@@ -25,6 +25,10 @@ Step 1 与 Step 2 的 agent prompt 在 SKILL.md 中被标为**硬约束**：必�
 只替换 `{xxx}` 变量，不要改写结构或措辞。需要额外传递的约定（如输出格式要求），
 写进 outline.yaml 的 item 字段里，通过 `{item_related_info}` 变量带进去。
 
+**Step 2 的产出必须注入深调 prompt，不能只用来改 schema。**
+它查到的公共背景已经付过钱了，不复用就等于让每个深调 agent 重查一遍。
+（因此也不要在 Step 2 返回前就发出深调 agent。）
+
 ## 环境准备
 
 skill 与 agent 必须先装到规定路径，否则 `/research-deep` 的校验步骤和
