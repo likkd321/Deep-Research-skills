@@ -1,0 +1,38 @@
+topic: "飞书 vs 企业微信（含微信）vs 钉钉：市场份额、生态对比与办公AI Agent赛道终局胜率"
+date: "2026-09-18"
+time_range: "2024年至今"
+perspectives: "双视角（平台方终局胜率 + ISV依附胜算）"
+
+items:
+  - name: 钉钉
+    category: 主体玩家
+    description: "阿里巴巴旗下协同办公平台，中国协同办公市占率第一（MAU约1.9-2亿）。2026年3月17日'AI钉钉2.0'发布会推出Agent OS、钉钉ONE、悟空平台、企业AI硬件Real、AI录音卡DingTalk A1、AI表格、AI听记、AI搜问。评估其在办公AI Agent赛道的市场份额、生态与终局胜率。"
+
+  - name: 企业微信与微信
+    category: 主体玩家
+    description: "腾讯旗下企业协同平台，MAU约1亿，最大差异化是与12亿月活微信的深度互通，客户触达与私域运营天然入口。2026年7月AI助手'大元'内测。评估范围包含微信生态（小程序/公众号/视频号/支付）对办公Agent的外部性，以及腾讯混元与元宝的支撑。"
+
+  - name: 飞书
+    category: 主体玩家
+    description: "字节跳动旗下协同办公平台，MAU约3000万但客单价与知识型客户结构最优。2026年3月19日发布企业级Agent矩阵与aily升级，2026年9月15日发布飞书8.0与'豆包工作'原生融合。2026上半年ARR增速为去年同期2.5倍，90%以上新客同时采购AI产品。"
+
+  - name: 腾讯WorkBuddy
+    category: 对照标杆
+    description: "腾讯云CodeBuddy团队出品的全场景AI办公工作台/桌面智能体，自然语言下达任务后自主思考、拆解任务、规划执行、交付可验收成果，覆盖运营/设计/财务/法务/开发岗位，支持多专家并行协作。作为'办公AI Agent产品形态'的对照系，用于提炼做这类产品所需的能力维度，并校准三家主体玩家的产品力。"
+
+  - name: Microsoft 365 Copilot
+    category: 对照标杆
+    description: "微软办公AI Agent标杆，Copilot Studio + Agent Store + Microsoft Graph数据底座 + Entra Agent ID身份体系。作为国际对照系，用于校准中国三家在Agent运行时、权限模型、生态商业化上的代差与可借鉴路径。"
+
+execution:
+  batch_size: 5
+  items_per_agent: 1
+  output_dir: ./office-ai-agent-ecosystem/results
+  subagent_type: web-search-agent
+  model: sonnet
+
+report:
+  format: html
+  theme: dark
+  output: ./office-ai-agent-ecosystem/report.html
+  note: "用户指定报告为深色背景HTML，同时保留 report.md 作为中间产物"

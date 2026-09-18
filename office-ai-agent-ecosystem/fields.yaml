@@ -1,0 +1,244 @@
+topic: "飞书 vs 企业微信（含微信）vs 钉钉：市场份额、生态对比与办公AI Agent赛道终局胜率"
+
+json_structure: "扁平结构。所有字段名必须作为 JSON 顶层 key 直接出现（不要用 basic_info/市场与份额 等分类层级包裹），否则 validate_json.py 无法识别。值可以是字符串、数字、数组或对象。"
+
+scoring_rubric: |
+  所有 *_score 字段统一用 1-10 分制，格式："X.X/10 — 一句话核心理由"。
+  锚点：
+    9-10 = 该维度中国市场绝对领先，短期内竞争对手无法复制的结构性优势
+    7-8  = 明显强于同行，是该玩家的核心护城河之一
+    5-6  = 行业平均水平，能用但不构成差异化
+    3-4  = 明显短板，会实质性拖累其在办公Agent赛道的竞争
+    1-2  = 严重缺失或战略性放弃
+  要求：每个分数必须有可追溯的事实依据（数据、发布会、公开报道），不得凭印象打分。
+  注意：各 item 由独立 agent 打分，主线程会在报告阶段做横向校准（normalization），
+  因此请给出"绝对锚点分"而非"相对排名分"。
+
+evaluation_perspectives: |
+  本次调研为双视角：
+  视角A（平台方视角）：三家自身在"办公AI Agent"赛道的终局胜率。
+  视角B（ISV视角）：假设我要做一个类似腾讯 WorkBuddy 的办公AI Agent产品，
+                    依附/接入哪家生态胜算最大、被平台吃掉的风险多大。
+  两个视角的结论分别落在 total_score_platform 与 isv_attach_score 字段。
+
+fields:
+  基本信息:
+    - name: name
+      description: "产品/生态名称，含所属公司与本次评估覆盖的范围（例如'企业微信+微信'需说明是否含微信主体）"
+      detail_level: 极简
+    - name: vendor
+      description: "母公司、所属事业群/BU、当前负责人及汇报线"
+      detail_level: 简要
+    - name: positioning
+      description: "官方战略定位原话（如钉钉'AI时代的工作方式'、飞书'AI时代先进生产力平台'），以及实际市场定位"
+      detail_level: 简要
+    - name: ai_product_timeline
+      description: "2024年至今AI/Agent相关的关键发布时间线，列出日期+发布内容+战略含义，尤其是2025-2026年的重大版本"
+      detail_level: 详细
+
+  市场与份额:
+    - name: mau
+      description: "月活跃用户数（MAU/DAU），注明数据来源、口径（个人用户/组织用户）与统计时间"
+      detail_level: 简要
+    - name: enterprise_orgs
+      description: "覆盖的企业/组织数量，注明口径（注册组织数 vs 活跃组织数）与时间"
+      detail_level: 简要
+    - name: market_share
+      description: "中国协同办公市场份额百分比，给出多个机构口径（IDC/艾瑞/QuestMobile等）并说明差异原因"
+      detail_level: 详细
+    - name: paying_customers
+      description: "付费企业数量、付费渗透率（付费企业/总企业数）"
+      detail_level: 简要
+    - name: revenue_arr
+      description: "营收或ARR规模（含AI产品单独贡献，若披露），注明是否官方口径或第三方估算"
+      detail_level: 详细
+    - name: growth_rate
+      description: "2024年至今的增长曲线：用户增速、收入/ARR增速、AI产品付费增速"
+      detail_level: 详细
+    - name: customer_industry_mix
+      description: "客户行业与规模结构（大型央国企/民企/中小微、制造/零售/互联网/教育/政务占比），这决定Agent能落地的场景类型"
+      detail_level: 详细
+    - name: geo_overseas
+      description: "海外/出海进展：Lark、WeCom国际版、DingTalk出海的市场、客户数与策略"
+      detail_level: 简要
+    - name: market_share_score
+      description: "【打分】市场份额与用户基本盘维度评分，按 scoring_rubric 格式"
+      detail_level: 简要
+
+  产品力_办公Agent:
+    - name: agent_product_matrix
+      description: "已发布的Agent产品全矩阵：产品名、形态（对话/流程/数字员工/桌面智能体）、目标岗位、可用状态（公测/商用）"
+      detail_level: 详细
+    - name: agent_runtime_os
+      description: "是否有Agent运行时/操作系统层（如钉钉Agent OS、飞书8.0的Agent原生底座），Agent如何被调度、拥有什么身份与权限"
+      detail_level: 详细
+    - name: context_foundation
+      description: "上下文底座能力：Agent能读到多少企业上下文（IM消息/文档/表格/审批/日历/组织架构），如何做RAG与索引"
+      detail_level: 详细
+    - name: memory_capability
+      description: "长期记忆能力：跨会话记忆、个人偏好记忆、组织级知识沉淀机制"
+      detail_level: 简要
+    - name: multi_agent_orchestration
+      description: "多Agent编排与协作能力：是否支持Agent间调用、任务分解、并行执行、人机混合流程"
+      detail_level: 详细
+    - name: deliverable_capability
+      description: "交付物能力：能否直接产出可验收的文档/表格/PPT/数据分析/代码，以及交付质量的公开评价"
+      detail_level: 详细
+    - name: endpoint_coverage
+      description: "触点覆盖：移动端/PC端/桌面智能体/浏览器/AI硬件（如钉钉A1录音卡、Real硬件）分别的能力边界"
+      detail_level: 详细
+    - name: human_agent_interface
+      description: "人机协同交互范式：信息流推送（钉钉ONE）、IM内@Agent、独立工作台、审批介入点、可干预与可回滚设计"
+      detail_level: 详细
+    - name: task_reliability
+      description: "任务可靠性与可验收性：长任务成功率、幻觉控制、权限越界防护的公开信息或用户实测反馈"
+      detail_level: 详细
+    - name: product_score
+      description: "【打分】办公Agent产品力维度评分，按 scoring_rubric 格式"
+      detail_level: 简要
+
+  模型与技术底座:
+    - name: base_model
+      description: "依赖的基座模型：自研（豆包/通义/混元）还是外采，模型代际与在公开榜单上的位置"
+      detail_level: 详细
+    - name: model_product_integration
+      description: "模型与办公产品的一体化程度：是否同公司同一战线、迭代节奏是否同步、能否为办公场景定向后训练"
+      detail_level: 详细
+    - name: compute_and_cost
+      description: "算力储备与推理成本优势，是否具备大规模Agent常驻运行的成本结构"
+      detail_level: 简要
+    - name: multimodal
+      description: "多模态能力：语音转写/会议实时纪要/图像/视频/屏幕理解在办公场景的落地情况"
+      detail_level: 简要
+    - name: protocol_openness
+      description: "协议与标准开放度：MCP、A2A、Function Calling、OpenAPI的支持程度，第三方模型能否接入"
+      detail_level: 详细
+    - name: model_score
+      description: "【打分】模型与技术底座维度评分，按 scoring_rubric 格式"
+      detail_level: 简要
+
+  生态:
+    - name: open_platform_api
+      description: "开放平台API的覆盖度与质量：开放了哪些核心能力（消息/文档/表格/审批/组织架构/音视频），限流与权限申请难度，是否有能力做到'Agent可写'而不只是'可读'"
+      detail_level: 详细
+    - name: developer_count
+      description: "开发者数量、活跃开发者规模、开发者增速，注明来源与时间"
+      detail_level: 简要
+    - name: app_market_scale
+      description: "应用市场规模：上架应用数、头部ISV名单、应用市场GMV或交易规模"
+      detail_level: 详细
+    - name: isv_revenue_share
+      description: "ISV商业条款：分成比例、结算周期、平台抽成、补贴与流量扶持政策的公开信息"
+      detail_level: 详细
+    - name: lowcode_apaas
+      description: "低代码/aPaaS能力：宜搭、多维表格、微搭等的产品力、用户规模与AI化程度"
+      detail_level: 详细
+    - name: mcp_connector_ecosystem
+      description: "连接器与MCP生态：官方MCP Server数量、可连接的外部系统数量、Agent调用外部工具的便利度"
+      detail_level: 详细
+    - name: third_party_system_integration
+      description: "与企业既有系统（ERP/CRM/HR/财税/OA，如SAP/用友/金蝶/Salesforce）的集成深度与官方方案"
+      detail_level: 详细
+    - name: hardware_ecosystem
+      description: "硬件生态：考勤机/会议室屏/录音硬件/AI硬件的品类、出货与合作伙伴规模"
+      detail_level: 简要
+    - name: channel_partner_system
+      description: "渠道与代理商体系：服务商数量、区域覆盖、渠道对大客户交付的支撑能力"
+      detail_level: 详细
+    - name: industry_solutions
+      description: "行业解决方案深度：在制造/零售/政务/教育/医疗等行业的标杆客户与垂直方案成熟度"
+      detail_level: 详细
+    - name: developer_community_docs
+      description: "开发者体验：文档质量、SDK完备度、沙箱与调试工具、社区活跃度、上架审核周期"
+      detail_level: 简要
+    - name: platform_encroachment_risk
+      description: "【ISV视角关键】平台吃掉第三方的风险：历史上平台自研替代ISV的案例、官方Agent与ISV Agent的竞合关系、数据与流量是否被平台单向占有"
+      detail_level: 详细
+    - name: ecosystem_score
+      description: "【打分】生态维度综合评分（开放度/繁荣度/商业友好度三个子分+总分），按 scoring_rubric 格式"
+      detail_level: 详细
+
+  组织数据与权限资产:
+    - name: data_accumulation
+      description: "企业数据沉淀厚度：该平台上究竟沉淀了多少高价值的结构化/非结构化工作数据，这是Agent的燃料"
+      detail_level: 详细
+    - name: knowledge_base
+      description: "企业知识库产品能力：知识问答、知识沉淀、权限化检索的成熟度"
+      detail_level: 简要
+    - name: permission_model
+      description: "权限模型：Agent如何继承人的权限、最小权限原则、跨部门数据隔离机制（这是企业敢不敢放Agent进来的前提）"
+      detail_level: 详细
+    - name: audit_compliance_private_deploy
+      description: "审计合规与部署形态：日志审计、数据不出域、专有云/私有化部署能力，信创与政企合规资质"
+      detail_level: 详细
+    - name: data_asset_score
+      description: "【打分】组织数据与权限资产维度评分，按 scoring_rubric 格式"
+      detail_level: 简要
+
+  商业化飞轮:
+    - name: pricing_model
+      description: "定价模式与价格带：免费版边界、标准版/专业版/旗舰版价格、大客户定制"
+      detail_level: 详细
+    - name: ai_billing_model
+      description: "AI/Agent如何计费：席位费、Token计费、Agent调用次数、算力包，以及是否单独收费"
+      detail_level: 详细
+    - name: paid_conversion_arpu
+      description: "付费转化率与客单价（ARPU/ACV），以及AI产品对客单价的拉动幅度"
+      detail_level: 详细
+    - name: acquisition_channel_cac
+      description: "获客方式与成本：自然流量/母公司导流/直销/渠道的结构，获客成本优势来源"
+      detail_level: 简要
+    - name: retention_renewal
+      description: "续费率、NDR（净收入留存）、客户流失情况的公开信息"
+      detail_level: 简要
+    - name: parent_business_synergy
+      description: "与母公司主业的协同：阿里云/腾讯云微信/字节豆包与火山引擎分别如何反哺，是否存在内部利益冲突"
+      detail_level: 详细
+
+  战略与组织:
+    - name: strategic_priority
+      description: "在母公司内部的战略优先级：是核心战役还是防御性业务，是否被列入集团级重点"
+      detail_level: 详细
+    - name: parent_support_investment
+      description: "母公司投入力度：人员规模、亏损容忍度、是否有明确的盈利时间表压力"
+      detail_level: 详细
+    - name: org_stability
+      description: "组织稳定性：2024年至今负责人变更、团队重组、战略摇摆的记录"
+      detail_level: 详细
+    - name: execution_track_record
+      description: "历史执行力证据：过去三年承诺的路线图兑现情况，快速迭代能力"
+      detail_level: 详细
+    - name: strategy_score
+      description: "【打分】战略与组织维度评分，按 scoring_rubric 格式"
+      detail_level: 简要
+
+  评分与终局预测:
+    - name: capability_dimensions_for_office_agent
+      description: "【核心交付】从该item身上提炼：做一个类似WorkBuddy的办公AI Agent，究竟需要哪些能力维度？按'必要条件/加分项/伪需求'三档列出，每条说明该item在这条上的实际表现与证据"
+      detail_level: 详细
+    - name: core_advantages
+      description: "在办公Agent赛道上最难被复制的3-5条结构性优势，每条附证据"
+      detail_level: 详细
+    - name: fatal_weaknesses
+      description: "可能导致其在办公Agent赛道出局的3-5条致命短板，每条附证据"
+      detail_level: 详细
+    - name: key_swing_variables
+      description: "决定胜负的关键变量：哪些事情一旦发生会显著改变该item的胜率（如基座模型代差、组织变动、政策、价格战）"
+      detail_level: 详细
+    - name: total_score_platform
+      description: "【打分·视角A】平台方视角综合分：汇总各维度加权总分，并列出各维度分值明细"
+      detail_level: 详细
+    - name: isv_attach_score
+      description: "【打分·视角B】ISV依附视角评分：我要做WorkBuddy类产品，接入这家生态的胜算评分（考虑开放度/流量/付费意愿/被吃掉风险）"
+      detail_level: 详细
+    - name: isv_attach_rationale
+      description: "视角B的详细理由：接入这家的最佳切入场景、最大风险、以及推荐的合作姿态（深度绑定/多平台分发/只做连接器）"
+      detail_level: 详细
+    - name: endgame_win_probability
+      description: "【核心交付】办公AI Agent赛道终局胜率预测（百分比）。注意：评估的是该玩家在整个赛道的胜率而非单个产品，需给出乐观/中性/悲观三种情景的概率区间"
+      detail_level: 详细
+    - name: win_probability_rationale
+      description: "胜率判断的推理链：终局形态假设是什么、该玩家赢在哪里输在哪里、需要发生什么才能赢、时间窗口多长"
+      detail_level: 详细
+
+uncertain: []
