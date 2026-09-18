@@ -24,17 +24,22 @@ items:
     description: "腾讯云CodeBuddy团队出品的全场景AI办公工作台/桌面智能体，自然语言下达任务后自主思考、拆解任务、规划执行、交付可验收成果，覆盖运营/设计/财务/法务/开发岗位，支持多专家并行协作。作为'办公AI Agent产品形态'的对照系，用于提炼做这类产品所需的能力维度，并校准三家主体玩家的产品力。"
     research_notes: "输出JSON必须是扁平结构（所有字段名为顶层key，不要用分类层级包裹），否则validate_json.py无法识别。除fields.yaml定义的字段外，必须额外包含一个 sources 数组，列出本次调研引用的全部URL（形如 [{标题, url, 日期}]），报告需要可追溯引用。所有 *_score 字段严格遵循fields.yaml中 scoring_rubric 的 'X.X/10 — 一句话理由' 格式，且分数必须是绝对锚点分。"
 
-  - name: Microsoft 365 Copilot
-    category: 对照标杆
-    description: "微软办公AI Agent标杆，Copilot Studio + Agent Store + Microsoft Graph数据底座 + Entra Agent ID身份体系。作为国际对照系，用于校准中国三家在Agent运行时、权限模型、生态商业化上的代差与可借鉴路径。"
-    research_notes: "输出JSON必须是扁平结构（所有字段名为顶层key，不要用分类层级包裹），否则validate_json.py无法识别。除fields.yaml定义的字段外，必须额外包含一个 sources 数组，列出本次调研引用的全部URL（形如 [{标题, url, 日期}]），报告需要可追溯引用。所有 *_score 字段严格遵循fields.yaml中 scoring_rubric 的 'X.X/10 — 一句话理由' 格式，且分数必须是绝对锚点分。"
-
   - name: 千问办公
     category: 主体玩家-独立Agent层
     description: "阿里巴巴的独立通用AI Agent品牌。2026年8月3日阿里将 QoderWork、MuleRun、悟空 三款产品整合发布为'千问办公'（悟空已并入、不再独立），支持桌面端/云端/企业协同三形态；8月18日打通钉钉、飞书、企业微信、Slack；9月4日注册用户超3000万、过半为企业用户。与钉钉合并构成'阿里在办公Agent赛道'的完整战力，是评估阿里赛道胜率不可拆分的另一半。"
     research_notes: "输出JSON必须是扁平结构（所有字段名为顶层key，不要用分类层级包裹），否则validate_json.py无法识别。除fields.yaml定义的字段外，必须额外包含一个 sources 数组，列出本次调研引用的全部URL（形如 [{标题, url, 日期}]），报告需要可追溯引用。所有 *_score 字段严格遵循fields.yaml中 scoring_rubric 的 'X.X/10 — 一句话理由' 格式，且分数必须是绝对锚点分。"
 
 synthesis_only_variables:
+  - name: Microsoft 365 Copilot（微软）
+    reason: "国际对照标杆，按CLAUDE.md规则不单独起agent：只需几个数据点做代差校准，填满全字段不会改变三家的胜率结论。"
+    used_as: "校准中国三家在Agent运行时、身份权限体系、生态商业化上的代差与可借鉴路径。"
+    key_facts:
+      - "Copilot Studio 作为Agent构建平台 + Agent Store 作为分发渠道"
+      - "Microsoft Graph 作为跨应用统一数据底座，是Agent上下文的来源"
+      - "Entra Agent ID：把Agent当作一等公民身份纳入企业目录与权限体系，中国三家2026年才开始追这条线"
+      - "Agent 365 治理框架，面向企业多Agent并存场景"
+    source: "https://openai.com/index/introducing-workspace-agents/ 等，详见 research-archive 中Step2补充调研的信源列表"
+
   - name: 库库AI（百度）
     reason: "不在用户圈定的三家范围内，且全量78字段深调对结论无边际贡献，故不单独立item、不派agent。"
     used_as: "反证样本：百度无IM基本盘，却在独立Agent层办公场景MAU超2500万、居通用AI办公赛道第一（高于同期WorkBuddy的1115万）。用于检验'IM入口是否构成护城河'这一核心假设，仅在synthesis的胜率推理中引用。"
