@@ -80,23 +80,35 @@ uncertain: []
 深度调研的成本 ≈ **agent 数 × 字段数 × 检索轮数**，三者都要主动压。
 默认按以下方式跑，除非用户要求不计成本地穷尽。
 
-### 落盘即提交
+### 中间产物本地处理，不入库
 
-容器是临时的，**只有 commit 并 push 过的产物能活过会话**。
-不要攒批提交：每有一个 `results/*.json` 落地就立即 commit + push。
-额度中断、会话超时、容器回收都会让未推送的检索成果归零。
+本仓库是 skill 仓库，不是调研产物仓库。**中间产物一律不提交**，
+`.gitignore` 已排除：
 
-### 断点续传
+```
+research-archive/      # 历史调研的构建脚本等
+**/results/            # 各 item 的调研 JSON
+**/build_*.py          # 子 agent 的 JSON 构建脚本
+**/synthesis.json      # 跨 item 校准结论
+**/report.md           # markdown 中间产物
+```
+
+**入库的只有三类**：`CLAUDE.md`（沉淀经验）、调研配置（`outline.yaml`、
+`fields.yaml`、`generate_report.py`，用于复现）、以及最终 `report.html`（交付物）。
+
+### 断点续传（注意：仅限同一会话内）
 
 `/research-deep` 会扫描 `output_dir` 下已完成的 JSON 并跳过对应 item。
-新会话恢复调研的完整步骤：
+但由于 `results/` 不入库，**这个机制只在同一会话、同一容器内有效**。
 
-1. clone 仓库并切到调研所在分支
-2. 执行上文「环境准备」的安装命令（skill 与 agent 不装好，校验和子 agent 类型都会失效）
-3. 直接跑 `/research-deep`，它会自动跳过 `results/` 里已完成的 item
+必须清楚这个取舍：
 
-因此 `outline.yaml`、`fields.yaml`、`results/*.json` 必须始终保持已推送状态——
-它们就是断点本身。
+- 仓库保持干净，代价是**会话中断 = 已完成的 item 全部丢失，需要重跑**
+- 因此单次会话内要尽快跑完；预计跑不完时，主动提醒用户这个风险
+- 用户若要跨会话续传，需当场把 `results/` 手动备份出去，或临时取消 gitignore
+
+相应地，子 agent 的**分段落盘**纪律变得更重要（见下文经验），
+因为它是会话内唯一的止损手段。
 
 ### 控制调研对象数量
 
