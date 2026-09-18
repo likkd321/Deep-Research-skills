@@ -34,10 +34,15 @@ items:
     description: "阿里巴巴的独立通用AI Agent品牌。2026年8月3日阿里将 QoderWork、MuleRun、悟空 三款产品整合发布为'千问办公'（悟空已并入、不再独立），支持桌面端/云端/企业协同三形态；8月18日打通钉钉、飞书、企业微信、Slack；9月4日注册用户超3000万、过半为企业用户。与钉钉合并构成'阿里在办公Agent赛道'的完整战力，是评估阿里赛道胜率不可拆分的另一半。"
     research_notes: "输出JSON必须是扁平结构（所有字段名为顶层key，不要用分类层级包裹），否则validate_json.py无法识别。除fields.yaml定义的字段外，必须额外包含一个 sources 数组，列出本次调研引用的全部URL（形如 [{标题, url, 日期}]），报告需要可追溯引用。所有 *_score 字段严格遵循fields.yaml中 scoring_rubric 的 'X.X/10 — 一句话理由' 格式，且分数必须是绝对锚点分。"
 
-  - name: 库库AI
-    category: 赛道变量-第四极
-    description: "百度文库+百度网盘联合推出的通用AI办公智能体（原GenFlow），2026年8月14日官宣中文名并上线独立PC端/网页端/小程序/企业版。截至2026年8月办公场景MAU超2500万，位居通用AI办公赛道第一（高于同期WorkBuddy的1115万）。与WorkBuddy、千问办公、豆包工作并称'WQKD四强'。百度无IM基本盘却在Agent层跑到第一，是检验'IM入口是否真是护城河'的关键反证样本，直接影响三家终局胜率的判断。"
-    research_notes: "输出JSON必须是扁平结构（所有字段名为顶层key，不要用分类层级包裹），否则validate_json.py无法识别。除fields.yaml定义的字段外，必须额外包含一个 sources 数组，列出本次调研引用的全部URL（形如 [{标题, url, 日期}]），报告需要可追溯引用。所有 *_score 字段严格遵循fields.yaml中 scoring_rubric 的 'X.X/10 — 一句话理由' 格式，且分数必须是绝对锚点分。"
+synthesis_only_variables:
+  - name: 库库AI（百度）
+    reason: "不在用户圈定的三家范围内，且全量78字段深调对结论无边际贡献，故不单独立item、不派agent。"
+    used_as: "反证样本：百度无IM基本盘，却在独立Agent层办公场景MAU超2500万、居通用AI办公赛道第一（高于同期WorkBuddy的1115万）。用于检验'IM入口是否构成护城河'这一核心假设，仅在synthesis的胜率推理中引用。"
+    key_facts:
+      - "2026-08-14 官宣中文名（原GenFlow），上线独立PC端/网页端/小程序/企业版"
+      - "百度文库+百度网盘联合推出，2026年8月办公场景MAU超2500万"
+      - "与WorkBuddy、千问办公、豆包工作并称'WQKD四强'"
+    source: "https://news.qq.com/rain/a/20260814A0DTXC00"
 
 execution:
   batch_size: 5
