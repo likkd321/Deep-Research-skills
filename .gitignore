@@ -1,7 +1,9 @@
-# 调研中间产物：本地处理，不入库
-# 这些文件体量大、时效性强，留在主仓库只会越积越乱
+# 调研产物：一律本地处理，不入库
+# 本仓库是 skill 仓库，不是调研产物仓库
 research-archive/
+office-ai-agent-ecosystem/
 **/results/
 **/build_*.py
 **/synthesis.json
 **/report.md
+**/report.html
