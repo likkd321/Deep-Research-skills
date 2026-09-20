@@ -1,0 +1,60 @@
+topic: AI/Agent时代对谷歌搜索业务的影响及谷歌的应对
+generated_date: 2026-09-20
+time_range: 最近12个月，重点2025-2026
+
+items:
+  - name: 搜索行为与流量现状
+    category: 需求侧现状
+    description: >
+      AI概览(AI Overviews)/AI Mode/Gemini嵌入搜索后，搜索查询量、用户停留时长、
+      点击量的真实变化数据。验证"搜索量创新高、停留与点击不降反升"这一说法是否成立，
+      区分谷歌官方口径与第三方(出版商/SEO)测得的点击下降。
+
+  - name: AI广告工具与广告变现
+    category: 变现侧
+    description: >
+      Performance Max / AI Max for Search、AI概览与AI Mode内嵌广告的进展与效果。
+      "广告主转化率提升、愿意加投预算"的说法有无数据支撑；谷歌广告收入趋势。
+
+  - name: Agent时代谁还看广告及谷歌应对
+    category: 结构性冲击
+    description: >
+      若未来由agent代替人访问网页，展示型/搜索广告如何存续。谷歌的应对：
+      Project Mariner、Gemini in Chrome、AI Mode中的agentic能力、面向agent的广告/支付协议(AP2)。
+
+  - name: 谷歌搜索AI变现逻辑与收入影响
+    category: 变现侧
+    description: >
+      AI时代搜索变现逻辑到底是什么(AI入口内植入广告 vs 基础设施收费)；
+      是否会显著影响谷歌搜索收入；华尔街/分析师与最新研报观点。
+
+  - name: 过桥费与搜索基础设施变现
+    category: 变现侧
+    description: >
+      "即使用户问别的AI，最终也要靠谷歌搜索/索引取数，谷歌可收过桥费"这一逻辑是否成立。
+      Grounding with Google Search API(Gemini API按次计费)、第三方AI对谷歌索引的依赖、
+      谷歌是否已在做、按API/按次付费的现状。
+
+  - name: 出版商流量与收入危机
+    category: 生态矛盾
+    description: >
+      AI抓取内容/生成摘要但回流流量减少，出版商成为"免费原材料"。
+      referral流量下降、零点击搜索占比、出版商收入锐减的真实数据与案例(诉讼、投诉)。
+
+  - name: 内容爬取付费与打破恶性循环
+    category: 破局
+    description: >
+      "内容减少→AI质量下降"的恶性循环如何打破。按爬取/调用次数付费的新模式：
+      Cloudflare pay-per-crawl、RSL标准、内容licensing交易、Google Offerwall等；
+      谷歌对内容付费的立场与做法。
+
+  - name: 行业格局与谷歌竞争力
+    category: 竞争格局
+    description: >
+      ChatGPT/OpenAI、Perplexity、Bing/Copilot等对谷歌搜索的冲击与份额变化；
+      谷歌在"按API付费/内容付费"新模式下是否仍有竞争力；护城河(索引、分发、Chrome、Android、TPU)。
+
+execution:
+  batch_size: 4
+  items_per_agent: 1
+  output_dir: ./google-search-ai-agent-era/results

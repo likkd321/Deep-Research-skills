@@ -1,0 +1,39 @@
+topic: AI/Agent时代对谷歌搜索业务的影响及谷歌的应对
+
+fields:
+  核心结论:
+    - name: core_conclusion
+      description: 针对该item对应的核心问题，给出直接、明确的结论(先说观点，再给依据)。判断用户引用的"那个AI"说法哪里对、哪里片面或错误。
+      detail_level: 详细
+
+  关键数据与成果:
+    - name: key_data_and_results
+      description: 可量化的关键数据、指标、财报数字、增长/下降幅度、第三方研究结论。每条尽量标注出处与时间。
+      detail_level: 详细
+
+  谷歌的具体举措与产品:
+    - name: google_actions_and_products
+      description: 谷歌为此做了什么(产品、功能、协议、政策、交易)，以及相应取得了何种成果或进展。
+      detail_level: 详细
+
+  其他玩家与行业格局:
+    - name: other_players_and_landscape
+      description: OpenAI/ChatGPT、Perplexity、Microsoft/Bing、Cloudflare、出版商联盟、监管等其他相关方的动作与格局。
+      detail_level: 简要
+
+  对谷歌搜索收入的影响:
+    - name: impact_on_google_revenue
+      description: 该维度对谷歌搜索/广告收入(或整体变现)的实际或潜在影响，含正反两面与量级判断。
+      detail_level: 简要
+
+  争议与不确定性:
+    - name: controversies_and_uncertainties
+      description: 存在争议、口径分歧、尚未验证或前景不确定之处；官方口径与第三方口径的差异。
+      detail_level: 简要
+
+  信息来源:
+    - name: sources
+      description: 支撑本item的关键信息来源，markdown链接形式[标题](url)，优先权威研报/财报/一手报道。
+      detail_level: 详细
+
+uncertain: []
