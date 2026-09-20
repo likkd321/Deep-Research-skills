@@ -24,6 +24,11 @@ allowed-tools: Bash, Read, Write, Glob, WebSearch, Task
 - 每个agent负责items_per_agent个项目
 - 启动web-search-agent（后台并行，禁用task output）
 
+**模型指定（重要）**：派发每个web-search-agent子agent时使用 **sonnet** 模型。检索+事实抽取+填字段是广度型任务，Sonnet性价比最优（约为Opus质量的90-95%，成本约1/5、更快）；跨item的综合与判断留给主线程/`research-report`阶段用Opus兜底，因此子agent降档几乎不损失最终质量。
+- **网页/云端会话**：执行者必须在派发子agent时**显式指定 model=sonnet**（此类环境不会读取 `agents/web-search-agent.md` 的 model 字段，模型由派发时决定）。
+- **本地CLI**：由 `agents/web-search-agent.md` 的 `model: sonnet` 字段自动控制，无需额外操作。
+- 不要用Haiku跑deep阶段：它对多源交叉、来源可信度判断、长上下文抽取偏弱，易抽浅漏口径。
+
 **参数获取**：
 - `{topic}`: outline.yaml中的topic字段
 - `{item_name}`: item的name字段
@@ -93,6 +98,13 @@ python ~/.claude/skills/research/validate_json.py -f {project_dir}/fields.yaml -
 - 完成数量
 - 失败/不确定标记的items
 - 输出目录
+
+### Step 6: 定向补深（复用已有agent，勿冷启动重跑）
+汇总后若某item字段偏薄、关键数字仅靠单一来源、或多源数字冲突：
+- **优先唤醒该item对应的、仍在会话中的子agent**（带完整上下文继续对话，如环境支持用其agent id/SendMessage），给出具体补深指令，例如"CTR区间只有一个来源，去读各家方法学把冲突数字调和掉并注明口径差异"。
+- 只对存疑字段**定向补充**，不要全部item重跑；补完重新运行validate_json.py。
+- 仅当对应agent已不可唤醒（会话/容器已回收）时，才用断点续传方式对该**单个**item冷启动新agent。
+- 这样既省token、又比全量重跑更快更对症。
 
 ## Agent配置
 - 后台执行: 是

@@ -24,6 +24,11 @@ Find `*/outline.yaml` file in current working directory, read items list, execut
 - Each agent handles items_per_agent items
 - Launch web-search-agent (background parallel, disable task output)
 
+**Model selection (important)**: Dispatch each web-search-agent subagent on the **sonnet** model. Breadth retrieval + fact extraction + field-filling is well-suited to Sonnet (~90-95% of Opus quality at ~1/5 the cost and faster); cross-item synthesis and judgment are handled by the main thread / `research-report` step on Opus, so downgrading subagents costs almost no final quality.
+- **Web/cloud sessions**: the executor MUST **explicitly pass model=sonnet** when dispatching subagents (such environments do NOT read the `model` field in `agents/web-search-agent.md`; the model is decided at dispatch time).
+- **Local CLI**: controlled automatically by the `model: sonnet` field in `agents/web-search-agent.md`; no extra action needed.
+- Do not use Haiku for the deep phase: it is weaker at multi-source cross-checking, source-credibility judgment, and long-context extraction.
+
 **Parameter Retrieval**:
 - `{topic}`: topic field from outline.yaml
 - `{item_name}`: item's name field
@@ -93,6 +98,13 @@ After all complete, output:
 - Completion count
 - Failed/uncertain marked items
 - Output directory
+
+### Step 6: Targeted Deepening (reuse existing agents, do not cold-restart)
+After summarizing, if an item has thin fields, a key figure backed by a single source, or conflicting numbers across sources:
+- **Prefer waking the still-alive subagent for that item** (continue the conversation with full context — use its agent id / SendMessage where the environment supports it) and give a specific deepening instruction, e.g. "the CTR range rests on one source; read each study's methodology, reconcile the conflicting numbers, and note the differing definitions."
+- Deepen **only the questionable fields** — do not re-run all items; re-run validate_json.py afterwards.
+- Only when that agent can no longer be woken (session/container reclaimed) should you cold-start a new agent for that **single** item via the resume mechanism.
+- This saves tokens and is faster and more targeted than a full re-run.
 
 ## Agent Config
 - Background execution: Yes
