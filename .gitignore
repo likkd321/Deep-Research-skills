@@ -1,0 +1,21 @@
+# ── 调研产物不进 master ────────────────────────────────────────────
+# 本仓库只放 skill 工具本身，不是调研产物仓库。
+# 每次调研的「中间产物」(outline.yaml / fields.yaml / results/*.json) 按
+# CLAUDE.md 的规矩 checkpoint 到 research/<slug> 子分支（那里用 `git add -f`
+# 强制入库，绕过下面这些规则）；report、渲染脚本等可再生物不入任何分支。
+# 详见 CLAUDE.md。
+
+# 调研中间产物 / 可再生物（防止误提交进 master）
+**/outline.yaml
+**/fields.yaml
+**/results/
+**/report.md
+**/report.html
+**/synthesis.json
+**/generate_report.py
+**/build_*.py
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
