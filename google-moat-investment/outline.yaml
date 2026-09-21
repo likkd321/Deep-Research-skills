@@ -1,0 +1,46 @@
+topic: 谷歌AI时代护城河与投资研判（从收入结构反推护城河，落到"长坡厚雪"打分）
+generated_date: 2026-09-21
+time_range: 最新，重点2025-2026
+mode_note: 性能模式（全部子agent用Opus）；batch_size=3；投资视角深度调研
+established_baseline: |
+  已由前两轮确立、无需重复论证的基线事实（供各agent引用，聚焦各自新角度）：
+  - 变现"主力腿"=自有AI入口(AI Overviews/AI Mode)内广告，谷歌称其变现率与传统搜索"大致相同"；带广告的AIO占比2025年初~3%→年底~25-40%；2026Q2搜索广告约633亿美元(+17%)。
+  - 变现"辅助腿"=Grounding过桥费，已证不能规模化（<1-2%搜索广告，属Cloud功能加售）。
+  - 反垄断：2025.12终判不拆Chrome/Android，行为救济为主，负向但温和可控；强制索引"一次性快照+近成本"含水量大；上诉至2027-2028才定。
+
+items:
+  - name: 第一条腿现状与竞品胜率
+    category: 变现引擎
+    description: >
+      AI入口内广告(AI Overviews/AI Mode)变现的最新现状与竞争胜率。深挖：AIO/AI Mode变现率是否真"同等"、广告格式进展(AI Mode内广告、Direct Offers)、Gemini订阅(Google One AI/AI Ultra)收入；用户规模(AI Mode 10亿+月活、Gemini App月活)。核心：在"AI入口内变现"这条大家都新起步的赛道上，谷歌相对ChatGPT/Perplexity/Meta的结构性优势在哪(广告主网络、竞价系统、意图数据、衡量与归因、商家关系)——即便对手能自建搜索/爬虫，为何变现未必追得上。给胜率判断。
+
+  - name: 搜索索引与数据护城河持续性
+    category: 传统护城河
+    description: >
+      "索引/数据"作为壁垒在AI时代是否仍成立、是否被削弱或转移。深挖：谷歌索引规模/质量/实时性相对Bing及自建索引(OpenAI/Perplexity)到底强多少；抓取管线、知识图谱(实体/事实数)、点击/意图数据飞轮(Search/YouTube/Maps/Chrome/Android/Workspace)；答案式AI是否让"最全索引"贬值；护城河是否从"索引"转向"数据飞轮+用户意图"。给强度(强/中/弱)与趋势(升/平/降)。
+
+  - name: 分发与生态联动护城河
+    category: 分发护城河
+    description: >
+      分发是否是AI时代更硬的护城河。深挖：Chrome(约30-35亿用户)、Android(约30亿设备)、默认搜索、Play、Workspace(约30亿用户/Gemini集成)、Pixel硬件——把Gemini低成本、零获客地推给最多用户的分发飞轮；对比OpenAI/Perplexity的获客成本与分发劣势；反垄断对分发的限制(默认协议改一年期、非独家)与对Apple关系的影响。给强度与趋势。
+
+  - name: 算力与模型新护城河
+    category: 新形态护城河
+    description: >
+      护城河是否已换形态到"全栈算力+前沿模型"。深挖：自研TPU(v7/Ironwood)相对英伟达的成本与供给优势、全栈(芯片-数据中心-模型-产品)垂直整合；Gemini 3能力是否回到/领先第一梯队(基准、多模态、Agent)；DeepMind研究储备；对比OpenAI(依赖英伟达+微软Azure)、Anthropic的成本结构。这是否成为AI时代最被低估的结构性优势。给强度与趋势。
+
+  - name: 收入结构与估值传导
+    category: 财务与估值
+    description: >
+      从Alphabet收入结构反推护城河如何转化为"稳固增长"。深挖：最新分部收入与增速(搜索广告、YouTube、Google订阅平台与设备、Google Cloud、Other Bets)、各分部利润率、整体营收/EPS/自由现金流增速；AI capex规模(2025-2026资本开支)对利润率与FCF的压力；订阅(Gemini/One/YouTube)与Cloud作为第二/第三曲线的体量与增速；分析师目标价区间、估值倍数(PE/EV-EBITDA)与多空预期。判断护城河能否推动收入稳固增长。
+
+  - name: 空方论点与竞争威胁
+    category: 风险与竞争
+    description: >
+      系统整理bear case，避免单边乐观。深挖：AI答案式分流/零点击对搜索长期侵蚀、去谷歌化(ChatGPT/Perplexity自建索引与入口)、"自家AI蚕食自家高价广告位"的替代难题、AI capex吞噬利润与ROI存疑、反垄断尾部(禁Apple付费)、估值已price in多少、Gemini变现率是否真能等同搜索；以及OpenAI/微软/Meta/Perplexity/Apple各自对谷歌的具体威胁与进展。给"最可能击穿护城河"的风险排序。
+
+execution:
+  batch_size: 3
+  items_per_agent: 1
+  output_dir: ./google-moat-investment/results
+  mode: performance   # 全部子agent用Opus

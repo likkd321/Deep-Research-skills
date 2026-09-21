@@ -1,0 +1,39 @@
+topic: 谷歌AI时代护城河与投资研判
+
+fields:
+  核心结论:
+    - name: core_conclusion
+      description: 针对该维度对"护城河/收入/投资"的核心研判(先结论后依据)，明确该维度是加固还是削弱谷歌地位。
+      detail_level: 详细
+
+  关键数据与证据:
+    - name: key_data_and_evidence
+      description: 可量化数据(市占、变现率、用户规模、分部收入与增速、利润率、capex、TPU、目标价、倍数等)，每条尽量标注出处与时间。
+      detail_level: 详细
+
+  护城河强度与趋势:
+    - name: moat_strength_and_trend
+      description: 该维度护城河强度(强/中/弱)与趋势(上升/持平/下降)，并说明理由；若属"换形态"要点明新形态。
+      detail_level: 详细
+
+  与竞品对比及胜率:
+    - name: vs_competitors_and_win_rate
+      description: 与ChatGPT/OpenAI、Perplexity、微软、Meta、Apple等的对比与谷歌在该维度的胜率判断。
+      detail_level: 详细
+
+  对收入稳固增长的传导:
+    - name: revenue_linkage
+      description: 该维度如何(或不能)传导为收入的稳固增长；量级与确定性。
+      detail_level: 简要
+
+  风险与不确定性:
+    - name: risks_and_uncertainties
+      description: 该维度的风险、口径分歧、可能被击穿之处、多空分歧。
+      detail_level: 详细
+
+  信息来源:
+    - name: sources
+      description: 关键来源，markdown链接[标题](url)，优先一手(财报/SEC/官方/法院)与投行研报/权威媒体，至少8条。
+      detail_level: 详细
+
+uncertain: []
