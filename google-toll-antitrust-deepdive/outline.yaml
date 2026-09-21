@@ -1,0 +1,32 @@
+topic: 谷歌搜索深挖 - 过桥费能否规模化 与 反垄断影响
+generated_date: 2026-09-21
+time_range: 最新，重点2025-2026（含Dec 2025终判与2026上诉进展）
+parent_research: google-search-ai-agent-era（本轮为其中item 5与item 8/监管维度的定向深挖）
+
+items:
+  - name: 过桥费能否规模化
+    category: 变现前景研判
+    description: >
+      深挖"谷歌把搜索/索引做成基础设施、向第三方AI收过桥费"这条路能否成为真正的规模化第二曲线。
+      核心问题：Grounding with Google Search API(Gemini/Vertex按次计费)的实际采用与收入量级；
+      定价权(vs 第三方Search API $5-10/千次的压价)；竞品(ChatGPT自建爬虫、Perplexity自建索引)"去谷歌化"的程度与趋势；
+      谷歌是否愿意/可能把索引批发给竞争对手(反垄断救济是否强制开放索引)；
+      与广告收入(单季600亿+)相比过桥费的天花板在哪；结论——是niche防御性变现，还是有望规模化。
+    upgrade_reason: 预测型(能否规模化)——命中升档条件②③，升Opus
+
+  - name: 反垄断影响
+    category: 监管风险研判
+    description: >
+      深挖美国DOJ搜索反垄断案救济(2024.8判定垄断→2025.9不拆Chrome/Android→2025.12.5终判：
+      五人技术委员会、强制共享搜索索引+用户数据(不含广告数据)、默认合约限一年、六年监督)对谷歌搜索
+      业务的实际影响；双方上诉(谷歌就数据共享上诉、DOJ交叉上诉求更强救济)进展与时间线；
+      对Apple默认搜索协议(约200亿美元/年)的冲击；欧盟2025.12对AI摘要的反垄断调查；
+      强制索引/数据共享是否反而降低竞品(及AI公司)复制谷歌的门槛、削弱护城河；
+      结论——对搜索收入与竞争格局的净影响与量级、时间线。
+    upgrade_reason: 判断/裁定型(影响研判)——命中升档条件③，升Opus
+
+execution:
+  batch_size: 2
+  items_per_agent: 1
+  output_dir: ./google-toll-antitrust-deepdive/results
+  mode: efficiency   # 两个item均命中升档规则→实际派发Opus

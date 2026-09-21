@@ -1,0 +1,39 @@
+topic: 谷歌搜索深挖 - 过桥费能否规模化 与 反垄断影响
+
+fields:
+  核心结论:
+    - name: core_conclusion
+      description: 针对该item的核心问题给出直接、明确的研判(先结论后依据)，含量级与时间线定性。
+      detail_level: 详细
+
+  关键数据与证据:
+    - name: key_data_and_evidence
+      description: 支撑结论的可量化数据、定价、收入量级、采用率、裁决要点、时间线，每条尽量标注出处与时间。
+      detail_level: 详细
+
+  支撑因素:
+    - name: drivers
+      description: 支持"能规模化"/"影响重大"的正向因素与证据。
+      detail_level: 详细
+
+  制约与反面因素:
+    - name: constraints_and_counterforces
+      description: 制约规模化/削弱影响的反面因素、竞品对冲、执行难度、谷歌的规避空间。
+      detail_level: 详细
+
+  量级与时间线判断:
+    - name: magnitude_and_timeline
+      description: 相对广告收入的量级判断(大/小/占比)、以及关键节点的时间线预期(何时兑现/生效)。
+      detail_level: 详细
+
+  争议与不确定性:
+    - name: controversies_and_uncertainties
+      description: 口径分歧、上诉/立法不确定性、尚未验证之处、多空观点。
+      detail_level: 简要
+
+  信息来源:
+    - name: sources
+      description: 关键来源，markdown链接[标题](url)，优先一手(财报/法院文件/官方文档)与权威媒体/投行研报，至少8条。
+      detail_level: 详细
+
+uncertain: []
