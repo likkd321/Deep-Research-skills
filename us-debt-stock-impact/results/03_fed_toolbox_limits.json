@@ -1,0 +1,93 @@
+{
+  "关键数据": [
+    "政策利率路径（斥力的主变量）：联邦基金目标区间 3.75%–4.00%（2026-09-16 FOMC 加息25bp，为2023年来首次加息，投票12-0全票通过，主席 Kevin Warsh）。此前2025年9/10/12连续三次降息把区间降至3.50%–3.75%，2026-09一举转向。加息触发链：美-伊朗（含以色列）冲突→能源价格飙升→通胀重新抬头（CPI同比3.4%、核心PCE约3.4%、总体PCE被上修至约3.7%）。来源：CNBC 2026-09-16 https://www.cnbc.com/2026/09/16/fed-rate-decision-september-2026.html ；Fed 2026-09-16 经济预测表 https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260916.htm",
+    "点阵图/SEP（2026-09-16）：联邦基金利率年终中位数预测上调至约4.10%（6月为3.80%），多数委员预计年内至少再加一次（目标区间或至4.00%–4.25%）；2027年18位委员中仅4位预计降息、其余14位落在4.00%–4.25%或4.25%–4.50%；长期中性利率中位数约3.25%。PCE通胀预测由2026年末3.7%回落至2027年末2.3%。来源：Fed 2026-09-16 projtable https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260916.htm ；Raisin 2026-09 点阵图解读 https://www.raisin.com/en-us/news/fed-decision-dot-plot-breakdown-september-2026/",
+    "缩表（QT）与资产负债表：QT2 于 2025-12-01 结束（2025-10 FOMC 宣布），累计从2022-06峰值约8.93万亿缩至约6.5–6.6万亿、合计缩表约2.2–2.4万亿（口径差异：RESUME基线约2.2万亿 vs 部分二手约2.4万亿到期滚出）。资产负债表规模：2026-02约6.63万亿、2026-07约6.7万亿（QT结束后经RMP重新温和扩张）。来源：SVB《The Fed ends QT》 https://www.svb.com/market-insights/us-treasuries/the-federal-reserve-ends-qt-key-market-liquidity-insights/ ；Wolf Street 2026-03 https://wolfstreet.com/2026/03/05/update-on-the-feds-balance-sheet-and-its-reserve-management-purchases/",
+    "储备管理购买（RMP，QT后的短端『技术性QE』）：2025-12-12起纽约联储公开市场操作台通过购买国库券（T-bills，必要时其他短端国债）扩表以维持准备金充裕；同时全额滚存到期国债、并将MBS本金回款再投资于T-bills。节奏：RMP约100亿美元/月 + MBS再投资约165亿美元/月 ≈ 约265亿/月新增T-bill需求（2026年中口径；另有源称到2026-04纳税日前一度约400亿/月后显著下调），2026全年约吸收5,400亿T-bills。来源：纽约联储 RMP 操作声明 251210a https://www.newyorkfed.org/markets/opolicy/operating_policy_251210a ；TFTC 2026 https://www.tftc.io/fed-reserve-management-purchases-t-bill-buying-2026",
+    "银行准备金（斥力『体液』/流动性缓冲）：2025-10-31 降至约2.8万亿美元，为4年多来最低（QT+大额国债发行共同抽干）；经RMP回补后至2026年中回升至约3.0–3.1万亿（自年初SOMA约买入2,500亿T-bills，其中约1,600亿为RMP、约900亿为MBS本金再投资）。2026-09-21当期精确印数未见新公开值，估约3.0万亿一线。来源：Kitco 2025-10-31 https://www.kitco.com/news/off-the-wire/2025-10-31/banks-tap-fed-standing-repo-facility-record-numbers-amid-month-end ；Wolf Street 2026-03 https://wolfstreet.com/2026/03/05/update-on-the-feds-balance-sheet-and-its-reserve-management-purchases/",
+    "常备回购便利（SRF）创纪录使用（回购市场压力实测）：2025-10-31 单日合计约503.5亿美元（跨『上午+下午』两场操作、三类抵押品），为2021-07设立以来最高；广为流传的『294亿』只是其中一部分（Snopes 核查澄清当日实际总额为503.5亿）。当日Fed同时卖出约500亿逆回购，净抽水仅约14.5亿——SRF放量≠净大放水。2025-12-31年末进一步刷新至约746亿（年末window dressing）。多类回购利率当日一度冲破4%区间上限。来源：Snopes 核查 https://www.snopes.com/fact-check/federal-reserve-injecting-money-banking-system/ ；Kitco 2025-10-31 https://www.kitco.com/news/off-the-wire/2025-10-31/banks-tap-fed-standing-repo-facility-record-numbers-amid-month-end ；WHTC/路透 2025-12-31 https://whtc.com/2025/12/31/banks-tap-record-liquidity-from-new-york-feds-standing-repo-facility/",
+    "贴现窗口一级信贷利率（最后贷款人价格）：2026-04约3.75%（对应当时3.50%–3.75%区间的上沿）；2026-09-16加息后升至4.00%（一级信贷利率定为目标区间上限）。SRF最低投标利率同样锚在区间上限（约4.00%），二者共同构成利率走廊『天花板』。来源：TradingEconomics（Fed数据）https://tradingeconomics.com/united-states/primary-credit-rate-percent-d-na-fed-data.html ；Fed 贴现窗口 https://www.federalreserve.gov/regreform/discount-window.htm",
+    "SRF额度与机制：2021-07正式设立，对合格对手方（一级交易商+纳入的银行）以国债/机构债/机构MBS为抵押提供隔夜回购；FOMC设总额上限5,000亿美元（主席可临时上调），触及后转全额分配（full allotment）。上午场（8:15–8:30 ET）额度5,000亿，下午场额度=5,000亿减上午已中标额。来源：纽约联储 SRF FAQ 251114 https://www.newyorkfed.org/markets/repo-agreement-ops-faq-251114 ；Fed 政策正常化 https://www.federalreserve.gov/monetarypolicy/policy-normalization.htm",
+    "独立性压力测试（法律层，Cook案）：2026-06-29 最高法院 Trump v. Cook 以5-4维持对理事Cook的初步禁令，确立联储理事『非因故不可解雇（for-cause）』受宪法保护、且须先给予通知与听证；『是否构成cause』受司法审查，非总统单方说了算。Roberts首席撰写多数意见（Sotomayor、Kagan、Kavanaugh、Jackson加入），Thomas/Alito/Gorsuch/Barrett异议。Cook继续留任。这是联储111年史上首位被『解雇』的理事引发的宪法级判决。来源：SCOTUS 判决 25A312 https://www.supremecourt.gov/opinions/25pdf/25a312_5468.pdf ；国会研究局 CRS LSB11449 https://www.congress.gov/crs-product/LSB11449 ；CNBC 2026-06-29 https://www.cnbc.com/2026/06/29/supreme-court-lisa-cook-trump-federal-reserve.html",
+    "独立性压力测试（人事层，Warsh就任）：Kevin Warsh 于2026-05-13以参议院54-45（现代最接近、史上最党派化的联储主席表决，仅民主党Fetterman倒戈支持）获确认，2026-05-22就任第17任主席接替Powell。市场原以为Warsh作为特朗普提名者会偏鸽，但其上任后于2026-09逆『廉价货币』偏好、以12-0全票加息——独立性的实证信号。来源：C-SPAN『54-45』 https://www.c-span.org/clip/us-senate/senate-confirms-kevin-warsh-as-fed-chair-54-45/5200274 ；CNBC 2026-05-13 https://www.cnbc.com/2026/05/13/kevin-warsh-wins-senate-confirmation-as-the-next-federal-reserve-chair.html ；CNN 2026-05-13 https://www.cnn.com/2026/05/13/economy/kevin-warsh-confirmation-trump-fed-chair",
+    "斥力硬上限（财政主导预警）：前财长/前联储主席耶伦于2026-01-04（费城 AEA/ASSA 年会panel）警告『财政主导（fiscal dominance）的前提条件正明显增强』，联储恐沦为『财政当局的融资臂膀』；背景为债务超38万亿、债务/GDP约120%、三十年内趋向150%，叠加行政当局对联储独立性的施压。财政主导=债务融资需求开始约束央行的抗通胀能力、调整改由货币购买力（通胀）而非增税/减支来完成。来源：Bloomberg 2026-01-04 https://www.bloomberg.com/news/articles/2026-01-04/yellen-warns-of-growing-fiscal-dominance-threat-to-us-economy ；Central Banking https://www.centralbanking.com/central-banks/financial-stability/7974726/yellen-warns-of-fiscal-dominance-at-the-fed ；Fortune 2026-01-05 https://fortune.com/2026/01/05/janet-yellen-warns-38-trillion-national-debt-fiscal-dominance-eric-leeper-heather-long/"
+  ],
+  "近期变化": [
+    "政策方向180度掉头（本维度最核心变化）：2025年三连降（9/10/12→3.50-3.75%）到2026-09-16三年来首次加息（→3.75-4.00%），且12-0全票、Trump提名主席Warsh主导——从『配合宽松』急转为『不惜逆政治偏好抗通胀』。这既证明斥力仍能主动施加（未被财政/政治绑架），也暴露了斥力的方向已被通胀约束反转：Fed不能再靠降息去减轻财政付息压力。来源：CNBC 2026-09-16 https://www.cnbc.com/2026/09/16/fed-rate-decision-september-2026.html",
+    "QT结束、转入RMP『隐性扩表』（2025-12）：缩表2.2-2.4万亿后于2025-12-01停止，2025-12-12起以购买T-bills扩表维持准备金充裕。Fed刻意不称其为QE、定性为『技术性储备管理』，但市场普遍视作『另一个名字的QE』——短端在扩表、长端仍在抛售，工具箱内部出现『短端放水、长端失控』的张力。来源：SVB https://www.svb.com/market-insights/us-treasuries/the-federal-reserve-ends-qt-key-market-liquidity-insights/ ；Fed 政策正常化 https://www.federalreserve.gov/monetarypolicy/policy-normalization.htm",
+    "回购市场压力显性化、SRF从『备而不用』变『常态动用』（2025 Q4）：2025-09—10 出现类2019-09的回购紧张，准备金跌至约2.8万亿（4年低）、SRF 2025-10-31创503.5亿纪录、2025-12-31再破746亿。这是斥力工具箱『管道端』首次被真刀真枪测试——SRF作为设计中的天花板工具成功封住回购利率尖峰、避免了2019式失控，但动用频率与规模的抬升本身就是准备金逼近『充裕下限』的警报。来源：Snopes https://www.snopes.com/fact-check/federal-reserve-injecting-money-banking-system/ ；WHTC/路透 2025-12-31 https://whtc.com/2025/12/31/banks-tap-record-liquidity-from-new-york-feds-standing-repo-facility/",
+    "独立性经历真实『极限拉扯』并大体守住（2026上半年）：Trump尝试以『上任前抵押贷款欺诈』指控解雇理事Cook（联储史上首次），最高法院2026-06-29 以5-4确立『非因故不可解雇+司法审查cause』的护栏；同期Warsh 54-45低票当选主席却随即加息。制度（法院护栏）+ 人（Trump系主席仍加息）双重实证：独立性此轮压力测试大体通过，但5-4的薄弱多数与54-45的党派化表决说明护栏并不稳固。来源：SCOTUS 25A312 https://www.supremecourt.gov/opinions/25pdf/25a312_5468.pdf ；Gibson Dunn https://www.gibsondunn.com/supreme-court-allows-federal-reserve-governor-to-remain-in-office/",
+    "『财政主导』从学术概念进入政策一线话语（2026-01起）：耶伦在AEA panel（同场有Eric Leeper、Heather Long等）明确警告财政主导前提在增强、Fed恐成『财政的融资臂膀』。这标志斥力的『硬上限』（通胀/美元信用）已被最高层公开定价为现实风险，而非教科书假想。来源：Central Banking https://www.centralbanking.com/central-banks/financial-stability/7974726/yellen-warns-of-fiscal-dominance-at-the-fed ；Fortune 2026-01-05 https://fortune.com/2026/01/05/janet-yellen-warns-38-trillion-national-debt-fiscal-dominance-eric-leeper-heather-long/",
+    "『短端锚住、长端失控』的分裂加深：政策利率3.75-4.00%把短端牢牢锚住，但10Y于2026-09突破约5.01%（盘中触5.04%，2007年来最高）、30Y约5.33%，期限溢价（ACM）升至约0.96%。斥力能控制它直接定价的短端，却越来越管不住由财政/供给/期限溢价驱动的长端——这是斥力『触及作用半径边界』的关键信号。来源：RESUME_STATE首轮交叉核对（FRED DGS10/DGS30、NY Fed ACM）"
+  ],
+  "核心机制": [
+    "斥力=货币政策工具箱如何抵抗『国债引力』：Fed通过①政策利率（FFR/IORB）设定资金价格、②走廊工具（ON RRP做地板、SRF+贴现窗口做天花板）锁住短端、③资产负债表（QE/QT/RMP）调节准备金总量与期限结构、④最后贷款人（贴现窗口/紧急授信13(3)）在恐慌时兜底流动性。这些工具能在『增长熄火』时仍托住资产价格与金融管道——因为它们不依赖经济增长本身，而依赖Fed的信用与印钞权（正如简并压不依赖核聚变）。",
+    "利率走廊与SRF/贴现窗口机制（管道端如何封尖峰）：地板=IORB与ON RRP（银行/货基不会以低于此利率放款）；天花板=SRF最低投标利率与贴现窗口一级信贷利率（均锚在区间上限约4.00%）——当回购利率想冲破上限时，交易商可用国债向SRF无限量（额度内全额分配）借钱，套利把利率压回上限内。2025-10/12 SRF放量正是该天花板被动用、成功封住回购尖峰的实证；贴现窗口则因『污名效应』使用受限，SRF设计上正是为绕开污名、常态化提供隐夜流动性。",
+    "QT→RMP的机制转换（准备金『充裕下限』约束）：QT通过到期不续做抽走准备金，直到准备金从『过剩』逼近『充裕』下沿——信号即回购利率对IORB的利差走阔、SRF动用上升。触及该下限后Fed必须停QT并转RMP（买短端）把准备金补回充裕区。这界定了斥力『抽水』的下边界：Fed不能无限缩表，否则管道断裂（2019-09教训）。",
+    "斥力的『硬上限』=通胀+美元信用（财政主导的临界）：Fed若想用降息/买债去直接减轻财政付息负担，代价是通胀与美元贬值。当债务规模使『维持低利率以压低付息』的诱惑压倒『加息以控通胀』时，即进入财政主导——货币政策被迫服从财政需要，调整通过货币购买力（通胀税）完成。2026-09被迫加息（而非顺势降息去救财政）恰恰证明该上限仍在约束Fed、且方向仍是抗通胀优先——但这也意味着Fed已无空间用宽松去缓解引力。",
+    "独立性=斥力能否持续施加的制度前提：斥力有效的前提是Fed能不顾政治压力做『该做但不受欢迎』的事（如逆周期加息）。制度护栏：理事14年错任期、非因故不可解雇（Cook案5-4确立）、FOMC 12票含轮值地区联储行长（不易被行政快速俘获）。人事实证：Warsh虽为Trump提名却加息。若独立性被侵蚀（Fed被迫为财政融资/压低利率），等于斥力的『量子机制』被关闭——即使质量未超上限也会提前坍缩（对应Pauli不相容被破坏）。",
+    "非线性/自反馈：斥力用得越猛（利率越高），国债引力（付息滚雪球）越强——加息抗通胀的同时恶化财政、抬高长端与期限溢价、又反过来收紧金融条件。这使斥力与引力并非独立，而是同源纠缠：短端加息压不住由财政担忧驱动的长端，形成『越抗越重』的张力，正是当前10Y破5%而政策利率仅4%的根源。"
+  ],
+  "隐喻映射": "本维度=抵抗国债引力坍缩的『量子简并压』本体（电子/中子简并压）。物理对应有两层，务必分清：（1）『增长熄火后仍能托住』——简并压来自Pauli不相容、与温度（核聚变=经济增长）无关，故白矮星/中子星在停止聚变后仍能被简并压撑住；对应Fed工具箱不依赖增长即可托住金融管道与资产价格（QT转RMP补准备金、SRF封回购尖峰、最后贷款人兜底），2026-09加息当日标普仅-0.45%次日+1.14%的V形快修复即『简并压仍有效』的读数。（2）『但有硬上限』——简并压有Chandrasekhar极限（白矮星≈1.4 M☉）/ TOV极限（中子星≈2.2–2.9 M☉），超过即失效、坍缩不可逆；对应Fed的通胀+美元信用上限（财政主导临界）：一旦债务迫使Fed为财政融资而放弃控通胀，简并压就『失效』，塌向中子星（恶性通胀/货币重置）乃至黑洞。独立性=简并压的『量子机制完好度』（Pauli不相容是否仍被强制执行）：Cook案5-4护栏+Warsh逆偏好加息=机制目前仍在强制执行，故未提前坍缩。独立看当前阶段：介于『红巨星晚期→早期白矮星』——聚变（增长）动能边际减弱、越来越靠简并压托底，简并压engaged且有效，但2026-09被迫加息说明质量已接近使支撑『吃力』的水平、硬上限（通胀/美元）已在地平线可见，尚未突破，远未到中子星/黑洞。",
+  "传导到股市": [
+    "①『Fed put』弱化 vs『管道put』仍在（本维度对股市最关键的二分）：Fed转为加息、点阵图偏鹰=不会再靠降息去救股市（『Fed put』行权价被下移/弱化，贴现率通道对高久期成长股是持续逆风）；但SRF/RMP/贴现窗口/最后贷款人仍全力兜底市场功能=一旦出现回购/基差踩踏式流动性事件，Fed会立刻封堵（『管道put』完好）。含义：Fed不会为托估值而宽松，但会为防系统性断裂而兜底——股市尾部崩盘风险被压低，但『慢性de-rating』风险上升。",
+    "②贴现率/久期通道：政策利率3.75-4.00%且higher-for-longer，叠加长端10Y破5%，抬高股票贴现率，最伤长久期科技/成长/未盈利/软件/生科；对能源、价值、短久期高股息相对温和。注意力度分裂：真正压估值的是失控的长端（Fed管不住的部分），而非被锚住的短端。",
+    "③独立性/可信度通道（双向、易被忽视）：独立性守住（Warsh加息12-0、Cook案护栏）→抗通胀可信度维持→通胀预期与长端期限溢价被相对锚住→间接支撑股票估值与降低尾部；反之若独立性被侵蚀（财政主导被定价）→期限溢价飙升+美元走弱+通胀预期脱锚→股债汇三杀、成长股遭估值与ERP双杀。这是把『抽象独立性』翻译成股价的核心链条。",
+    "④流动性/准备金总量通道：准备金从2.8万亿低位经RMP回补至约3.0-3.1万亿=短端流动性边际转松，利好风险偏好与融资密集型板块（小盘、AI循环融资）；但若准备金再度逼近充裕下限（大额发行+TGA重建抽水），SRF放量与回购利率尖峰会经风险平价/VaR冲击传导到股市。RMP的『隐性扩表』本身是温和利多流动性。",
+    "⑤方向确认：本维度对股市净效应取决于『斥力是主动施加（加息抗通胀，短空长多——短期压估值但守住货币信用）』还是『斥力被迫失效（财政主导，短多长空——短期放水托估值但埋下货币贬值/汇率崩塌的大空头）』。当前处于前者：2026-09加息=选择保货币信用而非保估值，故股市短期承压但V形修复、系统性风险未被点燃。"
+  ],
+  "历史幅度与修复": [
+    "【独立性/政治干预类——最深最久】尼克松-伯恩斯（1971-72）：Fed为连任压低利率→酿成1970年代大通胀，1973-74标普熊市回撤约-48%、L型、名义修复耗时约7年余（含实际购买力更久）。沃尔克恢复独立性（1979-82）：以近20%利率压通胀，触发衰退但重建可信度，之后开启1982长牛。教训：独立性受损→深而久的坍缩；独立性重建虽先痛后可迎长牛。",
+    "【加息/紧缩驱动类——中等深度、修复取决于是否转向】2018Q4：Fed加息+QT『自动驾驶』，标普峰谷约-19.8%，Powell 2019-01转鸽后约4个月V/U型收复。2022利率冲击熊市：史上最快加息，标普-25.4%（2022-01→2022-10），因股债同跌无缓冲，直到2024-01才名义新高（约2年，U/L型）。含义：当前Fed加息路径最可比2018/2022，但有RMP托底流动性、跌幅或介于二者。",
+    "【流动性/管道类——最快但若Fed兜底则V型最快修复】2019-09回购危机：Fed重启回购操作+买T-bills，股市几无扰动（斥力管道工具直接奏效的正面模板，与当前SRF/RMP同源）。2020-03疫情+基差踩踏：国债一度失灵、标普-34%（史上最快熊市），Fed无限量QE后V型急修复。2023-03 SVB：Fed推出BTFP，区域银行冲击被控、标普快速修复。含义：只要斥力管道工具（SRF/RMP/紧急授信）及时出手，流动性类冲击多为V型浅修复——这正是当前工具箱的强项。",
+    "【财政主导/金融压抑类——名义抗跌但实际购买力受损】二战后金融压抑（1942-1951 Fed钉住收益率上限）：债券实际负回报，股票名义尚可但实际受通胀侵蚀；新兴市场财政主导（土耳其/阿根廷）：股指名义暴涨、以美元计暴跌、货币崩塌。含义：若美国滑向财政主导，美股名义或不崩甚至上涨，但以真实购买力/黄金/外币计将是隐性大熊市——这是本维度『硬上限被突破』时最可能的股市形态（与前几类的名义回撤不同）。",
+    "【校准当前】斥力仍主动施加+管道工具完好→若『第一波』是加息/紧缩驱动，可比区间约-10%~-20%、数周至数月、有RMP托底偏V/U型；若叠加回购/基差踩踏，尾部可比2020-03但Fed兜底后V型快修复；真正的深坑是独立性失守→财政主导（对应1970年代式L型或名义抗跌/实际熊市），但此情形近期概率低（Cook案+Warsh加息已实证独立性）。2026-09至今标普仅约-1%温和回调+V形快修复=斥力余量仍在。"
+  ],
+  "触发条件与催化剂日历": [
+    "可监测领先指标（斥力『触限/失效』预警）：①通胀分项（能源vs核心）与油价——伊朗冲突能源传导是本轮加息主因，若核心PCE二次上行=被迫更鹰；②准备金水平（向充裕下限约3万亿逼近=流动性趋紧）+ SRF动用规模/频率（单日>500亿常态化=准备金稀缺）+ SOFR-IORB利差走阔；③长端10Y/30Y与期限溢价（ACM）——由财政/期限溢价驱动的『坏的』长端上行是斥力管不住的部分；④独立性信号：Cook案实体审理进展、Fed理事会空缺与Trump提名、Warsh言行、任何『要求Fed货币化/压低利率』的行政施压；⑤通胀预期脱锚（TIPS盈亏平衡）与美元（DXY）/黄金——财政主导被定价的市场指纹。",
+    "近期催化剂日历：FOMC 2026-10-27/28、2026-12-08/09（含SEP点阵图，验证『年内再加一次』）；政府拨款悬崖 2026-12-11（与12月FOMC同周，近期最密催化剂窗口，含关门风险扰动数据/发债）；2026-12-31年末回购压力窗（2025年末SRF曾破746亿，需盯准备金与SRF）；CPI/PCE月度（能源分项关键）；财政部季度再融资（约2026-11，长债供给与拍卖尾部）；债务上限约2027恢复（届时博弈或提前扰动）。",
+    "触发『斥力显著承压/失效』的组合条件：(a)通胀二次抬头迫使Fed持续加息至4.25-4.5%+且长端向5.5%冲=紧缩驱动型冲击加剧；或(b)准备金跌破充裕下限+SRF巨额动用+回购利率尖峰=管道端应激（快而暴力，但SRF/RMP设计上应能封住）；或(c)独立性事件（新的解雇尝试/Board被快速改组/公开要求货币化）→财政主导被定价=期限溢价飙升+美元/通胀预期脱锚（慢起点、破坏力最大）。三者中(c)最致命但近期概率最低。"
+  ],
+  "时点估计": "分层看：①『通胀约束已在binding』属近月已发生态——2026-09被迫加息即斥力方向被通胀反转的实证，属『温和第一波』的一部分；②『回购/管道端应激』属近月—1年内的尾部风险（年末与拨款悬崖窗口最集中），但SRF/RMP为其量身设计、大概率被封住；③『独立性被侵蚀→斥力失效/财政主导』属结构性中长期（1-3年及以上）——Cook案与Warsh加息使近期（6-12月）制度性崩塌概率偏低，但2028大选周期施压、Board人事更替、财政持续恶化会在24个月尺度上抬升该尾部。总体：斥力『触限的迹象』近月已现（被迫加息、长端失控），但『斥力失效』是慢变量、需1-3年以上发酵。",
+  "概率估计_分窗口": [
+    "6个月（至2027-03）：约10%–20%（此处风险特指『斥力工具触及极限或独立性被侵蚀导致实质失效』，非普通股市回撤）。依据：通胀约束虽已binding但工具仍全功能运转，独立性刚经实证（Cook案2026-06、Warsh 12-0加息）；主要近端风险是年末/拨款悬崖（12-11）的回购管道应激，但SRF/RMP专为此设计、大概率封住尖峰而非失效。故『失效』属低概率、非基准。",
+    "12个月（至2027-09）：约20%–35%。更多FOMC决议、可能的Fed理事会空缺与提名、财政持续恶化与长端/期限溢价压力累积，均抬升『斥力被长端与财政共同架空』的赔率；但制度独立性结构完好（14年错任期、非因故不可解雇），真正失效仍非主线。区间中枢约25%。",
+    "24个月（至2028-09）：约35%–55%。覆盖2028大选周期（对Fed施压高峰）、2027债务上限恢复、财政主导前提持续增强；若通胀因能源/去全球化而黏性、Fed既不能降息救财政又难压住长端，则『硬上限可见度』显著上升。但请注意：即便24个月，『斥力彻底失效/财政主导确立』仍属尾部而非基准——更可能是『约束越来越明显、余量越来越薄』而非『断崖式失效』。以上为主观研判（基于通胀约束已binding×长短端分裂×独立性护栏偏薄的结构脆弱），非既定事实；若通胀回落至目标或财政转向，概率整体下移。"
+  ],
+  "缓解因素": [
+    "制度独立性护栏被司法夯实：Cook案（2026-06-29，5-4）确立联储理事『非因故不可解雇+cause受司法审查』，叠加14年错任期、FOMC含轮值地区联储行长，行政难以快速俘获——独立性有硬制度底座。",
+    "独立性的行为实证：Trump提名的Warsh上任即以12-0全票加息、逆『廉价货币』偏好，证明可信度与独立性在实践中仍在运作，短期被迫货币化的概率低。",
+    "管道工具箱强大且已验证：SRF（5000亿额度、可上调、全额分配）成功封住2025 Q4回购尖峰，RMP已把准备金从2.8万亿低位回补至约3.0-3.1万亿，贴现窗口/最后贷款人随时可用——流动性类冲击几乎必被兜底（2019/2020/2023模板）。",
+    "美元储备货币地位与全球最深国债市场：为斥力提供结构性需求缓冲，使美国『财政主导机制』的约束远弱于新兴市场，赢得远比EM更长的调整时间与政策空间。",
+    "通胀主因是能源/外生冲击（伊朗）而非需求过热、核心仍相对温和（核心PCE约3.4%但核心CPI曾回落至约2.4%）：若地缘缓和、油价回落，通胀约束可松、Fed重获宽松空间，斥力上限被动上移。"
+  ],
+  "反方观点": [
+    "『独立性在守住而非失效』：Cook案胜诉、Warsh 12-0加息、Yellen也只说『前提在增强』而非『财政主导已到来』——把当前读成『斥力失效在即』是过度灾难化；实证方向恰恰相反（Fed在证明自己没被俘获）。",
+    "『工具箱远未耗尽』：SRF平滑吸收创纪录需求、RMP顺利回补准备金、无任何管道危机爆发，说明斥力弹药充足；把SRF放量读成『危机』是误读（Snopes已核查澄清净抽水仅约14.5亿、非大放水）。",
+    "『加息本身就是非财政主导的证据』：财政主导的定义是被迫压低利率给财政减负；而Fed在债务破40万亿、付息破1万亿时仍加息，是财政主导的反面。",
+    "『美国不是新兴市场』：深市场、储备货币、法治与美元惯性使财政主导传导机制不成立或极慢；『斥力有TOV硬上限』在理论正确，但对美国这颗『恒星』其有效质量上限远高于EM，短期不逼近。",
+    "『短端完全可控，只是长端在闹』：政策利率牢牢锚定，失控的是由市场定价的长端/期限溢价——这是市场定价问题而非Fed工具失效，Fed若愿意随时可用YCC/扩表干预（工具仍在，只是选择不用）。"
+  ],
+  "一句话结论与不确定性": "美联储的『斥力/简并压』本轮压力测试大体通过——独立性经Cook案（5-4护栏）与Warsh逆偏好12-0加息双重实证仍在运作，SRF/RMP/最后贷款人使管道工具在增长熄火后仍能托住金融系统（V形快修复即证），故简并压尚有效、远未到中子星/黑洞；但2026-09被迫加息（而非降息救财政）恰恰暴露了硬上限已在地平线可见：通胀+美元信用约束使Fed再无空间用宽松缓解国债引力，长端破5%又显示斥力管不住由财政/期限溢价驱动的部分——斥力有余量但边际递减、Chandrasekhar/TOV式上限已可见未突破。最大不确定性：①独立性能否扛住2028大选周期施压与未来Board人事更替（护栏仅5-4/54-45的薄弱多数）；②通胀是外生暂时（能源/伊朗）还是黏性到迫使higher-for-longer与财政可持续性正面相撞（这是财政主导的真正扳机）。",
+  "一手来源": [
+    "官方一手（部分在本会话被egress代理拦截，已用可达二手交叉核验，URL仍列供查证）：",
+    "Federal Reserve 2026-09-16 FOMC 经济预测/点阵图（SEP）: https://www.federalreserve.gov/monetarypolicy/fomcprojtabl20260916.htm",
+    "Federal Reserve 政策正常化原则与计划: https://www.federalreserve.gov/monetarypolicy/policy-normalization.htm",
+    "Federal Reserve 贴现窗口/最后贷款人: https://www.federalreserve.gov/regreform/discount-window.htm ；https://www.frbdiscountwindow.org/",
+    "纽约联储 储备管理购买（RMP）操作声明 251210a〔本会话EGRESS_BLOCKED〕: https://www.newyorkfed.org/markets/opolicy/operating_policy_251210a",
+    "纽约联储 常备回购便利（SRF）FAQ 251114〔本会话EGRESS_BLOCKED〕: https://www.newyorkfed.org/markets/repo-agreement-ops-faq-251114",
+    "FRED 常备回购操作规模 SRFTSYD〔本会话EGRESS_BLOCKED〕: https://fred.stlouisfed.org/series/SRFTSYD ；一级信贷利率 DPCREDIT: https://fred.stlouisfed.org/series/DPCREDIT",
+    "美国最高法院 判决 Trump v. Cook, No. 25A312（2026-06-29）: https://www.supremecourt.gov/opinions/25pdf/25a312_5468.pdf",
+    "国会研究局 CRS《Trump v. Cook and For-Cause Removal of Federal Reserve Governors》LSB11449: https://www.congress.gov/crs-product/LSB11449",
+    "专业二手/媒体（用于交叉核验被拦截的一手数字）：",
+    "CNBC 2026-09-16《Fed rate decision September 2026: Rates rise to 3.75%-4%》: https://www.cnbc.com/2026/09/16/fed-rate-decision-september-2026.html",
+    "Raisin 2026-09 点阵图解读: https://www.raisin.com/en-us/news/fed-decision-dot-plot-breakdown-september-2026/",
+    "SVB《The Federal Reserve ends QT: Key market liquidity insights》: https://www.svb.com/market-insights/us-treasuries/the-federal-reserve-ends-qt-key-market-liquidity-insights/",
+    "Wolf Street 2026-03-05《Update on the Fed's Balance Sheet and its RMP》: https://wolfstreet.com/2026/03/05/update-on-the-feds-balance-sheet-and-its-reserve-management-purchases/ ；TFTC 2026 RMP: https://www.tftc.io/fed-reserve-management-purchases-t-bill-buying-2026",
+    "Snopes 核查《Fed 294亿≠实际总额（503.5亿）》: https://www.snopes.com/fact-check/federal-reserve-injecting-money-banking-system/ ；Kitco 2025-10-31 SRF创纪录: https://www.kitco.com/news/off-the-wire/2025-10-31/banks-tap-fed-standing-repo-facility-record-numbers-amid-month-end ；WHTC/路透 2025-12-31 SRF 746亿: https://whtc.com/2025/12/31/banks-tap-record-liquidity-from-new-york-feds-standing-repo-facility/",
+    "C-SPAN《Senate Confirms Kevin Warsh as Fed Chair, 54-45》: https://www.c-span.org/clip/us-senate/senate-confirms-kevin-warsh-as-fed-chair-54-45/5200274 ；CNBC 2026-05-13: https://www.cnbc.com/2026/05/13/kevin-warsh-wins-senate-confirmation-as-the-next-federal-reserve-chair.html ；CNN 2026-05-13: https://www.cnn.com/2026/05/13/economy/kevin-warsh-confirmation-trump-fed-chair",
+    "Bloomberg 2026-01-04《Yellen Warns of Growing 'Fiscal Dominance' Threat》: https://www.bloomberg.com/news/articles/2026-01-04/yellen-warns-of-growing-fiscal-dominance-threat-to-us-economy ；Central Banking: https://www.centralbanking.com/central-banks/financial-stability/7974726/yellen-warns-of-fiscal-dominance-at-the-fed ；Fortune 2026-01-05: https://fortune.com/2026/01/05/janet-yellen-warns-38-trillion-national-debt-fiscal-dominance-eric-leeper-heather-long/",
+    "Gibson Dunn《Supreme Court Allows Federal Reserve Governor To Remain In Office》: https://www.gibsondunn.com/supreme-court-allows-federal-reserve-governor-to-remain-in-office/ ；Wikipedia Trump v. Cook（背景补充）: https://en.wikipedia.org/wiki/Trump_v._Cook"
+  ],
+  "uncertain": []
+}
