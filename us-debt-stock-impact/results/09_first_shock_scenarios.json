@@ -1,0 +1,89 @@
+{
+  "关键数据": [
+    "基准日期 2026-09-21。长端利率（所有情景的共同输入）：10Y约5.00%（2026-09-18，盘中触5.04%，2007年来最高）；30Y约5.33%（2026-09，2007年来最高）。来源：FRED DGS10 https://fred.stlouisfed.org/series/DGS10 ；FRED DGS30 https://fred.stlouisfed.org/series/DGS30",
+    "期限溢价（情景B核心）：ACM(纽约联储)10Y约0.96%（2026-09，2011-02来最高，一年前仅约0.43%）；Kim-Wright(FRED THREEFYTP10)约0.52%–0.76%（口径偏低）。来源：NY Fed ACM https://www.newyorkfed.org/research/data_indicators/term-premia-tabs ；FRED THREEFYTP10 https://fred.stlouisfed.org/series/THREEFYTP10",
+    "债市/股市波动率（情景D的最佳预警表）：MOVE指数（『债市VIX』）约80.64、近30日已实现波动约74.00（2026-09中旬）；VIX约14.81、近30日已实现约9.49。二者背离——MOVE走升、VIX回落，债市已在定价更多波动而股市仍偏安逸；两者均近10年均值附近。来源：StreetStats https://streetstats.finance/markets/volatility ；Charles Schwab『What's the MOVE Index』 https://www.schwab.com/learn/story/whats-move-index-and-why-it-might-matter",
+    "拍卖健康度（情景A/G核心实证）：2026-09-15 20年期国债拍卖bid-to-cover约2.57（低于近均2.65），间接投标人(外资代理)占比由62.9%骤降至52.5%（有记录以来最低），直接投标人升至30.7%（记录新高）、一级交易商获配16.9%，中标利率约5.420%。此前2026-03三场(2Y/5Y/7Y)亦走弱，CRFB专文警示。来源：TheVaultReport https://thevaultreport.com/treasury-auctions ；ZeroHedge『Terrible 20Y Auction…Lowest Foreign Demand On Record』 https://www.zerohedge.com/markets/terrible-20y-auction-prices-huge-tail-lowest-foreign-demand-record ；CRFB 2026-03『Weak Auctions Underscore Risks』 https://www.crfb.org/blogs/weak-auctions-underscore-risks-our-growing-debt-burden",
+    "货币政策（情景C核心）：联邦基金利率3.75%-4.00%（2026-09-16 FOMC时隔三年首次加息25bp，12-0全票，主席Warsh；触发是伊朗冲突→油价→CPI；点阵图16/18委员预计年内至少再加一次）；CPI(2026-08)同比3.4%、核心2.4%（2021-03来最低，通胀主要在能源分项，核心仍放缓）。来源：Federal Reserve https://www.federalreserve.gov/newsevents/calendar.htm ；本调研item 03/RESUME_STATE交叉核对",
+    "杠杆化管道规模（情景D核心，口径并列）：现金-期货基差交易约8300亿美元（2025-09，约2020-初峰值2倍）；利率互换价差交易(swap trade)约6310亿（2025-06）；对冲基金净回购借款约1.8万亿、总国债敞口约4万亿、典型杠杆20–100倍、价差仅5–15bp。来源：Fed FEDS Notes 2026-06-22 https://www.federalreserve.gov/econres/notes/feds-notes/decomposing-hedge-funds-u-s-treasury-exposures-20260622.html ；BIS Quarterly Review 2025-12 https://www.bis.org/publ/qtrpdf/r_qt2512y.htm",
+    "美元/外资（情景G核心）：DXY约100.27（2026-09-21，走强——『美元悖论』，财政忧虑未压垮美元，因Fed相对更鹰）；外国官方持有中国约6944亿（较2013峰值降约42%）、日本约1.22万亿（最大）、外国合计约8.5万亿（占市场化债务约28–30%）。来源：本调研item 04/08、RESUME_STATE",
+    "评级（情景F核心）：Moody's Aa1（2025-05降）/ S&P AA+（2026-06确认稳定）/ Fitch AA+（2026-08确认稳定，警告FY2026一般政府赤字7.4%为AA级最高）；三家均『已降完+展望稳定、无一负面观察』。来源：本调研item 05",
+    "债务上限（情景E核心）：经OBBBA(2025-07)上调5万亿至41.1万亿并推迟，X-date约2027；社保OASI信托基金耗尽约2032Q4、Medicare HI约2033Q2（内部时钟）。来源：本调研item 01/05",
+    "估值与缓冲：Shiller CAPE约40.6（2026-09，2000年来最高、约98.8百分位）；Damodaran隐含ERP 4.23%(2026-01)→4.45%(2026-07)未随CAPE走高而压缩、反升；标普盈利收益率低于10Y约1个百分点（2002来首见，缓冲极薄）。S&P 500约7,620–7,657（2026-09）；2026-09-16加息当日7,551.81(-0.45%)、次日+1.14%至7,637.76（V形快修复）。来源：multpl/Shiller https://www.multpl.com/shiller-pe ；Damodaran『Data Update 2 for 2026』 https://aswathdamodaran.substack.com/p/data-update-2-for-2026-a-testing",
+    "专业研判锚点（非事实，供校准）：Kalshi预测市场对『2027年美国衰退』定价约41%（2026-09，显著高于2026年）；Capital Economics(James Reilly)判定为『晚期泡沫』，预期S&P 2026年底约8,250、随后至2027年底暴跌约21%至6,500，并称10Y突破5%标志『紧货币新时代』。来源：Yahoo Finance『Wall Street Sees Recession Risk Fading in 2026, but 2027 Flashing Warning Signs』 https://finance.yahoo.com/economy/articles/wall-street-sees-recession-risk-141240798.html ；Fortune 2026-09-13 https://fortune.com/2026/09/13/stock-market-outlook-late-stage-bubble-crash-2027-treasury-yields-5-percent/"
+  ],
+  "近期变化": [
+    "本项最核心判断——『温和的第一波可能已在发生，但尚未系统化』：2026-09-16加息(2023来首次) + 10Y破5% + 30Y 5.33% + 股市仅约-1%温和回调且次日V形快修复，构成情景C(叠加B)的『温和版』已兑现；但迄今无≥10%系统性回撤、无管道踩踏、V形修复不断，说明货币/流动性『斥力』仍有余量、第一波尚未系统化。这是收官综合的中枢结论。",
+    "催化剂日历落定（2026-09核实）：FOMC 2026-10-27/28、2026-12-08/09（后者含点阵图SEP）；2026-11-03中期选举；2026-11-04财政部季度再融资公告（长债供给指引）；政府拨款悬崖2026-12-11（CR于2026-09-02签署、资金续至该日，与12月FOMC同周=近期最密催化剂窗口）；债务上限X-date约2027。来源：Federal Reserve日历 https://www.federalreserve.gov/newsevents/calendar.htm ；CRFB『Upcoming Congressional Fiscal Policy Deadlines』2026-09-10 https://www.crfb.org/blogs/upcoming-congressional-fiscal-policy-deadlines ；Bipartisan Policy Center https://bipartisanpolicy.org/article/the-2026-midterms-key-dates-and-events/",
+    "情景A的实证升级：2026-09-15 20年期拍卖间接投标人(外资代理)占比52.5%创记录新低、直接投标人30.7%创记录新高——外资退场、由本土直接投标与一级交易商被动承接，正是『需求罢工/买家迁移』的现场证据；使情景A/G从『理论尾部』升为『有实测信号的活跃风险』。来源：ZeroHedge / TheVaultReport（见关键数据）",
+    "情景D的结构脆弱被官方点名：BIS 2026-09季报指国债相对互换『异常便宜』、10Y互换价差深度为负→高杠杆swap trade更脆弱；Fed FEDS Notes(2026-06)首次系统拆解对冲基金总敞口约4万亿、并记录2025-04关税动荡中swap trade被动去杠杆约11%（$707bn→$631bn）作为管道踩踏的预演。来源：BIS QR 2026-09 https://www.bis.org/publications/qr-202609 ；Fed FEDS Notes 2026-06-22",
+    "波动率市场的分歧信号：MOVE(债市)走升而VIX(股市)回落（80.64 vs 14.81），历史上MOVE常领先VIX预警（2023-03、2022初、2026伊朗冲突初）；CNBC 2026-09-10报道投资者因中期选举与地缘风险加码对冲——债市已在为『第一波』定价，股市尚未。来源：CNBC『Investors seek hedges as midterms and geopolitical risks threaten market calm』 https://www.cnbc.com/2026/09/10/fear-gauge-vix-hedges-volatility-stocks.html",
+    "评级/债务上限近期概率被下调：三大机构均『已降完+稳定展望』、债务上限推迟至约2027→情景E、F的近月(6–12月)概率显著低于A/B/C/D；风险后移至2027再融资与上限窗口。来源：本调研item 05"
+  ],
+  "核心机制": [
+    "【情景树总论】第一波不是单一事件而是一棵情景树：A拍卖事故、B期限溢价飙升、C通胀反复迫使Fed续加、D基差/回购管道踩踏、E债务上限危机、F评级连锁降级、G美元融资压力/外资撤离、H财政主导确认。八者并非互斥——A常经B放大、C/H抬高长端又喂养B、B/A的收益率跳升是D的点火器、G与A/B共振。速度谱：D最快最暴力(数日)、A/B为急性(数日–数周)、C为渐进(数月)、G为慢–急混合、E/F为离散事件驱动、H为结构性慢变量。当前实测：温和版C+B已在发生但未系统化。",
+    "【情景A 拍卖事故/需求罢工】触发机制：某场关键付息债(20Y/30Y)拍卖尾部剧烈、bid-to-cover骤降、间接(外资)占比塌陷、一级交易商被动巨额承接→收益率瞬间跳升、引发跨市场risk-off。领先指标：bid-to-cover、间接/直接投标占比、tail(中标−市场利率)、交易商获配比例(2026-09-15 20Y已现记录低外资、记录高直投)。对美股冲击路径与幅度：单场坏拍卖多经情景B(期限溢价)传导，纯拍卖事故通常制造-3%~-8%的急跌与波动率跳升；若连续多场失败+叠加D，可放大至-10%~-15%。修复偏快(数日–数周)若财政部调整发行结构(增buyback/缩长债)或Fed安抚。",
+    "【情景B 期限溢价飙升(长端失控上行)】触发机制：期限溢价(ACM 0.96%)持续走高、10Y向5.25–5.5%冲，且由财政/供给/通胀不确定性(非增长)驱动的『坏收益率上行』。领先指标：ACM/THREEFYTP10斜率、30Y绝对水平与单周涨速(周涨>30–40bp常伴股市承压)、5s30s陡峭化、再融资规模上修。对美股冲击路径与幅度：经贴现率+ERP双通道系统性压估值，尤重长久期科技/半导体/软件/公用事业/REITs；渐进版-8%~-15%、失控版(10Y快破5.5%)可达-15%~-20%。这是最可能把温和第一波『系统化』的主通道。",
+    "【情景C 通胀反复迫使美联储继续加息（温和第一波，已在发生）】触发机制：CPI(3.4%，能源分项主导)黏性→Fed 2026-09已加息、点阵图预示年内或再加→贴现率抬升、宽松预期落空。领先指标：CPI/PCE(尤其能源与超级核心)、油价、12月点阵图SEP、Warsh表态、2Y收益率。对美股冲击路径与幅度：温和版(已发生)仅-1%~-5%回调+V形修复；若通胀二次上行迫使Fed加息路径明显上移，可深化至-10%~-15%(2018Q4式估值压缩)。这是当前已兑现但尚未系统化的那一波。",
+    "【情景D 基差交易/回购管道踩踏（快而暴力）】触发机制：收益率跳升/保证金上调/SLR或清算规则变动，迫使对冲基金对约8300亿基差+约6310亿swap trade(20–100倍杠杆、净回购约1.8万亿、总敞口约4万亿)强制去杠杆→被动抛售国债→收益率再跳→追缴螺旋。领先指标：MOVE跳升(当前80.64)、SOFR-EFFR利差、SRF使用量、swap spread异常(BIS 2026-09点名深负)、回购利率飙升。对美股冲击路径与幅度：经风险平价/VaR冲击、抵押品贬值与流动性收紧在数日内击穿股市，是唯一能数日内制造暴跌的通道——尾部可比2020-03(-34%、史上最快熊市)或2025-04(两日-10%『股债汇三杀』)。低概率、高冲击、极难预警。",
+    "【情景E 债务上限危机（近期概率低，2027才到期）】触发机制：债务上限恢复(X-date约2027)后两党僵局→非常规措施耗尽→技术性违约临界。领先指标：TGA余额、非常规措施剩余空间、1个月期与跨X-date票据的收益率『扭结(kink)』、CDS利差、CRFB的X-date估算。对美股冲击路径与幅度：2011式对峙(叠加降级)曾致标普约-17%、U形约5–6个月修复；纯上限博弈若最终解决多为-5%~-12%。近月概率很低，风险集中于2027。",
+    "【情景F 评级连锁降级（近期概率低）】触发机制：财政进一步恶化触发Moody's(Aa1)/S&P(AA+)/Fitch(AA+)之一再降或转负面。领先指标：赤字/GDP实测(Fitch警示FY2026达7.4%)、利息/收入比、机构展望语言。对美股冲击路径与幅度：单纯降级市场影响已钝化(2023 Fitch降级仅小幅)；2011标普降级之所以-17%是与债务上限共振。当前三家均稳定、无负面观察→近月概率很低，主要作为E的放大器而非独立点火源。",
+    "【情景G 美元融资压力/外资撤离】触发机制：外资(尤其官方)持续减持/拍卖缺席、跨货币基差走阔、离岸美元荒；极端版即储备管理者『需求罢工』。领先指标：拍卖间接投标占比(2026-09-15已录记录低52.5%)、TIC资本流、cross-currency basis、DXY与美债收益率是否『同向背离』(美元与美债同跌=避险属性受损)。对美股冲击路径与幅度：慢变量版为长端持续高企的结构性拖累；急性版=2025-04式『股债汇三杀』(两日-10%)。当前DXY约100.27走强构成强缓冲(美元悖论)，急性版短期概率受抑但非零。",
+    "【情景H 财政主导确认（慢变量、结构性）】触发机制：净利息(FY2026破1万亿)与r>g(CBO交叉点约FY2031)迫使货币政策实质从属于财政——Fed被迫容忍通胀/以购债压低长端/收益率曲线控制。领先指标：Fed独立性事件(Cook案已判5-4维持、Warsh逆偏好加息12-0=独立性尚存)、实际利率与通胀预期背离、期限溢价是否在Fed宽松时仍上行。对美股冲击路径与幅度：非离散暴跌而是结构性重定价——名义股价或因通胀『上涨』但实际购买力受损、估值中枢长期下移；是决定『距黑洞多远』的终极慢变量，当前仅部分显现、尚未确认。"
+  ],
+  "隐喻映射": "综合定位：美国当前处于『红巨星晚期 → 早期白矮星过渡』阶段——核聚变(经济内生增长/g)动能边际减弱，恒星越来越依赖量子简并压(货币/流动性斥力)托住包层而非靠聚变；但简并压仍然有效(每次星震后V形快修复即证)、硬上限(通胀失控/美元信用/TOV式财政主导)尚未逼近。第一波冲击=一次『星震/脉动』而非坍缩本身：情景C+B的温和版已是一次可观测星震(9月加息+10Y破5%+小幅回调)，但包层被简并压重新充起、未坍缩。距『黑洞』(斥力失效→财政主导确认H→通胀/货币危机→不可逆坍缩)仍有明确距离与缓冲，由内部时钟标定路径(r>g约FY2031、债务上限约2027、社保2032/医保2033)。理由：①斥力工具箱仍在且被实证有效(Warsh能逆偏好加息、Fed可SRF/购债兜底)；②ERP反升说明增长预期仍顶住估值、缓冲未耗尽；③评级/上限近期稳定。故本项综合判断：主序已过、红巨星晚期确立、正向白矮星过渡，远未到中子星/黑洞——但每一次脉动(尤其若叠加D或AI集中度共振)都在测试简并压余量。",
+  "传导到股市": [
+    "本项作为收官综合，把八情景折算为对美股的『第一波』净影响：方向偏空，但触发概率、速度、幅度各异(详见核心机制与概率估计)。总判断：温和第一波(C+B)已在发生、经贴现率通道渐进压估值(尤重长久期成长)，但尚未系统化；真正的系统性第一波(标普≥10%回撤)需要B失控、或D点火、或A连环失败+G外资退场共振——概率随窗口拉长而上升。",
+    "最快最烈=D(基差/回购踩踏)：经风险平价/VaR冲击与抵押品贬值数日内无差别下杀，高贝塔小盘(Russell 2000)、信贷敏感金融最受伤；尾部-25%~-34%。最连续=B/C(长端/加息):经久期效应压高PE长久期资产(科技/半导体/软件/未盈利成长/公用事业/REITs)，-8%~-20%。最放大=股债正相关(2026再度转正)+Mag7集中度(约33.9%)+AI循环融资(约7450亿)——把任一利率冲击乘数化，是把普通脉动放大为系统性第一波的关键共振点。",
+    "缓冲/反向：ERP反升(4.23%→4.45%)显示估值有增长预期支撑、非机械泡沫；DXY走强(100.27)使美元避险回流仍能在极端时压低收益率；V形快修复(2026-09-16次日+1.14%)证明斥力仍有余量。故基准情形是『渐进逆风+间歇脉动』，系统性暴跌是需要催化的尾部而非基线。"
+  ],
+  "历史幅度与修复": [
+    "按情景类型给可比标尺(区分利率驱动 vs 信用/财政/管道驱动)：利率/紧缩驱动(对应B/C)——2013 taper tantrum标普约-6%浅回撤、快修复；2018Q4约-19.8%、约215天收复(Powell转鸽后V/U形)；2022利率冲击熊市-25.4%、约2年才创新高(股债同跌无缓冲，故更深更久)；2023-08/10长端飙升约-10%、V/U形数月收复。",
+    "信用/财政/管道驱动(对应A/D/E/F/G)——2011美债降级+上限对峙约-17%、U形5–6个月；2020-03疫情+基差踩踏-34%(史上最快熊市)、Fed无限量QE后V形急修复；2025-04关税『解放日』两日约-10%『股债汇三杀』、V形至年中修复；2023 Fitch降级影响甚微。",
+    "校准当前第一波：若为温和C+B(基线)，-5%~-15%、数周至数月修复(有Fed兜底则V形)；若B失控或A连环+G共振，-15%~-20%；若D管道踩踏点火，尾部-25%~-34%、修复取决于Fed是否及时兜底。正相关时代(债券不再对冲)使同一冲击的股市痛感与修复时长均被放大——这是2022比2018更深更久的原因，也是本轮需警惕之处。"
+  ],
+  "触发条件与催化剂日历": [
+    "【确切催化剂日历（2026-09-21核实）】FOMC：2026-10-27/28（决议10-28 14:00 ET）、2026-12-08/09（含点阵图SEP，若继续加息=情景C『通胀反复』已系统化）；2027年首次约2027-01-26/27。中期选举：2026-11-03（众/参两院+30余州长，政治不确定性窗口）。财政部季度再融资：2026-11-04公告（长债供给指引，情景A/B的关键催化）。政府拨款悬崖：2026-12-11（2026-09-02签署的CR资金续至该日；与12月FOMC同周=近期最密催化剂窗口，情景A/H扰动源）。债务上限：X-date约2027（情景E，近月概率低但定位博弈或提前扰动）。来源：Federal Reserve日历 https://www.federalreserve.gov/newsevents/calendar.htm ；CRFB 2026-09-10 https://www.crfb.org/blogs/upcoming-congressional-fiscal-policy-deadlines ；Treasury季度再融资 https://home.treasury.gov/policy-issues/financing-the-government/quarterly-refunding",
+    "【高频数据发布（月度）】CPI/PCE（能源与超级核心是情景C关键，逐月）；月度长债拍卖(20Y/30Y，情景A实测窗口，2026-09-15 20Y已现记录低外资)；企业AI资本开支指引与超大规模厂商季度财报(AI证伪风险窗口)；TIC资本流(情景G外资流向)。",
+    "【可监测领先指标（按情景）】A/G：bid-to-cover、间接/直接投标占比、tail、TIC；B：ACM/THREEFYTP10斜率、30Y单周涨速、5s30s；C：CPI/PCE、油价、点阵图、2Y；D：MOVE(当前80.64)、SOFR-EFFR、SRF使用量、swap spread深度(BIS点名深负)、回购利率；E：TGA、非常规措施空间、票据收益率扭结、CDS；F：赤字/GDP、机构展望语言；H：Fed独立性事件、实际利率-通胀预期背离。触发『系统性下行』的组合：(a)10Y由期限溢价驱动向5.25–5.5%冲；或(b)MOVE跳升+swap spread异常+回购飙升(D前兆)；或(c)A连环失败+外资退场(A×G)；任一叠加正相关+高集中环境即放大为指数级回撤。"
+  ],
+  "时点估计": "直接回答『第一波大概多久之后』：分两层。第一层——温和的第一波很可能已在发生（2026-09加息+10Y破5%+30Y 5.33%+股市约-1%小幅回调），即『已到、但尚未系统化』：斥力仍有余量、V形快修复不断、无≥10%回撤、无管道踩踏。第二层——系统性的第一波（标普≥10%可归因于债市传导的回撤）最可能落在未来6–24个月，其中12–24个月窗口(约2027年至2028-09)因催化剂密度最高(2026-12 FOMC点阵图+拨款悬崖、2027债务上限定位、再融资墙重定价、AI资本开支证伪窗口增多)而赔率过半。依据：估值极端(CAPE 40.6)×股债正相关×Mag7高集中×杠杆化管道(约1.4万亿+基差/swap、总敞口约4万亿)的结构脆弱，叠加拍卖外资占比record低与MOVE走升的实测预警。近月(6个月内)以温和渐进为主、系统性暴跌是需催化的尾部；一旦B失控/D点火/A×G共振，时点可急剧前移至数日–数周内兑现。",
+  "概率估计_分窗口": [
+    "【整体：第一波系统性冲击(标普≥10%可归因债市传导的回撤)】6个月(至2027-03)约25%–40%；12个月(至2027-09)约40%–55%；24个月(至2028-09)约55%–75%。依据：与本调研item 06(传导项)口径一致校准——估值极端×正相关放大器×高集中×杠杆化管道；斥力仍有余量、V形修复能力仍在使6月内非基准情形，但24月跨度覆盖多轮FOMC/财报/供给冲击与2027上限，累计发生更可能而非不可能。以下为主观研判(非既定事实)；若Fed及时兜底或AI盈利兑现，实际概率下移。",
+    "【情景A 拍卖事故/需求罢工】6月约8%–15%、12月约15%–25%、24月约25%–40%。依据：2026-09-15 20Y间接投标record低52.5%显示外资退场已在发生，单场坏拍卖概率中等偏升；但升级为『系统性第一波级别』通常需经B放大或A连环失败，故为放大器而非独立高概率点火源。研判。",
+    "【情景B 期限溢价飙升(长端失控上行)】6月约15%–25%、12月约25%–40%、24月约40%–55%。依据：ACM期限溢价已0.96%(2011来最高)、10Y已在5%，『向5.25–5.5%冲』的路径最短、最连续，是最可能把温和第一波系统化的主通道；概率随再融资墙与供给上修而升。研判。",
+    "【情景C 通胀反复迫使Fed续加(温和第一波已发生)】温和版：已基本兑现(概率≈已发生)。升级为系统性冲击：6月约10%–20%、12月约20%–30%、24月约30%–40%。依据：CPI 3.4%但核心已降至2.4%、通胀主要在能源分项→黏性上行迫使Fed大幅超预期加息的概率受核心放缓压制；12月点阵图SEP是关键验证点。研判。",
+    "【情景D 基差交易/回购管道踩踏(快而暴力)】6月约5%–12%、12月约10%–20%、24月约15%–30%。依据：约1.4万亿+基差/swap、总敞口约4万亿、20–100倍杠杆、BIS 2026-09点名swap spread深负=脆弱；但SEC中央清算与Fed SRF等2020-03后加固降低触发概率——低概率、高冲击、极难预警的经典尾部。研判。",
+    "【情景E 债务上限危机】6月约<3%、12月约3%–8%、24月约10%–20%。依据：X-date约2027、OBBBA已上调至41.1万亿→近月几无风险，24月窗口才开始覆盖2027定位博弈(2011式对峙可致-17%)。研判。",
+    "【情景F 评级连锁降级】6月约<3%、12月约5%–10%、24月约10%–20%。依据：三家均Aa1/AA+/AA+、展望稳定、无负面观察→需新的财政恶化才触发；且单纯降级市场影响已钝化(2023 Fitch微弱)，主要作E的放大器。研判。",
+    "【情景G 美元融资压力/外资撤离】6月约5%–12%、12月约10%–20%、24月约20%–35%。依据：拍卖间接投标record低、中国持仓较峰值降42%显示慢变量在推进；但DXY走强(100.27)『美元悖论』是强缓冲，急性『股债汇三杀』(2025-04式)短期受抑。研判。",
+    "【情景H 财政主导确认(慢变量结构性)】6月约<5%、12月约5%–10%、24月约10%–20%。依据：净利息破1万亿、r>g约FY2031，但Fed独立性尚存实证(Warsh逆偏好加息12-0、Cook案维持)→近月确认概率低；作为背景慢变量已部分显现、离散确认后移。研判。",
+    "【口径说明】各情景概率非互斥、不可简单相加(A常经B兑现、D由A/B点火、G与A/B共振)；整体系统性冲击概率已对重叠做综合校准。全部为基于结构脆弱性的主观研判，随Fed政策、通胀路径与AI盈利兑现动态修正。"
+  ],
+  "缓解因素": "①货币/流动性『简并压』仍有效且可加码：Fed可经SRF/常备回购/必要时重启购债兜底管道(2020-03先例)，历次冲击后V形快修复即证——直接压低D与A的尾部；②ERP反升(4.23%→4.45%)而非压缩、Mag7为高盈利净现金公司，估值有增长预期支撑、缓冲尚未耗尽；③美元避险地位仍在(DXY约100.27)、美债仍是全球最深流动市场，极端时避险回流压低收益率——抑制B/G；④评级/债务上限近期稳定(三家展望稳定、上限推迟至2027)→E/F近月近乎休眠；⑤核心通胀仍在放缓(2.4%)、增长虽放缓未衰退→限制C升级；⑥财政部工具(增buyback、缩长债/增bills发行、季度再融资微调)可在A/B苗头时主动降压；⑦2020-03后监管加固(SEC国债中央清算推进、SLR讨论)降低D的可触发性。",
+  "反方观点": "①迄今高利率(10Y约5%)与美股历史高位并存、CAPE约40仍未崩，证明『高债务/高利率→第一波暴跌』的线性叙事屡被证伪；②2026-09加息当日仅-0.45%、次日+1.14%收复，斥力(流动性)明显仍有余量，V形修复是常态而非例外；③ERP不降反升说明市场并未定价危机、增长预期(尤其AI)仍顶住估值；④评级、债务上限近期均稳定/推迟，E/F近月基本无虞；⑤基差/swap trade虽大但监管与Fed工具已针对2020-03漏洞加固，D的可控性提高；⑥历史上多数利率驱动型回撤(2013/2018Q4/2023)偏浅且数月修复，真正深熊需叠加衰退或信用事件，而当前核心通胀放缓、增长未衰退；⑦部分卖方(如Goldman)对2027仍看双位数上涨——第一波系统化并非市场共识基线，而是尾部研判。故『第一波已温和发生但尚未系统化、系统化是需催化的概率事件』这一表述本身即是对末日叙事的克制。",
+  "一句话结论与不确定性": "综合八情景：温和的第一波很可能已经发生(2026-09加息+10Y破5%+小幅回调)，但尚未系统化——斥力仍有余量、V形修复不断；真正的系统性第一波(标普≥10%回撤)最可能落在未来6–24个月(整体研判6月25–40%/12月40–55%/24月55–75%)，其中最短路径是情景B(期限溢价失控)、最快最烈是情景D(管道踩踏)、最活跃实测信号来自A×G(拍卖外资record低)；恒星阶段定位为『红巨星晚期→早期白矮星过渡』，主序已过但远未到黑洞。最大不确定性：①ERP这层缓冲何时因AI/盈利证伪而从『被增长顶住』翻转为『向均值剧烈回补』(择时极难)；②杠杆化管道(约4万亿敞口)是否在某次由A/B引发的收益率跳升中触发2020-03式D踩踏——低概率、高冲击、几乎无法预警；③概率均为结构脆弱性研判而非既定事实，Fed兜底能力与AI盈利兑现是最大的双向摆动项。",
+  "一手来源": [
+    "官方一手——Federal Reserve『Calendar』(FOMC 2026-10-27/28、2026-12-08/09含SEP)：https://www.federalreserve.gov/newsevents/calendar.htm",
+    "官方一手——U.S. Treasury『Quarterly Refunding』(2026-11-04再融资公告、发行结构与buyback)：https://home.treasury.gov/policy-issues/financing-the-government/quarterly-refunding",
+    "官方一手——FRED DGS10 / DGS30(10Y≈5.00%/30Y≈5.33%)：https://fred.stlouisfed.org/series/DGS10 ；https://fred.stlouisfed.org/series/DGS30",
+    "官方一手——NY Fed ACM期限溢价(10Y≈0.96%)：https://www.newyorkfed.org/research/data_indicators/term-premia-tabs ；FRED THREEFYTP10：https://fred.stlouisfed.org/series/THREEFYTP10",
+    "官方一手——Federal Reserve FEDS Notes『Decomposing Hedge Funds' U.S. Treasury Exposures』(2026-06-22，总敞口约4万亿、净回购约1.8万亿、swap trade去杠杆)：https://www.federalreserve.gov/econres/notes/feds-notes/decomposing-hedge-funds-u-s-treasury-exposures-20260622.html",
+    "官方一手——BIS Quarterly Review 2026-09(r_qt2609，国债相对互换变便宜/10Y互换价差深负/期限溢价上行)：https://www.bis.org/publications/qr-202609",
+    "官方一手——BIS Quarterly Review 2025-12(swap trade规模拆解)：https://www.bis.org/publ/qtrpdf/r_qt2512y.htm",
+    "专业二手——CRFB『Upcoming Congressional Fiscal Policy Deadlines』(2026-09-10，拨款悬崖2026-12-11、债务上限约2027)：https://www.crfb.org/blogs/upcoming-congressional-fiscal-policy-deadlines",
+    "专业二手——CRFB『Weak Auctions Underscore Risks of our Growing Debt Burden』(2026-03，拍卖走弱警示)：https://www.crfb.org/blogs/weak-auctions-underscore-risks-our-growing-debt-burden",
+    "媒体二手——ZeroHedge / TheVaultReport(2026-09-15 20Y拍卖：bid-to-cover 2.57、间接52.5%记录低、直接30.7%记录高、5.420%)：https://www.zerohedge.com/markets/terrible-20y-auction-prices-huge-tail-lowest-foreign-demand-record ；https://thevaultreport.com/treasury-auctions",
+    "专业二手——Charles Schwab『What's the MOVE Index』/ StreetStats(MOVE≈80.64、VIX≈14.81、二者背离)：https://www.schwab.com/learn/story/whats-move-index-and-why-it-might-matter ；https://streetstats.finance/markets/volatility",
+    "媒体二手——CNBC『Investors seek hedges as midterms and geopolitical risks threaten market calm』(2026-09-10，对冲需求上升)：https://www.cnbc.com/2026/09/10/fear-gauge-vix-hedges-volatility-stocks.html",
+    "媒体二手——Yahoo Finance『Wall Street Sees Recession Risk Fading in 2026, but 2027 Flashing Warning Signs』(Kalshi 2027衰退概率≈41%)：https://finance.yahoo.com/economy/articles/wall-street-sees-recession-risk-141240798.html",
+    "媒体二手——Fortune 2026-09-13『Stocks are in a late-stage bubble…crash 21%…Treasury yields above 5%』(Capital Economics研判：S&P 8,250→6,500)：https://fortune.com/2026/09/13/stock-market-outlook-late-stage-bubble-crash-2027-treasury-yields-5-percent/",
+    "专业二手——Bipartisan Policy Center『The 2026 Midterms: Key Dates and Events』(中期选举2026-11-03)：https://bipartisanpolicy.org/article/the-2026-midterms-key-dates-and-events/",
+    "专业二手——Aswath Damodaran『Data Update 2 for 2026』(隐含ERP 4.23%→4.45%)：https://aswathdamodaran.substack.com/p/data-update-2-for-2026-a-testing",
+    "本调研内部交叉——item 06『国债向美股传导机制』(>10%回撤整体概率校准、7通道)与item 01/03/04/05/08(债务/Fed/需求/评级/美元数据)：/home/user/Deep-Research-skills/us-debt-stock-impact/results/"
+  ],
+  "uncertain": [
+    "概率估计_分窗口",
+    "时点估计"
+  ]
+}
