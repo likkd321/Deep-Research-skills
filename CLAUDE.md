@@ -28,9 +28,12 @@ master（及任何会合并回 master 的分支）只包含工具本身：
 
 ## 4. 子 agent 模型
 
-- `research` / `research-deep` 派发的 web-search 子 agent 用 **sonnet**（检索+抽取任务性价比最优）。
-  网页/云端会话须在**派发时显式传 `model=sonnet`**（此类环境不读 `agents/web-search-agent.md` 的 model 字段）；本地 CLI 由该文件的 `model: sonnet` 自动控制。
-- 最终 `research-report` 的跨 item 综合与判断留在主线程用 **opus**。
+子 agent 模型由 `/research` 生成 outline 时选定的 `execution.mode` 决定（默认 `efficiency`）：
+
+- **`efficiency`（默认）**：deep 阶段子 agent 默认 **sonnet**（约 Opus 质量 90-95%、成本 ~0.4×）；仅当某 item 满足升档条件——一手来源稀疏 / 需从零散证据推断预测 / 字段本身要判断而非罗列——才**个别升 opus**（默认不升，避免退化成全 sonnet 或全 opus）。
+- **`performance`**：deep 阶段子 agent **一律 opus**。
+- **两种模式相同**：最终 `research-report` 的跨 item 综合始终用 **opus**（一趟、最吃质量，不降档）。
+- **派发**：网页/云端会话须在**派发时显式传 `model`**（此类环境不读 `agents/web-search-agent.md` 的 model 字段）；本地 CLI 由该文件的 `model` 提供默认、需升档的 item 派发时覆盖为 opus。
 - deep 阶段不要用 Haiku。
 
 ## 5. 定向补深优先复用已有 agent

@@ -24,9 +24,17 @@ Find `*/outline.yaml` file in current working directory, read items list, execut
 - Each agent handles items_per_agent items
 - Launch web-search-agent (background parallel, disable task output)
 
-**Model selection (important)**: Dispatch each web-search-agent subagent on the **sonnet** model. Breadth retrieval + fact extraction + field-filling is well-suited to Sonnet (~90-95% of Opus quality at ~1/5 the cost and faster); cross-item synthesis and judgment are handled by the main thread / `research-report` step on Opus, so downgrading subagents costs almost no final quality.
-- **Web/cloud sessions**: the executor MUST **explicitly pass model=sonnet** when dispatching subagents (such environments do NOT read the `model` field in `agents/web-search-agent.md`; the model is decided at dispatch time).
-- **Local CLI**: controlled automatically by the `model: sonnet` field in `agents/web-search-agent.md`; no extra action needed.
+**Model selection (driven by execution.mode, important)**: Read `execution.mode` from outline.yaml (treat missing as `efficiency`) and choose each web-search-agent subagent's model accordingly.
+
+- **`efficiency` (default)**: subagents **default to sonnet** (breadth retrieval + extraction + field-filling suits Sonnet — ~90-95% of Opus quality at ~0.4× the cost and faster).
+  Upgrade **only that individual item** to opus (not all of them) when it meets ANY of these **upgrade conditions**:
+  1. reliable primary sources are sparse (little authoritative material; must judge from scant evidence);
+  2. the item requires **inference or forecasting** from scattered/indirect evidence rather than direct extraction;
+  3. the item's own fields call for **judgment/assessment** (e.g. outlook calls, adjudicating disputes) rather than listing facts.
+  Default to NOT upgrading — most retrieval items are fine on sonnet; this keeps "auto-select" from degenerating into all-sonnet or all-opus.
+- **`performance`**: all subagents use **opus**.
+- **Same in both modes**: the final `research-report` cross-item synthesis and judgment **always uses opus** (a single pass, most quality-sensitive; never downgraded).
+- **Dispatch**: web/cloud sessions **MUST explicitly pass the model** when dispatching subagents (`model=sonnet` or `model=opus`; such environments do NOT read the `model` field in `agents/web-search-agent.md`); local CLI takes the default from that file's `model` field and overrides upgraded items to opus at dispatch.
 - Do not use Haiku for the deep phase: it is weaker at multi-source cross-checking, source-credibility judgment, and long-context extraction.
 
 **Parameter Retrieval**:

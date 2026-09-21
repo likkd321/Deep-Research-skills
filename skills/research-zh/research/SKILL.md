@@ -22,7 +22,7 @@ description: 对目标话题进行初步调研，生成调研outline。用于学
 - 字段框架是否满足需求？
 
 ### Step 2: Web Search补充
-使用AskUserQuestion询问时间范围（如：最近6个月、2024年至今、不限）。
+使用AskUserQuestion询问时间范围（如：最近6个月、2024年至今、不限），并同时询问**执行模式**（efficiency 效率模式=默认 / performance 性能模式，含义见Step 4的execution.mode）。
 
 **参数获取**：
 - `{topic}`: 用户输入的调研话题
@@ -120,6 +120,10 @@ prompt = f"""## 任务
   - batch_size: 并行agent数量（需AskUserQuestion确认）
   - items_per_agent: 每个agent调研项目数（需AskUserQuestion确认）
   - output_dir: 结果输出目录（默认./results）
+  - mode: 执行模式（需AskUserQuestion确认，默认 efficiency）
+    - `efficiency`（效率模式，默认）：deep阶段子agent默认Sonnet、仅个别item按升档条件升Opus；省钱够用，适合探索性/大多数研究
+    - `performance`（性能模式）：deep阶段子agent一律Opus；适合高价值、数据有争议、要对外发布的研究
+    - 两种模式下最终report综合都用Opus（见research-deep）
 
 **fields.yaml**（字段定义）：
 - 字段分类和定义

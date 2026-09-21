@@ -22,7 +22,7 @@ Output {step1_output}, use AskUserQuestion to confirm:
 - Does field framework meet requirements?
 
 ### Step 2: Web Search Supplement
-Use AskUserQuestion to ask for time range (e.g., last 6 months, since 2024, unlimited).
+Use AskUserQuestion to ask for time range (e.g., last 6 months, since 2024, unlimited), and at the same time ask for the **execution mode** (efficiency = default / performance; meaning defined in Step 4's execution.mode).
 
 **Parameter Retrieval**:
 - `{topic}`: User input research topic
@@ -120,6 +120,10 @@ Merge {step1_output}, {step2_output} and user's existing fields, generate two fi
   - batch_size: Number of parallel agents (confirm with AskUserQuestion)
   - items_per_agent: Items per agent (confirm with AskUserQuestion)
   - output_dir: Results output directory (default: ./results)
+  - mode: Execution mode (confirm with AskUserQuestion, default efficiency)
+    - `efficiency` (default): deep-phase subagents default to Sonnet, only individual items upgrade to Opus per the upgrade rule; cheaper and sufficient for exploratory / most research
+    - `performance`: deep-phase subagents all use Opus; for high-value, contested-data, or publish-grade research
+    - In both modes the final report synthesis uses Opus (see research-deep)
 
 **fields.yaml** (field definitions):
 - Field categories and definitions

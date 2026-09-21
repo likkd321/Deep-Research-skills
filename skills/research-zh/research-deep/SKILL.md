@@ -24,10 +24,18 @@ allowed-tools: Bash, Read, Write, Glob, WebSearch, Task
 - 每个agent负责items_per_agent个项目
 - 启动web-search-agent（后台并行，禁用task output）
 
-**模型指定（重要）**：派发每个web-search-agent子agent时使用 **sonnet** 模型。检索+事实抽取+填字段是广度型任务，Sonnet性价比最优（约为Opus质量的90-95%，成本约1/5、更快）；跨item的综合与判断留给主线程/`research-report`阶段用Opus兜底，因此子agent降档几乎不损失最终质量。
-- **网页/云端会话**：执行者必须在派发子agent时**显式指定 model=sonnet**（此类环境不会读取 `agents/web-search-agent.md` 的 model 字段，模型由派发时决定）。
-- **本地CLI**：由 `agents/web-search-agent.md` 的 `model: sonnet` 字段自动控制，无需额外操作。
-- 不要用Haiku跑deep阶段：它对多源交叉、来源可信度判断、长上下文抽取偏弱，易抽浅漏口径。
+**模型指定（按 execution.mode 决定，重要）**：读取 outline.yaml 的 `execution.mode`（缺省视为 `efficiency`），据此决定每个 web-search-agent 子 agent 的模型。
+
+- **`efficiency`（效率模式，默认）**：子 agent **默认 sonnet**（检索+抽取+填字段是广度型任务，Sonnet 约为 Opus 质量的 90-95%、成本约 0.4×、更快）。
+  仅当某个 item 满足以下任一**升档条件**时，**该 item 单独升 opus**（而非全部升档）：
+  1. 可靠一手来源稀疏（几乎搜不到权威来源，需从少量证据判断）；
+  2. 需要从零散/间接证据做**推断或预测**，而非直接摘录；
+  3. 该 item 的字段本身要求**判断/评估**（如前景研判、争议裁定）而非罗列事实。
+  默认不升——多数检索型 item 用 sonnet 即可，避免"自选"退化成"全 sonnet"或"全 opus"。
+- **`performance`（性能模式）**：所有子 agent **一律 opus**。
+- **两种模式相同**：最终 `research-report` 的跨 item 综合与判断**始终用 opus**（只跑一趟、最吃质量，不降档）。
+- **派发方式**：网页/云端会话**必须在派发子 agent 时显式指定 model**（`model=sonnet` 或 `model=opus`；此类环境不读 `agents/web-search-agent.md` 的 model 字段）；本地 CLI 由该文件的 `model` 字段提供默认值，需要升档的 item 在派发时覆盖为 opus。
+- 不要用 Haiku 跑 deep 阶段：它对多源交叉、来源可信度判断、长上下文抽取偏弱，易抽浅漏口径。
 
 **参数获取**：
 - `{topic}`: outline.yaml中的topic字段
