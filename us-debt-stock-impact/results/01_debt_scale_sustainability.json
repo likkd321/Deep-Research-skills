@@ -1,0 +1,76 @@
+{
+  "关键数据": [
+    "联邦债务总额（gross / 总公共债务）：约40.09万亿美元（2026-09-16，Treasury Debt to the Penny；2026-09-02曾达40.117万亿，2026年8月前后首破40万亿）。来源：https://fiscaldata.treasury.gov/datasets/debt-to-the-penny/",
+    "公众持有债务（Debt Held by the Public）：约32.41万亿美元；政府内部持有（Intragovernmental）约7.69万亿美元（2026-09-16，两者之和=总债务40.09万亿）。来源：Treasury MSPD/Fiscal Data https://fiscaldata.treasury.gov/datasets/monthly-statement-public-debt/",
+    "gross债务/GDP：约122.6%（2026Q1，FRED GFDEGDQ188S『总公共债务占GDP比』=122.59%）。口径提示：此为『联邦总债务/GDP、按面值』。来源：https://fred.stlouisfed.org/series/GFDEGDQ188S",
+    "IMF一般政府总债务/GDP：约123.9%（2026年Article IV磋商口径；IMF WEO 2026年约126%）。口径差异：IMF『一般政府』=联邦+州+地方、并对部分内部持有做不同处理，故略高于FRED的联邦口径122.6%。来源：https://www.imf.org/en/news/articles/2026/04/01/pr-26102-usa-imf-executive-board-concludes-2026-article-iv-consult",
+    "公众持有债务/GDP：FY2025约99.8%（CBO口径约99%；2026年4月首次站上100%——公众债务31.27万亿 vs GDP 31.22万亿）。CBO 2026-2036展望预测：2026约101% → 2030约108%（超越1946年二战106%历史峰值）→ 2036约120%。来源：CBO Budget & Economic Outlook 2026-2036 https://www.cbo.gov/publication/61882",
+    "CBO长期预测（2026年长期预算展望，延伸至2056）：公众债务/GDP 2040约129% → 2056约175%（约168万亿美元），届时年度赤字达9.1%GDP。来源（一手CBO+二手CRFB/PGPF）：https://www.crfb.org/blogs/debt-rises-175-gdp-under-cbos-long-term-outlook ；https://www.pgpf.org/article/national-debt-projected-to-hit-175-gdp-interest-totals-99-trillion/",
+    "FY2025赤字：1.8万亿美元（=5.9%GDP，较FY2024的6.3%略降）；收入5.2万亿、支出7.0万亿；其中净利息约1.0万亿（史上首破1万亿）、基础赤字（primary deficit，剔除净利息）约0.8万亿。来源：CBO Monthly Budget Review Summary FY2025 https://www.cbo.gov/publication/61307",
+    "FY2026赤字：CBO 2026年2月基线原预测1.9万亿（5.8%GDP）；2026年8月因IEEPA关税被推翻而上修至约2.1万亿（+2000亿）。基础赤字FY2026约2.6%GDP（约0.8–0.9万亿），2036年前维持在2.1%–2.6%GDP区间。来源：CBO tariff update https://www.cbo.gov/publication/62210 ；Fortune 2026-08-10 https://fortune.com/2026/08/10/how-big-deficit-national-debt-tariffs-cbo/",
+    "赤字路径：CBO预测年度赤字2036年升至3.1万亿；2026-2035十年累计赤字缺口约24.4万亿。来源：CBO Budget & Economic Outlook 2026-2036 https://www.cbo.gov/publication/61882",
+    "内部时钟（法定日历坍缩点，2026年受托人报告，2026-06发布）：社保OASI信托基金约2032Q4耗尽（届时法定自动降给付至78%）；医保HI约2033Q2耗尽（降至89%）；合并OASDI约2034Q3耗尽；DI单独可支付至2100年。来源：SSA 2026 OASDI Trustees Report https://www.ssa.gov/oact/TR/2026/ ；https://www.ssa.gov/oact/trsum/"
+  ],
+  "近期变化": [
+    "OBBBA（『大而美』法案，2025-07-04签署）：将债务上限上调5万亿至约41.1万亿（把下一次上限危机推迟至约2027）；据CBO十年赤字因此增加约4.7万亿；并把社保OASI耗尽从2033提前至2032。来源：CRFB/CBO https://www.crfb.org/papers/cbos-february-2026-budget-and-economic-outlook",
+    "里程碑跨越：gross债务2026年8月前后首破40万亿；公众持有债务/GDP 2026年4月首次自1946年以来站上100%；净利息FY2025史上首破1万亿并超越国防开支。来源：Treasury Debt to the Penny；Fox Business https://www.foxbusiness.com/economy/us-national-debt-surpasses-size-economy-first-time-since-world-war-ii-data-shows",
+    "2026年受托人报告（2026-06）将OASI耗尽提前一个季度至2032Q4、HI提前一个季度至2033Q2，恶化趋势延续。来源：Bipartisan Policy Center https://bipartisanpolicy.org/explainer/2026-social-security-trustees-report-explained/ ；CNBC 2026-06-09 https://www.cnbc.com/2026/06/09/social-security-trustees-report-depletion-dates.html",
+    "意外财政恶化——2026-02-20最高法院6-3裁定（Learning Resources v. Trump，Roberts主笔）推翻IEEPA关税：认定IEEPA不授权总统征关税。后果：FY2026关税/海关收入较2月预测低约2500亿（约降60%），已退税约1000亿；FY2026赤字由1.9万亿上修至2.1万亿。收入损失估算存口径差：Tax Foundation约1.4万亿（10年静态收入）、CBO约2.0万亿（含利息、2026-2036）、CRFB约2.4万亿（含债务孳息）。来源：CBO https://www.cbo.gov/publication/62210 ；Tax Foundation https://taxfoundation.org/blog/ieepa-tariff-revenue-trump-debt-economy/ ；CRFB https://www.crfb.org/blogs/scotus-tariff-ruling-could-add-24-trillion-debt",
+    "CBO 2026年2月基线：OBBBA使赤字+4.7万亿、关税（当时尚未被推翻）-3.0万亿部分对冲；十年累计赤字较2025年1月预测多约1.4万亿——关税被推翻后此对冲大部分落空，趋势进一步转差。来源：CRFB https://www.crfb.org/papers/cbos-february-2026-budget-and-economic-outlook"
+  ],
+  "核心机制": [
+    "『质量=存量、坍缩趋势=流量轨迹』：债务存量（约40万亿/122.6%GDP）本身是引力质量；真正决定坍缩趋势的是流量——只要存在基础赤字（primary deficit，FY2026约2.6%GDP），即使不计利息，债务/GDP也会机械性上升，除非名义增长g持续高于实际融资利率r或财政收紧。",
+    "结构性驱动（CBO 2026-2056分解）：债务/GDP的全部上升可由三项解释——净利息+3.7%GDP、主要医疗项目+2.1%GDP、社保+0.8%GDP；即『人口老龄化→强制性支出刚性上升』叠加『利息滚雪球』。收入端（约18–19%GDP）远追不上支出端（升至约28%GDP）。来源：https://www.pgpf.org/article/national-debt-projected-to-hit-175-gdp-interest-totals-99-trillion/",
+    "内部时钟的特殊性：信托基金耗尽日（OASI 2032Q4、HI 2033Q2）是法律与精算共同确定的『硬日历节点』，非市场定价——到点若国会不立法，给付按法律自动削减至78%/89%。这与市场驱动的拍卖事故/评级下调不同：时点相对确定、但政治上高度可修复（1983年社保改革即先例）。",
+    "IEEPA裁决=收入端外生负向冲击：直接抬高基础赤字、加快轨迹，并迫使财政部增发以填补约2500亿关税缺口——把『存量问题』的边际恶化传导为『新增供给』压力。但其量级（十年约1.4–2.4万亿）相对于30年累计逾100万亿的赤字仍属次要，主因仍是养老医疗+利息。",
+    "自我强化临界：随债务存量与边际发行利率上升，净利息占收入比重攀升（利息滚雪球），使流量赤字内生扩大——这是判断『引力能否自稳』的关键非线性（详见付息成本/r减g维度）。"
+  ],
+  "隐喻映射": "本维度=『恒星质量』本身及其坍缩倾向（引力之源）。约40万亿/gross 122.6%GDP、且债务/GDP无稳定迹象、朝2056年175%攀升——这是一颗高质量恒星，核『燃料』（财政空间）持续耗尽，且内置一台确定倒计时的时钟（2032/2033信托基金悬崖）。独立看，本维度指向『红巨星阶段』：质量大、已过主序、核燃料有明确倒计时、坍缩倾向结构性开启且自我强化（利息滚雪球=越缩引力越强）；但『何时真正坍缩、最终成白矮星（靠增长+温和通胀软着陆）还是中子星/黑洞（靠货币化/违约硬着陆）』不由本维度决定，而取决于斥力（美联储/需求端）诸维度。",
+  "传导到股市": [
+    "债务规模是慢变量，几乎不产生逐日直接冲击；主要经四条通道传导：①贴现率/期限溢价通道——债务越高→期限溢价上行→长端利率上行→DCF估值下压，长久期成长/科技股最受损；②供给通道——IEEPA致赤字走阔→国债净增发上升→拍卖供给压力→收益率上行→压制估值；③财政可持续性疑虑→『债市义警』→长端抛售→风险溢价/估值压缩；④内部时钟通道——2032/2033悬崖=已知的未来财政冲击→养老金改革风险与挤出效应，医疗/医院板块与被挤出的可选消费承压。",
+    "方向：对估值偏负面。力度：单独看温和且渐进；只有当它触发期限溢价飙升或『买家罢工』（属其他维度）时才转为急性冲击。",
+    "强非线性/机制依赖：迄今债务高企与美股历史高位并存（CAPE约40），说明『引力』尚未压垮资产价格，简单『高债务→估值崩塌』的线性叙事不成立——只在利率被迫走高或流动性/管道断裂时才咬合。",
+    "板块差异：长久期科技/成长最敏感（贴现率通道）；价值、能源、短久期/高股息相对抗跌；金融喜陡峭曲线但惧信用事件；医疗/医院对2032/2033给付削减与改革敏感；国防在挤出叙事下中性偏负。"
+  ],
+  "历史幅度与修复": [
+    "纯『债务规模』驱动的回撤在历史上罕见且偏浅，多需一个离散催化剂点燃。可比案例：2011-07/08债务上限对峙+标普降级——标普500峰谷约-17%（7月至10月初），U型，约5–6个月收复；2023-08/10财政担忧+长端飙升——标普约-10%（8月至10月底），V/U型，至12月基本收复；2025-04『解放日』关税冲击——标普两日约-10%（后续深度更大），V型，至2025年中修复（但伴随罕见『股债汇三杀』）。",
+    "上述均由离散事件（降级/上限/关税）触发，而非债务存量本身；债务规模单独更像『慢性估值拖累』而非急跌导火索。",
+    "2032/2033养老医疗悬崖无干净历史类比（法定自动削减给付史无前例），一旦临近其定价方式高度不确定。",
+    "校准：单独债务规模型冲击→标普回撤个位数至约-10%、极端可比至-17%，V/U型、数周至数月修复，前提是美联储/结构性买盘吸收供给；尾部风险是它转化为拍卖/期限溢价危机（见其他维度）则更深更慢。",
+    "关键区分：利率驱动型回撤（估值压缩、修复较快）vs 信用/财政驱动型回撤（更深、修复更慢，且可能伴随美元与国债避险属性受损）。"
+  ],
+  "触发条件与催化剂日历": [
+    "可监测领先指标：债务/GDP轨迹（季度BEA GDP + Treasury债务）、基础赤字趋势、CBO基线修订、期限溢价（FRED THREEFYTP10）、拍卖bid-to-cover与tail、外国官方持有变动、利息/收入比。",
+    "近期催化剂日历：FY2026财政年度最终数（Treasury/CBO，约2026-10）；CBO每月预算回顾（月度）；政府拨款悬崖2026-12-11；财政部季度再融资公告（约2026-11、2027-02）；CBO更新版预算与经济展望（约2027年1–2月）；债务上限恢复约2027（OBBBA已上调至约41.1万亿）；2027年受托人报告（约2027年中，更新2032/2033日期）。",
+    "硬性内部时钟节点：OASI约2032Q4、HI约2033Q2、合并OASDI约2034Q3。",
+    "债务里程碑：跨越41万亿、42万亿关口；公众债务/GDP逼近并突破2030年二战106%历史纪录（CBO预测2030约108%）。"
+  ],
+  "时点估计": "作为独立『坍缩触发器』，债务规模属结构性/长期变量（数年至数十年）。近月（6–12月）：主要经IEEPA走阔的赤字→增发/供给压力渐进传导（部分已发生）。1–3年：2027年前后债务上限恢复是最近的离散节点，债务/GDP向2030年约108%攀升。结构性长期：2032/2033信托基金悬崖与2056年175%路径。总体上，本维度更多是『放大其他触发器』而非自身独立点火。",
+  "概率估计_分窗口": [
+    "6个月（至2027-03）：约5%–15%。债务规模单独很少造成急性股市事件；IEEPA恶化与2.1万亿FY2026赤字已被市场知悉与部分定价；急性通道主要来自其他维度（期限溢价/拍卖）。本维度此窗口以渐进供给压力为主。",
+    "12个月（至2027-09）：约10%–25%。增发累积、2027债务上限恢复的定位博弈提前、CBO更新展示更差轨迹，出现一次财政驱动重定价事件的概率上升。",
+    "24个月（至2028-09）：约20%–40%。债务上限恢复（约2027）、财政持续恶化、2032/2033悬崖显著性上升，累计出现财政驱动重定价的赔率抬高；但『债务规模本身直接导致崩盘』仍属低概率高冲击的尾部，多数传导仍走流量（利息）与斥力（美联储/需求）维度。依据：概率为主观研判，非既定事实。"
+  ],
+  "缓解因素": "储备货币溢价+全球最深最流动的美债市场（迄今已吸收约32万亿公众债务）；美元避险地位仍在（DXY约100）；美联储后盾（QT于2025-12结束，必要时可重启购债）；名义增长+温和通胀侵蚀实际债务负担（r vs g）；加权平均期限约5.8年放缓重定价；新增结构性买盘（稳定币/GENIUS Act、货币基金）；债务上限已上调至约41.1万亿把危机推至约2027；信托基金悬崖在立法上可修复（1983年社保改革先例，78%/89%属法定违约情景，国会几乎必然提前行动）。",
+  "反方观点": "①美国以本币举债，无外部违约风险，名义上总能偿付；②债务/GDP在二战后曾更高（1946约106%），最终靠增长+温和通胀而非违约化解；③日本债务/GDP逾200%仍正常运转，可见高债务未必即崩；④CAPE约40且美股历史高位——市场并未定价债务危机，说明『引力』尚未压垮价格；⑤Tax Foundation指出损失约1.4万亿IEEPA关税收入『不改变长期财政轨迹』，真正驱动是养老医疗+利息而非关税；⑥2032/2033悬崖尚有6–7年、政治上可修复，78%/89%是法定违约情景而非基准预期；⑦债务可持续性是连续谱而非悬崖（除法定信托基金日期外没有硬坍缩点）。",
+  "一句话结论与不确定性": "引力（债务）质量大且结构性自我强化——gross约40万亿、gross债务/GDP约122.6%、公众债务/GDP约100%并朝2056年175%攀升，且有OASI约2032Q4、HI约2033Q2的法定内部时钟悬崖——但『质量本身』不决定坍缩时点；近期恶化（IEEPA致FY2026赤字升至约2.1万亿）真实但相对养老医疗+利息驱动仍属边际。最大不确定性：①债务规模何时/是否转化为期限溢价/拍卖危机（机制依赖、难以择时）；②2032/2033前养老医疗改革的政治意愿与时点。",
+  "一手来源": [
+    "官方一手统计——U.S. Treasury Fiscal Data『Debt to the Penny』（gross债务日频）：https://fiscaldata.treasury.gov/datasets/debt-to-the-penny/",
+    "官方一手统计——U.S. Treasury『Monthly Statement of the Public Debt (MSPD)』（公众持有/内部持有分解）：https://fiscaldata.treasury.gov/datasets/monthly-statement-public-debt/",
+    "官方一手统计——FRED GFDEBTN（总公共债务，美元序列）：https://fred.stlouisfed.org/series/GFDEBTN",
+    "官方一手统计——FRED GFDEGDQ188S（总公共债务占GDP=122.59% Q1 2026）：https://fred.stlouisfed.org/series/GFDEGDQ188S",
+    "官方一手统计——CBO『The Budget and Economic Outlook: 2026 to 2036』（FY2026赤字1.9万亿、2036债务120%GDP）：https://www.cbo.gov/publication/61882",
+    "官方一手统计——CBO『Monthly Budget Review: Summary for FY2025』（1.8万亿赤字/净利息/基础赤字）：https://www.cbo.gov/publication/61307",
+    "官方一手统计——CBO『An Update About CBO's Projections of the Budgetary Effects of Tariffs』（IEEPA裁决后FY2026赤字上修至2.1万亿）：https://www.cbo.gov/publication/62210",
+    "官方一手统计——SSA『2026 OASDI Trustees Report』/受托人摘要（OASI 2032Q4、HI 2033Q2、OASDI 2034Q3）：https://www.ssa.gov/oact/TR/2026/ ；https://www.ssa.gov/oact/trsum/",
+    "官方一手统计——IMF『2026 Article IV Consultation, United States』（一般政府债务123.9%GDP）：https://www.imf.org/en/news/articles/2026/04/01/pr-26102-usa-imf-executive-board-concludes-2026-article-iv-consult",
+    "专业二手解读——CRFB『Debt Rises to 175% of GDP Under CBO's Long-Term Outlook』：https://www.crfb.org/blogs/debt-rises-175-gdp-under-cbos-long-term-outlook",
+    "专业二手解读——CRFB『SCOTUS Tariff Ruling Could Add $2.4 Trillion to the Debt』：https://www.crfb.org/blogs/scotus-tariff-ruling-could-add-24-trillion-debt",
+    "专业二手解读——Tax Foundation『Why Losing IEEPA Tariff Revenue Won't Change the Long-Term US Fiscal Trajectory』（约1.4万亿10年收入损失）：https://taxfoundation.org/blog/ieepa-tariff-revenue-trump-debt-economy/",
+    "专业二手解读——PGPF『National Debt Projected to Hit 175% GDP; Interest Totals $99 Trillion』：https://www.pgpf.org/article/national-debt-projected-to-hit-175-gdp-interest-totals-99-trillion/",
+    "专业二手解读——Bipartisan Policy Center『2026 Social Security Trustees Report, Explained』：https://bipartisanpolicy.org/explainer/2026-social-security-trustees-report-explained/",
+    "专业二手解读——Penn Wharton Budget Model『Supreme Court Tariff Ruling: IEEPA Revenue and Potential Refunds』（退税约1750亿，代理拦截未直连，仅引用其结论）：https://budgetmodel.wharton.upenn.edu/p/2026-02-20-supreme-court-tariff-ruling/",
+    "媒体二手——Fortune『Trump's $200 billion tariff hit swells budget deficit to $2.1 trillion for 2026』(2026-08-10)：https://fortune.com/2026/08/10/how-big-deficit-national-debt-tariffs-cbo/"
+  ],
+  "uncertain": []
+}
