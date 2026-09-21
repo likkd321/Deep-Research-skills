@@ -16,7 +16,7 @@ master（及任何会合并回 master 的分支）只包含工具本身：
 - **只 checkpoint 这三样**（断点续传的全部依据）：
   `<topic>/outline.yaml`、`<topic>/fields.yaml`、`<topic>/results/*.json`
 - 因为 master 的 `.gitignore` 挡了它们，在 research 分支上用 **`git add -f`** 强制入库。
-- **不要** checkpoint `report.md` / `report.html` / `generate_report.py` / `build_*.py` —— 这些是可再生物，由 `results/*.json` 经脚本重新生成即可。
+- **不要** checkpoint 报告文件(`*.html`、`report.md`)/ `generate_report.py` / `build_*.py` —— 这些是可再生物，由 `results/*.json` 经脚本重新生成即可（`.gitignore` 已按 `**/*.html` 等挡掉）。
 - 所有产物放在**统一的 `<topic-slug>/` 目录**下（`outline.yaml`、`fields.yaml`、`results/`），不要把文件散落在分支根目录。
 
 ## 3. 为什么这样（尤其网页/云端会话）
@@ -39,3 +39,11 @@ master（及任何会合并回 master 的分支）只包含工具本身：
 ## 5. 定向补深优先复用已有 agent
 
 某字段偏薄/单一来源/数字冲突时，优先**唤醒该 item 仍在会话中的子 agent**（带完整上下文继续）做定向补深，而不是全部 item 冷启动重跑。详见 `research-deep` 的 Step 6。
+
+## 6. 询问阶段与报告交付
+
+- **开跑前的询问**（`/research` Step 2，一次问清）：时间范围、执行模式(efficiency/performance)、**最大子agent并行数**(每批同时运行上限，写入 `execution.batch_size`，默认3)。
+- **报告一律 HTML**：最终报告只出**单文件自包含 HTML**（不再 markdown），**文件名用报告标题**的 slug（不要用 `report.html` 这种通用名）。
+- **背景白天/深色两种模式**：HTML 内置切换按钮 + 跟随系统 `prefers-color-scheme`，两套 CSS 变量配色，`body` 显式设背景。
+- **交付方式**：**直接给用户一键可下载的文件**（`SendUserFile`，`display="attach"`）。**不要用 Artifact / 网页部署功能发布报告。** 本地 CLI 则文件在 `{topic}/` 目录、告知路径即可。
+- 报告的综合与研判由主线程 **Opus** 完成（见第 4 节）。

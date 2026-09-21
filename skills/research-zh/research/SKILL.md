@@ -22,7 +22,10 @@ description: 对目标话题进行初步调研，生成调研outline。用于学
 - 字段框架是否满足需求？
 
 ### Step 2: Web Search补充
-使用AskUserQuestion询问时间范围（如：最近6个月、2024年至今、不限），并同时询问**执行模式**（efficiency 效率模式=默认 / performance 性能模式，含义见Step 4的execution.mode）。
+使用AskUserQuestion在正式开跑前一次问清三件事：
+1. **时间范围**（如：最近6个月、2024年至今、不限）；
+2. **执行模式**（efficiency 效率模式=默认 / performance 性能模式，含义见Step 4的execution.mode）；
+3. **最大子agent并行数**（即每批同时运行的子agent上限，写入 execution.batch_size，默认3；给几个常用档如 2/3/5 供选）。
 
 **参数获取**：
 - `{topic}`: 用户输入的调研话题

@@ -22,7 +22,10 @@ Output {step1_output}, use AskUserQuestion to confirm:
 - Does field framework meet requirements?
 
 ### Step 2: Web Search Supplement
-Use AskUserQuestion to ask for time range (e.g., last 6 months, since 2024, unlimited), and at the same time ask for the **execution mode** (efficiency = default / performance; meaning defined in Step 4's execution.mode).
+Before the run starts, use AskUserQuestion to settle three things in one pass:
+1. **Time range** (e.g., last 6 months, since 2024, unlimited);
+2. **Execution mode** (efficiency = default / performance; meaning defined in Step 4's execution.mode);
+3. **Max parallel subagents** (the cap on subagents running at once per batch, written to execution.batch_size, default 3; offer common options like 2/3/5).
 
 **Parameter Retrieval**:
 - `{topic}`: User input research topic

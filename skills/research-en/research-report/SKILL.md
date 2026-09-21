@@ -1,11 +1,11 @@
 ---
 name: research-report
 user-invocable: true
-description: Summarize deep research results into markdown report, cover all fields, skip uncertain values.
+description: Summarize deep research results into an HTML report, cover all fields, skip uncertain values, support light/dark mode, deliver as a downloadable file.
 allowed-tools: Read, Write, Glob, Bash, AskUserQuestion
 ---
 
-# Research Report - Summary Report
+# Research Report - Summary Report (HTML)
 
 ## Trigger
 `/research-report`
@@ -16,78 +16,36 @@ allowed-tools: Read, Write, Glob, Bash, AskUserQuestion
 Find `*/outline.yaml` in current working directory, read topic and output_dir config.
 
 ### Step 2: Scan Optional Summary Fields
-Read all JSON results, extract fields suitable for TOC display (numeric, short metrics), e.g.:
-- github_stars
-- google_scholar_cites
-- swe_bench_score
-- user_scale
-- valuation
-- release_date
+Read all JSON results, extract fields suitable for TOC display (numeric, short metrics). Use AskUserQuestion:
+- Which fields to display in the TOC besides item name? (dynamic options from fields actually present in the JSON)
 
-Use AskUserQuestion to ask user:
-- Which fields to display in TOC besides item name?
-- Provide dynamic options list (based on actual fields in JSON)
+### Step 3: Generate HTML Report (no longer markdown)
+Generate `generate_report.py` in `{topic}/`; it reads all JSON under output_dir + fields.yaml and produces a **single self-contained HTML report**.
 
-### Step 3: Generate Python Conversion Script
-Generate `generate_report.py` in `{topic}/` directory, script requirements:
-- Read all JSON from output_dir
-- Read fields.yaml to get field structure
-- Cover all field values from each JSON
-- Skip fields with values containing [uncertain]
-- Skip fields listed in uncertain array
-- Generate markdown report format: Table of contents (with anchor links + user-selected summary fields) + Detailed content (by field category)
-- Save to `{topic}/report.md`
+**Output & naming (hard rules)**:
+- The report is always **HTML**, emitted as **one self-contained `.html` file** (all CSS/JS inlined, no external dependencies).
+- **Name the file after the report title**: slugify outline.yaml's `topic` (or a user-specified title) (spaces→`-`, drop special chars), e.g. `google-moat-and-long-runway.html`. Do NOT use a generic name like `report.html`.
+- Synthesis/judgment is done by the **main thread on Opus** (`research-report` always runs on Opus; see CLAUDE.md).
 
-**TOC Format Requirements**:
-- Must include every item
-- Each item displays: number, name (anchor link), user-selected summary fields
-- Example: `1. [GitHub Copilot](#github-copilot) - Stars: 10k | Score: 85%`
+**HTML hard rules**:
+- **Light & dark background modes**: an in-page toggle button (top-right) plus following the system `prefers-color-scheme`; define both palettes with CSS variables (`:root` light + `[data-theme="dark"]`/media query dark), and set an explicit `background` on `body`. Persist the choice in `localStorage` (wrapped in try/catch).
+- Responsive: readable at phone width (~400px), ≥16px side gutter, no horizontal overflow.
+- Structure: title + table of contents (anchor links + user-selected summary fields, includes every item) + one section per item (organized by field category).
+- Readability: clear typographic hierarchy; tabular-nums for figures; simple inline-SVG charts (theme-aware colors) for cross-item conclusions/scores where useful.
 
-#### Script Technical Requirements (Must Follow)
+**TOC format**: must include every item; each shows number, name (anchor link), user-selected summary fields.
 
-**1. JSON Structure Compatibility**
-Support two JSON structures:
-- Flat structure: Fields directly at top level `{"name": "xxx", "release_date": "xxx"}`
-- Nested structure: Fields in category sub-dict `{"basic_info": {"name": "xxx"}, "technical_features": {...}}`
+#### Script Technical Requirements (must follow)
+**1. JSON structure compatibility**: support flat (fields at top level) and nested (fields in a category sub-dict). Lookup order: top level → category-mapping key → traverse nested dicts.
+**2. Category multi-language mapping**: fields.yaml category names and JSON keys may mix CN/EN — build a bidirectional mapping and adapt to this run's actual categories.
+**3. Complex value formatting**: list of dicts → one line each with ` | ` between kv; plain list → comma-join if short, line breaks if long; nested dict → recurse; long text (>100 chars) → break into lines/paragraphs; escape HTML special chars on output.
+**4. Extra fields**: fields present in JSON but not in fields.yaml go under "Other"; filter internal keys `_source_file`, `uncertain`, and nested top-level keys.
+**5. Uncertain skipping**: skip when the value contains `[uncertain]`, the field name is in the `uncertain` array, or the value is None/empty.
 
-Field lookup order: Top level -> category mapping key -> Traverse all nested dicts
-
-**2. Category Multi-language Mapping**
-fields.yaml category names and JSON keys can be any combination (CN-CN, CN-EN, EN-CN, EN-EN). Must establish bidirectional mapping:
-```python
-CATEGORY_MAPPING = {
-    "Basic Info": ["basic_info", "Basic Info"],
-    "Technical Features": ["technical_features", "technical_characteristics", "Technical Features"],
-    "Performance Metrics": ["performance_metrics", "performance", "Performance Metrics"],
-    "Milestone Significance": ["milestone_significance", "milestones", "Milestone Significance"],
-    "Business Info": ["business_info", "commercial_info", "Business Info"],
-    "Competition & Ecosystem": ["competition_ecosystem", "competition", "Competition & Ecosystem"],
-    "History": ["history", "History"],
-    "Market Positioning": ["market_positioning", "market", "Market Positioning"],
-}
-```
-
-**3. Complex Value Formatting**
-- list of dicts (e.g., key_events, funding_history): Format each dict as one line, separate kv with ` | `
-- Normal list: Short lists joined with comma, long lists displayed with line breaks
-- Nested dict: Recursive formatting, display with semicolon or line breaks
-- Long text strings (over 100 chars): Add line breaks `<br>` or use blockquote format for readability
-
-**4. Extra Fields Collection**
-Collect fields that exist in JSON but not defined in fields.yaml, put in "Other Info" category. Note to filter:
-- Internal fields: `_source_file`, `uncertain`
-- Nested structure top-level keys: `basic_info`, `technical_features` etc.
-- `uncertain` array: Display each field name on separate line, don't compress into one line
-
-**5. Uncertain Value Skipping**
-Skip conditions:
-- Field value contains `[uncertain]` string
-- Field name is in `uncertain` array
-- Field value is None or empty string
-
-### Step 4: Execute Script
-Run `python {topic}/generate_report.py`
+### Step 4: Build and Deliver
+1. Run `python {topic}/generate_report.py` to produce `{title-slug}.html`.
+2. **Delivery (hard rule)**: **hand the user a one-click downloadable file** — deliver the HTML via `SendUserFile` (`display="attach"` download card). **Do NOT use the Artifact / web-deploy feature to publish it.** In a local CLI the file already sits in `{topic}/`; state the path and let the user open it directly.
 
 ## Output
-- `{topic}/generate_report.py` - Conversion script
-- `{topic}/report.md` - Summary report
+- `{topic}/generate_report.py` - conversion script (regenerable, not committed)
+- `{topic}/{title-slug}.html` - summary report (HTML with light/dark toggle; regenerable, not committed)

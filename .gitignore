@@ -10,7 +10,7 @@
 **/fields.yaml
 **/results/
 **/report.md
-**/report.html
+**/*.html
 **/synthesis.json
 **/generate_report.py
 **/build_*.py
