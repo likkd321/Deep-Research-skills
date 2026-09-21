@@ -1,0 +1,78 @@
+{
+  "关键数据": [
+    "净利息支出（budget function 900，剔除政府内部持有的利息收入后的『净』口径）：FY2025约9700亿美元（$970.07B，govspending/Treasury MTS 汇总；CBO FY2025 Monthly Budget Review），已超越国防（约9000亿）、Medicaid、非国防可选支出，成为仅次于社保/医保的支出大项。来源：https://govspending.org/series/FYOINT/ ；CBO MBR FY2025 https://www.cbo.gov/system/files/2025-11/61307-MBR-FY25-final.pdf",
+    "毛利息（gross interest on the debt，含付给社保/联邦退休金等信托基金的政府内部利息）：FY2025约1.2万亿美元。口径差异：毛-净≈2300亿，其中付给信托基金的政府内部利息约1880亿、融资账户净额约430亿。即『毛利息』早已破万亿，『净利息』FY2025约9700亿尚未破万亿。来源：Treasury Fiscal Data『Interest Expense on the Debt Outstanding』https://fiscaldata.treasury.gov/datasets/interest-expense-debt-outstanding/ ；AAF https://www.americanactionforum.org/insight/sizing-up-interest-payments-on-the-national-debt/",
+    "FY2026净利息：CBO预测约1.0万亿美元、占GDP约3.3%——为『净利息』口径史上首破1万亿，并首度超越1991年3.2%GDP的历史峰值（创净利息/GDP有记录以来新高）。媒体口径：滚动12个月净利息约2026年8月前后越过1万亿关口。来源：CBO『Budget and Economic Outlook: 2026 to 2036』https://www.cbo.gov/publication/61882 ；PGPF https://www.pgpf.org/article/new-report-national-debt-outlook-gets-worse-as-interest-costs-exceed-1-trillion-annually/",
+    "CBO十年净利息路径：2026约1.0万亿（3.3%GDP）→2036约2.1万亿（4.6%GDP）；占联邦收入比重升至约18.5%；2026–2035累计净利息约16.2万亿美元、为增长最快的支出类别。来源：CBO 61882 ；CRFB『Net Interest Costs Will Double, Again, Over the Next Decade』https://www.crfb.org/blogs/net-interest-costs-will-double-again-over-next-decade",
+    "CBO长期（至2056）：净利息升至约6.9%GDP，成为债务/GDP冲向175%的最大单一驱动（净利息贡献约+3.7个百分点GDP）。来源：CBO长期预算展望；PGPF https://www.pgpf.org/article/national-debt-projected-to-hit-175-gdp-interest-totals-99-trillion/",
+    "存量平均利率 vs 边际发行利率（『重定价楔子』核心数据）：全部计息国债加权平均利率约3.447%（2026-07，Treasury Fiscal Data；较一年前+约0.10pp）、可流通国债约3.348%（2026-01）；而边际发行利率以2026-09-18收益率曲线计为——1Y 4.41%、2Y 4.75%、5Y 4.86%、10Y 5.01%、30Y 5.33%。存量均息约3.4% 显著低于边际约5%，楔子约150bp。来源：Treasury『Average Interest Rates on U.S. Treasury Securities』https://fiscaldata.treasury.gov/datasets/average-interest-rates-treasury-securities/ ；Fed H.15 https://www.federalreserve.gov/releases/h15/",
+    "10年期国债收益率：2026-09-18约5.01%（FOMC前一度触及5.04%，为2007年以来最高）；30年约5.33%。r（长端融资利率）≈5% 成为再融资墙的重定价基准。来源：Fed H.15 ；FRED DGS10 https://fred.stlouisfed.org/series/DGS10",
+    "加权平均期限 WAM（可流通国债）：约70个月≈5.8年（2025-12；2024-12为71个月、2020-12为65个月，先延长后小幅回落）。含义：约1/6存量每年到期重定价，缩短了缓冲、但也未极端短化。来源：Treasury TBAC 演示；PGPF『How Does the Treasury Issue Debt?』https://www.pgpf.org/article/how-does-the-treasury-issue-debt/",
+    "r 减 g 动态（CBO 2026基线，经CRFB）：名义融资利率 r 预计于约2031年首度超过名义增长 g，届时两者均约3.8%（实际约1.8%）；至2056年 r≈4.2%（实际2.2%）> g≈3.5%（实际1.5%），差约0.7pp，届时需约0.7%GDP的基础盈余才能稳定债务/GDP。来源：CRFB『CBO Projects Possible Debt Spiral, as R Exceeds G』https://www.crfb.org/blogs/cbo-projects-possible-debt-spiral-r-exceeds-g",
+    "再融资墙规模：未来12–18个月有数万亿美元低息（部分近0%发行）国债到期、按约5%重定价；有测算约8万亿国债滚动、年化利息可增约3000亿美元。来源：Investment Watch/行业测算（二手，标注）https://www.investmentwatchblog.com/the-u-s-debt-wall-is-here-8-trillion-gets-refinanced-the-bill-could-jump-300-billion-a-year/",
+    "挤出效应（CBO弹性）：联邦赤字每增1美元，私人投资约减少0.33美元；CBO预计因挤出，实际GDP增速2027年起降至约1.8%并延续至2036。来源：CBO；Bipartisan Policy Center『Crowding Out』https://bipartisanpolicy.org/explainer/crowding-out-how-rising-public-debt-squeezes-the-economy/"
+  ],
+  "近期变化": [
+    "里程碑：FY2025净利息约9700亿首超国防、成为第二大支出；FY2026净利息（净口径）史上首破1万亿、占GDP约3.3%——超越1991年3.2%GDP的历史峰值创净利息/GDP新高。滚动口径约2026-08越过万亿关口。来源：PGPF interest tracker https://www.pgpf.org/programs-and-projects/fiscal-policy/monthly-interest-tracker-national-debt/",
+    "利率环境急转：2026-09-16美联储时隔三年首次加息25bp（因伊朗冲突→油价→CPI 3.4%），叠加财政供给忧虑，10Y升破5%、触及2007年来最高（5.04%），30Y约5.33%——直接抬高再融资墙的重定价基准，加速『存量均息3.4%向边际5%收敛』。来源：Fed H.15；outline会话情景（2026-09-16加息）",
+    "CBO 2026-02《预算与经济展望2026–2036》正式把净利息列为增长最快支出，并给出2036年2.1万亿/4.6%GDP路径；CRFB 2026-03据CBO点名 r 将于约2031年超过 g、警示『可能的债务螺旋』——这是相对我知识截止后最关键的新框架转折（存量→流量的定价重心转移）。来源：CBO 61882；CRFB r>g https://www.crfb.org/blogs/cbo-projects-possible-debt-spiral-r-exceeds-g",
+    "学术前沿：NBER Working Paper 35459《From Stocks to Flows: Debt Service and Fiscal Sustainability》（Barry Eichengreen、Maxime Menuet、Gregory Donnat，2026-07；CEPR Discussion Paper 21723 / VoxEU专栏）提出——约束财政的不是负债『存量』而是偿债『流量』；用美国1800–2023两个世纪财政数据+发达国家长面板证明：基础盈余与偿债负担的关联更稳健，一旦纳入偿债流，债务/GDP比率的解释力显著下降；且当 r>g（利息-增长差为正）时财政响应显著加强。来源：NBER https://www.nber.org/papers/w35459 ；CEPR/VoxEU https://cepr.org/voxeu/columns/debt-service-and-fiscal-sustainability",
+    "再融资墙进入高峰：2026–2027大量疫情期近0%发行债到期、按约5%重定价，成为净利息FY2026→2036翻倍的主引擎；行业测算滚动约8万亿、年化利息可增约3000亿。来源：BondStats『The Refinancing Era』https://www.bondstats.org/20252026-the-refinancing-era/"
+  ],
+  "核心机制": [
+    "重定价楔子（存量均息 vs 边际利率）：全部计息国债加权平均利率约3.4%（历史低息存量的残留），远低于边际发行利率约5%（10Y）。每有一笔低息债到期滚动，利息成本便机械性抬升约150bp×该笔本金——即使债务存量不变，纯『再融资』本身就推高付息。这是把2020–2021近0%利率的『历史红利』逐年吐还的过程。",
+    "WAM≈5.8年=重定价速度阀门：加权平均期限约5.8年意味着每年约1/6的存量到期重定价。WAM较长（相对英国等）放缓了冲击、把一次性利率跳升摊成多年渐进上行；但也意味着即便利率见顶回落，均息仍将因滚动而继续上行数年（存在『管道内滞后』）。",
+    "r 减 g 螺旋（自我强化非线性）：债务动态近似 Δ(债务/GDP) ≈ (r−g)×(债务/GDP) − 基础盈余/GDP。当 r>g（CBO 约2031交叉）时，即便基础预算平衡，利息也会让债务/GDP自发上升；债务越高→利息越多→赤字越大→发债越多→期限溢价/利率再上行→利息再增……形成『越缩越强』的正反馈。CRFB明确称之为『可能的债务螺旋』。",
+    "从存量到流量（NBER 2026框架）：Eichengreen等证明触发财政收紧（基础盈余改善）的是偿债『流量』负担而非债务/GDP『存量』；含义是市场与政治对『利息/收入比升破某阈值（现约18.5%并升向20%+）』的反应，可能比对『债务/GDP破120%'更敏感、更早——把风险计价的锚从慢变量（存量）换成快变量（付息流）。",
+    "挤出效应放大螺旋：政府为付息而增发，与私人部门争夺储蓄，推高实际利率（CBO：赤字每增1美元、私人投资减0.33美元），压低资本形成与潜在增长 g——而 g 下行又使 r−g 差扩大，反过来加速螺旋。付息挤出与 r−g 螺旋互为因果。",
+    "与斥力维度的耦合：这台『滚雪球』能否被顶住，取决于斥力——美联储把 r 压回 g 之下（降息/重启QE、金融抑制），或增长/温和通胀抬高 g（通胀侵蚀实际债务）。若斥力工具受通胀与美元约束而失灵，付息流量便成为最难逆转的内生坍缩加速器。"
+  ],
+  "隐喻映射": "本维度=引力的『自我强化机制』本身，即坍缩一旦启动便自发加速的正反馈引信（越缩引力越强）。在恒星阶段上：存量（维度一）是红巨星的质量，本维度（付息流量与 r−g）则是红巨星核心走向简并/坍缩临界的『点火开关』。当前 r 仍略低于 g（交叉点约2031），故引信已布设、雪球在滚但尚未失控——独立看指向『红巨星晚期，正加速逼近坍缩临界点（类 Chandrasekhar/TOV 阈值）』：净利息/GDP已破1991纪录、存量均息3.4%正被边际5%不可逆地拉高、再融资墙持续供能。r>g 交叉（约2031）即为『不可逆点火』——此后若无斥力（美联储压 r 或增长抬 g）介入，正反馈自持，恒星滑向中子星/黑洞（货币化或名义违约的硬着陆）；反之若斥力及时介入，仍可停在白矮星（增长+温和通胀软着陆）。关键：本维度不决定坍缩的『是否』，但决定坍缩一旦启动的『不可逆性与速度』。",
+  "传导到股市": [
+    "①贴现率/期限溢价通道（主）：付息滚雪球→财政风险溢价与期限溢价上行→长端实际利率抬升→DCF分母走高，长久期成长/科技（AI资本开支叙事）估值最受压；这是当前 CAPE≈40 高位下最直接的脆弱点。方向偏负、力度取决于是否触发一次期限溢价跳升。",
+    "②供给/挤出通道：付息增大赤字→国债净增发上升→与私人融资争夺储蓄→实际利率上行（CBO：赤字每增1美元、私投减0.33美元）→企业资本开支与估值双压；对高杠杆、需外部融资的板块（地产、公用事业、非盈利成长）更不利。",
+    "③『债市义警』/财政信誉通道：若利息/收入比升破市场心理阈值（现约18.5%→20%+），NBER『流量框架』提示市场对偿付流的反应可能早于对存量的反应，长端可能出现无序抛售（类2023-08/10、2025-04），触发股债汇同向承压。",
+    "④相关性通道：利率驱动的抛售期，股债相关性转正（60/40失效、股债同跌），削弱传统对冲、放大组合层面回撤。",
+    "板块差异：长久期科技/成长最敏感（贴现率）；价值、能源、短久期高股息、必需消费相对抗跌；银行喜曲线陡峭（净息差）但惧信用与久期错配事件；高杠杆地产/公用事业受挤出与再融资成本双击；防务在『挤出—利息侵蚀可选支出』叙事下中性偏负。",
+    "净力度：付息本身是慢变量，逐日冲击小；真正的急性风险在于它随时可能把慢变量『流量恶化』引燃为一次期限溢价/财政风险溢价的离散重定价——那才是股市第一波冲击的候选导火索之一。"
+  ],
+  "历史幅度与修复": [
+    "付息/r−g 属慢变量，纯由『利息滚雪球』直接引发的股灾罕见，多需一次利率/期限溢价的离散跳升点火。最贴近的『利率重定价驱动』类比：2022年通胀+利率冲击熊市——标普500全年峰谷约−25%、长久期成长（纳指约−33%）重创，L/U型、修复约1年余（至2024年初创新高）；此为『r 快速抬升压估值』的最强近例。",
+    "2023-08/10长端飙升+财政担忧（含惠誉降级、再融资供给）——标普约−10%（8月至10月底），期限溢价驱动、V/U型、至12月基本收复；这是『财政/供给推期限溢价』小型预演。",
+    "2025-04『解放日』关税冲击——标普两日约−10%、30Y三日最大涨幅自1982、美元同步走弱=罕见『股债汇三杀』，V型至年中修复；示范了财政/供给冲击叠加长端失序时的尾部形态。",
+    "区分两类回撤：利率驱动型（估值压缩为主，斥力仍在，修复较快，数周至数月V/U型）vs 信用/财政驱动型（含美债避险属性受损、美元走弱，更深更慢、可达数季L型）。付息螺旋若最终引燃，更可能滑向后者。",
+    "校准：付息/r−g 单独看是『慢性估值拖累+间歇性期限溢价惊吓』——温和期个位数回撤；一旦引燃一次财政风险溢价重定价，可比至−10%~−15%（2023-08/10、2025-04量级），极端叠加利率冲击可比2022年−25%。修复速度取决于美联储是否能重新压低长端（斥力余量）。"
+  ],
+  "触发条件与催化剂日历": [
+    "可监测领先指标：①存量平均利率（Treasury月度均息，向边际5%收敛的速度）；②10Y期限溢价（FRED THREEFYTP10/ACM模型）——最能直接反映『财政供给+滚雪球』溢价；③利息/联邦收入比（现约18.5%，升破20%为NBER框架的关键阈值）；④拍卖健康度（bid-to-cover、tail、一级交易商获配）；⑤10Y/30Y绝对水平与实际利率（DFII10）；⑥r−g名义差是否转正的滚动估计。",
+    "近期催化剂日历：FOMC会议（2026-10-27/28、12-15/16——加息路径与点阵图直接决定 r）；财政部季度再融资公告 QRA（约2026-11、2027-02，决定长端 vs bills 发行组合与久期供给）；国债标售（每周bills、每月中长债，观察 tail）；CBO每月预算回顾（月度，追踪净利息实绩）；FY2026财政年度最终决算（Treasury/CBO，约2026-10）；CBO更新版《预算与经济展望》（约2027年1–2月，更新 r−g 交叉与利息路径）；CPI/PCE与油价（决定加息延续与否）。",
+    "结构性硬节点：再融资墙2026–2027高峰（低息债集中到期重定价）；r>g 名义交叉约2031（CBO/CRFB）——螺旋『不可逆点火』的日历坐标；利息/GDP向2036年4.6%、利息/收入向20%+攀升。"
+  ],
+  "时点估计": "结构性/长期变量，但已进入加速期。近月（6–12月）：再融资墙+加息使存量均息向5%边际收敛、净利息实绩逐月刷新纪录，属渐进恶化而非急性事件；急性风险来自它随时可能引燃一次期限溢价/财政风险溢价跳升（与需求端、传导维度耦合）。1–3年：再融资墙高峰、利息/收入逼近20%、市场按NBER『流量』逻辑提前对偿付流计价的概率上升。结构性长期：r>g 交叉约2031为螺旋自持的日历坐标，2036年利息2.1万亿/4.6%GDP。总体：本维度是最难逆转的内生加速器，但『失控』时点被 WAM≈5.8年的缓冲与斥力（美联储压 r）延后。",
+  "概率估计_分窗口": [
+    "6个月（至2027-03）——『利息螺旋失控/挤出加剧』触发显著风险：约15%–25%。渐进重定价与净利息刷新纪录近乎确定，但演变为一次由付息/财政溢价驱动的显著股市重定价（≥5%–10%回撤）仍需长端失序配合；加息环境+10Y破5%抬高了这一尾部。依据：慢变量+WAM缓冲，急性事件需催化。",
+    "12个月（至2027-09）：约20%–35%。再融资墙高峰、存量均息继续向5%收敛、利息/收入升向19%–20%，叠加2027财政/上限定位博弈，出现一次期限溢价/财政风险溢价重定价的赔率上升。依据：流量恶化累积+供给压力+NBER框架下市场对偿付流更敏感。",
+    "24个月（至2028-09）：约30%–45%。累计重定价显著、利息/收入逼近20%阈值、r−g 交叉（2031）进入市场视野，付息流量成为持续的估值拖累且间歇性引燃期限溢价惊吓的概率抬高；但『自持式失控螺旋』的完全兑现仍主要被 r>g 尚未交叉（2031）与美联储压 r 的能力所约束。以上为主观研判、非既定事实，且与需求端/传导维度高度耦合。"
+  ],
+  "缓解因素": "①WAM≈5.8年的期限缓冲：每年仅约1/6存量重定价，把利率冲击摊成多年渐进、留出调整窗口；②美联储斥力：可降息/重启QE/收益率曲线管理把 r 压回 g 之下（金融抑制），直接掐断螺旋（代价是通胀/美元信用）；③名义增长+温和通胀抬高 g、侵蚀实际债务负担（r−g 目前仍为负、交叉点在2031）；④储备货币溢价+全球最深流动性市场压低期限溢价、承接供给；⑤发行结构调节（curve正常化后可适度增发短端bills降低久期成本，或反之延长以锁定）；⑥政治可行的基础盈余改善（哪怕小幅）即可显著改变螺旋斜率——NBER框架恰指出政府对偿债流负担会加强响应。",
+  "反方观点": "①存量均息仅约3.4%，仍远低于1980–1990年代（常在6%–8%），当前『高利息』主因是债务基数大而非利率极端；②r−g 目前仍为负、交叉点在约2031，滚雪球尚未真正自持，仍有约5年窗口靠增长/改革化解；③美国以本币举债、可展期可货币化，无被迫外部违约风险，『失控』非机械必然；④WAM较长（5.8年）使重定价渐进、非悬崖式，给财政与货币政策充分反应时间；⑤利息/GDP 3.3%虽破1991纪录，但相较养老/医疗强制性支出的结构性上行仍是次要驱动，且历史上高利息负担（1991后）曾靠增长+降息化解；⑥净利息（9700亿）尚未破万亿，『毛利息破万亿』含大量付给自家信托基金的内部利息（约1880亿），并非全部真实外部现金流出；⑦日本长期 r 极低、债务/GDP逾200%仍维持，说明高存量未必导致付息失控——关键在央行是否愿意压低 r。",
+  "一句话结论与不确定性": "付息成本已进入自我强化的加速通道——净利息FY2026破1万亿/3.3%GDP创1991年来新高、CBO预测2036达2.1万亿/4.6%GDP，存量均息约3.4%正被边际约5%经再融资墙不可逆拉高，且 r 预计约2031超过 g 点燃『可能的债务螺旋』（CRFB），NBER 2026『存量→流量』框架进一步表明市场/政治对偿付流的反应会早于对存量——这是判断『引力能否自稳』的关键非线性、也是最难逆转的内生加速器。最大不确定性：①螺旋何时/是否从『慢性拖累』引燃为一次期限溢价/财政风险溢价的离散重定价（机制依赖、难以择时，且高度耦合需求端与美联储斥力）；②美联储在通胀/美元约束下把 r 压回 g 之下的意愿与能力（斥力余量）。",
+  "一手来源": [
+    "官方一手统计——U.S. Treasury Fiscal Data『Average Interest Rates on U.S. Treasury Securities』（存量加权平均利率约3.4%，重定价楔子核心）：https://fiscaldata.treasury.gov/datasets/average-interest-rates-treasury-securities/",
+    "官方一手统计——U.S. Treasury Fiscal Data『Interest Expense on the Debt Outstanding』（毛利息FY2025约1.2万亿）：https://fiscaldata.treasury.gov/datasets/interest-expense-debt-outstanding/",
+    "官方一手统计——CBO『The Budget and Economic Outlook: 2026 to 2036』（净利息2026约1.0万亿/3.3%GDP→2036约2.1万亿/4.6%GDP、18.5%收入）：https://www.cbo.gov/publication/61882",
+    "官方一手统计——CBO『Monthly Budget Review: Summary for FY2025』（FY2025净利息与基础赤字）：https://www.cbo.gov/system/files/2025-11/61307-MBR-FY25-final.pdf",
+    "官方一手统计——Federal Reserve H.15『Selected Interest Rates』（2026-09-18曲线：10Y约5.01%、30Y约5.33%）：https://www.federalreserve.gov/releases/h15/",
+    "官方一手统计——FRED DGS10『10-Year Treasury Constant Maturity』（边际长端 r）：https://fred.stlouisfed.org/series/DGS10",
+    "官方一手统计——FRED THREEFYTP10『10Y Term Premium (ACM)』（期限溢价，付息/供给溢价的直接观测）：https://fred.stlouisfed.org/series/THREEFYTP10",
+    "学术一手——NBER Working Paper 35459『From Stocks to Flows: Debt Service and Fiscal Sustainability』（Eichengreen/Menuet/Donnat，2026-07；美国1800–2023数据，偿债流量>存量触发财政收紧）：https://www.nber.org/papers/w35459",
+    "学术一手——CEPR Discussion Paper 21723 / VoxEU『Debt service and fiscal sustainability』（同论文的CEPR版与专栏解读）：https://cepr.org/voxeu/columns/debt-service-and-fiscal-sustainability",
+    "专业二手解读——CRFB『CBO Projects Possible Debt Spiral, as R Exceeds G』（r 约2031超 g、均约3.8%名义/1.8%实际、螺旋反馈机制）：https://www.crfb.org/blogs/cbo-projects-possible-debt-spiral-r-exceeds-g",
+    "专业二手解读——CRFB『Net Interest Costs Will Double, Again, Over the Next Decade』（净利息十年翻倍、累计约16.2万亿）：https://www.crfb.org/blogs/net-interest-costs-will-double-again-over-next-decade",
+    "专业二手解读——PGPF『National Debt Outlook Gets Worse as Interest Costs Exceed $1 Trillion Annually』与利息追踪器（净利息/GDP破1991峰值3.2%）：https://www.pgpf.org/article/new-report-national-debt-outlook-gets-worse-as-interest-costs-exceed-1-trillion-annually/ ；https://www.pgpf.org/programs-and-projects/fiscal-policy/monthly-interest-tracker-national-debt/",
+    "专业二手解读——Bipartisan Policy Center『Crowding Out: How Rising Public Debt Squeezes the Economy』（赤字每增1美元、私投减0.33美元）：https://bipartisanpolicy.org/explainer/crowding-out-how-rising-public-debt-squeezes-the-economy/",
+    "专业二手解读——AAF『Sizing Up Interest Payments on the National Debt』（毛/净利息口径分解、内部利息约1880亿）：https://www.americanactionforum.org/insight/sizing-up-interest-payments-on-the-national-debt/",
+    "行业二手（标注估算）——『$8 trillion refinanced, bill could jump $300B/year』（再融资墙规模，非官方，仅作量级参考）：https://www.investmentwatchblog.com/the-u-s-debt-wall-is-here-8-trillion-gets-refinanced-the-bill-could-jump-300-billion-a-year/"
+  ],
+  "uncertain": []
+}
