@@ -35,6 +35,7 @@ Find `*/outline.yaml` file in current working directory, read items list, execut
 - **`performance`**: all subagents use **opus**.
 - **Same in both modes**: the final `research-report` cross-item synthesis and judgment **always uses opus** (a single pass, most quality-sensitive; never downgraded).
 - **Dispatch**: web/cloud sessions **MUST explicitly pass the model** when dispatching subagents (`model=sonnet` or `model=opus`; such environments do NOT read the `model` field in `agents/web-search-agent.md`); local CLI takes the default from that file's `model` field and overrides upgraded items to opus at dispatch.
+- **Agent-type fallback**: the repo's SessionStart hook (`.claude/hooks/session-start.sh`) installs the skills/agent/modules when a web session starts, and the project-level `.claude/agents/web-search-agent.md` registers `web-search-agent` from the first turn, so a fallback is normally unnecessary. If the Agent tool still reports `web-search-agent` not found (e.g. the agent was installed mid-session), dispatch `general-purpose` instead and put one role line at the very **top** of the prompt: `(Role: you are web-search-agent. Before anything else, Read ~/.claude/agents/web-search-agent.md and follow its Research Methodology exactly, including loading the relevant ~/.claude/agents/web-search-modules/ module first.)` — the template body after it stays verbatim.
 - Do not use Haiku for the deep phase: it is weaker at multi-source cross-checking, source-credibility judgment, and long-context extraction.
 
 **Parameter Retrieval**:

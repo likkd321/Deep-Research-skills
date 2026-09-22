@@ -35,7 +35,7 @@ description: 对目标话题进行初步调研，生成调研outline。用于学
 
 **硬约束**：以下prompt必须严格复述，仅替换{xxx}中的变量，禁止改写结构或措辞。
 
-启动1个web-search-agent（后台），**Prompt模板**：
+启动1个web-search-agent（后台；网页/云端会话显式传 model，agent 类型兜底规则同 research-deep 的 Step 3），**Prompt模板**：
 ```python
 prompt = f"""## 任务
 调研话题: {topic}

@@ -5,7 +5,7 @@
 ## 1. master 只放工具，产物永不进 master
 
 master（及任何会合并回 master 的分支）只包含工具本身：
-`skills/`、`agents/`、`agents-codex/`、`scripts/`、`tests/`、`README*`、`LICENSE`、本文件。
+`skills/`、`agents/`、`agents-codex/`、`scripts/`、`tests/`、`.claude/`（云端会话启动钩子与项目级 agent 注册）、`README*`、`LICENSE`、本文件。
 
 **调研产物一律不进 master。** 原因：git 历史永久保留文件字节，"提交后再删"并不能瘦身，只会让工具仓无限膨胀。`.gitignore` 已挡掉产物文件，防止误提交。
 
@@ -47,3 +47,9 @@ master（及任何会合并回 master 的分支）只包含工具本身：
 - **背景白天/深色两种模式**：HTML 内置切换按钮 + 跟随系统 `prefers-color-scheme`，两套 CSS 变量配色，`body` 显式设背景。
 - **交付方式**：**直接给用户一键可下载的文件**（`SendUserFile`，`display="attach"`）。**不要用 Artifact / 网页部署功能发布报告。** 本地 CLI 则文件在 `{topic}/` 目录、告知路径即可。
 - 报告的综合与研判由主线程 **Opus** 完成（见第 4 节）。
+
+## 7. 云端会话开箱即用（SessionStart 钩子）
+
+- `.claude/settings.json` 注册了 `.claude/hooks/session-start.sh`：**仅在云端会话**（`CLAUDE_CODE_REMOTE=true`）启动时，把 `skills/research-zh/*` 装进 `~/.claude/skills/`、把 `agents/web-search-agent.md` 与 `agents/web-search-modules/` 装进 `~/.claude/agents/`，并确保 `pyyaml` 可用。幂等、同步执行。要英文版 skills 就在环境变量里设 `RESEARCH_SKILLS_LANG=en`。
+- 项目级 `.claude/agents/web-search-agent.md` 让 `web-search-agent` 子 agent 类型在会话开局即注册。**它必须与 `agents/web-search-agent.md` 保持逐字一致**——改 agent 时两处一起改（`tests/test_session_start_hook.sh` 会检查漂移）。
+- 若仍遇到 agent 类型未注册，按 `research-deep` Step 3 的"agent 类型兜底"用 `general-purpose` 派发。

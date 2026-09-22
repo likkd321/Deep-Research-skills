@@ -35,7 +35,7 @@ Before the run starts, use AskUserQuestion to settle three things in one pass:
 
 **Hard Constraint**: The following prompt must be strictly reproduced, only replacing variables in {xxx}, do not modify structure or wording.
 
-Launch 1 web-search-agent (background), **Prompt Template**:
+Launch 1 web-search-agent (background; web/cloud sessions pass the model explicitly, and the agent-type fallback in research-deep Step 3 applies), **Prompt Template**:
 ```python
 prompt = f"""## Task
 Research topic: {topic}

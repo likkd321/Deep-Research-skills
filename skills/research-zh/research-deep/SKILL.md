@@ -35,6 +35,7 @@ allowed-tools: Bash, Read, Write, Glob, WebSearch, Task
 - **`performance`（性能模式）**：所有子 agent **一律 opus**。
 - **两种模式相同**：最终 `research-report` 的跨 item 综合与判断**始终用 opus**（只跑一趟、最吃质量，不降档）。
 - **派发方式**：网页/云端会话**必须在派发子 agent 时显式指定 model**（`model=sonnet` 或 `model=opus`；此类环境不读 `agents/web-search-agent.md` 的 model 字段）；本地 CLI 由该文件的 `model` 字段提供默认值，需要升档的 item 在派发时覆盖为 opus。
+- **agent 类型兜底**：仓库的 SessionStart 钩子（`.claude/hooks/session-start.sh`）会在云端会话启动时自动安装 skills/agent/模块，项目级 `.claude/agents/web-search-agent.md` 让 `web-search-agent` 开局即注册，一般无需兜底。若 Agent 工具仍报 `web-search-agent` not found（例如会话中途才装 agent），改用 `general-purpose` 派发，并在 prompt **最前面**加一行角色设定：`（角色设定：你是 web-search-agent。开始前先 Read ~/.claude/agents/web-search-agent.md，严格按其 Research Methodology 执行，包括先读 ~/.claude/agents/web-search-modules/ 下相应模块。）`——其后的模板正文仍一字不改。
 - 不要用 Haiku 跑 deep 阶段：它对多源交叉、来源可信度判断、长上下文抽取偏弱，易抽浅漏口径。
 
 **参数获取**：

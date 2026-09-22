@@ -40,6 +40,8 @@ cp -r agents/web-search-modules ~/.claude/agents/
 pip install pyyaml
 ```
 
+> **Claude Code on the web**: no manual install needed. The repo's SessionStart hook (`.claude/hooks/session-start.sh`, registered in `.claude/settings.json`) installs the skills, `web-search-agent` and its modules into `~/.claude` whenever a web session starts (Chinese skills by default; set `RESEARCH_SKILLS_LANG=en` in the environment for English).
+
 ### OpenCode (default: gpt-5.4)
 ```bash
 # Skills (same as Claude Code)

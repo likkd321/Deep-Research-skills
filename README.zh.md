@@ -40,6 +40,8 @@ cp -r agents/web-search-modules ~/.claude/agents/
 pip install pyyaml
 ```
 
+> **Claude Code 网页/云端会话**：无需手动安装。仓库自带 SessionStart 钩子（`.claude/hooks/session-start.sh`，在 `.claude/settings.json` 注册），每次云端会话启动时自动把 skills、`web-search-agent` 及其模块装进 `~/.claude`（默认中文版；环境变量设 `RESEARCH_SKILLS_LANG=en` 则装英文版）。
+
 ### OpenCode (默认: gpt-5.4)
 ```bash
 # Skills (同 Claude Code)
