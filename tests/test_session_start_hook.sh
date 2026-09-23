@@ -28,7 +28,9 @@ for s in research research-add-items research-add-fields research-deep research-
     || fail "installed $s differs from skills/research-zh (default must be zh)"
 done
 [[ -f "$TMP_HOME/.claude/skills/research/validate_json.py" ]] || fail "validate_json.py not installed"
-[[ -f "$TMP_HOME/.claude/agents/web-search-agent.md" ]] || fail "web-search-agent.md not installed"
+for a in web-search-agent web-search-agent-deep; do
+  [[ -f "$TMP_HOME/.claude/agents/$a.md" ]] || fail "$a.md not installed"
+done
 for m in "$ROOT_DIR"/agents/web-search-modules/*.md; do
   [[ -f "$TMP_HOME/.claude/agents/web-search-modules/$(basename "$m")" ]] || fail "missing module $(basename "$m")"
 done
@@ -38,11 +40,20 @@ HOME="$TMP_HOME" CLAUDE_CODE_REMOTE=true CLAUDE_PROJECT_DIR="$ROOT_DIR" RESEARCH
 diff -q "$ROOT_DIR/skills/research-en/research/SKILL.md" "$TMP_HOME/.claude/skills/research/SKILL.md" >/dev/null \
   || fail "RESEARCH_SKILLS_LANG=en did not install research-en"
 
-# 4. The project-level agent (registers `web-search-agent` in web sessions) must not drift from agents/.
-diff -q "$ROOT_DIR/agents/web-search-agent.md" "$ROOT_DIR/.claude/agents/web-search-agent.md" >/dev/null \
-  || fail ".claude/agents/web-search-agent.md drifted from agents/web-search-agent.md — re-copy it"
+# 4. The project-level agents (register both agent types in web sessions) must not drift from agents/.
+for a in web-search-agent web-search-agent-deep; do
+  diff -q "$ROOT_DIR/agents/$a.md" "$ROOT_DIR/.claude/agents/$a.md" >/dev/null \
+    || fail ".claude/agents/$a.md drifted from agents/$a.md — re-copy it"
+done
 
-# 5. settings.json registers the hook.
+# 5. The two agent types differ only in frontmatter: same methodology body, effort medium vs high.
+body() { awk '/^---$/ && n < 2 { n++; next } n >= 2' "$1"; }
+[[ "$(body "$ROOT_DIR/agents/web-search-agent.md")" == "$(body "$ROOT_DIR/agents/web-search-agent-deep.md")" ]] \
+  || fail "web-search-agent-deep.md body drifted from web-search-agent.md — keep the methodology identical"
+grep -qx 'effort: medium' "$ROOT_DIR/agents/web-search-agent.md" || fail "web-search-agent must declare effort: medium"
+grep -qx 'effort: high' "$ROOT_DIR/agents/web-search-agent-deep.md" || fail "web-search-agent-deep must declare effort: high"
+
+# 6. settings.json registers the hook.
 python3 - "$ROOT_DIR/.claude/settings.json" <<'PY' || fail "settings.json does not register the SessionStart hook"
 import json, sys
 cfg = json.load(open(sys.argv[1]))

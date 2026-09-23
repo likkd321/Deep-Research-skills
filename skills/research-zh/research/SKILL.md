@@ -129,8 +129,8 @@ prompt = f"""## 任务
     - 三种模式下最终report综合都用Opus（见research-deep）
   - core_items: 重点核心item列表，每个单独一个子agent（模式1/2；需AskUserQuestion确认；模式3可留空）
   - items_per_agent: 非核心item每个子agent负责几个（模式3下适用于全部item；需AskUserQuestion确认）
-  - opus_items: 模式2下需派Opus的item（按research-deep Step 3的判定条件生成；模式1/3留空）
-  - agent_groups: 由以上各项生成的实际派发分组，每组 = 一个子agent，格式 `{model: opus|sonnet, items: [item名, ...]}`；同组模型取组内最高需求；同主题/同来源的item尽量分到一组；按优先级排序（核心组在前）
+  - judgment_items: 需要大量深度判断的item（按research-deep Step 3的判定条件生成，三种模式都要标）：派 `web-search-agent-deep`（effort high），模式2下同时用Opus；其余item派 `web-search-agent`（effort medium）
+  - agent_groups: 由以上各项生成的实际派发分组，每组 = 一个子agent，格式 `{agent: web-search-agent|web-search-agent-deep, model: opus|sonnet, items: [item名, ...]}`；同组的agent类型与模型都取组内最高需求；同主题/同来源的item尽量分到一组；按优先级排序（核心组在前）
   - output_dir: 结果输出目录（默认./results）
 
 **fields.yaml**（字段定义）：

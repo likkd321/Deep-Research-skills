@@ -35,7 +35,8 @@ master（及任何会合并回 master 的分支）只包含工具本身：
 - **模式3（全 sonnet）**：deep 阶段子 agent **一律 sonnet**，各子 agent 分配多个 item。
 - **多 item 的子 agent**：一组 item 共用一个子 agent，模型取组内最高需求（组内有任一 item 需 opus 则整组 opus），所以模式2 下需 opus 的 item 尽量单独成组；同主题、同来源的 item 尽量分到一组。
 - **三种模式相同**：最终 `research-report` 的跨 item 综合始终用 **opus**（一趟、最吃质量，不降档）。
-- **派发**：网页/云端会话须在**派发时显式传 `model`**（此类环境不读 `agents/web-search-agent.md` 的 model 字段）；本地 CLI 由该文件的 `model` 提供默认（sonnet），需 opus 的组派发时覆盖为 opus。
+- **agent 类型与努力程度**（按任务性质选，与模式无关）：信息检索类用 `web-search-agent`（`effort: medium`），需要大量深度判断的用 `web-search-agent-deep`（`effort: high`）；模型仍按模式在派发时显式传。派发工具只能临时覆盖 `model`、不能覆盖 `effort`，所以努力程度靠 agent 类型区分；多 item 组取组内最高需求。
+- **派发**：网页/云端会话须在**派发时显式传 `model`**（此类环境不读 agent 文件的 model 字段）；本地 CLI 由 agent 文件的 `model` 提供默认（`web-search-agent` 为 sonnet、`web-search-agent-deep` 为 opus），与模式不符时派发时覆盖。
 - deep 阶段不要用 Haiku。
 - 兼容旧 outline：`mode: efficiency` 按模式2 处理，`mode: performance` 按模式1 处理。
 
@@ -53,6 +54,6 @@ master（及任何会合并回 master 的分支）只包含工具本身：
 
 ## 7. 云端会话开箱即用（SessionStart 钩子）
 
-- `.claude/settings.json` 注册了 `.claude/hooks/session-start.sh`：**仅在云端会话**（`CLAUDE_CODE_REMOTE=true`）启动时，把 `skills/research-zh/*` 装进 `~/.claude/skills/`、把 `agents/web-search-agent.md` 与 `agents/web-search-modules/` 装进 `~/.claude/agents/`，并确保 `pyyaml` 可用。幂等、同步执行。要英文版 skills 就在环境变量里设 `RESEARCH_SKILLS_LANG=en`。
-- 项目级 `.claude/agents/web-search-agent.md` 让 `web-search-agent` 子 agent 类型在会话开局即注册。**它必须与 `agents/web-search-agent.md` 保持逐字一致**——改 agent 时两处一起改（`tests/test_session_start_hook.sh` 会检查漂移）。
+- `.claude/settings.json` 注册了 `.claude/hooks/session-start.sh`：**仅在云端会话**（`CLAUDE_CODE_REMOTE=true`）启动时，把 `skills/research-zh/*` 装进 `~/.claude/skills/`、把 `agents/web-search-agent.md`、`agents/web-search-agent-deep.md` 与 `agents/web-search-modules/` 装进 `~/.claude/agents/`，并确保 `pyyaml` 可用。幂等、同步执行。要英文版 skills 就在环境变量里设 `RESEARCH_SKILLS_LANG=en`。
+- 项目级 `.claude/agents/web-search-agent.md` 与 `.claude/agents/web-search-agent-deep.md` 让这两个子 agent 类型在会话开局即注册。**它们必须与 `agents/` 下同名文件保持逐字一致**，且两个 agent 的正文（方法论）也必须一致、只差 frontmatter（effort/model/description）——改 agent 时几处一起改（`tests/test_session_start_hook.sh` 会检查）。
 - 若仍遇到 agent 类型未注册，按 `research-deep` Step 3 的"agent 类型兜底"用 `general-purpose` 派发。

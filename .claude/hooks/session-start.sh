@@ -31,8 +31,10 @@ for d in "$SKILLS_SRC"/*/; do
   cp -r "$d" "$SKILLS_DIR/$name"
 done
 
-# web-search agent + 策略模块（agent 正文会从 ~/.claude/agents/web-search-modules/ 读取模块）
-cp "$REPO/agents/web-search-agent.md" "$AGENTS_DIR/web-search-agent.md"
+# web-search agent（检索型 effort medium / 深度判断型 effort high）+ 策略模块（agent 正文会从 ~/.claude/agents/web-search-modules/ 读取模块）
+for agent in web-search-agent web-search-agent-deep; do
+  cp "$REPO/agents/$agent.md" "$AGENTS_DIR/$agent.md"
+done
 rm -rf "$AGENTS_DIR/web-search-modules"
 cp -r "$REPO/agents/web-search-modules" "$AGENTS_DIR/web-search-modules"
 

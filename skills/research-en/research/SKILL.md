@@ -129,8 +129,8 @@ Merge {step1_output}, {step2_output} and user's existing fields, generate two fi
     - In all three modes the final report synthesis uses Opus (see research-deep)
   - core_items: Core items, each dispatched to its own subagent (Modes 1/2; confirm with AskUserQuestion; may be empty in Mode 3)
   - items_per_agent: How many non-core items each subagent takes (applies to all items in Mode 3; confirm with AskUserQuestion)
-  - opus_items: Mode 2 only — items that get Opus (generated from the criteria in research-deep Step 3; empty in Modes 1/3)
-  - agent_groups: The actual dispatch groups derived from the above; each group = one subagent, formatted `{model: opus|sonnet, items: [item name, ...]}`; a group takes the highest model any of its items needs; put same-topic/same-source items together; order by priority (core groups first)
+  - judgment_items: Items that need heavy deep judgment (generated from the criteria in research-deep Step 3; mark them in every mode): dispatched to `web-search-agent-deep` (effort high), and in Mode 2 also on Opus; all other items go to `web-search-agent` (effort medium)
+  - agent_groups: The actual dispatch groups derived from the above; each group = one subagent, formatted `{agent: web-search-agent|web-search-agent-deep, model: opus|sonnet, items: [item name, ...]}`; a group takes the highest agent type and model any of its items needs; put same-topic/same-source items together; order by priority (core groups first)
   - output_dir: Results output directory (default: ./results)
 
 **fields.yaml** (field definitions):

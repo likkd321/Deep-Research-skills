@@ -33,14 +33,14 @@ cp -r skills/research-en/* ~/.claude/skills/
 cp -r skills/research-zh/* ~/.claude/skills/
 
 # Required: Install agent and modules
-cp agents/web-search-agent.md ~/.claude/agents/
+cp agents/web-search-agent.md agents/web-search-agent-deep.md ~/.claude/agents/
 cp -r agents/web-search-modules ~/.claude/agents/
 
 # Required: Install Python dependency
 pip install pyyaml
 ```
 
-> **Claude Code on the web**: no manual install needed. The repo's SessionStart hook (`.claude/hooks/session-start.sh`, registered in `.claude/settings.json`) installs the skills, `web-search-agent` and its modules into `~/.claude` whenever a web session starts (Chinese skills by default; set `RESEARCH_SKILLS_LANG=en` in the environment for English).
+> **Claude Code on the web**: no manual install needed. The repo's SessionStart hook (`.claude/hooks/session-start.sh`, registered in `.claude/settings.json`) installs the skills, the `web-search-agent` / `web-search-agent-deep` agents and their modules into `~/.claude` whenever a web session starts (Chinese skills by default; set `RESEARCH_SKILLS_LANG=en` in the environment for English).
 
 ### OpenCode (default: gpt-5.4)
 ```bash
