@@ -119,7 +119,7 @@ config_file = "agents/web-researcher.toml"
 | `/research-add-items` | 向现有outline添加更多调研对象 |
 | `/research-add-fields` | 向现有outline添加更多字段定义 |
 | `/research-deep` | 使用并行agents对每个item进行深度调研 |
-| `/research-report` | 从JSON结果生成markdown报告 |
+| `/research-report` | 把调研结果浓缩成讲述式 HTML 报告（只讲推导、核心数据和结论） |
 
 ## 工作流 & 示例
 
@@ -157,9 +157,9 @@ Use the research skill to build an outline for AI Agent Demo 2025
 ```
 /research-report
 ```
-💡 **会发生什么**：所有数据 → 一份整理好的报告
+💡 **会发生什么**：主线程把所有调研汇聚、浓缩 → 一份像讲故事一样有条理的报告
 
-**你会得到**：`report.md` - 带目录的完整Markdown报告，可直接阅读或分享
+**你会得到**：`<报告标题>.html` - 单文件讲述式 HTML 报告（白天/深色模式），只呈现推导过程、核心数据和结论，不列来源和各 item 明细（Codex 版仍输出 Markdown 汇总）
 
 ## 遇到问题？
 
