@@ -119,7 +119,7 @@ config_file = "agents/web-researcher.toml"
 | `/research-add-items` | Add more research items to existing outline |
 | `/research-add-fields` | Add more field definitions to existing outline |
 | `/research-deep` | Deep research each item with parallel agents |
-| `/research-report` | Generate markdown report from JSON results |
+| `/research-report` | Condense results into a narrative HTML report (reasoning, core data and conclusions only) |
 
 ## Workflow & Example
 
@@ -152,9 +152,9 @@ config_file = "agents/web-researcher.toml"
 ```
 /research-report
 ```
-💡 **What will happen**: All data → One organized report
+💡 **What will happen**: The main thread gathers and condenses all the research → one report that reads like a well-told story
 
-**You get**: `report.md` - A complete markdown report with table of contents, ready to read or share
+**You get**: `<report-title>.html` - a single-file narrative HTML report (light/dark mode) showing only the reasoning, core data and conclusions, without source lists or per-item details (the Codex variant still produces a markdown summary)
 
 ## Need Help?
 

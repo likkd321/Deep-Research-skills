@@ -47,6 +47,7 @@ master（及任何会合并回 master 的分支）只包含工具本身：
 ## 6. 询问阶段与报告交付
 
 - **开跑前的询问**（`/research` Step 2，一次问清）：时间范围、执行模式(模式1/2/3)、**最大子agent并行数**(每批同时运行上限，写入 `execution.batch_size`，默认3)、**item 分配**(每个 item 如何分配给子 agent：哪些核心 item 单独一个 agent、其余每个 agent 负责几个；写入 `execution.core_items` / `execution.items_per_agent`，据此生成 `execution.agent_groups`，在 Step 5 连同 outline 给用户确认)。
+- **报告是讲述版**：最终报告由主线程把全部调研汇聚、浓缩后，像给客户讲解、给小孩讲故事一样有条有理地讲出来——**只展示推导/判断过程、核心数据和结论**；**不展示信息来源，也不展示各 item 的详情**（来源与明细留在 research 分支的 `results/*.json` 备查），不要把调研内容一股脑搬上来。
 - **报告一律 HTML**：最终报告只出**单文件自包含 HTML**（不再 markdown），**文件名用报告标题**的 slug（不要用 `report.html` 这种通用名）。
 - **背景白天/深色两种模式**：HTML 内置切换按钮 + 跟随系统 `prefers-color-scheme`，两套 CSS 变量配色，`body` 显式设背景。
 - **交付方式**：**直接给用户一键可下载的文件**（`SendUserFile`，`display="attach"`）。**不要用 Artifact / 网页部署功能发布报告。** 本地 CLI 则文件在 `{topic}/` 目录、告知路径即可。
