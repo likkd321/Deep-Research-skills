@@ -22,10 +22,11 @@ description: 对目标话题进行初步调研，生成调研outline。用于学
 - 字段框架是否满足需求？
 
 ### Step 2: Web Search补充
-使用AskUserQuestion在正式开跑前一次问清三件事：
+使用AskUserQuestion在正式开跑前一次问清四件事（正好是一次AskUserQuestion的4问上限）：
 1. **时间范围**（如：最近6个月、2024年至今、不限）；
-2. **执行模式**（efficiency 效率模式=默认 / performance 性能模式，含义见Step 4的execution.mode）；
-3. **最大子agent并行数**（即每批同时运行的子agent上限，写入 execution.batch_size，默认3；给几个常用档如 2/3/5 供选）。
+2. **执行模式**（模式1 全opus / 模式2 甜点区=默认 / 模式3 全sonnet，含义见Step 4的execution.mode）；
+3. **最大子agent并行数**（即每批同时运行的子agent上限，写入 execution.batch_size，默认3；给几个常用档如 2/3/5 供选）；
+4. **item分配**（每个item如何分配给子agent、每个子agent负责几个）：在问题里点名建议的重点核心item，给出如"核心item各自单独一个agent、其余每个agent 2–3个（模式1/2推荐）"/"每个agent只负责1个"/"每个agent 3–4个（模式3推荐）"等选项；与第2问的模式冲突时以模式为准（模式3下核心item也合并分组）。写入 execution.core_items 与 execution.items_per_agent。
 
 **参数获取**：
 - `{topic}`: 用户输入的调研话题
@@ -120,13 +121,17 @@ prompt = f"""## 任务
 - topic: 调研主题
 - items: 调研对象列表
 - execution:
-  - batch_size: 并行agent数量（需AskUserQuestion确认）
-  - items_per_agent: 每个agent调研项目数（需AskUserQuestion确认）
+  - batch_size: 最大并行子agent数，即每批同时运行的子agent上限（需AskUserQuestion确认）
+  - mode: 执行模式，取值 1/2/3（需AskUserQuestion确认，默认 2）
+    - `1`（模式1，全opus）：deep阶段子agent一律Opus；重点核心item可一个agent只看一个，其他item可一个子agent负责多个；适合高价值、数据有争议、要对外发布的研究
+    - `2`（模式2，甜点区，默认）：按任务难度找甜点区——信息检索类item用Sonnet，需要大量深度判断的item用Opus（判定条件见research-deep Step 3）；item分配同模式1；适合大多数研究
+    - `3`（模式3，全sonnet）：deep阶段子agent一律Sonnet，各子agent分配多个item；最省，适合探索性、以信息汇总为主的研究
+    - 三种模式下最终report综合都用Opus（见research-deep）
+  - core_items: 重点核心item列表，每个单独一个子agent（模式1/2；需AskUserQuestion确认；模式3可留空）
+  - items_per_agent: 非核心item每个子agent负责几个（模式3下适用于全部item；需AskUserQuestion确认）
+  - opus_items: 模式2下需派Opus的item（按research-deep Step 3的判定条件生成；模式1/3留空）
+  - agent_groups: 由以上各项生成的实际派发分组，每组 = 一个子agent，格式 `{model: opus|sonnet, items: [item名, ...]}`；同组模型取组内最高需求；同主题/同来源的item尽量分到一组；按优先级排序（核心组在前）
   - output_dir: 结果输出目录（默认./results）
-  - mode: 执行模式（需AskUserQuestion确认，默认 efficiency）
-    - `efficiency`（效率模式，默认）：deep阶段子agent默认Sonnet、仅个别item按升档条件升Opus；省钱够用，适合探索性/大多数研究
-    - `performance`（性能模式）：deep阶段子agent一律Opus；适合高价值、数据有争议、要对外发布的研究
-    - 两种模式下最终report综合都用Opus（见research-deep）
 
 **fields.yaml**（字段定义）：
 - 字段分类和定义
@@ -137,7 +142,7 @@ prompt = f"""## 任务
 ### Step 5: 输出并确认
 - 创建目录: `./{topic_slug}/`
 - 保存: `outline.yaml` 和 `fields.yaml`
-- 展示给用户确认
+- 展示给用户确认（含 agent_groups：共几个子agent、每个负责哪些item、用什么模型）
 
 ## 输出路径
 ```
