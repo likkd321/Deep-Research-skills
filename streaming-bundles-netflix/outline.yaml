@@ -164,7 +164,7 @@ execution:
     - 捆绑市场数据专题
     - 流媒体飞轮与行业格局专题
   items_per_agent: 3     # 非核心 item 每个子 agent 负责 3 个（用户：2–3 个）
-  opus_items:            # 模式2 下派 opus 的 item（其余 sonnet）
+  judgment_items:        # 需要大量深度判断的 item：派 web-search-agent-deep（effort high），模式2 下同时用 opus；其余派 web-search-agent（effort medium）+ sonnet
     - Netflix                  # 飞轮/应对需从零散证据推断并做研判
     - 捆绑市场数据专题          # 多源口径冲突需调和，市占率需从间接数据推算
     - 流媒体飞轮与行业格局专题  # 行业终局、类比研判等判断型字段
@@ -172,10 +172,10 @@ execution:
   batch_confirm: true    # 每个子 agent 结束后等用户确认再启动下一个
   # 执行顺序（串行）。批 1 的两个 opus agent 因 API 额度中断，已唤醒原 agent 续跑。
   agent_groups:
-    - {model: opus,   items: [Netflix]}
-    - {model: opus,   items: [捆绑市场数据专题]}
-    - {model: opus,   items: [流媒体飞轮与行业格局专题]}
-    - {model: sonnet, items: [Disney+ Hulu HBO Max 跨集团捆绑, 迪士尼系捆绑 Disney+ Hulu ESPN, 体育流媒体捆绑 ESPN Fox One]}
-    - {model: sonnet, items: [Paramount WBD 合并与 HBO Max Paramount+, Peacock 与 Comcast 捆绑, 零售与生活服务会员捆绑]}
-    - {model: sonnet, items: [YouTube, Amazon Prime Video, Apple TV]}
-    - {model: sonnet, items: [有线与卫星付费电视运营商捆绑, 无线运营商捆绑, 加拿大与墨西哥市场捆绑]}
+    - {agent: web-search-agent,      model: opus,   items: [Netflix]}                # 已完成（续跑时仍是原 agent 类型，未带 effort 设置）
+    - {agent: web-search-agent,      model: opus,   items: [捆绑市场数据专题]}        # 续跑中（同上，原 agent 继续）
+    - {agent: web-search-agent-deep, model: opus,   items: [流媒体飞轮与行业格局专题]}
+    - {agent: web-search-agent,      model: sonnet, items: [Disney+ Hulu HBO Max 跨集团捆绑, 迪士尼系捆绑 Disney+ Hulu ESPN, 体育流媒体捆绑 ESPN Fox One]}
+    - {agent: web-search-agent,      model: sonnet, items: [Paramount WBD 合并与 HBO Max Paramount+, Peacock 与 Comcast 捆绑, 零售与生活服务会员捆绑]}
+    - {agent: web-search-agent,      model: sonnet, items: [YouTube, Amazon Prime Video, Apple TV]}
+    - {agent: web-search-agent,      model: sonnet, items: [有线与卫星付费电视运营商捆绑, 无线运营商捆绑, 加拿大与墨西哥市场捆绑]}
