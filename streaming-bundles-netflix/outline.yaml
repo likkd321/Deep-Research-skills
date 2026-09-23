@@ -1,0 +1,178 @@
+topic: 北美流媒体联合会员（捆绑）趋势与奈飞的竞争格局——捆绑是否威胁奈飞的规模飞轮
+created: 2026-09-23
+time_range: 2024年至今（优先截至 2026 年 9 月的最新数据；理论与历史类比不受限）
+
+# 用户原始问题（report 阶段逐条综合作答）
+questions:
+  - 北美流媒体还有哪些在做联合会员/捆绑？
+  - 联合会员是大趋势吗？优劣势如何？联合会员的市占率如何？
+  - 奈飞不加入会被甩下吗？会不会形成"降低利润率但更能抢占市场"的形式？
+  - 奈飞如果不加入，是否就必须降低利润打价格战？对奈飞威胁大吗？
+  - 流媒体飞轮是否就是"观众越多→单剧成本摊薄→内容投入效率越高→内容越多→观众越多"？
+  - 捆绑销售会不会打破奈飞的飞轮？奈飞目前怎么做？若飞轮受实质影响该怎么办？
+  - 行业是否会变成没有龙头、没有高利润的"汽车式苦生意"？还是奈飞打不过就加入、加入后仍能延续飞轮优势？
+
+# 说明：description 中标注"线索"的内容来自 Step 2 初步搜索，deep 阶段须核实，不可直接当事实引用。
+items:
+  - name: Netflix
+    category: 核心对象
+    description: >-
+      奈飞自身。重点：①奈飞已参与的捆绑/分发合作（Comcast Xfinity StreamSaver、Verizon myPlan
+      Netflix & Max、T-Mobile Netflix On Us、Charter/Cox 等运营商、加拿大/墨西哥运营商；Amazon/Apple/Roku
+      等平台是否上架），以及奈飞为何不加入对手之间的"联合会员"；②定价与提价历史（2024 年至今各档价格、
+      广告档）、付费会员数（停止季度披露后的最新口径，线索：2025 年底超 3.25 亿）、ARM；③财务：营收、
+      营业利润率、自由现金流、内容现金支出与摊销（2024、2025 实际，2026 指引与最新季度，线索：Q2'26
+      营收约 125.6 亿美元、营业利润率约 33%）；④美国电视观看份额（Nielsen The Gauge，线索：2026 年
+      春季跌至约 7.8% 的多年低点、与 YouTube 差距拉大）与流失率（Antenna）；⑤广告业务、直播/体育
+      （NFL 圣诞赛、WWE、FIFA 女足世界杯等）、游戏、视频播客等扩张；⑥竞购华纳兄弟探索的完整过程与
+      结果（线索：2025 年 12 月签约、2026 年 2 月放弃跟价、Paramount 胜出，奈飞是否获分手费）及其战略
+      含义；⑦"再聚合"动向（线索：WSJ 2026 年 7 月报道奈飞考虑推出直播频道、在 App 内捆绑销售 Peacock
+      等第三方服务）；⑧管理层（Sarandos、Peters、Neumann）关于捆绑、价格战、竞争的表态，以及 2026 年
+      9 月前后的评级下调（线索：HSBC、Wells Fargo 以 YouTube 威胁为由下调）；⑨飞轮：规模→单位内容成本→
+      内容投入→用户的证据，捆绑对它的潜在冲击，以及奈飞的应对。
+
+  - name: 捆绑市场数据专题
+    category: 专题
+    description: >-
+      全行业层面的量化数据：①美国 SVOD 订阅中经由捆绑（内容方自营捆绑、跨集团捆绑、运营商/零售/聚合
+      平台分发）的存量占比与新增占比，及 2024 年以来的变化（Antenna 的 bundle/distribution 报告和
+      State of Subscriptions 报告为核心来源）；②各主要服务的月流失率、捆绑与单订用户的流失差异、serial
+      churner 占比、回流订阅数据；③美国家庭平均订阅数与支出、订阅疲劳（Deloitte Digital Media Trends、
+      Parks Associates、Kantar、Hub Entertainment Research、Ampere、MIDiA）；④各服务的订阅与观看份额
+      （Nielsen The Gauge 分平台份额、JustWatch/Antenna 份额）；⑤广告档在新增订阅中的占比；
+      ⑥"联合会员"在整体市场的市占率估算（没有直接数据时写明推算方法与口径）；⑦消费者满意度与偏好
+      （ACSI、J.D. Power、Parks 关于"直播电视+流媒体捆绑"偏好的调查）。不同机构口径不一致时，冲突数字
+      并列给出并说明原因。
+
+  - name: 流媒体飞轮与行业格局专题
+    category: 专题
+    description: >-
+      判断型专题：①流媒体"规模飞轮"的定义与实证（订阅规模→每订阅内容成本→内容投入与效率→参与度→
+      订阅/定价权；奈飞与对手的每订阅内容成本、内容投入回报、营业利润率对比）；②捆绑能否让中小玩家
+      "拼出规模"从而削弱奈飞的飞轮，还是只是次级玩家的防御手段；Paramount 与 WBD 合并后（线索：DTC
+      用户据称超 2 亿）能否构成规模对手；③行业终局研判：赢家通吃/寡头，还是同质化价格战（汽车、航空式
+      "苦生意"）；与有线电视捆绑、音乐流媒体（Spotify/Apple Music 目录同质、毛利低）作类比；
+      ④"奈飞不加入就只能打价格战"是否成立：奈飞定价权的证据、广告档作为低价防线；⑤奈飞加入捆绑的
+      利弊与可行形式（做锚定方、批发、做聚合者），奈飞竞购 WBD 失败及其"再聚合"动向（线索）的战略
+      含义；⑥YouTube 与短视频/创作者内容对奈飞注意力份额的挤压，与"捆绑威胁"相比孰轻孰重；⑦主要研报与
+      知名分析师观点（MoffettNathanson、Morgan Stanley、JPMorgan、Goldman Sachs、Bernstein、
+      LightShed/Rich Greenfield、Doug Shapiro、Stratechery/Ben Thompson、Matthew Ball、AlixPartners
+      等）。区分事实与推断。
+
+  - name: Disney+ Hulu HBO Max 跨集团捆绑
+    category: 跨集团联合会员
+    description: >-
+      2024 年 7 月上线的迪士尼与华纳兄弟探索（WBD）跨集团捆绑，第一个主要对手之间的"联合会员"。重点：
+      套餐与价格变化（线索：2025 年 10 月提价）、折扣、谁计费（迪士尼/WBD 各自渠道）、分成机制、用户
+      规模或 Antenna 估算的采用率与流失改善、双方管理层评价；经由 Comcast StreamSaver 等渠道的扩展
+      （线索：2026 年 StreamSaver 加入该捆绑）；Paramount 收购 WBD 后该捆绑的存续与变化；这一模式有没有
+      被复制；对奈飞的影响。
+
+  - name: Paramount WBD 合并与 HBO Max Paramount+
+    category: 内容方自营捆绑 + 并购整合
+    description: >-
+      华纳兄弟探索（HBO Max）与 Paramount Skydance（Paramount+）：2025–2026 年并购全过程（WBD 拆分
+      计划、奈飞与 Paramount 竞购、最终条款、股东批准、交割时间、反垄断审查与诉讼状态——均需核实），
+      合并后的平台整合计划（线索：Paramount+、HBO Max、Pluto TV、BET+ 合为单一平台）；两者各自与合并后
+      的订阅规模（线索：HBO Max 2026 年 5 月超 1.4 亿）、DTC 盈利、提价；捆绑策略（HBO Max 与迪士尼的
+      捆绑、Paramount+ 与 Walmart+/运营商的捆绑）；合并体能否成为奈飞的规模对手。
+
+  - name: Peacock 与 Comcast 捆绑
+    category: 内容方自营捆绑 + 分发方捆绑
+    description: >-
+      NBCU/Comcast：Xfinity StreamSaver（Netflix 广告档 + Apple TV + Peacock，2024 年 5 月上线；线索：
+      2026 年扩容加入 Disney+/Hulu/HBO Max 选项）、Peacock 与 Apple TV 捆绑（2025 年 10 月）、Peacock 与
+      Instacart、Walmart+ 等合作、Comcast NOW TV、Versant 分拆（线索：2026 年 1 月完成）。重点：Peacock
+      订阅数与盈亏（线索：已出现首个季度盈利）、价格、StreamSaver 的定价与用户规模、Comcast 为何把奈飞
+      放进捆绑、奈飞在其中的角色与分成（如可得）。
+
+  - name: 迪士尼系捆绑 Disney+ Hulu ESPN
+    category: 内容方自营捆绑
+    description: >-
+      迪士尼自家捆绑：Disney+/Hulu Duo、Disney+/Hulu/ESPN+ Trio、ESPN 直营（ESPN Unlimited，2025 年
+      8 月）相关捆绑、Hulu 完全并入 Disney+ App、Hulu + Live TV 与 Fubo 合并（线索：2025 年 10 月完成，
+      迪士尼持股约 70%）。重点：套餐价格与 2024 年以来提价、捆绑用户占比（迪士尼披露的捆绑比例与
+      Antenna 数据）、流失率改善、DTC 业务利润率拐点、停止披露订阅数、内容投入、对奈飞的影响。
+
+  - name: YouTube
+    category: 聚合平台
+    description: >-
+      YouTube：美国电视观看份额第一（Nielsen The Gauge）；YouTube TV（虚拟有线；线索：2025 年 10–11 月
+      与迪士尼停播纠纷及新协议）、Primetime Channels（聚合第三方订阅）、NFL Sunday Ticket、YouTube
+      Premium；作为奈飞最大的注意力竞争者，它与捆绑趋势的关系（YouTube TV 瘦身/分类套餐），以及
+      2025–2026 年它与奈飞观看份额差距的变化。
+
+  - name: Amazon Prime Video
+    category: 聚合平台
+    description: >-
+      Prime 会员本身即捆绑（Prime Video 含在 Prime 内）；Prime Video Channels 聚合（100+ 频道，含
+      Apple TV、HBO Max、Paramount+、Peacock 等）及其分成模式；平台自营多合一捆绑（线索：2026 年 9 月
+      推出 Starz、AMC+、BritBox、MGM+、PBS Masterpiece 五合一捆绑）；2024 年 1 月默认开启广告；
+      NBA/NFL 体育；美国观看份额；作为"聚合者"对奈飞的威胁（奈飞是否上架 Channels）。
+
+  - name: Apple TV
+    category: 平台
+    description: >-
+      Apple TV（原 Apple TV+）：Apple One 捆绑、与 Peacock 的捆绑、经 Amazon Prime Video Channels
+      与 Comcast StreamSaver 分发、2024 年以来的提价（线索：2025–2026 年多次上调，需核实日期与价格）、
+      订阅规模估算、亏损与投入、F1/MLS 体育、苹果在捆绑中的角色。
+
+  - name: Roku
+    category: 聚合平台
+    description: >-
+      Roku：设备/操作系统层的聚合货架（Premium Subscriptions、The Roku Channel）；线索：2026 年 9 月在
+      Premium Subscriptions 上线 30 余种捆绑（HBO Max、AMC+、Fox One、Starz 等，最高省约 30%）、自有
+      低价服务 Howdy（2025 年 8 月上线）。重点：平台分成模式、用户规模（活跃账户、流媒体时长）、
+      The Roku Channel 的观看份额（Nielsen Gauge）、Roku 作为独立于内容方的聚合者对捆绑格局的意义；
+      与奈飞的关系（遥控器奈飞按钮、广告合作等）及对奈飞的影响。
+
+  - name: 体育流媒体捆绑 ESPN Fox One
+    category: 跨集团联合会员
+    description: >-
+      体育类跨集团捆绑：ESPN 直营（ESPN Unlimited）与 Fox One 的联合捆绑（价格、上线时间）、Venu
+      Sports（ESPN/Fox/WBD 合资）夭折的原因、ESPN 与 NFL 的媒体资产交易、体育版权向流媒体迁移
+      （Amazon、YouTube、Peacock、奈飞）；体育作为捆绑"粘合剂"的作用，以及对奈飞的影响（奈飞的
+      体育直播策略）。
+
+  - name: 有线与卫星付费电视运营商捆绑
+    category: 分发方捆绑
+    description: >-
+      付费电视运营商做捆绑方：Charter Spectrum 电视套餐内含多家广告档 App（Disney+、Hulu、HBO Max、
+      Peacock、Paramount+、AMC+ 等，是否含奈飞；线索：约每月 120 美元价值）、Charter–Cox 合并（线索：
+      2026 年完成交割）、Comcast Xfinity（StreamSaver 及新电视套餐）、DirecTV（分类瘦身套餐 Genre Packs、
+      整合流媒体 App 的设备、与 EchoStar/DISH 合并传闻）、DISH/Sling。重点：内含 App 的价值、用户规模、
+      付费电视用户流失是否止住、对流媒体公司批发收入的意义、是否是"有线捆绑 2.0"、奈飞的位置。
+
+  - name: 无线运营商捆绑
+    category: 分发方捆绑
+    description: >-
+      无线运营商捆绑：Verizon myPlan/myHome perks（Netflix & Max 广告档，线索：该 perk 已提价；迪士尼
+      捆绑；Apple One 等）、T-Mobile（Netflix On Us、Apple TV、Hulu 等；线索：可能推出自选 perk）、
+      AT&T；奈飞在其中的角色与批发条款（如可得）、用户规模、运营商视角的留存价值。
+
+  - name: 零售与生活服务会员捆绑
+    category: 分发方捆绑
+    description: >-
+      非媒体会员做流媒体分发：Walmart+（线索：2025 年起可在 Paramount+ Essential 与 Peacock Premium 中
+      二选一）、Instacart+（Peacock）、DoorDash DashPass（HBO Max）、Uber One 等；合作条款、对流媒体方
+      获客与流失的影响（Antenna 数据）、奈飞是否参与。
+
+  - name: 加拿大与墨西哥市场捆绑
+    category: 区域市场
+    description: >-
+      加拿大：Telus Stream+（可含 Netflix/Disney+/Apple TV+/Crave 等）、Rogers（线索：捆绑 Netflix、
+      Disney+、Apple TV+）、Bell/Crave（HBO 内容；线索：2026 年 1 月推出四合一流媒体捆绑）；墨西哥：
+      Totalplay/izzi/Telmex 等运营商含 Netflix 的套餐、ViX 等。重点：奈飞在这些捆绑中的参与程度（奈飞
+      在北美其他市场更愿意进捆绑的证据）、价格、规模。
+
+execution:
+  batch_size: 3          # 用户指定：最多同时 3 个子 agent
+  items_per_agent: 1
+  output_dir: ./results
+  mode: efficiency       # 默认 sonnet，满足升档条件的 item 单独升 opus
+  # efficiency 模式下单独升 opus 的 item（其余一律 sonnet）
+  opus_items:
+    - Netflix                  # 条件 2+3：飞轮/应对需从零散证据推断并做研判
+    - 捆绑市场数据专题          # 条件 2：多源口径冲突需调和，市占率需从间接数据推算
+    - 流媒体飞轮与行业格局专题  # 条件 3：行业终局、类比研判等判断型字段
+  batch_confirm: true    # 用户选择：每批完成后等用户确认再启动下一批

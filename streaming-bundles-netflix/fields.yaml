@@ -1,0 +1,104 @@
+# 字段定义：北美流媒体联合会员（捆绑）趋势与奈飞的竞争格局
+# detail_level 分层：极简 → 简要 → 详细
+# 说明：items 既有"捆绑参与方/渠道"也有"专题"。专题类 item 对实体型字段请给全行业层面的对应信息；
+#       确实不适用的字段写"不适用：<原因>"，不要留空。
+
+fields:
+  基本信息:
+    - name: 名称
+      description: item 名称（捆绑/平台/渠道/专题）
+      detail_level: 极简
+    - name: 类型
+      description: 内容方自营捆绑 / 跨集团联合会员 / 分发方捆绑（运营商、零售）/ 聚合平台 / 区域市场 / 专题分析 之一或组合
+      detail_level: 极简
+    - name: 参与方与涉及服务
+      description: 涉及的公司与流媒体服务（注明所属集团及最新股权/并购归属）
+      detail_level: 简要
+    - name: 关键时间线
+      description: 2024 年至今的上线、调价、并购、退出、合作等关键事件，按时间排列并注明日期
+      detail_level: 简要
+    - name: 并购分拆与监管
+      description: 2024 年至今与该 item 相关的并购、分拆、合资与反垄断/监管事件（交易金额、结构、时间、当前状态、战略意图）；没有则写"无重大事件"
+      detail_level: 简要
+
+  捆绑产品与定价:
+    - name: 捆绑套餐明细
+      description: 每个套餐的组成与美国（或该区域）月价（含广告/无广告分别列出），有年付价也列出；注明最新有效价格及生效日期
+      detail_level: 详细
+    - name: 折扣幅度
+      description: 捆绑价相对单独订阅合计的折扣百分比（逐套餐计算，写明计算口径与所用单价）
+      detail_level: 简要
+    - name: 分发渠道与计费方
+      description: 谁销售、谁计费、谁拥有用户关系与数据；是否也能在第三方平台（Prime Video Channels、YouTube、Roku、运营商）订阅
+      detail_level: 简要
+    - name: 提价历史
+      description: 2024 年至今历次提价（日期、档位、前后价格、幅度）；用于判断捆绑是否变相涨价、各方定价权强弱
+      detail_level: 简要
+
+  规模与市场数据:
+    - name: 订阅规模
+      description: 最新付费订阅数（全球/美国分开），注明口径、日期、来源；已停止披露的注明最后披露值与第三方估算
+      detail_level: 简要
+    - name: 捆绑用户占比
+      description: 通过捆绑/第三方渠道获得的订阅在存量与新增中的占比（Antenna 等），以及 2024 年以来的变化；注明口径
+      detail_level: 详细
+    - name: 流失率与捆绑效果
+      description: 月流失率（注明是否加权），捆绑用户与单订用户的流失差异、serial churner（反复退订者）数据、捆绑对留存的量化效果
+      detail_level: 详细
+    - name: 观看时长份额
+      description: Nielsen The Gauge 美国电视观看时长份额（最新月份及 2024 年以来趋势）；专题类 item 给全行业分平台格局
+      detail_level: 简要
+
+  财务与经济模型:
+    - name: 流媒体业务财务
+      description: 流媒体/DTC 业务营收、营业利润与利润率（最新财年与最新季度，附同比），盈利拐点时间
+      detail_level: 详细
+    - name: 分成与ARPU影响
+      description: 捆绑的收入分成或批发价机制、对 ARPU 的稀释程度、对利润率的影响（有数据给数据，推算须写明方法）
+      detail_level: 详细
+    - name: 内容投入
+      description: 年度内容现金支出/摊销规模；能推算的给出每订阅内容成本，并写明推算方法
+      detail_level: 简要
+    - name: 体育与直播版权
+      description: 该方持有的体育/直播版权组合（联赛、年限、年均成本）及其在捆绑中的"粘合剂"作用；与奈飞体育直播策略对比
+      detail_level: 简要
+
+  战略与效果:
+    - name: 捆绑战略动机
+      description: 为什么捆绑（降流失、降获客成本、凑规模、推广告档、清库存、对抗谁等）
+      detail_level: 简要
+    - name: 优势
+      description: 对参与方与消费者的好处
+      detail_level: 简要
+    - name: 劣势与风险
+      description: ARPU 稀释、失去用户关系、品牌稀释、渠道依赖、反垄断等
+      detail_level: 简要
+    - name: 实际效果评估
+      description: 推出后用户、流失、收入变化的证据（数据优先，注明来源与日期）
+      detail_level: 详细
+    - name: 管理层表态
+      description: 高管关于捆绑、定价、竞争、奈飞的公开表态（原话要点 + 出处 + 日期）
+      detail_level: 简要
+
+  与奈飞的关系:
+    - name: 与奈飞的竞合关系
+      description: 与奈飞是竞争、合作还是既竞争又合作；奈飞是否在该捆绑/渠道中，以什么条件
+      detail_level: 简要
+    - name: 对奈飞的影响研判
+      description: 对奈飞用户增长、定价权、流失、规模飞轮的影响方向与大小；给出证据与判断理由，区分事实与推断
+      detail_level: 详细
+
+  研报与观点:
+    - name: 研报与分析师观点
+      description: 券商、咨询、数据机构的关键观点与数据（机构、分析师、日期、结论），含评级/目标价变动与股价反应
+      detail_level: 详细
+    - name: 飞轮与行业格局证据
+      description: 与规模经济、每订阅内容成本、赢家通吃还是同质化价格战相关的证据与观点
+      detail_level: 详细
+
+  来源:
+    - name: 主要来源
+      description: 关键来源列表（标题 + URL + 发布日期），至少 8 条，优先一手来源（财报、公司公告、Antenna/Nielsen 原始报告）
+      detail_level: 简要
+
+uncertain: []
