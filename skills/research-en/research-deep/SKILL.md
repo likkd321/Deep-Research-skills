@@ -13,29 +13,31 @@ allowed-tools: Bash, Read, Write, Glob, WebSearch, Task
 ## Workflow
 
 ### Step 1: Auto-locate Outline
-Find `*/outline.yaml` file in current working directory, read items list, execution config (including items_per_agent).
+Find `*/outline.yaml` file in current working directory, read items list, execution config (including mode and agent_groups). If agent_groups is missing (older outline), group on the spot from mode, core_items and items_per_agent, and show the grouping to the user for confirmation.
 
 ### Step 2: Resume Check
 - Check completed JSON files in output_dir
-- Skip completed items
+- Skip completed items; drop completed items from multi-item groups, and skip a group once all its items are done
 
 ### Step 3: Batch Execution
-- Batch by batch_size (need user approval before next batch)
-- Each agent handles items_per_agent items
+- The dispatch unit is one group in `execution.agent_groups`: each group = one subagent (a core item is usually a group of one; other groups hold several items)
+- Batch by batch_size: at most batch_size subagents run at once per batch (need user approval before next batch)
 - Launch web-search-agent (background parallel, disable task output)
 
-**Model selection (driven by execution.mode, important)**: Read `execution.mode` from outline.yaml (treat missing as `efficiency`) and choose each web-search-agent subagent's model accordingly.
+**Model selection (driven by execution.mode, important)**: Read `execution.mode` from outline.yaml (treat missing as `2`; legacy `efficiency` = `2`, `performance` = `1`) and choose each web-search-agent subagent's model accordingly.
 
-- **`efficiency` (default)**: subagents **default to sonnet** (breadth retrieval + extraction + field-filling suits Sonnet — ~90-95% of Opus quality at ~0.4× the cost and faster).
-  Upgrade **only that individual item** to opus (not all of them) when it meets ANY of these **upgrade conditions**:
+- **Mode 1 (all Opus)**: all subagents use **opus**. Each core item may get its own agent; other items may share one subagent.
+- **Mode 2 (sweet spot, default)**: pick the sweet spot by task difficulty. **Information-retrieval items use sonnet** (breadth retrieval + extraction + field-filling suits Sonnet — ~90-95% of Opus quality at ~0.4× the cost and faster); **items that need heavy deep judgment use opus**, i.e. items meeting ANY of these conditions:
   1. reliable primary sources are sparse (little authoritative material; must judge from scant evidence);
   2. the item requires **inference or forecasting** from scattered/indirect evidence rather than direct extraction;
   3. the item's own fields call for **judgment/assessment** (e.g. outlook calls, adjudicating disputes) rather than listing facts.
-  Default to NOT upgrading — most retrieval items are fine on sonnet; this keeps "auto-select" from degenerating into all-sonnet or all-opus.
-- **`performance`**: all subagents use **opus**.
-- **Same in both modes**: the final `research-report` cross-item synthesis and judgment **always uses opus** (a single pass, most quality-sensitive; never downgraded).
-- **Dispatch**: web/cloud sessions **MUST explicitly pass the model** when dispatching subagents (`model=sonnet` or `model=opus`; such environments do NOT read the `model` field in `agents/web-search-agent.md`); local CLI takes the default from that file's `model` field and overrides upgraded items to opus at dispatch.
-- **Agent-type fallback**: the repo's SessionStart hook (`.claude/hooks/session-start.sh`) installs the skills/agent/modules when a web session starts, and the project-level `.claude/agents/web-search-agent.md` registers `web-search-agent` from the first turn, so a fallback is normally unnecessary. If the Agent tool still reports `web-search-agent` not found (e.g. the agent was installed mid-session), dispatch `general-purpose` instead and put one role line at the very **top** of the prompt: `(Role: you are web-search-agent. Before anything else, Read ~/.claude/agents/web-search-agent.md and follow its Research Methodology exactly, including loading the relevant ~/.claude/agents/web-search-modules/ module first.)` — the template body after it stays verbatim.
+  Default to sonnet — most retrieval items are fine on sonnet; this keeps the choice from degenerating into all-sonnet or all-opus. Allocation as in Mode 1.
+- **Mode 3 (all Sonnet)**: all subagents use **sonnet**, each subagent takes several items.
+- **Model for a multi-item group**: the highest any of its items needs (one opus item makes the whole group opus), so in Mode 2 keep opus items in groups of their own.
+- **Same in all three modes**: the final `research-report` cross-item synthesis and judgment **always uses opus** (a single pass, most quality-sensitive; never downgraded).
+- **Agent type (effort level; chosen by task nature, independent of mode)**: information-retrieval items go to `web-search-agent` (frontmatter `effort: medium`); items that need heavy deep judgment (the three conditions above — `judgment_items` in the outline; legacy `opus_items` count the same) go to `web-search-agent-deep` (`effort: high`). Both share the same methodology body and differ only in effort and default model; the dispatch tool can override `model` per call but not `effort`, so effort is selected through the agent type. A multi-item group likewise takes the highest type any of its items needs.
+- **Dispatch**: web/cloud sessions **MUST explicitly pass the model** when dispatching subagents (`model=sonnet` or `model=opus`; such environments do NOT read the agent files' `model` field); local CLI takes the default from the agent file's `model` field (sonnet for `web-search-agent`, opus for `web-search-agent-deep`) and overrides it at dispatch when the mode says otherwise (e.g. everything to opus in Mode 1, everything to sonnet in Mode 3).
+- **Agent-type fallback**: the repo's SessionStart hook (`.claude/hooks/session-start.sh`) installs the skills/agent/modules when a web session starts, and the project-level `.claude/agents/web-search-agent.md` and `.claude/agents/web-search-agent-deep.md` register both types from the first turn, so a fallback is normally unnecessary. If the Agent tool still reports the type not found (e.g. the agent was installed mid-session), dispatch `general-purpose` instead and put one role line at the very **top** of the prompt: `(Role: you are web-search-agent. Before anything else, Read ~/.claude/agents/web-search-agent.md and follow its Research Methodology exactly, including loading the relevant ~/.claude/agents/web-search-modules/ module first.)` (for a deep-judgment group, replace both `web-search-agent` mentions with `web-search-agent-deep`) — the template body after it stays verbatim. Note that `general-purpose` carries no effort setting and inherits the session's effort level.
 - Do not use Haiku for the deep phase: it is weaker at multi-source cross-checking, source-credibility judgment, and long-context extraction.
 
 **Parameter Retrieval**:
@@ -45,6 +47,7 @@ Find `*/outline.yaml` file in current working directory, read items list, execut
 - `{output_dir}`: execution.output_dir from outline.yaml (default: ./results)
 - `{fields_path}`: absolute path to {topic}/fields.yaml
 - `{output_path}`: absolute path to {output_dir}/{item_name_slug}.json (slugify item_name: replace spaces with _, remove special chars)
+- For a multi-item group also: `{n}` number of items in the group; `{item_related_info_i}` / `{output_path_i}` the i-th item's complete yaml and output path
 
 **Hard Constraint**: The following prompt must be strictly reproduced, only replacing variables in {xxx}, do not modify structure or wording.
 
@@ -97,6 +100,37 @@ python ~/.claude/skills/research/validate_json.py -f {project_dir}/fields.yaml -
 Task is complete only after validation passes.
 ```
 
+**Multi-item group Prompt Template** (use when a group has more than one item; also reproduce strictly, only replacing variables, repeating the "### Item i" section and the output-path line per item):
+```python
+prompt = f"""## Task
+Research the following {n} items in order, outputting one structured JSON per item. As soon as an item is done, write its JSON and run validation before starting the next one (so finished items survive an interruption).
+
+### Item 1
+Research {item_related_info_1}, output structured JSON to {output_path_1}
+
+### Item 2
+Research {item_related_info_2}, output structured JSON to {output_path_2}
+
+## Field Definitions
+Read {fields_path} to get all field definitions
+
+## Output Requirements
+1. Output JSON according to fields defined in fields.yaml
+2. Mark uncertain field values with [uncertain]
+3. Add uncertain array at the end of JSON, listing all uncertain field names
+4. All field values must be in English
+
+## Output Path
+{output_path_1}
+{output_path_2}
+
+## Validation
+After writing each JSON, run the validation script to ensure complete field coverage:
+python ~/.claude/skills/research/validate_json.py -f {fields_path} -j {output_path_i}
+Task is complete only after every item passes validation.
+"""
+```
+
 ### Step 4: Wait and Monitor
 - Wait for current batch to complete
 - Launch next batch
@@ -110,7 +144,7 @@ After all complete, output:
 
 ### Step 6: Targeted Deepening (reuse existing agents, do not cold-restart)
 After summarizing, if an item has thin fields, a key figure backed by a single source, or conflicting numbers across sources:
-- **Prefer waking the still-alive subagent for that item** (continue the conversation with full context — use its agent id / SendMessage where the environment supports it) and give a specific deepening instruction, e.g. "the CTR range rests on one source; read each study's methodology, reconcile the conflicting numbers, and note the differing definitions."
+- **Prefer waking the still-alive subagent for that item** (for a multi-item group, the subagent that handled that group; continue the conversation with full context — use its agent id / SendMessage where the environment supports it) and give a specific deepening instruction, e.g. "the CTR range rests on one source; read each study's methodology, reconcile the conflicting numbers, and note the differing definitions."
 - Deepen **only the questionable fields** — do not re-run all items; re-run validate_json.py afterwards.
 - Only when that agent can no longer be woken (session/container reclaimed) should you cold-start a new agent for that **single** item via the resume mechanism.
 - This saves tokens and is faster and more targeted than a full re-run.

@@ -22,10 +22,11 @@ Output {step1_output}, use AskUserQuestion to confirm:
 - Does field framework meet requirements?
 
 ### Step 2: Web Search Supplement
-Before the run starts, use AskUserQuestion to settle three things in one pass:
+Before the run starts, use AskUserQuestion to settle four things in one pass (exactly the 4-question limit of one AskUserQuestion call):
 1. **Time range** (e.g., last 6 months, since 2024, unlimited);
-2. **Execution mode** (efficiency = default / performance; meaning defined in Step 4's execution.mode);
-3. **Max parallel subagents** (the cap on subagents running at once per batch, written to execution.batch_size, default 3; offer common options like 2/3/5).
+2. **Execution mode** (Mode 1 all-Opus / Mode 2 sweet spot = default / Mode 3 all-Sonnet; meaning defined in Step 4's execution.mode);
+3. **Max parallel subagents** (the cap on subagents running at once per batch, written to execution.batch_size, default 3; offer common options like 2/3/5);
+4. **Item allocation** (how items are assigned to subagents and how many each takes): name the suggested core items in the question and offer options such as "each core item gets its own agent, the rest 2–3 per agent (recommended for Modes 1/2)" / "one item per agent" / "3–4 items per agent (recommended for Mode 3)"; if this conflicts with the mode chosen in question 2, the mode wins (in Mode 3 core items are grouped too). Written to execution.core_items and execution.items_per_agent.
 
 **Parameter Retrieval**:
 - `{topic}`: User input research topic
@@ -120,13 +121,17 @@ Merge {step1_output}, {step2_output} and user's existing fields, generate two fi
 - topic: Research topic
 - items: Research objects list
 - execution:
-  - batch_size: Number of parallel agents (confirm with AskUserQuestion)
-  - items_per_agent: Items per agent (confirm with AskUserQuestion)
+  - batch_size: Max parallel subagents, i.e. the cap on subagents running at once per batch (confirm with AskUserQuestion)
+  - mode: Execution mode, one of 1/2/3 (confirm with AskUserQuestion, default 2)
+    - `1` (Mode 1, all Opus): deep-phase subagents all use Opus; each core item may get its own agent, other items may share one subagent; for high-value, contested-data, or publish-grade research
+    - `2` (Mode 2, sweet spot, default): pick the sweet spot by task difficulty — Sonnet for information-retrieval items, Opus for items that need heavy deep judgment (criteria in research-deep Step 3); allocation as in Mode 1; fits most research
+    - `3` (Mode 3, all Sonnet): deep-phase subagents all use Sonnet, each subagent takes several items; cheapest, for exploratory / mostly information-gathering research
+    - In all three modes the final report synthesis uses Opus (see research-deep)
+  - core_items: Core items, each dispatched to its own subagent (Modes 1/2; confirm with AskUserQuestion; may be empty in Mode 3)
+  - items_per_agent: How many non-core items each subagent takes (applies to all items in Mode 3; confirm with AskUserQuestion)
+  - judgment_items: Items that need heavy deep judgment (generated from the criteria in research-deep Step 3; mark them in every mode): dispatched to `web-search-agent-deep` (effort high), and in Mode 2 also on Opus; all other items go to `web-search-agent` (effort medium)
+  - agent_groups: The actual dispatch groups derived from the above; each group = one subagent, formatted `{agent: web-search-agent|web-search-agent-deep, model: opus|sonnet, items: [item name, ...]}`; a group takes the highest agent type and model any of its items needs; put same-topic/same-source items together; order by priority (core groups first)
   - output_dir: Results output directory (default: ./results)
-  - mode: Execution mode (confirm with AskUserQuestion, default efficiency)
-    - `efficiency` (default): deep-phase subagents default to Sonnet, only individual items upgrade to Opus per the upgrade rule; cheaper and sufficient for exploratory / most research
-    - `performance`: deep-phase subagents all use Opus; for high-value, contested-data, or publish-grade research
-    - In both modes the final report synthesis uses Opus (see research-deep)
 
 **fields.yaml** (field definitions):
 - Field categories and definitions
@@ -137,7 +142,7 @@ Merge {step1_output}, {step2_output} and user's existing fields, generate two fi
 ### Step 5: Output and Confirm
 - Create directory: `./{topic_slug}/`
 - Save: `outline.yaml` and `fields.yaml`
-- Show to user for confirmation
+- Show to user for confirmation (including agent_groups: how many subagents, which items each takes, and which model)
 
 ## Output Path
 ```
