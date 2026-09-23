@@ -1,0 +1,544 @@
+{
+  "名称": "捆绑市场数据专题",
+  "类型": "专题分析（全行业量化数据）：覆盖内容方自营捆绑、跨集团联合会员、分发方捆绑（有线/电信运营商、零售会员）与聚合平台（Prime Video Channels、Roku、YouTube Primetime Channels 等）四类的渗透率、新增占比、流失与回流、家庭订阅与订阅疲劳、观看/订阅份额、广告档占比及满意度数据",
+  "参与方与涉及服务": "【数据机构】Antenna（美国消费者交易面板；Premium SVOD 覆盖 10 个服务：Apple TV、Discovery+、Disney+、FOX One、HBO Max、Hulu、Netflix、Paramount+、Peacock、Starz，另有 Specialty SVOD、体育、vMVPD 垂类；按个人计量，不含免费档、MVPD+电信分发、Prime 会员内含的 Prime Video、有线套餐内免费附送的 SVOD、企业/商用订阅）；Nielsen（The Gauge / Media Distributor Gauge，电视观看时长份额）；JustWatch（用户互动份额）；Deloitte（Digital Media Trends 问卷）；Parks Associates（8,000 户宽带家庭季度调查）；Kantar（Entertainment on Demand）；Hub Entertainment Research；Ampere Analysis；ACSI；J.D. Power；MIDiA（近两年可公开引用的美国数据很少）。【服务与最新归属（截至 2026-09-23）】Netflix（独立上市）；Disney+、Hulu、ESPN（迪士尼；ESPN 于 2026-01 底以 10% 股权换得 NFL Network 等资产；Hulu + Live TV 于 2025-10-29 并入 Fubo，迪士尼持股 70%）；HBO Max、Discovery+（华纳兄弟探索 WBD；Paramount Skydance 约 1,109 亿美元收购案已获司法部批准，2026-09-21 与 12 州及美国编剧工会和解，暂定 10 月初交割，尚未完成）；Paramount+、Pluto TV（Paramount Skydance，2025-08-07 完成与 Skydance 合并）；Peacock（NBCU/康卡斯特；有线网络已于 2026-01-02 分拆为 Versant）；Apple TV（苹果）；Prime Video 及 Prime Video Channels（亚马逊）；YouTube / YouTube TV / Primetime Channels（Alphabet）；FOX One、Tubi（福克斯；2026-06-15 宣布以约 220 亿美元企业价值收购 Roku，待交割）；The Roku Channel（Roku）；Starz；【分发方】Charter/Spectrum（2026-08-20 完成约 345 亿美元收购 Cox）、Comcast Xfinity（StreamSaver）、Verizon（myPlan/myHome perks）、T-Mobile、Walmart+ 等。",
+  "关键时间线": [
+    "2024-01-29：Prime Video 在美国默认插入广告，无广告需另付 2.99 美元/月",
+    "2024-05：Comcast 推出 Xfinity StreamSaver（Netflix 广告档 + Apple TV+ + Peacock，15 美元/月）",
+    "2024-07-25：迪士尼×WBD 跨集团捆绑 Disney+/Hulu/Max 开售（7 月中旬公布价格；广告版 16.99、无广告 29.99 美元，官方称最高省 38%），Antenna 称其为少数真正起量的跨集团捆绑",
+    "2024-08-20：Paramount+ 对新用户提价（Essential 5.99→7.99、含 Showtime 版 11.99→12.99）",
+    "2024-10：Apple TV+ 上架 Amazon Prime Video Channels（2024Q4 经该渠道注册 150 万，73% 为新用户）；2024-11 HBO Max 上架 Roku Channel",
+    "2024 年末：Antenna 观察到 Premium SVOD 流失率在 2024 年最后三个月同比下降（此前 21 个月中 19 个月上升），年末加权月流失 5.0%、净流失 2.8%",
+    "2025-01-10：ESPN/福克斯/WBD 合资体育流媒体 Venu Sports 宣布放弃上线",
+    "2025-01：Netflix 美国提价（广告档 7.99、标准 17.99、高级 24.99 美元）",
+    "2025-02-25：Antenna 2024 年报：广告档占（兼有两档服务的）新增 57%、存量 45%；Disney×Max 捆绑 3 个月存活率 80%",
+    "2025-06-17：Nielsen 5 月 Gauge：流媒体 44.8%，首次超过广播（20.1%）与有线（24.1%）之和",
+    "2025-08-07：Paramount 与 Skydance 完成合并",
+    "2025-08：ESPN 直营（ESPN Unlimited，29.99 美元）与 FOX One（19.99 美元，8-21）上线；Peacock 上架 Amazon Channels",
+    "2025-09：吉米·基梅尔停播风波，Disney+/Hulu 当月流失率升至 7.8%/9.6%，Disney+、Hulu、HBO Max 9 月合计取消 890 万，致 2025Q3 Premium SVOD 净减 240 万",
+    "2025-10-02：ESPN Unlimited × FOX One 体育捆绑上线（39.99 美元）",
+    "2025-10-20：Apple TV × Peacock 捆绑上线（14.99 / 19.99 美元）",
+    "2025-10-21：迪士尼（Disney+ 广告版 11.99、无广告 18.99，Hulu 广告版 11.99）与 HBO Max（10.99/18.49/22.99）同日提价；Disney+/Hulu/HBO Max 捆绑升至 19.99/32.99",
+    "2025-10-29：Hulu + Live TV 与 Fubo 合并完成（迪士尼持股 70%）",
+    "2025-12-04：WBD 与 Netflix 签署合并协议（后被 Paramount 竞得）",
+    "2026-01-02：康卡斯特完成 Versant 分拆",
+    "2026-01-15：Paramount+ 提价（Essential 8.99、Premium 13.99）",
+    "2026-01-20：Nielsen 12 月 Gauge：流媒体 47.5% 创纪录，Netflix 9.0% 创平台纪录",
+    "2026-01 底：ESPN 完成收购 NFL Network 等资产（获司法部批准），NFL 持股 ESPN 10%",
+    "2026-02-24：Antenna 2025 年报：捆绑占 Premium SVOD 订阅 27%（7,100 万，两年前 14%），加权月流失 4.6%，订阅增速降至 7%",
+    "2026-02-26/27：WBD 认定 Paramount 每股 31 美元（约 1,109 亿美元）报价更优并终止与 Netflix 协议，Netflix 获 28 亿美元终止费",
+    "2026-03-25：Deloitte《2026 数字媒体趋势》：订阅家庭月均流媒体支出 69 美元、平均 4 个服务、41% 近 6 个月退订过",
+    "2026-03-26：Netflix 美国再提价（广告档 8.99、标准 19.99、高级 26.99）",
+    "2026-04-09：Xfinity StreamSaver 扩容为 8 种组合（18–35 美元，新增 Disney+/Hulu 捆绑与 HBO Max）",
+    "2026-04-24：Charter 称逾 50% 扩展基本套餐视频用户已激活至少一个内含流媒体 App，激活者流失率低三分之一",
+    "2026-05-06：Verizon Netflix & HBO Max（含广告）perk 由 10 美元涨至 13 美元",
+    "2026-05-20：Hub《The Best Bundle 2026》：人均电视服务数由 2024 年 7.4 个降至 6.8 个",
+    "2026-06-02：Antenna Adds & Ads：广告档占存量 48%、占 2026Q1 新增 59%，美国广告档订阅逾 1.1 亿（不含 Prime Video）",
+    "2026-06-15：福克斯宣布收购 Roku（企业价值约 220 亿美元）",
+    "2026-07-09：据 WSJ（经 Yahoo/Awful Announcing 转述），Netflix 研究在 App 内销售 Peacock 等第三方订阅、推出直播频道与捆绑",
+    "2026-08-13：Deloitte：50% 的美国 SVOD 用户称至少一个付费服务属于捆绑（一年前 44%）",
+    "2026-08-18：ACSI 2026：视频流媒体行业满意度降 1% 至 77，订阅电视升至 72 创纪录；同日 Peacock 对新用户提价（Premium 12.99）",
+    "2026-08-20：Charter 完成约 345 亿美元收购 Cox（同时完成收购 Liberty Broadband）",
+    "2026-08-28：Apple TV 月费由 12.99 涨至 14.99 美元",
+    "2026-09-01：Parks：51% 美国宽带家庭偏好“直播电视 + 流媒体”组合套餐；Apple TV × Peacock 捆绑对新用户涨至 17.99/22.99",
+    "2026-09-10：Nielsen 7 月 Gauge：流媒体 49.0% 创新高，YouTube 14.2% 创新高，Netflix 7.8%",
+    "2026-09-15：Prime Video 推出五合一捆绑（AMC+、BritBox、MGM+、PBS Masterpiece、Starz，29.99 美元）",
+    "2026-09-17：Roku 在 Premium Subscriptions 上线 30 种捆绑组合（最高省 30%）；J.D. Power 2026 电视服务商满意度研究发布（直播流媒体满意度降 3 分至 627）",
+    "2026-09-21：Paramount 与 12 州总检察长及编剧工会和解，Ellison 称约两周内完成 WBD 交割",
+    "2026-09-23：迪士尼公布 Disney+/Hulu 再提价（单订无广告 21.49、广告版 12.49，广告版 Duo 维持 12.99）"
+  ],
+  "并购分拆与监管": "①Paramount Skydance 收购 WBD：2025-08-07 Paramount 与 Skydance 完成合并；2025-12-04 WBD 先与 Netflix 签约（Netflix 收购片厂与 HBO Max、线性网络分拆）；Paramount 发起全现金要约并多次加价，2026-02-26 WBD 董事会认定其每股 31 美元、总值约 1,109 亿美元的报价更优，2026-02-27 终止与 Netflix 的协议，Netflix 获 28 亿美元终止费（Paramount 支付）；交易已获美国司法部反垄断局批准，加州等 12 州起诉后于 2026-09-21 和解（仍需法院批准），同时与美国编剧工会和解，CEO David Ellison 暂定约两周内交割（截至 2026-09-23 未完成）。战略意图：HBO Max + Paramount+ 拼规模；Antenna 估算 2026-01 两者美国付费订阅分别 2,710 万、3,580 万，重叠 760 万（HBO Max 用户 27.9% 同时订 Paramount+），去重约 5,530 万（推算）。②迪士尼：Hulu + Live TV 与 Fubo 于 2025-10-29 合并完成，迪士尼持股 70%，合并体近 600 万北美用户、为第二大虚拟付费电视；ESPN 以 10% 股权换取 NFL Network 等媒体资产，获司法部批准后于 2026-01 底完成。③体育合资 Venu Sports（ESPN/福克斯/WBD）在 Fubo 反垄断诉讼与初步禁令之后于 2025-01-10 宣布放弃——跨集团捆绑的反垄断边界案例。④康卡斯特：有线网络分拆为 Versant，2026-01-02 完成（纳斯达克 VSNT）。⑤福克斯收购 Roku：2026-06-15 宣布，每股 160 美元（96 美元现金 + 0.9693 股福克斯 A 类股），企业价值约 220 亿美元，待监管批准；交易方称合并后按观看份额为全美第三大电视参与者；Antenna 称 Roku Apps + Roku Channel 占美国 SVOD 订阅 4.5%（2026-05）。⑥Charter 以约 345 亿美元收购 Cox，2026-08-20 在加州公用事业委员会批准后完成，成为全美最大有线/宽带运营商——“App 内含型”付费电视捆绑的最大推动者规模进一步扩大。⑦测量争议：Nielsen 因接入 ARF DASH 电视宇宙研究（MRC 2026-02 认证）且客户要求补充数据，推迟 2026-02 Gauge 发布（2026-03）；电视广告局（TVB）2026-07 批评 Nielsen 广告支持 Gauge 夸大流媒体份额——2026 年前后的 Gauge 数据存在口径断点。",
+  "捆绑套餐明细": [
+    {
+      "套餐": "Disney+/Hulu 捆绑（Duo）",
+      "类型": "内容方自营",
+      "组成与美国月价": "广告版 12.99 美元（2026-09-23 提价公告中维持不变）；无广告 Premium 21.99 美元（原 19.99）",
+      "备注": "单订：Disney+、Hulu 广告版各 12.49（原 11.99）、无广告各 21.49（原 18.99）；新价 2026-09-23 公布，老用户于下一计费周期生效"
+    },
+    {
+      "套餐": "Disney+/Hulu/HBO Max",
+      "类型": "跨集团联合会员（迪士尼×WBD，2024-07-25 开售）",
+      "组成与美国月价": "广告版 19.99、无广告 32.99 美元（2025-10-21 起；上线时 16.99/29.99，官方称最高省 38%）",
+      "备注": "可在 Disney+、Hulu 或 HBO Max 任一方购买，由售卖方计费；2026-09-23 公告未提及此套餐调价"
+    },
+    {
+      "套餐": "Disney+/Hulu/ESPN 捆绑",
+      "类型": "内容方自营（含体育）",
+      "组成与美国月价": "含 ESPN Select：21.99（广告）/32.99（Premium）；含 ESPN Unlimited：35.99（广告）/44.99（Premium）；旧版 Disney+/Hulu/ESPN+ 捆绑自 2026-09-17 起 27.99",
+      "备注": "单订 ESPN Unlimited 29.99、ESPN Select 12.99（2025-10 起）"
+    },
+    {
+      "套餐": "ESPN Unlimited × FOX One",
+      "类型": "跨集团（体育）",
+      "组成与美国月价": "39.99 美元（2025-10-02 上线）",
+      "备注": "单订 29.99 + 19.99；仅限 ESPN Unlimited，不能与 Disney+/Hulu 叠加"
+    },
+    {
+      "套餐": "Apple TV × Peacock",
+      "类型": "跨集团联合会员（2025-10-20 上线）",
+      "组成与美国月价": "Apple TV + Peacock Premium（含广告）17.99（原 14.99）；Apple TV + Peacock Premium Plus 22.99（原 19.99）",
+      "备注": "新价对新用户 2026-09-01、老用户 2026-10-01 生效；Premium Plus 版亦可经 Prime Video Channels 订购"
+    },
+    {
+      "套餐": "Xfinity StreamSaver",
+      "类型": "分发方（有线/宽带运营商）",
+      "组成与美国月价": "2026-04-09 扩为 8 种组合：Peacock Premium + Netflix 标准含广告 + Apple TV 18 美元；三服务 22 美元（Peacock+Netflix+HBO Max、Peacock+Netflix+Disney+/Hulu、Peacock+Apple TV+HBO Max）；四服务 30 美元（3 种）；五服务全包 35 美元",
+      "备注": "仅限 Xfinity 宽带或电视用户；除 Apple TV 外均为广告档；2024-05 上线时三合一 15 美元；8 种组合中 7 种含 Netflix"
+    },
+    {
+      "套餐": "Verizon perk：Netflix & HBO Max（含广告）",
+      "类型": "分发方（电信）",
+      "组成与美国月价": "13 美元（2026-05-06 起，原 10 美元）",
+      "备注": "Netflix 标准含广告 + HBO Max Basic 含广告；Verizon 另有迪士尼捆绑等 perk（现价未核实）"
+    },
+    {
+      "套餐": "Charter Spectrum TV Select 内含 App（Seamless Entertainment）",
+      "类型": "分发方（有线运营商，批发内含）",
+      "组成与美国月价": "对 TV Select 及以上用户零额外费用内含 Disney+、Hulu、ESPN Unlimited、HBO Max Basic、Paramount+ Essential、Peacock Premium、AMC+、ViX、Tennis Channel、FOX One、Discovery+ 等广告版，Charter 称零售价值约 127–129 美元/月",
+      "备注": "内含清单不含 Netflix；用户在 Spectrum App Store 激活，可补差价升级无广告版"
+    },
+    {
+      "套餐": "Walmart+",
+      "类型": "分发方（零售会员）",
+      "组成与美国月价": "12.95 美元/月或 98 美元/年，含 Paramount+ Essential 或 Peacock Premium 二选一（每 90 天可切换）",
+      "备注": "另付 6 美元/月可升级 Peacock Premium Plus"
+    },
+    {
+      "套餐": "Prime Video Channels 五合一",
+      "类型": "聚合平台",
+      "组成与美国月价": "AMC+、BritBox、MGM+、PBS Masterpiece、Starz 合计 29.99 美元（2026-09-15 上线）",
+      "备注": "亚马逊称较单订约省 39%；非 Prime 会员也可购买"
+    },
+    {
+      "套餐": "Roku Premium Subscriptions 捆绑",
+      "类型": "聚合平台",
+      "组成与美国月价": "2026-09-17 上线 30 种组合（HBO Max、AMC+、FOX One、Starz 等）",
+      "备注": "最高省 30%；Roku 首次在其频道商店提供捆绑"
+    },
+    {
+      "套餐": "T-Mobile 套餐内含",
+      "类型": "分发方（电信）",
+      "组成与美国月价": "部分后付费套餐内含 Netflix 标准含广告（Netflix On Us）等",
+      "备注": "具体组合与规模未披露，本专题未核实最新条款"
+    }
+  ],
+  "折扣幅度": "口径：折扣 = 1 − 捆绑月价 ÷ 同档单订月价之和；单订价取 2026-09-23 可得的最新美国零售价（Disney+/Hulu 用 9-23 公告新价，括号内为公告前）。①Disney+/Hulu Duo 广告版：12.99 ÷（12.49×2）→ 48.0%（公告前 45.8%）；Duo Premium：21.99 ÷（21.49×2）→ 48.8%（公告前 47.4%）。②Disney+/Hulu/HBO Max 广告版：19.99 ÷（12.49+12.49+10.99）→ 44.4%（公告前 42.8%）；无广告：32.99 ÷（21.49+21.49+HBO Max Standard 18.49）→ 46.3%（公告前 41.6%）。③Disney+/Hulu/ESPN Unlimited：35.99 ÷（12.49+12.49+29.99）→ 34.5%；Premium 44.99 ÷ 72.97 → 38.3%（若该套餐随 9 月提价同步调整需重算）。④ESPN Unlimited × FOX One：39.99 ÷ 49.98 → 20.0%。⑤Apple TV × Peacock：17.99 ÷（14.99+12.99）→ 35.7%；22.99 ÷（14.99+19.99）→ 34.3%（2025-10 上线时分别为 37.5%、33.3%，官方称“超过 30%”）。⑥Xfinity StreamSaver 18 美元档：按 2026-04 扩容时零售价（Netflix 8.99 + Peacock 10.99 + Apple TV 12.99）→ 45.4%（Comcast 称 45%）；按 2026-09 新零售价（Peacock 12.99、Apple TV 14.99）→ 51.3%；35 美元五服务档按新价约 42.6%。⑦Verizon Netflix & HBO Max：13 ÷（8.99+10.99）→ 34.9%。⑧Prime Video 五合一约 39%（亚马逊口径）；Roku 捆绑最高 30%（Roku 口径）；Charter 对 TV Select 用户“零额外费用”（成本已含在电视套餐与批发费中）。小结：内容方自营/跨集团捆绑折扣集中在 35%–49%，体育捆绑约 20%，运营商分发 35%–51%，聚合平台 30%–39%。迪士尼 2026-09 “单订大涨、广告版 Duo 不涨”后，Duo 仅比单订贵 0.50 美元，说明捆绑已是主推 SKU 而非临时促销。",
+  "分发渠道与计费方": "①渠道结构（Antenna，2025Q1，34 个流媒体服务，Gross Adds 5,200 万）：服务方自有平台直销约 45%（2,300 万）；Amazon Prime Video Channels 24%（上年 21%）；其他 Channels（Hulu、The Roku Channel、YouTube Primetime Channels、Max、YouTube TV）9%（上年 6%）；应用商店约 21%（约 1,000 万，上年 28%/1,200 万）——约三分之一新增来自 Channels 型商店。②分服务：Netflix 在 Antenna 可测渠道中 100% 直销（2025-03 新增全部来自自有平台，未上架 Amazon/Roku Channels）；Paramount+ 30% 来自 Prime Video Channels、39% 直销；Peacock 55% 直销、18% 来自 iTunes；FOX One 上线（2025-08-21 至 10-31）近三分之二注册来自 Amazon Channels；Specialty SVOD 2026Q2 三分之二新增来自 Prime Video Channels（同比 +6 点）。③增量性：Antenna 称经 Prime Video 注册 HBO Max、Apple TV+、Crunchyroll、Paramount+ Essential 的 560 万人中 89% 若无该渠道不会订阅；Roku 提供的 Antenna 数据显示 Premium Subscriptions 注册 76% 为增量；Apple TV+ 经 Amazon Channels 的注册 73% 为新用户（iTunes 仅 48%）；HBO Max 2021 年退出 Amazon Channels 流失约 500 万用户，8 个月内回订不到十分之一，2022-12 回归后三个月带来 300 万注册。④Roku：2026-05 Roku Apps + Roku Channel 合计 2,440 万美国 SVOD 订阅（占 4.5%，2024Q2 为 3.7%，两年 +40% vs 全市场 +16%）；Roku 占美国 SVOD Gross Adds 由 2023Q1 的 8% 升至 2026Q1 的 11%；同期 Channels 环境份额 +2 点、直销 +3 点、应用商店 −8 点。⑤计费与用户关系：自营/跨集团捆绑由售卖方计费并掌握支付关系（如 Disney+/Hulu/HBO Max 可在三方任一处购买）；Channels 模式由亚马逊/Roku/YouTube/苹果计费并掌握交易数据，服务方仅保留观看账户，分成比例未公开；运营商捆绑由运营商计费，按批发价/激活向内容方付费（Charter 通过 Spectrum App Store 激活、管理与升级内含 App）。⑥测量盲区：Antenna 不测量 MVPD+电信分发、有线套餐内免费附送的 SVOD、Prime 会员内含的 Prime Video 与企业订阅——StreamSaver、Verizon/T-Mobile perk、Charter 内含 App、Walmart+ 等分发方捆绑的规模在主流第三方数据中基本缺位。",
+  "提价历史": "①行业均价（Antenna 平均实付价，不含促销，年付按 1/12、捆绑按服务数平摊）：无广告 2024 年 13.88 美元（同比 +4.4%，较 2022 年末 +22.8%）；广告档 7.57 美元（同比 +15.7%，较 2022 年末 +24.5%）。②主要服务 2024 年以来提价（美国月价）：Netflix——2025-01（广告档 6.99→7.99、标准 15.49→17.99、高级 22.99→24.99）；2026-03-26（8.99、19.99、26.99，平均约 +11%）。Disney+/Hulu——2024-10（Disney+ 广告版 7.99→9.99、无广告 13.99→15.99；Hulu 广告版 7.99→9.99）；2025-10-21（Disney+ 广告版 11.99、无广告 18.99；Hulu 广告版 11.99；Duo 广告版 12.99；ESPN Select 12.99）；2026-09-23 公布（广告版单订 12.49、无广告单订 21.49 即 +13%；Duo Premium 21.99；广告版 Duo 不变）。HBO Max——2024-06（无广告 15.99→16.99、Ultimate 19.99→20.99）；2025-10-21（Basic 含广告 10.99、Standard 18.49、Premium 22.99）。Peacock——2024-07（Premium 5.99→7.99、Premium Plus 11.99→13.99）；2025-07（10.99、16.99）；2026-08-18（Select 8.99、Premium 12.99、Premium Plus 19.99）。Paramount+——2024-08-20 起对新用户（Essential 5.99→7.99、含 Showtime 版 11.99→12.99，存量 Essential 月付用户保留 5.99）；2026-01-15（Essential 8.99、Premium 13.99；年付 Essential 59.99→89.99）。Apple TV——2025-08（9.99→12.99）；2026-08-28（14.99），Apple One 个人版 19.95→21.95。捆绑/分发——Disney+/Hulu/HBO Max 2025-10（16.99→19.99、29.99→32.99）；StreamSaver 三合一 15→18；Verizon Netflix&HBO Max perk 10→13（2026-05-06）；Apple TV×Peacock 14.99→17.99、19.99→22.99（2026-09）；旧版 Disney+/Hulu/ESPN+ 捆绑升至 27.99（2026-09-17）。③判断：单订价 2024 年初至今累计涨幅约 10%–117%（Netflix 标准 +29%、Disney+ 广告版 +56%、Peacock Premium +117%、HBO Max 广告版 +10%），而内容方自营捆绑价涨幅小或冻结（广告版 Duo 12.99 自 2025-10 未动）→ 捆绑是“相对降价”的留存工具；但分发方捆绑随成员服务同步涨价（+20%~+30%），说明定价权仍在内容方，尚无行业性降价战证据。",
+  "订阅规模": "①Antenna Premium SVOD（美国，10 个服务，个人级付费订阅，不含免费档、MVPD/电信分发与部分捆绑）：2025Q4 为 2.64 亿，同比 +7%（2024 年 +12%）；按同比净增（2024 年 +2,700 万、2025 年 +1,800 万）推算 2024Q4 约 2.46 亿、2023Q4 约 2.19 亿；2026Q2 同比 +6%。2025Q4 分服务订阅份额：Netflix 25%、Hulu 15%、Disney+ 14%、Paramount+ 13%、Peacock 10%、HBO Max 9%、Apple TV 8%、Starz 4%；2023Q4：Netflix 26%、Hulu 15%、Disney+ 13%、Paramount+ 13%、Peacock 10%、HBO Max 8%、Apple TV 8%、Starz 4%、Discovery+ 3%。②Specialty SVOD 2026Q2 为 4,200 万（同比 +14%），占 SVOD 合计 13%；由 Roku 2,440 万 = 4.5% 反推，美国全部 SVOD 订阅约 5.4 亿（2026-05，推算）；美国广告档订阅逾 1.1 亿（2026Q1，不含 Prime Video）。Antenna 测得 2022 年以来与 Premium SVOD 有过付费交易的独立个人约 1.31 亿（2024 年报）。③渗透：Kantar 2024Q4 有 96%（1.25 亿户）美国家庭使用流媒体；Parks：逾 90% 宽带家庭至少有一个付费 SVOD（2025Q3 调查，2026-02 发布）。④公司口径（最新披露）：Netflix 全球付费会员逾 3.25 亿（2025 年末，已停止季度披露）；Disney+ 1.316 亿、Hulu 6,410 万（含 Live TV 440 万，截至 2025-09-27，其后停止披露）；Paramount+ 8,160 万（2026Q2）；Peacock 4,800 万（2026Q2）；WBD 流媒体 2025 年末 1.316 亿，其后披露超 1.4 亿。⑤口径差异：按 Antenna 份额推算 Netflix 美国约 6,600 万（25% × 2.64 亿），明显低于 Netflix 最后一次分区披露的美加（UCAN）约 9,000 万（2024 年末）——后者含加拿大、合作方计费（运营商捆绑）与账户口径，Antenna 按个人计且不测 MVPD/电信渠道。（家庭订阅数与支出见额外字段“家庭订阅数支出与订阅疲劳”。）",
+  "捆绑用户占比": "【一、存量占比】①Antenna（服务级订阅口径，美国 Premium SVOD，不含 MVPD/电信分发与部分捆绑）：捆绑套餐订阅占比 2023Q4 14% → 2024Q4 19% → 2025Q4 27%（7,100 万 / 2.64 亿）；捆绑订阅同比 +50%，非捆绑订阅同比 −1% 至 1.94 亿——2025 年约 1,800 万的订阅净增在账面上全部体现为捆绑订阅增长（其中包含单订用户转入捆绑的迁移）。注意：Antenna 2025 年新增覆盖 22 个捆绑（含 FOX One+ESPN Unlimited、Apple TV+Peacock、Disney+/Hulu/ESPN Unlimited 及多个 Specialty 组合），占比上升有一部分可能来自测量覆盖扩大；Antenna 自称“并非覆盖 100% 的套餐，但相对趋势有意义”。②Deloitte（人口口径、问卷）：50% 的美国 SVOD 用户称至少一个付费服务属于捆绑（2026-05 调查，n=3,518，2026-08-13 发布），一年前 44%。③Hub：2025-06《Monetizing Video》据 DCN 转述 57% 订户至少订有一个捆绑（转述数字，未见原文）；Hub 2025-05 称使用捆绑者平均使用约 6 个付费视频产品，直订者约 3.2 个。Reviews.org（2026-06，n=1,000，可信度较低）：46% 已把流媒体捆在一起。④Kantar（渠道附加口径）：经 Prime Video/Apple TV 等 Channels 附加订阅的服务占全部流媒体服务 23%（2023Q4，上季 20%）。⑤运营商/零售渠道（Antenna 不覆盖）：Charter 称逾 50% 扩展基本套餐视频用户激活至少一个内含 App、激活者平均近 4 个（2026Q1）；按其约 1,250 万视频用户粗算，内含 App 激活约 2,000–2,500 万个服务级订阅（推算）。迪士尼 Hulu 纯 SVOD 用户在截至 2025-09-27 的季度由 5,120 万增至 5,970 万（+850 万），同期 Charter 开始向 TV Select 用户内含 Hulu；Parks 称 Charter 的 Hulu 合作带来约 1,000 万订阅（口径未披露）；迪士尼财报注明批发安排的每订户收入较低。【二、新增占比】①Antenna：Premium SVOD 捆绑注册（sign-ups）由 2023Q1 的 430 万增至 2025Q4 的 2,000 万（约 +375%）；同季 Premium SVOD Gross Adds 为 5,300 万 → 捆绑约占新增 35%–40%（推算，注册与 Gross Adds 定义略有差异）。②分服务：Disney+ 2026-02 新增的 95% 来自捆绑套餐（2024Q4 Disney Bundle 占其新增 68%）；Hulu 2024Q4 Disney Bundle 占新增 47%；HBO Max 经 Disney×WBD 捆绑的新增占比 2024Q3 22%、Q4 21%（Disney+ 14%、Hulu 15%）；Apple TV 经捆绑的新增占比在 Apple TV×Peacock 上线数月后升至 27%（2026-02）；ESPN 直营上线至 2025-10 约 65% 注册来自迪士尼捆绑（Antenna），Iger 称 80% ESPN Unlimited 用户选了三合一捆绑（迪士尼口径，2025-11）。③渠道：2025Q1 约三分之一新增来自 Channels 商店（Amazon 24%、其他 9%）。【三、2024 年以来变化】存量占比两年近翻倍（14%→27%）；非捆绑订阅已负增长；新增中捆绑与 Channels 占比上升、应用商店下降；人口口径一年内由 44% 升至 50%。【四、“联合会员”市占率估算（推算，口径逐层说明）】①广义（任何捆绑套餐，Antenna 可测口径）：27%（2025Q4）。②狭义跨集团联合会员（Disney+/Hulu/HBO Max、Apple TV×Peacock、ESPN×FOX One 及 Specialty 跨集团组合）：约 3%–6%（中值约 4%–5%，约 1,000–1,500 万服务级订阅）。方法：Disney×WBD 捆绑 2024 年末 220 万套（Antenna），×3 个服务≈660 万服务级订阅（约占 2024Q4 2.46 亿的 2.7%）；假设 2025 年与捆绑整体同步 +50% → 约 1,000 万；Apple TV×Peacock 以 Apple TV 约 2,100 万订阅（8%×2.64 亿）及捆绑占其新增 27% 推算约 100–200 万套（200–400 万服务级）；FOX One×ESPN 与 Specialty 组合合计约 100–200 万；合计占 2.64 亿的 3%–6%。其余约 21–24 个百分点为迪士尼等集团内部捆绑（Duo、Trio、ESPN 捆绑）。③全口径（含运营商/零售分发）：在 Antenna 7,100 万基础上加 Charter 内含 App 激活约 2,000 万、其他 MVPD/电信/零售 perk 假设 2,000–4,000 万（规模未披露），分母相应扩大 → 经捆绑/合作渠道获得的订阅约占 32%–40%（推算，区间宽）。④人口口径：约半数 SVOD 用户至少有一个服务来自捆绑（Deloitte 50%，Hub 转述 57%）。⑤新增口径：捆绑约占 2025Q4 Premium SVOD 新增的 35%–40%（推算）。说明：同一市场出现 14%/27%/32%–40%/50%/57% 等不同数字，源于“服务级订阅 vs 人口”、“是否含运营商内含”、“问卷自报 vs 交易面板”三重口径差异，不可直接比较。",
+  "流失率与捆绑效果": "【一、月流失率（Antenna 毛流失 = 当月取消 ÷ 上月末订阅，个人级，订阅数加权）】行业加权平均：2024-12 4.8%（2024 年报口径 5.0%）→ 2025-06 约 4% → 2025-12 4.6%（同比 −0.2 点）→ 2026-05 约 4% → 2026-07 约 4%；2024-09 至 2025-08 的 11 个月中 7 个月同比持平或下降（此前 21 个月仅 2 个月），2025 年 9 个服务中 7 个流失波动收窄。分服务（2026-05，Antenna 经 MediaPost）：Netflix 2%、Disney+ 3%、Hulu 4%、Paramount+ / Apple TV / Discovery+ / HBO Max 各 5%、Peacock 7%、Starz 8%；2026-07：Netflix 2%、Disney+ 3%、平均 4%。2025-12：Disney+ 4.1%、Hulu 4.9%（2025-09 基梅尔风波峰值 7.8%/9.6%）；Netflix 2023–2025 年长期在 1.3%–3% 之间。净流失（扣除当月回流）：2024 年末毛流失 5.0% vs 净流失 2.8%，2022 年以来净流失每月比毛流失低 1.5–2.7 点。广告档 vs 无广告：2025-03 广告档 4.96% vs 无广告 4.13%（差距主要因长期 Netflix 用户集中在无广告档）；按新用户队列 12 个月存活率广告档 37%、无广告 39%，差距仅 2 点（2026Q2 报告）。新用户留存：60% 的 Premium SVOD 新注册者一年内取消；12 个月存活率 Premium 35%、Specialty 27%（2026-08）；2024 年全体新注册 12 个月存活 36%，黑五促销队列 9 个月存活 57% vs 整体 43%。【二、捆绑 vs 单订】①Antenna 12 个月存活率（2024 年注册队列）：Disney+/Hulu/HBO Max 捆绑 59%、Netflix 单订 55%、Disney+/Hulu/ESPN Select 捆绑 53%、Disney+/Hulu 捆绑 50%；单订 Hulu 33%、Disney+ 31%、HBO Max 28% → 该捆绑比其成分服务单订平均高 28 点，差距从第 1 个月到第 12 个月扩大 2 倍以上。另一队列（2024-07~11 注册）：捆绑 59%，比 Netflix 高 7 点、比 HBO Max 单订高 26 点。②3 个月存活率（2024-07~09 注册）：Disney×WBD 捆绑 80%、Netflix 74%、Disney Bundle 73%、Hulu 56%、Disney+ 56%、Max 54%。③Ampere（2024-07）：回流用户选择 Disney+/Hulu/ESPN+ 捆绑者 12 个月内流失概率比只订 Disney+ 低 59%。④Charter：激活内含 App 的扩展基本套餐用户流失率低三分之一（2026Q1）。Hub（2025-06）：42% 用户称与单订相比“更可能保留”捆绑服务。【三、Serial churner（反复退订者）】Antenna 定义为近两年取消 ≥3 个 Premium SVOD 服务：2024Q3 末 2,950 万人，占订户 23%（2022 年初 1,180 万，+149%；2023Q3 2,270 万，+30%）；2024 年前三季度贡献 41% 的 Gross Adds 与 42% 的取消；≥5 次取消者占两者各 22%；3 个月后仍在订：非 serial 61%、标准 serial 54%、超重度（7 次以上）38%。2023 年末占“近四分之一”，其中 42% 两年内取消 ≥5 次、19% ≥7 次；2019 年仅约 3%（Deloitte 引述）。2025–2026 年未见 Antenna 公开更新值。【四、回流订阅】Antenna：2024 年 Gross Adds 中 32% 为 12 个月内回流（较 2023 年 +1 点、较 2022 年 +5 点）；2023 年取消者 3/6/12 个月回流 25%/34%/45%；2024 年取消者 23%/32%/42%；Netflix 6 个月 42%、12 个月 50% 居首，HBO Max、Hulu 12 个月各 44%；2026Q1 广告档存量中 25% 为回流用户（两年 +6 点）。Kantar：回流（boomerang）订阅占付费订阅 20%（2025Q2，2024Q2 16%），分服务回流率 Netflix 18%、Prime Video 9%、Apple TV+ 29%、Paramount+ 23%，季度流失约占付费订阅 14%。Deloitte：半年内“退订又回订同一服务”者 24%（2025 版）、22%（2026 版）。Ampere：42% 美国 SVOD 消费者是回流用户（2024-07）。【五、捆绑对留存的量化效果（结论）】捆绑把二线服务 12 个月留存从约 30% 提到 50%–59%，与 Netflix 单订（55%）持平甚至略高；行业加权流失从 5% 降至约 4%–4.6% 与捆绑占比由 14% 升至 27% 同期发生（相关性，非严格因果）。",
+  "观看时长份额": "【Nielsen The Gauge（美国电视总使用时长份额）】2024-12：流媒体 43.4%（广播 22.4%、有线 23.8%）；YouTube 11.1%、Netflix 8.5%、Prime Video 4.0%。2025-05：流媒体 44.8%，首次超过广播（20.1%）+有线（24.1%）之和；YouTube 12.5%。2025-07：流媒体 47.3%；YouTube 13.4%、Netflix 8.8%。2025-12：流媒体 47.5% 创纪录（广播 21.4%、有线 20.2%）；Netflix 9.0%（平台纪录，圣诞 NFL + 《怪奇物语》）、Prime Video 4.3%、Roku Channel 3.0%、Paramount 流媒体 2.5%；YouTube 约 12.7%（二手来源）。2026-04：流媒体 47.6%（广播 19.9%、有线 21.6%）；YouTube 13.4%、Netflix 7.8%（多年低位）、Prime Video 4.2%、Tubi 2.3%（平台最高）。2026-05：流媒体 48.6%（广播 19.2%、有线 20.4%）；YouTube 13.8%、Netflix 8.0%、Prime Video 4.5%、Roku Channel 3.1%、Paramount 2.3%、Peacock 1.8%。2026-07（最新，2026-09-10 发布，统计期 6/29–7/26）：流媒体 49.0% 新高、广播 19.5%、有线 18.7%；YouTube 14.2% 新高、Netflix 7.8%、迪士尼流媒体 4.7%、Prime Video 4.3%、Roku Channel 2.9%、Peacock 2.6%（世界杯 + 《Love Island USA》）、Tubi 2.0%。趋势：YouTube 与 Netflix 差距由 2024-12 的 2.6 点扩大到 2026-07 的 6.4 点；Netflix 在有大型直播的月份冲高（9.0%），其余月份在 7.8%–8.8%。【Media Distributor Gauge（按媒体集团）】2026-07：YouTube 14.2%，领先第二名 NBCU+Versant（9.2%）5.0 点，福克斯 7.8%；2026-05：YouTube 13.8%、迪士尼 10.0%、NBCU+Versant 8.4%、Netflix 8.0%；福克斯称并购 Roku 后按观看份额将成美国第三。【其他份额口径】JustWatch 2026Q2（美国平台用户互动份额，4,500 万次互动）：Netflix 20%、Prime Video 17%、Disney+ 15%、Apple TV 13%、Hulu 11%、HBO Max 10%、Peacock 4%、Paramount+ 3%，同比 Prime Video −4 点、Apple TV +5 点；Antenna 2025Q2 Premium SVOD 新增份额：HBO Max 15%、Hulu 14%、Paramount+ 14%、Peacock 13%、Apple TV+ 12%、Disney+ 12%、Netflix 11%（订阅存量份额见“订阅规模”）。【口径提醒】Nielsen 2026 年接入 DASH 电视宇宙估计并推迟 2 月报告，TVB 质疑其广告支持 Gauge；前后月份对比需谨慎。",
+  "流媒体业务财务": "①行业：Ampere 估算 2025 年全球订阅流媒体收入 1,571 亿美元（同比 +14%），美国约占一半；广告档收入占订阅收入比例由 2020 年不足 5% 升至 2025 年 28%；含广告收入全球流媒体收入约 1,770 亿；预计 2030 年订阅收入超 2,000 亿。②主要公司最新季度（2026Q2 或对应财季）：Netflix：营收 125.6 亿美元（同比 +13%）、营业利润 41.9 亿、营业利润率 33.4%，2026 年指引营收 510–514 亿、利润率 31.5%，2025 全年利润率 29.5%。迪士尼 DTC（FY2026Q3，截至 2026-06）：SVOD 营业利润 7.12 亿美元、利润率 12.9%，全年目标两位数利润率；FY2025 全年 DTC 营收 246.1 亿、营业利润 13.27 亿（FY2022 年亏损约 40 亿）。WBD 流媒体（2026Q2）：营收 30.8 亿（不计汇率 +10%）、调整后 EBITDA 5.12 亿（+63%）、利润率约 17%。Paramount DTC（2026Q2）：营收约 25 亿（+9%），其中 Paramount+ 21 亿（+16%，ARPU +12%），DTC 利润约 3.66 亿（TheWrap 口径）。Peacock（2026Q2）：营收 19 亿（+54%）、调整后 EBITDA 1.89 亿，首次季度盈利（2025Q2 亏 1.01 亿、2026Q1 亏 4.32 亿），受 NBA 季后赛、世界杯与《Love Island》驱动，公司提示季节性。③盈利拐点：迪士尼 DTC 2024 财年转盈并在 2025–2026 财年提升至两位数利润率；WBD、Paramount DTC 已盈利；Peacock 2026Q2 首次季度盈利。④格局：Netflix 单季营业利润（41.9 亿）约为迪士尼 DTC、WBD 流媒体、Paramount DTC、Peacock 四家利润合计（约 17.8 亿，营业利润与调整后 EBITDA 口径混合）的 2.4 倍；二线玩家利润率普遍 10%–17%，Netflix 为 33%。",
+  "分成与ARPU影响": "①分成机制：各方未披露捆绑收入拆分或批发价；Antenna 计算平均实付价时按“捆绑价 ÷ 服务数”平摊（方法论注明），以下按此口径推算。②每服务等效价（推算）：Disney+/Hulu/HBO Max 广告版 19.99÷3=6.66 美元、无广告 32.99÷3=11.00；Duo 广告版 12.99÷2=6.50、Premium 21.99÷2=11.00；StreamSaver 18÷3=6.00；Verizon perk 13÷2=6.50；Prime 五合一 29.99÷5=6.00；Apple TV×Peacock 17.99÷2=9.00；ESPN×FOX One 39.99÷2=20.00。③稀释幅度（推算）：广告版捆绑每服务 6.0–6.7 美元，比 Antenna 2024 年广告档平均实付 7.57 美元低 12%–21%，比当前单订广告档零售价（10.99–12.49）低约 40%–52%；无广告捆绑每服务约 11 美元，比 2024 年无广告平均实付 13.88 美元低约 21%，比单订零售（18.49–21.49）低 40%–49%。④批发（运营商内含）：迪士尼财报注明“批发安排的每付费订户月均收入较低”；Hulu 纯 SVOD 在 Charter 内含后一季 +850 万，属低 ARPU 规模；Charter 以“零额外费用”提供零售价值约 127–129 美元/月的 App，意味着批发价远低于零售价（推断，具体费率未披露）。⑤对利润率与 LTV 的影响（推算示例）：以生命周期价值≈月 ARPU×平均留存月数估算，若 12 个月存活率由单订约 30% 提至捆绑 59%（按几何衰减折算平均留存由约 10.5 个月增至约 23 个月，约 2.2 倍），即使每服务 ARPU 被稀释 40%–45%，LTV 仍提升约 20%–35%；再计入获客成本下降（渠道/批发几乎无营销费）与广告收入（捆绑以广告档为主），捆绑对单位经济未必是负面——示例未计内容成本与渠道分成，仅供方向参考。⑥旁证：迪士尼 DTC 在新增 95% 来自捆绑的同时利润率升至 12.9%，Paramount+ ARPU 同比 +12%（2026Q2）——说明捆绑与提价/广告可以并行（相关性）。风险在于若捆绑占比继续上升而单订被“挤出”，整体 ARPU 将向 6–9 美元/服务收敛。",
+  "内容投入": "①全行业（Ampere，2026-01-12）：2026 年全球内容投资预计 2,550 亿美元（同比 +2%），其中广告与订阅流媒体投入 1,010 亿美元（约占五分之二，同比 +6%），2025 年流媒体首次超过商业广播成为最大内容出资方；美国商业广播公司削减内容支出，母公司把预算转向自有流媒体；世界杯、冬奥等赛事推高 2026 年支出，付费电视与广播投入停滞或下降。②投入强度（推算）：流媒体 2026 年内容投入 1,010 亿美元约相当于 2025 年全球流媒体收入（订阅 1,571 亿 + 广告，合计约 1,770 亿）的 57%（年份与口径不完全匹配，仅作量级参考）。③每订阅内容成本：全行业缺少一致的订阅分母（多家已停止披露订阅数、全球与美国口径不一），本专题不做推算；各公司内容现金支出、摊销与每订阅成本见 Netflix 及“流媒体飞轮与行业格局专题”条目。④内容投入的获客/留存产出（Antenna）：新增高度集中于热门剧与大事件——《Love Island USA》《Landman》首播后 90 天内分别带来约 130 万、91.5 万新注册，Severance 首周注册最多；9–12 月占全年新增约 40%，服务方把大剧、院线大片首播与体育集中排在秋季；看过《The Pitt》的 HBO Max 新用户季终后 1 个月留存 75%（基准 67%）。⑤与捆绑的关系：捆绑让各方共享彼此内容库以提高留存，但不减少各自的内容投入（流媒体整体投入仍 +6%）；捆绑更像“内容互换以摊薄获客与留存成本”，而非内容成本的合并（推断）。",
+  "体育与直播版权": "①NFL 拉新：Antenna 估计拥有 NFL 转播权的 Premium SVOD 在 2025 赛季日均注册比休赛期高 60%；Peacock 日均注册由休赛期 5.5 万增至 10.8 万（+98%），首次超过 Paramount+（+27% 至 10.2 万）；ESPN +74% 至 3.4 万；FOX One 首个赛季日均 3 万；NFL 自营服务（NFL+、Sunday Ticket）2025Q4 合计 520 万（+31%），Sunday Ticket +44%。②直播对单平台的拉动：TNF 触达 2025-09 Amazon Prime 新注册者的 39%；Netflix 圣诞 NFL 触达 2025-12 Netflix 新注册者的 23%；2024 年 Paul vs Tyson 为 Netflix 带来 140 万注册、NFL 圣诞赛 70 万，但 Paul vs Tyson 队列 1 个月内取消 21%（Netflix 基准 14%、其他 Premium SVOD 26%）；Paramount+ UFC 324 与 AFC 冠军赛三天约 100 万注册（2026-01）。③体育作为捆绑“粘合剂”：ESPN 直营上线后约 65% 注册来自迪士尼捆绑（Antenna）/ 80% ESPN Unlimited 用户选三合一（迪士尼口径）；ESPN×FOX One 体育捆绑（39.99 美元）；Charter 内含 ESPN Unlimited 与 FOX One；Peacock 借 NBA 与世界杯实现首次季度盈利，2026-07 观看份额升至 2.6%。④与奈飞对比：奈飞走“事件型直播”（NFL 圣诞赛、WWE Raw、拳赛、2027/2031 女足世界杯）而不做捆绑，据 WSJ 报道还在研究 2030/2034 世界杯转播权；其直播拉新有效但留存弱于常规新用户（见②）。",
+  "捆绑战略动机": "①降流失（首要）：捆绑 12 个月存活 50%–59% vs 二线单订 28%–33%；Charter 激活内含 App 的用户流失低三分之一。②在增长放缓期找增量：Premium SVOD 订阅增速由 12%（2024）降至 7%（2025）、6%（2026Q2），非捆绑订阅已 −1%，新增增长只来自捆绑与 Channels。③降获客成本、触达新人群：Prime Video Channels 注册 89% 为增量、Roku 76% 为增量、Apple TV+ 经 Amazon 的注册 73% 为新用户；Disney×WBD 捆绑贡献 HBO Max 约五分之一新增。④推广告档与广告库存：捆绑几乎全是广告版（StreamSaver、Verizon、Charter、Walmart+、广告版 Duo），广告档已占新增 59%、全球订阅收入 28%。⑤价格歧视：单订持续大幅提价、捆绑价冻结（迪士尼 2026-09），把价格敏感用户导入捆绑、保留高价单订。⑥分发方动机：Charter 用内含 App 止住付费电视流失（2025Q4 视频用户 +4.4 万，为多年来首次净增）；运营商与零售会员用 perk 降低宽带/无线/会员流失。⑦对抗注意力竞争：YouTube 观看份额 14.2% 且持续扩大，二线服务以捆绑提高“打开率”与留存；并购整合（Paramount+HBO Max）本质也是“内部捆绑”。",
+  "优势": "对服务方：留存显著改善（+20~28 点）；拉新（捆绑约占新增 35%–40%）；借伙伴触达新用户；广告档规模扩大；迪士尼、WBD 等在捆绑占比上升期间实现流媒体盈利（相关性）。对分发方：Charter 视频用户由 2024Q4 −12.3 万转为 2025Q4 +4.4 万，2026Q1、Q2 流失同比收窄 67%、74%。对消费者：捆绑折扣 35%–51%（体育约 20%）；单一账单与统一管理（Hub 2026：44% 看重一张账单；Reviews.org：68% 愿把流媒体合并为一张账单；Hub 2025：四分之三认为单平台管理多订阅有吸引力）；可“尝试更多服务”（Hub 2026 32%）；订阅电视 ACSI 满意度 2026 年升至 72 创纪录（与内含 App、打包简化同期，推断相关）。",
+  "劣势与风险": "①ARPU 稀释：捆绑内每服务等效价 6–9 美元，比单订低 40%–50%；批发内含单价更低。②失去用户关系与数据：Channels 与运营商计费方掌握交易数据；Antenna/Nielsen 对运营商内含订阅存在测量盲区，市场份额难以核实。③渠道依赖：Amazon Channels 占新增 24%；HBO Max 2021 年退出 Amazon Channels 损失约 500 万用户、8 个月内回订不到十分之一；福克斯收购 Roku、Charter 并购 Cox 使分发方议价力上升。④连带流失：捆绑把单一事件放大为多服务流失——基梅尔风波当月 Disney+、Hulu、HBO Max 合计取消 890 万，2025Q3 行业净减 240 万。⑤并不能根治订阅疲劳：60% 新用户一年内取消，serial churner 占 23% 且贡献四成进出；Specialty 流失比 Premium 高 2–4 点。⑥隐性涨价与满意度：分发方捆绑随成员服务同步提价（StreamSaver 15→18、Verizon 10→13、Apple×Peacock 14.99→17.99）；ACSI 2026 视频流媒体降至 77，提价服务评分下滑（Apple TV+ 75、Disney+ 74）；J.D. Power 直播流媒体满意度降 3 分至 627、价值感开始下降。⑦反垄断与监管：Venu Sports 被诉后放弃；Paramount-WBD 遭州级诉讼后和解；Fox-Roku 待批——跨集团捆绑与纵向整合面临审查。⑧“有线电视捆绑 2.0”风险：Charter 内含 11 个 App（零售价值约 129 美元/月），若全面回到“打包+批发”，品牌与独立定价能力被稀释。",
+  "实际效果评估": "①规模：捆绑订阅 2025 年 +50% 至 7,100 万（占 27%），非捆绑 −1%；捆绑注册由 2023Q1 430 万增至 2025Q4 2,000 万。②流失：行业加权月流失 5.0%（2024 末）→ 4.6%（2025 末）→ 约 4%（2026 年中）；Disney+ 月流失 3%（2026-05）仅次于 Netflix（2%），而 Disney+ 新增 95% 来自捆绑。③留存：Disney+/Hulu/HBO Max 捆绑 12 个月存活 59%，高于 Netflix 单订 55% 与成分服务单订 28%–33%；3 个月存活 80%。④拉新：HBO Max 约 21%–22% 新增来自跨集团捆绑（2024H2）；Apple TV 捆绑新增占比 27%（2026-02）；Apple TV+ 上架 Amazon Channels 首季 150 万注册。⑤分发方：Charter 视频用户 2025Q4 +4.4 万（上年同期 −12.3 万），2026Q1 −6 万（上年 −18.1 万）、Q2 −2.1 万（上年 −8 万），逾 50% 扩展基本用户激活 App、激活者流失低三分之一。⑥财务（相关性）：迪士尼 DTC 利润率 12.9%、WBD 流媒体 EBITDA +63%、Peacock 首次季度盈利、Paramount+ ARPU +12%。⑦局限：行业增速仍降至个位数；Q3'25 净减 240 万；Antenna 显示 2025 年 Q4 贡献全年 31% 新增、57% 净增，增长依赖季节性大事件与促销（黑五周 890 万注册），捆绑未改变“大事件拉新”的结构。",
+  "管理层表态": [
+    {
+      "人物": "Bob Iger（迪士尼 CEO）",
+      "要点": "80% 的 ESPN Unlimited 用户选择了 Disney+/Hulu/ESPN 三合一捆绑；DTC 三年前还年亏约 40 亿美元，如今全年盈利 13 亿（“成绩不错”）",
+      "出处与日期": "迪士尼 FY2025Q4 财报电话会，2025-11-13（经媒体转述）"
+    },
+    {
+      "人物": "Chris Winfrey（Charter CEO）",
+      "要点": "“超过 50% 的扩展基本套餐视频用户已激活至少一个内含流媒体 App，激活者平均近 4 个”；激活用户流失率低三分之一；视频流失改善源于 2024 年末的新定价与套餐、Xumo 以及内含节目方 App 的无缝娱乐产品",
+      "出处与日期": "Charter 2026Q1 财报电话会，2026-04-24"
+    },
+    {
+      "人物": "Netflix（股东信）",
+      "要点": "“最近与 Mercado Libre 等新型伙伴合作取得成功，把 Netflix 与其电商会员计划捆绑，加深了在墨西哥和巴西的渗透”；广告档（美国 8.99 美元）占 Q1 广告国家注册的 60% 以上",
+      "出处与日期": "Netflix 2026Q1 股东信，2026-04-16"
+    },
+    {
+      "人物": "Netflix（股东信/电话会）",
+      "要点": "不与流媒体对手单独捆绑：Netflix 已是“目的地”，与其他流媒体直接捆绑对自身收益有限（意译，据媒体报道）",
+      "出处与日期": "Netflix 2024Q2 财报，2024-07（Deadline 报道）"
+    },
+    {
+      "人物": "Jonathan Carson（Antenna CEO，年报署名作者之一）",
+      "要点": "流媒体已“摸索出回流打法”，四成取消者 12 个月内回流；27% 的订阅是捆绑套餐、两年近翻倍，捆绑在留存上显著跑赢",
+      "出处与日期": "Antenna《Premium SVOD 2025 Year in Review》，2026-02-24"
+    },
+    {
+      "人物": "Michael Goodman（Parks Associates 娱乐研究总监）",
+      "要点": "“消费者并非在直播电视与流媒体之间二选一，许多人希望在一个套餐里两者兼得”",
+      "出处与日期": "Parks 新闻稿，2026-09-01"
+    },
+    {
+      "人物": "Guy Bisson（Ampere Analysis）",
+      "要点": "捆绑的逻辑与付费电视时代相同——降低流失，但如今缺少提供统一界面的“中间人”",
+      "出处与日期": "StreamingMedia 采访，2024-09-27"
+    },
+    {
+      "人物": "David Ellison（Paramount Skydance CEO）",
+      "要点": "与各州及编剧工会和解后，暂定约两周内完成对 WBD 的收购",
+      "出处与日期": "员工备忘录，2026-09-21"
+    }
+  ],
+  "与奈飞的竞合关系": "①Netflix 不在任何内容方之间的联合会员中（Disney+/Hulu/HBO Max、Apple TV×Peacock、ESPN×FOX One 均无 Netflix），在美国只经分发方捆绑出现：Xfinity StreamSaver（8 种组合中 7 种含 Netflix 标准含广告）、Verizon Netflix & HBO Max perk（13 美元）、T-Mobile Netflix On Us，均为广告档；Charter 零额外费用内含清单不含 Netflix；在 Antenna 可测渠道中 Netflix 100% 直销，未上架 Amazon/Roku Channels。②竞争地位：Antenna 订阅份额 25%（第一）、JustWatch 互动份额 20%（第一）、Nielsen 观看份额 7.8%（仅次于 YouTube）；月流失约 2%（最低）、12 个月回流率 50%（最高）。③动向：据 WSJ（2026-07）报道，Netflix 研究把 Peacock 等第三方订阅做成 App 内付费附加、推出直播频道与捆绑（由 Netflix 计费）；MoffettNathanson 分析师 Robert Fishman 建议其与 Peacock 捆绑或建“频道商店”；Netflix 在拉美与 Mercado Libre 做会员捆绑。④竞合特征：在 StreamSaver 中与 Peacock、Apple TV、迪士尼、HBO Max 同售；在观看时长、内容与体育版权上与之竞争；与 Comcast、Verizon、T-Mobile 为分发合作关系。",
+  "对奈飞的影响研判": "【事实】①捆绑订阅 +50%、非捆绑 −1%（2025），Netflix 订阅份额仅由 26% 降至 25%（2023Q4→2025Q4）；②Netflix 月流失约 2%，远低于行业 4%–4.6%；最佳捆绑（Disney+/Hulu/HBO Max）12 个月存活 59%，只比 Netflix 单订 55% 高 4 点（另一队列高 7 点）；③Netflix 仅占 2025Q2 Premium SVOD 新增的 11%（最低），因渗透率已高，增长主要靠提价（2025-01、2026-03 平均 +11%）与广告档（Q1'26 广告国家注册 60%+）；④观看份额 7.8%（2026-07），较 2025-07 的 8.8% 降 1 点，YouTube 升至 14.2%；⑤对手捆绑的每服务等效价 6–9 美元，低于 Netflix 广告档 8.99 美元。【推断】①短期直接冲击小：捆绑主要把二线服务的留存从约 30% 拉到接近/略超 Netflix 的水平，是“补短板”，并未明显挖走 Netflix 存量（份额只降 1 点、流失未上升）。②中期风险在钱包份额：家庭付费服务数停在约 4 个（Deloitte/Kantar），Hub 显示人均服务数下降，而 12.99 美元可买 Disney+/Hulu 两服务、19.99 美元三服务；Deloitte 61% 称涨 5 美元会取消最喜欢的服务——可能压制 Netflix 高价档（19.99/26.99）的升级与留存，影响方向为负、幅度中等（推断）。③“不加入就要打价格战”不成立（现阶段）：对手捆绑自身也在涨价，Netflix 2026-03 提价后 5–7 月流失仍约 2%，未见行业降价战证据。④更大威胁可能是注意力而非捆绑：YouTube 与 Netflix 观看份额差距扩大到 6.4 点；Paramount+ 与 HBO Max 合并后美国去重订阅约 5,500 万（推算），仍低于 Netflix 美国约 6,600 万（Antenna 口径推算）。⑤应对含义：Netflix 已以广告档参与分发方捆绑作为获客渠道；若推出第三方订阅附加（Peacock 等），将由“被捆绑者”转为“捆绑者/聚合者”，保留计费与数据关系——这是对捆绑趋势的“加入但做庄”策略（推断）。【结论】影响方向：对 Netflix 用户增长轻度负面、对定价权影响有限、对流失影响不明显；不确定性中等，关键观察指标为 Antenna 的 Netflix 份额/流失、Nielsen 观看份额与 Netflix 是否上线聚合功能。",
+  "研报与分析师观点": [
+    {
+      "机构/分析师": "Antenna（Carson、Brady、Kilker）",
+      "日期": "2026-02-24",
+      "观点与数据": "市场成熟：订阅 +7%；捆绑占 27%（7,100 万），留存显著更好；四成取消者 12 个月内回流；Q4 占全年新增 31%、净增 57%；加权流失 4.6%"
+    },
+    {
+      "机构/分析师": "Antenna（Adds & Ads）",
+      "日期": "2026-06-02",
+      "观点与数据": "广告档占存量 48%、占 Q1 新增 59%，过去 9 个季度贡献 78% 净增；78% 用户试过广告档；60% 新注册者一年内取消；付费电视取消者 90 天内 79% 订有 SVOD 或 vMVPD"
+    },
+    {
+      "机构/分析师": "Deloitte（Digital Media Trends）",
+      "日期": "2026-03-25；2026-08-13",
+      "观点与数据": "订阅家庭月均 69 美元、平均 4 个服务、41% 近半年退订、22% 退订后回订；68% 用户至少付费一个广告档；50% SVOD 用户至少一个服务来自捆绑（一年前 44%），建议基于受众数据选捆绑伙伴（识别 99 个潜在品牌，多为餐饮与零售类）"
+    },
+    {
+      "机构/分析师": "Parks Associates（Michael Goodman）",
+      "日期": "2026-02-11；2026-08；2026-09-01",
+      "观点与数据": "SVOD 家庭平均 5.8 个订阅（2021 年 5.5）；30% 因削减开支、20% 因涨价退订；订阅电视家庭平均付费 6.3 个视频服务；53% 宽带家庭对瘦身套餐感兴趣（预期 20–27 美元/月）；51% 偏好“直播电视 + 流媒体”组合"
+    },
+    {
+      "机构/分析师": "Hub Entertainment Research",
+      "日期": "2025-05-19；2025-06；2026-05-20",
+      "观点与数据": "人均电视服务 7.4（2024）→6.8（2026）；50% 强烈同意预算是首要因素（上年 41%）；44% 看重一张账单；42% 更可能保留捆绑服务；用户月均电视支出 83 美元、可接受上限约 86 美元"
+    },
+    {
+      "机构/分析师": "Kantar（Entertainment on Demand）",
+      "日期": "2025（Q2 数据）",
+      "观点与数据": "家庭平均 4.1 个付费视频服务（Q1 为 4.2）已见顶；回流订阅占 20%（一年前 16%）；季度流失约 14%"
+    },
+    {
+      "机构/分析师": "Ampere Analysis",
+      "日期": "2024-07；2026-03",
+      "观点与数据": "42% 美国 SVOD 消费者为回流用户，捆绑可使回流用户 12 个月流失概率降 59%；2025 年全球订阅流媒体收入 1,571 亿美元，美国约一半，广告档占 28%"
+    },
+    {
+      "机构/分析师": "Nielsen",
+      "日期": "2026-09-10",
+      "观点与数据": "2026-07 流媒体占电视时长 49.0%、YouTube 14.2% 均创新高，Netflix 7.8%"
+    },
+    {
+      "机构/分析师": "ACSI / J.D. Power",
+      "日期": "2026-08-18；2026-09-17",
+      "观点与数据": "视频流媒体满意度降至 77、订阅电视 72 创纪录；J.D. Power 直播流媒体满意度 627（−3）、有线/卫星 +18 分，后者月费贵 41 美元"
+    },
+    {
+      "机构/分析师": "MoffettNathanson（Robert Fishman）",
+      "日期": "2026（Netflix 研报，二手转述）",
+      "观点与数据": "建议 Netflix 与 Peacock 等捆绑或建流媒体“频道商店”/FAST 层，以在不显著加速成本增长的前提下增加收入与利润"
+    },
+    {
+      "机构/分析师": "Bernstein",
+      "日期": "2026（二手转述）",
+      "观点与数据": "Netflix 管理层正探索加入直播频道与捆绑其他服务以应对参与度下滑，属重要战略转向"
+    },
+    {
+      "机构/分析师": "S&P Global Market Intelligence（Kagan）",
+      "日期": "2026-02-27",
+      "观点与数据": "专题《Pay TV reinvented: the strategic impact of free SVOD bundles》研究运营商免费内含 SVOD 的战略影响（全文付费，未获取细节）"
+    }
+  ],
+  "飞轮与行业格局证据": "①集中度与稳定性：Antenna 订阅份额两年几乎不变——Netflix 26%→25%、Hulu 15%、Disney+ 13%→14%、Paramount+ 13%；前四合计约 67%；迪士尼系（Disney+ + Hulu，含捆绑双计）合计 29% 已高于 Netflix。②规模带来的“天然捆绑”：Netflix 以单一服务实现 2% 月流失、55% 的 12 个月存活与 50% 的回流率；二线服务需组成捆绑才能达到 59%——说明规模/内容广度本身就是留存护城河，捆绑是次级玩家的“补短板”。③利润集中：Netflix 单季营业利润 41.9 亿美元，约为迪士尼 DTC、WBD 流媒体、Paramount DTC、Peacock 合计（约 17.8 亿）的 2.4 倍，利润率 33% vs 10%–17%。④非价格战：2022–2024 年行业平均实付价 +23%~+25%，2025–2026 年主要服务继续提价；捆绑提供 35%–50% 折扣但自身也在提价——更像“分层定价/价格歧视”，而非同质化降价。⑤存量博弈：Premium SVOD 增速 12%→7%→6%，非捆绑订阅 −1%，约 40% 新增集中在 9–12 月；增长来自捆绑、回流（占新增 32%）与广告档（占新增 59%）。⑥注意力竞争：流媒体占电视时长 49%，但最大单一平台是 YouTube（14.2%），FAST（Roku Channel 2.9%、Tubi 2.0%）上升；订阅服务之间的捆绑无法解决与 UGC 的时间竞争。⑦整合与再聚合：Paramount+WBD、Fox+Roku、Charter+Cox、Hulu Live+Fubo、ESPN+NFL 资产；Charter 内含 11 个 App、Prime Video/Roku 推多合一——分发方与聚合平台重新获得议价力，类似“有线捆绑 2.0”。⑧研判（推断）：数据更支持“少数规模玩家 + 分层捆绑 + 聚合平台”的寡头格局——Netflix 以规模维持单订溢价，二线服务以捆绑换留存、以并购拼规模，聚合者（亚马逊、Roku、康卡斯特、Charter）抽取渠道价值；尚未出现全行业降价或利润率普遍塌陷的证据，但二线玩家的利润率（10%–17%）已显示“捆绑 + 批发”模式的上限。",
+  "主要来源": [
+    {
+      "标题": "Antenna: State of Subscriptions – Premium SVOD 2025 Year in Review（PDF）",
+      "URL": "https://cdn.prod.website-files.com/6756b521db09e280168a4cf3/699da4453c52c6c16fba9a45_Antenna%20x%20State%20of%20Subscriptions%20-%20Premium%20SVOD%202025%20Year%20in%20Review.pdf",
+      "发布日期": "2026-02-24"
+    },
+    {
+      "标题": "Antenna Q1'26 State of Subscriptions Report: Premium SVOD 2025 Year in Review",
+      "URL": "https://www.antenna.live/insights/antenna-q126-state-of-subscriptions-report-premium-svod-2025-year-in-review",
+      "发布日期": "2026-02-24"
+    },
+    {
+      "标题": "Antenna: State of Subscriptions – Premium SVOD 2024 Year in Review（PDF）",
+      "URL": "https://cdn.prod.website-files.com/6756b521db09e280168a4cf3/67bdc1527f0c1577a2ff0fd6_Antenna%20x%20State%20of%20Subscriptions%20-%20Premium%20SVOD.pdf",
+      "发布日期": "2025-02"
+    },
+    {
+      "标题": "Antenna: State of Subscriptions – Adds & Ads, June 2026（PDF）",
+      "URL": "https://cdn.prod.website-files.com/6756b521db09e280168a4cf3/6a1dec96cc28852a8ec381e4_Antenna%20x%20State%20of%20Subscriptions%20-%20Adds%20and%20Ads.pdf",
+      "发布日期": "2026-06-02"
+    },
+    {
+      "标题": "Antenna: State of Subscriptions – Adds & Ads, May 2025（PDF）",
+      "URL": "https://cdn.prod.website-files.com/6756b521db09e280168a4cf3/682b949d9a5c6427b5166d8b_Antenna%20x%20State%20of%20Subscriptions%20-%20Adds%20and%20Ads.pdf",
+      "发布日期": "2025-05"
+    },
+    {
+      "标题": "Antenna: The Power of the Pack: Bundling and Retention",
+      "URL": "https://www.antenna.live/insights/the-power-of-the-pack-bundling-and-retention",
+      "发布日期": "2026-02/03（引用 2026-02 数据）"
+    },
+    {
+      "标题": "Antenna: Breaking Through with Bundles",
+      "URL": "https://www.antenna.live/insights/breaking-through-with-bundles",
+      "发布日期": "2025-02"
+    },
+    {
+      "标题": "Antenna: 7 Charts That Sum Up Streaming in 2025",
+      "URL": "https://www.antenna.live/insights/7-charts-that-sum-up-streaming-in-2025",
+      "发布日期": "2025-12（约）"
+    },
+    {
+      "标题": "Antenna: How Third-Party Distribution is Fueling SVOD Growth",
+      "URL": "https://www.antenna.live/insights/how-third-party-distribution-is-fueling-svod-growth",
+      "发布日期": "2025（Q1'25 数据）"
+    },
+    {
+      "标题": "Antenna’s 2024 Top Subscription Insights: Serial Churn",
+      "URL": "https://www.antenna.live/insights/antennas-2024-top-subscription-insights-serial-churn",
+      "发布日期": "2024-12"
+    },
+    {
+      "标题": "Antenna: Roku by the numbers",
+      "URL": "https://www.antenna.live/insights/roku-by-the-numbers",
+      "发布日期": "2026-06-18"
+    },
+    {
+      "标题": "Antenna: The Ad-supported Majority",
+      "URL": "https://www.antenna.live/insights/the-ad-supported-majority",
+      "发布日期": "2026-05-08"
+    },
+    {
+      "标题": "Antenna: The NEW, New Fall Season（报告）",
+      "URL": "https://www.antenna.live/reports/the-new-new-fall-season",
+      "发布日期": "2026-09"
+    },
+    {
+      "标题": "MediaPost: Streaming Q1: Third-Party Streaming Distributors Gaining Strength",
+      "URL": "https://www.mediapost.com/publications/article/407195/streaming-q1-third-party-streaming-distributors-g.html",
+      "发布日期": "2025-07-09"
+    },
+    {
+      "标题": "MediaPost（Yahoo 转载）: Netflix Monthly Subscriber Churn Still Lowest At 2%",
+      "URL": "https://finance.yahoo.com/media-advertising/articles/netflix-monthly-subscriber-churn-still-153751017.html",
+      "发布日期": "2026-06-26"
+    },
+    {
+      "标题": "TheDesk: Antenna: Specialty subscription streaming services outpacing premium apps",
+      "URL": "https://thedesk.net/2026/08/antenna-state-of-streaming-q2-report/",
+      "发布日期": "2026-08-17"
+    },
+    {
+      "标题": "Nielsen: TV Usage Kicks Usual Summer Slowdown, Fueled by World Cup and Streaming in Nielsen’s July Gauge Reports",
+      "URL": "https://www.nielsen.com/news-center/2026/tv-usage-kicks-usual-summer-slowdown-fueled-by-world-cup-and-streaming-in-nielsens-july-gauge-reports/",
+      "发布日期": "2026-09-10"
+    },
+    {
+      "标题": "Nielsen: Streaming Shatters Multiple Records in December 2025 with 47.5% of TV Viewing",
+      "URL": "https://www.nielsen.com/news-center/2026/streaming-shatters-multiple-records-in-december-2025-with-47-5-of-tv-viewing-according-to-nielsens-the-gauge/",
+      "发布日期": "2026-01-20"
+    },
+    {
+      "标题": "Nielsen: Streaming Embarks on Annual Summer Ascent in Nielsen’s May 2026 Gauge Reports",
+      "URL": "https://www.nielsen.com/news-center/2026/streaming-embarks-on-annual-summer-ascent-in-nielsens-may-2026-gauge-reports/",
+      "发布日期": "2026-07-28"
+    },
+    {
+      "标题": "Nielsen: Streaming Reaches Historic TV Milestone, Eclipses Combined Broadcast and Cable Viewing For First Time",
+      "URL": "https://www.nielsen.com/news-center/2025/streaming-reaches-historic-tv-milestone-eclipses-combined-broadcast-and-cable-viewing-for-first-time/",
+      "发布日期": "2025-06-17"
+    },
+    {
+      "标题": "TheWrap: YouTube Extends Streaming Lead With 14% of TV Viewership in July",
+      "URL": "https://www.thewrap.com/media-platforms/streaming/youtube-viewership-july-2026/",
+      "发布日期": "2026-09-10"
+    },
+    {
+      "标题": "TheWrap: YouTube Notches 13% of TV Viewing in April as Streaming Holds Steady Near 48%",
+      "URL": "https://www.thewrap.com/media-platforms/tv/tv-viewership-streaming-broadcast-cable-nielsen-the-gauge-april-2026/",
+      "发布日期": "2026-06-25"
+    },
+    {
+      "标题": "JustWatch: Second Quarter 2026 Market Shares Report",
+      "URL": "https://www.justwatch.com/us/press/market-shares-q2",
+      "发布日期": "2026-07"
+    },
+    {
+      "标题": "Deloitte: 2026 Digital Media Trends",
+      "URL": "https://www.deloitte.com/us/en/insights/industry/technology/digital-media-trends-consumption-habits-survey.html",
+      "发布日期": "2026-03-25"
+    },
+    {
+      "标题": "Deloitte 新闻稿: From Subscribers to Superfans（2026 DMT）",
+      "URL": "https://www.deloitte.com/us/en/about/press-room/deloitte-survey-digital-media-trends-consumption-habits.html",
+      "发布日期": "2026-03"
+    },
+    {
+      "标题": "Deloitte: Streaming bundle strategy with audience intelligence",
+      "URL": "https://www.deloitte.com/us/en/insights/industry/technology/streaming-bundle-strategy.html",
+      "发布日期": "2026-08-13"
+    },
+    {
+      "标题": "Deloitte: 2025 Digital Media Trends",
+      "URL": "https://www.deloitte.com/us/en/insights/industry/technology/digital-media-trends-consumption-habits-survey/2025.html",
+      "发布日期": "2025-03-25"
+    },
+    {
+      "标题": "Deloitte TMT Predictions 2025: Video streaming bundles bigger than ever",
+      "URL": "https://www.deloitte.com/us/en/insights/industry/technology/technology-media-and-telecom-predictions/2025/tmt-predictions-video-streaming-bundles-bigger-than-ever.html",
+      "发布日期": "2024-11-18"
+    },
+    {
+      "标题": "Parks Associates: 51% Of Consumers Prefer A Video Subscription Package That Combines Live TV With Their Favorite Streaming Services",
+      "URL": "https://www.prnewswire.com/news-releases/parks-associates-51-of-consumers-prefer-a-video-subscription-package-that-combines-live-tv-with-their-favorite-streaming-services-302866004.html",
+      "发布日期": "2026-09-01"
+    },
+    {
+      "标题": "TheDesk: Parks Associates: Cost is biggest driver of streaming churn in 2025",
+      "URL": "https://thedesk.net/2026/02/parks-associates-cost-is-biggest-driver-of-streaming-churn-in-2025/",
+      "发布日期": "2026-02-11"
+    },
+    {
+      "标题": "TheDesk: Viewpoint: Consumers are redefining the value of pay TV (Michael Goodman)",
+      "URL": "https://thedesk.net/2026/08/viewpoint-goodman-parks-consumer-trends-pay-tv-bundles/",
+      "发布日期": "2026-08"
+    },
+    {
+      "标题": "Kantar: Boomerang Subscribers Up 27%",
+      "URL": "https://www.kantar.com/inspiration/technology/boomerang-subscribers-up-27-how-winning-back-customers-became-streamings-new-growth-strategy",
+      "发布日期": "2025（Q2 2025 数据）"
+    },
+    {
+      "标题": "Kantar: Sports fuel Q4 streaming surge in the US",
+      "URL": "https://www.kantar.com/north-america/company-news/entertainment-on-demand-us-q4",
+      "发布日期": "2025-02-12"
+    },
+    {
+      "标题": "Digital Content Next: Consumers making more selective subscription choices（Hub 2026 Best Bundle）",
+      "URL": "https://digitalcontentnext.org/blog/2026/06/02/consumers-making-more-selective-subscription-choices/",
+      "发布日期": "2026-06-02"
+    },
+    {
+      "标题": "Advanced Television: Study: Bundling delivering much needed simplicity to consumers（Hub）",
+      "URL": "https://www.advanced-television.com/2026/05/20/survey-bundling-delivering-much-needed-simplicity-to-consumers/",
+      "发布日期": "2026-05-20"
+    },
+    {
+      "标题": "TheDesk: Hub Entertainment: Streaming bundles boost adoption of SVOD services",
+      "URL": "https://thedesk.net/2025/05/hub-research-streaming-bundles/",
+      "发布日期": "2025-05-19"
+    },
+    {
+      "标题": "World Screen: Ampere: Bundles Key to Mitigating Churn",
+      "URL": "https://worldscreen.com/ampere-bundles-key-to-mitigating-churn/",
+      "发布日期": "2024-07-09"
+    },
+    {
+      "标题": "Broadband TV News: Ampere: Global streaming revenue passed $150 billion in 2025",
+      "URL": "https://www.broadbandtvnews.com/2026/03/30/ampere-global-streaming-revenue-passed-150-billion-in-2025/",
+      "发布日期": "2026-03-30"
+    },
+    {
+      "标题": "Advanced Television: Data: US pay-TV satisfaction hits record high（ACSI 2026）",
+      "URL": "https://www.advanced-television.com/2026/08/19/data-us-subscription-tv-satisfaction-hits-record-high/",
+      "发布日期": "2026-08-19"
+    },
+    {
+      "标题": "Money Talks News: 7 Streaming TV Services That Viewers Love Most in 2026（ACSI 分服务得分）",
+      "URL": "https://www.moneytalksnews.com/acsi-streaming-tv-services-ranking/",
+      "发布日期": "2026-09-08"
+    },
+    {
+      "标题": "J.D. Power: As The Channels Turn: Traditional TV Satisfaction Climbs While Streaming Flatlines（2026 电视服务商满意度研究）",
+      "URL": "https://secure.businesswire.com/news/home/20260917673547/en/As-The-Channels-Turn-Traditional-TV-Satisfaction-Climbs-While-Streaming-Flatlines",
+      "发布日期": "2026-09-17"
+    },
+    {
+      "标题": "迪士尼 FY2025 第四季度财报（SEC 8-K 附件）",
+      "URL": "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000154/fy2025_q4xprxex991.htm",
+      "发布日期": "2025-11-13"
+    },
+    {
+      "标题": "Charter Announces Fourth Quarter and Full Year 2025 Results",
+      "URL": "https://ir.charter.com/news-releases/news-release-details/charter-announces-fourth-quarter-and-full-year-2025-results",
+      "发布日期": "2026-01-30"
+    },
+    {
+      "标题": "Advanced Television: Forecast: Content investment to hit $255bn in 2026（Ampere）",
+      "URL": "https://www.advanced-television.com/2026/01/12/forecast-content-investment-to-hit-255bn-in-2026/",
+      "发布日期": "2026-01-12"
+    },
+    {
+      "标题": "CNN: Disney, Hulu and Max launch streaming bundle at up to 38% discount",
+      "URL": "https://www.cnn.com/2024/07/25/business/disney-hulu-and-max-launch-streaming-bundle-at-up-to-38-discount/index.html",
+      "发布日期": "2024-07-25"
+    },
+    {
+      "标题": "Deadline: StreamSaver Bundle From Comcast Officially Launches",
+      "URL": "https://deadline.com/2024/05/comcast-streamsaver-bundle-launches-xfinity-apple-netflix-peacock-1235943481/",
+      "发布日期": "2024-05-29"
+    },
+    {
+      "标题": "BigGo Finance: Charter Q1 2026 Earnings Call 摘要（App 激活与流失）",
+      "URL": "https://finance.biggo.com/news/US_CHTR_2026-04-24",
+      "发布日期": "2026-04-24"
+    },
+    {
+      "标题": "Netflix Q1 2026 股东信（SEC 8-K 附件）",
+      "URL": "https://www.sec.gov/Archives/edgar/data/1065280/000106528026000137/ex991_q126.htm",
+      "发布日期": "2026-04-16"
+    },
+    {
+      "标题": "TradingView: Netflix posts Q2 revenue $12.6B, operating margin 33.4%",
+      "URL": "https://www.tradingview.com/news/tradingview:047fc5894e749:0-netflix-posts-q2-revenue-12-6b-operating-margin-33-4-and-narrows-2026-revenue-range/",
+      "发布日期": "2026-07-16"
+    },
+    {
+      "标题": "TheWrap: How the Streamers Stack Up in Revenue and Profits for Q2 2026",
+      "URL": "https://www.thewrap.com/industry-news/business/netflix-disney-warner-bros-paramount-subscribers-revenue-profits-august-2026/",
+      "发布日期": "2026-08-10"
+    },
+    {
+      "标题": "TheDesk: Comcast adds HBO Max, Disney Plus to StreamSaver bundles",
+      "URL": "https://thedesk.net/2026/04/comcast-adds-hbo-max-disney-plus-to-streamsaver-bundle/",
+      "发布日期": "2026-04-09"
+    },
+    {
+      "标题": "Peacock 帮助中心: Price Increase（含 Apple TV×Peacock 捆绑新价）",
+      "URL": "https://www.peacocktv.com/help/article/price-increase",
+      "发布日期": "2026-08"
+    },
+    {
+      "标题": "AppleInsider: Disney+ and Hulu subscription prices are increasing in 2026",
+      "URL": "https://appleinsider.com/articles/26/09/23/disney-and-hulu-subscriptions-are-about-to-get-more-expensive",
+      "发布日期": "2026-09-23"
+    },
+    {
+      "标题": "Amazon: Five-Service Streaming Bundle Launches on Prime Video in the U.S.",
+      "URL": "https://press.aboutamazon.com/prime-video/2026/9/five-service-streaming-bundle-launches-on-prime-video-in-the-u-s",
+      "发布日期": "2026-09-15"
+    },
+    {
+      "标题": "Deadline: Roku Adds 30 New Bundles To Premium Subscriptions",
+      "URL": "https://deadline.com/2026/09/roku-adds-30-new-streaming-bundles-1237105830/",
+      "发布日期": "2026-09-17"
+    },
+    {
+      "标题": "Yahoo/THR: More Than a Quarter of HBO Max Subscribers in the U.S. Already Have Paramount+",
+      "URL": "https://finance.yahoo.com/news/more-quarter-hbo-max-subscribers-184219814.html",
+      "发布日期": "2026-03-02"
+    },
+    {
+      "标题": "CNBC: Paramount and state AGs settle lawsuit, allowing Warner Bros. merger to proceed",
+      "URL": "https://www.cnbc.com/2026/09/21/paramount-reaches-settlement-over-warner-bros-merger.html",
+      "发布日期": "2026-09-21"
+    },
+    {
+      "标题": "Fox Corporation to Acquire Roku, Inc.",
+      "URL": "https://investor.foxcorporation.com/news/corp-press-releases/2026/fox-corporation-to-acquire-roku-inc/",
+      "发布日期": "2026-06-15"
+    }
+  ],
+  "家庭订阅数支出与订阅疲劳": "①Deloitte：2026 版（2025-10/11 调查，n=3,575，2026-03-25 发布）订阅家庭月均流媒体支出 69 美元（与上年持平），平均 4 个付费 SVOD（粉丝 71 美元/4 个、非粉丝 56 美元/3 个），约 40% 用户近 6 个月退订过（41%），22% 退订后又回订同一服务，61% 称最喜欢的服务若涨 5 美元会退订；2025 版（2024-10 调查，n=3,595）月均支出由 61 美元升至 69 美元（+13%）、平均 4 个、39% 近半年退订、24% 退订又回订、47% 认为付费太多、41% 认为内容不值这个价、60% 涨 5 美元会退订。②Kantar：家庭平均付费视频服务 3.9（2024Q1）→4.1（2024Q4）→4.2（2025Q1）→4.1（2025Q2），“叠加上限”已现；美国流媒体渗透 96%（1.25 亿户，2024Q4）；季度流失约占付费订阅 14%，回流订阅占 20%。③Parks：SVOD 家庭平均 5.8 个订阅（2025Q3 调查，2021 年 5.5）；30% 因削减家庭开支、20% 因涨价而退订，近四分之一看完一部剧就退订、约五分之一因找不到想看的退订；逾三分之二认为广告重复过多；订阅电视家庭平均付费 6.3 个视频服务（付费电视+SVOD）；较早数据：2024Q1 宽带家庭 OTT SVOD 月均支出约 63 美元（2021 年 90 美元），支付 9 个以上服务的家庭由 29%（2023Q3）降至 20%（2024Q1）。④Hub：人均电视服务数由 2024 年 7.4 个降至 2026 年 6.8 个（含免费与付费电视）；50% 强烈同意预算是首要因素（上年 41%）、49% 认为订阅涨价越来越频繁；2025 年用户月均电视服务支出 83 美元、可接受上限 86 美元；支付“七大”中 3 个服务的用户由 61% 降至 52%（2025-05）。⑤其他：DCN 2026Q1 数字媒体订阅追踪（含视频以外的数字订阅）显示家庭订阅服务数同比 −6.4%、月支出 +6%；Reviews.org（2026-06，n=1,000，可信度较低）平均 3 个服务、43% 计划 3 个月内退订至少一个、52% 因涨价退订或降级；Ampere（2024-07）回流用户出现订阅疲劳迹象的概率比平均高 40%。MIDiA：近两年未检索到可公开引用的美国量化数据。⑥结论：订阅数量见顶甚至回落（Kantar 4.1、Hub 6.8、DCN −6.4%），支出因提价持平或微升（Deloitte 69 美元、DCN +6%），疲劳集中表现为价格敏感（六成涨 5 美元即退订）与“看完即退、之后回流”的循环——这正是捆绑降价、降流失的需求基础。",
+  "广告档占比": "①新增占比（Antenna，兼有广告与无广告档的服务）：2022 年 39% → 2023 年 45% → 2024 年 57%；季度口径 Q1'23 44%、Q1'24 58%、Q1'25 57%、Q1'26 59%；全体 Premium SVOD（含无广告档的 Apple TV、Starz）秋季（9–12 月）新增中广告档占比 43%（2023）→52%（2025），每年秋季比 1–8 月高 3–9 点。②分服务（2026Q1 新增中广告档占比）：Disney+ 70%、Hulu 70%、HBO Max 55%（+7 点）、Netflix 54%（+5 点，Antenna 美国口径）；Netflix 自称广告档占 Q1'26 广告国家注册的 60% 以上（全球 12 个广告国口径）。2025 年广告档新增超过 1,000 万的服务：Hulu 1,860 万、Disney+ 1,630 万、Peacock 1,430 万、HBO Max 1,250 万；Peacock 2026Q1 以 530 万广告档新增（占 25%）居首。③存量占比：31%（2022）→36%（2023）→45%（2024 年末）；季度 Q1'24 39%、Q1'25 46%、Q1'26 48%；广告档订阅约 1 亿（2025Q1）→1.1 亿（2026Q1，不含 Prime Video）；过去 9 个季度广告档贡献 78% 的净增（5,040 万/6,480 万）。④用户层面：78% 的 Premium SVOD 用户四年内订过广告档（2026-03）；多次面临选择的用户中仅 12% 从未选广告；Deloitte 称 68% 流媒体用户至少付费一个广告档（2026 版，2025 年末调查；2025 版为 54%，较 2024 版合计 +20 余点）。⑤与捆绑的关系：分发方捆绑（StreamSaver、Verizon、Charter、Walmart+）与广告版 Duo 几乎全部为广告档，捆绑是广告档渗透的主要推手之一；Ampere 估算广告档收入已占全球订阅流媒体收入 28%。",
+  "消费者满意度与偏好": "①ACSI 2026（2026-08-18 发布）：视频流媒体行业 77（2025 年 78，−1%）；Prime Video、Paramount+（80→79）、YouTube Premium（80→79）、Pluto TV 并列 79；Netflix 78（79→78）；Peacock 78（80→78）；Roku Channel 78；HBO Max 77（78）、Hulu 77（78）、Starz 77、Tubi 77；Apple TV+ 75（77，−3%，与涨价至 12.99 相关）；Disney+ 74（75）；ESPN+ 72（69，+4%）。涨价的服务得分普遍下降。订阅电视（含 YouTube TV 等）升 3% 至 72，为有记录以来最高；Verizon Fios 79、Xfinity 72（+6%）。②J.D. Power 2026 美国电视服务商满意度研究（2026-09-17，n=33,137，2025-08 至 2026-07）：直播电视流媒体（vMVPD）满意度降 3 分至 627（千分制），2024 年以来持平且价值感开始下降；有线/卫星电视满意度 +18 分，但月费比直播流媒体高 41 美元，后者在“物有所值”维度仍领先 99 分。J.D. Power 目前无专门的 SVOD 满意度研究。③偏好（Parks，2026-09-01《The New Live TV Model》）：27% 美国宽带家庭偏好传统直播电视套餐 + 喜爱的流媒体、24% 偏好瘦身套餐 + 流媒体，合计 51% 偏好“直播 + 流媒体”组合；68% 的 vMVPD 用户对瘦身套餐感兴趣；53% 宽带家庭对瘦身套餐有兴趣，主因更低月费（67%），预期价格 20–27 美元/月。④偏好（其他）：Hub 2026——44% 看重一张账单、32% 看重“能尝试更多服务”、20% 看重“热门与小众服务合一”；经聚合平台订阅者中 40% 因易用、38% 因更便宜、25% 因单一账单；Hub 2025——四分之三认为能在单一平台管理并支付多个订阅有吸引力，近四分之一称若推出会订用；Deloitte 2026——约半数 SVOD 用户已有捆绑。⑤含义：消费者对“更便宜、更简单”的捆绑与直播+点播组合需求明确，而对持续涨价的满意度在下降——捆绑满足的是价格与便利诉求，而非内容满意度本身。",
+  "口径冲突对照": "①捆绑渗透：Antenna 27%（服务级订阅，排除运营商/电信分发与有线内含）vs Deloitte 50%（人口口径、至少一个服务来自捆绑、问卷自报、含运营商 perk）vs Hub 57%（DCN 转述）vs Reviews.org 46%（小样本）vs Kantar 23%（Channels 附加服务占比，为渠道而非捆绑口径）——数字差异来自计量单位与覆盖渠道不同，不可互相替代。②流失：Antenna 月流失 4%–5%（交易口径，按服务），净流失约 2.8%；Deloitte 约 40%（近 6 个月退订过至少一个服务的人口比例）；Kantar 季度约 14%（占付费订阅）；Parks 以年度口径（2024-05 称 Prime Video 流失 8% 最低、Discovery+ 近 43%）——口径分别为“每月每服务”“每人每半年”“每季度”“每年”。③家庭订阅数：Deloitte 4 个（付费 SVOD，订阅家庭）、Kantar 4.1 个（付费视频，家庭）、Parks 5.8 个（SVOD 家庭，可能计入更多小众/附带服务）、Hub 6.8 个（人均“电视服务”，含免费与付费电视）、Reviews.org 3 个（小样本）。④支出：Deloitte 69 美元（SVOD，订阅家庭，上升）vs Parks 约 63 美元（2024Q1，宽带家庭 OTT SVOD，较 2021 年下降）vs Hub 83 美元（全部电视服务，含付费电视）——统计范围与年份不同。⑤广告档占新增：Antenna 59%（2026Q1，兼有双档服务）vs 52%（2025 秋季，全体 Premium 含无广告档服务）vs Netflix 自报 60%+（全球广告国）vs Antenna 的 Netflix 美国 54%——地理与分母不同。⑥ESPN 捆绑占比：Antenna 约 65%（上线至 2025-10 的注册，Antenna 可测渠道）vs 迪士尼 80%（ESPN Unlimited 用户选三合一，公司口径）。⑥b 捆绑占比的时间可比性：Antenna 2025 年新增覆盖 22 个捆绑，14%→19%→27% 的上升含部分测量覆盖扩大因素。⑦捆绑与 Netflix 的留存差：+4 点（2024 全年注册队列）vs +7 点（2024-07~11 队列）。⑧Serial churner：Antenna 23%（2024Q3，近两年取消 ≥3 个）vs 媒体引述“约四分之一/三分之一”（不同时点或定义）。⑨份额：Netflix 订阅份额 25%（Antenna）/ 互动份额 20%（JustWatch）/ 电视时长份额 7.8%（Nielsen，分母为全部电视使用含广播有线与 YouTube）——分母完全不同。⑩Netflix 美国规模：Antenna 推算约 6,600 万（个人级、可测渠道）vs Netflix 最后披露美加约 9,000 万（含加拿大与合作方计费）。⑪媒体误读提示：Media Play News 把 Antenna“订阅同比净增由 2,700 万降至 1,800 万（−33%）”写成“新订户下降 33%”（混淆净增与新增），并把“黑五周全体 Premium SVOD 890 万促销注册”写成 Prime Video 单日注册，引用时应以 Antenna 原始报告为准。⑫日期提示：Disney+/Hulu/Max 捆绑 2024 年 7 月中旬公布价格、7-25 开售，部分报道将两者混用。",
+  "uncertain": []
+}
