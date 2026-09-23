@@ -157,15 +157,19 @@ items:
       在北美其他市场更愿意进捆绑的证据）、价格、规模。
 
 execution:
-  batch_size: 1          # 用户指定（2026-09-23 第二次调整）：串行，一次只跑 1 个 agent，每个结束后问用户
-  items_per_agent: 1     # 核心 item 单独一个 agent；次要 item 按 agent_groups 每个 agent 负责 2–3 个
+  batch_size: 1          # 用户指定（2026-09-23 第二次调整）：串行，一次只跑 1 个子 agent，每个结束后问用户
+  mode: 2                # 模式2（甜点区；原 efficiency）：信息检索类 sonnet，需要大量深度判断的 opus
+  core_items:            # 重点核心 item，各自单独一个子 agent
+    - Netflix
+    - 捆绑市场数据专题
+    - 流媒体飞轮与行业格局专题
+  items_per_agent: 3     # 非核心 item 每个子 agent 负责 3 个（用户：2–3 个）
+  opus_items:            # 模式2 下派 opus 的 item（其余 sonnet）
+    - Netflix                  # 飞轮/应对需从零散证据推断并做研判
+    - 捆绑市场数据专题          # 多源口径冲突需调和，市占率需从间接数据推算
+    - 流媒体飞轮与行业格局专题  # 行业终局、类比研判等判断型字段
   output_dir: ./results
-  mode: efficiency       # 默认 sonnet；满足升档条件的 item 单独升 opus
-  opus_items:
-    - Netflix                  # 条件 2+3：飞轮/应对需从零散证据推断并做研判
-    - 捆绑市场数据专题          # 条件 2：多源口径冲突需调和，市占率需从间接数据推算
-    - 流媒体飞轮与行业格局专题  # 条件 3：行业终局、类比研判等判断型字段
-  batch_confirm: true    # 每个 agent 结束后等用户确认再启动下一个
+  batch_confirm: true    # 每个子 agent 结束后等用户确认再启动下一个
   # 执行顺序（串行）。批 1 的两个 opus agent 因 API 额度中断，已唤醒原 agent 续跑。
   agent_groups:
     - {model: opus,   items: [Netflix]}
