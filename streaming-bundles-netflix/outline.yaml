@@ -18,7 +18,7 @@ items:
     category: 核心对象
     description: >-
       奈飞自身。重点：①奈飞已参与的捆绑/分发合作（Comcast Xfinity StreamSaver、Verizon myPlan
-      Netflix & Max、T-Mobile Netflix On Us、Charter/Cox 等运营商、加拿大/墨西哥运营商；Amazon/Apple/Roku
+      Netflix & Max、T-Mobile Netflix On Us、Charter/Cox 等运营商、加拿大/墨西哥运营商；Amazon/Apple
       等平台是否上架），以及奈飞为何不加入对手之间的"联合会员"；②定价与提价历史（2024 年至今各档价格、
       广告档）、付费会员数（停止季度披露后的最新口径，线索：2025 年底超 3.25 亿）、ARM；③财务：营收、
       营业利润率、自由现金流、内容现金支出与摊销（2024、2025 实际，2026 指引与最新季度，线索：Q2'26
@@ -117,15 +117,6 @@ items:
       与 Comcast StreamSaver 分发、2024 年以来的提价（线索：2025–2026 年多次上调，需核实日期与价格）、
       订阅规模估算、亏损与投入、F1/MLS 体育、苹果在捆绑中的角色。
 
-  - name: Roku
-    category: 聚合平台
-    description: >-
-      Roku：设备/操作系统层的聚合货架（Premium Subscriptions、The Roku Channel）；线索：2026 年 9 月在
-      Premium Subscriptions 上线 30 余种捆绑（HBO Max、AMC+、Fox One、Starz 等，最高省约 30%）、自有
-      低价服务 Howdy（2025 年 8 月上线）。重点：平台分成模式、用户规模（活跃账户、流媒体时长）、
-      The Roku Channel 的观看份额（Nielsen Gauge）、Roku 作为独立于内容方的聚合者对捆绑格局的意义；
-      与奈飞的关系（遥控器奈飞按钮、广告合作等）及对奈飞的影响。
-
   - name: 体育流媒体捆绑 ESPN Fox One
     category: 跨集团联合会员
     description: >-
@@ -166,7 +157,7 @@ items:
       在北美其他市场更愿意进捆绑的证据）、价格、规模。
 
 execution:
-  batch_size: 3          # 用户指定：最多同时 3 个子 agent
+  batch_size: 2          # 用户指定：每批 2 个子 agent 并行（原为 3，2026-09-23 调整）
   items_per_agent: 1
   output_dir: ./results
   mode: efficiency       # 默认 sonnet，满足升档条件的 item 单独升 opus
