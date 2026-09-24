@@ -77,8 +77,9 @@ items:
     background_files:
       - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/MetaMuse类比.json
       - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/腾讯生态AI变现证据.json
-      - /home/user/Deep-Research-skills/meta-muse-tencent/results/ 下本研究已完成的JSON（派发时应已有：Muse产品定价与早期数据、Muse单位经济、海外个人Agent竞品与变现基准、Agent交易协议与支付轨道、Muse外部阻力与监管）
+      - /home/user/Deep-Research-skills/meta-muse-tencent/results/ 下本研究已完成的JSON（派发时已有：Muse产品定价与早期数据、Muse单位经济、海外个人Agent竞品与变现基准、Agent交易协议与支付轨道、Muse外部阻力与监管，以及Meta与腾讯禀赋对照、中国版Muse形态与腾讯路线、腾讯Agent落地现状、中国个人Agent竞争格局）
     description: |
+      出发点：先读上述JSON的overall_assessment、key_data与scenario_analysis（单位经济为负、ACP 4%结账于2026-03关停、ChatGPT广告上线不到200天达10亿美元年化等已有结论直接沿用），不重复检索；本项重点是把订阅/交易/广告/WhatsApp/硬件五条路径合成Meta层面的收入与利润情景，并核实Connect上扎克伯格关于交易抽成的原话、卖方预测与市场定价。
       研究要点：
       ①订阅：付费转化与ARPU的现实区间（早期数据+ChatGPT基准），年化订阅收入量级及占Meta收入比例；Oppenheimer"约1.15亿付费用户×20美元/月≈275–280亿美元年化"的门槛测算与其怀疑理由（第二步线索，待核实）；
       ②交易分成：扎克伯格在9/23 Connect上"从交易中抽成"的原话与机制细节（Runtime报道，待核实）、Muse商业网络伙伴与费率、可服务GMV（亚马逊封禁后的缺口）、潜在收入测算；与ACP/UCP的费率和存活情况对照；
@@ -199,8 +200,10 @@ items:
     background_files:
       - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/小微与微信Agent.json
       - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/Agent去界面化与微信通讯管道论.json
+      - /home/user/Deep-Research-skills/meta-muse-tencent/results/ 下本研究已完成的JSON（派发时已有：Meta与腾讯禀赋对照（含5/8智能体实施意见要点）、中国版Muse形态与腾讯路线（含中国支付清算协会《智能体支付应用自律公约》2026-08-24、豆包SAEP协议）、Agent交易协议与支付轨道（含AI专属卡、支付宝ACT、网联/银联安排）、中国个人Agent竞争格局（含豆包手机被封堵经过）等）——已有事实直接沿用，重点核实法规原文条款并补齐缺口
     description: |
       研究要点：
+      ⓪行业自律与平台规则（新线索，需核实原文）：中国支付清算协会《智能体支付应用自律公约》（2026-08-24：智能体身份核验KYA、用户签约授权、分级限额、自主支付报备、禁止排他/捆绑/低价补贴限制用户选择）；字节SAEP自动化声明协议（2026-09-14，公示期约至10-14）的性质与约束力；
       ①智能体专项新规（重点；第二步线索，需核实原文）：2026-05-08网信办、发改委、工信部《智能体规范应用与创新发展实施意见》（智能体定义、"可控、可审计、可追责"要求、对代理交易与跨应用操作的具体条款）；《人工智能拟人化互动服务管理暂行办法》（2026-02通过、7-15施行，涉金融服务的衔接）；2026-04"清朗·整治AI应用乱象"专项行动；工信部/信通院智能体标准与互联互通规范；
       ②支付：《非银行支付机构监督管理条例》（2024-05-01）及实施细则、央行关于支付授权/免密支付/委托扣款的规定、对"AI代付/智能体支付"的监管表态或窗口指导（AI专属卡、支付宝AI付如何设计以合规）；
       ③个人信息与数据：《个人信息保护法》对敏感个人信息、单独同意、委托处理、自动化决策的要求；读取聊天记录/通讯录/屏幕内容用于Agent的合规边界；《网络数据安全管理条例》（2025-01-01）；相关执法案例；
@@ -287,7 +290,7 @@ execution:
     - {agent: web-search-agent-deep, model: opus, items: [Muse单位经济]}                                          # 第2批
     - {agent: web-search-agent-deep, model: opus, items: [中国版Muse形态与腾讯路线]}                              # 第2批补位（禀赋对照完成后，用户要求再放一个opus）
     - {agent: web-search-agent, model: sonnet, items: [海外个人Agent竞品与变现基准, Agent交易协议与支付轨道]}     # 第3批（单位经济完成后，用户要求再放一个sonnet；先派此组以解锁变现路径）
-    - {agent: web-search-agent, model: sonnet, items: [中国监管与合规约束]}                                        # 第3批
-    - {agent: web-search-agent-deep, model: opus, items: [Muse变现路径与可行性]}                                  # 第4批（需单位经济、海外竞品、交易协议完成后）
+    - {agent: web-search-agent, model: sonnet, items: [中国监管与合规约束]}                                        # 第4批（用户确认"派③+⑨"）
+    - {agent: web-search-agent-deep, model: opus, items: [Muse变现路径与可行性]}                                  # 第4批（前置：单位经济、海外竞品、交易协议、外部阻力均已完成）
     - {agent: web-search-agent-deep, model: opus, items: [腾讯执行记录与落实能力评分]}                            # 第5批
   output_dir: meta-muse-tencent/results   # 相对仓库根目录
