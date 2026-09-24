@@ -61,7 +61,7 @@ items:
     background_files:
       - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/MetaMuse类比.json
       - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/财务资本开支与估值.json
-      - /home/user/Deep-Research-skills/meta-muse-tencent/results/ 下本研究已完成的JSON（派发时应已有：Muse产品定价与早期数据、海外个人Agent竞品与变现基准、Agent交易协议与支付轨道）
+      - /home/user/Deep-Research-skills/meta-muse-tencent/results/ 下本研究已完成的JSON（派发时已有：Muse产品定价与早期数据（含各档Token额度）、Muse外部阻力与监管、腾讯Agent落地现状、中国个人Agent竞争格局；海外个人Agent竞品与变现基准、Agent交易协议与支付轨道尚未完成，所需对照数据请自行检索）
     description: |
       研究要点：
       ①成本拆解：单次任务的推理Token量（计算机操作类Agent的截图/DOM输入与多步规划）、Muse Spark推理成本（无披露时以同级模型API价格或公开推理成本研究作代理）、Secure VM的算力/内存/存储/带宽成本（按云厂商同规格实例价格×任务时长估算）、Sentinel审核开销、支付与身份等第三方费用、客服与风控；
@@ -131,8 +131,9 @@ items:
       - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/腾讯生态AI变现证据.json
       - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/混元模型与组织调整.json
       - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/财务资本开支与估值.json
-      - /home/user/Deep-Research-skills/meta-muse-tencent/results/ 下本研究已完成的JSON（派发时应已有：Muse产品定价与早期数据、Muse外部阻力与监管、腾讯Agent落地现状、中国个人Agent竞争格局、海外个人Agent竞品与变现基准、Agent交易协议与支付轨道、中国监管与合规约束）
+      - /home/user/Deep-Research-skills/meta-muse-tencent/results/ 下本研究已完成的JSON（派发时已有：Muse产品定价与早期数据、Muse外部阻力与监管、腾讯Agent落地现状、中国个人Agent竞争格局；海外个人Agent竞品与变现基准、Agent交易协议与支付轨道、中国监管与合规约束尚未完成，支付、监管等维度所需信息请自行检索）
     description: |
+      注意：中国个人Agent竞争格局.json记录了"Meta收购Manus（2025-12-30）被发改委外资安全审查否决（2026-04-28）、腾讯牵头约136亿元回购（完成情况待核实）"的线索——请核实并评估其对腾讯Agent技术与团队禀赋的意义。
       任务：把"Muse逻辑"拆成若干核心命题（如：社交平台的分发与用户上下文能让个人Agent快速起量；云端隔离执行+独立审批解决信任；订阅+交易分成+广告回流构成变现；Agent强化而非削弱母平台），逐条判断在腾讯是否成立。
       逐维度对照（每个维度给Meta与腾讯的数据与判断）：
       ①入口与分发：Meta家族日活（DAP）与WhatsApp/Instagram/Facebook月活 vs 微信14亿+与QQ；Agent入口位置与推广力度（Meta用自家广告位推Muse vs 微信对小微的克制）；
@@ -276,13 +277,13 @@ execution:
     - Meta与腾讯禀赋对照
     - 中国版Muse形态与腾讯路线
     - 腾讯执行记录与落实能力评分
-  agent_groups:        # 按派发顺序排列：用户要求第一批先跑两个sonnet组；判断组排在它依赖的检索组之后，评分组最后
-    - {agent: web-search-agent, model: sonnet, items: [Muse产品定价与早期数据, Muse外部阻力与监管]}               # 第1批
-    - {agent: web-search-agent, model: sonnet, items: [腾讯Agent落地现状, 中国个人Agent竞争格局]}                 # 第1批
-    - {agent: web-search-agent, model: sonnet, items: [海外个人Agent竞品与变现基准, Agent交易协议与支付轨道]}     # 第2批
-    - {agent: web-search-agent, model: sonnet, items: [中国监管与合规约束]}                                        # 第2批
-    - {agent: web-search-agent-deep, model: opus, items: [Meta与腾讯禀赋对照]}                                    # 第3批
-    - {agent: web-search-agent-deep, model: opus, items: [Muse单位经济]}                                          # 第3批
+  agent_groups:        # 按派发顺序排列：用户要求第1批先跑两个sonnet组、第2批放两个opus组；判断组排在它依赖的检索组之后，评分组最后
+    - {agent: web-search-agent, model: sonnet, items: [Muse产品定价与早期数据, Muse外部阻力与监管]}               # 第1批（已完成）
+    - {agent: web-search-agent, model: sonnet, items: [腾讯Agent落地现状, 中国个人Agent竞争格局]}                 # 第1批（已完成）
+    - {agent: web-search-agent-deep, model: opus, items: [Meta与腾讯禀赋对照]}                                    # 第2批
+    - {agent: web-search-agent-deep, model: opus, items: [Muse单位经济]}                                          # 第2批
+    - {agent: web-search-agent, model: sonnet, items: [海外个人Agent竞品与变现基准, Agent交易协议与支付轨道]}     # 第3批
+    - {agent: web-search-agent, model: sonnet, items: [中国监管与合规约束]}                                        # 第3批
     - {agent: web-search-agent-deep, model: opus, items: [中国版Muse形态与腾讯路线]}                              # 第4批
     - {agent: web-search-agent-deep, model: opus, items: [Muse变现路径与可行性]}                                  # 第4批
     - {agent: web-search-agent-deep, model: opus, items: [腾讯执行记录与落实能力评分]}                            # 第5批
