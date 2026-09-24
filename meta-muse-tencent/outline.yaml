@@ -95,6 +95,7 @@ items:
     background_files:
       - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/MetaMuse类比.json
       - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/小微与微信Agent.json
+      - /home/user/Deep-Research-skills/meta-muse-tencent/results/ 下本研究已完成的JSON（派发时已有：Muse产品定价与早期数据、Muse外部阻力与监管（含Comet案、Cloudflare）、Muse单位经济（含ChatGPT付费率与毛利、OpenAI Instant Checkout关停等对照）、中国个人Agent竞争格局、Meta与腾讯禀赋对照）——已有的对照数据直接沿用，检索预算用在缺口上
     description: |
       研究要点（2025年至今，尽量给可比数字；交易协议细节归item 12，此处只记各家产品层面）：
       ①OpenAI：ChatGPT周活/月活、付费订阅数与付费率、Go/Plus/Pro价格与ARPU、收入与亏损；ChatGPT Agent（原Operator）的能力、使用量与限额；ChatGPT广告（是否上线、形式、收入预期）；OpenAI消费硬件进展；
@@ -253,6 +254,7 @@ items:
     background_files:
       - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/小微与微信Agent.json
       - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/MetaMuse类比.json
+      - /home/user/Deep-Research-skills/meta-muse-tencent/results/ 下本研究已完成的JSON（派发时已有：Muse产品定价与早期数据（含Connect零售伙伴）、Muse单位经济（含OpenAI 4% Instant Checkout于2026-03关停的初步核实）、中国个人Agent竞争格局（含支付宝ACT、千问、华为小艺）、Meta与腾讯禀赋对照（含微信AI专属卡））——已有事实直接沿用，检索预算用在协议费率、商户覆盖与交易规模等缺口上
     description: |
       为什么单列：据报道扎克伯格在9/23 Connect上首次明确"从交易中抽成"是Muse变现核心（Runtime报道，待核实）；交易分成能否跑通，取决于谁掌握交易与支付的"轨道"。
       研究要点：
@@ -284,7 +286,7 @@ execution:
     - {agent: web-search-agent-deep, model: opus, items: [Meta与腾讯禀赋对照]}                                    # 第2批
     - {agent: web-search-agent-deep, model: opus, items: [Muse单位经济]}                                          # 第2批
     - {agent: web-search-agent-deep, model: opus, items: [中国版Muse形态与腾讯路线]}                              # 第2批补位（禀赋对照完成后，用户要求再放一个opus）
-    - {agent: web-search-agent, model: sonnet, items: [海外个人Agent竞品与变现基准, Agent交易协议与支付轨道]}     # 第3批
+    - {agent: web-search-agent, model: sonnet, items: [海外个人Agent竞品与变现基准, Agent交易协议与支付轨道]}     # 第3批（单位经济完成后，用户要求再放一个sonnet；先派此组以解锁变现路径）
     - {agent: web-search-agent, model: sonnet, items: [中国监管与合规约束]}                                        # 第3批
     - {agent: web-search-agent-deep, model: opus, items: [Muse变现路径与可行性]}                                  # 第4批（需单位经济、海外竞品、交易协议完成后）
     - {agent: web-search-agent-deep, model: opus, items: [腾讯执行记录与落实能力评分]}                            # 第5批
