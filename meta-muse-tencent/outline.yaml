@@ -1,0 +1,289 @@
+topic: Meta Muse商业模式与变现可行性，及其逻辑对腾讯的适用性
+request: 研究Meta Muse的商业模式与变现路径能否跑通；若Muse逻辑成立，能否迁移到常被对标的腾讯——腾讯能做什么、中国版Muse会是什么样，并给腾讯在这方面的应用与落实能力打分。
+started_at: 2026-09-24T16:05+08:00
+
+questions:
+  - 问题一：Meta的Muse商业模式如何？变现路径能跑通吗？
+  - 问题二：如果Muse是对的，这个逻辑能否应用到腾讯上（两家常被对标）？腾讯能为此做什么？中国版的Muse会是怎样？给腾讯这方面的应用及落实能力打分。
+
+time_range: 2025年至今为主（腾讯执行记录等史实不限）
+
+background:   # 可复用的已核实材料：子agent先读，已核实事实直接沿用，检索预算花在缺口上
+  previous_research: research/tencent-dilemma-factcheck 分支（《腾讯当下的困局》核查，11个results JSON）
+  previous_results_dir: /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results
+  restore: 若本地目录不存在（容器已回收），执行 git archive origin/research/tencent-dilemma-factcheck tencent-dilemma-factcheck/results | tar -x -C <任意目录> 重新取出
+  tencent_local_sources: 腾讯近五次业绩电话会英文纪要与2026年Q1/Q2业绩公告的本地文本在 scratchpad（ec_*.txt、q1.txt、q2.txt）；不存在时联网检索
+
+scoring_framework:   # 腾讯"Muse式个人Agent"应用与落实能力评分（用户已确认；主观判断，报告中标明）
+  total: 100 = 应用适配度50 + 落实能力50；每维度1–10分，加权得分 = 分数 × 权重 / 10
+  应用适配度:
+    - {id: A1, name: 入口与分发, weight: 10}
+    - {id: A2, name: 用户上下文与关系链（按可合规使用程度）, weight: 10}
+    - {id: A3, name: 行动层与服务供给（小程序、商户、MCP、外部封锁风险）, weight: 15}
+    - {id: A4, name: 支付与交易闭环, weight: 10}
+    - {id: A5, name: 变现土壤（付费意愿、交易分成空间、广告/云协同）, weight: 5}
+  落实能力:
+    - {id: B1, name: 模型与Agent技术, weight: 15}
+    - {id: B2, name: 算力与资本投入, weight: 10}
+    - {id: B3, name: 产品化速度与历史执行记录, weight: 15}
+    - {id: B4, name: 组织协同与战略决心, weight: 5}
+    - {id: B5, name: 信任、安全与合规, weight: 5}
+  anchors: 9–10 全球/国内显著领先且已被数据验证；7–8 明显优势但有短板或未验证；5–6 与主要对手相当；3–4 明显落后或关键条件缺失；1–2 基本不具备
+  references: Meta（Muse）、阿里（千问）、字节（豆包）同维度给参照分
+
+step2_merge_notes: |
+  第二步补充检索（2026-09-24）的处理：
+  - 新增 item 12「Agent交易协议与支付轨道」（Muse商业网络、UCP、ACP/Instant Checkout、AP2、支付宝ACT、微信AI专属卡、华为支付）。
+  - 并入现有item：Connect新硬件与新功能→1；Manus收购→1、8；华尔街多空与Oppenheimer测算→3；Muse零日漏洞与漏洞赏金、亚马逊条款更新与Comet判决、欧盟对WhatsApp封禁第三方AI的临时措施→5；豆包手机事件与马化腾评价→8；中国智能体新规→9。
+  - 建议新增的4个字段不单列，并入现有字段说明：先例类比→benchmarks；协议/轨道→key_facts；信任与采用摩擦→key_data；监管时间节点→evidence_timing。
+  - 第二步线索均标"待核实"，由deep阶段核实。
+
+items:
+  - id: 1
+    name: Muse产品定价与早期数据
+    part: 问题一（Muse商业模式）
+    background_files:
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/MetaMuse类比.json
+    description: |
+      已核实（沿用上一研究，不必重查）：2026-09-08美国上线；入口iOS/Android/muse.ai/WhatsApp，9/17 Mac、9/18加拿大；免费档+Power 20美元/月+Max 100美元/月；Muse Secure VM+Sentinel哨兵代理+Stripe Link一次性卡号，预告Confidential VM；Sensor Tower 13天全球下载超250万、Apptopia 12天美加约280万/美国移动端日活约64.2万、Appfigures前11天净收入约2.7万美元；超95%用户同为Facebook用户、63%为Instagram用户；Meta至少投放53条推广广告。
+      研究要点：
+      ①能力边界：能做/不能做的任务（购物、订票、订餐、邮件、日程、表单、比价、后台长任务），可连接的账户与数据（WhatsApp/Facebook/Instagram收藏与私信、邮箱、日历、第三方网站），媒体实测与第三方评测的任务成功率；与Meta AI（聊天助手）的关系与分工；
+      ②技术与团队渊源：Muse Spark/Muse Spark 1.1；Meta是否于2025年底收购Manus（据报道）、Muse与Manus在技术和团队上的关系（第二步线索，待核实）；
+      ③定价细节：免费档用量上限（任务数/Token/虚拟机时长；InfoQ"约1亿Token/周"口径待核实）、Power与Max的差异（算力、并发、任务时长、优先级）、年付/家庭/企业版、是否计划广告支持的免费版；
+      ④9/23 Meta Connect新发布（第二步线索，待核实）：Muse新增实时视频通话、自定义语音、专属邮箱地址、Mac控制等；Muse Charm挂坠（价格、上市时间）；Ray-Ban Meta Audio、Ray-Ban Meta Gen 3、VR Glasses等新硬件的价格与时间；硬件与Muse的绑定方式；
+      ⑤9/22之后的最新数据：累计下载、App Store排名走势、DAU/MAU、留存（D1/D7/D30如有）、付费转化与收入估算更新（Appfigures/Sensor Tower/Apptopia）；Meta官方是否披露用户数；用户评分与评论主题；
+      ⑥信任与采用摩擦：用户调查（如"仅8%受访者愿意向Meta共享密码"，第二步线索，待核实）、隐私顾虑对授权深度的影响；
+      ⑦使用场景分布（第三方调查或官方案例）与扩张路线（下一批国家/地区、语言、Windows/网页端）。
+
+  - id: 2
+    name: Muse单位经济
+    part: 问题一（Muse商业模式）
+    background_files:
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/MetaMuse类比.json
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/财务资本开支与估值.json
+      - /home/user/Deep-Research-skills/meta-muse-tencent/results/ 下本研究已完成的JSON（派发时应已有：Muse产品定价与早期数据、海外个人Agent竞品与变现基准、Agent交易协议与支付轨道）
+    description: |
+      研究要点：
+      ①成本拆解：单次任务的推理Token量（计算机操作类Agent的截图/DOM输入与多步规划）、Muse Spark推理成本（无披露时以同级模型API价格或公开推理成本研究作代理）、Secure VM的算力/内存/存储/带宽成本（按云厂商同规格实例价格×任务时长估算）、Sentinel审核开销、支付与身份等第三方费用、客服与风控；
+      ②分档测算：按典型用户画像测算免费/Power/Max用户的月成本区间与毛利；免费档用量上限对应的最大补贴；
+      ③对照：ChatGPT Plus/Pro的推理成本与毛利报道（含Pro档亏损报道）、ChatGPT Agent/Operator单任务成本、Manus积分定价与单任务成本、云浏览器/沙箱服务（Browserbase、E2B等）价格；
+      ④Meta的承受力：2026年资本开支指引（1300–1450亿美元口径需核最新）、折旧增长、FoA经营利润率、Reality Labs亏损；Muse算力占用的量级；管理层对Muse/Meta AI成本与ROI的表述；
+      ⑤盈亏平衡：在成本假设下需要多高的付费率、ARPU、交易分成或广告增量才能覆盖免费档补贴；敏感性（推理成本年降幅、VM复用/休眠、端侧推理）；
+      ⑥对腾讯的映射：小程序/MCP结构化调用 vs 虚拟机操作网页的成本差（Token、延迟、成功率），中国算力价格与芯片约束，腾讯做同类Agent的单位成本高低与可承受补贴（结合腾讯资本开支与新AI产品亏损）。
+
+  - id: 3
+    name: Muse变现路径与可行性
+    part: 问题一（Muse商业模式）
+    background_files:
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/MetaMuse类比.json
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/腾讯生态AI变现证据.json
+      - /home/user/Deep-Research-skills/meta-muse-tencent/results/ 下本研究已完成的JSON（派发时应已有：Muse产品定价与早期数据、Muse单位经济、海外个人Agent竞品与变现基准、Agent交易协议与支付轨道、Muse外部阻力与监管）
+    description: |
+      研究要点：
+      ①订阅：付费转化与ARPU的现实区间（早期数据+ChatGPT基准），年化订阅收入量级及占Meta收入比例；Oppenheimer"约1.15亿付费用户×20美元/月≈275–280亿美元年化"的门槛测算与其怀疑理由（第二步线索，待核实）；
+      ②交易分成：扎克伯格在9/23 Connect上"从交易中抽成"的原话与机制细节（Runtime报道，待核实）、Muse商业网络伙伴与费率、可服务GMV（亚马逊封禁后的缺口）、潜在收入测算；与ACP/UCP的费率和存活情况对照；
+      ③广告：Meta自2025-12-16起用Meta AI对话信号个性化广告的政策（待核实）是否覆盖Muse、Muse任务意图如何进入广告系统；Muse内赞助推荐/付费排名的可能；AI广告系统（Advantage+、Andromeda、GEM等）已带来的转化提升数据；意图数据价值测算；
+      ④WhatsApp商业化：商家Business AI（每周100万+商家使用）、点击消息广告、付费消息（FoA其他收入约10亿美元/季、+73%）——Muse作为用户侧Agent与商家侧Agent对接的可能与收入含义；
+      ⑤硬件：Connect新眼镜与Muse Charm的定价、销量预期、与Muse订阅的捆绑；
+      ⑥战略意图与间接价值：防守OpenAI/Google占据个人助理入口、提升时长与留存、数据飞轮；Meta管理层（扎克伯格、Susan Li、Alexandr Wang等）关于Muse变现的原话（2026年Q2电话会、Connect、采访）；
+      ⑦市场定价：9/21以来卖方对Muse收入的预测（2027/2028）、目标价调整理由、约1920亿美元市值增量的拆解；多空分歧（Oppenheimer看空理由 vs 摩根大通、富国银行等看多理由）；中文媒体观点（21世纪经济报道《别急着找"中国版Muse"》、虎嗅《拆解Muse叙事："新入口"逻辑并不成立》）；
+      ⑧综合判断：各路径判定（已跑通/有望/存疑/难）、时间表与前提；乐观/基准/悲观三情景（用户、付费率、ARPU、GMV、抽成、广告增量→收入与利润贡献），结合单位经济结果给出"何时、以何种组合跑通"的结论。
+
+  - id: 4
+    name: 海外个人Agent竞品与变现基准
+    part: 问题一（Muse商业模式的对照组）
+    background_files:
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/MetaMuse类比.json
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/小微与微信Agent.json
+    description: |
+      研究要点（2025年至今，尽量给可比数字；交易协议细节归item 12，此处只记各家产品层面）：
+      ①OpenAI：ChatGPT周活/月活、付费订阅数与付费率、Go/Plus/Pro价格与ARPU、收入与亏损；ChatGPT Agent（原Operator）的能力、使用量与限额；ChatGPT广告（是否上线、形式、收入预期）；OpenAI消费硬件进展；
+      ②Google：Gemini App月活、Gemini Agent/Project Mariner/Chrome内Agent、AI Pro/Ultra订阅价格与用户数、AI Mode广告；
+      ③Amazon：Alexa+（定价、Prime捆绑、用户数）、Buy for Me、Rufus（对GMV与广告的贡献）；
+      ④Apple：新版Siri（与Gemini合作）、App Intents、上线时间；
+      ⑤Perplexity（Comet、Pro/Max订阅、购物功能、收入）、Microsoft Copilot消费者版（Copilot Actions）、Anthropic Claude消费者产品（Claude for Chrome等）、xAI Grok、Manus等；
+      ⑥汇总"变现基准表"：各家订阅价格、付费率、ARPU、交易抽成、广告化进度、对平台封锁的态度，并标出哪些数字可用来推断Muse的天花板（例如Muse达到ChatGPT的付费率意味着多少订阅收入）。
+
+  - id: 5
+    name: Muse外部阻力与监管
+    part: 问题一（Muse变现的外部约束）
+    background_files:
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/MetaMuse类比.json
+    description: |
+      已核实（沿用）：亚马逊9/20起封禁Muse；Inc.记者称其擅读私信；TechCrunch质疑信任；Instagram私信2026-05取消端到端加密。
+      研究要点：
+      ①平台封锁：亚马逊封禁的方式（技术屏蔽/服务条款/法律函）、理由（Muse不表明AI身份、疑似截留登录凭证等）与Meta回应；亚马逊2026-08-14更新使用条款要求Agent在User-Agent中表明身份、9/21起对Muse执法，以及"标准对自家购物Agent不适用"的双重标准争议（第二步线索，待核实）；Forbes《亚马逊封禁Muse的680亿美元理由》（广告收入）的论证；其他平台（沃尔玛、eBay、Shopify商户、Expedia/Booking、航司、银行、Uber/DoorDash、Ticketmaster）是合作、放行还是屏蔽；Cloudflare等对AI Agent流量的识别、签名与收费机制；
+      ②法律先例：Amazon v. Perplexity（Comet）案——2026-08-04上诉法院裁定"是Comet用户而非Perplexity访问亚马逊"（第二步线索，待核实）的要点及对CFAA/服务条款执法的影响；对Muse的法律风险外溢；
+      ③Meta自己也是守门人：欧盟委员会就WhatsApp禁止第三方AI助手采取临时措施（IP/26/1276，待核实）——Meta一边被亚马逊封、一边封别人，对"开放网页Agent"逻辑的含义；
+      ④安全：Muse Mac客户端本地零日漏洞（Patrick Wardle披露，配置项可被篡改以劫持听写流量）与修复情况；Meta漏洞赏金（提示注入最高13万美元、严重漏洞最高30万美元，待核实）；提示注入/恶意网页攻击Agent的公开案例；误购与退款责任、Meta的赔付政策；Sentinel/Confidential VM的第三方评估；
+      ⑤隐私与信任：Muse读取WhatsApp/Instagram私信的范围与授权方式、用户信任度调查；Meta历史隐私处罚与FTC 2020同意令对Muse的约束；
+      ⑥美国监管：FTC、CFPB对AI Agent与代理支付的表态，各州隐私/AI法（加州CCPA自动化决策规则、科罗拉多AI法等）；
+      ⑦欧盟与其他：Muse未进欧盟的原因（DMA、GDPR、AI法案、Meta AI在欧盟延迟上线的前例），进英国/印度/巴西等市场的障碍；
+      ⑧结论：上述阻力对订阅、交易分成、广告三条变现路径的影响程度排序。
+
+  - id: 6
+    name: Meta与腾讯禀赋对照
+    part: 问题二（Muse逻辑能否迁移到腾讯）
+    background_files:
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/MetaMuse类比.json
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/小微与微信Agent.json
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/Agent去界面化与微信通讯管道论.json
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/腾讯生态AI变现证据.json
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/混元模型与组织调整.json
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/财务资本开支与估值.json
+      - /home/user/Deep-Research-skills/meta-muse-tencent/results/ 下本研究已完成的JSON（派发时应已有：Muse产品定价与早期数据、Muse外部阻力与监管、腾讯Agent落地现状、中国个人Agent竞争格局、海外个人Agent竞品与变现基准、Agent交易协议与支付轨道、中国监管与合规约束）
+    description: |
+      任务：把"Muse逻辑"拆成若干核心命题（如：社交平台的分发与用户上下文能让个人Agent快速起量；云端隔离执行+独立审批解决信任；订阅+交易分成+广告回流构成变现；Agent强化而非削弱母平台），逐条判断在腾讯是否成立。
+      逐维度对照（每个维度给Meta与腾讯的数据与判断）：
+      ①入口与分发：Meta家族日活（DAP）与WhatsApp/Instagram/Facebook月活 vs 微信14亿+与QQ；Agent入口位置与推广力度（Meta用自家广告位推Muse vs 微信对小微的克制）；
+      ②用户上下文与社交数据：两边可用的数据类型与合规可用程度（Meta：收藏、关注、私信、Meta AI对话，含2025-12-16起用AI对话个性化广告的政策；微信：聊天、朋友圈、公众号、支付账单、小程序记录，及"不读聊天记录"的承诺）；隐私口碑差异（向Meta共享密码意愿类数据 vs 中国用户对微信的信任）；
+      ③行动层：开放网页+虚拟机操作（覆盖广、脆弱、易被封）vs 小程序+AI接入框架/MCP（结构化、成本低、限于微信生态内服务）；中美服务在"开放网页"与"App/小程序"内的比重差异；
+      ④支付：Meta无强势自有支付（依赖Stripe/Shop Pay/PayPal）vs 微信支付+AI专属卡；
+      ⑤模型：Muse Spark vs 混元/WeLM/DeepSeek的Agent能力（计算机操作与工具调用基准）；
+      ⑥算力与资本：两家2026年资本开支、芯片获取（出口管制）、推理成本；
+      ⑦用户付费意愿：美国消费者AI订阅渗透率 vs 中国（元宝/豆包/千问免费）；
+      ⑧生态与竞争：亚马逊封Muse、Meta在WhatsApp封第三方AI（欧盟临时措施）vs 中国生态墙（豆包手机事件）——谁的围墙更利于自家Agent；
+      ⑨监管：美国事后执法 vs 中国事前备案与智能体新规；
+      ⑩结论：可迁移/不可迁移/腾讯反而更有利 三类清单；在score_inputs中对A1–A5、B1、B2、B5给出腾讯与Meta的建议分。
+
+  - id: 7
+    name: 腾讯Agent落地现状
+    part: 问题二（腾讯现状与管理层表态）
+    background_files:
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/小微与微信Agent.json
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/腾讯生态AI变现证据.json
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/WorkBuddy.json
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/企业微信私域资产与大圆.json
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/混元模型与组织调整.json
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/ec_2025-08-13.txt（腾讯2025年Q2业绩电话会英文纪要）
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/ec_2025-11-13.txt（2025年Q3电话会）
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/ec_2026-03-18.txt（2025年Q4及全年电话会）
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/ec_2026-05-13.txt（2026年Q1电话会）
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/ec_q2.txt（2026年Q2电话会，2026-08-12）
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/q1.txt 与 q2.txt（2026年Q1、Q2业绩公告英文文本）
+    description: |
+      已核实（沿用）：小微2026-06-20起灰度、9/15电脑版、WeLM主模型+DeepSeek兜底、付款前多步确认（刘炽平Q2电话会）；6/8小程序AI接入框架（原子接口/组件/Skill/MCP/自动模式）与首批美团、京东、携程、同程、得物、美的接入；6月A2A协议；6/17 AI专属卡（首个接入WorkBuddy）；3/22 ClawBot；元宝全端DAU超5000万、MAU 1.14亿（2026-02腾讯口径），QuestMobile独立App 6月4984万；新AI产品拖累经营利润Q2约105亿元（推算）。
+      研究要点（重点是上述事实之后的更新，尤其9/8与9/22之后）：
+      ①小微：灰度范围与节奏、全量时间表、功能更新（9/21版本"好友间对话上下文理解"待核实）、可调用的小程序与服务范围、支付流程（AI专属卡是否已接入小微；21世纪经济报道"AI专属卡推出后小微开启内测"）、使用数据与用户反馈；
+      ②元宝：最新DAU/MAU（腾讯口径与第三方口径）、微信内入口（好友、元宝派、搜一搜）、办事能力、营销投入；
+      ③微信Agent基础设施：小程序AI接入框架的接入开发者/小程序数量与名单更新、A2A协议接入的手机厂商、AI专属卡接入方与用户数、ClawBot数据；
+      ④其他Agent产品：WorkBuddy（最新MAU、付费、企业版）、QClaw、腾讯云智能体开发平台与Agent商业化、企业微信AI/大圆、ima、QQ浏览器AI；
+      ⑤模型：混元Hy4正式版进展、WeLM进展、外部模型使用；Q2电话会"不准备出租算力"的表述（新浪全文实录）；
+      ⑥9/22之后腾讯的回应：官方或高管对Muse、"中国版Muse"的公开表态或采访，券商会议中IR的说法；
+      ⑦管理层原话：从本地五次电话会纪要中逐字提取关于Agent、小微、元宝、交易闭环、变现方式（广告/交易/服务费）、算力投入的原话（英文原文+中文翻译，标注日期）；
+      ⑧汇总表：腾讯Agent产品矩阵（产品｜定位｜入口｜模型｜用户数据｜变现方式｜状态｜时间）。
+
+  - id: 8
+    name: 中国个人Agent竞争格局
+    part: 问题二（中国版Muse的竞争者）
+    background_files:
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/Agent去界面化与微信通讯管道论.json
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/小微与微信Agent.json
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/WorkBuddy.json
+    description: |
+      已核实（沿用）：阿里千问App 2026-01-15接入淘宝、闪购、支付宝、飞猪、高德（支付宝AI付闭环），千问办公8/3上线首月3000万用户；字节豆包手机助手2025-12被微信、淘宝、银行等封堵；QuestMobile 6月：豆包3.82亿、千问1.67亿、元宝4984万。
+      研究要点：
+      ①豆包手机事件——中国已经发生的"Muse时刻"（重点）：完整时间线（2025-12工程机→被封堵→与各平台谈判/"停火"→2026年MWC海外发布？→豆包收窄自动化操作范围；第二步线索，时间顺序待核实），哪些平台如何封堵、理由，马化腾是否公开评价"极不安全、极不负责任"（待核实，找原话与场合），最终达成什么条件、现状如何；与亚马逊封禁Muse的异同；
+      ②阿里：千问App最新MAU/DAU、接入后的办事能力与交易数据（"2026-05全面打通、400+AI服务功能"待核实）、支付宝ACT协议（2026-01-16）、阿里管理层对个人Agent的战略原话；
+      ③字节：豆包最新MAU/DAU、Agent能力、与抖音电商/抖音支付的打通、扣子/Coze；
+      ④手机厂商系统级Agent：华为小艺（HDC 2026接入华为支付可对话下单、转账类仍强制人工确认，待核实；鸿蒙智能体框架与数量）、荣耀、OPPO、vivo、小米——调用第三方App的方式（无障碍/屏幕读取 vs 官方意图框架）、被封堵情况、与微信A2A协议的关系；
+      ⑤其他：百度、美团、京东、携程的Agent；智谱（2026-01-08港交所上市、AutoGLM开源，待核实）、月之暗面（赴港IPO计划）、MiniMax、阶跃；Manus（中国团队创立、迁往新加坡、2025年底被收购——收购方与交易额待核实）；
+      ⑥生态互封与互通时间线（2025–2026）：微信/淘宝 vs 豆包、银行App风险提示、淘宝接入微信支付（2024-09）等；
+      ⑦汇总表：玩家｜入口｜用户规模｜能否跨App办事｜支付闭环｜商业化｜被封/封人记录；初判谁最可能做出中国版Muse、腾讯的相对位置。
+
+  - id: 9
+    name: 中国监管与合规约束
+    part: 问题二（中国版Muse的硬约束）
+    background_files:
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/小微与微信Agent.json
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/Agent去界面化与微信通讯管道论.json
+    description: |
+      研究要点：
+      ①智能体专项新规（重点；第二步线索，需核实原文）：2026-05-08网信办、发改委、工信部《智能体规范应用与创新发展实施意见》（智能体定义、"可控、可审计、可追责"要求、对代理交易与跨应用操作的具体条款）；《人工智能拟人化互动服务管理暂行办法》（2026-02通过、7-15施行，涉金融服务的衔接）；2026-04"清朗·整治AI应用乱象"专项行动；工信部/信通院智能体标准与互联互通规范；
+      ②支付：《非银行支付机构监督管理条例》（2024-05-01）及实施细则、央行关于支付授权/免密支付/委托扣款的规定、对"AI代付/智能体支付"的监管表态或窗口指导（AI专属卡、支付宝AI付如何设计以合规）；
+      ③个人信息与数据：《个人信息保护法》对敏感个人信息、单独同意、委托处理、自动化决策的要求；读取聊天记录/通讯录/屏幕内容用于Agent的合规边界；《网络数据安全管理条例》（2025-01-01）；相关执法案例；
+      ④生成式AI与算法：《生成式人工智能服务管理暂行办法》备案、《人工智能生成合成内容标识办法》（2025-09-01）、算法备案；
+      ⑤平台互联互通与竞争法：超级App封堵第三方Agent（豆包手机助手事件）是否违反《反垄断法》《反不正当竞争法》（2025年修订的数据/技术干扰条款），监管或法院的态度与判例；
+      ⑥民事责任：Agent代为下单/付款出错的责任分配（《民法典》代理规则、消费者权益保护法、电子商务法）；
+      ⑦结论：中国版Muse的硬约束清单（必须用户确认的环节、数据使用边界、准入与备案），谁更容易合规（持牌支付+账户体系的超级平台 vs 第三方Agent），并与美国的监管节奏对比。
+
+  - id: 10
+    name: 中国版Muse形态与腾讯路线
+    part: 问题二（中国版Muse与腾讯能做什么）
+    background_files:
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/小微与微信Agent.json
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/Agent去界面化与微信通讯管道论.json
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/腾讯生态AI变现证据.json
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/企业微信私域资产与大圆.json
+      - /home/user/Deep-Research-skills/meta-muse-tencent/results/ 下本研究已完成的JSON（派发时应已有：Meta与腾讯禀赋对照、腾讯Agent落地现状、中国个人Agent竞争格局、中国监管与合规约束、Agent交易协议与支付轨道等）
+    description: |
+      研究要点：
+      ①形态推演：四种候选——(a)微信内嵌Agent（小微/元宝）调用小程序与微信支付；(b)手机系统级Agent（华为小艺等，跨App）；(c)超级App Agent（千问+淘宝/支付宝、豆包+抖音）；(d)独立Agent App/云端虚拟机（Manus类）。逐一评估用户价值、覆盖面、成本、合规、被封锁风险，给出胜率与可能的共存格局；豆包手机事件对(b)(d)的启示；
+      ②中国版与美版的关键差异：是否需要云端虚拟机（结构化调用 vs 界面操作）、信任设计（逐笔确认、专属卡限额、智能体新规要求）、变现结构（交易/技术服务费/广告 优先于订阅）；
+      ③变现组合与规模测算：微信生态交易规模（小程序年交易额、微信支付、微信小店）× Agent渗透率 × 可收费率（支付费率、技术服务费、佣金、意图广告）→收入与利润量级，对比腾讯营销服务与金融科技收入；乐观/基准/悲观三情景；
+      ④腾讯行动清单：短期（6–12个月：小微全量、AI专属卡接入小微、头部小程序深度接入、A2A扩展）、中期（1–3年：商家侧Agent与企业微信/公众号对接的A2A交易、意图广告产品、开发者分成机制、元宝与小微分工）、长期（3年+：系统级/硬件入口、海外WeChat）；每项的前提、代价（广告库存、用户体验、监管）与风险；
+      ⑤腾讯不该做或做不了的事（如跨生态操作淘宝/抖音、订阅化收费）；
+      ⑥关键里程碑与验证信号（腾讯2026年Q3业绩约11月中、2027年初微信公开课、小微全量、Agent交易额首次披露等）；
+      ⑦在score_inputs中对A1–A5与B3、B4给出建议分。
+
+  - id: 11
+    name: 腾讯执行记录与落实能力评分
+    part: 问题二（打分）
+    background_files:
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/混元模型与组织调整.json
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/微信电商失败史实与拼多多.json
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/WorkBuddy.json
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/小微与微信Agent.json
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/财务资本开支与估值.json
+      - /home/user/Deep-Research-skills/meta-muse-tencent/results/ 下本研究其余全部JSON（最后派发，届时应已全部完成）
+    description: |
+      任务：先读完本研究其余11项结果（尤其各项score_inputs），再补检索执行记录证据，最后按评分框架（见fields.yaml中score_inputs的说明）打分；本项的scenario_analysis写评分的敏感性情景。
+      研究要点：
+      ①历史执行记录（每例写时间、对手、腾讯做法、结果数据、成败归因——"握有入口的跟进"还是"独立新品类"）：微信 vs 米聊（2011）、微信红包（2014春节）与微信支付追赶支付宝、小程序（2017）、视频号追抖音（2020–）、微视（2013–2023）、拍拍/易迅电商（→京东）、搜搜（→搜狗）、腾讯微博、腾讯云追阿里云、元宝接入DeepSeek（2025-02）与追赶豆包、混元追赶、WorkBuddy快速迭代；
+      ②组织与决策：2025–2026年AI组织调整、赛马机制、马化腾"不搞AI全家桶、坚持去中心化"；关键决策速度（如小微从曝光到灰度的时间）；
+      ③打分：对A1–A5、B1–B5逐维度给分、理由、关键证据（引用本研究各项事实与score_inputs），同时给Meta、阿里、字节的参照分；计算加权分：应用适配度（/50）、落实能力（/50）、总分（/100）；
+      ④敏感性分析：哪些变化会让总分变动5分以上（如小微全量并打通支付、混元进入第一梯队、监管收紧AI代付、阿里/字节与微信互通）；
+      ⑤结论：腾讯最强项与最短板各一句话、整体置信度；明确标注为主观判断。
+
+  - id: 12
+    name: Agent交易协议与支付轨道
+    part: 问题一与问题二（交易分成能否跑通的"轨道之争"）
+    background_files:
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/小微与微信Agent.json
+      - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/MetaMuse类比.json
+    description: |
+      为什么单列：据报道扎克伯格在9/23 Connect上首次明确"从交易中抽成"是Muse变现核心（Runtime报道，待核实）；交易分成能否跑通，取决于谁掌握交易与支付的"轨道"。
+      研究要点：
+      ①Muse商业网络：已接入的伙伴（Shopify/Shop Pay、PayPal含Mastercard Agent Pay、Stripe/Link、Expedia、Instacart等；第二步线索，待核实）、合作条款、抽成对象（商户还是用户）与比例、上线时间；
+      ②美国协议阵营：OpenAI/Stripe的Agentic Commerce Protocol（据称4%交易费）与Instant Checkout（据称2026-03因商户寥寥下线、转向"发现"，待核实）；Google/Shopify的Universal Commerce Protocol（20+伙伴，支持Nike/Target/Walmart/Wayfair等结账，待核实）；Google AP2；Visa Intelligent Commerce、Mastercard Agent Pay；各协议的费率、商户覆盖、交易规模、存活状态；
+      ③商户侧经济：零售商对Agent渠道的态度（担心失去客户关系与广告收入，如亚马逊）、联盟佣金/CPS费率作为抽成上限参照（亚马逊联盟、旅行OTA佣金）、Agent带来的转化率/客单价数据；
+      ④中国协议与轨道：支付宝ACT协议（2026-01-16，联合千问App、淘宝闪购）与AI付交易数据；微信AI专属卡（资金隔离、限额、逐笔确认）与小程序AI接入框架中的交易环节；华为支付接入小艺；网联/银联相关安排；中国第三方支付费率（约0.38%–0.6%）与小程序技术服务费作为抽成参照；
+      ⑤对比结论：美国"Agent平台不掌握支付、需与商户和支付方谈判"vs 中国"超级App自有支付与服务生态"——交易分成在哪边更容易跑通、谁拿走多少价值；对Muse与腾讯各自的含义。
+
+execution:
+  mode: 标准           # 检索类item用sonnet（web-search-agent），需大量深度判断的item用opus（web-search-agent-deep）
+  batch_size: 2        # 最大并行子agent数；用户要求每批两个都回来、验证、存档后询问是否继续
+  core_items:          # 重点核心item，各自单独一个子agent
+    - Muse单位经济
+    - Muse变现路径与可行性
+    - Meta与腾讯禀赋对照
+    - 中国版Muse形态与腾讯路线
+    - 腾讯执行记录与落实能力评分
+  items_per_agent: 2   # 非核心item每个子agent负责2个（item 12为第二步新增，与同源的item 4成组；item 9单独成组）
+  judgment_items:      # 需要大量深度判断：派 web-search-agent-deep（effort high），标准模式下用opus
+    - Muse单位经济
+    - Muse变现路径与可行性
+    - Meta与腾讯禀赋对照
+    - 中国版Muse形态与腾讯路线
+    - 腾讯执行记录与落实能力评分
+  agent_groups:        # 按派发顺序排列：用户要求第一批先跑两个sonnet组；判断组排在它依赖的检索组之后，评分组最后
+    - {agent: web-search-agent, model: sonnet, items: [Muse产品定价与早期数据, Muse外部阻力与监管]}               # 第1批
+    - {agent: web-search-agent, model: sonnet, items: [腾讯Agent落地现状, 中国个人Agent竞争格局]}                 # 第1批
+    - {agent: web-search-agent, model: sonnet, items: [海外个人Agent竞品与变现基准, Agent交易协议与支付轨道]}     # 第2批
+    - {agent: web-search-agent, model: sonnet, items: [中国监管与合规约束]}                                        # 第2批
+    - {agent: web-search-agent-deep, model: opus, items: [Meta与腾讯禀赋对照]}                                    # 第3批
+    - {agent: web-search-agent-deep, model: opus, items: [Muse单位经济]}                                          # 第3批
+    - {agent: web-search-agent-deep, model: opus, items: [中国版Muse形态与腾讯路线]}                              # 第4批
+    - {agent: web-search-agent-deep, model: opus, items: [Muse变现路径与可行性]}                                  # 第4批
+    - {agent: web-search-agent-deep, model: opus, items: [腾讯执行记录与落实能力评分]}                            # 第5批
+  output_dir: meta-muse-tencent/results   # 相对仓库根目录

@@ -1,0 +1,77 @@
+# 字段定义 —— Meta Muse 商业模式与变现可行性，及其逻辑对腾讯的适用性
+# 本研究回答两个问题：
+#   问题一：Meta 的 Muse 商业模式是什么？变现路径能不能跑通？
+#   问题二：如果 Muse 的逻辑成立，能否迁移到腾讯（两家常被对标）？腾讯能为此做什么？
+#           中国版 Muse 会是什么样？给腾讯在这方面的应用与落实能力打分。
+# 输出JSON请用扁平结构：下面所有字段的 name 直接作为 JSON 顶层键（不要按分类嵌套），
+# JSON 末尾加 uncertain 数组。字段值一律中文。
+# 某字段对本 item 确实不适用时，写"不适用：<一句话原因>"，不要留空或删键。
+# 上一研究（《腾讯当下的困局》核查）已核实的事实可直接沿用并注明"沿用上一研究"，检索预算花在本项缺口上。
+fields:
+  基本信息:
+    - name: item_name
+      description: 研究项名称（与outline中item的name一致）
+      detail_level: 极简
+  事实与数据:
+    - name: key_facts
+      description: 与本项相关的关键事实（产品发布与功能、合作与封禁、政策与执法、组织与人事等），每条带日期与来源类型（一手/二手）；涉及交易/支付时写明所用协议或支付轨道（Muse商业网络、UCP、ACP、AP2、支付宝ACT、微信AI专属卡等）及其费率、开放程度与存活状态；重点写上一研究之后的新增与更新
+      detail_level: 详细
+    - name: key_data
+      description: 核心数据：数值+单位+时间+口径+来源机构+来源类型；估算值须写明估算方法与假设；如适用，包含信任与采用摩擦的量化证据（如愿意向平台共享密码/支付信息的用户比例、付费转化率、留存率）
+      detail_level: 详细
+    - name: benchmarks
+      description: 对照基准：可比产品/公司/历史案例的关键数字（如ChatGPT付费率与ARPU、各Agent交易协议的商户费率、Alexa+定价、视频号追抖音的时间与份额），以及直接可比的先例（如亚马逊封禁Muse↔豆包手机助手被超级App封堵、Perplexity Comet诉讼），写明相似点、关键差异，以及它用来校准本项哪个判断
+      detail_level: 详细
+    - name: data_conflicts
+      description: 多源数字冲突、口径差异及调和结论（无则写"无"）
+      detail_level: 简要
+  机制与判断:
+    - name: business_logic
+      description: 商业机制拆解：钱从哪来（谁付费、为什么付）、成本在哪（推理、虚拟机、获客、补贴、合规）、飞轮是否成立（数据/网络效应/生态协同），以及机制成立所需的前提条件
+      detail_level: 详细
+    - name: bull_case
+      description: 支持"跑得通/迁移得了/腾讯做得成"的证据与逻辑，逐条列出并注明证据强弱（强/中/弱）
+      detail_level: 详细
+    - name: bear_case
+      description: 反证、风险与反例（平台封锁、监管、成本、用户信任、竞争、执行），逐条列出并注明证据强弱（强/中/弱）
+      detail_level: 详细
+    - name: scenario_analysis
+      description: 情景推演：乐观/基准/悲观三种情景各自的关键假设（尽量数字化）、测算出的量级（用户、付费、交易额、收入、利润）、触发信号与大致时间点；确不适用须写明原因
+      detail_level: 详细
+    - name: overall_assessment
+      description: 本项结论：一句话回答本项核心问题 + 置信度（高/中/低）+ 最关键的一条理由
+      detail_level: 简要
+  腾讯映射:
+    - name: tencent_mapping
+      description: 本项结论放到腾讯/中国语境下是否成立：相同点、不同点及原因（用户、支付、生态、监管、竞争、模型与算力），明确哪些可迁移、哪些不可迁移、哪些腾讯反而更有利
+      detail_level: 详细
+    - name: tencent_actions
+      description: 腾讯已在做的事（带日期与证据）和可以做的事（具体动作、前提、代价与风险、优先级）
+      detail_level: 简要
+    - name: score_inputs
+      description: |
+        对腾讯评分框架相关维度的输入：逐条写"维度编号+名称｜建议分(1–10)｜理由｜关键证据"，可同时给Meta/阿里/字节的参照分；与本项无关的维度不写；本项与腾讯评分完全无关时写"不适用：…"并尽量给Meta参照分。均属主观判断，须标明置信度。
+        评分框架（总分100 = 应用适配度50 + 落实能力50；每维度1–10分，加权得分 = 分数 × 权重 / 10）：
+        应用适配度（Muse逻辑在腾讯能否成立）：A1 入口与分发（10）；A2 用户上下文与关系链，按可合规使用程度（10）；A3 行动层与服务供给：小程序、商户、MCP、外部封锁风险（15）；A4 支付与交易闭环（10）；A5 变现土壤：付费意愿、交易分成空间、广告/云协同（5）。
+        落实能力（腾讯能否做成）：B1 模型与Agent技术（15）；B2 算力与资本投入（10）；B3 产品化速度与历史执行记录（15）；B4 组织协同与战略决心（5）；B5 信任、安全与合规（5）。
+        分数锚点：9–10 全球/国内显著领先且已被数据验证；7–8 明显优势但有短板或未验证；5–6 与主要对手相当；3–4 明显落后或关键条件缺失；1–2 基本不具备。
+      detail_level: 简要
+  投资与跟踪:
+    - name: investment_implications
+      description: 对腾讯（重点）与Meta投资判断的含义：本项结论如何影响对AI变现、估值叙事与风险的看法
+      detail_level: 简要
+    - name: signals_to_watch
+      description: 后续可验证本项结论的信号：指标、阈值、预计时间点（如Meta 2026年Q3财报约10月底、腾讯2026年Q3业绩约11月中），含可能证伪的反向信号
+      detail_level: 简要
+  原话与时效:
+    - name: management_quote_verbatim
+      description: 相关管理层原话逐字引用（Meta：扎克伯格、Susan Li、MSL负责人等；腾讯：马化腾、刘炽平、James Mitchell、汤道生、张小龙等；竞争对手高管亦可），注明说话人、日期、场合与语境；英文原话附中文翻译；区别于媒体转述；无则写"无"
+      detail_level: 简要
+    - name: evidence_timing
+      description: 关键证据时间线（按日期排序），标注每条在Muse发布（2026-09-08）之前还是之后，并单独标出监管条文/执法动作节点与2026-09-22之后的最新进展
+      detail_level: 简要
+  来源:
+    - name: sources
+      description: 主要来源列表，每条"标题｜URL｜发布日期｜一手/二手"，优先一手（财报、电话会纪要、官方博客/公告、监管文件、数据机构原文）；按重要性排序，最重要的3–5条以"★核心"开头，供报告页底"核心参考网页"精选
+      detail_level: 简要
+uncertain: []
