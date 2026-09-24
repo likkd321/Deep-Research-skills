@@ -216,8 +216,9 @@ items:
       - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/Agent去界面化与微信通讯管道论.json
       - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/腾讯生态AI变现证据.json
       - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/企业微信私域资产与大圆.json
-      - /home/user/Deep-Research-skills/meta-muse-tencent/results/ 下本研究已完成的JSON（派发时应已有：Meta与腾讯禀赋对照、腾讯Agent落地现状、中国个人Agent竞争格局、中国监管与合规约束、Agent交易协议与支付轨道等）
+      - /home/user/Deep-Research-skills/meta-muse-tencent/results/ 下本研究已完成的JSON（派发时已有：Meta与腾讯禀赋对照、腾讯Agent落地现状、中国个人Agent竞争格局、Muse产品定价与早期数据、Muse外部阻力与监管；中国监管与合规约束、Agent交易协议与支付轨道尚未完成——禀赋对照.json已含智能体新规与支付轨道的初步事实，其余所需信息请自行检索）
     description: |
+      出发点：以Meta与腾讯禀赋对照.json的结论（可迁移/不可迁移/腾讯更有利三类清单、score_inputs）为起点，不重复其对照工作，把检索预算用在形态推演、变现测算与行动清单上；Manus回购已获批签署（腾讯为最大外部股东、不控股、Manus独立运营），可评估其作为出海Agent期权的意义。
       研究要点：
       ①形态推演：四种候选——(a)微信内嵌Agent（小微/元宝）调用小程序与微信支付；(b)手机系统级Agent（华为小艺等，跨App）；(c)超级App Agent（千问+淘宝/支付宝、豆包+抖音）；(d)独立Agent App/云端虚拟机（Manus类）。逐一评估用户价值、覆盖面、成本、合规、被封锁风险，给出胜率与可能的共存格局；豆包手机事件对(b)(d)的启示；
       ②中国版与美版的关键差异：是否需要云端虚拟机（结构化调用 vs 界面操作）、信任设计（逐笔确认、专属卡限额、智能体新规要求）、变现结构（交易/技术服务费/广告 优先于订阅）；
@@ -282,9 +283,9 @@ execution:
     - {agent: web-search-agent, model: sonnet, items: [腾讯Agent落地现状, 中国个人Agent竞争格局]}                 # 第1批（已完成）
     - {agent: web-search-agent-deep, model: opus, items: [Meta与腾讯禀赋对照]}                                    # 第2批
     - {agent: web-search-agent-deep, model: opus, items: [Muse单位经济]}                                          # 第2批
+    - {agent: web-search-agent-deep, model: opus, items: [中国版Muse形态与腾讯路线]}                              # 第2批补位（禀赋对照完成后，用户要求再放一个opus）
     - {agent: web-search-agent, model: sonnet, items: [海外个人Agent竞品与变现基准, Agent交易协议与支付轨道]}     # 第3批
     - {agent: web-search-agent, model: sonnet, items: [中国监管与合规约束]}                                        # 第3批
-    - {agent: web-search-agent-deep, model: opus, items: [中国版Muse形态与腾讯路线]}                              # 第4批
-    - {agent: web-search-agent-deep, model: opus, items: [Muse变现路径与可行性]}                                  # 第4批
+    - {agent: web-search-agent-deep, model: opus, items: [Muse变现路径与可行性]}                                  # 第4批（需单位经济、海外竞品、交易协议完成后）
     - {agent: web-search-agent-deep, model: opus, items: [腾讯执行记录与落实能力评分]}                            # 第5批
   output_dir: meta-muse-tencent/results   # 相对仓库根目录
