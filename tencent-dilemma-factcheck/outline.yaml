@@ -257,7 +257,7 @@ execution:
     - WorkBuddy
     - 腾讯生态AI变现证据
   items_per_agent: 2   # 非核心item每个子agent负责2个
-  judgment_items:      # 需要大量深度判断：派 web-search-agent-deep（effort high），模式2下用opus
+  judgment_items:      # 需要大量深度判断：派 web-search-agent-deep（effort high），标准模式下用opus
     - SaaS护城河三要素框架
     - Agent去界面化与微信通讯管道论
     - MetaMuse类比
