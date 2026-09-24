@@ -1,0 +1,65 @@
+# 字段定义：股市能否对冲通胀——补涨、链条与堵点、五年监控台
+# 输出格式说明（给 deep 阶段子 agent）：
+#   - JSON 用扁平结构：顶层键直接用下面各字段的 name（不要按分类再嵌套一层）。
+#   - 某字段对该 item 不适用时，值写"不适用：<原因>"，不要省略键。
+#   - 数字一律带时间口径（日期/区间）与口径（名义/实际、价格/总回报、币种、税前/税后）；
+#     自己计算得出的数字注明"推算"及计算方法。
+#   - 全部字段值用中文。
+note: JSON为扁平结构，顶层键=字段name；不适用写"不适用：原因"；数字须带时间与口径；推算值注明"推算"。
+
+fields:
+  基本信息:
+    - name: name
+      description: item名称
+      detail_level: 极简
+    - name: period_and_basis
+      description: 覆盖的时间段与数据口径：名义/实际、价格指数/总回报（含股息再投资）、币种、税前/税后、主要数据集（如Shiller、DMS/UBS年鉴、FRED、公司财报）
+      detail_level: 简要
+
+  核心结论:
+    - name: one_line_answer
+      description: 一句话回答该item对应的核心问题（先给结论）
+      detail_level: 极简
+    - name: key_findings
+      description: 3–7条关键发现，每条=事实+具体数字+时间口径；推算值注明"推算"
+      detail_level: 详细
+    - name: chain_verdict
+      description: 对「通胀涨→名义盈利涨→通胀修复后估值修复→股市补涨」链条的判定：支持/部分支持/反驳/视条件而定；注明作用于哪一环（①通胀→名义盈利 ②估值压缩 ③估值修复 ④补涨与回本），并给出理由
+      detail_level: 简要
+
+  数据:
+    - name: core_data
+      description: 核心数据表（数组，每行含：指标、数值、日期或区间、口径）；与当下相关的item须给出截至2026年的最新值及日期
+      detail_level: 详细
+    - name: return_decomposition
+      description: 回报拆解：股息、实际盈利增长、估值变化（市盈率/CAPE变动）、通胀各自贡献多少（年化或累计，注明区间与口径）；不适用时写"不适用：原因"
+      detail_level: 详细
+    - name: catch_up_timeline
+      description: 补涨/回本时间表：从哪个高点或事件起算，名义价格、名义总回报、实际总回报分别在何时回本、各用了多久；不适用时写"不适用：原因"
+      detail_level: 简要
+
+  机制:
+    - name: mechanism_and_preconditions
+      description: 传导机制及其成立的前提条件（如起点估值、实际利率、利润率、定价权、资本开支强度、央行信誉、财政状况）
+      detail_level: 详细
+    - name: blockers
+      description: 链条的堵点清单（数组）：每条写堵在哪一环、机制、严重度（高/中/低）、历史实例或当下迹象
+      detail_level: 详细
+    - name: counterexamples_and_disputes
+      description: 反例与学界/业界争议；多个来源数字冲突时说明各自口径，并给出调和后的采用值
+      detail_level: 详细
+
+  含义与监控:
+    - name: holder_implication
+      description: 对"主要持有大盘价值股/优质龙头（如谷歌、腾讯）"的长期投资者意味着什么（可操作的含义，不做个股买卖建议）
+      detail_level: 简要
+    - name: monitor_signals
+      description: 建议纳入2026–2031五年监控台的信号（数组，2–6条）；每条含：signal（信号名）、current_value（当前值及日期）、threshold（触发阈值）、direction（勾中时对"链条走通/股市对冲通胀"是利好还是利空）、weight（1–3，越大越重要）、frequency（观察频率）、data_source（数据源）
+      detail_level: 详细
+
+  来源:
+    - name: sources
+      description: 主要来源列表（标题+URL），仅留在research分支备查，最终报告不展示
+      detail_level: 极简
+
+uncertain: []
