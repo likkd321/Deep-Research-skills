@@ -1,0 +1,61 @@
+# 字段定义 —— 《腾讯当下的困局》一文事实核查与论证批判
+# 输出JSON请用扁平结构：下面所有字段的 name 直接作为 JSON 顶层键（不要按分类嵌套），
+# JSON 末尾加 uncertain 数组。字段值一律中文。
+fields:
+  基本信息:
+    - name: item_name
+      description: 核查对象名称（与outline中item的name一致）
+      detail_level: 极简
+    - name: article_section
+      description: 对应原文的章节（如"第六章"）
+      detail_level: 极简
+    - name: article_claims
+      description: 原文与本item相关的具体论断与论据，逐条编号摘录（尽量保留原文措辞，便于逐条对照）
+      detail_level: 简要
+  事实核查:
+    - name: fact_checks
+      description: 逐条事实核查——对article_claims中每条可核实的事实/数字/时间/引语，给出真实情况（准确数字、时间、口径）与判定（正确/基本正确/部分错误/错误/无法核实），并说明依据
+      detail_level: 详细
+    - name: key_data
+      description: 核查所得、支撑判断的关键数据（每条注明时间与口径）
+      detail_level: 详细
+    - name: data_conflicts
+      description: 多源数字冲突、口径差异及调和结论（无则写"无"）
+      detail_level: 简要
+  论证评估:
+    - name: logic_assessment
+      description: 论证逻辑评估——推理链是否成立；逐条指出偷换概念、时间错置、自相矛盾、以偏概全、因果倒置、选择性引用、类比失当等问题
+      detail_level: 详细
+    - name: counter_evidence
+      description: 原文忽略或回避的反证与关键事实
+      detail_level: 详细
+    - name: what_it_gets_right
+      description: 原文说对的部分及理由
+      detail_level: 简要
+    - name: what_it_gets_wrong
+      description: 原文说错的部分，逐条解释为什么错（事实错误还是推理错误、错在哪、正确的理解是什么）——本项是重点
+      detail_level: 详细
+    - name: article_internal_consistency
+      description: 原文自洽性检查——本item相关论断与原文其他章节/段落的正面冲突，逐条列出冲突双方的原文措辞与所在章节（无则写"无"）
+      detail_level: 简要
+    - name: evidence_timing
+      description: 关键证据/事件时间轴，并标注每条发生在原文成文日（2026-09-22）之前还是之后——之前=作者应知而未纳入或曲解；之后=事后新证据，不苛责作者但需注明
+      detail_level: 简要
+    - name: overall_verdict
+      description: 总体判定（正确/基本正确/部分正确/基本错误/错误）+ 一句话理由
+      detail_level: 极简
+  投资含义:
+    - name: investment_implications
+      description: 对腾讯投资判断的含义，尤其是对WorkBuddy与腾讯生态AI变现逻辑的影响
+      detail_level: 简要
+    - name: signals_to_watch
+      description: 后续可验证本item结论的跟踪信号/指标（含可能证伪的反向信号）
+      detail_level: 简要
+    - name: management_quote_verbatim
+      description: 与本item相关的腾讯管理层（马化腾、刘炽平、James Mitchell、汤道生等）原话逐字引用，注明日期、场合（如2026年Q2业绩电话会）与语境；区别于媒体二手转述；无相关原话则写"无"
+      detail_level: 简要
+  来源:
+    - name: sources
+      description: 主要信息来源（标题+URL+发布日期），优先一手来源（财报、业绩公告、电话会纪要、官方公告/文档）；仅存档备查，最终报告不展示
+      detail_level: 简要
+uncertain: []
