@@ -241,9 +241,9 @@ items:
       - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/WorkBuddy.json
       - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/小微与微信Agent.json
       - /tmp/claude-0/-home-user-Deep-Research-skills/5bf80f54-c3e3-528d-b83e-30267eac3a7b/scratchpad/prev/tencent-dilemma-factcheck/results/财务资本开支与估值.json
-      - /home/user/Deep-Research-skills/meta-muse-tencent/results/ 下本研究其余全部JSON（最后派发，届时应已全部完成）
+      - /home/user/Deep-Research-skills/meta-muse-tencent/results/ 下本研究其余JSON（派发时已完成10项：Muse产品定价与早期数据、Muse单位经济、海外个人Agent竞品与变现基准、Muse外部阻力与监管、Agent交易协议与支付轨道、Meta与腾讯禀赋对照、腾讯Agent落地现状、中国个人Agent竞争格局、中国监管与合规约束、中国版Muse形态与腾讯路线；Muse变现路径与可行性仍在进行，只影响Meta参照分，若检索期间该文件已出现可读取，不必等待）
     description: |
-      任务：先读完本研究其余11项结果（尤其各项score_inputs），再补检索执行记录证据，最后按评分框架（见fields.yaml中score_inputs的说明）打分；本项的scenario_analysis写评分的敏感性情景。
+      任务：先读完本研究已完成的各项结果（尤其各项score_inputs：禀赋对照给了A1–A5、B1、B2、B5，中国版形态给了A1–A5、B3、B4，单位经济给了A3、A5、B1、B2），调和其中的分歧并说明取舍；再补检索执行记录证据；最后按评分框架（见fields.yaml中score_inputs的说明）打分；本项的scenario_analysis写评分的敏感性情景。
       研究要点：
       ①历史执行记录（每例写时间、对手、腾讯做法、结果数据、成败归因——"握有入口的跟进"还是"独立新品类"）：微信 vs 米聊（2011）、微信红包（2014春节）与微信支付追赶支付宝、小程序（2017）、视频号追抖音（2020–）、微视（2013–2023）、拍拍/易迅电商（→京东）、搜搜（→搜狗）、腾讯微博、腾讯云追阿里云、元宝接入DeepSeek（2025-02）与追赶豆包、混元追赶、WorkBuddy快速迭代；
       ②组织与决策：2025–2026年AI组织调整、赛马机制、马化腾"不搞AI全家桶、坚持去中心化"；关键决策速度（如小微从曝光到灰度的时间）；
@@ -292,5 +292,5 @@ execution:
     - {agent: web-search-agent, model: sonnet, items: [海外个人Agent竞品与变现基准, Agent交易协议与支付轨道]}     # 第3批（单位经济完成后，用户要求再放一个sonnet；先派此组以解锁变现路径）
     - {agent: web-search-agent, model: sonnet, items: [中国监管与合规约束]}                                        # 第4批（用户确认"派③+⑨"）
     - {agent: web-search-agent-deep, model: opus, items: [Muse变现路径与可行性]}                                  # 第4批（前置：单位经济、海外竞品、交易协议、外部阻力均已完成）
-    - {agent: web-search-agent-deep, model: opus, items: [腾讯执行记录与落实能力评分]}                            # 第5批
+    - {agent: web-search-agent-deep, model: opus, items: [腾讯执行记录与落实能力评分]}                            # 第5批（用户要求不必等变现路径，提前派出）
   output_dir: meta-muse-tencent/results   # 相对仓库根目录
