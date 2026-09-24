@@ -1,4 +1,6 @@
 topic: 《腾讯当下的困局》一文事实核查与论证批判（重点第六、七章；WorkBuddy与腾讯生态AI变现）
+request: 读阿尔法研究处《腾讯当下的困局：看似便宜，但便宜得有道理》，用本仓库的调研skill出研究报告——逐条判断文章哪里对、哪里错，重点解释错的部分为什么错，尤其第六、七章；视角是腾讯投资，重点关注WorkBuddy与腾讯生态对AI变现的赋能。
+started_at: 2026-09-24T12:06+08:00
 
 article:
   title: 腾讯当下的困局：看似便宜，但便宜得有道理
@@ -246,7 +248,7 @@ items:
       ⑦组织调整的方向（集中化）是否恰恰反驳了"联邦制导致重复投入"的现状描述。
 
 execution:
-  mode: 2              # 模式2 甜点区：检索类item用sonnet，需大量深度判断的item用opus
+  mode: 标准           # 标准模式（原模式2，甜点区）：检索类item用sonnet，需大量深度判断的item用opus
   batch_size: 2        # 最大并行子agent数（每批同时运行上限）
   core_items:          # 重点核心item，各自单独一个子agent
     - SaaS护城河三要素框架
