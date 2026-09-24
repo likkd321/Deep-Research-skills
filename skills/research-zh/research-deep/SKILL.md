@@ -24,19 +24,19 @@ allowed-tools: Bash, Read, Write, Glob, WebSearch, Task
 - 按batch_size分批，每批最多 batch_size 个子agent同时运行（完成一批需要得到用户同意才可进行下一批）
 - 启动web-search-agent（后台并行，禁用task output）
 
-**模型指定（按 execution.mode 决定，重要）**：读取 outline.yaml 的 `execution.mode`（缺省视为 `2`；旧值 `efficiency` 视为 `2`、`performance` 视为 `1`），据此决定每个 web-search-agent 子 agent 的模型。
+**模型指定（按 execution.mode 决定，重要）**：读取 outline.yaml 的 `execution.mode`，取值 `性能` / `标准` / `经济`（英文写法 `performance` / `standard` / `economy` 等价；缺省视为 `标准`；旧数字值 `1` / `2` / `3` 依次视为性能 / 标准 / 经济，更早的 `efficiency` 视为 `标准`），据此决定每个 web-search-agent 子 agent 的模型。
 
-- **模式1（全 opus）**：所有子 agent **一律 opus**。重点核心 item 可一个 agent 只看一个，其余 item 可一个子 agent 负责多个。
-- **模式2（甜点区，默认）**：按任务难度找甜点区。**信息检索类 item 用 sonnet**（检索+抽取+填字段是广度型任务，Sonnet 约为 Opus 质量的 90-95%、成本约 0.4×、更快）；**需要大量深度判断的 item 用 opus**，即满足以下任一条件：
+- **性能模式（全 opus）**：所有子 agent **一律 opus**。重点核心 item 可一个 agent 只看一个，其余 item 可一个子 agent 负责多个。
+- **标准模式（甜点区，默认）**：按任务难度找甜点区。**信息检索类 item 用 sonnet**（检索+抽取+填字段是广度型任务，Sonnet 约为 Opus 质量的 90-95%、成本约 0.4×、更快）；**需要大量深度判断的 item 用 opus**，即满足以下任一条件：
   1. 可靠一手来源稀疏（几乎搜不到权威来源，需从少量证据判断）；
   2. 需要从零散/间接证据做**推断或预测**，而非直接摘录；
   3. 该 item 的字段本身要求**判断/评估**（如前景研判、争议裁定）而非罗列事实。
-  默认用 sonnet——多数检索型 item 用 sonnet 即可，避免退化成"全 sonnet"或"全 opus"。item 分配同模式1。
-- **模式3（全 sonnet）**：所有子 agent **一律 sonnet**，各子 agent 分配多个 item。
-- **多 item 组的模型**：取组内最高需求（组内有任一 item 需 opus 则整组 opus），所以模式2 下需 opus 的 item 尽量单独成组。
+  默认用 sonnet——多数检索型 item 用 sonnet 即可，避免退化成"全 sonnet"或"全 opus"。item 分配同性能模式。
+- **经济模式（全 sonnet）**：所有子 agent **一律 sonnet**，各子 agent 分配多个 item。
+- **多 item 组的模型**：取组内最高需求（组内有任一 item 需 opus 则整组 opus），所以标准模式下需 opus 的 item 尽量单独成组。
 - **三种模式相同**：最终 `research-report` 的跨 item 综合与判断**始终用 opus**（只跑一趟、最吃质量，不降档）。
 - **agent 类型（努力程度，按任务性质选，与模式无关）**：信息检索类 item 派 `web-search-agent`（frontmatter `effort: medium`）；需要大量深度判断的 item（即上面三条判定条件，outline 里的 `judgment_items`；旧 outline 的 `opus_items` 视同）派 `web-search-agent-deep`（`effort: high`）。两者方法论正文一致，只差努力程度与默认模型；派发工具只能临时覆盖 `model`、不能覆盖 `effort`，所以努力程度靠选 agent 类型实现。多 item 组的 agent 类型同样取组内最高需求。
-- **派发方式**：网页/云端会话**必须在派发子 agent 时显式指定 model**（`model=sonnet` 或 `model=opus`；此类环境不读 agent 文件的 model 字段）；本地 CLI 由 agent 文件的 `model` 字段提供默认值（`web-search-agent` 为 sonnet、`web-search-agent-deep` 为 opus），与模式不符时派发时覆盖（如模式1 全部覆盖为 opus、模式3 全部覆盖为 sonnet）。
+- **派发方式**：网页/云端会话**必须在派发子 agent 时显式指定 model**（`model=sonnet` 或 `model=opus`；此类环境不读 agent 文件的 model 字段）；本地 CLI 由 agent 文件的 `model` 字段提供默认值（`web-search-agent` 为 sonnet、`web-search-agent-deep` 为 opus），与模式不符时派发时覆盖（如性能模式全部覆盖为 opus、经济模式全部覆盖为 sonnet）。
 - **agent 类型兜底**：仓库的 SessionStart 钩子（`.claude/hooks/session-start.sh`）会在云端会话启动时自动安装 skills/agent/模块，项目级 `.claude/agents/web-search-agent.md` 与 `.claude/agents/web-search-agent-deep.md` 让这两个类型开局即注册，一般无需兜底。若 Agent 工具仍报 not found（例如会话中途才装 agent），改用 `general-purpose` 派发，并在 prompt **最前面**加一行角色设定：`（角色设定：你是 web-search-agent。开始前先 Read ~/.claude/agents/web-search-agent.md，严格按其 Research Methodology 执行，包括先读 ~/.claude/agents/web-search-modules/ 下相应模块。）`（深度判断组把其中两处 `web-search-agent` 换成 `web-search-agent-deep`）——其后的模板正文仍一字不改。注意 `general-purpose` 不带 effort 设置，会继承会话的努力程度。
 - 不要用 Haiku 跑 deep 阶段：它对多源交叉、来源可信度判断、长上下文抽取偏弱，易抽浅漏口径。
 

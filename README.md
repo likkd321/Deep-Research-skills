@@ -119,7 +119,7 @@ config_file = "agents/web-researcher.toml"
 | `/research-add-items` | Add more research items to existing outline |
 | `/research-add-fields` | Add more field definitions to existing outline |
 | `/research-deep` | Deep research each item with parallel agents |
-| `/research-report` | Condense results into a narrative HTML report (reasoning, core data and conclusions only) |
+| `/research-report` | Condense results into a narrative HTML report (reasoning, core data and conclusions; key reference pages at the bottom) |
 
 ## Workflow & Example
 
@@ -154,7 +154,7 @@ config_file = "agents/web-researcher.toml"
 ```
 💡 **What will happen**: The main thread gathers and condenses all the research → one report that reads like a well-told story
 
-**You get**: `<report-title>.html` - a single-file narrative HTML report (light/dark mode) showing only the reasoning, core data and conclusions, without source lists or per-item details (the Codex variant still produces a markdown summary)
+**You get**: `<report-title>.html` - a single-file narrative HTML report (light/dark mode) whose body shows only the reasoning, core data and conclusions (no per-sentence citations or per-item details), with a production-info card (starting question, main model, skills, execution mode, production time) and curated key reference pages at the bottom (the Codex variant still produces a markdown summary)
 
 ## Need Help?
 

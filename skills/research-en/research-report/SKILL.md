@@ -1,7 +1,7 @@
 ---
 name: research-report
 user-invocable: true
-description: Condense deep research results into a narrative HTML report that shows only the reasoning/judgment process, core data and conclusions (no source lists, no per-item details); supports light/dark mode; delivered as a downloadable file.
+description: Condense deep research results into a narrative HTML report whose body shows only the reasoning/judgment process, core data and conclusions (no per-sentence citations, no per-item details), with curated key reference pages at the bottom and a production-info card (starting question, main model, skills, execution mode, production time); supports light/dark mode; delivered as a downloadable file.
 allowed-tools: Read, Write, Glob, Bash, AskUserQuestion
 ---
 
@@ -13,19 +13,21 @@ allowed-tools: Read, Write, Glob, Bash, AskUserQuestion
 ## Purpose (hard rule)
 The final report is the **narrative version** the main thread (Opus) writes after **gathering and condensing** all the research — organized and easy to follow, the way you would walk a client through it or tell a child a story, not a dump of everything the research collected.
 - **Show only**: the reasoning/judgment process, the core data that supports each step, and the conclusions.
-- **Do not show**: sources (source lists, links, per-sentence citations); per-item field details, an item table of contents, or raw field dumps.
-- Sources and details stay in `results/*.json` (on the research branch) for reference; the report does not repeat them.
+- **Keep out of the body**: per-sentence citations and source dumps; per-item field details, an item table of contents, or raw field dumps.
+- **Key reference pages at the very bottom**: show only a curated set of high-value pages (not the full source list); the full sources and details stay in `results/*.json` (on the research branch) for reference.
+- **Production info is mandatory**: starting question, main model, skills used, execution mode, production time (format in Step 3).
 
 ## Workflow
 
 ### Step 1: Locate Results
-Find `*/outline.yaml` in the current working directory; read topic, questions (the user's original questions, if present) and output_dir.
+Find `*/outline.yaml` in the current working directory; read topic, request (the starting question), questions (the user's original questions, if present), started_at, execution.mode, agent_groups and output_dir.
 
 ### Step 2: Read and Distill (main thread, Opus)
 Read every JSON under output_dir (flat or nested; skip values containing `[uncertain]`, fields listed in the uncertain array, and empty values) and distill:
 - the **key facts and figures** needed to answer each core question — when sources disagree, reconcile the definitions first and keep a single figure in the report;
 - a **storyline** that ties all the questions together, starting from the background and building step by step to the conclusions;
-- the **chain of reasoning** behind each judgment: because A (data) → therefore B → so C; mark what is an estimate and what is a subjective judgment.
+- the **chain of reasoning** behind each judgment: because A (data) → therefore B → so C; mark what is an estimate and what is a subjective judgment;
+- **candidate key reference pages**: pick high-value pages from each JSON's sources — first the core sources of opus single-item subagents (groups in agent_groups with model opus and exactly one item), plus primary sources (financial reports/results announcements, earnings-call transcripts, official announcements and docs, regulatory filings); dedupe and drop low-quality reposts/aggregators.
 
 ### Step 3: Write the Narrative HTML
 Generate `generate_report.py` in `{topic}/` (the narrative text may live in `build_report_content.py` next to it; neither is committed) and produce a **single self-contained HTML file**.
@@ -36,7 +38,14 @@ Generate `generate_report.py` in `{topic}/` (the narrative text may live in `bui
 3. **One chapter per step, "question → reasoning → data → conclusion"**: open each chapter with a question, give the answer first and then the reasons; include only the data that supports that step; link chapters together ("which raises the next question…"). Prefer the user's original questions (outline `questions`) as the chapter spine.
 4. **Analogies and charts**: explain complex mechanisms with apt analogies; chart only the key data behind the reasoning (follow the dataviz guidance, theme-aware colors), each chart with an expandable data table.
 5. **Wrap-up**: a one-page summary (a few points) + the signals/metrics to watch next.
-6. **Reading notes** (optional, short): which figures are estimates and which definitions are not fully comparable; no sources.
+6. **Reading notes** (optional, short): which figures are estimates and which definitions are not fully comparable; sources go to the bottom of the page.
+7. **Production info** (mandatory, one small card, right after the opening conclusion or just before the references at the end):
+   - Starting question: outline `request` (if missing, condense the user's original prompt into one or two sentences);
+   - Main model: the model the main thread actually ran on — query the session when generating the report, never write it from memory; put it only in the report, never in committed files such as outline.yaml;
+   - Skills used: e.g. `research` → `research-deep` → `research-report`, plus the subagent types (`web-search-agent` / `web-search-agent-deep`) and the model tier each used;
+   - Execution mode: performance / standard / economy;
+   - Production time: from `started_at` to report generation, with time zone and total duration.
+8. **Key reference pages** (mandatory, at the very bottom): grouped by theme, each entry = title (clickable link opening in a new tab, `rel="noopener"`) + publisher/date; about 10–25 entries; the body does not cite them by number.
 
 **Writing**: plain and orderly, one idea per paragraph; conclusion before reasons; few, well-chosen numbers — only the one that makes the point; keep facts and judgments apart (phrase judgments as "I judge", "likely"); no jargon piles, no long lists.
 
