@@ -144,7 +144,7 @@ prompt = f"""## 任务
 ### Step 5: 输出并确认
 - 创建目录: `./{topic_slug}/`
 - 保存: `outline.yaml` 和 `fields.yaml`
-- 展示给用户确认（含 agent_groups：共几个子agent、每个负责哪些item、用什么模型）
+- 展示给用户（含 agent_groups：共几个子agent、每个负责哪些item、用什么模型），并用 AskUserQuestion 可选项确认
 
 ## 输出路径
 ```

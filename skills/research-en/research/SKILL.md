@@ -144,7 +144,7 @@ Merge {step1_output}, {step2_output} and user's existing fields, generate two fi
 ### Step 5: Output and Confirm
 - Create directory: `./{topic_slug}/`
 - Save: `outline.yaml` and `fields.yaml`
-- Show to user for confirmation (including agent_groups: how many subagents, which items each takes, and which model)
+- Show to user (including agent_groups: how many subagents, which items each takes, and which model) and confirm with AskUserQuestion options
 
 ## Output Path
 ```

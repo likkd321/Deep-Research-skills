@@ -21,7 +21,7 @@ Find `*/outline.yaml` file in current working directory, read items list, execut
 
 ### Step 3: Batch Execution
 - The dispatch unit is one group in `execution.agent_groups`: each group = one subagent (a core item is usually a group of one; other groups hold several items)
-- Batch by batch_size: at most batch_size subagents run at once per batch (need user approval before next batch)
+- Batch by batch_size: at most batch_size subagents run at once per batch (need user approval before next batch; ask with AskUserQuestion options)
 - Launch web-search-agent (background parallel, disable task output)
 
 **Model selection (driven by execution.mode, important)**: Read `execution.mode` from outline.yaml — one of `performance` / `standard` / `economy` (the Chinese names `性能` / `标准` / `经济` are equivalent; treat missing as `standard`; legacy numeric values `1` / `2` / `3` mean performance / standard / economy, and the older `efficiency` means `standard`) and choose each web-search-agent subagent's model accordingly.
@@ -133,6 +133,7 @@ Task is complete only after every item passes validation.
 
 ### Step 4: Wait and Monitor
 - Wait for current batch to complete
+- After each batch, in order: validate that batch's JSON → checkpoint (push to the research branch) → check for deepening needs and, if any, deepen while hot (see Step 6; don't wait for all batches to finish) → ask with AskUserQuestion whether to launch the next batch (the deepening plan can be folded into that same question)
 - Launch next batch
 - Display progress
 
@@ -142,8 +143,9 @@ After all complete, output:
 - Failed/uncertain marked items
 - Output directory
 
-### Step 6: Targeted Deepening (reuse existing agents, do not cold-restart)
-After summarizing, if an item has thin fields, a key figure backed by a single source, or conflicting numbers across sources:
+### Step 6: Targeted Deepening (do it right after each batch while hot; reuse existing agents, do not cold-restart)
+After each batch (don't save it all for after the last batch), if an item has thin fields, a key figure backed by a single source, or conflicting numbers across sources:
+- **Deepen while hot**: a subagent's context sits in the prompt cache, whose lifetime counts from that agent's last request (usually 1 hour in cloud sessions; 5 minutes under usage overage or in some local setups) and is renewed on every hit. Waking it inside that window is billed as cache reads (about a tenth of the input price); waking it later rewrites its whole context into the cache (about 2× the input price on the 1-hour tier) — still better than a cold restart, but far worse than deepening while hot. So deepen after each batch, before launching the next one; the deepening subagent counts toward the batch_size parallel cap, and Step 5 is just a final sweep.
 - **Prefer waking the still-alive subagent for that item** (for a multi-item group, the subagent that handled that group; continue the conversation with full context — use its agent id / SendMessage where the environment supports it) and give a specific deepening instruction, e.g. "the CTR range rests on one source; read each study's methodology, reconcile the conflicting numbers, and note the differing definitions."
 - Deepen **only the questionable fields** — do not re-run all items; re-run validate_json.py afterwards.
 - Only when that agent can no longer be woken (session/container reclaimed) should you cold-start a new agent for that **single** item via the resume mechanism.

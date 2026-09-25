@@ -22,7 +22,7 @@ Simultaneously:
 
 ### Step 3: Merge and Update
 - Append new items to outline.yaml
-- Display to user for confirmation
+- Display to user and confirm with AskUserQuestion options
 - Avoid duplicates
 - Save updated outline
 

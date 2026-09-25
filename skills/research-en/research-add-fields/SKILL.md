@@ -22,7 +22,7 @@ Ask user to choose:
 
 ### Step 3: Display and Confirm
 - Display suggested new fields list
-- User confirms which fields to add
+- User picks which fields to add via AskUserQuestion options (multiSelect)
 - User specifies field category and detail_level
 
 ### Step 4: Save Update

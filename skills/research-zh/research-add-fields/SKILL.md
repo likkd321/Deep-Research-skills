@@ -22,7 +22,7 @@ allowed-tools: Bash, Read, Write, Glob, WebSearch, Task, AskUserQuestion
 
 ### Step 3: 展示并确认
 - 展示建议的新字段列表
-- 用户确认哪些字段需要添加
+- 用 AskUserQuestion 可选项让用户勾选需要添加的字段（multiSelect）
 - 用户指定字段分类和detail_level
 
 ### Step 4: 保存更新

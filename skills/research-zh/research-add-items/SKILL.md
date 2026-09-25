@@ -22,7 +22,7 @@ allowed-tools: Bash, Read, Write, Glob, WebSearch, Task, AskUserQuestion
 
 ### Step 3: 合并更新
 - 将新items追加到outline.yaml
-- 展示给用户确认
+- 展示给用户，并用 AskUserQuestion 可选项确认
 - 避免重复
 - 保存更新后的outline
 
