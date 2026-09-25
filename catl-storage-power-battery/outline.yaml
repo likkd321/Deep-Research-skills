@@ -225,14 +225,14 @@ execution:
     - 电网侧与新能源配套大储
     - AI数据中心储能
     - 技术路线演进与替代风险
-  agent_groups:          # 实际派发分组，每组=一个子agent，按优先级排序
-    - {agent: web-search-agent-deep, model: opus, items: [储能行业整体（全球）]}
-    - {agent: web-search-agent-deep, model: opus, items: [动力电池行业整体（全球）]}
-    - {agent: web-search-agent-deep, model: opus, items: [电网侧与新能源配套大储]}
-    - {agent: web-search-agent-deep, model: opus, items: [AI数据中心储能]}
-    - {agent: web-search-agent-deep, model: opus, items: [技术路线演进与替代风险]}
-    - {agent: web-search-agent, model: sonnet, items: [工商业储能, 户用储能, 离网弱电网备电与新兴市场储能]}
-    - {agent: web-search-agent, model: sonnet, items: [中国乘用车, 海外乘用车]}
-    - {agent: web-search-agent, model: sonnet, items: [商用车电动化, 其他新兴动力场景]}
-    - {agent: web-search-agent, model: sonnet, items: [锂电池价格、产能与价值量, 宁德时代定位与暴露]}
+  agent_groups:          # 实际派发分组，每组=一个子agent，按派发顺序排列（第2批起按用户要求每批1个Opus组+1个Sonnet组）
+    - {agent: web-search-agent-deep, model: opus, items: [储能行业整体（全球）]}           # 第1批
+    - {agent: web-search-agent-deep, model: opus, items: [动力电池行业整体（全球）]}       # 第1批
+    - {agent: web-search-agent-deep, model: opus, items: [电网侧与新能源配套大储]}         # 第2批
+    - {agent: web-search-agent, model: sonnet, items: [工商业储能, 户用储能, 离网弱电网备电与新兴市场储能]}  # 第2批
+    - {agent: web-search-agent-deep, model: opus, items: [AI数据中心储能]}                 # 第3批
+    - {agent: web-search-agent, model: sonnet, items: [中国乘用车, 海外乘用车]}            # 第3批
+    - {agent: web-search-agent-deep, model: opus, items: [技术路线演进与替代风险]}         # 第4批
+    - {agent: web-search-agent, model: sonnet, items: [商用车电动化, 其他新兴动力场景]}    # 第4批
+    - {agent: web-search-agent, model: sonnet, items: [锂电池价格、产能与价值量, 宁德时代定位与暴露]}  # 第5批
   output_dir: ./catl-storage-power-battery/results
