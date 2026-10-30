@@ -1,0 +1,120 @@
+topic: 白马三价标定：成熟大市值白马击球区 / 好价 / 地板价的合理修正后 TTM 市盈率判定标准
+request: >-
+  以 skill 修正后标准 TTM 市盈率为口径，为市值 3000 亿元人民币以上、市占率不俗的成熟白马找出击球区 / 好价 / 地板价三档判定标准；
+  从回本年数、上证锚分位、历史回测、体感三价（腾讯 15 / 13 / 11 倍）和引力净推力（隐含年化 − 无风险利率）多个视角标定，
+  报告要写入引力视角的推导备忘，并附回本法与引力两个计算器。
+started_at: 2026-10-29T17:49+08:00
+time_range: 2010 年至今
+shared_data:
+  risk_free: data/risk_free_monthly.csv   # month, cn10y, us10y（%，月末；中国来自 akshare，美国来自 FRED DGS10）
+  fx: data/fx_monthly.csv                 # month, usd_cny, usd_hkd, hkd_cny（FRED 月末）
+  prestudy: /home/user/Deep-Research-skills/payback-prestudy/results/   # 腾讯、上证锚等前置研究结果
+items:
+  - name: 贵州茅台
+    category: A股
+    description: 预收款（合同负债）大、股权激励几乎为 0，口径干净的消费白马；精算核心，代表"干净"一类。
+  - name: 美的集团
+    category: A股
+    description: 上下游占款大，2016–2017 年东芝白电、库卡并购带来一次性项目与并表增长；精算核心，代表"占款大"一类。
+  - name: 宁德时代
+    category: A股
+    description: 资本开支重、占款大，成熟期起点需仔细判定（2023 年后增速明显放缓）；精算核心，代表"资本开支重"一类。
+  - name: Alphabet（谷歌）
+    category: 美股
+    description: 股权激励约占净利润 23–29%，2024 年后 AI 资本开支激增，权益投资公允价值损益需剔除；精算核心，代表"股权激励大"一类。
+  - name: 五粮液
+    category: A股
+    description: 预收款大，与茅台同类对照。
+  - name: 长江电力
+    category: A股
+    description: 资本开支随大型电站注入呈周期（2016 年三峡相关、2023 年乌东德白鹤滩注入），类债券的稳定现金流。
+  - name: 中国神华
+    category: A股
+    description: 利润随煤价周期波动、高分红；需按 cyclical_normalization 另算正常化市盈率。
+  - name: 腾讯控股
+    category: 港股
+    description: >-
+      复用前置研究：/home/user/Deep-Research-skills/payback-prestudy/results/tencent.json 与 tencent_pe_series.csv
+      （已有 2015–2025 年度数据、p_A / p_B / p_C、一次性清单、2016-01 至 2026-10 月度修正后市盈率）；只补缺失字段，
+      并把序列向前延伸到 2010 年、补算回测与净推力。用户体感三价 15 / 13 / 11 倍。
+  - name: 网易
+    category: 港股
+    description: 游戏为主、现金多，股权激励中等；港股与美股 ADR 双重上市，财报为人民币，按美债利率计净推力。
+  - name: 阿里巴巴
+    category: 港股
+    description: 投资损益与一次性项目多（蚂蚁、股权投资公允价值、减值），2021 年后才进入成熟期；按"常态投资损益算经常性、只剔除巨额单笔"处理。
+  - name: 中国移动
+    category: 港股
+    description: 资本开支有周期（4G、5G 投入期），高分红；用港股（1997 年上市）的长历史，财报为人民币。
+  - name: 中国海洋石油
+    category: 港股
+    description: 利润随油价周期波动；需按 cyclical_normalization 另算正常化市盈率。
+  - name: 京东集团
+    category: 港股
+    description: 低毛利零售、应付账款占款大、一次性项目多；市值是否达到 3000 亿元人民币门槛待核实，未达标也照常计算并标注。
+  - name: 苹果
+    category: 美股
+    description: 回购规模巨大，营运资本为负（供应商账期），股权激励中等。
+  - name: 微软
+    category: 美股
+    description: 股权激励中等，2024 年后 AI 资本开支激增，需正常化。
+  - name: Meta
+    category: 美股
+    description: 股权激励大，资本开支重（数据中心、AI、Reality Labs），2022 年有重组费用。
+  - name: 可口可乐
+    category: 美股
+    description: 口径干净的消费对照组，常有资产处置与装瓶厂重组类一次性项目。
+  - name: 百事可乐
+    category: 美股
+    description: 口径干净的消费对照组。
+  - name: 宝洁
+    category: 美股
+    description: 口径干净的消费对照组，偶有品牌减值与剥离一次性项目。
+  - name: 强生
+    category: 美股
+    description: 医药，滑石粉等诉讼计提与 Kenvue 分拆属一次性项目。
+  - name: Costco
+    category: 美股
+    description: 会员费模式，应付账款占款，偶有特别股息。
+  - name: 沃尔玛
+    category: 美股
+    description: 低毛利零售、占款大，有股权投资公允价值损益与海外业务处置一次性项目。
+  - name: Visa
+    category: 美股
+    description: 轻资产支付网络，回购大，诉讼准备金为一次性项目。
+  - name: 麦当劳
+    category: 美股
+    description: 加盟模式、回购大、净资产为负，偶有门店出售收益与重组费用。
+  - name: Mastercard
+    category: 美股
+    description: 与 Visa 同类的轻资产支付网络，回购大，诉讼准备金等属一次性项目。
+  - name: 家得宝
+    category: 美股
+    description: 家装零售，回购大、净资产低或为负；2024 年收购 SRS 带来并购摊销与费用。
+  - name: 思科
+    category: 美股
+    description: 成熟科技，2010 年后进入低增速，股权激励中等、回购大；2024 年收购 Splunk 带来摊销与重组费用。
+  - name: 中国电信
+    category: 港股
+    description: 与中国移动同属类债券型电信，资本开支有周期；用港股（2002 年上市）的长历史，财报为人民币，按美债利率计净推力。
+execution:
+  mode: 标准
+  batch_size: 2
+  batch_plan: 第一批 3 个子 agent，之后每批 2 个；每批结束都用可选项询问用户是否开下一批
+  core_items: [贵州茅台, 美的集团, 宁德时代, Alphabet（谷歌）]
+  items_per_agent: 3
+  judgment_items: [贵州茅台, 美的集团, 宁德时代, Alphabet（谷歌）]
+  agent_groups:
+    - {agent: web-search-agent-deep, model: opus, items: [Alphabet（谷歌）]}
+    - {agent: web-search-agent-deep, model: opus, items: [美的集团]}
+    - {agent: web-search-agent-deep, model: opus, items: [宁德时代]}
+    - {agent: web-search-agent-deep, model: opus, items: [贵州茅台]}
+    - {agent: web-search-agent, model: sonnet, items: [五粮液, 长江电力, 中国神华]}
+    - {agent: web-search-agent, model: sonnet, items: [腾讯控股, 网易, 阿里巴巴]}
+    - {agent: web-search-agent, model: sonnet, items: [中国移动, 中国电信, 中国海洋石油]}
+    - {agent: web-search-agent, model: sonnet, items: [苹果, 微软, Meta]}
+    - {agent: web-search-agent, model: sonnet, items: [可口可乐, 百事可乐, 宝洁]}
+    - {agent: web-search-agent, model: sonnet, items: [Costco, 沃尔玛, 京东集团]}
+    - {agent: web-search-agent, model: sonnet, items: [强生, 家得宝, 思科]}
+    - {agent: web-search-agent, model: sonnet, items: [Visa, Mastercard, 麦当劳]}
+  output_dir: ./results

@@ -1,0 +1,1384 @@
+{
+ "company": "宜宾五粮液股份有限公司（Wuliangye Yibin Co., Ltd.），股票代码 000858.SZ，深圳证券交易所主板（1998 年上市）",
+ "listing_market": "A股",
+ "currency_unit": "财报币种人民币，单位亿元；股价为 A 股人民币收盘价（不复权）；市盈率在人民币下计算，无需汇率换算",
+ "market_cap_rmb": "2026-10-29 收盘价 72.28 元 × 总股本 38.8161 亿股 ≈ 2805.6 亿元人民币（与东方财富总市值 2805.6 亿元一致；库存股仅约 0.03 亿股，可忽略）；低于 3000 亿元门槛，未达标（2026-07 月末市值约 3028 亿元，其后回落；2025 年末约 4112 亿元，此前长期高于门槛）。按约定未达标也照常计算并标注。",
+ "type_tags": {
+  "标签": [
+   "占款大",
+   "干净"
+  ],
+  "依据": "净占款余额（应付票据+应付账款+合同负债+预收款项−应收票据−应收账款−应收款项融资−预付款项−存货−合同资产）变动÷合并净利润：近3年 24.7%、近5年 11.8%、近10年 4.2%；单年绝对值超过30%的年份：2016(+59%)、2017(−32%)、2018(−31%)、2025(+112%)，2023 年为 +29.9%（略低于阈值）。预收货款（合同负债 2025 年末 134.6 亿元）与经销商银行承兑汇票（应收款项融资 2022 年末 289 亿元）同向放大，使净占款为负数且波动大。股权激励=0；一次性项目极少（最大为 2013 年反垄断罚款 2.02 亿元，占当年归母 2.5%）；资本开支÷营收近10年仅 2.6%（近3年 3.6%）。提示：2025 年起披露收入确认口径追溯更正，2025 年归母净利润 89.5 亿元（较 2024 年 318.5 亿元下降 72%），属行业深度调整期，周期性并未体现在标签中。"
+ },
+ "risk_free_basis": "cn10y（中国10年期国债收益率，月末值；2026-10 为 1.6345%）",
+ "maturity_start": {
+  "采用起点": 2022,
+  "公式起点": 2022,
+  "判定依据": "按“营收3年复合<15% 且 归母(剔除一次性)3年复合<20% 的‘稳定’首个年份，与上市满5年取较晚者”。2012年 营收3年复合34.7%、归母(剔除一次性)3年复合45.2%；2013年 营收3年复合16.7%、归母(剔除一次性)3年复合22.9%；2014年 营收3年复合1.1%、归母(剔除一次性)3年复合-1.7%；2015年 营收3年复合-7.3%、归母(剔除一次性)3年复合-14.6%；2016年 营收3年复合-0.2%、归母(剔除一次性)3年复合-6.0%；2017年 营收3年复合12.8%、归母(剔除一次性)3年复合18.2%；2018年 营收3年复合22.7%、归母(剔除一次性)3年复合29.4%；2019年 营收3年复合26.9%、归母(剔除一次性)3年复合36.9%；2020年 营收3年复合23.8%、归母(剔除一次性)3年复合27.3%；2021年 营收3年复合18.3%、归母(剔除一次性)3年复合20.5%；2022年 营收3年复合13.9%、归母(剔除一次性)3年复合15.3%；2023年 营收3年复合13.3%、归母(剔除一次性)3年复合14.9%；2024年 营收3年复合10.4%、归母(剔除一次性)3年复合10.8%；2025年 营收3年复合-18.2%、归母(剔除一次性)3年复合-30.5%。2014–2017 年首次满足，但 2018–2021 年（营收3年复合 22.7/26.9/23.8/18.3%、归母 29.4/36.9/27.3/20.5%）再次突破，因此取最后一次突破之后的第一个满足年 2022 年（13.9%/15.3%）；2023、2024 年继续满足，2025 年因收入下滑为负增长。上市满5年早已满足（1998 年上市）。",
+  "人工调整理由": "未做人工调整。注意样本偏短：成熟期窗口 2022-01 至 2026-10 仅 58 个月，且包含 2025 年的利润陡降；故同时给出近5年（60 月）、近10年（120 月）和“公式首次满足年 2014-01 起”的敏感性窗口（151 月，含 2014–2016 年低谷估值）。"
+ },
+ "annual_data": [
+  {
+   "year": 2010,
+   "revenue": 155.41,
+   "ni_attr": 43.95,
+   "ni_consolidated": 45.62,
+   "oneoff_after_tax": 0.0,
+   "ocf": 77.03,
+   "capex_total": 4.63,
+   "lease_principal": 0.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": 0.01,
+   "delta_wc": 12.08,
+   "net_float_balance": 2.06,
+   "buyback": 0.0,
+   "dividends_paid": 5.69,
+   "shares_end": 37.96,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 0.0
+  },
+  {
+   "year": 2011,
+   "revenue": 203.51,
+   "ni_attr": 61.57,
+   "ni_consolidated": 63.94,
+   "oneoff_after_tax": -0.05,
+   "ocf": 95.33,
+   "capex_total": 5.36,
+   "lease_principal": 0.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": 0.0,
+   "delta_wc": 12.7,
+   "net_float_balance": 14.76,
+   "buyback": 0.0,
+   "dividends_paid": 11.39,
+   "shares_end": 37.96,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 0.0
+  },
+  {
+   "year": 2012,
+   "revenue": 272.01,
+   "ni_attr": 99.35,
+   "ni_consolidated": 103.36,
+   "oneoff_after_tax": 0.01,
+   "ocf": 87.5,
+   "capex_total": 3.56,
+   "lease_principal": 0.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": 0.03,
+   "delta_wc": -38.92,
+   "net_float_balance": -24.16,
+   "buyback": 0.0,
+   "dividends_paid": 18.98,
+   "shares_end": 37.96,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 0.0
+  },
+  {
+   "year": 2013,
+   "revenue": 247.19,
+   "ni_attr": 79.73,
+   "ni_consolidated": 83.22,
+   "oneoff_after_tax": -1.95,
+   "ocf": 14.59,
+   "capex_total": 3.42,
+   "lease_principal": 0.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": 0.04,
+   "delta_wc": -69.23,
+   "net_float_balance": -93.39,
+   "buyback": 0.0,
+   "dividends_paid": 30.37,
+   "shares_end": 37.96,
+   "ocf_oneoff_cash": 2.02,
+   "acquisition_cash_in_investing": 0.0
+  },
+  {
+   "year": 2014,
+   "revenue": 210.11,
+   "ni_attr": 58.35,
+   "ni_consolidated": 60.58,
+   "oneoff_after_tax": -0.15,
+   "ocf": 7.95,
+   "capex_total": 4.11,
+   "lease_principal": 0.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": 0.0,
+   "delta_wc": -49.53,
+   "net_float_balance": -142.91,
+   "buyback": 0.0,
+   "dividends_paid": 26.57,
+   "shares_end": 37.96,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 0.72
+  },
+  {
+   "year": 2015,
+   "revenue": 216.59,
+   "ni_attr": 61.76,
+   "ni_consolidated": 64.1,
+   "oneoff_after_tax": -0.01,
+   "ocf": 66.91,
+   "capex_total": 3.95,
+   "lease_principal": 0.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": 0.0,
+   "delta_wc": -2.56,
+   "net_float_balance": -145.47,
+   "buyback": 0.0,
+   "dividends_paid": 22.78,
+   "shares_end": 37.96,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 0.0
+  },
+  {
+   "year": 2016,
+   "revenue": 245.44,
+   "ni_attr": 67.85,
+   "ni_consolidated": 70.57,
+   "oneoff_after_tax": -0.05,
+   "ocf": 116.97,
+   "capex_total": 3.07,
+   "lease_principal": 0.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": 0.36,
+   "delta_wc": 41.29,
+   "net_float_balance": -104.18,
+   "buyback": 0.0,
+   "dividends_paid": 30.37,
+   "shares_end": 37.96,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": -0.05
+  },
+  {
+   "year": 2017,
+   "revenue": 301.87,
+   "ni_attr": 96.74,
+   "ni_consolidated": 100.86,
+   "oneoff_after_tax": 0.03,
+   "ocf": 97.66,
+   "capex_total": 2.16,
+   "lease_principal": 0.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": 0.0,
+   "delta_wc": -32.22,
+   "net_float_balance": -136.4,
+   "buyback": 0.0,
+   "dividends_paid": 34.16,
+   "shares_end": 37.96,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 0.0
+  },
+  {
+   "year": 2018,
+   "revenue": 400.3,
+   "ni_attr": 133.84,
+   "ni_consolidated": 140.39,
+   "oneoff_after_tax": 0.03,
+   "ocf": 123.17,
+   "capex_total": 3.81,
+   "lease_principal": 0.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": 0.36,
+   "delta_wc": -43.65,
+   "net_float_balance": -180.05,
+   "buyback": 0.0,
+   "dividends_paid": 50.46,
+   "shares_end": 38.816,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 0.0
+  },
+  {
+   "year": 2019,
+   "revenue": 501.18,
+   "ni_attr": 174.02,
+   "ni_consolidated": 182.28,
+   "oneoff_after_tax": -0.01,
+   "ocf": 231.12,
+   "capex_total": 16.99,
+   "lease_principal": 0.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": 0.0,
+   "delta_wc": 20.74,
+   "net_float_balance": -159.31,
+   "buyback": 0.0,
+   "dividends_paid": 65.99,
+   "shares_end": 38.816,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 0.0
+  },
+  {
+   "year": 2020,
+   "revenue": 573.21,
+   "ni_attr": 199.55,
+   "ni_consolidated": 209.13,
+   "oneoff_after_tax": -0.04,
+   "ocf": 146.98,
+   "capex_total": 9.94,
+   "lease_principal": 0.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": 0.0,
+   "delta_wc": -53.89,
+   "net_float_balance": -213.21,
+   "buyback": 0.0,
+   "dividends_paid": 85.4,
+   "shares_end": 38.816,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 0.0
+  },
+  {
+   "year": 2021,
+   "revenue": 662.09,
+   "ni_attr": 233.77,
+   "ni_consolidated": 245.07,
+   "oneoff_after_tax": -0.18,
+   "ocf": 267.75,
+   "capex_total": 15.39,
+   "lease_principal": 4.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": -0.27,
+   "delta_wc": 8.91,
+   "net_float_balance": -204.3,
+   "buyback": 0.0,
+   "dividends_paid": 100.15,
+   "shares_end": 38.816,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 0.0
+  },
+  {
+   "year": 2022,
+   "revenue": 739.69,
+   "ni_attr": 266.9,
+   "ni_consolidated": 279.7,
+   "oneoff_after_tax": 0.02,
+   "ocf": 244.31,
+   "capex_total": 17.81,
+   "lease_principal": 4.2,
+   "sbc": 0.0,
+   "interest_dividend_adj": -0.25,
+   "delta_wc": -42.16,
+   "net_float_balance": -246.46,
+   "buyback": 0.0,
+   "dividends_paid": 117.34,
+   "shares_end": 38.816,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 0.0
+  },
+  {
+   "year": 2023,
+   "revenue": 832.72,
+   "ni_attr": 302.11,
+   "ni_consolidated": 315.21,
+   "oneoff_after_tax": -0.38,
+   "ocf": 417.42,
+   "capex_total": 29.57,
+   "lease_principal": 4.3,
+   "sbc": 0.0,
+   "interest_dividend_adj": 0.12,
+   "delta_wc": 94.39,
+   "net_float_balance": -152.08,
+   "buyback": 0.0,
+   "dividends_paid": 146.8,
+   "shares_end": 38.816,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 0.0
+  },
+  {
+   "year": 2024,
+   "revenue": 891.75,
+   "ni_attr": 318.53,
+   "ni_consolidated": 331.93,
+   "oneoff_after_tax": -0.1,
+   "ocf": 339.4,
+   "capex_total": 26.66,
+   "lease_principal": 4.7,
+   "sbc": 0.0,
+   "interest_dividend_adj": -0.26,
+   "delta_wc": -15.93,
+   "net_float_balance": -168.0,
+   "buyback": 0.0,
+   "dividends_paid": 181.27,
+   "shares_end": 38.816,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 0.0
+  },
+  {
+   "year": 2025,
+   "revenue": 405.29,
+   "ni_attr": 89.54,
+   "ni_consolidated": 93.17,
+   "oneoff_after_tax": 0.03,
+   "ocf": 297.06,
+   "capex_total": 19.67,
+   "lease_principal": 5.2,
+   "sbc": 0.0,
+   "interest_dividend_adj": -0.29,
+   "delta_wc": 104.56,
+   "net_float_balance": -63.44,
+   "buyback": 0.0,
+   "dividends_paid": 323.07,
+   "shares_end": 38.816,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 0.0
+  },
+  {
+   "year": "TTM（2025Q4-2026Q3）",
+   "revenue": 427.49,
+   "ni_attr": 121.9,
+   "ni_consolidated": 124.99,
+   "oneoff_after_tax": 0.08,
+   "ocf": 15.05,
+   "capex_total": 11.37,
+   "lease_principal": 5.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": -0.01,
+   "delta_wc": -63.45,
+   "net_float_balance": -88.55,
+   "buyback": 0.0,
+   "dividends_paid": 200.2,
+   "shares_end": 38.816,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": null
+  }
+ ],
+ "oneoff_items": [
+  {
+   "year": 2013,
+   "item": "反垄断罚款（四川省发改委川发改价检处[2013]1号，对五粮液酒类销售公司罚款）",
+   "pretax": -2.02,
+   "after_tax": -1.94,
+   "is_oneoff": true,
+   "reason": "罚款不可税前扣除；归母口径按销售公司少数股东约 4% 估算为 −1.94 亿元[不确定]，归入 2013Q1（2013-02 收到处罚决定）；现金已于 2013 年支付，计入“经营现金流内一次性现金”2.02 亿元"
+  },
+  {
+   "year": "2011–2025",
+   "item": "非流动资产处置损益（逐年很小：2011 −0.06、2012 +0.02、2013 −0.02、2014 −0.20、2015 −0.02、2016 −0.06、2017 +0.04、2018 +0.03、2019 −0.02、2020 −0.05、2021 −0.24、2022 +0.02、2023 −0.51、2024 −0.14、2025 +0.03；2026年前三季度 +0.10 亿元，税前）",
+   "pretax": null,
+   "after_tax": null,
+   "is_oneoff": true,
+   "reason": "全局口径列为一次性；金额均小于 0.6 亿元，按25%税率估算税后（见 annual_data.oneoff_after_tax）；2010 年未能取到明细按 0 处理[不确定]"
+  },
+  {
+   "year": "2011–2025",
+   "item": "其他营业外收支（对外捐赠、赔偿、打假支出等，2018 −1.10、2019 −1.35、2020 −1.42、2021 −0.80、2022 −0.63 亿元，2013 年捐赠 0.32 亿元）",
+   "pretax": null,
+   "after_tax": null,
+   "is_oneoff": false,
+   "reason": "考虑过但判为经常性：每年持续发生，金额占归母不足 1%（2013 年罚款单独处理）"
+  },
+  {
+   "year": "2011–2025",
+   "item": "政府补助（0.1–2.4 亿元/年）、资金占用费、财务公司/存款利息收入（财务费用净收益 2025 年约 26.6 亿元）",
+   "pretax": null,
+   "after_tax": null,
+   "is_oneoff": false,
+   "reason": "每年持续发生的政府补助与现金管理收益，按全局口径判为经常性，不剔除"
+  },
+  {
+   "year": 2025,
+   "item": "收入确认口径追溯更正（2026-04-30 随 2025 年报披露，2025 年一季报/半年报/三季报同步“更新后”）",
+   "pretax": null,
+   "after_tax": null,
+   "is_oneoff": false,
+   "reason": "属会计差错更正而非一次性损益，不放入 X；处理方式见 pe_method：2026-04-30 以前的月份按当时已公告的原始 2025 年季度数据计算 TTM，不事后回填"
+  }
+ ],
+ "payout_windows": {
+  "3年(2023-2025)": {
+   "p_A": 1.0,
+   "p_A_untruncated": 1.302,
+   "p_B": 1.0,
+   "p_B_untruncated": 1.3,
+   "p_A_仅占款正常化": 1.0,
+   "p_B_仅占款正常化": 1.0,
+   "p_B_仅占款正常化_未截断": 1.152,
+   "p_A_normalized": 1.0,
+   "p_A_normalized_untruncated": 1.154,
+   "p_B_normalized": 1.0,
+   "p_B_normalized_untruncated": 1.152
+  },
+  "5年(2021-2025)": {
+   "p_A": 1.0,
+   "p_A_untruncated": 1.134,
+   "p_B": 1.0,
+   "p_B_untruncated": 1.133,
+   "p_A_仅占款正常化": 1.0,
+   "p_B_仅占款正常化": 1.0,
+   "p_B_仅占款正常化_未截断": 1.046,
+   "p_A_normalized": 1.0,
+   "p_A_normalized_untruncated": 1.047,
+   "p_B_normalized": 1.0,
+   "p_B_normalized_untruncated": 1.046
+  },
+  "7年(2019-2025)": {
+   "p_A": 1.0,
+   "p_A_untruncated": 1.078,
+   "p_B": 1.0,
+   "p_B_untruncated": 1.077,
+   "p_A_仅占款正常化": 1.0,
+   "p_B_仅占款正常化": 1.0,
+   "p_B_仅占款正常化_未截断": 1.011,
+   "p_A_normalized": 1.0,
+   "p_A_normalized_untruncated": 1.012,
+   "p_B_normalized": 1.0,
+   "p_B_normalized_untruncated": 1.011
+  },
+  "10年(2016-2025)": {
+   "p_A": 1.0,
+   "p_A_untruncated": 1.074,
+   "p_B": 1.0,
+   "p_B_untruncated": 1.074,
+   "p_A_仅占款正常化": 0.995,
+   "p_B_仅占款正常化": 0.995,
+   "p_B_仅占款正常化_未截断": 0.995,
+   "p_A_normalized": 0.995,
+   "p_A_normalized_untruncated": 0.995,
+   "p_B_normalized": 0.995,
+   "p_B_normalized_untruncated": 0.995
+  },
+  "4个完整财年+TTM(2022-2025+TTM)": {
+   "p_A": 1.0,
+   "p_A_untruncated": 1.035,
+   "p_B": 1.0,
+   "p_B_untruncated": 1.034,
+   "p_A_仅占款正常化": 0.939,
+   "p_B_仅占款正常化": 0.938,
+   "p_B_仅占款正常化_未截断": 0.938,
+   "p_A_normalized": 0.939,
+   "p_A_normalized_untruncated": 0.939,
+   "p_B_normalized": 0.938,
+   "p_B_normalized_untruncated": 0.938
+  },
+  "口径说明": "p_A=Σ(经营现金流−购建长期资产−租赁本金)÷Σ合并净利润；p_B=Σ(经营现金流−购建长期资产−租赁本金−股权激励−经营现金流内一次性现金+取得投资收益收到的现金−利息费用)×(Σ归母÷Σ合并)÷Σ(归母−税后一次性)；p_A、p_B 均截断在 100%（同时给出未截断值）；“仅占款正常化”=对单年营运资本变动>30%合并净利润的年份按“期初净占款余额×稳态g”替换；“_normalized”=占款正常化+资本开支正常化（见 payout_normalized）。营运资本变动用资产负债表净占款余额（应付票据+应付账款+合同负债+预收款项−应收票据−应收账款−应收款项融资−预付款项−存货−合同资产，不含其他流动负债）的年度变化近似，新浪财务报表无现金流量表补充资料，属近似[不确定]。"
+ },
+ "payout_bridge": {
+  "3年(2023-2025)": {
+   "未正常化": {
+    "p_A起点": 130.2,
+    "利息股息对齐": -0.1,
+    "股权激励": -0.0,
+    "经营现金流内一次性现金": -0.0,
+    "归母缩放": -5.3,
+    "分母剔除一次性": 5.2,
+    "截断前p_B": 130.0,
+    "截断": -30.0,
+    "p_B": 100.0
+   },
+   "正常化后": {
+    "p_A起点": 115.4,
+    "利息股息对齐": -0.1,
+    "股权激励": -0.0,
+    "经营现金流内一次性现金": -0.0,
+    "归母缩放": -4.7,
+    "分母剔除一次性": 4.6,
+    "截断前p_B": 115.2,
+    "截断": -15.2,
+    "p_B": 100.0,
+    "占款跳升正常化(pp)": -14.8,
+    "资本开支正常化(pp)": 0.0
+   }
+  },
+  "5年(2021-2025)": {
+   "未正常化": {
+    "p_A起点": 113.4,
+    "利息股息对齐": -0.1,
+    "股权激励": -0.0,
+    "经营现金流内一次性现金": -0.0,
+    "归母缩放": -4.9,
+    "分母剔除一次性": 4.8,
+    "截断前p_B": 113.3,
+    "截断": -13.3,
+    "p_B": 100.0
+   },
+   "正常化后": {
+    "p_A起点": 104.7,
+    "利息股息对齐": -0.1,
+    "股权激励": -0.0,
+    "经营现金流内一次性现金": -0.0,
+    "归母缩放": -4.5,
+    "分母剔除一次性": 4.4,
+    "截断前p_B": 104.6,
+    "截断": -4.6,
+    "p_B": 100.0,
+    "占款跳升正常化(pp)": -8.7,
+    "资本开支正常化(pp)": 0.0
+   }
+  },
+  "7年(2019-2025)": {
+   "未正常化": {
+    "p_A起点": 107.8,
+    "利息股息对齐": -0.1,
+    "股权激励": -0.0,
+    "经营现金流内一次性现金": -0.0,
+    "归母缩放": -4.7,
+    "分母剔除一次性": 4.6,
+    "截断前p_B": 107.7,
+    "截断": -7.7,
+    "p_B": 100.0
+   },
+   "正常化后": {
+    "p_A起点": 101.2,
+    "利息股息对齐": -0.1,
+    "股权激励": -0.0,
+    "经营现金流内一次性现金": -0.0,
+    "归母缩放": -4.4,
+    "分母剔除一次性": 4.4,
+    "截断前p_B": 101.1,
+    "截断": -1.1,
+    "p_B": 100.0,
+    "占款跳升正常化(pp)": -6.6,
+    "资本开支正常化(pp)": 0.0
+   }
+  },
+  "10年(2016-2025)": {
+   "未正常化": {
+    "p_A起点": 107.4,
+    "利息股息对齐": -0.0,
+    "股权激励": -0.0,
+    "经营现金流内一次性现金": -0.0,
+    "归母缩放": -4.7,
+    "分母剔除一次性": 4.6,
+    "截断前p_B": 107.4,
+    "截断": -7.4,
+    "p_B": 100.0
+   },
+   "正常化后": {
+    "p_A起点": 99.5,
+    "利息股息对齐": -0.0,
+    "股权激励": -0.0,
+    "经营现金流内一次性现金": -0.0,
+    "归母缩放": -4.3,
+    "分母剔除一次性": 4.3,
+    "截断前p_B": 99.5,
+    "截断": 0.0,
+    "p_B": 99.5,
+    "占款跳升正常化(pp)": -7.9,
+    "资本开支正常化(pp)": 0.0
+   }
+  },
+  "4个完整财年+TTM(2022-2025+TTM)": {
+   "未正常化": {
+    "p_A起点": 103.5,
+    "利息股息对齐": -0.1,
+    "股权激励": -0.0,
+    "经营现金流内一次性现金": -0.0,
+    "归母缩放": -4.2,
+    "分母剔除一次性": 4.1,
+    "截断前p_B": 103.4,
+    "截断": -3.4,
+    "p_B": 100.0
+   },
+   "正常化后": {
+    "p_A起点": 93.9,
+    "利息股息对齐": -0.1,
+    "股权激励": -0.0,
+    "经营现金流内一次性现金": -0.0,
+    "归母缩放": -3.8,
+    "分母剔除一次性": 3.7,
+    "截断前p_B": 93.8,
+    "截断": 0.0,
+    "p_B": 93.8,
+    "占款跳升正常化(pp)": -9.6,
+    "资本开支正常化(pp)": 0.0
+   }
+  },
+  "说明": "单位为百分点(pp)。起点为未截断 p_A；依次加入利息股息对齐（取得投资收益收到的现金−费用化利息）、股权激励、经营现金流内一次性现金、归母÷合并缩放、分母剔除税后一次性，得到截断前 p_B，再截断到100%。正常化后一列另含“占款跳升正常化(pp)”“资本开支正常化(pp)”（相对未正常化起点的调整量，已计入起点之后的结果）。"
+ },
+ "payout_normalized": {
+  "做法": "按全局口径第3条对“单年营运资本变动>30%合并净利润”的年份（10年窗口：2016、2025；其余窗口仅 2025）以“期初净占款余额×基准g(3%)”替换：2025 年期初净占款为 −168.0 亿元，替换后占款贡献约 −5.0 亿元，较实际 +104.6 亿元调减约 109.6 亿元。资本开支未做正常化：资本开支÷营收 2025 年 4.9%、近3年 3.6%，虽高于 2016–2021 年中位数 1.5%，但绝对额仅 20–30 亿元（约占净利润 6–10%），不属于类似 AI 投入的峰值，也未见新稳态证据。另做对称处理的敏感性：若连负向大变动（2017、2018 年占款吸收）也替换，10年窗口 p_B 为 1.03，与单侧结果 0.995 接近。",
+  "解读": "未正常化 p_B 为 1.03–1.30（截断为 1.00），主要来自 2023、2025 年占款流入（合同负债、应收款项融资、应交税费等变动）；正常化后各窗口 p_B 为 0.94–1.00（10年 0.995，含 TTM 的窗口 0.94）。Wuliangye 的 p 偏高是因为资本开支极轻、折旧小、现金多而利息收入已在经营现金流内；2026 年 TTM 经营现金流仅 15 亿元（对应应交税费大降、合同负债回落、收入下滑），说明 p 对周期位置敏感。",
+  "结果": {
+   "3年(2023-2025)": {
+    "p_A": 1.0,
+    "p_B": 1.0,
+    "p_B_untruncated": 1.152,
+    "占款替换年份": [
+     "2025"
+    ],
+    "占款调整亿元": -109.6,
+    "资本开支调整亿元": 0.0
+   },
+   "5年(2021-2025)": {
+    "p_A": 1.0,
+    "p_B": 1.0,
+    "p_B_untruncated": 1.046,
+    "占款替换年份": [
+     "2025"
+    ],
+    "占款调整亿元": -109.6,
+    "资本开支调整亿元": 0.0
+   },
+   "7年(2019-2025)": {
+    "p_A": 1.0,
+    "p_B": 1.0,
+    "p_B_untruncated": 1.011,
+    "占款替换年份": [
+     "2025"
+    ],
+    "占款调整亿元": -109.6,
+    "资本开支调整亿元": 0.0
+   },
+   "10年(2016-2025)": {
+    "p_A": 0.995,
+    "p_B": 0.995,
+    "p_B_untruncated": 0.995,
+    "占款替换年份": [
+     "2016",
+     "2025"
+    ],
+    "占款调整亿元": -155.3,
+    "资本开支调整亿元": 0.0
+   },
+   "4个完整财年+TTM(2022-2025+TTM)": {
+    "p_A": 0.939,
+    "p_B": 0.938,
+    "p_B_untruncated": 0.938,
+    "占款替换年份": [
+     "2025"
+    ],
+    "占款调整亿元": -109.6,
+    "资本开支调整亿元": 0.0
+   }
+  }
+ },
+ "payout_recommended": {
+  "p_B基准": 0.95,
+  "p_B区间": [
+   0.85,
+   1.0
+  ],
+  "p_A推荐": 0.95,
+  "理由": "正常化后 p_B 在 0.94–1.00（截断），含 2026 年 TTM 的窗口为 0.94，取 0.95 留出余量：①经营现金流受预收款与银行承兑汇票节奏影响大，2026 年前三季度经营现金流仅 0.5 亿元；②2025 年分红 323 亿元（三次派息）超过当年归母 89.5 亿元的 3.6 倍，已动用存量现金，难持续；③2025 年起收入确认口径更正使近期利润基数不稳。区间下沿 0.85 对应 TTM 回款继续偏弱，上沿 1.00 对应截断值。p_A 与 p_B 差异小于 0.01（利息股息对齐与股权激励均≈0），同取 0.95。"
+ },
+ "growth_history": {
+  "归母剔除一次性_5年_2020-2025": -14.82,
+  "归母剔除一次性_10年_2015-2025": 3.78,
+  "归母剔除一次性_3年均值基期5年(2018-20→2023-25)": 6.97,
+  "归母剔除一次性_3年均值基期10年(2013-15→2023-25)": 13.41,
+  "营收_5年_2020-2025": -6.7,
+  "营收_10年_2015-2025": 6.47,
+  "营收_3年均值基期5年": 7.63,
+  "营收_3年均值基期10年": 12.2,
+  "归母原始_5年_2020-2025": -14.81,
+  "归母原始_10年_2015-2025": 3.78,
+  "TTM同比_归母剔除一次性": -9.13,
+  "TTM同比_营收": -17.63,
+  "TTM同比_归母剔除一次性_说明": "TTM=TTM(2025Q4-2026Q3)；上年同期 TTM 用新浪单季（含追溯调整）口径，数值=134.1 → 121.8 亿元",
+  "单位": "%（年化复合或同比）"
+ },
+ "growth_recommended": {
+  "低": 0.0,
+  "基准": 0.03,
+  "高": 0.06,
+  "理由": "历史：剔除一次性的归母净利润 2024 年 318.6 亿元 → 2025 年 89.5 亿元（−72%），TTM 121.9 亿元；5年(3年均值基期)复合 +7.0% 受 2025 年塌陷拖累，10年简单复合 +3.8%，营收 5年 −6.7%。TTM 同比 −9.1%（按追溯更正口径），2026 年第三季度单季营收 −37.7%、归母 −48%，前三季度归母 +50% 属低基数。按永续理解：高端白酒总量需求平台化、批价在 800 元附近修复，量价难以重回 2018–2023 年两位数增速；基准 3%（略高于通胀、低于名义GDP），低档 0% 对应需求继续萎缩被提价抵消，高档 6% 对应批价回升与利润率修复。该 g 以当前 TTM 为基数；当前 TTM 较 2024 年高点仍低 62%，若利润回到前期高位则回本年数会显著缩短，这种“谷底回升”不计入永续 g。"
+ },
+ "pe_series_csv": "/home/user/Deep-Research-skills/whitehorse-three-tier-pe/results/wuliangye_pe_series.csv（2010-01 至 2026-10，共 202 行；2010-01 至 2026-10 全部月份有序列，2015-08 至 2015-10 因停牌无价格留空）",
+ "pe_method": {
+  "股价": "新浪财经 A 股日线（不复权）月末收盘价，经 akshare stock_zh_a_daily 获取；2026-10 用 2026-10-29 收盘 72.28 元（与东方财富一致）；停牌月（2015-08 至 2015-10）留空。",
+  "股本": "巨潮资讯股本变动表（akshare stock_share_change_cninfo）的总股本：2018-04-20 增发后 38.8161 亿股，此前 37.9597 亿股；库存股仅 2026 年出现约 2.0 亿元（约 0.03 亿股），忽略。",
+  "TTM切换": "按东方财富公告日（定期报告披露日）月末前已披露即切换；单季值=累计值相减。关键处理：五粮液 2026-04-30 随 2025 年报追溯更正 2025 年全部季度（收入确认口径），新浪/东财数据库中 2025 年各季度已是更正后数值。为“不事后回填”，2025-04 至 2026-03 各月用当时已公告的原始数据：2025Q1 营收 369.40 亿/归母 148.60 亿，2025H1 527.71/194.92，2025 前三季度营收 609.45、归母 215.11（Q3 单季 20.19），据此 2025-12 月末 TTM 归母为 284.3 亿元（更正后口径为 133.97 亿元）；2026-04 起切换为更正后口径。",
+  "一次性8/9处理": "X=TTM 内按口径挑出的一次性税后额（见 oneoff_items：2013Q1 反垄断罚款 −1.94 亿，其余为逐年很小的处置损益）；PE_corrected=(市值−X×8/9)÷(TTM归母−X×8/9)；除 2013 年外 |X| 均小于 0.4 亿元，修正后与原始市盈率差异小于 0.1。",
+  "币种": "全部人民币，无需换算。",
+  "公开数据抽查": "2018-12-28 东方财富 PE(TTM)=16.18、总市值=1975亿，本序列原始 PE=16.18、市值=1975亿；2022-10-31 东方财富 PE(TTM)=19.90、总市值=5182亿，本序列原始 PE=19.90、市值=5182亿；2024-12-31 东方财富 PE(TTM)=16.82、总市值=5436亿，本序列原始 PE=16.82、市值=5436亿；2026-10-29 东方财富 PE(TTM)=23.02、总市值=2806亿，本序列原始 PE=23.02、市值=2806亿"
+ },
+ "pe_current": {
+  "日期": "2026-10-29",
+  "股价_元": 72.28,
+  "股本_亿股": 38.8161,
+  "市值_亿元": 2805.63,
+  "TTM区间": "TTM(2025Q4-2026Q3)",
+  "TTM归母净利润_亿元": 121.9,
+  "本期一次性_税后_亿元": 0.08,
+  "pe_raw": 23.02,
+  "pe_corrected": 23.03
+ },
+ "anchor_pe": {
+  "成熟期窗口(2022-01至2026-10)": {
+   "第15百分位": 15.16,
+   "第9百分位": 14.48,
+   "第4百分位": 14.24,
+   "中位数": 20.04,
+   "最小值": 14.09,
+   "最大值": 33.86,
+   "样本月数": 58,
+   "PE小于等于0剔除月数": 0
+  },
+  "近5年(2021-11至2026-10)": {
+   "第15百分位": 15.23,
+   "第9百分位": 14.5,
+   "第4百分位": 14.25,
+   "中位数": 20.34,
+   "最小值": 14.09,
+   "最大值": 38.01,
+   "样本月数": 60,
+   "PE小于等于0剔除月数": 0
+  },
+  "近10年(2016-11至2026-10)": {
+   "第15百分位": 16.17,
+   "第9百分位": 15.31,
+   "第4百分位": 14.44,
+   "中位数": 25.51,
+   "最小值": 14.09,
+   "最大值": 58.38,
+   "样本月数": 120,
+   "PE小于等于0剔除月数": 0
+  },
+  "敏感性:公式首次满足年(2014-01至2026-10)": {
+   "第15百分位": 15.06,
+   "第9百分位": 14.27,
+   "第4百分位": 10.57,
+   "中位数": 22.33,
+   "最小值": 5.93,
+   "最大值": 58.38,
+   "样本月数": 151,
+   "PE小于等于0剔除月数": 0
+  }
+ },
+ "current_percentile": {
+  "成熟期窗口(2022-01至2026-10)": 65.5,
+  "近5年(2021-11至2026-10)": 63.3,
+  "近10年(2016-11至2026-10)": 40.8,
+  "敏感性:公式首次满足年(2014-01至2026-10)": 53.0
+ },
+ "cyclical_normalization": "不适用（白酒不是商品价格周期股）。仅作提示：当前 TTM 归母 121.9 亿元处于周期谷底，若按近7年（2019–2025 年）平均剔除一次性利润 226.4 亿元粗算，当前市值 2805.6 亿元对应约 12.4 倍市盈率，仅供参考，不进入三价判定。",
+ "payback_years_at_anchors": {
+  "参数": "推荐 p_B=0.95、p_A=0.95，基准 g=3%，低 g=0%，高 g=6%；n=ln(1+PE×g/p)/ln(1+g)",
+  "结果": {
+   "成熟期窗口(2022-01至2026-10)": {
+    "击球区(15%)": {
+     "pe": 15.16,
+     "n_pB_base": 13.23,
+     "n_pA_base": 13.23,
+     "n_pB_glow": 15.96,
+     "n_pB_ghigh": 11.53,
+     "n_pB_lo": 14.5,
+     "n_p100_base": 12.68
+    },
+    "好价(9%)": {
+     "pe": 14.48,
+     "n_pB_base": 12.74,
+     "n_pA_base": 12.74,
+     "n_pB_glow": 15.24,
+     "n_pB_ghigh": 11.15,
+     "n_pB_lo": 13.96,
+     "n_p100_base": 12.2
+    },
+    "地板价(4%)": {
+     "pe": 14.24,
+     "n_pB_base": 12.56,
+     "n_pA_base": 12.56,
+     "n_pB_glow": 14.99,
+     "n_pB_ghigh": 11.01,
+     "n_pB_lo": 13.77,
+     "n_p100_base": 12.03
+    }
+   },
+   "近5年(2021-11至2026-10)": {
+    "击球区(15%)": {
+     "pe": 15.23,
+     "n_pB_base": 13.29,
+     "n_pA_base": 13.29,
+     "n_pB_glow": 16.03,
+     "n_pB_ghigh": 11.57,
+     "n_pB_lo": 14.56,
+     "n_p100_base": 12.73
+    },
+    "好价(9%)": {
+     "pe": 14.5,
+     "n_pB_base": 12.76,
+     "n_pA_base": 12.76,
+     "n_pB_glow": 15.27,
+     "n_pB_ghigh": 11.16,
+     "n_pB_lo": 13.98,
+     "n_p100_base": 12.22
+    },
+    "地板价(4%)": {
+     "pe": 14.25,
+     "n_pB_base": 12.57,
+     "n_pA_base": 12.57,
+     "n_pB_glow": 15.0,
+     "n_pB_ghigh": 11.01,
+     "n_pB_lo": 13.78,
+     "n_p100_base": 12.04
+    }
+   },
+   "近10年(2016-11至2026-10)": {
+    "击球区(15%)": {
+     "pe": 16.17,
+     "n_pB_base": 13.96,
+     "n_pA_base": 13.96,
+     "n_pB_glow": 17.02,
+     "n_pB_ghigh": 12.08,
+     "n_pB_lo": 15.28,
+     "n_p100_base": 13.38
+    },
+    "好价(9%)": {
+     "pe": 15.31,
+     "n_pB_base": 13.34,
+     "n_pA_base": 13.34,
+     "n_pB_glow": 16.12,
+     "n_pB_ghigh": 11.61,
+     "n_pB_lo": 14.62,
+     "n_p100_base": 12.79
+    },
+    "地板价(4%)": {
+     "pe": 14.44,
+     "n_pB_base": 12.71,
+     "n_pA_base": 12.71,
+     "n_pB_glow": 15.2,
+     "n_pB_ghigh": 11.13,
+     "n_pB_lo": 13.94,
+     "n_p100_base": 12.18
+    }
+   },
+   "敏感性:公式首次满足年(2014-01至2026-10)": {
+    "击球区(15%)": {
+     "pe": 15.06,
+     "n_pB_base": 13.17,
+     "n_pA_base": 13.17,
+     "n_pB_glow": 15.86,
+     "n_pB_ghigh": 11.47,
+     "n_pB_lo": 14.42,
+     "n_p100_base": 12.62
+    },
+    "好价(9%)": {
+     "pe": 14.27,
+     "n_pB_base": 12.58,
+     "n_pA_base": 12.58,
+     "n_pB_glow": 15.02,
+     "n_pB_ghigh": 11.02,
+     "n_pB_lo": 13.8,
+     "n_p100_base": 12.05
+    },
+    "地板价(4%)": {
+     "pe": 10.57,
+     "n_pB_base": 9.74,
+     "n_pA_base": 9.74,
+     "n_pB_glow": 11.13,
+     "n_pB_ghigh": 8.78,
+     "n_pB_lo": 10.73,
+     "n_p100_base": 9.32
+    }
+   },
+   "当前": {
+    "pe": 23.03,
+    "n_pB_base": 18.49,
+    "n_pB_glow": 24.24,
+    "n_pB_ghigh": 15.41,
+    "n_p100_base": 17.77
+   }
+  },
+  "说明": "n_pB_base=推荐p_B+基准g；n_pA_base=推荐p_A+基准g（两者推荐值相同故相等）；n_pB_glow/ghigh 为低/高 g；n_pB_lo 为 p 取区间下沿 0.85；n_p100_base 为 p=1.00 的版本。"
+ },
+ "implied_return_current": {
+  "修正后PE": 23.03,
+  "p": 0.95,
+  "低g=0%": 4.13,
+  "基准g=3%": 7.13,
+  "高g=6%": 10.13,
+  "单位": "%"
+ },
+ "risk_free_current": {
+  "cn10y_2026-10": 1.6345,
+  "单位": "%",
+  "来源": "/home/user/Deep-Research-skills/whitehorse-three-tier-pe/data/risk_free_monthly.csv"
+ },
+ "net_thrust_current": {
+  "低g=0%": 2.49,
+  "基准g=3%": 5.49,
+  "高g=6%": 8.49,
+  "单位": "百分点"
+ },
+ "net_thrust_at_anchors": {
+  "参数": "p=0.95，无风险利率取当前 cn10y 1.6345%；implied 为基准 g=3%，另给低/高 g 的隐含年化与净推力",
+  "结果": {
+   "成熟期窗口(2022-01至2026-10)": {
+    "击球区": {
+     "pe": 15.16,
+     "implied": 9.27,
+     "net_thrust": 7.63,
+     "implied_glow": 6.27,
+     "implied_ghigh": 12.27,
+     "net_thrust_glow": 4.63,
+     "net_thrust_ghigh": 10.63
+    },
+    "好价": {
+     "pe": 14.48,
+     "implied": 9.56,
+     "net_thrust": 7.93,
+     "implied_glow": 6.56,
+     "implied_ghigh": 12.56,
+     "net_thrust_glow": 4.93,
+     "net_thrust_ghigh": 10.93
+    },
+    "地板价": {
+     "pe": 14.24,
+     "implied": 9.67,
+     "net_thrust": 8.04,
+     "implied_glow": 6.67,
+     "implied_ghigh": 12.67,
+     "net_thrust_glow": 5.04,
+     "net_thrust_ghigh": 11.04
+    }
+   },
+   "近5年(2021-11至2026-10)": {
+    "击球区": {
+     "pe": 15.23,
+     "implied": 9.24,
+     "net_thrust": 7.6,
+     "implied_glow": 6.24,
+     "implied_ghigh": 12.24,
+     "net_thrust_glow": 4.6,
+     "net_thrust_ghigh": 10.6
+    },
+    "好价": {
+     "pe": 14.5,
+     "implied": 9.55,
+     "net_thrust": 7.92,
+     "implied_glow": 6.55,
+     "implied_ghigh": 12.55,
+     "net_thrust_glow": 4.92,
+     "net_thrust_ghigh": 10.92
+    },
+    "地板价": {
+     "pe": 14.25,
+     "implied": 9.67,
+     "net_thrust": 8.03,
+     "implied_glow": 6.67,
+     "implied_ghigh": 12.67,
+     "net_thrust_glow": 5.03,
+     "net_thrust_ghigh": 11.03
+    }
+   },
+   "近10年(2016-11至2026-10)": {
+    "击球区": {
+     "pe": 16.17,
+     "implied": 8.87,
+     "net_thrust": 7.24,
+     "implied_glow": 5.87,
+     "implied_ghigh": 11.87,
+     "net_thrust_glow": 4.24,
+     "net_thrust_ghigh": 10.24
+    },
+    "好价": {
+     "pe": 15.31,
+     "implied": 9.2,
+     "net_thrust": 7.57,
+     "implied_glow": 6.2,
+     "implied_ghigh": 12.2,
+     "net_thrust_glow": 4.57,
+     "net_thrust_ghigh": 10.57
+    },
+    "地板价": {
+     "pe": 14.44,
+     "implied": 9.58,
+     "net_thrust": 7.94,
+     "implied_glow": 6.58,
+     "implied_ghigh": 12.58,
+     "net_thrust_glow": 4.94,
+     "net_thrust_ghigh": 10.94
+    }
+   },
+   "敏感性:公式首次满足年(2014-01至2026-10)": {
+    "击球区": {
+     "pe": 15.06,
+     "implied": 9.31,
+     "net_thrust": 7.67,
+     "implied_glow": 6.31,
+     "implied_ghigh": 12.31,
+     "net_thrust_glow": 4.67,
+     "net_thrust_ghigh": 10.67
+    },
+    "好价": {
+     "pe": 14.27,
+     "implied": 9.66,
+     "net_thrust": 8.03,
+     "implied_glow": 6.66,
+     "implied_ghigh": 12.66,
+     "net_thrust_glow": 5.03,
+     "net_thrust_ghigh": 11.03
+    },
+    "地板价": {
+     "pe": 10.57,
+     "implied": 11.99,
+     "net_thrust": 10.35,
+     "implied_glow": 8.99,
+     "implied_ghigh": 14.99,
+     "net_thrust_glow": 7.35,
+     "net_thrust_ghigh": 13.35
+    }
+   }
+  }
+ },
+ "net_thrust_series_csv": {
+  "路径": "/home/user/Deep-Research-skills/whitehorse-three-tier-pe/results/wuliangye_net_thrust.csv",
+  "口径": "p_pit、g_pit 在每年年报披露月（按东方财富公告日）切换为截至上一披露财年的值；p_pit=截至 t 年的 5 年累计 p_B（含“占款跳升>30%合并净利润按期初净占款×基准g替换”的正常化，不做资本开支正常化，下限0、上限1，不足5年用已有年份）；g_pit=3年均值基期的5年复合增速（剔除一次性），截断在[0%,15%]；implied_return=p_pit÷PE_corrected+g_pit；rf=当月 cn10y；单位%。",
+  "成熟期窗口净推力分位(2022-01至2026-10)": {
+   "第85百分位": 19.55,
+   "第91百分位": 19.73,
+   "第96百分位": 19.84,
+   "中位数": 16.95,
+   "样本月数": 58,
+   "当前值": 9.68,
+   "当前所处百分位": 6.9
+  },
+  "解读": "序列口径中 p_pit 多年为 1.0 或 0.6–0.9（受 2012–2014 年占款收缩影响），g_pit 在 2012–2015 年被截断在 15%，2016–2018 年回落到 2–6%，2019 年后升至 11%，2025 年报后为 7.0%（3年均值基期平滑了 2025 年的利润塌陷，偏乐观）。当前净推力序列值 9.7 百分点处于成熟期窗口第 7 百分位（净推力越低越贵），按推荐 p=0.95、g=3% 的前瞻口径当前净推力为 5.5 百分点；两个口径差异主要来自 g，使用时以前瞻口径为准。"
+ },
+ "backtest_points": [
+  {
+   "year": 2012,
+   "mcap_rmb": 1071.6,
+   "mcap_pass": false,
+   "pe_corrected": 11.72,
+   "pe_percentile_at_t": null,
+   "pe_percentile_since_2010": 2.8,
+   "p_pit": 1.0,
+   "p_pit_untruncated": 1.1996,
+   "p_window": "2009-2012",
+   "g_pit": 0.15,
+   "g_pit_uncapped": 0.4299,
+   "payback_years": 7.26,
+   "implied_return": 23.53,
+   "rf": 3.5738,
+   "net_thrust": 19.96,
+   "tsr_3y": 2.02,
+   "tsr_5y": 26.57,
+   "tsr_7y": 27.92,
+   "tsr_10y": 22.98,
+   "decomposition_5y": {
+    "cash_yield": 3.13,
+    "growth": -0.53,
+    "valuation_change": 24.5,
+    "residual": -0.52
+   },
+   "max_drawdown_5y": -48.0
+  },
+  {
+   "year": 2013,
+   "mcap_rmb": 594.5,
+   "mcap_pass": false,
+   "pe_corrected": 6.34,
+   "pe_percentile_at_t": null,
+   "pe_percentile_since_2010": 2.1,
+   "p_pit": 0.92,
+   "p_pit_untruncated": 0.92,
+   "p_window": "2009-2013",
+   "g_pit": 0.15,
+   "g_pit_uncapped": 0.404,
+   "payback_years": 5.08,
+   "implied_return": 29.51,
+   "rf": 4.5518,
+   "net_thrust": 24.96,
+   "tsr_3y": 33.74,
+   "tsr_5y": 29.7,
+   "tsr_7y": 55.22,
+   "tsr_10y": 27.04,
+   "decomposition_5y": {
+    "cash_yield": 2.89,
+    "growth": 10.38,
+    "valuation_change": 20.62,
+    "residual": -4.19
+   },
+   "max_drawdown_5y": -47.3
+  },
+  {
+   "year": 2014,
+   "mcap_rmb": 816.1,
+   "mcap_pass": false,
+   "pe_corrected": 14.63,
+   "pe_percentile_at_t": null,
+   "pe_percentile_since_2010": 43.3,
+   "p_pit": 0.7226,
+   "p_pit_untruncated": 0.7226,
+   "p_window": "2010-2014",
+   "g_pit": 0.15,
+   "g_pit_uncapped": 0.2971,
+   "payback_years": 9.98,
+   "implied_return": 19.94,
+   "rf": 3.6219,
+   "net_thrust": 16.32,
+   "tsr_3y": 58.2,
+   "tsr_5y": 46.87,
+   "tsr_7y": 42.11,
+   "tsr_10y": 23.01,
+   "decomposition_5y": {
+    "cash_yield": 2.67,
+    "growth": 24.36,
+    "valuation_change": 16.52,
+    "residual": 3.32
+   },
+   "max_drawdown_5y": -47.3
+  },
+  {
+   "year": 2015,
+   "mcap_rmb": 1035.5,
+   "mcap_pass": false,
+   "pe_corrected": 18.03,
+   "pe_percentile_at_t": null,
+   "pe_percentile_since_2010": 52.2,
+   "p_pit": 0.6622,
+   "p_pit_untruncated": 0.6622,
+   "p_window": "2011-2015",
+   "g_pit": 0.15,
+   "g_pit_uncapped": 0.164,
+   "payback_years": 11.64,
+   "implied_return": 18.67,
+   "rf": 2.8212,
+   "net_thrust": 15.85,
+   "tsr_3y": 25.67,
+   "tsr_5y": 63.66,
+   "tsr_7y": 33.23,
+   "tsr_10y": 17.38,
+   "decomposition_5y": {
+    "cash_yield": 2.44,
+    "growth": 26.43,
+    "valuation_change": 26.49,
+    "residual": 8.3
+   },
+   "max_drawdown_5y": -47.3
+  },
+  {
+   "year": 2016,
+   "mcap_rmb": 1308.8,
+   "mcap_pass": false,
+   "pe_corrected": 19.61,
+   "pe_percentile_at_t": null,
+   "pe_percentile_since_2010": 60.5,
+   "p_pit": 0.5951,
+   "p_pit_untruncated": 0.5951,
+   "p_window": "2012-2016",
+   "g_pit": 0.0639,
+   "g_pit_uncapped": 0.0639,
+   "payback_years": 18.29,
+   "implied_return": 9.43,
+   "rf": 3.0115,
+   "net_thrust": 6.42,
+   "tsr_3y": 59.81,
+   "tsr_5y": 47.54,
+   "tsr_7y": 24.27,
+   "tsr_10y": null,
+   "decomposition_5y": {
+    "cash_yield": 2.03,
+    "growth": 28.07,
+    "valuation_change": 14.15,
+    "residual": 3.28
+   },
+   "max_drawdown_5y": -47.3
+  },
+  {
+   "year": 2017,
+   "mcap_rmb": 3032.2,
+   "mcap_pass": true,
+   "pe_corrected": 35.05,
+   "pe_percentile_at_t": null,
+   "pe_percentile_since_2010": 95.7,
+   "p_pit": 0.6292,
+   "p_pit_untruncated": 0.6292,
+   "p_window": "2013-2017",
+   "g_pit": 0.0201,
+   "g_pit_uncapped": 0.0201,
+   "payback_years": 37.74,
+   "implied_return": 3.81,
+   "rf": 3.8807,
+   "net_thrust": -0.07,
+   "tsr_3y": 56.57,
+   "tsr_5y": 19.49,
+   "tsr_7y": 10.44,
+   "tsr_10y": null,
+   "decomposition_5y": {
+    "cash_yield": 1.78,
+    "growth": 22.51,
+    "valuation_change": -5.14,
+    "residual": 0.34
+   },
+   "max_drawdown_5y": -60.3
+  },
+  {
+   "year": 2018,
+   "mcap_rmb": 1975.0,
+   "mcap_pass": false,
+   "pe_corrected": 16.19,
+   "pe_percentile_at_t": null,
+   "pe_percentile_since_2010": 34.3,
+   "p_pit": 0.8029,
+   "p_pit_untruncated": 0.8029,
+   "p_window": "2014-2018",
+   "g_pit": 0.0423,
+   "g_pit_uncapped": 0.0423,
+   "payback_years": 14.89,
+   "implied_return": 9.18,
+   "rf": 3.2265,
+   "net_thrust": 5.96,
+   "tsr_3y": 65.78,
+   "tsr_5y": 24.43,
+   "tsr_7y": 13.99,
+   "tsr_10y": null,
+   "decomposition_5y": {
+    "cash_yield": 1.87,
+    "growth": 17.72,
+    "valuation_change": 2.64,
+    "residual": 2.21
+   },
+   "max_drawdown_5y": -60.3
+  },
+  {
+   "year": 2019,
+   "mcap_rmb": 5162.9,
+   "mcap_pass": true,
+   "pe_corrected": 31.42,
+   "pe_percentile_at_t": null,
+   "pe_percentile_since_2010": 88.9,
+   "p_pit": 1.0,
+   "p_pit_untruncated": 1.0048,
+   "p_window": "2015-2019",
+   "g_pit": 0.1105,
+   "g_pit_uncapped": 0.1105,
+   "payback_years": 14.29,
+   "implied_return": 14.24,
+   "rf": 3.1365,
+   "net_thrust": 11.1,
+   "tsr_3y": 12.17,
+   "tsr_5y": 3.03,
+   "tsr_7y": null,
+   "tsr_10y": null,
+   "decomposition_5y": {
+    "cash_yield": 1.86,
+    "growth": 12.86,
+    "valuation_change": -11.76,
+    "residual": 0.07
+   },
+   "max_drawdown_5y": -66.0
+  }
+ ],
+ "backtest_notes": "股东总回报用新浪后复权（hfq）日线计算，等价于现金分红按除息日再投资；公司无回购，故回购收益为0。tsr 为年化%，起点为 t 年末最后交易日，终点为 t+n 年末最后交易日；t+n 超过 2025 年的记为 null（2016 年后的10年、2019 年的7/10年等）。5 年回报分解：cash_yield=t+1…t+5 各年(分红+回购)÷上年末市值的平均；growth=剔除一次性的归母净利润 t→t+5 的年化增速（口径为年报值，含 2013 年罚款剔除）；valuation_change=修正后 PE（12月末）的年化变化；residual=TSR−三项之和（含股本变化、复利交叉项）。pe_percentile_at_t 要求 t 年及以前处于成熟期窗口，五粮液成熟期起点为 2022 年，2012–2019 年均为 null，另给出 pe_percentile_since_2010（2010-01 起至 t）作参考。p_pit 为截至 t 年的最多5年累计 p_B（2012 年仅有 2009–2012 共4年，不足5年已注明 p_window），g_pit 以 3 年均值基期的5年复合增速(剔除一次性)、截断[0,15%]；2012–2015 年 g_pit 触及 15% 上限。max_drawdown_5y 为 t 年末之后5年内后复权价从起点或前高计的最大回撤。2017 年末市值 3032 亿元刚过门槛，2012–2016、2018 年均未达 3000 亿元门槛（mcap_pass=false），仍照常计算。",
+ "user_intuition_tiers": "未提供",
+ "sources": [
+  {
+   "title": "五粮液 2025 年年度报告（含非经常性损益、租赁、其他流动负债附注）",
+   "url": "https://pdf.dfcfw.com/pdf/H2_AN202604301821851584_1.pdf",
+   "date": "2026-04-30",
+   "type": "一手"
+  },
+  {
+   "title": "五粮液 2026 年第三季度报告",
+   "url": "https://pdf.dfcfw.com/pdf/H2_AN202610271831037454_1.pdf",
+   "date": "2026-10-27",
+   "type": "一手"
+  },
+  {
+   "title": "五粮液 2026 年半年度报告",
+   "url": "https://pdf.dfcfw.com/pdf/H2_AN202608281828643700_1.pdf",
+   "date": "2026-08-28",
+   "type": "一手"
+  },
+  {
+   "title": "五粮液 2025 年第一季度报告（原始，未更正）",
+   "url": "https://pdf.dfcfw.com/pdf/H2_AN202504251662335479_1.pdf",
+   "date": "2025-04-25",
+   "type": "一手"
+  },
+  {
+   "title": "五粮液 2025 年半年度报告（原始，未更正）",
+   "url": "https://pdf.dfcfw.com/pdf/H2_AN202508271735522786_1.pdf",
+   "date": "2025-08-27",
+   "type": "一手"
+  },
+  {
+   "title": "五粮液 2025 年三季度报告（原始，未更正）",
+   "url": "https://pdf.dfcfw.com/pdf/H2_AN202510301771985099_1.pdf",
+   "date": "2025-10-30",
+   "type": "一手"
+  },
+  {
+   "title": "五粮液 2024 年年度报告",
+   "url": "https://pdf.dfcfw.com/pdf/H2_AN202504251662335463_1.pdf",
+   "date": "2025-04-25",
+   "type": "一手"
+  },
+  {
+   "title": "五粮液 2022 年年度报告（2020–2022 年非经常性损益）",
+   "url": "https://pdf.dfcfw.com/pdf/H2_AN202304281586075843_1.pdf",
+   "date": "2023-04-28",
+   "type": "一手"
+  },
+  {
+   "title": "五粮液 2019 年年度报告（2017–2019 年非经常性损益）",
+   "url": "https://pdf.dfcfw.com/pdf/H2_AN202004271378794135_1.pdf",
+   "date": "2020-04-27",
+   "type": "一手"
+  },
+  {
+   "title": "五粮液 2016 年年度报告（2014–2016 年非经常性损益）",
+   "url": "https://pdf.dfcfw.com/pdf/H2_AN201703300452910871_1.pdf",
+   "date": "2017-03-30",
+   "type": "一手"
+  },
+  {
+   "title": "五粮液 2013 年年度报告（反垄断罚款 2.02 亿元、2011–2013 年非经常性损益）",
+   "url": "https://pdf.dfcfw.com/pdf/H2_AN201404170005454688_1.pdf",
+   "date": "2014-04-17",
+   "type": "一手"
+  },
+  {
+   "title": "新浪财经财务报表与日线行情（akshare stock_financial_report_sina / stock_zh_a_daily）",
+   "url": "https://finance.sina.com.cn/realstock/company/sz000858/nc.shtml",
+   "date": "2026-10-29",
+   "type": "二手"
+  },
+  {
+   "title": "东方财富 F10 主要财务指标与公告日（datacenter RPT_F10_FINANCE_MAINFINADATA）",
+   "url": "https://datacenter.eastmoney.com/securities/api/data/v1/get?reportName=RPT_F10_FINANCE_MAINFINADATA",
+   "date": "2026-10-29",
+   "type": "二手"
+  },
+  {
+   "title": "东方财富个股估值（PE(TTM)、总市值，akshare stock_value_em）用于抽查",
+   "url": "https://data.eastmoney.com/gzfx/detail/000858.html",
+   "date": "2026-10-29",
+   "type": "二手"
+  },
+  {
+   "title": "巨潮资讯股本变动与分红（akshare stock_share_change_cninfo / stock_dividend_cninfo）",
+   "url": "http://www.cninfo.com.cn/new/disclosure/stock?stockCode=000858",
+   "date": "2026-10-29",
+   "type": "一手/二手"
+  },
+  {
+   "title": "华尔街见闻：五粮液前三季度净利润增近五成，Q3 单季下降 48.16%",
+   "url": "https://wallstreetcn.com/articles/3784576",
+   "date": "2026-10-27",
+   "type": "二手"
+  },
+  {
+   "title": "华尔街见闻：五粮液对 2025 年财务数据追溯更正（收入确认口径）",
+   "url": "https://wallstreetcn.com/articles/3771397",
+   "date": "2026-04-30",
+   "type": "二手"
+  }
+ ],
+ "data_quality_notes": [
+  "【重大口径变化】五粮液 2026-04-30 披露 2025 年报时追溯更正收入确认口径：2025 年营收 405.29 亿元（原始前三季度累计已达 609.45 亿元）、归母 89.54 亿元（原始前三季度累计 215.11 亿元）。新浪/东财数据库的 2025 年各季度均为更正后数值（Q1 营收 170.86 亿 vs 原始 369.40 亿），本次对 2025-04 至 2026-03 各月的 TTM 用原始已公告数补丁还原，2026-04 起用更正后数；更正的具体会计处理细节主要来自二手媒体报道，未逐项核对原文[不确定]。",
+  "annual_data 的 2025 年及 TTM 使用更正后口径；2025 年归母净利润 89.5 亿元远低于原始前三季度累计的 215.1 亿元，回本年数、增速、可分配比例的历史对比时需注意口径断层。",
+  "营运资本变动用资产负债表净占款余额的年度差近似（新浪不提供现金流量表补充资料）；其他流动负债（2025 年新增“监管商品款项”约 263 亿元，疑为资金账户性质的对冲科目）未计入净占款，否则 2025 年占款变动将被高估[不确定]。",
+  "租赁本金：2021–2025 年用现金流量表“支付其他与筹资活动有关的现金”（约 4.0–5.2 亿元，与年报“偿还租赁负债付款额”4.3–4.7 亿元吻合）近似，2021 年以前租赁未资本化记 0；TTM 记 5.0 亿元[估计]。",
+  "分红现金=巨潮每股派息×股权登记日股本，按派息日所在年度归集（2025 年含三次派息共 323.1 亿元，与现金流量表“分配股利”280.1 亿元+少数股东股利差异来自应付股利跨期）；回购：库存股仅 2026 年出现 2.0 亿元，buyback 记 0。",
+  "2010 年非流动资产处置损益未取到明细，按 0 处理；2011 年及之前仅有简表，2013 年年报开始披露完整非经常性明细。",
+  "抽查：本序列原始 PE 与东方财富 PE(TTM) 在 2018-12、2020-12、2022-10、2024-12、2026-10 完全一致（市值误差<0.001%），说明股本与价格口径无偏差；修正后 PE 与原始 PE 的差异仅来自极小的处置损益与 2013 年罚款。",
+  "至少抽查一年与原文核对：2025 年非经常性损益表（处置 +0.03 亿、政府补助 2.35 亿、其他营业外 −0.43 亿）与新浪处置损益项、东财扣非 88.16 亿一致；2013 年罚款金额 2.02 亿元与年报营业外支出明细一致。",
+  "成熟期窗口仅 58 个月，且包含 2025 年更正后的低利润期，分位锚的统计可靠性较弱，建议以近10年和 2014 年起窗口作交叉验证。"
+ ],
+ "uncertain": [
+  "maturity_start（成熟期窗口样本短）",
+  "annual_data[2025]与TTM（收入确认口径追溯更正，细节来自二手报道）",
+  "annual_data[*].lease_principal（用筹资其他支付近似）",
+  "annual_data[*].delta_wc（净占款余额差近似）",
+  "annual_data[2010].oneoff_after_tax（未取到明细）",
+  "oneoff_items[2013 反垄断罚款归母口径 −1.94 亿元]",
+  "payout_recommended（p 取 0.95 为判断）",
+  "growth_recommended（g 三档为判断）",
+  "pe_method.2025 原始季度补丁（按原始公告数手工录入）",
+  "market_cap_rmb（未达 3000 亿元门槛）",
+  "backtest_points[2012]（p_pit 仅4年数据）"
+ ]
+}

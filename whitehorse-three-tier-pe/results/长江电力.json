@@ -1,0 +1,1354 @@
+{
+ "company": "中国长江电力股份有限公司（China Yangtze Power Co., Ltd.），股票代码 600900.SH，上海证券交易所主板（2003 年上市）",
+ "listing_market": "A股",
+ "currency_unit": "财报币种人民币，单位亿元；股价为 A 股人民币收盘价（不复权）；市盈率在人民币下计算，无需汇率换算",
+ "market_cap_rmb": "2026-10-29 收盘价 29.99 元 × 总股本 244.6822 亿股 ≈ 7338.0 亿元人民币（与东方财富总市值 7338.0 亿元一致，无库存股）；远超 3000 亿元门槛，达标（2018 年起市值持续高于 3000 亿元）。",
+ "type_tags": {
+  "标签": [
+   "资本开支重"
+  ],
+  "依据": "资本开支（购建长期资产支付的现金）÷合并净利润：近3年 47.5%、近5年 41.7%、近10年 29.0%；资本开支÷营收 2016–2021 年为 4.6–6.3%，2022–2025 年升至 18.1/15.9/17.3/21.4%（2025 年现金流量表口径 184.9 亿元，年报“资本性支出情况”披露固定资产投资 94.4 亿元，其余含工程尾款与分期付款等[不确定]），与乌东德、白鹤滩电站 2023 年 1 月注入及抽水蓄能在建项目相关。类债券现金流：经营现金流÷归母净利润 1.4–2.4 倍（2025 年 1.76 倍），费用化利息支出 48–127 亿元/年（2023 年 127.4 亿、2025 年 95.1 亿）。占款小（净占款变动÷净利润绝对值多数年份<5%，2022 年 −45% 来自乌白并表重述）；股权激励=0；一次性项目中等（2021 年投资收益等 +18.6 亿元约占归母 7.1%，2025 年长期股权投资减值 −14.8 亿元与公允价值收益 +15.4 亿元基本抵消）。"
+ },
+ "risk_free_basis": "cn10y（中国10年期国债收益率，月末值；2026-10 为 1.6345%）",
+ "maturity_start": {
+  "采用起点": 2018,
+  "公式起点": 2018,
+  "判定依据": "按“营收3年复合<15% 且 归母(剔除一次性)3年复合<20% 的‘稳定’首个年份，与上市满5年取较晚者”。2012年 营收3年复合32.8%、归母(剔除一次性)3年复合30.6%；2013年 营收3年复合1.2%、归母(剔除一次性)3年复合1.4%；2014年 营收3年复合9.1%、归母(剔除一次性)3年复合16.1%；2015年 营收3年复合22.5%、归母(剔除一次性)3年复合20.0%；2016年 营收3年复合29.2%、归母(剔除一次性)3年复合32.8%；2017年 营收3年复合23.1%、归母(剔除一次性)3年复合22.5%；2018年 营收3年复合2.6%、归母(剔除一次性)3年复合8.3%；2019年 营收3年复合0.6%、归母(剔除一次性)3年复合1.2%；2020年 营收3年复合4.8%、归母(剔除一次性)3年复合6.4%；2021年 营收3年复合2.8%、归母(剔除一次性)3年复合2.6%；2022年 营收3年复合11.4%、归母(剔除一次性)3年复合2.3%；2023年 营收3年复合10.6%、归母(剔除一次性)3年复合1.0%；2024年 营收3年复合14.9%、归母(剔除一次性)3年复合9.6%；2025年 营收3年复合7.8%、归母(剔除一次性)3年复合14.8%。2013、2014 年首次满足，但 2015–2017 年再次突破（营收3年复合 22.5/29.2/23.1%、归母 20.0/32.8/22.5%）——原因是 2016 年同一控制下并入三峡集团的溪洛渡、向家坝电站资产（川云、云川公司）后，2015 年被追溯重述为合并口径，形成基期跳升；因此取最后一次突破后的第一个满足年 2018 年（2.6%/8.3%）。上市满5年早已满足（2003 年上市）。",
+  "人工调整理由": "未做人工调整。注意 2023 年乌东德、白鹤滩注入后 2022 年被追溯重述（营收 520.6→688.6 亿元），2022–2024 年的3年复合增速含重述基期的影响；成熟期窗口 2018-01 至 2026-10 共 106 个月，同时给出近5年、近10年窗口。"
+ },
+ "annual_data": [
+  {
+   "year": 2010,
+   "revenue": 218.8,
+   "ni_attr": 82.25,
+   "ni_consolidated": 82.26,
+   "oneoff_after_tax": -2.75,
+   "ocf": 173.26,
+   "capex_total": 115.12,
+   "lease_principal": 0.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": -39.75,
+   "delta_wc": -11.31,
+   "net_float_balance": -27.28,
+   "buyback": 0.0,
+   "dividends_paid": 35.42,
+   "shares_end": 165.0,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 0.0
+  },
+  {
+   "year": 2011,
+   "revenue": 207.0,
+   "ni_attr": 77.0,
+   "ni_consolidated": 77.01,
+   "oneoff_after_tax": 1.25,
+   "ocf": 154.5,
+   "capex_total": 78.3,
+   "lease_principal": 0.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": -35.19,
+   "delta_wc": 4.61,
+   "net_float_balance": -22.67,
+   "buyback": 0.0,
+   "dividends_paid": 42.21,
+   "shares_end": 165.0,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 0.0
+  },
+  {
+   "year": 2012,
+   "revenue": 257.82,
+   "ni_attr": 103.52,
+   "ni_consolidated": 103.53,
+   "oneoff_after_tax": 0.61,
+   "ocf": 214.61,
+   "capex_total": 40.67,
+   "lease_principal": 0.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": -41.9,
+   "delta_wc": 4.06,
+   "net_float_balance": -18.6,
+   "buyback": 0.0,
+   "dividends_paid": 42.01,
+   "shares_end": 165.0,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 0.0
+  },
+  {
+   "year": 2013,
+   "revenue": 226.98,
+   "ni_attr": 89.93,
+   "ni_consolidated": 89.94,
+   "oneoff_after_tax": 1.28,
+   "ocf": 180.91,
+   "capex_total": 7.71,
+   "lease_principal": 0.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": -33.5,
+   "delta_wc": 1.74,
+   "net_float_balance": -16.87,
+   "buyback": 0.0,
+   "dividends_paid": 54.71,
+   "shares_end": 165.0,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 0.0
+  },
+  {
+   "year": 2014,
+   "revenue": 268.98,
+   "ni_attr": 118.3,
+   "ni_consolidated": 118.3,
+   "oneoff_after_tax": -0.3,
+   "ocf": 212.99,
+   "capex_total": 8.5,
+   "lease_principal": 0.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": -28.1,
+   "delta_wc": -3.2,
+   "net_float_balance": -20.07,
+   "buyback": 0.0,
+   "dividends_paid": 46.27,
+   "shares_end": 165.0,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 0.0
+  },
+  {
+   "year": 2015,
+   "revenue": 474.35,
+   "ni_attr": 182.35,
+   "ni_consolidated": 211.13,
+   "oneoff_after_tax": 4.32,
+   "ocf": 397.93,
+   "capex_total": 48.25,
+   "lease_principal": 0.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": -81.99,
+   "delta_wc": -12.05,
+   "net_float_balance": -32.12,
+   "buyback": 0.0,
+   "dividends_paid": 62.55,
+   "shares_end": 165.0,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 0.0
+  },
+  {
+   "year": 2016,
+   "revenue": 489.39,
+   "ni_attr": 207.81,
+   "ni_consolidated": 209.38,
+   "oneoff_after_tax": 0.15,
+   "ocf": 389.9,
+   "capex_total": 22.54,
+   "lease_principal": 0.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": -59.7,
+   "delta_wc": -1.13,
+   "net_float_balance": -33.25,
+   "buyback": 0.0,
+   "dividends_paid": 88.0,
+   "shares_end": 220.0,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 374.55
+  },
+  {
+   "year": 2017,
+   "revenue": 501.46,
+   "ni_attr": 222.61,
+   "ni_consolidated": 222.75,
+   "oneoff_after_tax": 4.57,
+   "ocf": 396.93,
+   "capex_total": 25.56,
+   "lease_principal": 0.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": -53.78,
+   "delta_wc": -0.53,
+   "net_float_balance": -33.78,
+   "buyback": 0.0,
+   "dividends_paid": 159.5,
+   "shares_end": 220.0,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 0.0
+  },
+  {
+   "year": 2018,
+   "revenue": 512.14,
+   "ni_attr": 226.11,
+   "ni_consolidated": 226.44,
+   "oneoff_after_tax": 0.05,
+   "ocf": 397.37,
+   "capex_total": 31.19,
+   "lease_principal": 0.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": -48.49,
+   "delta_wc": 6.75,
+   "net_float_balance": -27.03,
+   "buyback": 0.0,
+   "dividends_paid": 149.6,
+   "shares_end": 220.0,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 0.0
+  },
+  {
+   "year": 2019,
+   "revenue": 498.74,
+   "ni_attr": 215.43,
+   "ni_consolidated": 215.67,
+   "oneoff_after_tax": 0.1,
+   "ocf": 364.64,
+   "capex_total": 27.17,
+   "lease_principal": 0.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": -38.0,
+   "delta_wc": -3.66,
+   "net_float_balance": -30.69,
+   "buyback": 0.0,
+   "dividends_paid": 149.6,
+   "shares_end": 220.0,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 0.0
+  },
+  {
+   "year": 2020,
+   "revenue": 577.83,
+   "ni_attr": 262.98,
+   "ni_consolidated": 265.06,
+   "oneoff_after_tax": 0.28,
+   "ocf": 410.37,
+   "capex_total": 36.28,
+   "lease_principal": 0.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": -35.79,
+   "delta_wc": -0.01,
+   "net_float_balance": -30.7,
+   "buyback": 0.0,
+   "dividends_paid": 149.6,
+   "shares_end": 227.419,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 240.01
+  },
+  {
+   "year": 2021,
+   "revenue": 556.46,
+   "ni_attr": 262.73,
+   "ni_consolidated": 264.85,
+   "oneoff_after_tax": 18.6,
+   "ocf": 357.32,
+   "capex_total": 34.74,
+   "lease_principal": 1.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": -28.29,
+   "delta_wc": -5.55,
+   "net_float_balance": -36.25,
+   "buyback": 0.0,
+   "dividends_paid": 159.19,
+   "shares_end": 227.419,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 0.0
+  },
+  {
+   "year": 2022,
+   "revenue": 688.63,
+   "ni_attr": 237.26,
+   "ni_consolidated": 251.02,
+   "oneoff_after_tax": 7.01,
+   "ocf": 434.77,
+   "capex_total": 124.7,
+   "lease_principal": 1.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": -80.61,
+   "delta_wc": -112.33,
+   "net_float_balance": -148.58,
+   "buyback": 0.0,
+   "dividends_paid": 185.41,
+   "shares_end": 227.419,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 0.0
+  },
+  {
+   "year": 2023,
+   "revenue": 781.44,
+   "ni_attr": 272.45,
+   "ni_consolidated": 279.67,
+   "oneoff_after_tax": 1.54,
+   "ocf": 647.49,
+   "capex_total": 124.17,
+   "lease_principal": 1.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": -105.92,
+   "delta_wc": 71.99,
+   "net_float_balance": -76.59,
+   "buyback": 0.0,
+   "dividends_paid": 208.79,
+   "shares_end": 244.682,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 6.02
+  },
+  {
+   "year": 2024,
+   "revenue": 844.92,
+   "ni_attr": 324.96,
+   "ni_consolidated": 329.3,
+   "oneoff_after_tax": 3.18,
+   "ocf": 596.48,
+   "capex_total": 146.34,
+   "lease_principal": 1.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": -87.79,
+   "delta_wc": -5.12,
+   "net_float_balance": -81.71,
+   "buyback": 0.0,
+   "dividends_paid": 200.64,
+   "shares_end": 244.682,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 11.02
+  },
+  {
+   "year": 2025,
+   "revenue": 862.42,
+   "ni_attr": 345.03,
+   "ni_consolidated": 349.49,
+   "oneoff_after_tax": -3.4,
+   "ocf": 605.63,
+   "capex_total": 184.88,
+   "lease_principal": 1.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": -68.74,
+   "delta_wc": 15.39,
+   "net_float_balance": -66.32,
+   "buyback": 0.0,
+   "dividends_paid": 230.74,
+   "shares_end": 244.682,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": 16.21
+  },
+  {
+   "year": "TTM（2025Q3-2026Q2）",
+   "revenue": 874.74,
+   "ni_attr": 362.02,
+   "ni_consolidated": 367.0,
+   "oneoff_after_tax": -3.4,
+   "ocf": 607.0,
+   "capex_total": 166.13,
+   "lease_principal": 1.0,
+   "sbc": 0.0,
+   "interest_dividend_adj": -62.11,
+   "delta_wc": 7.95,
+   "net_float_balance": -100.97,
+   "buyback": 0.0,
+   "dividends_paid": 230.74,
+   "shares_end": 244.682,
+   "ocf_oneoff_cash": 0.0,
+   "acquisition_cash_in_investing": null
+  }
+ ],
+ "oneoff_items": [
+  {
+   "year": 2010,
+   "item": "非流动资产处置损益",
+   "pretax": -3.67,
+   "after_tax": -2.75,
+   "is_oneoff": true,
+   "reason": "全局口径一次性；按25%税率估算税后"
+  },
+  {
+   "year": "2011–2020",
+   "item": "非流动资产处置损益（2011 +1.67、2012 +0.82、2013 +1.71、2014 −0.40、2015 +5.76、2016 +0.21、2017 +6.09、2018 +0.07、2019 0.00、2020 +0.37 亿元，税前）",
+   "pretax": null,
+   "after_tax": null,
+   "is_oneoff": true,
+   "reason": "一次性；按25%税率估算税后，见 annual_data.oneoff_after_tax；2015 年（5.76 亿）与 2017 年（6.09 亿）相对较大"
+  },
+  {
+   "year": 2019,
+   "item": "取得子公司投资成本小于可辨认净资产公允价值份额的收益（负商誉）",
+   "pretax": 0.105,
+   "after_tax": 0.105,
+   "is_oneoff": true,
+   "reason": "企业合并相关，金额很小；按无税处理"
+  },
+  {
+   "year": 2021,
+   "item": "处置长期资产收益 +5.65 亿元；交易性金融资产公允价值变动及处置金融资产投资收益 +19.15 亿元（异常大）",
+   "pretax": 24.8,
+   "after_tax": 18.6,
+   "is_oneoff": true,
+   "reason": "后者为 2021 年远超常年（0.2–3 亿元）的单笔股权类金融资产处置收益，约占当年归母 7.3%，按“异常大的单笔”处理为一次性；按25%税率估算（年报合计税后 21.3 亿元含政府补助等其他项）"
+  },
+  {
+   "year": 2022,
+   "item": "非流动资产处置损益 +6.63 亿元；非货币性资产交换损益 +2.05 亿元；负商誉收益 +0.50 亿元（后两项在年报表中仅列一栏数值，归属年度按 2022 年处理）",
+   "pretax": 9.19,
+   "after_tax": 7.02,
+   "is_oneoff": true,
+   "reason": "全局口径一次性；非货币性资产交换与负商誉的归属年度存在不确定[不确定]"
+  },
+  {
+   "year": 2023,
+   "item": "非流动资产处置损益",
+   "pretax": 2.06,
+   "after_tax": 1.54,
+   "is_oneoff": true,
+   "reason": "一次性，按25%税率估算"
+  },
+  {
+   "year": 2024,
+   "item": "非流动资产处置损益",
+   "pretax": 4.24,
+   "after_tax": 3.18,
+   "is_oneoff": true,
+   "reason": "一次性，按25%税率估算"
+  },
+  {
+   "year": 2025,
+   "item": "其他非流动金融资产公允价值变动收益 +16.77 亿元（其中 Q4 约 +15.39 亿元）",
+   "pretax": 15.39,
+   "after_tax": 11.54,
+   "is_oneoff": true,
+   "reason": "全年 16.8 亿元为近年远超常态（2021 年之后最大一次，约占归母 4.9%），按“异常大的单笔”处理；与下一项方向相反、金额接近。若改判经常性，2025 年修正后市盈率仅上升约 0.6 倍"
+  },
+  {
+   "year": 2025,
+   "item": "长期股权投资减值 −14.83 亿元、商誉减值 −0.12 亿元（均计入 2025Q4）",
+   "pretax": -14.95,
+   "after_tax": -14.95,
+   "is_oneoff": true,
+   "reason": "全局口径“巨额减值”，约占归母 4.3%；长期股权投资减值一般不可税前抵扣，按无税处理；非货币性处置 +0.01 亿元并入"
+  },
+  {
+   "year": 2025,
+   "item": "2025 年合计一次性（上述三项净额）",
+   "pretax": null,
+   "after_tax": -3.4,
+   "is_oneoff": true,
+   "reason": "净额很小，对 2025–2026 TTM 市盈率影响约 −0.2 倍"
+  },
+  {
+   "year": "2016",
+   "item": "同一控制下企业合并（川云、云川公司）产生的期初至合并日净损益 +4.98 亿元",
+   "pretax": null,
+   "after_tax": null,
+   "is_oneoff": false,
+   "reason": "考虑过但判为经常性：同一控制合并的被合并方利润全年并入且比较期追溯重述，股本已增加（165→220 亿股），市值与利润口径一致，剔除会造成口径错配；仅在 2015–2016-03 的月份用当时公告的未重述原始数据"
+  },
+  {
+   "year": "2010–2025",
+   "item": "增值税即征即退等政府补助（营业外收入/其他收益约 17–34 亿元/年）、利息收入、小额公允价值波动（2011–2020 年 ±0.2–8 亿元，2022 −3.85、2023 −2.14、2024 +2.12 亿元）",
+   "pretax": null,
+   "after_tax": null,
+   "is_oneoff": false,
+   "reason": "每年持续发生，按全局口径判为经常性；2017 年营业外收入骤降至近零系新准则将政府补助改列“其他收益”所致[不确定]"
+  },
+  {
+   "year": 2020,
+   "item": "收购秘鲁路德斯公司（Luz del Sur）83.64% 股权，取得子公司现金 240.0 亿元",
+   "pretax": null,
+   "after_tax": null,
+   "is_oneoff": false,
+   "reason": "非同一控制并购：投资现金流出不计入资本开支，合并后利润计入经常性；2020 年起净利润含其贡献"
+  }
+ ],
+ "payout_windows": {
+  "3年(2023-2025)": {
+   "p_A": 1.0,
+   "p_A_untruncated": 1.451,
+   "p_B": 1.0,
+   "p_B_untruncated": 1.179,
+   "p_A_仅占款正常化": 1.0,
+   "p_B_仅占款正常化": 1.0,
+   "p_B_仅占款正常化_未截断": 1.179,
+   "p_A_normalized": 1.0,
+   "p_A_normalized_untruncated": 1.777,
+   "p_B_normalized": 1.0,
+   "p_B_normalized_untruncated": 1.505
+  },
+  "5年(2021-2025)": {
+   "p_A": 1.0,
+   "p_A_untruncated": 1.371,
+   "p_B": 1.0,
+   "p_B_untruncated": 1.141,
+   "p_A_仅占款正常化": 1.0,
+   "p_B_仅占款正常化": 1.0,
+   "p_B_仅占款正常化_未截断": 1.141,
+   "p_A_normalized": 1.0,
+   "p_A_normalized_untruncated": 1.642,
+   "p_B_normalized": 1.0,
+   "p_B_normalized_untruncated": 1.417
+  },
+  "7年(2019-2025)": {
+   "p_A": 1.0,
+   "p_A_untruncated": 1.398,
+   "p_B": 1.0,
+   "p_B_untruncated": 1.187,
+   "p_A_仅占款正常化": 1.0,
+   "p_B_仅占款正常化": 1.0,
+   "p_B_仅占款正常化_未截断": 1.187,
+   "p_A_normalized": 1.0,
+   "p_A_normalized_untruncated": 1.604,
+   "p_B_normalized": 1.0,
+   "p_B_normalized_untruncated": 1.396
+  },
+  "10年(2016-2025)": {
+   "p_A": 1.0,
+   "p_A_untruncated": 1.469,
+   "p_B": 1.0,
+   "p_B_untruncated": 1.252,
+   "p_A_仅占款正常化": 1.0,
+   "p_B_仅占款正常化": 1.0,
+   "p_B_仅占款正常化_未截断": 1.252,
+   "p_A_normalized": 1.0,
+   "p_A_normalized_untruncated": 1.623,
+   "p_B_normalized": 1.0,
+   "p_B_normalized_untruncated": 1.408
+  },
+  "4个完整财年+TTM(2022-2025+TTM)": {
+   "p_A": 1.0,
+   "p_A_untruncated": 1.358,
+   "p_B": 1.0,
+   "p_B_untruncated": 1.104,
+   "p_A_仅占款正常化": 1.0,
+   "p_B_仅占款正常化": 1.0,
+   "p_B_仅占款正常化_未截断": 1.104,
+   "p_A_normalized": 1.0,
+   "p_A_normalized_untruncated": 1.683,
+   "p_B_normalized": 1.0,
+   "p_B_normalized_untruncated": 1.43
+  },
+  "口径说明": "p_A=Σ(经营现金流−购建长期资产−租赁本金)÷Σ合并净利润；p_B=Σ(经营现金流−购建长期资产−租赁本金−股权激励−经营现金流内一次性现金+取得投资收益收到的现金−利息费用)×(Σ归母÷Σ合并)÷Σ(归母−税后一次性)；p_A、p_B 均截断在 100%（同时给出未截断值）；“仅占款正常化”=对单年营运资本变动>30%合并净利润的年份按“期初净占款余额×稳态g”替换；“_normalized”=占款正常化+资本开支正常化（见 payout_normalized）。营运资本变动用资产负债表净占款余额（应付票据+应付账款+合同负债+预收款项−应收票据−应收账款−应收款项融资−预付款项−存货−合同资产，不含其他流动负债）的年度变化近似，新浪财务报表无现金流量表补充资料，属近似[不确定]。"
+ },
+ "payout_bridge": {
+  "3年(2023-2025)": {
+   "未正常化": {
+    "p_A起点": 145.1,
+    "利息股息对齐": -27.4,
+    "股权激励": -0.0,
+    "经营现金流内一次性现金": -0.0,
+    "归母缩放": -2.0,
+    "分母剔除一次性": 2.1,
+    "截断前p_B": 117.9,
+    "截断": -17.9,
+    "p_B": 100.0
+   },
+   "正常化后": {
+    "p_A起点": 177.7,
+    "利息股息对齐": -27.4,
+    "股权激励": -0.0,
+    "经营现金流内一次性现金": -0.0,
+    "归母缩放": -2.5,
+    "分母剔除一次性": 2.7,
+    "截断前p_B": 150.5,
+    "截断": -50.5,
+    "p_B": 100.0,
+    "占款跳升正常化(pp)": 0.0,
+    "资本开支正常化(pp)": 32.5
+   }
+  },
+  "5年(2021-2025)": {
+   "未正常化": {
+    "p_A起点": 137.1,
+    "利息股息对齐": -25.2,
+    "股权激励": -0.0,
+    "经营现金流内一次性现金": -0.0,
+    "归母缩放": -2.4,
+    "分母剔除一次性": 4.6,
+    "截断前p_B": 114.1,
+    "截断": -14.1,
+    "p_B": 100.0
+   },
+   "正常化后": {
+    "p_A起点": 164.2,
+    "利息股息对齐": -25.2,
+    "股权激励": -0.0,
+    "经营现金流内一次性现金": -0.0,
+    "归母缩放": -3.0,
+    "分母剔除一次性": 5.7,
+    "截断前p_B": 141.7,
+    "截断": -41.7,
+    "p_B": 100.0,
+    "占款跳升正常化(pp)": 0.0,
+    "资本开支正常化(pp)": 27.1
+   }
+  },
+  "7年(2019-2025)": {
+   "未正常化": {
+    "p_A起点": 139.8,
+    "利息股息对齐": -22.8,
+    "股权激励": -0.0,
+    "经营现金流内一次性现金": -0.0,
+    "归母缩放": -2.0,
+    "分母剔除一次性": 3.7,
+    "截断前p_B": 118.7,
+    "截断": -18.7,
+    "p_B": 100.0
+   },
+   "正常化后": {
+    "p_A起点": 160.4,
+    "利息股息对齐": -22.8,
+    "股权激励": -0.0,
+    "经营现金流内一次性现金": -0.0,
+    "归母缩放": -2.4,
+    "分母剔除一次性": 4.4,
+    "截断前p_B": 139.6,
+    "截断": -39.6,
+    "p_B": 100.0,
+    "占款跳升正常化(pp)": 0.0,
+    "资本开支正常化(pp)": 20.6
+   }
+  },
+  "10年(2016-2025)": {
+   "未正常化": {
+    "p_A起点": 146.9,
+    "利息股息对齐": -23.2,
+    "股权激励": -0.0,
+    "经营现金流内一次性现金": -0.0,
+    "归母缩放": -1.7,
+    "分母剔除一次性": 3.3,
+    "截断前p_B": 125.2,
+    "截断": -25.2,
+    "p_B": 100.0
+   },
+   "正常化后": {
+    "p_A起点": 162.3,
+    "利息股息对齐": -23.2,
+    "股权激励": -0.0,
+    "经营现金流内一次性现金": -0.0,
+    "归母缩放": -1.9,
+    "分母剔除一次性": 3.7,
+    "截断前p_B": 140.8,
+    "截断": -40.8,
+    "p_B": 100.0,
+    "占款跳升正常化(pp)": 0.0,
+    "资本开支正常化(pp)": 15.5
+   }
+  },
+  "4个完整财年+TTM(2022-2025+TTM)": {
+   "未正常化": {
+    "p_A起点": 135.8,
+    "利息股息对齐": -25.7,
+    "股权激励": -0.0,
+    "经营现金流内一次性现金": -0.0,
+    "归母缩放": -2.4,
+    "分母剔除一次性": 2.8,
+    "截断前p_B": 110.4,
+    "截断": -10.4,
+    "p_B": 100.0
+   },
+   "正常化后": {
+    "p_A起点": 168.3,
+    "利息股息对齐": -25.7,
+    "股权激励": -0.0,
+    "经营现金流内一次性现金": -0.0,
+    "归母缩放": -3.1,
+    "分母剔除一次性": 3.6,
+    "截断前p_B": 143.0,
+    "截断": -43.0,
+    "p_B": 100.0,
+    "占款跳升正常化(pp)": 0.0,
+    "资本开支正常化(pp)": 32.5
+   }
+  },
+  "说明": "单位为百分点(pp)。起点为未截断 p_A；依次加入利息股息对齐（取得投资收益收到的现金−费用化利息）、股权激励、经营现金流内一次性现金、归母÷合并缩放、分母剔除税后一次性，得到截断前 p_B，再截断到100%。正常化后一列另含“占款跳升正常化(pp)”“资本开支正常化(pp)”（相对未正常化起点的调整量，已计入起点之后的结果）。"
+ },
+ "payout_normalized": {
+  "做法": "占款：近10年仅 2022 年绝对值超过30%（−45%，为乌白并表后资产负债表重述，非真实现金流），正向（占款流入）无年份超阈值，故“仅占款正常化”与未正常化一致（对称处理时 2022 年被替换，p_B 约 +7–8pp）。资本开支：2022–2025 年资本开支÷营收 15.9–21.4%，显著高于 2016–2021 年中位数 5.77%，属乌东德、白鹤滩电站注入后的工程尾款、抽水蓄能与新能源建设高峰，按全局口径第3条用 2016–2021 年中位数 5.77% 的稳态强度重算（各窗口资本开支下调 312–512 亿元）；备选“新稳态”：若按 2025 年年报披露的固定资产投资强度（94.4 亿元÷营收 862 亿元≈10.9%）重算，5年窗口 p_B 未截断值约 1.30（5.77% 为 1.42，未正常化为 1.14）。",
+  "解读": "无论是否正常化，各窗口 p_B 未截断值都在 1.10 以上（未正常化 1.10–1.25，正常化后 1.40–1.51），截断后均为 1.00。原因：水电折旧远高于维护性资本开支，经营现金流是归母净利润的 1.4–2.4 倍，即使扣除费用化利息（−28 至 −106 亿元/年）与全部资本开支，剩余现金仍超过净利润。但实际现金分红仅为归母净利润的 65–68%（近3/5/10年），其余用于偿还债务与投资，本研究的 p 不含债务本金偿还。",
+  "结果": {
+   "3年(2023-2025)": {
+    "p_A": 1.0,
+    "p_B": 1.0,
+    "p_B_untruncated": 1.505,
+    "占款替换年份": [],
+    "占款调整亿元": 0.0,
+    "资本开支调整亿元": 311.8
+   },
+   "5年(2021-2025)": {
+    "p_A": 1.0,
+    "p_B": 1.0,
+    "p_B_untruncated": 1.417,
+    "占款替换年份": [],
+    "占款调整亿元": 0.0,
+    "资本开支调整亿元": 399.4
+   },
+   "7年(2019-2025)": {
+    "p_A": 1.0,
+    "p_B": 1.0,
+    "p_B_untruncated": 1.396,
+    "占款替换年份": [],
+    "占款调整亿元": 0.0,
+    "资本开支调整亿元": 402.3
+   },
+   "10年(2016-2025)": {
+    "p_A": 1.0,
+    "p_B": 1.0,
+    "p_B_untruncated": 1.408,
+    "占款替换年份": [],
+    "占款调整亿元": 0.0,
+    "资本开支调整亿元": 404.0
+   },
+   "4个完整财年+TTM(2022-2025+TTM)": {
+    "p_A": 1.0,
+    "p_B": 1.0,
+    "p_B_untruncated": 1.43,
+    "占款替换年份": [],
+    "占款调整亿元": 0.0,
+    "资本开支调整亿元": 512.4
+   }
+  }
+ },
+ "payout_recommended": {
+  "p_B基准": 1.0,
+  "p_B区间": [
+   0.9,
+   1.0
+  ],
+  "p_A推荐": 1.0,
+  "理由": "未正常化的最低窗口（4个完整财年+TTM）p_B 未截断值仍为 1.10，已超过截断上限，故基准取 1.00；区间下沿 0.90 考虑：①资本开支仍处高位（2025 年 184.9 亿元、TTM 166 亿元，占归母 46–54%），若抽水蓄能与新能源投资长期保持 10% 左右营收强度，p 仍≥1.30，但对外并购（2016 年取得子公司现金 374.6 亿元、2020 年秘鲁路德斯收购 240.0 亿元）未计入资本开支，类似的大额注入会占用现金；②利息与债务本金偿还占用现金，实际可分配（分红）比例仅 65–68%。p_A 同取 1.00（未截断 p_A 1.36–1.47）。"
+ },
+ "growth_history": {
+  "归母剔除一次性_5年_2020-2025": 5.81,
+  "归母剔除一次性_10年_2015-2025": 6.95,
+  "归母剔除一次性_3年均值基期5年(2018-20→2023-25)": 5.97,
+  "归母剔除一次性_3年均值基期10年(2013-15→2023-25)": 9.34,
+  "营收_5年_2020-2025": 8.34,
+  "营收_10年_2015-2025": 6.16,
+  "营收_3年均值基期5年": 9.39,
+  "营收_3年均值基期10年": 9.88,
+  "归母原始_5年_2020-2025": 5.58,
+  "归母原始_10年_2015-2025": 6.58,
+  "TTM同比_归母剔除一次性": 7.9,
+  "TTM同比_营收": 1.3,
+  "TTM同比_归母剔除一次性_说明": "TTM=TTM(2025Q3-2026Q2)；上年同期 TTM 用新浪单季（含追溯调整）口径，数值=338.7 → 365.4 亿元",
+  "单位": "%（年化复合或同比）"
+ },
+ "growth_recommended": {
+  "低": 0.01,
+  "基准": 0.03,
+  "高": 0.05,
+  "理由": "历史：剔除一次性归母净利润 2020 年 262.7 亿元 → 2025 年 348.4 亿元，5年复合 +5.8%（3年均值基期 +6.0%）、10年简单复合 +6.9%，含 2016、2023 年外延注入与 2022 年追溯重述带来的跳升；有机增长更低。TTM 同比 +7.9%（2025Q3–2026Q2 对比上年同期，口径含追溯调整），主要由利息费用回落（2023 年 127.4 亿元 → 2025 年 95.1 亿元）、来水与出力改善驱动。按永续理解：水电装机基本固定、电价市场化后略有下行压力、折旧与利息逐年下降提供有限的利润弹性，增量来自抽水蓄能与新能源（装机占比小）和控股母公司后续资产注入的可能性（不计入永续 g）。基准 3%（略高于通胀），低档 1% 对应来水偏枯与电价下行，高档 5% 对应利息继续下降且新项目投产。"
+ },
+ "pe_series_csv": "/home/user/Deep-Research-skills/whitehorse-three-tier-pe/results/changjiang_power_pe_series.csv（2010-01 至 2026-10，共 202 行；2015-06 至 2015-10 因停牌（重大资产重组）无价格留空）",
+ "pe_method": {
+  "股价": "新浪财经 A 股日线（不复权）月末收盘价；2026-10 用 2026-10-29 收盘 29.99 元（与东方财富一致）；2015-06 至 2015-10 停牌月留空。",
+  "股本": "巨潮资讯股本变动表总股本：2009-11 向三峡集团发行 15.88 亿股至 110 亿股；2010-07-20 资本公积转增（10转5）至 165 亿股；2016-04-13 增发 55 亿股至 220 亿股；2020-09/10 GDR 及超额配售至 227.42 亿股；2023-02-03、2023-04-24 增发至 244.68 亿股；无库存股。",
+  "TTM切换": "按东方财富公告日月末前已披露即切换；单季值=累计值相减。追溯重述处理：2016 年并入川云、云川公司导致 2015 年追溯重述，2022 年乌东德、白鹤滩注入导致 2022 年追溯重述。为“不事后回填”，2015-01 至 2016-03 月份使用 2015 年原始已公告季度数（营收 38.27/62.07/84.29/57.75 亿元，归母 18.87/33.13/42.93/20.27 亿元，全年 115.2 亿元，新浪库中 2015 年归母为重述后 182.35 亿元）；2022-01 至 2023-04 月份使用 2022 年原始季度数（营收 97.38/156.50/158.81/107.91 亿元，归母 31.37/81.54/76.53/23.65 亿元，全年 213.1 亿元，重述后 237.26 亿元）；其余月份用新浪库数值。2026 年半年报最新，2026 年三季报预计 10 月底披露，截至 10-29 未纳入。",
+  "一次性8/9处理": "X=TTM 内按口径挑出的一次性税后额（见 oneoff_items：逐年处置损益、2021Q4 +18.60、2022Q4 +7.02、2025Q4 −3.40 等，按25%税率估算税后，同一控制合并利润不剔除）；政府补助、利息收入、小额公允价值波动均为经常性；PE_corrected=(市值−X×8/9)÷(TTM归母−X×8/9)。",
+  "币种": "全部人民币，无需换算。",
+  "公开数据抽查": "2018-12-28 东方财富 PE(TTM)=15.58、总市值=3494亿，本序列原始 PE=15.58、市值=3494亿；2022-10-31 东方财富 PE(TTM)=17.96、总市值=4608亿，本序列原始 PE=17.96、市值=4608亿；2024-12-31 东方财富 PE(TTM)=21.43、总市值=7230亿，本序列原始 PE=21.43、市值=7230亿；2026-10-29 东方财富 PE(TTM)=20.27、总市值=7338亿，本序列原始 PE=20.27、市值=7338亿"
+ },
+ "pe_current": {
+  "日期": "2026-10-29",
+  "股价_元": 29.99,
+  "股本_亿股": 244.6822,
+  "市值_亿元": 7338.02,
+  "TTM区间": "TTM(2025Q3-2026Q2)",
+  "TTM归母净利润_亿元": 362.02,
+  "本期一次性_税后_亿元": -3.4,
+  "pe_raw": 20.27,
+  "pe_corrected": 20.11
+ },
+ "anchor_pe": {
+  "成熟期窗口(2018-01至2026-10)": {
+   "第15百分位": 16.73,
+   "第9百分位": 16.2,
+   "第4百分位": 15.8,
+   "中位数": 19.6,
+   "最小值": 14.32,
+   "最大值": 26.6,
+   "样本月数": 106,
+   "PE小于等于0剔除月数": 0
+  },
+  "近5年(2021-11至2026-10)": {
+   "第15百分位": 19.54,
+   "第9百分位": 18.94,
+   "第4百分位": 18.48,
+   "中位数": 20.75,
+   "最小值": 17.36,
+   "最大值": 26.6,
+   "样本月数": 60,
+   "PE小于等于0剔除月数": 0
+  },
+  "近10年(2016-11至2026-10)": {
+   "第15百分位": 16.16,
+   "第9百分位": 15.77,
+   "第4百分位": 15.53,
+   "中位数": 18.98,
+   "最小值": 14.32,
+   "最大值": 26.6,
+   "样本月数": 120,
+   "PE小于等于0剔除月数": 0
+  }
+ },
+ "current_percentile": {
+  "成熟期窗口(2018-01至2026-10)": 60.4,
+  "近5年(2021-11至2026-10)": 35.0,
+  "近10年(2016-11至2026-10)": 65.0
+ },
+ "cyclical_normalization": "不适用（水电，来水有年度波动但利润随电价与装机变化，未出现商品价格式的大幅波动；2010–2025 年归母未出现亏损，最大年度降幅为 2019 年 −4.7%、2022 年重述口径 −9.7%）",
+ "payback_years_at_anchors": {
+  "参数": "推荐 p_B=1.0、p_A=1.0，基准 g=3%，低 g=1%，高 g=5%；n=ln(1+PE×g/p)/ln(1+g)",
+  "结果": {
+   "成熟期窗口(2018-01至2026-10)": {
+    "击球区(15%)": {
+     "pe": 16.73,
+     "n_pB_base": 13.76,
+     "n_pA_base": 13.76,
+     "n_pB_glow": 15.55,
+     "n_pB_ghigh": 12.46,
+     "n_pB_lo": 14.99,
+     "n_p100_base": 13.76
+    },
+    "好价(9%)": {
+     "pe": 16.2,
+     "n_pB_base": 13.4,
+     "n_pA_base": 13.4,
+     "n_pB_glow": 15.09,
+     "n_pB_ghigh": 12.16,
+     "n_pB_lo": 14.6,
+     "n_p100_base": 13.4
+    },
+    "地板价(4%)": {
+     "pe": 15.8,
+     "n_pB_base": 13.13,
+     "n_pA_base": 13.13,
+     "n_pB_glow": 14.74,
+     "n_pB_ghigh": 11.93,
+     "n_pB_lo": 14.31,
+     "n_p100_base": 13.13
+    }
+   },
+   "近5年(2021-11至2026-10)": {
+    "击球区(15%)": {
+     "pe": 19.54,
+     "n_pB_base": 15.61,
+     "n_pA_base": 15.61,
+     "n_pB_glow": 17.94,
+     "n_pB_ghigh": 13.97,
+     "n_pB_lo": 16.97,
+     "n_p100_base": 15.61
+    },
+    "好价(9%)": {
+     "pe": 18.94,
+     "n_pB_base": 15.22,
+     "n_pA_base": 15.22,
+     "n_pB_glow": 17.43,
+     "n_pB_ghigh": 13.66,
+     "n_pB_lo": 16.56,
+     "n_p100_base": 15.22
+    },
+    "地板价(4%)": {
+     "pe": 18.48,
+     "n_pB_base": 14.93,
+     "n_pA_base": 14.93,
+     "n_pB_glow": 17.05,
+     "n_pB_ghigh": 13.42,
+     "n_pB_lo": 16.24,
+     "n_p100_base": 14.93
+    }
+   },
+   "近10年(2016-11至2026-10)": {
+    "击球区(15%)": {
+     "pe": 16.16,
+     "n_pB_base": 13.37,
+     "n_pA_base": 13.37,
+     "n_pB_glow": 15.05,
+     "n_pB_ghigh": 12.14,
+     "n_pB_lo": 14.58,
+     "n_p100_base": 13.37
+    },
+    "好价(9%)": {
+     "pe": 15.77,
+     "n_pB_base": 13.1,
+     "n_pA_base": 13.1,
+     "n_pB_glow": 14.72,
+     "n_pB_ghigh": 11.92,
+     "n_pB_lo": 14.29,
+     "n_p100_base": 13.1
+    },
+    "地板价(4%)": {
+     "pe": 15.53,
+     "n_pB_base": 12.94,
+     "n_pA_base": 12.94,
+     "n_pB_glow": 14.51,
+     "n_pB_ghigh": 11.78,
+     "n_pB_lo": 14.11,
+     "n_p100_base": 12.94
+    }
+   },
+   "当前": {
+    "pe": 20.11,
+    "n_pB_base": 15.97,
+    "n_pB_glow": 18.42,
+    "n_pB_ghigh": 14.26,
+    "n_p100_base": 15.97
+   }
+  },
+  "说明": "n_pB_base=推荐p_B+基准g；n_pA_base=推荐p_A+基准g（两者推荐值相同故相等）；n_pB_glow/ghigh 为低/高 g；n_pB_lo 为 p 取区间下沿 0.9；n_p100_base 为 p=1.00 的版本。"
+ },
+ "implied_return_current": {
+  "修正后PE": 20.11,
+  "p": 1.0,
+  "低g=1%": 5.97,
+  "基准g=3%": 7.97,
+  "高g=5%": 9.97,
+  "单位": "%"
+ },
+ "risk_free_current": {
+  "cn10y_2026-10": 1.6345,
+  "单位": "%",
+  "来源": "/home/user/Deep-Research-skills/whitehorse-three-tier-pe/data/risk_free_monthly.csv"
+ },
+ "net_thrust_current": {
+  "低g=1%": 4.34,
+  "基准g=3%": 6.34,
+  "高g=5%": 8.34,
+  "单位": "百分点"
+ },
+ "net_thrust_at_anchors": {
+  "参数": "p=1.0，无风险利率取当前 cn10y 1.6345%；implied 为基准 g=3%，另给低/高 g 的隐含年化与净推力",
+  "结果": {
+   "成熟期窗口(2018-01至2026-10)": {
+    "击球区": {
+     "pe": 16.73,
+     "implied": 8.98,
+     "net_thrust": 7.34,
+     "implied_glow": 6.98,
+     "implied_ghigh": 10.98,
+     "net_thrust_glow": 5.34,
+     "net_thrust_ghigh": 9.34
+    },
+    "好价": {
+     "pe": 16.2,
+     "implied": 9.17,
+     "net_thrust": 7.54,
+     "implied_glow": 7.17,
+     "implied_ghigh": 11.17,
+     "net_thrust_glow": 5.54,
+     "net_thrust_ghigh": 9.54
+    },
+    "地板价": {
+     "pe": 15.8,
+     "implied": 9.33,
+     "net_thrust": 7.69,
+     "implied_glow": 7.33,
+     "implied_ghigh": 11.33,
+     "net_thrust_glow": 5.69,
+     "net_thrust_ghigh": 9.69
+    }
+   },
+   "近5年(2021-11至2026-10)": {
+    "击球区": {
+     "pe": 19.54,
+     "implied": 8.12,
+     "net_thrust": 6.48,
+     "implied_glow": 6.12,
+     "implied_ghigh": 10.12,
+     "net_thrust_glow": 4.48,
+     "net_thrust_ghigh": 8.48
+    },
+    "好价": {
+     "pe": 18.94,
+     "implied": 8.28,
+     "net_thrust": 6.64,
+     "implied_glow": 6.28,
+     "implied_ghigh": 10.28,
+     "net_thrust_glow": 4.64,
+     "net_thrust_ghigh": 8.64
+    },
+    "地板价": {
+     "pe": 18.48,
+     "implied": 8.41,
+     "net_thrust": 6.78,
+     "implied_glow": 6.41,
+     "implied_ghigh": 10.41,
+     "net_thrust_glow": 4.78,
+     "net_thrust_ghigh": 8.78
+    }
+   },
+   "近10年(2016-11至2026-10)": {
+    "击球区": {
+     "pe": 16.16,
+     "implied": 9.19,
+     "net_thrust": 7.55,
+     "implied_glow": 7.19,
+     "implied_ghigh": 11.19,
+     "net_thrust_glow": 5.55,
+     "net_thrust_ghigh": 9.55
+    },
+    "好价": {
+     "pe": 15.77,
+     "implied": 9.34,
+     "net_thrust": 7.71,
+     "implied_glow": 7.34,
+     "implied_ghigh": 11.34,
+     "net_thrust_glow": 5.71,
+     "net_thrust_ghigh": 9.71
+    },
+    "地板价": {
+     "pe": 15.53,
+     "implied": 9.44,
+     "net_thrust": 7.81,
+     "implied_glow": 7.44,
+     "implied_ghigh": 11.44,
+     "net_thrust_glow": 5.81,
+     "net_thrust_ghigh": 9.81
+    }
+   }
+  }
+ },
+ "net_thrust_series_csv": {
+  "路径": "/home/user/Deep-Research-skills/whitehorse-three-tier-pe/results/changjiang_power_net_thrust.csv",
+  "口径": "p_pit、g_pit 在每年年报披露月（按东方财富公告日）切换为截至上一披露财年的值；p_pit=截至 t 年的 5 年累计 p_B（含“占款跳升>30%合并净利润按期初净占款×基准g替换”的正常化，不做资本开支正常化，下限0、上限1，不足5年用已有年份）；g_pit=3年均值基期的5年复合增速（剔除一次性），截断在[0%,15%]；implied_return=p_pit÷PE_corrected+g_pit；rf=当月 cn10y；单位%。",
+  "成熟期窗口净推力分位(2018-01至2026-10)": {
+   "第85百分位": 17.58,
+   "第91百分位": 17.85,
+   "第96百分位": 17.99,
+   "中位数": 9.92,
+   "样本月数": 106,
+   "当前值": 9.31,
+   "当前所处百分位": 35.8
+  },
+  "解读": "序列口径中 p_pit 仅 2012–2013 年因 2009–2012 年购置三峡发电资产及机组的资本开支高峰（当年资本开支 236/115/78/41 亿元）为 0–0.40[不确定]，2014 年后为 1.00；g_pit 自 2012 年到 2019 年多被截断在 15%（2015、2016 年并表追溯重述抬高历史增速），2025 年报后为 6.0%。当前净推力序列值 9.3 百分点处于成熟期窗口第 36 百分位，但序列整体受 g_pit 偏高影响（中位数 9.9，较前瞻口径高）；按推荐 p=1.00、g=3% 的前瞻口径当前净推力为 6.3 百分点，以前瞻口径为准。"
+ },
+ "backtest_points": [
+  {
+   "year": 2012,
+   "mcap_rmb": 1133.5,
+   "mcap_pass": false,
+   "pe_corrected": 11.44,
+   "pe_percentile_at_t": null,
+   "pe_percentile_since_2010": 11.1,
+   "p_pit": 0.068,
+   "p_pit_untruncated": 0.068,
+   "p_window": "2009-2012",
+   "g_pit": 0.15,
+   "g_pit_uncapped": 0.1642,
+   "payback_years": 23.38,
+   "implied_return": 15.59,
+   "rf": 3.5738,
+   "net_thrust": 12.02,
+   "tsr_3y": 30.6,
+   "tsr_5y": 22.55,
+   "tsr_7y": 19.71,
+   "tsr_10y": 16.15,
+   "decomposition_5y": {
+    "cash_yield": 4.5,
+    "growth": 16.2,
+    "valuation_change": 6.08,
+    "residual": -4.23
+   },
+   "max_drawdown_5y": -25.2
+  },
+  {
+   "year": 2013,
+   "mcap_rmb": 1042.8,
+   "mcap_pass": false,
+   "pe_corrected": 11.3,
+   "pe_percentile_at_t": null,
+   "pe_percentile_since_2010": 14.6,
+   "p_pit": 0.4034,
+   "p_pit_untruncated": 0.4034,
+   "p_window": "2009-2013",
+   "g_pit": 0.15,
+   "g_pit_uncapped": 0.1552,
+   "payback_years": 11.8,
+   "implied_return": 18.57,
+   "rf": 4.5518,
+   "net_thrust": 14.02,
+   "tsr_3y": 30.29,
+   "tsr_5y": 24.82,
+   "tsr_7y": 21.63,
+   "tsr_10y": 18.22,
+   "decomposition_5y": {
+    "cash_yield": 4.4,
+    "growth": 20.59,
+    "valuation_change": 7.0,
+    "residual": -7.17
+   },
+   "max_drawdown_5y": -22.3
+  },
+  {
+   "year": 2014,
+   "mcap_rmb": 1760.5,
+   "mcap_pass": false,
+   "pe_corrected": 16.35,
+   "pe_percentile_at_t": null,
+   "pe_percentile_since_2010": 78.3,
+   "p_pit": 1.0,
+   "p_pit_untruncated": 1.0777,
+   "p_window": "2010-2014",
+   "g_pit": 0.15,
+   "g_pit_uncapped": 0.1726,
+   "payback_years": 8.87,
+   "implied_return": 21.12,
+   "rf": 3.6219,
+   "net_thrust": 17.49,
+   "tsr_3y": 17.42,
+   "tsr_5y": 15.58,
+   "tsr_7y": 15.46,
+   "tsr_10y": 14.65,
+   "decomposition_5y": {
+    "cash_yield": 4.37,
+    "growth": 12.67,
+    "valuation_change": 1.9,
+    "residual": -3.36
+   },
+   "max_drawdown_5y": -22.3
+  },
+  {
+   "year": 2015,
+   "mcap_rmb": 2237.4,
+   "mcap_pass": false,
+   "pe_corrected": 18.8,
+   "pe_percentile_at_t": null,
+   "pe_percentile_since_2010": 85.1,
+   "p_pit": 1.0,
+   "p_pit_untruncated": 1.2777,
+   "p_window": "2011-2015",
+   "g_pit": 0.15,
+   "g_pit_uncapped": 0.1761,
+   "payback_years": 9.59,
+   "implied_return": 20.32,
+   "rf": 2.8212,
+   "net_thrust": 17.5,
+   "tsr_3y": 9.56,
+   "tsr_5y": 11.32,
+   "tsr_7y": 10.45,
+   "tsr_10y": 11.07,
+   "decomposition_5y": {
+    "cash_yield": 4.4,
+    "growth": 8.09,
+    "valuation_change": -0.66,
+    "residual": -0.52
+   },
+   "max_drawdown_5y": -16.4
+  },
+  {
+   "year": 2016,
+   "mcap_rmb": 2785.2,
+   "mcap_pass": false,
+   "pe_corrected": 15.79,
+   "pe_percentile_at_t": null,
+   "pe_percentile_since_2010": 62.0,
+   "p_pit": 1.0,
+   "p_pit_untruncated": 1.4099,
+   "p_window": "2012-2016",
+   "g_pit": 0.15,
+   "g_pit_uncapped": 0.195,
+   "payback_years": 8.69,
+   "implied_return": 21.33,
+   "rf": 3.0115,
+   "net_thrust": 18.32,
+   "tsr_3y": 18.11,
+   "tsr_5y": 16.92,
+   "tsr_7y": 13.4,
+   "tsr_10y": null,
+   "decomposition_5y": {
+    "cash_yield": 4.34,
+    "growth": 3.29,
+    "valuation_change": 5.02,
+    "residual": 4.27
+   },
+   "max_drawdown_5y": -16.4
+  },
+  {
+   "year": 2017,
+   "mcap_rmb": 3429.8,
+   "mcap_pass": true,
+   "pe_corrected": 15.37,
+   "pe_percentile_at_t": null,
+   "pe_percentile_since_2010": 54.9,
+   "p_pit": 1.0,
+   "p_pit_untruncated": 1.4375,
+   "p_window": "2013-2017",
+   "g_pit": 0.15,
+   "g_pit_uncapped": 0.1802,
+   "payback_years": 8.55,
+   "implied_return": 21.51,
+   "rf": 3.8807,
+   "net_thrust": 17.63,
+   "tsr_3y": 11.26,
+   "tsr_5y": 10.08,
+   "tsr_7y": 13.48,
+   "tsr_10y": null,
+   "decomposition_5y": {
+    "cash_yield": 3.92,
+    "growth": 1.09,
+    "valuation_change": 5.23,
+    "residual": -0.16
+   },
+   "max_drawdown_5y": -17.5
+  },
+  {
+   "year": 2018,
+   "mcap_rmb": 3493.6,
+   "mcap_pass": true,
+   "pe_corrected": 15.85,
+   "pe_percentile_at_t": 41.7,
+   "pe_percentile_since_2010": 61.2,
+   "p_pit": 1.0,
+   "p_pit_untruncated": 1.4169,
+   "p_window": "2014-2018",
+   "g_pit": 0.15,
+   "g_pit_uncapped": 0.1951,
+   "payback_years": 8.71,
+   "implied_return": 21.31,
+   "rf": 3.2265,
+   "net_thrust": 18.08,
+   "tsr_3y": 16.84,
+   "tsr_5y": 11.97,
+   "tsr_7y": 11.73,
+   "tsr_10y": null,
+   "decomposition_5y": {
+    "cash_yield": 3.92,
+    "growth": 3.69,
+    "valuation_change": 8.48,
+    "residual": -4.11
+   },
+   "max_drawdown_5y": -17.5
+  },
+  {
+   "year": 2019,
+   "mcap_rmb": 4043.6,
+   "mcap_pass": true,
+   "pe_corrected": 17.96,
+   "pe_percentile_at_t": 87.5,
+   "pe_percentile_since_2010": 87.8,
+   "p_pit": 1.0,
+   "p_pit_untruncated": 1.4036,
+   "p_window": "2015-2019",
+   "g_pit": 0.15,
+   "g_pit_uncapped": 0.1628,
+   "payback_years": 9.35,
+   "implied_return": 20.57,
+   "rf": 3.1365,
+   "net_thrust": 17.43,
+   "tsr_3y": 8.25,
+   "tsr_5y": 13.73,
+   "tsr_7y": null,
+   "tsr_10y": null,
+   "decomposition_5y": {
+    "cash_yield": 3.77,
+    "growth": 8.37,
+    "valuation_change": 3.67,
+    "residual": -2.07
+   },
+   "max_drawdown_5y": -17.5
+  }
+ ],
+ "backtest_notes": "股东总回报用新浪后复权（hfq）日线计算，等价于现金分红按除息日再投资；无回购，回购收益为0。tsr 为年化%，起点为 t 年末最后交易日；t+n 超过 2025 年记为 null。5年回报分解：cash_yield=t+1…t+5 各年现金分红÷上年末市值的平均（分红取巨潮每股派息×登记日股本，按派息日年份归集）；growth=剔除一次性的归母净利润 t→t+5 的年化增速（受 2016 年并入川云及 2023 年乌白重述影响，2012–2015 年起点的 growth 含并表跳升）；valuation_change=修正后 PE（12月末）年化变化；residual=TSR−三项之和（含股本摊薄：2016 年增发 55 亿股、2023 年增发 17 亿股）。pe_percentile_at_t 仅在 t≥2018（成熟期起点）时给出，其余为 null，另给 pe_percentile_since_2010 作参考。p_pit 的 5 年窗口在 2012–2013 年不足5年或含资本开支高峰；g_pit 在 2012–2019 年多触及 15% 上限（并表重述基期）。2012 年起算 TSR 受 2013–2014 年低估值与 2015 年停牌复牌影响。mcap_pass 为 2012–2016 年 false（2016 年末 2785 亿元），2017 年起 true。",
+ "user_intuition_tiers": "未提供",
+ "sources": [
+  {
+   "title": "长江电力 2025 年年度报告（非经常性损益、资产减值、公允价值变动、资本性支出）",
+   "url": "https://pdf.dfcfw.com/pdf/H2_AN202604291821763631_1.pdf",
+   "date": "2026-04-29",
+   "type": "一手"
+  },
+  {
+   "title": "长江电力 2026 年半年度报告（TTM 截至 2026Q2）",
+   "url": "https://pdf.dfcfw.com/pdf/H2_AN202608301828734088_1.pdf",
+   "date": "2026-08-30",
+   "type": "一手"
+  },
+  {
+   "title": "长江电力 2025 年半年度报告",
+   "url": "https://pdf.dfcfw.com/pdf/H2_AN202508291736547604_1.pdf",
+   "date": "2025-08-29",
+   "type": "一手"
+  },
+  {
+   "title": "长江电力 2022 年年度报告（2020–2022 年非经常性损益、2022 年原始分季度数据）",
+   "url": "https://pdf.dfcfw.com/pdf/H2_AN202304271585967917_1.pdf",
+   "date": "2023-04-27",
+   "type": "一手"
+  },
+  {
+   "title": "长江电力 2023 年年度报告（乌东德、白鹤滩 2023 年 1 月收购）",
+   "url": "https://pdf.dfcfw.com/pdf/H2_AN202404291631631589_1.pdf",
+   "date": "2024-04-29",
+   "type": "一手"
+  },
+  {
+   "title": "长江电力 2020 年年度报告（秘鲁路德斯收购、取得子公司现金 240 亿元）",
+   "url": "https://pdf.dfcfw.com/pdf/H2_AN202104291488640617_1.pdf",
+   "date": "2021-04-29",
+   "type": "一手"
+  },
+  {
+   "title": "长江电力 2019 年年度报告（2017–2019 年非经常性损益）",
+   "url": "https://pdf.dfcfw.com/pdf/H2_AN202004301379083749_1.pdf",
+   "date": "2020-04-30",
+   "type": "一手"
+  },
+  {
+   "title": "长江电力 2016 年年度报告（2014–2016 年非经常性损益、川云合并）",
+   "url": "https://pdf.dfcfw.com/pdf/H2_AN201704280539312049_1.pdf",
+   "date": "2017-04-28",
+   "type": "一手"
+  },
+  {
+   "title": "长江电力 2015 年年度报告（2015 年原始分季度数据）",
+   "url": "https://pdf.dfcfw.com/pdf/H2_AN201604280014610902_1.pdf",
+   "date": "2016-04-28",
+   "type": "一手"
+  },
+  {
+   "title": "长江电力 2013 年年报（2011–2013 年非经常性损益）",
+   "url": "https://pdf.dfcfw.com/pdf/H2_AN201404290005602522_1.pdf",
+   "date": "2014-04-29",
+   "type": "一手"
+  },
+  {
+   "title": "长江电力 2010 年年度报告",
+   "url": "https://pdf.dfcfw.com/pdf/H2_AN201203020004824987_1.pdf",
+   "date": "2012-03-02",
+   "type": "一手"
+  },
+  {
+   "title": "新浪财经财务报表与日线行情（akshare stock_financial_report_sina / stock_zh_a_daily）",
+   "url": "https://finance.sina.com.cn/realstock/company/sh600900/nc.shtml",
+   "date": "2026-10-29",
+   "type": "二手"
+  },
+  {
+   "title": "东方财富 F10 主要财务指标与公告日（datacenter RPT_F10_FINANCE_MAINFINADATA）",
+   "url": "https://datacenter.eastmoney.com/securities/api/data/v1/get?reportName=RPT_F10_FINANCE_MAINFINADATA",
+   "date": "2026-10-29",
+   "type": "二手"
+  },
+  {
+   "title": "东方财富个股估值（PE(TTM)、总市值，akshare stock_value_em）用于抽查",
+   "url": "https://data.eastmoney.com/gzfx/detail/600900.html",
+   "date": "2026-10-29",
+   "type": "二手"
+  },
+  {
+   "title": "巨潮资讯股本变动与分红（akshare stock_share_change_cninfo / stock_dividend_cninfo）",
+   "url": "http://www.cninfo.com.cn/new/disclosure/stock?stockCode=600900",
+   "date": "2026-10-29",
+   "type": "一手/二手"
+  }
+ ],
+ "data_quality_notes": [
+  "【追溯重述】新浪/东财库中 2015 年（并入川云、云川）与 2022 年（乌东德、白鹤滩）为追溯重述后的口径：2015 年归母 182.35 亿元（原始 115.2 亿元）、2022 年归母 237.26 亿元（原始 213.1 亿元）；annual_data 保留重述口径以便与后续年度可比，PE 序列在相应月份还原为当时公告的原始数据。2010–2014 年未并入川云，历史增速与 2015 年起不可比。",
+  "营运资本变动用资产负债表净占款余额的年度差近似；其他流动负债（含短期融资券等债务性科目）未计入净占款。2022 年净占款变动 −112 亿元为乌白并表后的资产负债表重述，非真实现金流，故不据此做占款正常化。",
+  "资本开支=现金流量表“购建固定资产、无形资产和其他长期资产支付的现金”，2022 年及以后与年报“固定资产投资额”不一致（2025 年 184.9 亿元 vs 94.4 亿元），差额疑含工程尾款与分期款、无形资产及土地等，未逐项拆分[不确定]；取得子公司现金（2016 年 374.6、2020 年 240.0、2023–2025 年 6–16 亿元）单列于 annual_data.acquisition_cash_in_investing，未计入资本开支。",
+  "利息股息对齐=取得投资收益收到的现金−费用化利息支出（2017 年以前新浪缺“利息费用”，用财务费用近似，含少量利息收入）；资本化利息已包含在资本开支内。",
+  "租赁本金：2021 年起按 1.0 亿元/年粗估（租赁负债约 5–6 亿元），TTM 记 1.0 亿元[估计]；该项占归母不足 0.3%。",
+  "一次性项目的税后额均按 25% 税率估算（非货币性资产交换与负商誉的归属年度不确定）；2025 年公允价值收益与长投减值的一次性判定属于判断，若 2025 年 FV 收益改判经常性，修正后 PE 约+0.6 倍。",
+  "抽查：本序列原始 PE 与东方财富 PE(TTM) 在 2018-12、2020-12、2022-10、2024-12、2026-10 完全一致，说明股本、价格口径无偏差；原始数据补丁月份（2022-01 至 2023-04）东财 PE 与本序列差异仅来自当时已公告数。至少抽查：2025 年非经常性损益表（处置 0.01、公允价值 16.78、其他营业外 −2.89 亿元等）与 2025 年年报一致。",
+  "分红现金=巨潮每股派息×登记日股本，按派息日年份归集，与现金流量表“分配股利、利润或偿付利息支付的现金”（含利息）不可直接比较；无回购。"
+ ],
+ "uncertain": [
+  "annual_data[*].capex_total（与年报固定资产投资口径差异）",
+  "annual_data[*].lease_principal（粗估）",
+  "annual_data[*].delta_wc（净占款余额差近似）",
+  "oneoff_items[2022 非货币性资产交换与负商誉归属年度]",
+  "oneoff_items[2025 公允价值收益判为一次性]",
+  "oneoff_items[税后按25%估算]",
+  "payout_recommended（p 取 1.00 为判断）",
+  "growth_recommended（g 三档为判断）",
+  "maturity_start（受重述基期影响）",
+  "pe_method.2015/2022 原始季度补丁（手工录入）",
+  "backtest_points[2012–2015]（p_pit、g_pit 受并表与资本开支高峰影响）"
+ ]
+}

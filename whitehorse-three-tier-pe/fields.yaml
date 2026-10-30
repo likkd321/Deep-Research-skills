@@ -1,0 +1,144 @@
+# 白马三价标定 · 字段定义
+#
+# 全局口径（每个子 agent 都必须遵守，保证各公司可比）
+# 1. 单位：财务数据用财报币种的"亿元"（美股为亿美元；腾讯、网易、阿里、京东、中国移动、中海油为亿元人民币）。
+#    市值换算用 /home/user/Deep-Research-skills/whitehorse-three-tier-pe/data/fx_monthly.csv（usd_cny、usd_hkd、hkd_cny，月末值）；市盈率在利润的币种下计算。
+# 2. 修正后标准 TTM 市盈率（skill 的传统口径，不是 EV 真实口径）：
+#    PE_corrected = (市值 − X × 8/9) ÷ (TTM 归母净利润 − X × 8/9)，X 为 TTM 内税后一次性损益（收益为正、损失为负）。
+#    市值 = 月末收盘价 × 期末总股本（扣库存股）；TTM 利润取"截至该月已公告"的最近四个季度，按业绩公告月份切换，不事后回填。
+#    一次性：处置/视同处置收益、企业合并相关损益、巨额商誉或资产减值、诉讼和解与罚款、重组费用、税法变动等。
+#    经常性（不剔除）：每年持续发生的政府补助、现金管理收益（理财收益、交易性金融资产公允价值变动、利息收入）；只有异常大的单笔才按一次性处理并说明。
+#    A 股不要直接用"归母净利润 − 扣非归母净利润"：要从非经常性损益明细表里只挑出上面列为一次性的项目（扣非会把政府补助和理财收益也剔除，使市盈率偏高）。
+#    以投资为常态业务的公司（腾讯、阿里），常态投资损益算经常性，只剔除特别巨大的单笔。
+# 3. 可分配比例：
+#    p_A（原始口径）= Σ(经营现金流 − 资本开支（含无形资产、内容、土地）− 租赁本金) ÷ Σ合并净利润。
+#    p_B（skill 口径）= Σ(经营现金流 − 资本开支 − 租赁本金 − 股权激励 − 经营现金流内的一次性现金 ± 利息股息对齐) ÷ Σ(归母净利润 − 税后一次性)；
+#    少数股东占比大时按 归母 ÷ 合并 缩放；超过 100% 截断，同时报告未截断值。
+#    利息股息对齐：利息收入、股息收入记在投资活动、利息支出记在筹资活动时（IFRS 常见），按与净利润一致的口径调回。
+#    正常化：资本开支处于峰值（如 2024 年后的 AI 投入）时，按稳态强度（过去 7 年资本开支 ÷ 营收的中位数，或有依据的新稳态）重算；
+#    单年营运资本贡献超过净利润 30% 的占款跳升，按"期初净占款余额 × 稳态 g"替换。
+# 4. 稳态增速 g：公司整体归母净利润（剔除一次性）增速，不是每股收益；以 3 年均值为基期的 5 年复合为主，
+#    结合营收增速与最新趋势判断；给出低 / 基准 / 高三档；按永续理解（回本后按同样市盈率卖出）。
+# 5. 成熟期起点：营收 3 年复合增速首次稳定低于 15%、且归母利润 3 年复合增速低于 20% 的第一年，与上市满 5 年取较晚者；可人工调整并说明。
+# 6. 分位：百分位 = 窗口内月度观测中低于该值的占比；PE ≤ 0 的月份剔除并计数。
+#    锚分位：击球区 15%、好价 9%、地板价 4%。窗口：成熟期起点至 2026-10（主）；近 5 年、近 10 年（敏感性）。
+# 7. 回本年数 n = ln(1 + PE × g ÷ p) ÷ ln(1 + g)（g = 0 时 n = PE ÷ p）。
+# 8. 引力视角：隐含年化 = p ÷ PE + g；净推力 = 隐含年化 − 无风险利率。
+#    无风险利率：A 股用 cn10y，港股美股用 us10y，取 /home/user/Deep-Research-skills/whitehorse-three-tier-pe/data/risk_free_monthly.csv 当月值（单位 %）。
+# 9. 回测时点 t = 2012–2019 年各年末，只能用 t 年及以前的数据：
+#    p_pit = 截至 t 年的 5 年累计 p_B（不足 5 年用已有年份并注明）；g_pit = 截至 t 年、3 年均值基期的 5 年复合增速（剔除一次性），截断在 [0%, 15%]。
+#    之后 3 / 5 / 7 / 10 年的股东年化总回报（复权价，含分红再投资），能取多少算多少；
+#    5 年回报拆成：现金回报（分红 + 回购）+ 利润增长 + 估值变化。
+# 10. 数据来源：一手（年报、SEC XBRL companyfacts、HKEX 披露易、巨潮资讯）优先，二手（东方财富 F10、stockanalysis、macrotrends 等）补充；至少抽查一年与原文核对。
+# 11. 月度序列存 CSV：/home/user/Deep-Research-skills/whitehorse-three-tier-pe/results/<公司英文slug>_pe_series.csv 与 results/<公司英文slug>_net_thrust.csv。JSON 文字值用中文，数值用数值类型。
+
+fields:
+  基本信息:
+    - name: company
+      description: 公司中文名、英文名、股票代码、上市地
+      detail_level: 极简
+    - name: listing_market
+      description: A股 / 港股 / 美股（字段名不用 market：校验脚本会把 market 当作分类名跳过）
+      detail_level: 极简
+    - name: currency_unit
+      description: 财报币种与单位、股价币种，以及市盈率在哪个币种下计算
+      detail_level: 极简
+    - name: market_cap_rmb
+      description: 当前市值（人民币亿元，注明日期与汇率），是否达到 3000 亿元门槛
+      detail_level: 简要
+    - name: type_tags
+      description: 类型标签（股权激励大 / 占款大 / 资本开支重 / 周期 / 一次性多 / 干净，可多选）及依据（如股权激励 ÷ 净利润、占款贡献 ÷ 净利润）
+      detail_level: 简要
+    - name: risk_free_basis
+      description: 无风险利率口径（cn10y 或 us10y）
+      detail_level: 极简
+  成熟期:
+    - name: maturity_start
+      description: 成熟期起点年份、按全局口径第 5 条的判定依据（列出相关年份的 3 年复合增速），以及人工调整的理由
+      detail_level: 简要
+  年度财务:
+    - name: annual_data
+      description: 2010–2025 每年一项，外加一项 TTM（最近四个季度，注明区间）的数组；每项含 year, revenue, ni_attr, ni_consolidated, oneoff_after_tax, ocf, capex_total, lease_principal, sbc, interest_dividend_adj, delta_wc, net_float_balance, buyback, dividends_paid, shares_end，数值类型，单位按全局口径第 1 条
+      detail_level: 详细
+    - name: oneoff_items
+      description: 重大一次性项目清单（年份、项目、税前与税后金额、是否一次性及理由），也列出考虑过但判为经常性的项目
+      detail_level: 详细
+  可分配比例:
+    - name: payout_windows
+      description: 截至 2025 年的 3 / 5 / 7 / 10 年窗口，以及"4 个完整财年 + TTM"窗口的 p_A、p_B、p_B 未截断值
+      detail_level: 简要
+    - name: payout_bridge
+      description: 各窗口从 p_A 到 p_B 的逐项桥接（利息股息对齐、股权激励、经营现金流内一次性现金、分母剔除一次性、归母缩放、截断），单位为百分点
+      detail_level: 简要
+    - name: payout_normalized
+      description: 资本开支峰值、占款跳升正常化后的 p_B 及具体做法；不需要正常化时写明原因
+      detail_level: 简要
+    - name: payout_recommended
+      description: 推荐的 p_B（基准值与区间）及理由，同时给出 p_A 的推荐值
+      detail_level: 简要
+  稳态增速:
+    - name: growth_history
+      description: 归母净利润（剔除一次性）与营收的 5 / 10 年复合增速（含 3 年均值基期版本），以及最近 TTM 同比
+      detail_level: 简要
+    - name: growth_recommended
+      description: 稳态增速低 / 基准 / 高三档及理由（5–10 年视角，按永续理解）
+      detail_level: 简要
+  市盈率序列:
+    - name: pe_series_csv
+      description: 月度 CSV 路径（2010-01 至 2026-10；列：month, price, shares, mcap_local, ttm_ni_attr, ttm_oneoff_after_tax, pe_raw, pe_corrected）
+      detail_level: 极简
+    - name: pe_method
+      description: 序列构造口径（股价来源、股本口径、TTM 切换规则、一次性 8/9 处理、币种换算）与 2–3 个日期的公开市盈率抽查结果
+      detail_level: 简要
+    - name: pe_current
+      description: 最近交易日的股价、市值、TTM 归母净利润、本期一次性项目、原始与修正后市盈率
+      detail_level: 简要
+  分位锚:
+    - name: anchor_pe
+      description: 成熟期窗口、近 5 年、近 10 年各自的第 15 / 9 / 4 百分位修正后市盈率、中位数与样本月数
+      detail_level: 简要
+    - name: current_percentile
+      description: 当前修正后市盈率在各窗口中的百分位
+      detail_level: 极简
+    - name: cyclical_normalization
+      description: 周期股（利润随商品价格大幅波动）另算的正常化市盈率（市值 ÷ 近 7 年平均剔除一次性利润）序列分位锚及当前值；非周期股写"不适用"
+      detail_level: 简要
+  回本年数:
+    - name: payback_years_at_anchors
+      description: 三档锚市盈率（成熟期窗口为主，近 5 / 10 年为辅）在推荐 p_B 与基准 g 下的回本年数，并给出 p_A 版本及 g 取低 / 高时的敏感性
+      detail_level: 简要
+  引力净推力:
+    - name: implied_return_current
+      description: 当前隐含年化（g 取低 / 基准 / 高三档）
+      detail_level: 极简
+    - name: risk_free_current
+      description: 当前无风险利率（取 /home/user/Deep-Research-skills/whitehorse-three-tier-pe/data/risk_free_monthly.csv 的 2026-10 值）
+      detail_level: 极简
+    - name: net_thrust_current
+      description: 当前净推力（g 取低 / 基准 / 高三档）
+      detail_level: 极简
+    - name: net_thrust_at_anchors
+      description: 三档锚市盈率对应的隐含年化与净推力（无风险利率取当前值）
+      detail_level: 简要
+    - name: net_thrust_series_csv
+      description: 月度净推力 CSV 路径（列：month, pe_corrected, p_pit, g_pit, implied_return, rf, net_thrust；p_pit、g_pit 按全局口径第 9 条逐年更新），以及成熟期窗口净推力的第 85 / 91 / 96 百分位（净推力越高越便宜，对应市盈率的第 15 / 9 / 4 百分位方向）
+      detail_level: 简要
+  历史回测:
+    - name: backtest_points
+      description: 2012–2019 年各年末一项的数组；每项含 year, mcap_rmb, mcap_pass, pe_corrected, pe_percentile_at_t（只用 t 年及以前的成熟期数据）, p_pit, g_pit, payback_years, implied_return, rf, net_thrust, tsr_3y, tsr_5y, tsr_7y, tsr_10y（取不到写 null）, decomposition_5y（cash_yield, growth, valuation_change）, max_drawdown_5y
+      detail_level: 详细
+    - name: backtest_notes
+      description: 回测数据口径（复权方式、分红再投资、回购收益算法）、缺失年份与原因
+      detail_level: 简要
+  体感三价:
+    - name: user_intuition_tiers
+      description: 用户体感三价对应的回本年数、隐含年化与净推力（只有腾讯有：15 / 13 / 11 倍）；其他公司写"未提供"
+      detail_level: 极简
+  来源:
+    - name: sources
+      description: 来源列表（标题、URL、日期、一手或二手）
+      detail_level: 简要
+    - name: data_quality_notes
+      description: 数据缺口、估计值、与公开数据抽查的差异、口径争议
+      detail_level: 简要
+uncertain: []
