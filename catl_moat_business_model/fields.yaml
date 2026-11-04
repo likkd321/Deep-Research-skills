@@ -1,0 +1,45 @@
+fields:
+  基本信息:
+    - name: item_name
+      description: 判断角度名称（与outline中的name一致）
+      detail_level: 极简
+    - name: dimension_group
+      description: 所属维度：商业模式 或 护城河
+      detail_level: 极简
+    - name: framework_criterion
+      description: 对应两份参考报告中的哪条标准、标准原意是什么（如「三种储蓄账户」「晨星成本优势」「四问之十年后还在吗」），以及「满分」长什么样
+      detail_level: 简要
+  证据:
+    - name: key_data
+      description: 核心数据列表，每条写明指标、数值、年份/期间与口径（如合并报表、归母、SNE口径）；尽量给多年序列而非单一年份
+      detail_level: 详细
+    - name: positive_evidence
+      description: 支持宁德在该角度表现好的证据与推理
+      detail_level: 详细
+    - name: negative_evidence
+      description: 反对、削弱或风险方面的证据与推理（不得省略）
+      detail_level: 详细
+    - name: benchmark_comparison
+      description: 与参考报告中的标杆（喜诗、Visa、茅台、开市客、BNSF、穆迪、航空、诺基亚、柯达等）及主要同行（比亚迪、LG新能源等）对照，说明宁德更像谁
+      detail_level: 简要
+  判断:
+    - name: trend
+      description: 该角度的趋势：变宽/改善、稳定、变窄/恶化，并列出依据的信号
+      detail_level: 简要
+    - name: ten_year_scenarios
+      description: 十年后（约2036年）该角度的乐观、中性、悲观三种情景，各一两句
+      detail_level: 简要
+    - name: score
+      description: 10分制评分（0–10，可到0.5分），10分=达到参考报告中的「满分标杆」水准（如喜诗的资本效率、Visa的网络效应），5分=及格但无明显优势，0分=完全不具备
+      detail_level: 极简
+    - name: score_rationale
+      description: 打分理由，两到四句，说清加分项与扣分项
+      detail_level: 简要
+  来源:
+    - name: source_quality_note
+      description: 关键数据中哪些来自一手来源（年报、季报、公告、电话会），哪些为二手且未核对；多源冲突时说明采用哪个口径
+      detail_level: 简要
+    - name: sources
+      description: 来源列表，每条含标题、URL、日期，一手来源优先
+      detail_level: 详细
+uncertain: []
