@@ -1,44 +1,39 @@
-# 每个 item（调研维度）通用的字段定义
-categories:
-  - name: 核心
-    fields:
-      - name: core_facts
-        description: 这一维度最关键的3—6条事实/结论（每条一句话，带数字）
-        detail_level: 极简
-      - name: mechanism
-        description: 机制解释——钱从哪里来、为什么能持续、因果链条；像给外行讲清楚
-        detail_level: 详细
-      - name: metaphor
-        description: 一句直观比喻/视角（如"谷歌是互联网时代的收费站"），可给1—3个备选并说明贴切之处
-        detail_level: 简要
-  - name: 数据
-    fields:
-      - name: key_data_series
-        description: 可画图的关键数据时序或分类数据，结构化给出 [{series, unit, basis(GAAP/调整后/口径), data:[{period, value}], chart_suggestion(折线/直方/堆叠/饼), source}]；尽量年度长序列或分部拆分
-        detail_level: 详细
-      - name: item_specific_extras
-        description: 本维度特有的结构化内容（如：加盟商经济学→unit_economics 单店模型；近期经营→latest_quarter_snapshot 与可比销售拆解；股东回报→capital_allocation_record 与 owner_earnings 换算；护城河→moat_scorecard；风险→bear_case_pre_mortem）
-        detail_level: 详细
-  - name: 判断
-    fields:
-      - name: value_investing_implications
-        description: 对巴菲特式价投的含义——对护城河、确定性、再投资需求、定价权、通胀抵御、长期复利的影响
-        detail_level: 详细
-      - name: controversies
-        description: 争议、反方观点与不确定处
-        detail_level: 简要
-      - name: key_quotes
-        description: 管理层/巴菲特/创始人等关键原话（附出处与日期），用于讲故事和判断管理层风格
-        detail_level: 简要
-  - name: 质量
-    fields:
-      - name: data_confidence
-        description: 数据可信度说明——一手（10-K/10-Q/8-K/业绩会）vs 二手转述；GAAP vs 调整后口径；冲突数字如何处理
-        detail_level: 简要
-      - name: as_of_date
-        description: 本 item 数据截止日期
-        detail_level: 极简
-      - name: sources
-        description: 来源列表 [{title, url, date, type(一手/二手)}]
-        detail_level: 简要
+fields:
+  核心:
+  - name: core_facts
+    description: 这一维度最关键的3—6条事实/结论（每条一句话，带数字）
+    detail_level: 极简
+  - name: mechanism
+    description: 机制解释——钱从哪里来、为什么能持续、因果链条；像给外行讲清楚
+    detail_level: 详细
+  - name: metaphor
+    description: 一句直观比喻/视角（如"谷歌是互联网时代的收费站"），可给1—3个备选并说明贴切之处
+    detail_level: 简要
+  数据:
+  - name: key_data_series
+    description: 可画图的关键数据时序或分类数据，结构化给出 [{series, unit, basis(GAAP/调整后/口径), data:[{period, value}], chart_suggestion(折线/直方/堆叠/饼), source}]；尽量年度长序列或分部拆分
+    detail_level: 详细
+  - name: item_specific_extras
+    description: 本维度特有的结构化内容（如：加盟商经济学→unit_economics 单店模型；近期经营→latest_quarter_snapshot 与可比销售拆解；股东回报→capital_allocation_record 与 owner_earnings 换算；护城河→moat_scorecard；风险→bear_case_pre_mortem）
+    detail_level: 详细
+  判断:
+  - name: value_investing_implications
+    description: 对巴菲特式价投的含义——对护城河、确定性、再投资需求、定价权、通胀抵御、长期复利的影响
+    detail_level: 详细
+  - name: controversies
+    description: 争议、反方观点与不确定处
+    detail_level: 简要
+  - name: key_quotes
+    description: 管理层/巴菲特/创始人等关键原话（附出处与日期），用于讲故事和判断管理层风格
+    detail_level: 简要
+  质量:
+  - name: data_confidence
+    description: 数据可信度说明——一手（10-K/10-Q/8-K/业绩会）vs 二手转述；GAAP vs 调整后口径；冲突数字如何处理
+    detail_level: 简要
+  - name: as_of_date
+    description: 本 item 数据截止日期
+    detail_level: 极简
+  - name: sources
+    description: 来源列表 [{title, url, date, type(一手/二手)}]
+    detail_level: 简要
 uncertain: []
