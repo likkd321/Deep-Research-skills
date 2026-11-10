@@ -60,7 +60,7 @@ execution:
     - {agent: web-search-agent, model: sonnet, items: [商业模式与收入结构]}
     - {agent: web-search-agent, model: sonnet, items: [房地产引擎]}
     - {agent: web-search-agent-deep, model: opus, items: [护城河与竞争格局]}
-    - {agent: web-search-agent-deep, model: opus, items: [增长前景]}
+    - {agent: web-search-agent-deep, model: sonnet, items: [增长前景]}  # 用户指定第2批一个sonnet一个opus
     - {agent: web-search-agent, model: sonnet, items: [长期财务轨迹, 股东回报与资本配置]}
     - {agent: web-search-agent, model: sonnet, items: [加盟商经济学与关系, 近期经营与价值战]}
     - {agent: web-search-agent, model: sonnet, items: [起源与基因, 企业文化与治理]}
