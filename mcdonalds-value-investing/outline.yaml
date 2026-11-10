@@ -1,0 +1,70 @@
+topic: 麦当劳（McDonald's, NYSE:MCD）巴菲特式价值投资深度解读
+request: 用巴菲特式价投视角，从商业模式、企业文化、增长前景、股东回报等角度讲透麦当劳——它具体在干什么、扮演什么角色、有没有伟大企业潜质，并给出"谷歌是互联网时代的收费站"式的直观比喻；以长者讲故事的口吻串起来，关键数据配折线图/直方图。
+started_at: 2026-11-10T10:57+08:00
+time_range: 长周期+最新（财务数据 2000—2025 年度 + 2026 年最新季报，动态截至 2026-11-10；历史维度追溯至 1950 年代）
+
+items:
+  - name: 起源与基因
+    category: 历史
+    description: 麦当劳兄弟 Speedee 服务系统、Ray Kroc 1954 年起的扩张、Harry Sonneborn "我们不做汉堡生意，我们做地产生意"、1965 年上市；这些基因如何延续到今天
+  - name: 商业模式与收入结构
+    category: 商业模式
+    description: 约95%加盟；收入=加盟收入（租金+特许权使用费+首期费）+ 自营餐厅收入 + 其他；各部分利润率与利润贡献；系统销售额 vs 公司收入；"麦当劳真正在卖什么"
+  - name: 房地产引擎
+    category: 商业模式
+    description: 自有土地/建筑与长租转租结构、租金按销售额百分比抽成、10-K 中自有/租赁比例与物业原值、地产对加盟商的控制力与通胀保护
+  - name: 长期财务轨迹
+    category: 财务
+    description: 2000—2025 年收入、营业利润与营业利润率、净利润、稀释 EPS、经营现金流/资本开支/FCF、系统销售额、门店数、ROIC；2003 年危机、2015 年转型前后对比
+  - name: 股东回报与资本配置
+    category: 股东回报
+    description: 连续增派股息年数与每股股息时序、回购金额与流通股数下降、负股东权益与债务结构、信用评级、长期 TSR 对比标普500；资本开支用途与回购均价
+  - name: 企业文化与治理
+    category: 文化
+    description: 三脚凳（公司/加盟商/供应商）、QSC&V、汉堡大学、"自己当老板但不孤单"；历任 CEO 转折（Cantalupo/Skinner Plan to Win、Easterbrook 转型及解雇、Kempczinski）；Accelerating the Organization 重组；管理层坦率程度
+  - name: 运营、供应链与菜单
+    category: 运营
+    description: 标准化与规模采购、长期供应商（如 Keystone、OSI、Lamb Weston 等）、菜单工程、鸡肉已大于牛肉且增速更快、成本通胀（牛肉/人工/油价）传导
+  - name: 护城河与竞争格局
+    category: 竞争
+    description: 品牌、规模成本优势、地产位置、数字会员与数据、加盟商网络；vs Yum、RBI（汉堡王）、Wendy's、Chick-fil-A、星巴克、中国本土品牌；护城河评分与证据
+  - name: 增长前景
+    category: 增长
+    description: Accelerating the Arches、2027 年约5万家门店目标与 2026 开店指引、数字化/会员（活跃用户、数字销售占比）、外卖、CosMc's 后续、鸡肉与饮品；未来十年系统销售/EPS 增长的合理区间
+  - name: 国际市场与中国
+    category: 增长
+    description: 美国/IOM/IDL 分部结构与贡献；2017 年中国业务出售（中信+凯雷，金拱门）及后续股权变化、中国门店与开店节奏；日本、法国等关键市场；IDL 授权模式的经济学
+  - name: 加盟商经济学与关系
+    category: 商业模式
+    description: 单店模型（AUV 平均单店销售额、加盟商利润率/现金流、投资额与回收期、租金+特许费占销售比例）、加盟商协会（NOA）矛盾、公司补贴、自营餐厅利润与再加盟（refranchising）进程、加州$20时薪影响
+  - name: 近期经营与价值战
+    category: 近况
+    description: 2025Q1—2026Q3 季度追踪（全球/美国/IOM/IDL 可比销售、客流 vs 客单价、EPS）；McValue / Extra Value Menu、低收入客群流失与分化；2024 年大肠杆菌事件影响；Q3 2026 美国客流为负
+  - name: 风险与挑战
+    category: 风险
+    description: GLP-1 减重药、消费降级与价值战、劳动成本与监管、加盟商关系、食品安全、健康与 ESG、汇率、杠杆；反方预演（十年后表现差最可能的原因）
+  - name: 估值与巴菲特往事
+    category: 估值
+    description: 当前股价/PE/股息率/FCF 收益率、历史 PE 区间；伯克希尔 1990 年代买入、1998 年前卖出、巴菲特称"大错"的原话与背景；长期持有回报测算；当前隐含回报率
+  - name: 伟大企业对照检验
+    category: 综合判断
+    description: 用巴菲特式标准（可口可乐、喜诗糖果、美国运通、苹果等）逐项给麦当劳打分：护城河、定价权、再投资需求/资本轻重、可预测性、管理层与资本配置、通胀抵御；结论：是否具备伟大企业潜质；可读取已完成的其他 item 结果
+
+execution:
+  mode: 标准
+  batch_size: 2
+  core_items: [商业模式与收入结构, 房地产引擎, 护城河与竞争格局, 增长前景]
+  items_per_agent: 2
+  judgment_items: [护城河与竞争格局, 增长前景, 估值与巴菲特往事, 伟大企业对照检验]
+  agent_groups:
+    - {agent: web-search-agent, model: sonnet, items: [商业模式与收入结构]}
+    - {agent: web-search-agent, model: sonnet, items: [房地产引擎]}
+    - {agent: web-search-agent-deep, model: opus, items: [护城河与竞争格局]}
+    - {agent: web-search-agent-deep, model: opus, items: [增长前景]}
+    - {agent: web-search-agent, model: sonnet, items: [长期财务轨迹, 股东回报与资本配置]}
+    - {agent: web-search-agent, model: sonnet, items: [加盟商经济学与关系, 近期经营与价值战]}
+    - {agent: web-search-agent, model: sonnet, items: [起源与基因, 企业文化与治理]}
+    - {agent: web-search-agent, model: sonnet, items: [运营、供应链与菜单, 国际市场与中国]}
+    - {agent: web-search-agent-deep, model: opus, items: [风险与挑战, 估值与巴菲特往事]}
+    - {agent: web-search-agent-deep, model: opus, items: [伟大企业对照检验]}
+  output_dir: ./mcdonalds-value-investing/results
