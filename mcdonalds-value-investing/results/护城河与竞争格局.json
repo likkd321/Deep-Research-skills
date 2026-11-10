@@ -1,0 +1,911 @@
+{
+  "core_facts": [
+    "规模断层式领先：2025年麦当劳全球系统销售额约1,394亿美元，约为百胜餐饮（682.95亿）的2.0倍、RBI（467.62亿）的3.0倍、Wendy's（140亿）的10倍；美国系统销售额550.61亿美元，约为第2名星巴克（302.5亿）的1.8倍、第3名Chick-fil-A（约239亿）的2.3倍",
+    "品类统治力：据2026年9月投资者日，麦当劳约占全球500亿美元牛肉汉堡品类的约40%、1,300亿美元鸡肉品类的约20%、2,300亿美元饮品品类的约10%（全球第二大咖啡卖家）；在美国前10大汉堡连锁合计销售额中占约54%（按QSR 50 2026数据测算）",
+    "地产+规模双重成本壁垒：公司在合并市场拥有约56%的门店土地与约80%的建筑，拥有全球最多的得来速门店；2026年G&A约占系统销售额2.2%，目标2030年降至约1.9%；营业利润率46.1%（2025），远高于百胜约31%、RBI约23%、Wendy's约16%、星巴克约8%",
+    "数字会员全行业最大：90天活跃会员近2.2亿（2026Q2，覆盖70个市场），会员系统销售额过去12个月约410亿美元（2026Q3），约三分之一销售来自数字渠道；对比星巴克美国90天活跃会员3,560万、百胜2025年数字销售近400亿美元（数字占比近60%）",
+    "品牌资产：凯度BrandZ 2026年估值约2,351亿美元（全球第10，餐饮第1），Brand Finance 2026年餐饮品牌第1（426亿美元）；公司称其占头部快餐品牌社交正面提及的约40%，超过后三名之和",
+    "护城河的软肋在美国前台：2026Q1—Q3美国可比销售+3.9%/+0.8%/-0.2%且客流为负，同期汉堡王美国+5.8%/+8.5%/+8.4%；Chick-fil-A美国单店销售约727万美元（独立店约920万）为麦当劳409万的约1.8—2.2倍；加盟商协会调查称95%受访者2026Q1门店利润下滑，公司随后承诺至2036年约85亿美元的NEXT扶持"
+  ],
+  "mechanism": "把麦当劳的护城河拆开看，它不是一条河，而是五道相互加固的城墙。\n\n【第一道：位置（地产）】麦当劳在过去70年里把最好的街角、高速出口、社区路口先买下或长租下来（合并市场约56%土地、约80%建筑自有），再转租给加盟商，按销售额收取比例租金。新进入者可以做出更好吃的汉堡，但无法凭空造出另一张约1.37万个美国街角、4.5万个全球门店的地图；得来速车道、停车位、可见度这些物理资产，一旦被占据就很难复制。地产还让公司对加盟商有强控制力（租约与特许协议捆绑、通常20年），保障标准执行。\n\n【第二道：规模成本】系统销售额1,394亿美元意味着：①采购：在牛肉、鸡肉、薯条、包装上拥有行业最强议价力（CEO称「无可匹敌的采购力」），使其基础菜单价格能低于对手（CEO 2026Q3称在美国绝大多数门店基础菜单价格低于竞争对手）同时保持加盟商利润；②营销：美国加盟商至少把销售额4%投入广告合作社，按550亿美元美国销售额估算，仅美国每年广告池约22亿美元，约为汉堡王、Wendy's各自广告池的约5倍（估算），单位顾客分摊的广告成本最低；③管理费用：G&A仅约占系统销售额2.2%；④技术：一套数字/AI系统（如ArchIQ）可摊薄到4.5万家门店。规模→更低单位成本→更低价格/更多营销→更多客流→更大规模，是典型正反馈飞轮。\n\n【第三道：品牌与习惯】70年的全球统一品牌、每天服务7,000多万顾客、儿童时代即形成的味觉与情感记忆（开心乐园餐、麦乐鸡、薯条），使麦当劳成为全球最具识别度的餐饮品牌（凯度2026约2,351亿美元）。品牌带来的不是溢价，而是「默认选项」——在陌生城市、深夜、公路旅行时，消费者无需思考即可信任其品质稳定、价格可预期。这一点在快餐行业极为重要，因为转换成本几乎为零，唯一能留住顾客的是习惯与信任。\n\n【第四道：数字会员与数据】近2.2亿90天活跃会员、约410亿美元会员年化销售，构成全行业最大的第一方消费数据池；会员加入后12个月消费频次提升约2.5倍（CFO 2026Q3）。数据用于个性化优惠、菜单测试和精准投放，并支撑外卖（约4.1万家门店提供外卖、是第三方平台首选）。这道墙较新，正在加高，但对手（百胜数字化占比更高、星巴克会员黏性更深）也在建同样的墙，因此其独占性弱于地产与规模。\n\n【第五道：加盟商网络（三脚凳）】约95%门店由2,000多名独立加盟商经营，他们以自有资金承担门店装修、设备、人工，公司只出地产与系统。这让麦当劳能以轻资本方式扩张，并把一线执行力交给「自己当老板」的业主；加盟商的长期绑定（20年租约、再投资义务）也提高了系统稳定性。但这道墙依赖加盟商赚钱：一旦单店现金流被价值战、成本通胀、改造投入挤压，系统就会出现裂缝——2026年美国加盟商协会调查与公司85亿美元NEXT扶持计划正是这一张力的体现。\n\n【竞争格局】美国汉堡赛道是「一超多弱」：麦当劳550亿 vs Wendy's 119亿、汉堡王111亿；但在更广的快餐（QSR）赛道，真正的威胁来自品类专家——Chick-fil-A（鸡肉，单店销售约为麦当劳的2倍，ACSI满意度83分常年领先）、星巴克（咖啡/饮品，2026财年美国可比销售恢复至+6.5%）、塔可钟（墨西哥风味），以及汉堡王在2026年凭借新版Whopper的强势反弹。国际与中国市场，麦当劳面对肯德基（中国约1.28万家）、华莱士（2万+家）、塔斯汀（约1.14万家，已超过麦当劳中国的7,000+家）等本土化、低价、下沉的竞争者，麦当劳在中国份额靠规模与品牌支撑，但门店数并非第一。\n\n【因果链条总结】地产占位+规模成本→最低单位成本与最大营销/数字投入→最广的便利性与价格领导力→最大的客流与会员数据→更多加盟商愿意投资开店→更大规模。护城河的结构部分（地产、规模、品牌识别）几乎不可复制，因此「宽护城河」判断稳固；但面向消费者的「价值感与体验」部分可被对手阶段性超越，表现为美国客流与份额的周期性波动，需要公司不断再投资（价值菜单补贴、改造、NEXT计划）来维护。",
+  "metaphor": "备选1：「麦当劳是全球公路与街角的『地主+收费站』——竞争者能做出更好吃的汉堡，却造不出第二张占据4.5万个黄金街角的地图。」贴切之处：点出其护城河最核心、最难复制的是地产位置与网络，而非产品本身。\n备选2：「麦当劳像快餐界的『可口可乐+沃尔玛』：可口可乐式的全球品牌心智，加上沃尔玛式的规模成本优势，让它能卖得最便宜还赚得最多。」贴切之处：同时概括品牌与低成本两条护城河，并解释为何利润率（46%）远高于同行。\n备选3：「麦当劳是一座由五道城墙围起的城：最外层的『价值感』会被对手攻破，但内城的『位置、规模、品牌习惯』七十年未失守。」贴切之处：区分了可被侵蚀的前台竞争力与不可复制的结构性护城河，契合2026年美国客流走弱但长期地位未变的现实。",
+  "key_data_series": [
+    {
+      "series": "2025年全球系统销售额对比（主要西式快餐/连锁餐饮集团）",
+      "unit": "十亿美元",
+      "basis": "各公司2025财年系统销售额口径（含加盟店销售）；Chick-fil-A为加盟披露文件（FDD）系统销售，基本为美国；星巴克无系统销售口径，改列公司营收作为参照（不可直接比）",
+      "data": [
+        {
+          "period": "麦当劳",
+          "value": 139.4
+        },
+        {
+          "period": "百胜餐饮（KFC+塔可钟+必胜客）",
+          "value": 68.3
+        },
+        {
+          "period": "RBI（汉堡王+Tim Hortons+Popeyes+Firehouse）",
+          "value": 46.8
+        },
+        {
+          "period": "Chick-fil-A",
+          "value": 23.9
+        },
+        {
+          "period": "Wendy's",
+          "value": 14.0
+        },
+        {
+          "period": "星巴克（FY2025公司营收，非系统销售）",
+          "value": 37.2
+        }
+      ],
+      "chart_suggestion": "直方（横向条形图）",
+      "source": "McDonald's 10-K FY2025；Yum 10-K FY2025；RBI 2025Q4 8-K；Wendy's 2025Q4新闻稿；Chick-fil-A 2026 FDD（经AJC/QSR报道）；Starbucks FY2025 8-K"
+    },
+    {
+      "series": "2025年美国系统销售额前列快餐品牌（QSR 50 2026）",
+      "unit": "十亿美元",
+      "basis": "QSR杂志2026年QSR 50，2025年美国系统销售额，企业自报（In-N-Out为QSR估算）",
+      "data": [
+        {
+          "period": "麦当劳",
+          "value": 55.06
+        },
+        {
+          "period": "星巴克",
+          "value": 30.25
+        },
+        {
+          "period": "Chick-fil-A",
+          "value": 23.9
+        },
+        {
+          "period": "塔可钟",
+          "value": 17.25
+        },
+        {
+          "period": "Wendy's",
+          "value": 11.9
+        },
+        {
+          "period": "Chipotle",
+          "value": 11.68
+        },
+        {
+          "period": "汉堡王",
+          "value": 11.07
+        }
+      ],
+      "chart_suggestion": "直方",
+      "source": "QSR Magazine《QSR 50 2026》及Yahoo Finance转载汉堡/墨西哥品类表"
+    },
+    {
+      "series": "2025年美国单店平均销售额（AUV）对比",
+      "unit": "千美元/店",
+      "basis": "QSR 50 2026 AUV（企业自报）；Chick-fil-A为系统销售/门店数测算的混合口径（FDD披露独立店约9,200）；星巴克为系统销售/门店数测算",
+      "data": [
+        {
+          "period": "Chick-fil-A（混合，测算）",
+          "value": 7270
+        },
+        {
+          "period": "In-N-Out（QSR估算）",
+          "value": 6032
+        },
+        {
+          "period": "Culver's",
+          "value": 4040
+        },
+        {
+          "period": "麦当劳",
+          "value": 4088
+        },
+        {
+          "period": "Whataburger",
+          "value": 3914
+        },
+        {
+          "period": "Chipotle",
+          "value": 3104
+        },
+        {
+          "period": "塔可钟",
+          "value": 2216
+        },
+        {
+          "period": "Wendy's",
+          "value": 2001
+        },
+        {
+          "period": "星巴克（测算）",
+          "value": 1794
+        },
+        {
+          "period": "汉堡王",
+          "value": 1660
+        }
+      ],
+      "chart_suggestion": "直方",
+      "source": "QSR 50 2026（Yahoo Finance转载）；Chick-fil-A 2026 FDD报道（AJC、Franchise Chatter）"
+    },
+    {
+      "series": "2025年营业利润率对比",
+      "unit": "%",
+      "basis": "GAAP营业利润/总收入；RBI另有调整后约27.4%；星巴克非GAAP 9.4%。注意：加盟比例与广告基金是否并表会显著影响可比性",
+      "data": [
+        {
+          "period": "麦当劳",
+          "value": 46.1
+        },
+        {
+          "period": "百胜餐饮",
+          "value": 31.3
+        },
+        {
+          "period": "RBI",
+          "value": 23.3
+        },
+        {
+          "period": "Wendy's",
+          "value": 15.8
+        },
+        {
+          "period": "星巴克（FY2025）",
+          "value": 7.9
+        }
+      ],
+      "chart_suggestion": "直方",
+      "source": "各公司2025年报/业绩新闻稿；百胜、RBI、Wendy's比率为本研究按披露营业利润与收入测算"
+    },
+    {
+      "series": "2025年末全球门店数对比",
+      "unit": "家",
+      "basis": "各公司年报/新闻稿；百胜63,285为二手摘要（10-K称超过63,000）；星巴克为FY2025末北美18,311+国际22,679",
+      "data": [
+        {
+          "period": "百胜餐饮",
+          "value": 63285
+        },
+        {
+          "period": "麦当劳",
+          "value": 45356
+        },
+        {
+          "period": "星巴克",
+          "value": 40990
+        },
+        {
+          "period": "RBI",
+          "value": 33041
+        },
+        {
+          "period": "Wendy's",
+          "value": 7397
+        },
+        {
+          "period": "Chick-fil-A（美国QSR 50口径）",
+          "value": 3287
+        }
+      ],
+      "chart_suggestion": "直方",
+      "source": "McDonald's 10-K FY2025；Yum 10-K FY2025及摘要；Starbucks FY2025 8-K；RBI 2025Q4 8-K；Wendy's 2025Q4新闻稿；QSR 50 2026"
+    },
+    {
+      "series": "2025年单店平均系统销售额（全球口径，测算）",
+      "unit": "百万美元/店",
+      "basis": "系统销售额/年末门店数，本研究测算，年末门店数口径会略高估分母",
+      "data": [
+        {
+          "period": "Chick-fil-A",
+          "value": 7.27
+        },
+        {
+          "period": "麦当劳",
+          "value": 3.07
+        },
+        {
+          "period": "Wendy's",
+          "value": 1.89
+        },
+        {
+          "period": "RBI",
+          "value": 1.42
+        },
+        {
+          "period": "百胜餐饮",
+          "value": 1.08
+        }
+      ],
+      "chart_suggestion": "直方",
+      "source": "基于上述系统销售额与门店数测算"
+    },
+    {
+      "series": "麦当劳 vs Chick-fil-A 美国系统销售额时序",
+      "unit": "十亿美元",
+      "basis": "麦当劳2021—2023为10-K美国分部系统销售额，2024—2025为QSR 50口径；Chick-fil-A为FDD口径（QSR杂志整理）。麦当劳2019—2020未取得同口径数据",
+      "data": [
+        {
+          "period": "2019",
+          "value": "麦当劳[不确定]；Chick-fil-A 12.2"
+        },
+        {
+          "period": "2020",
+          "value": "麦当劳[不确定]；Chick-fil-A 13.7"
+        },
+        {
+          "period": "2021",
+          "value": "麦当劳43.34；Chick-fil-A 16.7（约为麦当劳38%）"
+        },
+        {
+          "period": "2022",
+          "value": "麦当劳45.90；Chick-fil-A 18.8（41%）"
+        },
+        {
+          "period": "2023",
+          "value": "麦当劳49.91；Chick-fil-A 21.6（43%）"
+        },
+        {
+          "period": "2024",
+          "value": "麦当劳53.5；Chick-fil-A 22.7（42%）"
+        },
+        {
+          "period": "2025",
+          "value": "麦当劳55.06；Chick-fil-A 23.9（43%）"
+        }
+      ],
+      "chart_suggestion": "折线（双线）",
+      "source": "McDonald's 10-K FY2023；QSR 50 2025/2026；QSR Magazine《Chick-fil-A's sales surpassed $22 billion in 2024》"
+    },
+    {
+      "series": "2026年美国可比销售：麦当劳 vs 汉堡王（季度）",
+      "unit": "%（同比）",
+      "basis": "公司季度业绩新闻稿；汉堡王为RBI披露的BK US可比销售；2026Q2汉堡王部分报道为8.5%",
+      "data": [
+        {
+          "period": "2026Q1",
+          "value": "麦当劳+3.9；汉堡王+5.8"
+        },
+        {
+          "period": "2026Q2",
+          "value": "麦当劳+0.8；汉堡王+8.5"
+        },
+        {
+          "period": "2026Q3",
+          "value": "麦当劳-0.2（客流为负）；汉堡王+8.4；同季Wendy's美国-5.7、塔可钟美国-4（食品安全事件）"
+        }
+      ],
+      "chart_suggestion": "分组直方",
+      "source": "McDonald's 2026Q1/Q3 8-K；RBI 2026Q3 8-K；Wendy's 2026Q3 10-Q；Yum 2026Q3 8-K；二手报道（Q2数据）"
+    },
+    {
+      "series": "麦当劳在全球三大品类中的份额（公司口径）",
+      "unit": "%（品类规模：十亿美元）",
+      "basis": "2026年9月投资者日管理层口径（非第三方审计），品类为全球非正式餐饮（IEO）中的相关品类",
+      "data": [
+        {
+          "period": "牛肉（品类约500亿美元）",
+          "value": 40
+        },
+        {
+          "period": "鸡肉（品类约1,300亿美元）",
+          "value": 20
+        },
+        {
+          "period": "饮品（品类约2,300亿美元）",
+          "value": 10
+        }
+      ],
+      "chart_suggestion": "直方（可附目标：2030年鸡肉、饮品各+1.5个百分点）",
+      "source": "CNBC 2026-09-23投资者日报道；McDonald's 2026投资者日8-K"
+    },
+    {
+      "series": "麦当劳会员（忠诚度计划）规模",
+      "unit": "百万人 / 十亿美元",
+      "basis": "公司口径：90天活跃会员；会员系统销售额=过去四个季度90天活跃会员的销售；2024年为按2025年增速（+19%/+20%）倒推的近似值",
+      "data": [
+        {
+          "period": "2024年末",
+          "value": "活跃会员约176（倒推）；会员销售约31（倒推）"
+        },
+        {
+          "period": "2025年末",
+          "value": "活跃会员近210；会员销售近37"
+        },
+        {
+          "period": "2026Q2末",
+          "value": "活跃会员近220"
+        },
+        {
+          "period": "2026Q3（TTM）",
+          "value": "会员销售约41"
+        },
+        {
+          "period": "2027年末目标",
+          "value": "活跃会员250；会员销售45"
+        }
+      ],
+      "chart_suggestion": "折线（双轴）",
+      "source": "McDonald's 2025Q4、2026Q2、2026Q3业绩新闻稿；10-K FY2025"
+    },
+    {
+      "series": "数字会员/数字化横向对比（最新）",
+      "unit": "混合",
+      "basis": "各公司口径不同，仅作量级参照",
+      "data": [
+        {
+          "period": "麦当劳",
+          "value": "90天活跃会员近2.2亿（全球70市场）；会员年化销售约410亿美元；约1/3销售为数字渠道；美国会员超4,500万"
+        },
+        {
+          "period": "百胜餐饮",
+          "value": "2025年数字系统销售近400亿美元，数字占比近60%"
+        },
+        {
+          "period": "星巴克",
+          "value": "美国90天活跃会员3,560万（FY2026Q2）"
+        },
+        {
+          "period": "Wendy's",
+          "value": "数字销售约占系统销售24.9%（2026Q3）"
+        }
+      ],
+      "chart_suggestion": "表格",
+      "source": "各公司业绩新闻稿/电话会；Restaurant Dive（星巴克）；Wendy's 10-Q"
+    },
+    {
+      "series": "麦当劳凯度BrandZ品牌价值",
+      "unit": "十亿美元",
+      "basis": "Kantar BrandZ全球品牌价值榜；2024年数值未取得",
+      "data": [
+        {
+          "period": "2022",
+          "value": 196.5
+        },
+        {
+          "period": "2023",
+          "value": 191.1
+        },
+        {
+          "period": "2025",
+          "value": 221.1
+        },
+        {
+          "period": "2026",
+          "value": 235.1
+        }
+      ],
+      "chart_suggestion": "折线",
+      "source": "Kantar BrandZ 2023快餐榜（转载）；Prism News 2026；Kantar BrandZ 2026"
+    },
+    {
+      "series": "中国西式快餐/连锁主要品牌门店数（2025年）",
+      "unit": "家",
+      "basis": "第三方门店监测（窄门餐眼等）与公司披露混合，时间点不完全一致",
+      "data": [
+        {
+          "period": "华莱士",
+          "value": "20,000+"
+        },
+        {
+          "period": "肯德基中国（2025年12月）",
+          "value": 12831
+        },
+        {
+          "period": "塔斯汀（2025年末，窄门）",
+          "value": 11447
+        },
+        {
+          "period": "麦当劳中国（2025年3月）",
+          "value": "7,000+"
+        },
+        {
+          "period": "百胜中国合计（2025年末）",
+          "value": 18101
+        },
+        {
+          "period": "蜜雪冰城（全球，2025年末，饮品参照）",
+          "value": 59823
+        }
+      ],
+      "chart_suggestion": "直方",
+      "source": "东方财富研报转载窄门餐眼；金羊网；百胜中国2025业绩报道；华尔街见闻（蜜雪冰城）"
+    }
+  ],
+  "item_specific_extras": {
+    "moat_scorecard": {
+      "评分说明": "每项0—10分（10=几乎不可复制），趋势：↑加强/→稳定/↓减弱；综合为加权判断",
+      "维度": [
+        {
+          "维度": "地产与位置",
+          "得分": 9,
+          "趋势": "→",
+          "证据": "合并市场自有约56%土地、80%建筑；租金约占加盟销售8.1%、随销售浮动；全球最多得来速门店；美国13,706家门店占据最优街角。对手中仅Chick-fil-A类似地掌控物业，百胜/RBI基本不持有",
+          "隐忧": "NEXT计划含租金减免，相当于把部分地租让给加盟商以维系系统"
+        },
+        {
+          "维度": "规模成本优势",
+          "得分": 9,
+          "趋势": "→",
+          "证据": "系统销售1,394亿美元为百胜2倍、RBI 3倍；G&A约2.2%系统销售、2030年目标1.9%；美国广告池估算约22亿美元/年（约为汉堡王5倍）；CEO称基础菜单价格低于对手（牛肉、鸡肉、饮品、早餐）；营业利润率46%行业最高",
+          "隐忧": "规模优势在低端价值战中被动用为「补贴弹药」，转化为加盟商利润压力"
+        },
+        {
+          "维度": "品牌与消费习惯",
+          "得分": 8,
+          "趋势": "→",
+          "证据": "凯度2026约2,351亿美元、餐饮第一；Brand Finance餐饮第一；每日服务7,000万+顾客；公司称占头部快餐品牌社交正面提及约40%",
+          "隐忧": "顾客满意度长期偏低（ACSI历史约70分，行业均值79、Chick-fil-A 83）；2024年「涨价40%」舆情削弱价值感"
+        },
+        {
+          "维度": "数字会员与数据",
+          "得分": 7,
+          "趋势": "↑",
+          "证据": "近2.2亿90天活跃会员、约410亿美元会员年化销售，均为行业最大；会员加入后消费频次约升2.5倍；约4.1万家门店提供外卖、为第三方平台首选",
+          "隐忧": "百胜数字占比（近60%）更高，星巴克会员黏性更深；数据优势可被同等规模对手追赶，且会员优惠可能沦为折扣渠道"
+        },
+        {
+          "维度": "加盟商网络",
+          "得分": 7,
+          "趋势": "↓",
+          "证据": "约95%加盟、2,000+独立加盟商自出资本；美国AUV约409万美元，2021年单店现金流曾创超50万美元纪录；20年租约+特许捆绑",
+          "隐忧": "2026年NOA调查：95%受访者Q1利润下滑、近8成称现金流不足以支撑再投资；改造每店40—70万美元起；公司承诺至2036年约85亿美元扶持"
+        },
+        {
+          "维度": "定价权",
+          "得分": 6,
+          "趋势": "↓",
+          "证据": "2019—2024年平均菜单价约涨40%（公司称与成本同步），系统未流失规模",
+          "隐忧": "2024年起被迫回到价值战（5美元套餐、McValue、3美元及以下菜单）；2026年美国客流为负；Chick-fil-A据Placer.ai分析「无需打折」仍客流增长"
+        },
+        {
+          "维度": "转换成本",
+          "得分": 2,
+          "趋势": "→",
+          "证据": "快餐消费者几乎零转换成本，仅靠便利、习惯与会员积分维系",
+          "隐忧": "这是所有快餐品牌的共同弱点，决定了前台竞争永远激烈"
+        }
+      ],
+      "综合评级": "宽护城河（约8/10）。结构性护城河（地产位置+规模成本+品牌识别）极强且难以复制；前台竞争力（价值感、体验、定价权）呈周期性波动，2025—2026年在美国阶段性走弱。晨星给予宽护城河、低不确定性评级，与本研究判断一致",
+      "护城河趋势": "整体稳定；美国消费者端与加盟商端承压（↓），数字会员端加强（↑）"
+    },
+    "peer_comparison": [
+      {
+        "对手": "百胜餐饮（Yum）",
+        "规模": "系统销售682.95亿美元（KFC 362亿、塔可钟183亿、必胜客128亿），门店约6.3万家",
+        "模式": "约98%加盟，基本不持有地产，靠特许费",
+        "护城河特点": "多品牌+国际化+数字化领先（数字销售近400亿美元，占比近60%）；KFC鸡肉全球品牌",
+        "相对麦当劳": "规模约一半；单店系统销售约108万美元仅为麦当劳约1/3；无地产收租层，利润率约31%；2026年塔可钟遭遇食品安全事件（Q3美国同店-4%）、必胜客战略评估"
+      },
+      {
+        "对手": "RBI（汉堡王等）",
+        "规模": "系统销售467.62亿美元，门店33,041家",
+        "模式": "近100%加盟，轻资产",
+        "护城河特点": "Tim Hortons在加拿大的咖啡早餐地位较强；汉堡王为全球第二汉堡品牌",
+        "相对麦当劳": "汉堡王美国AUV仅166万美元（约为麦当劳40%），门店质量与加盟商财务较弱；但2026年凭新版Whopper与「Reclaim the Flame」投入，美国可比销售连续三季+5.8%/+8.5%/+8.4%，明显跑赢麦当劳，是当前最直接的份额挑战者"
+      },
+      {
+        "对手": "Wendy's",
+        "规模": "全球系统销售140亿美元（2025年-3.5%），门店7,397家",
+        "模式": "约93%加盟",
+        "护城河特点": "「新鲜不冷冻牛肉」定位、早餐尝试",
+        "相对麦当劳": "2025Q4美国同店-11.3%、2026Q3美国-5.7%，2026上半年关闭5—6%美国门店；护城河窄且在缩小，被规模更大的麦当劳与反弹的汉堡王两头挤压"
+      },
+      {
+        "对手": "Chick-fil-A（私有）",
+        "规模": "美国系统销售约239亿美元，约3,287家",
+        "模式": "运营商模式：公司拥有物业与设备，运营商仅付约1万美元加入费，公司分享利润；周日不营业",
+        "护城河特点": "服务体验与满意度（ACSI 2015—2025连续第一，2026年83分居第二）、单店效率（独立店约920万美元）、品类专注",
+        "相对麦当劳": "单店销售约为麦当劳2倍，是鸡肉品类最强对手；系统销售约为麦当劳美国的43%，比例自2023年后趋稳；国际化刚起步（10亿美元计划、新加坡/英国），全球化护城河远不及麦当劳"
+      },
+      {
+        "对手": "星巴克",
+        "规模": "FY2025营收372亿美元，FY2026末门店41,607家；美国系统销售302.5亿美元",
+        "模式": "以直营为主（北美基本直营，国际部分授权）",
+        "护城河特点": "「第三空间」品牌、高端咖啡定价权、会员黏性（美国活跃会员3,560万）",
+        "相对麦当劳": "直营重资产、利润率低（FY2025 GAAP 7.9%）；但FY2026经「Back to Starbucks」复苏，美国可比销售全年+6.5%、Q4+7.7%，估值倍数（约34倍远期PE）远高于麦当劳（约19倍）；饮品是麦当劳2030年要抢的品类（目标+1.5个百分点）"
+      },
+      {
+        "对手": "中国本土品牌（华莱士、塔斯汀等）+肯德基中国",
+        "规模": "华莱士2万+家；塔斯汀约1.14万家；肯德基中国约1.28万家；麦当劳中国7,000+家（2028年目标1万家）",
+        "模式": "华莱士、塔斯汀以加盟、下沉、低价为主；麦当劳中国由中信资本控股、麦当劳持少数股权（约48%）",
+        "护城河特点": "本土品牌靠低价（塔斯汀香辣鸡腿堡约13—15元）与中式口味创新、县域密度",
+        "相对麦当劳": "中国西式快餐2024年市场规模约2,975亿元（红餐），肯德基+麦当劳合计份额超40%；本土品牌门店数领先但单店质量、食品安全与品牌溢价较弱（塔斯汀2026年涨价缩水引发争议）；麦当劳在中国走「品牌+规模+下沉」路线，60%以上新店布局三四线城市"
+      }
+    ],
+    "moat_vs_peers_matrix": {
+      "说明": "本研究主观评分（0—10），供直观对比，非第三方评级",
+      "表头": [
+        "品牌",
+        "规模成本",
+        "地产位置",
+        "数字会员",
+        "加盟/运营网络",
+        "综合"
+      ],
+      "麦当劳": [
+        9,
+        9,
+        9,
+        8,
+        7,
+        8.5
+      ],
+      "百胜餐饮": [
+        8,
+        7,
+        4,
+        8,
+        7,
+        7
+      ],
+      "RBI": [
+        7,
+        6,
+        4,
+        5,
+        5,
+        5.5
+      ],
+      "Wendy's": [
+        6,
+        4,
+        5,
+        5,
+        5,
+        4.5
+      ],
+      "Chick-fil-A": [
+        9,
+        6,
+        8,
+        7,
+        9,
+        8
+      ],
+      "星巴克": [
+        9,
+        7,
+        6,
+        9,
+        6,
+        7.5
+      ],
+      "中国本土（华莱士/塔斯汀）": [
+        4,
+        5,
+        3,
+        5,
+        4,
+        4
+      ]
+    },
+    "threat_ranking": [
+      "1. 品类专家抢夺增长最快的品类：鸡肉（Chick-fil-A、Popeyes、Raising Cane's）与饮品（星巴克、Dutch Bros、蜜雪冰城/瑞幸等）——麦当劳2030年把鸡肉、饮品份额各+1.5个百分点作为核心目标，说明管理层自认这是主战场",
+      "2. 汉堡王在美国的阶段性反弹：2026年连续三季跑赢麦当劳8个百分点左右",
+      "3. 便利店、超市熟食与外卖平台扩大「非正式餐饮（IEO）」竞争边界",
+      "4. 中国等国际市场的本土低价品牌与肯德基",
+      "5. 自身加盟商关系与价值战导致的系统内部裂缝"
+    ]
+  },
+  "value_investing_implications": "【护城河】巴菲特式标准下，麦当劳属于「宽而深」的护城河：最核心的两条——地产位置与规模成本——是七十年复利积累的结果，任何竞争者即使有资本也无法在合理时间内复制4.5万家门店的位置网络与1,394亿美元系统销售带来的采购、营销、技术摊薄优势。品牌带来的是「默认选项」而非奢侈溢价，这与可口可乐类似：不是让你多付钱，而是让你不必思考。数字会员是正在加高的第四道墙。因此对「十年后麦当劳是否仍是全球最大餐饮品牌」可以给出很高的确定性。\n\n【确定性与可预测性】高。系统销售额由4.5万家门店、每天7,000万顾客分散构成，对单一市场、单一产品依赖低；公司收入的约60%来自随销售浮动的租金与特许费，加盟商承担大部分经营波动。但需区分「地位的确定性」与「增长的确定性」：2026年美国客流为负、汉堡王反弹说明前台份额会波动，短期可比销售可预测性不如护城河本身。\n\n【再投资需求】护城河的维护成本在上升：①价值战需要公司与加盟商共同补贴；②NEXT计划至2036年约85亿美元扶持（其中约50亿至2030年，含租金减免与资本支持）；③2027—2030年基础资本开支约每年30亿美元。好消息是这些投入大部分是「加高城墙」而非「填补漏洞」，管理层给出加盟商中高20%回报、公司高十几%回报、约4年回收的测算；坏消息是自由现金流转化率2026年指引降至低至中80%区间，说明护城河不是免费的。\n\n【定价权】中等且有边界。2019—2024年菜单均价约+40%证明其有能力传导成本通胀，但2024—2026年低收入客群流失、被迫推出5美元套餐与3美元以下菜单，说明在大众快餐赛道定价权受「价值感」约束——麦当劳的定价权更多体现在「成本最低者可以把价格定得比对手低还赚得最多」，而不是「能持续比对手贵」。这一点与可口可乐、喜诗糖果式的提价能力不同，是投资者应降低预期之处。\n\n【通胀抵御】结构上较强：租金按销售额比例收取且有基础租金保底，名义销售随通胀上升时公司收入自动上升；食材与人工通胀主要由加盟商承担。但通胀过高时会通过「加盟商利润被挤压→公司被迫让利（租金减免）」间接回传给公司，2026年的NEXT计划正是例证。\n\n【长期复利】护城河保证了「存续与地位」，长期复利则取决于：净开店（目标2027年净门店增长约4.5%以上、此后3—3.5%）、可比销售（约随名义GDP）、利润率提升（2030年目标低至中50%）和回购。宽护城河+稳定扩张+资本回报，构成中高个位数系统销售增长、高个位数EPS增长的合理底盘。当前市场因美国客流与加盟商矛盾给予约19倍远期PE（投资者日当天股价触及约234美元的近4年低位），若护城河判断成立，这类「前台波动、结构未损」的时刻往往是价值投资者的观察窗口——但需要验证2027年美国客流是否恢复、加盟商现金流是否企稳。",
+  "controversies": "1. 护城河是否在美国被侵蚀？反方：Chick-fil-A单店销售约为麦当劳2倍、满意度领先十年；汉堡王2026年连续三季+8%左右而麦当劳客流为负；Placer.ai称2026年3月后麦当劳美国客流逐月同比下降。正方：麦当劳美国系统销售仍为第二名的1.8倍，Chick-fil-A占麦当劳美国销售比例2023—2025年稳定在约42—43%，未继续拉近；管理层称在多数主要市场份额持平或提升。\n2. 价值战是在「用护城河」还是在「消耗护城河」？规模允许麦当劳以最低价格竞争，但加盟商协会调查显示95%受访者2026Q1利润下滑、8成认为折扣未带来足够客流（估计单季成本约3.1亿美元）；公司称调查仅代表2,000多名加盟商中的小部分。\n3. 数字会员是否真是护城河？CIO称其形成对手「无法复制的学习闭环」，但百胜数字占比更高、星巴克会员更深；会员体系也可能主要沦为发放折扣的渠道，提升频次的同时稀释客单利润。\n4. 地产护城河的代价：NEXT计划含租金减免，意味着地产收益的一部分要返还给加盟商以维持系统健康，地产「收租权」并非无条件。\n5. 中国市场：本土品牌门店数（华莱士2万+、塔斯汀1.1万+）已超过麦当劳中国（7,000+），麦当劳只持少数股权；其在华护城河更多是品牌与标准化，而非规模第一。\n6. 品牌美誉度：麦当劳ACSI满意度长期处于行业低位，品牌「大而不被喜爱」是否构成长期隐患存在争议。\n7. 数据口径争议：品类份额（牛肉40%等）为公司自报口径；Chick-fil-A单店销售因口径（独立店/混合/Technomic）在约727万—920万美元区间不等。[不确定]",
+  "key_quotes": [
+    {
+      "人物": "Chris Kempczinski（CEO）",
+      "原话": "McDonald's has the unmatched scale, customer insights, brand loyalty, and operational capabilities…（麦当劳拥有无可匹敌的规模、顾客洞察、品牌忠诚和运营能力）",
+      "出处": "2026年投资者日新闻稿（8-K附件）",
+      "日期": "2026-09-23"
+    },
+    {
+      "人物": "Chris Kempczinski（CEO）",
+      "原话": "We have unrivaled buying power across our supply chain.（我们在整个供应链上拥有无可匹敌的采购力）",
+      "出处": "2026年投资者日实录",
+      "日期": "2026-09-23"
+    },
+    {
+      "人物": "Chris Kempczinski（CEO）",
+      "原话": "Our base menu pricing is below our competitors on beef, chicken, and beverages, and breakfast.（我们的基础菜单价格在牛肉、鸡肉、饮品和早餐上都低于竞争对手）",
+      "出处": "2026年投资者日实录",
+      "日期": "2026-09-23"
+    },
+    {
+      "人物": "Morgan Flatley（全球首席营销官）",
+      "原话": "McDonald's captures approximately 40% of positive brand mentions on social across the leading QSR brands… That's more than our next three competitors combined.（麦当劳占头部快餐品牌社交正面提及的约40%，超过后三名之和）",
+      "出处": "2026年投资者日实录",
+      "日期": "2026-09-23"
+    },
+    {
+      "人物": "Brian Rice（全球CIO）",
+      "原话": "This creates an insurmountable advantage and a continuous learning loop that competitors cannot replicate.（这形成了竞争对手无法复制的不可逾越优势与持续学习闭环）",
+      "出处": "2026年投资者日实录",
+      "日期": "2026-09-23"
+    },
+    {
+      "人物": "Chris Kempczinski（CEO）",
+      "原话": "We are at a discount in the vast majority of our restaurants in the U.S. on base menu pricing.（在美国绝大多数门店，我们的基础菜单价格都处于折价）",
+      "出处": "2026年第三季度业绩电话会",
+      "日期": "2026-11-04"
+    },
+    {
+      "人物": "Ian Borden（CFO）",
+      "原话": "We continued to gain or hold share across the majority of our top markets.（我们在大多数主要市场继续提升或保持份额）",
+      "出处": "2026年第三季度业绩电话会",
+      "日期": "2026-11-04"
+    },
+    {
+      "人物": "Skye Anderson（美国业务负责人）",
+      "原话": "We are falling short when it comes to consistent execution.（在执行一致性上我们做得不够）",
+      "出处": "CNBC投资者日报道",
+      "日期": "2026-09-23"
+    },
+    {
+      "人物": "Chris Kempczinski（CEO）",
+      "原话": "They've got a lot of borrowing capacity still.（加盟商仍有很大的借贷空间）——回应加盟商协会利润下滑调查",
+      "出处": "L'Express Franchise转述",
+      "日期": "2026年（Q2前后）"
+    },
+    {
+      "人物": "Joe Erlinger（时任麦当劳美国总裁）",
+      "原话": "公开信称巨无霸美国均价由2019年4.39美元升至5.29美元（+21%），整体菜单均价约+40%，与食材、人工、包装成本同步，并否认「五年涨价100%」说法",
+      "出处": "麦当劳官网公开信《Providing meaningful value to our fans, with a side of facts》",
+      "日期": "2024-05-29"
+    },
+    {
+      "人物": "McDonald's 10-K",
+      "原话": "The Company has the most drive thru locations worldwide… This channel remains a competitive advantage.（公司拥有全球最多的得来速门店……该渠道仍是竞争优势）；与快餐同行的竞争「primarily on the basis of price, convenience, service, experience, menu variety and product quality」",
+      "出处": "McDonald's 2025年10-K",
+      "日期": "2026-02"
+    },
+    {
+      "人物": "Warren Buffett",
+      "原话": "承认卖出麦当劳股票是「a very big mistake（一个非常大的错误）」",
+      "出处": "Fortune报道转述（伯克希尔1996年末持有约3,040万股、4.3%）",
+      "日期": "原话1990年代末，报道2026-03-02"
+    },
+    {
+      "人物": "Charlie Munger",
+      "原话": "（意译）麦当劳是最令人钦佩的机构之一：它给大量问题少年第一份工作，教会他们准时可靠地上班；名校若能像麦当劳那样务实地教育，世界会更好。[不确定：为读者摘录，未核对原文]",
+      "出处": "《穷查理宝典》读者摘录（Goodreads）",
+      "日期": "[不确定]"
+    }
+  ],
+  "data_confidence": "一手来源：麦当劳2025年10-K（门店数、地产自有比例、竞争描述、忠诚度目标）、2026年Q1/Q3 8-K业绩稿、2026年投资者日8-K；百胜/RBI/Wendy's/星巴克年报或业绩新闻稿（系统销售、门店、营业利润）——可信度高。二手来源：QSR 50 2026（企业自报但为媒体汇编，In-N-Out为估算）、Chick-fil-A FDD经媒体转述、凯度/Brand Finance品牌价值、Placer.ai客流、加盟商协会调查（代表性有限、立场偏加盟商）、中国门店数（窄门餐眼等第三方监测，部分报告自称AI生成）——中等可信度。口径说明：营业利润率为GAAP测算，加盟比例与广告基金是否并表影响可比性（百胜并表广告基金收入，压低其利润率；星巴克以直营为主不可直接比）；Chick-fil-A单店销售存在独立店920万、混合约727万（本研究测算）、Technomic 750万等不同口径，本研究采用混合测算值并注明；麦当劳美国系统销售2021—2023取10-K、2024—2025取QSR 50，两者口径可能有数亿美元差异；品类份额（牛肉约40%、鸡肉约20%、饮品约10%）为管理层口径；美国广告池（约22亿美元）为按4%最低投入比例估算，非披露数；百胜门店63,285为二手摘要；麦当劳中国最新门店数仅取得2025年3月的7,000+。冲突处理：优先采用公司一手披露，二手冲突时列出区间并标注。",
+  "as_of_date": "2026-11-10（财务数据截至2026年第三季度；年度对比为2025财年）",
+  "sources": [
+    {
+      "title": "McDonald's Corp Form 10-K FY2025",
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm",
+      "date": "2026-02",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's Reports Fourth Quarter and Full Year 2025 Results",
+      "url": "https://corporate.mcdonalds.com/corpmcd/our-stories/article/Q4-full-year-2025-results.html",
+      "date": "2026-02-11",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's Reports First Quarter 2026 Results (8-K Exhibit 99.1)",
+      "url": "https://www.sec.gov/Archives/edgar/data/0000063908/000006390826000048/exhibit991-33126xq1.htm",
+      "date": "2026-05-07",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's Reports Third Quarter 2026 Results (8-K Exhibit 99.1)",
+      "url": "https://www.sec.gov/Archives/edgar/data/0000063908/000006390826000080/exhibit991-9302026.htm",
+      "date": "2026-11",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's 2026 Investor Day press release (8-K)",
+      "url": "https://www.sec.gov/Archives/edgar/data/0000063908/000006390826000076/exhibit991-investorupdate2.htm",
+      "date": "2026-09-23",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's Investor Day 2026 Transcript (StockAnalysis)",
+      "url": "https://stockanalysis.com/stocks/mcd/transcripts/746101-investor-day-2026/",
+      "date": "2026-09-23",
+      "type": "一手（实录转载）"
+    },
+    {
+      "title": "McDonald's (MCD) Q3 2026 Earnings Call Transcript (Motley Fool)",
+      "url": "https://www.fool.com/earnings/call-transcripts/2026/11/04/mcdonalds-mcd-q3-2026-earnings-call-transcript/",
+      "date": "2026-11-04",
+      "type": "一手（实录转载）"
+    },
+    {
+      "title": "CNBC: McDonald's investor day: Remodels, training, chicken among growth plans",
+      "url": "https://www.cnbc.com/2026/09/23/mcdonalds-investor-day-remodels-training-chicken-growth-plans.html",
+      "date": "2026-09-23",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's Sets 2030 Margin and Market Share Targets (Finviz)",
+      "url": "https://finviz.com/news/394713/mcdonalds-sets-2030-margin-and-market-share-targets-under-new-growth-strategy",
+      "date": "2026-09",
+      "type": "二手"
+    },
+    {
+      "title": "TIKR: McDonald's Bets $8.5 Billion on NEXT as Its CEO Warns Traffic Will Stay Flat",
+      "url": "https://www.tikr.com/blog/mcdonalds-bets-8-5-billion-on-next-as-its-ceo-warns-traffic-will-stay-flat",
+      "date": "2026-09/10",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's franchisees flag falling profits as remodel costs loom (NOA survey)",
+      "url": "https://lexpress-franchise.com/en-us/news/mcdonalds-franchisees-flag-falling-profits-as-remodel-costs-loom/",
+      "date": "2026",
+      "type": "二手"
+    },
+    {
+      "title": "Providing meaningful value to our fans, with a side of facts (Erlinger open letter)",
+      "url": "https://corporate.mcdonalds.com/corpmcd/our-stories/article/providing-meaningful-value-to-our-fans-with-a-side-of-facts.html",
+      "date": "2024-05-29",
+      "type": "一手"
+    },
+    {
+      "title": "QSR 50 2026: Top 50 Fast-Food Chains, Ranked by Sales",
+      "url": "https://www.qsrmagazine.com/story/qsr-50-2026-top-50-fast-food-chains-ranked-by-sales/",
+      "date": "2026",
+      "type": "二手"
+    },
+    {
+      "title": "QSR 50 2026: Top Fast-Food Burger Chains, Ranked by Sales (Yahoo转载)",
+      "url": "https://finance.yahoo.com/small-business/articles/qsr-50-2026-top-fast-120915022.html",
+      "date": "2026",
+      "type": "二手"
+    },
+    {
+      "title": "The 2025 QSR 50",
+      "url": "https://www.qsrmagazine.com/story/the-2025-qsr-50-fast-foods-leading-annual-reportqsr-50-2025/",
+      "date": "2025",
+      "type": "二手"
+    },
+    {
+      "title": "Chick-fil-A grew US sales to nearly $24B last year (AJC)",
+      "url": "https://www.ajc.com/business/2026/04/chick-fil-a-grew-us-sales-to-nearly-24b-last-year",
+      "date": "2026-04",
+      "type": "二手"
+    },
+    {
+      "title": "Chick-fil-A's sales surpassed $22 billion in 2024 (QSR Magazine)",
+      "url": "https://www.qsrmagazine.com/story/chick-fil-as-sales-surpassed-22-billion-in-2024/",
+      "date": "2025",
+      "type": "二手"
+    },
+    {
+      "title": "Yum! Brands Form 10-K FY2025",
+      "url": "https://www.sec.gov/Archives/edgar/data/1041061/000104106126000084/yum-20251231.htm",
+      "date": "2026-02",
+      "type": "一手"
+    },
+    {
+      "title": "Yum! Brands Reports Fourth-Quarter Results and Increases Dividend",
+      "url": "https://www.businesswire.com/news/home/20260203608464/en/Yum-Brands-Reports-Fourth-Quarter-Results-and-Increases-Dividend",
+      "date": "2026-02-04",
+      "type": "一手"
+    },
+    {
+      "title": "Yum! Brands Q3 2026 8-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/0001041061/000104106126000149/a8kex9917302026.htm",
+      "date": "2026-11-03",
+      "type": "一手"
+    },
+    {
+      "title": "Restaurant Brands International Q4/FY2025 press release (8-K)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1618756/000161875626000006/qsr_20251231xpressrelease.htm",
+      "date": "2026-02",
+      "type": "一手"
+    },
+    {
+      "title": "Restaurant Brands International Q3 2026 press release (8-K)",
+      "url": "https://www.sec.gov/Archives/edgar/data/0001618756/000161875626000051/qsr_2026930xpressrelease.htm",
+      "date": "2026-10-29",
+      "type": "一手"
+    },
+    {
+      "title": "The Wendy's Company Q4/FY2025 results (8-K)",
+      "url": "https://www.sec.gov/Archives/edgar/data/30697/000119312526049816/d81721dex991.htm",
+      "date": "2026-02-13",
+      "type": "一手"
+    },
+    {
+      "title": "Wendy's Form 10-Q Q3 2026",
+      "url": "https://www.sec.gov/Archives/edgar/data/0000030697/000003069726000179/wen-20260927.htm",
+      "date": "2026-11",
+      "type": "一手"
+    },
+    {
+      "title": "Starbucks Reports Q4 and Full Fiscal Year 2025 Results",
+      "url": "https://investor.starbucks.com/news/financial-releases/news-details/2025/Starbucks-Reports-Q4-and-Full-Fiscal-Year-2025-Results/default.aspx",
+      "date": "2025-10-29",
+      "type": "一手"
+    },
+    {
+      "title": "Starbucks Q4 FY2026 earnings release (8-K)",
+      "url": "https://www.sec.gov/Archives/edgar/data/0000829224/000082922426000154/sbux-09272026xearningsrele.htm",
+      "date": "2026-10-29",
+      "type": "一手"
+    },
+    {
+      "title": "Starbucks loyalty update (Restaurant Dive)",
+      "url": "https://www.restaurantdive.com/news/starbucks-loyalty-update-driving-frequency-membership-grows/818884/",
+      "date": "2026",
+      "type": "二手"
+    },
+    {
+      "title": "Kantar BrandZ Most Valuable Global Brands 2026",
+      "url": "https://www.kantar.com/Campaigns/BrandZ/Global",
+      "date": "2026-05",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's ranks 10th in Kantar's 2026 most valuable brands (Prism News)",
+      "url": "https://www.prismnews.com/workplace/mcdonalds/mcdonalds-ranks-10th-in-kantars-2026-most-valuable-brands",
+      "date": "2026-05",
+      "type": "二手"
+    },
+    {
+      "title": "ACSI 2026: Jersey Mike's tops Chick-fil-A (Atlanta News First)",
+      "url": "https://www.atlantanewsfirst.com/2026/06/17/study-chick-fil-as-11-year-reign-top-fast-food-restaurant-comes-end/",
+      "date": "2026-06-17",
+      "type": "二手"
+    },
+    {
+      "title": "Placer.ai: How Did McDonald's Navigate Q1 2026 Headwinds?",
+      "url": "https://placer.ai/anchor/articles/how-did-mcdonalds-navigate-q1-2026-headwinds",
+      "date": "2026",
+      "type": "二手"
+    },
+    {
+      "title": "Morningstar 2025-02 McDonald's analyst note (wide moat)",
+      "url": "https://invest.firstrade.com/ms/equity_reports/sr/2025/0P000003IJ_20250210_RT.pdf",
+      "date": "2025-02-10",
+      "type": "二手"
+    },
+    {
+      "title": "Fortune: Warren Buffett sold McDonald's early, regret",
+      "url": "https://fortune.com/2026/03/02/warren-buffett-berkshire-hathaway-sold-mcdonalds-early-regret-multibillion-dollar-missed-opportunity/",
+      "date": "2026-03-02",
+      "type": "二手"
+    },
+    {
+      "title": "东方财富研报（窄门餐眼：西式快餐门店数据）",
+      "url": "https://pdf.dfcfw.com/pdf/H3_AP202603161820576237_1.pdf",
+      "date": "2026-03",
+      "type": "二手"
+    },
+    {
+      "title": "金羊网：麦当劳中国门店7000多家",
+      "url": "https://news.ycwb.com/ikinvkotjm/content_53356387.htm",
+      "date": "2025-04",
+      "type": "二手"
+    },
+    {
+      "title": "新京报：麦当劳中国年均开店约1000家，2028年万店目标",
+      "url": "https://m.bjnews.com.cn/detail/1754901240168729.html",
+      "date": "2025-08",
+      "type": "二手"
+    },
+    {
+      "title": "华尔街见闻：蜜雪冰城2025年全球门店近6万家",
+      "url": "https://wallstreetcn.com/articles/3768240",
+      "date": "2026-03",
+      "type": "二手"
+    },
+    {
+      "title": "Poor Charlie's Almanack reader highlight (Munger on McDonald's)",
+      "url": "https://www.goodreads.com/notes/157686100-poor-charlie-s-almanack/15118001-pat-donlin/ff6669b0-0552-4cbf-a9a5-4e7d9ee2fd04",
+      "date": "[不确定]",
+      "type": "二手"
+    }
+  ],
+  "uncertain": [
+    "key_data_series",
+    "item_specific_extras",
+    "controversies",
+    "key_quotes"
+  ]
+}
