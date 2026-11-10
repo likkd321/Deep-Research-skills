@@ -1,0 +1,41 @@
+{
+"core_facts": [
+"三脚凳（公司/加盟商/供应商）是麦当劳长期强调的关系框架，由Kroc时代形成；'自己当老板但不孤单'（in business for yourself, not by yourself）为加盟商口号。[口号与三脚凳为公司公开叙事，本次未逐一核对一手出处]",
+"QSC&V（质量、服务、清洁、价值）是店面运营的核心标准；汉堡大学（Hamburger University，1961年创办）用于培训经理与加盟商。[创办年份取自既有知识，本次未检索核实]",
+"CEO转折：Cantalupo（2003年重返）与Skinner接任后推行Plan to Win（'更好而非更大'），[具体年份与内容本次检索未得到确认]；Easterbrook 2019年因与员工关系被董事会解雇，之后Kempczinski接任。",
+"Easterbrook事件：2020年8月McDonald's起诉其隐瞒更多关系；2021年底和解，追回约1.05亿美元（现金+股票）；2023年SEC罚款40万美元，禁止其五年内担任上市公司高管/董事。",
+"2023年1月Kempczinski发起'Accelerating the Organization'，压平层级、关闭美国区域办公室，4月初远程通知裁员（报道称'少于1000人'）；此前2018年曾削减约5亿美元公司开销。",
+"管理层表述：2025年Q3电话会上强调'affordability'（亲民价格），承认低收入客群流量连续两年大幅下滑，坦率度中上。"
+],
+"mechanism": "文化如何产生价值：三脚凳把利益捆绑——供应商靠长期订单投入专用产能，加盟商靠品牌与系统赚钱，公司收租金与特许权使用费。QSC&V与汉堡大学让数万家店维持一致体验，品牌一致性才支撑得起租金溢价。治理上，公司赚的是加盟商销售额的一个百分比，所以高层必须不断处理'公司利益 vs 加盟商利益'的张力（折扣、数字化投入、涨价）。CEO更替影响战略节奏：Cantalupo/Skinner强调聚焦核心餐厅，Easterbrook转向科技与外送，Kempczinski面对危机（疫情、E. coli 2024）与通胀下的价值感。",
+"metaphor": "'麦当劳治理像一支靠三条腿平衡的凳子——任何一条腿过长，凳子就会倾斜'；'董事会是房东，加盟商是租户兼合伙人，管理层要在双方间反复协调'。",
+"key_data_series": [
+{"series":"CEO更替关键节点","unit":"事件","basis":"新闻与公司披露","data":[{"period":"2003","value":"Cantalupo/Skinner Plan to Win [不确定]"},{"period":"2015-2019","value":"Easterbrook任CEO"},{"period":"2019","value":"Easterbrook被解雇，Kempczinski接任"},{"period":"2020-08","value":"诉讼追偿"},{"period":"2021","value":"和解，追回约1.05亿美元"},{"period":"2023-01","value":"Accelerating the Organization"},{"period":"2023","value":"SEC罚款40万美元+5年禁令"}],"chart_suggestion":"时间线","source":"Restaurant Dive、KTVZ/AP、Restaurant Business"},
+{"series":"Easterbrook事件金额","unit":"美元","basis":"新闻报道","data":[{"period":"追回","value":105000000},{"period":"SEC罚款","value":400000}],"chart_suggestion":"直方","source":"同上"}
+],
+"item_specific_extras": {
+"three_legged_stool":{"公司":"品牌、地产、系统","加盟商":"经营者，约95%餐厅为加盟","供应商":"长期合作、专用产能"},
+"ceo_eras":[
+{"ceo":"Cantalupo / Skinner","focus":"回归核心、Plan to Win，提高单店销售与回报 [具体细节不确定]"},
+{"ceo":"Easterbrook","focus":"数字化、全天早餐、转型；2019年被解雇"},
+{"ceo":"Kempczinski","focus":"Accelerating the Arches、重组、价值与亲民定价"}],
+"accelerating_the_organization":{"time":"2023-01 memo; 2023-04 layoffs","scale":"少于1000人（报道）","moves":["关闭美国区域办公室","改为全国集中模式","远程通知裁员"]},
+"easterbrook_event":{"firing":"2019年，因违反公司政策","separation":"当时以'无过错'解雇，保留部分股权薪酬","clawback":"2020年起诉，2021年和解，追回约1.05亿美元","sec":"2023年罚款40万美元，禁止五年担任高管/董事；公司因配合未被罚款"}
+},
+"value_investing_implications": "对价投：1) 三脚凳与加盟商关系是护城河的一部分，一旦关系恶化（例如在价格战中让加盟商承担过多折扣成本），品牌一致性受损；2) 治理上，Easterbrook事件显示董事会最终采取行动、追回薪酬，属于纠错机制有效的证据，但'无过错'解雇最初保留了价值，说明初期判断有瑕疵；3) 重组与裁员显示管理层愿意压缩公司层级，对资本配置和费用控制是正面；4) 长期来看管理层稳定性良好（Kempczinski任期已逾六年），对巴菲特式'可预测性'有利，但对价格亲民与低收入客群流失的坦率承认也提示增长压力。",
+"controversies": "1) Easterbrook初始处理是否过轻；2) 加盟商对数字化投入、折扣促销与成本压力的不满长期存在（本次未检索到具体数字）；3) 重组是否削弱对加盟商的支持；4) Cantalupo/Skinner及汉堡大学相关细节本次检索未覆盖，需另查。",
+"key_quotes": [
+"'difficult discussions and decisions ahead'——Kempczinski，2023年1月内部备忘录（据报道）",
+"Kempczinski在2025年Q3电话会：强调affordability，称低收入客群流量疲弱已持续两年（据二手摘要转述）"
+],
+"data_confidence": "Easterbrook事件与2023重组来自新闻报道（Restaurant Dive、AP转载、Restaurant Business），可信度中高；三脚凳、QSC&V、汉堡大学、Cantalupo/Skinner部分来自既有知识，本次检索未取得一手来源，已标[不确定]。",
+"as_of_date": "2026-11-10",
+"sources": [
+{"title":"SEC fines ex-McDonald's CEO Steve Easterbrook - Restaurant Dive","url":"https://www.restaurantdive.com/news/sec-fines-ex-mcdonalds-ceo-steve-easterbrook-false-statements-termination/639944/","date":"2023","type":"二手"},
+{"title":"McDonald's claws back $105 million from fired CEO Steve Easterbrook","url":"https://ktvz.com/?p=752886","date":"2021","type":"二手"},
+{"title":"Read the full memo: McDonald's outlines plans for layoffs","url":"https://news.yahoo.com/read-full-memo-mcdonalds-outlines-133349184.html","date":"2023-01","type":"二手"},
+{"title":"McDonald's gears up for corporate layoffs - Restaurant Dive","url":"https://www.restaurantdive.com/news/mcdonalds-gears-up-for-corporate-layoffs-mcdonalds-pauses-office-operat/646612/","date":"2023-04","type":"二手"},
+{"title":"McDonald's Q3 2025 earnings call transcript","url":"https://www.fool.com/earnings/call-transcripts/2025/11/05/mcdonalds-mcd-q3-2025-earnings-call-transcript","date":"2025-11-05","type":"二手"}
+],
+"uncertain": ["core_facts(三脚凳/汉堡大学/Cantalupo/Skinner细节)","key_data_series(2003节点)","item_specific_extras(ceo_eras)","controversies"]
+}
