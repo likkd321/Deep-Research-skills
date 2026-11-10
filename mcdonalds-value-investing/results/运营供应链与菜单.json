@@ -1,0 +1,115 @@
+{
+  "core_facts": [
+    "采购体系是“三脚凳”：麦当劳（总部）+ 独立加盟商 + 长期供应商（原话式表述：公司与加盟商向众多独立供应商采购），总部自己几乎不持有食材和物流资产，成本风险主要由加盟商和供应商网络承担；2025 年公司自营餐厅（占比仅约5%的门店，销售额96.9亿美元）食品纸品成本约30.6亿美元，占自营销售约31.0%，人工约29.0亿美元、占约30.0%（均为据10-K利润表推算，口径为自营餐厅，不代表加盟体系）。",
+    "核心供应商关系都是数十年级别：Lamb Weston（薯条，与麦当劳合作可追溯到1971年，另有McCain、Simplot）、Keystone Foods（牛肉饼与鸡肉，参与发明麦乐鸡，关系始于1970年代初）、OSI Group（自称麦当劳全球最大蛋白质供应商，2014年上海福喜事件后麦当劳将中国供货转到OSI其他工厂）；Lopez Foods 等为牛肉饼供应商。注：Keystone 现已并入 Tyson 体系，Tyson 2018 年收购 Keystone 的信息是我的背景知识，本次检索未复核 [不确定]。",
+    "2026 年成本指引（Q1 2026 业绩会，CFO Ian Borden）：美国食品纸品通胀为“低至中个位数”、国际自营市场（IOM）为“中个位数”，并强调对冲与供应商关系提供缓冲；Q3 2025 时Borden称公司供应链使其牛肉成本涨幅“低于多数同行”，同期美国劳工统计局（BLS）牛肉及小牛肉价格同比约+14.7%（2025年9月）。",
+    "鸡肉 vs 牛肉：CEO Kempczinski 多次表示麦当劳鸡肉销售额已与牛肉“持平/相当（on par）”（2024-2025年业绩会），并称鸡肉品类全球比牛肉大、增速是牛肉的两倍；公司在快餐鸡肉市场份额“高十几个百分点”，在牛肉汉堡约45%；2030年目标是鸡肉市占再 +1.5 个百分点。本次未找到“鸡肉销售已明确超过牛肉”的一手证据，委托描述中的“鸡肉已大于牛肉”应降级为“已基本持平，且增速更快”。",
+    "菜单工程在做三件事：用 McCrispy（2025年底已在几乎所有主要市场上线，并延伸到鸡柳、卷饼）扩张鸡肉；用 “Best Burger” 配方与操作升级牛肉汉堡（计划2026年底前覆盖几乎所有市场）；用价值菜单（含5美元McChicken价值组合；美国入门级价值试点约1,900家餐厅，计划2027年初全国推广）守住低收入客群。",
+    "成本传导的真实结构：总部收入按“销售额百分比”收租金和特许权费（2025年租金104.4亿美元、特许权费60.2亿美元），因此总部不直接承担食材/人工成本，只通过“加盟商餐厅利润变薄→客流与开店意愿下降”间接受影响；这解释了为何公司在2026年9月投资者日提出到2036年约85亿美元的加盟商支持（租金减免+资本支持）以修复餐厅层面利润。"
+  ],
+  "mechanism": "把麦当劳想象成一个“只出规矩、不扛货”的连锁大管家：第一，它与少数几家长期合作的大供应商（薯条、牛肉饼、鸡肉、面包、酱料）签长期框架，把全球数万家门店的采购量打包，换来更低且更稳的价格——标准化菜单是这一切的前提，因为菜单越统一，采购量越集中，议价力越强。第二，实际运输和仓储交给专业配送商，货款由加盟商和供应商直接结算，总部几乎不占用营运资本和重资产。第三，当牛肉、人工、油价上涨时：自营店（约5%）的利润率直接被压缩（2025年自营餐厅费用占销售额85.3%，高于2023年的84.4%）；加盟店的利润被压缩，但总部拿的是“销售额的百分比”，只要门店客流和菜单价格没有崩，总部收入基本不受影响，甚至因涨价而名义增加。第四，总部用菜单工程对冲：当牛肉贵时，把增长重心放在成本更稳、市场更大的鸡肉（McCrispy）与饮品上，并用价值菜单维持客流，用“以销量换利润”的方式摊薄固定成本。最大的风险点是：加盟商的利润如果长期被通胀和价值战挤压，会先反映为开店放缓、翻新投入减少，再反映为总部收入增速下降——所以2026年投资者日才会用约85亿美元来“补贴”加盟商，这本质上是总部用自己的利润率换取体系的长期健康。",
+  "metaphor": "麦当劳的供应链像“一条自己不拥有、但全球几万家餐厅都离不开的标准化粮道”：总部是粮道的规则制定者与收费站，供应商是粮道上的长期驮队，加盟商是沿路的客栈老板；路上的粮价涨跌，先由客栈老板和驮队承担，收费站按过路客人的‘流水’收费。备选比喻：“全球最大的团餐采购联合体”，一家公司的采购规模，等于整个行业的议价权。贴切之处在于：它的优势不是持有资产，而是持有“规则+规模”；不贴切之处在于：当客栈老板长期不赚钱时，收费站迟早也会被迫降费补贴。",
+  "key_data_series": [
+    {
+      "series": "分部收入构成（餐厅销售+加盟收入，不含其他收入）",
+      "unit": "百万美元",
+      "basis": "GAAP，来自FY2025 10-K分部披露；2025年另有其他收入6.47亿美元",
+      "data": [
+        {"period": "2025 美国（加盟7,371 + 自营3,115）", "value": 10486},
+        {"period": "2025 国际自营市场IOM（加盟7,279 + 自营6,131）", "value": 13410},
+        {"period": "2025 IDL与公司（加盟1,898 + 自营443）", "value": 2341}
+      ],
+      "chart_suggestion": "堆叠柱",
+      "source": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+    },
+    {
+      "series": "自营餐厅费用占自营销售额比例",
+      "unit": "%",
+      "basis": "GAAP，由10-K利润表数字推算（自营餐厅总费用/自营销售额）",
+      "data": [
+        {"period": "2023", "value": 84.4},
+        {"period": "2024", "value": 85.2},
+        {"period": "2025", "value": 85.3}
+      ],
+      "chart_suggestion": "折线",
+      "source": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+    },
+    {
+      "series": "自营餐厅成本结构（2025）",
+      "unit": "占自营销售额%",
+      "basis": "GAAP，推算：食品纸品30.6亿/96.9亿，人工29.05亿/96.9亿",
+      "data": [
+        {"period": "食品与纸品", "value": 31.0},
+        {"period": "人工与福利", "value": 30.0},
+        {"period": "其他运营费用及租金等（含折旧）", "value": 24.3}
+      ],
+      "chart_suggestion": "饼/直方",
+      "source": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+    },
+    {
+      "series": "加盟收入构成（2025）",
+      "unit": "亿美元",
+      "basis": "GAAP；据sec-api对10-K的转述，租金104.4、特许权费60.2，加盟收入合计165.5（含首期费等）",
+      "data": [
+        {"period": "租金", "value": 104.4},
+        {"period": "特许权使用费", "value": 60.2},
+        {"period": "加盟收入合计", "value": 165.5}
+      ],
+      "chart_suggestion": "直方",
+      "source": "https://sec-api.io/insights/mcdonald-s-mcd-q3-2026-earnings-sec-filing-analysis-us-guest-counts-value-reset-and-the-2028-unit-target"
+    },
+    {
+      "series": "2026年公司成本指引",
+      "unit": "同比%",
+      "basis": "管理层指引（Q1 2026业绩会，二手转述）",
+      "data": [
+        {"period": "美国食品纸品通胀", "value": "低至中个位数"},
+        {"period": "IOM食品纸品通胀", "value": "中个位数"},
+        {"period": "2026运营利润率", "value": "中高40%"}
+      ],
+      "chart_suggestion": "表格",
+      "source": "https://www.nasdaq.com/articles/mcdonalds-q1-earnings-call-highlights"
+    }
+  ],
+  "item_specific_extras": {
+    "supplier_map": [
+      {"supplier": "Lamb Weston", "category": "薯条", "relationship": "与麦当劳合作可追溯到1971年，另有McCain、Simplot等并行供应商，避免单一依赖"},
+      {"supplier": "Keystone Foods", "category": "牛肉饼、鸡肉（含麦乐鸡）", "relationship": "1970年代初起共同开发“整体配送概念”，并推动IQF速冻技术；现归属 Tyson 体系 [不确定]"},
+      {"supplier": "OSI Group", "category": "蛋白质（牛肉、鸡肉等）", "relationship": "自称麦当劳全球最大蛋白质供应商；2014年上海福喜事件后，中国供货转至OSI其他工厂"},
+      {"supplier": "Lopez Foods", "category": "牛肉饼", "relationship": "1990年代为供应麦当劳而设立（二手来源）"}
+    ],
+    "menu_engineering": {
+      "chicken": "McCrispy 2025年底已在几乎所有主要市场上线，向鸡柳、卷饼延伸；目标2030年鸡肉市占+1.5个百分点",
+      "beef": "Best Burger 计划2026年底覆盖几乎所有市场；牛肉通胀使牛肉汉堡成本上升，Kempczinski 在Q1 2026称鸡肉相对牛肉因成本更受益",
+      "value": "美国入门级价值试点覆盖约1,900家餐厅，2027年初计划全国推广；5美元McChicken价值组合"
+    },
+    "cost_pass_through": {
+      "company_operated_2025": {"food_and_paper_pct_of_sales": 31.0, "payroll_pct_of_sales": 30.0, "total_expenses_pct": 85.3},
+      "royalty_and_rent_logic": "总部按销售额百分比收租金与特许权费，名义上与食材成本无关；加盟商利润是传导缓冲层",
+      "franchisee_support": "2026年9月投资者日：到2036年约85亿美元加盟商支持（租金减免+资本支持），其中约50亿美元在2030年前"
+    },
+    "company_operated_restaurants_us": "美国自营门店：2026年9月30日577家，上年同期667家，说明公司在继续把自营店再加盟化（目标加盟比例约98%，2028年底）"
+  },
+  "value_investing_implications": "对价值投资者，运营与供应链这一维度的含义是：第一，护城河不在“把食材做便宜”，而在“把规模做成规则”——数万家门店的标准化菜单使麦当劳在采购上拥有行业最强议价权，这是难以复制的规模优势，但它同时是“成本中枢”而非“利润中枢”，不应被误认为核心利润来源。第二，通胀抵御：总部收入按销售额百分比取成，所以菜单涨价会同步抬高租金和特许权费，名义上具有天然通胀传导；但真实风险在于加盟商利润被挤压后的“二阶效应”，需要用开店增速、加盟商现金流和公司补贴力度来跟踪，而不是看总部毛利率。第三，再投资需求低：总部几乎不持有食材和物流资产，2026年资本开支约37亿美元主要用于开店与房地产，不是供应链；这支持高自由现金流转化率（目标由低中80%升至中高80%）。第四，鸡肉与牛肉的转换让菜单具备“成本弹性”：牛肉贵时用鸡肉与价值餐换结构，这是定价权之外的第二道防线，但也意味着单店平均客单价可能被低价组合稀释。第五，需要警惕的信号：自营餐厅费用率连续三年上升（84.4→85.3%）、美国客流/可比销售偏弱（Q3 2026美国可比-0.2%）、加盟商支持计划的规模（约85亿美元）说明“价值战”已经迫使总部让利，这会影响2030年利润率目标（低至中50%）的达成路径。",
+  "controversies": "（1）“鸡肉已超过牛肉”并无一手证据，只有“持平”的管理层表述；若有人宣称已超越需核实口径（销售额、份数、全球还是美国）。（2）牛肉价格周期是否是长期结构性上涨（美国牛群处于数十年低位、BLS牛肉价格同比约+15%），公司称对冲和供应商关系可缓冲，但缓冲只是延后而非消除。（3）总部到底“不受成本影响”还是“只是转嫁给了加盟商”：2025-2026年的加盟商支持计划恰恰表明后者有极限。（4）自营店比例再下降（目标约98%加盟）会提升利润率，但也削弱了总部对运营细节与成本数据的第一手掌握。（5）价值战：入门级价值菜单是否会稀释客单价和利润，仍在试点中。",
+  "key_quotes": [
+    "Kempczinski（Q1 2026 业绩会，二手转述）：鸡肉在相对牛肉的成本上受益。",
+    "Kempczinski（2024-2025年业绩会，meatingplace 转述）：“The chicken category is bigger than beef globally, and it's growing two times faster.”",
+    "Borden（Q3 2025 业绩会，二手转述）：公司供应链的实力使其牛肉成本上涨幅度低于多数同行。",
+    "10-K 风险因素（FY2025）：某些商品供应商有限（certain items have limited suppliers），商品价格与劳动力成本波动已经并可能继续不利影响餐厅盈利。"
+  ],
+  "data_confidence": "一手：FY2025 10-K（分部收入、利润、门店数、自营成本）、Q3 2026 8-K 数字经 sec-api 转述（二手，需对照原文）。推算：自营食品纸品31.0%、人工30.0%、总费用率为我根据10-K数字计算。二手：供应商历史关系（麦当劳官网、Mashed、Food Republic 等媒体）、业绩会引语（Nasdaq、Fox Business、meatingplace）。未取得：Q3 2026 电话会内容（2027年通胀指引）、各蛋白质占销售额的精确比例、全球食品纸品占系统销售额的口径。口径提示：自营餐厅成本不能代表加盟商成本结构。",
+  "as_of_date": "2026-11-10（财务数据至2025财年与2026年Q3；指引至2026年Q1电话会）",
+  "sources": [
+    {"title": "McDonald's Form 10-K FY2025", "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm", "date": "2026-02", "type": "一手"},
+    {"title": "McDonald's 8-K Q3 2026 Exhibit 99.1", "url": "https://www.sec.gov/Archives/edgar/data/0000063908/000006390826000080/exhibit991-9302026.htm", "date": "2026-11-04", "type": "一手"},
+    {"title": "sec-api: McDonald's Q3 2026 earnings and filing analysis", "url": "https://sec-api.io/insights/mcdonald-s-mcd-q3-2026-earnings-sec-filing-analysis-us-guest-counts-value-reset-and-the-2028-unit-target", "date": "2026-11-04", "type": "二手"},
+    {"title": "Nasdaq: McDonald's Q1 earnings call highlights", "url": "https://www.nasdaq.com/articles/mcdonalds-q1-earnings-call-highlights", "date": "2026-05", "type": "二手"},
+    {"title": "Meatingplace: Chicken now matches beef in sales for McDonald's, CEO", "url": "https://meatingplace.com/chicken-now-matches-beef-in-sales-for-mcdonalds-ceo/", "date": "2025", "type": "二手"},
+    {"title": "Fox Business: McDonald's CEO warns rising beef prices remain a challenge", "url": "https://www.foxbusiness.com/retail/mcdonalds-ceo-warns-rising-beef-prices-remain-challenge-inflation-stays-sticky", "date": "2025-11", "type": "二手"},
+    {"title": "McDonald's US: Keystone Foods supplier page", "url": "https://mcdonalds.com/us/en-us/about-our-food/meet-our-suppliers/keystone-foods.html", "date": "", "type": "一手"},
+    {"title": "McDonald's Cyprus: suppliers (Lamb Weston since 1971)", "url": "https://www.mcdonalds.com.cy/about-our-food/suppliers", "date": "", "type": "一手"},
+    {"title": "Food Republic: companies behind McDonald's burger patties", "url": "https://www.foodrepublic.com/2205691/companies-behind-mcdonalds-burger-patties/", "date": "", "type": "二手"}
+  ],
+  "uncertain": ["Keystone 现归属（Tyson）", "鸡肉销售已大于牛肉（仅有“持平”证据）", "Q3 2026 后对 2027 年通胀的指引", "各蛋白质占销售额精确比例"]
+}
