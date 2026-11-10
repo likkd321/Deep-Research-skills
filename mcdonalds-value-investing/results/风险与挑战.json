@@ -1,0 +1,525 @@
+{
+  "core_facts": [
+    "美国客流是头号风险：美国可比销售2026年Q2 +0.8%、Q3 -0.2%（客流为负、靠客单价撑住），管理层在2026年9月投资者日直言在通胀高企期间，自营市场行业客流「预计持平」；美国汽油均价2026年5月一度达4.56美元/加仑（2月底2.98美元），低收入（家庭收入4.5万美元以下）客群快餐到店仍在下滑",
+    "加盟商利润被挤压、关系紧张：独立加盟商协会NOA（2026年调查，100多家加盟商）称95%在2026年Q1门店利润下降、97%认为公司现行方案没有改善其现金流、近8成称现金流不足以支撑必需的再投资、97%称定价自主权被削弱或取消；公司称NOA只是2,000多家美国加盟商中的「一小部分」",
+    "公司开始给加盟商「让利」：2026年9月23日投资者日宣布到2036年约85亿美元的租金减免与资本支持（2030年前约50亿），叠加美国单店约80万美元的「Restaurant > NEXT」改造；CFO称公司口径回收期约5—6年、加盟商约4年；当日股价跌4.8%至238.32美元，为2020年3月以来最差单日、近4年低点",
+    "GLP-1目前影响小但在累积：盖洛普2026年7月调查约11%美国成年人在用GLP-1（约3,000万人）；第三方Advan估算GLP-1拖累麦当劳2025年Q4客流约0.67个百分点；Circana称用户每次点单件数约少1%（主要砍薯条、小食、面包）；Kempczinski 2026年2月称「尚未看到GLP-1对业务有显著影响」",
+    "汇率与杠杆是「放大器」而非「病根」：2025年约59%—60%营收、约51%营业利润（IOM 63.8亿/总123.9亿美元）来自美国以外，汇率使2025年EPS +0.16美元、2026年预计约+0.15美元；总债务400亿美元（含租赁负债约545亿）、97%固定利率、39%外币债，利息覆盖约7.8倍，评级BBB+/Baa1",
+    "法律与监管：加州2024年起快餐最低时薪20美元（伯克利2026年4月研究称价格仅涨约1.5%、就业未减；Cato称相对少了约1.8万个岗位）；2026年10月伊利诺伊联邦法院出现一宗指控麦当劳定价推荐工具构成「价格操纵」的拟集体诉讼；2024年10月洋葱丝大肠杆菌事件致104人患病、1人死亡，使美国当季可比销售-1.4%"
+  ],
+  "mechanism": "把麦当劳想成「收租+抽成」的房东：公司收入≈加盟商销售额×（约4%特许权使用费+约8%—12%租金），所以公司利润只取决于两件事——加盟商卖得多不多、加盟商活不活得下去。几乎所有风险都要沿这条链条传导才会伤到股东：\n\n①需求端（客流）：低收入客群受汽油价格、物价和就业压力挤出；高收入客群部分因GLP-1少点小食、少吃；竞争对手（Taco Bell、Wendy's、汉堡王）都在打5美元套餐价值战。客流下滑→加盟商销售额停滞→公司租金与抽成增长放缓。但因为公司按「销售额」而非「利润」收费，短期内公司利润远比加盟商稳（2026年Q3美国可比销售为负，公司营业利润仍+7%）。\n\n②供给端（加盟商经济学）：牛肉、纸品、人工持续涨（2026年美国食品纸品通胀低到中个位数，2027年预计中个位数；加州最低时薪20美元并向其他州扩散），而价值战又要求降价、公司还开始考核加盟商定价是否「够实惠」。结果是成本涨、售价受压，加盟商的门店利润被夹在中间——这正是风险真正积聚的地方。加盟商若长期赚不到钱，就会少改造、少开店、续约意愿下降、优秀运营者流失，最终反噬系统销售。\n\n③公司被迫「让利」：为稳住加盟商，公司拿出约85亿美元做租金减免与资本支持（到2036年），本质是把一部分本来归股东的租金收入返还给加盟商。会计上分摊在平均约10年的特许协议期内，短期EPS伤害有限，但它说明「房东永远单边涨租」的定价权并非无限。\n\n④放大器：汇率（约一半营业利润来自海外，美元走强会直接压低换算后利润）、杠杆（负股东权益、400亿美元债务，利率上升或评级下调会推高资金成本、挤压回购），本身不是病根，但会在坏年份放大波动。\n\n⑤尾部事件：食品安全（一次大肠杆菌事件就能让美国一个季度转负）、地缘与抵制（2023—2024年中东/穆斯林市场抵制使国际授权市场增速一度从预期5.5%降到0.7%）、反垄断与用工诉讼（定价工具诉讼、共同雇主认定）。\n\n总结：风险链条是「消费者变穷/变瘦 → 客流弱 → 价值战压价 + 成本涨 → 加盟商利润被夹 → 公司让利/增长放慢」。麦当劳的收租模式让它在链条末端，受冲击最晚、最轻，但并非免疫。",
+  "metaphor": "1）「收租的房东遇到租客叫苦」：房东（麦当劳）按营业额收租，租客生意差时房东收入还算稳，但租客（加盟商）真的撑不住时，房东只能减租——85亿美元的租金减免就是这一幕。贴切在于点出公司风险的本质是加盟商健康度。\n2）「温水里的青蛙」：GLP-1、低收入客群流失都是每年只掉零点几个百分点的慢变量，单季看不出，十年累积才致命。贴切在于提醒长期投资者关注累积效应而非季度噪音。\n3）「收费站旁修了新路」：竞争对手的价值套餐、外卖平台和更健康的快休闲品牌像旁边的新路，车流（客流）不会一夜消失，但会被慢慢分流。",
+  "key_data_series": [
+    {
+      "series": "美国可比销售增长（季度）——价值战与客流压力的晴雨表",
+      "unit": "%",
+      "basis": "公司披露口径（可比餐厅、固定汇率）",
+      "data": [
+        {
+          "period": "2024Q3",
+          "value": 0.3
+        },
+        {
+          "period": "2024Q4",
+          "value": -1.4
+        },
+        {
+          "period": "2025Q1",
+          "value": -3.6
+        },
+        {
+          "period": "2025Q2",
+          "value": 2.5
+        },
+        {
+          "period": "2025Q3",
+          "value": 2.4
+        },
+        {
+          "period": "2025Q4",
+          "value": 6.8
+        },
+        {
+          "period": "2026Q1",
+          "value": 3.9
+        },
+        {
+          "period": "2026Q2",
+          "value": 0.8
+        },
+        {
+          "period": "2026Q3",
+          "value": -0.2
+        }
+      ],
+      "chart_suggestion": "直方（正负柱），可标注2024年10月大肠杆菌事件、2025年1月McValue、2026年4月3美元以下菜单等事件",
+      "source": "麦当劳各季度业绩公告（8-K Exhibit 99.1）；2024Q3数值（+0.3%）凭既往报道[不确定]"
+    },
+    {
+      "series": "NOA加盟商调查（2026年，100多家受访加盟商）",
+      "unit": "% 受访者",
+      "basis": "独立加盟商协会自行调查，非公司口径，样本有偏",
+      "data": [
+        {
+          "period": "2026Q1门店利润下降",
+          "value": 95
+        },
+        {
+          "period": "认为公司方案未改善现金流",
+          "value": 97
+        },
+        {
+          "period": "定价自主权被削弱或取消",
+          "value": 97
+        },
+        {
+          "period": "自2025年底以来食品与纸品成本上升",
+          "value": 99
+        },
+        {
+          "period": "感到被直接施压降价",
+          "value": 75
+        },
+        {
+          "period": "现金流不足以支撑必需再投资",
+          "value": 80
+        }
+      ],
+      "chart_suggestion": "横向直方",
+      "source": "L'Express Franchise转述NOA调查（2026年）"
+    },
+    {
+      "series": "营业利润地区构成（汇率敞口）",
+      "unit": "百万美元",
+      "basis": "GAAP，FY2025 10-K分部口径",
+      "data": [
+        {
+          "period": "美国",
+          "value": 5808
+        },
+        {
+          "period": "国际直营市场IOM",
+          "value": 6382
+        },
+        {
+          "period": "国际授权市场IDL及公司总部",
+          "value": 203
+        }
+      ],
+      "chart_suggestion": "饼图（海外合计约53%）",
+      "source": "McDonald's FY2025 Form 10-K"
+    },
+    {
+      "series": "外币折算对稀释EPS的影响",
+      "unit": "美元/股",
+      "basis": "公司披露（GAAP EPS的汇率贡献）",
+      "data": [
+        {
+          "period": "2025全年",
+          "value": 0.16
+        },
+        {
+          "period": "2025Q1",
+          "value": -0.04
+        },
+        {
+          "period": "2026全年（公司预估）",
+          "value": 0.15
+        },
+        {
+          "period": "2026Q3",
+          "value": -0.01
+        }
+      ],
+      "chart_suggestion": "直方",
+      "source": "2025年Q4业绩公告、2026年Q1 10-Q；2026全年预估来自二手报道"
+    },
+    {
+      "series": "股价关键点位（风险定价的体现）",
+      "unit": "美元",
+      "basis": "收盘价",
+      "data": [
+        {
+          "period": "52周高点（约2025年底—2026年初）",
+          "value": 342
+        },
+        {
+          "period": "2026-09-22（投资者日前）",
+          "value": 250.35
+        },
+        {
+          "period": "2026-09-23（投资者日当日）",
+          "value": 238.32
+        },
+        {
+          "period": "52周低点（2026年9—10月）",
+          "value": 229.2
+        },
+        {
+          "period": "2026-11-09",
+          "value": 281.44
+        }
+      ],
+      "chart_suggestion": "折线",
+      "source": "TheCryptoBasic/247WallSt（9月23日）、Lightyear（52周区间）、StockAnalysis（11月9日）"
+    },
+    {
+      "series": "GLP-1渗透与影响",
+      "unit": "混合",
+      "basis": "第三方调查与估算（非公司口径）",
+      "data": [
+        {
+          "period": "美国成年人当前使用率（盖洛普，2026年7月）",
+          "value": "11%（约3,000万人）"
+        },
+        {
+          "period": "GLP-1家庭占美国家庭（Circana，2025）",
+          "value": "23%"
+        },
+        {
+          "period": "2030年GLP-1家庭占食品饮料销量（Circana预测）",
+          "value": "35%"
+        },
+        {
+          "period": "对麦当劳2025Q4客流拖累（Advan估算）",
+          "value": "-0.67个百分点"
+        },
+        {
+          "period": "用户每次点单件数变化（Circana）",
+          "value": "约-1%"
+        },
+        {
+          "period": "有GLP-1用户的家庭仍光顾麦当劳比例（公司）",
+          "value": "84%"
+        }
+      ],
+      "chart_suggestion": "分类直方或信息卡",
+      "source": "Fortune 2026-10-01；Advan Research 2026-03-05"
+    }
+  ],
+  "item_specific_extras": {
+    "risk_matrix": [
+      {
+        "risk": "美国客流与消费降级（低收入客群流失）",
+        "severity": "高",
+        "probability_10y": "高（已在发生）",
+        "transmission": "客流→加盟商销售→公司租金/抽成增速",
+        "current_evidence": "2026Q3美国可比-0.2%、客流为负；低收入客群快餐到店连续约两年下滑；汽油价格冲击",
+        "mitigation": "2027年初全国推出新入门级价值方案、忠诚度计划（加入后年到店频次10.5→26次）"
+      },
+      {
+        "risk": "价值战与定价权侵蚀",
+        "severity": "中高",
+        "probability_10y": "中高",
+        "transmission": "降价→加盟商毛利→改造/开店意愿",
+        "current_evidence": "3美元以下菜单单季约耗费系统3.1亿美元（NOA估算）；仅约60%—65%门店执行推荐价",
+        "mitigation": "公司分担部分促销成本、NEXT效率提升250个基点"
+      },
+      {
+        "risk": "加盟商关系与经济学",
+        "severity": "高",
+        "probability_10y": "中",
+        "transmission": "加盟商现金流→再投资→系统质量→长期销售；公司被迫让利→租金收入",
+        "current_evidence": "NOA调查95%利润下降；85亿美元租金减免/资本支持；2027—2028年起每店40万—70万美元改造",
+        "mitigation": "公司目标单店加盟商现金流约50万美元、改造约4年回收"
+      },
+      {
+        "risk": "劳动成本与监管（最低工资、共同雇主）",
+        "severity": "中",
+        "probability_10y": "高",
+        "transmission": "加盟商人工成本→利润/价格",
+        "current_evidence": "加州20美元时薪；2026年约二十多个州上调最低工资；第九巡回法院曾裁定麦当劳在加州法下非共同雇主",
+        "mitigation": "自助点餐机、数字化订单、排班优化"
+      },
+      {
+        "risk": "GLP-1与健康趋势",
+        "severity": "中（长期累积）",
+        "probability_10y": "中高",
+        "transmission": "每单件数↓、高收入客群频次↓",
+        "current_evidence": "11%美国成年人在用；Advan估算Q4客流-0.67个百分点；10-K已新增「减重药物」风险表述",
+        "mitigation": "高蛋白标识（17款）、小份量、鸡肉碗/鸡蛋杯等新菜单"
+      },
+      {
+        "risk": "食品安全",
+        "severity": "中（事件型）",
+        "probability_10y": "中（十年内至少一次区域性事件概率不低）",
+        "transmission": "品牌信任→短期客流",
+        "current_evidence": "2024年10月洋葱丝大肠杆菌：104人患病、34人住院、1人死亡，美国当季可比-1.4%，公司投入约1亿美元恢复",
+        "mitigation": "供应商切换、规模化供应链审计"
+      },
+      {
+        "risk": "ESG与声誉/地缘抵制",
+        "severity": "中低",
+        "probability_10y": "中",
+        "transmission": "抵制→特定市场销售",
+        "current_evidence": "2023—2024年中东/马来西亚/印尼/法国抵制使IDL市场2023Q4增速仅0.7%（预期5.5%）；牛肉约占公司温室气体排放三分之一，股东气候提案2025年获10.5%支持",
+        "mitigation": "授权市场公司不投资本、收入占比低（IDL约10%）"
+      },
+      {
+        "risk": "汇率",
+        "severity": "中低（波动非趋势）",
+        "probability_10y": "高（必然波动）",
+        "transmission": "海外利润换算",
+        "current_evidence": "约51%营业利润来自IOM；最大净资产敞口澳元17.7亿、英镑14.2亿、兹罗提8.2亿美元",
+        "mitigation": "39%外币债务与衍生品对冲部分特许权使用费"
+      },
+      {
+        "risk": "杠杆与利率",
+        "severity": "中低",
+        "probability_10y": "低—中",
+        "transmission": "再融资成本→利息→可回购资金",
+        "current_evidence": "总债务400亿美元、负股东权益、利息覆盖约7.8倍、BBB+/Baa1；2027—2030年每年30亿—52亿美元到期",
+        "mitigation": "97%固定利率、加权利率约4.0%、现金流稳定"
+      },
+      {
+        "risk": "反垄断/定价诉讼",
+        "severity": "低—中",
+        "probability_10y": "中",
+        "transmission": "罚金、定价协调能力受限",
+        "current_evidence": "2026年10月伊利诺伊北区联邦法院拟集体诉讼（原告Michael Thomas）指控定价推荐工具构成价格操纵，未获集体认证",
+        "mitigation": "公司称「AI不为麦当劳餐厅设定菜单价格」并将积极抗辩"
+      }
+    ],
+    "bear_case_pre_mortem": {
+      "framing": "假设站在2036年回看：过去十年麦当劳股东年化回报只有约3%—5%，明显跑输标普500。最可能的原因按可能性排序如下：",
+      "scenarios": [
+        {
+          "rank": 1,
+          "title": "美国「零客流增长」成为新常态，增长只剩开店与提价",
+          "story": "低收入客群被物价和油价挤出，GLP-1让高收入客群少点小食；价值战使提价空间受限，美国可比销售长期徘徊在0%—2%。系统销售只能靠每年3%—3.5%的开店，EPS年增速从过去十年约9.6%降到4%—6%，同时估值从20多倍PE被重估到15—18倍（类似2026年9月低点时约18倍远期PE），双杀导致回报平庸。",
+          "early_warning": "美国客流连续多个季度为负；2027年新入门价值方案后仍无改善；管理层继续用「新常态」描述行业"
+        },
+        {
+          "rank": 2,
+          "title": "加盟商体系「失血」，房东被迫持续降租",
+          "story": "成本涨（牛肉、人工、改造40万—70万美元/店）而售价受限，加盟商现金流长期不足，85亿美元让利不够，后续又要追加；租金/特许费有效费率被侵蚀，营业利润率达不到2030年「50%出头」的目标，反而停滞在45%—48%。",
+          "early_warning": "NOA类调查持续恶化、加盟商主动退出/转让增多、改造进度滞后、公司追加支持方案"
+        },
+        {
+          "rank": 3,
+          "title": "杠杆放大了周期，回购效率下降",
+          "story": "公司已是负权益、400亿美元债务；若利率维持高位而利润停滞，新增借债回购的边际收益下降，评级压力令公司减少回购，每股收益失去过去十年最主要的「助推器」（股本十年减少约26%）。",
+          "early_warning": "评级展望转负、利息覆盖跌破6倍、回购金额连续下降"
+        },
+        {
+          "rank": 4,
+          "title": "美元长期走强吞噬海外增长",
+          "story": "约一半利润在海外，若美元十年升值20%—30%，以美元计的EPS增速每年少1—2个百分点。",
+          "early_warning": "汇率对EPS影响连续多年为负"
+        },
+        {
+          "rank": 5,
+          "title": "尾部冲击：重大食品安全或声誉事件叠加诉讼",
+          "story": "一次全国性食品安全事件或定价反垄断败诉（并限制公司协调定价的能力），叠加地缘抵制，单年就可让利润倒退并打掉估值溢价。",
+          "early_warning": "疾控部门通报、诉讼获集体认证、国际市场抵制蔓延"
+        }
+      ],
+      "most_likely_single_cause": "美国核心市场客流停滞（消费降级+健康趋势）叠加加盟商利润挤压导致的「低增长+估值下修」双杀，而非破产或暴雷式风险",
+      "what_would_not_kill_it": "品牌、地段与规模优势在十年内被替代的概率很低；收租模式使公司现金流在坏年份依然稳定（2020年疫情营业利润率仍约38%），所以「本金永久性损失」风险低，主要风险是「回报平庸」"
+    },
+    "risk_offsets_checklist": [
+      "收租模式：按销售额收费，加盟商亏损时公司仍收租（2026Q3美国可比为负，公司营业利润+7%）",
+      "国际市场分散：IOM利润已超过美国，IDL市场（中国、日本等）增速4%左右",
+      "开店仍在加速：2026年净增约2,100家、2027年净增长约4.5%，目标2028年底5万家",
+      "现金流韧性：2025年自由现金流约71.9亿美元、FCF转换率约84%"
+    ]
+  },
+  "value_investing_implications": "1）护城河：品牌、地段和采购规模这三道墙没有被风险动摇，但「定价权」这一项出现裂缝——美国顾客对涨价开始用脚投票，公司要靠价值菜单和让利维持客流，说明麦当劳的定价权更多体现在「对加盟商收租」而不是「对顾客无限提价」。\n2）确定性：公司层面的利润确定性仍高（收租结构+约95%加盟），2026年美国销售转负时EPS依旧两位数增长；真正的不确定性在加盟商层面，投资者应把「加盟商现金流」当作领先指标跟踪，而不是只看公司EPS。\n3）再投资需求：过去十年资本开支仅占经营现金流约30%—36%，但未来十年要叠加85亿美元的加盟商支持与每年约30亿美元基础资本开支（另加15亿—20亿美元资本支持），自由现金流转换率短期将维持在80%出头，「几乎不需要再投资」的轻资产叙事略打折扣。\n4）通胀抵御：租金与特许费按销售额计，名义销售随通胀上升，对公司是天然对冲；但通胀若压垮低收入顾客（如2026年油价冲击），会以客流下滑的形式反噬，所以是「温和通胀友好、高通胀不友好」。\n5）长期复利：最可能的失败方式不是暴雷，而是「增长从8%—10%降到4%—6% + 估值从25倍降到18倍」的平庸化；因此安全边际应来自买入价格——在约18倍远期PE（2026年9月）附近买入，比在约25倍附近买入能多吸收一次估值下修。\n6）杠杆：负权益是回购造成的而非亏损，在利率4%附近可控；但它降低了公司应对长期不利情景的弹性，巴菲特式投资者应对「靠借债回购撑EPS」部分打折。",
+  "controversies": [
+    "GLP-1影响大小：公司称尚无显著影响，Advan估算单季客流-0.67个百分点，Redburn称约0.9%系统销售拖累（二手转述），Circana称每单件数仅少约1%——影响是「小而累积」还是「被高估」仍有分歧",
+    "NOA调查代表性：NOA声称成员占麦当劳运营者一半以上，但公司称其只是2,000多家加盟商中的一小部分；另有加盟商咨询委员会在共同雇主等议题上与NOA意见相左",
+    "85亿美元让利的解读：多头认为是「投资于餐厅体验与价值」的好用途（Gimme Credit称对债券持有人更友好），空头认为是加盟商模式承压的信号、会侵蚀租金收入，且回收期5—6年偏长",
+    "加州20美元最低工资效果：伯克利研究称价格只涨约1.5%、就业未减；圣克鲁兹分校研究称工时被砍（某18店加盟商工时下降11.5%）、Cato称相对少了约1.8万岗位",
+    "价值战是否有效：Entrepreneur（2026年5月）称超值套餐带来增量客流；NOA称超过8成受访者的增量客流不足以弥补毛利损失、单季耗费系统约3.1亿美元",
+    "2030年营业利润率「50%出头」目标能否兑现存疑（Gimme Credit：仍有待观察）"
+  ],
+  "key_quotes": [
+    {
+      "speaker": "Chris Kempczinski（CEO）",
+      "quote": "我们尚未看到GLP-1药物对我们的业务产生显著影响。（We don't yet see evidence that GLP-1 drugs have a significant impact on our business.）",
+      "context": "2025年Q4业绩会",
+      "date": "2026-02",
+      "source": "Ámbito等转述"
+    },
+    {
+      "speaker": "Chris Kempczinski（CEO）",
+      "quote": "人们开始用GLP-1后依然会想吃我们的食物，但他们买什么、买多大份量会改变。",
+      "context": "2025年Q4业绩会",
+      "date": "2026-02",
+      "source": "二手转述"
+    },
+    {
+      "speaker": "Chris Kempczinski（CEO）",
+      "quote": "（高油价）将不成比例地冲击低收入消费者。",
+      "context": "2026年Q1业绩会，美国汽油均价4.56美元",
+      "date": "2026-05-07",
+      "source": "The Daily Upside"
+    },
+    {
+      "speaker": "Chris Kempczinski（CEO）",
+      "quote": "要么我把它修好，要么我们去找能把餐厅经营得更好的加盟商。",
+      "context": "谈美国自营餐厅利润（Q1同比-25%至5,900万美元）",
+      "date": "2026-05",
+      "source": "The Daily Upside"
+    },
+    {
+      "speaker": "Chris Kempczinski（CEO）",
+      "quote": "预计在通胀维持高位期间，我们全资市场的行业客流将保持持平。",
+      "context": "2026年投资者日",
+      "date": "2026-09-23",
+      "source": "TheCryptoBasic转述"
+    },
+    {
+      "speaker": "Ian Borden（CFO）",
+      "quote": "对整体Restaurant > NEXT投资，预计约五到六年回收。",
+      "context": "2026年投资者日",
+      "date": "2026-09-23",
+      "source": "TheCryptoBasic转述"
+    },
+    {
+      "speaker": "Chris Kempczinski（CEO）",
+      "quote": "他们（加盟商）仍有大量借款能力。",
+      "context": "回应加盟商现金流压力",
+      "date": "2026",
+      "source": "L'Express Franchise转述"
+    },
+    {
+      "speaker": "麦当劳公司声明",
+      "quote": "该诉状充满不实之处，我们将积极抗辩……AI不为麦当劳餐厅设定菜单价格。",
+      "context": "回应定价工具反垄断拟集体诉讼",
+      "date": "2026-10",
+      "source": "Nation's Restaurant News"
+    },
+    {
+      "speaker": "McDonald's FY2025 10-K风险因素",
+      "quote": "我们的成功在很大程度上依赖于加盟商的财务成功与合作。",
+      "context": "风险因素：特许经营模式",
+      "date": "2026-02",
+      "source": "SEC 10-K"
+    },
+    {
+      "speaker": "Carol Levenson（Gimme Credit）",
+      "quote": "从债券投资者角度看，这比向股东返还更多现金是更可取的财务政策。",
+      "context": "评85亿美元加盟商支持计划",
+      "date": "2026-09",
+      "source": "Restaurant Dive"
+    }
+  ],
+  "data_confidence": "一手：季度可比销售、EPS、分部营业利润、债务结构、汇率影响、风险因素原文来自SEC 10-K与8-K（GAAP为主，调整后EPS已注明）。二手：投资者日目标（85亿美元、50%出头利润率、回收期）主要来自Reuters/BNN Bloomberg/Restaurant Dive/Quartr等转述，数字之间基本一致，但公司口径（约4年回收）与CFO口径（5—6年回收）分别对应加盟商与公司整体，已分别标注；NOA调查为加盟商团体自行调查、样本约100家、立场偏空；GLP-1影响为第三方估算（Advan、Circana、Redburn），方法不透明；股价52周高低点来自数据站，可能有日期偏差。2024年Q3美国可比销售与部分高管原话为二手转述，标为不确定。",
+  "as_of_date": "2026-11-10（最新财报为2026年Q3，2026年11月4日发布；股价截至2026年11月9日收盘）",
+  "sources": [
+    {
+      "title": "McDonald's Form 10-K FY2025（风险因素、分部营业利润、债务与汇率）",
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm",
+      "date": "2026-02",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's Q3 2026 业绩公告（8-K Exhibit 99.1）",
+      "url": "https://www.sec.gov/Archives/edgar/data/0000063908/000006390826000080/exhibit991-9302026.htm",
+      "date": "2026-11-04",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's Investor Day 2026 summary（Quartr）",
+      "url": "https://quartr.com/events/mcdonald-s-mcd-investor-day-2026_3g5IhUQF",
+      "date": "2026-09-23",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's Q3 2026 earnings summary（Quartr）",
+      "url": "https://quartr.com/events/mcdonald-s-corporation-mcd-q3-2026_3g5IhQhP",
+      "date": "2026-11-04",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's investor day roundup（Restaurant Dive）",
+      "url": "https://www.restaurantdive.com/news/mcdonalds-investor-day-roundup/831594/",
+      "date": "2026-09",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's outlines US$8.5 billion plan to support franchisees（BNN Bloomberg/Reuters）",
+      "url": "https://www.bnnbloomberg.ca/business/company-news/2026/09/23/mcdonalds-outlines-us85-billion-plan-to-support-franchisees/",
+      "date": "2026-09-23",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's stock fell 4.8% amid investor day; CFO puts NEXT payback at 5-6 years",
+      "url": "https://thecryptobasic.com/2026/09/24/mcdonalds-stock-fell-4-8-amid-investor-day-cfo-puts-next-company-payback-at-5-6-years/",
+      "date": "2026-09-24",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's stock lowest since 2022 after investor day（TIKR）",
+      "url": "https://www.tikr.com/de/blog/mcdonalds-stock-lowest-since-2022-investor-day-next-plan",
+      "date": "2026-09",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's franchisees flag falling profits as remodel costs loom（NOA调查）",
+      "url": "https://lexpress-franchise.com/en-us/news/mcdonalds-franchisees-flag-falling-profits-as-remodel-costs-loom/",
+      "date": "2026",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's $8.5 billion bet on protein and GLP-1（Fortune）",
+      "url": "https://fortune.com/2026/10/01/mcdonalds-8-5-billion-bet-fast-food-protein-glp-1/",
+      "date": "2026-10-01",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's Q4: consumer trade-in more than offsets consumer trade-out（Advan Research）",
+      "url": "https://advanresearch.com/insights/mcdonalds-q4-consumer-trade-in-more-than-offsets-consumer-trade-out",
+      "date": "2026-03-05",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's posts earnings beat but warns consumer sentiment is on edge（The Daily Upside）",
+      "url": "https://thedailyupside.com/industries/consumer/mcdonalds-posts-earnings-beat-but-warns-consumer-sentiment-is-on-edge",
+      "date": "2026-05-08",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's now faces a lawsuit over its pricing recommendations（NRN）",
+      "url": "https://www.nrn.com/quick-service/mcdonald-s-now-faces-a-lawsuit-over-its-pricing-recommendations",
+      "date": "2026-10-06",
+      "type": "二手"
+    },
+    {
+      "title": "UC Berkeley study on California $20 minimum wage（Fortune）",
+      "url": "https://fortune.com/2026/04/15/uc-berkeley-study-california-20-dollar-minimum-wage-food-prices-employment/",
+      "date": "2026-04-15",
+      "type": "二手"
+    },
+    {
+      "title": "It's a new value standard: McDonald's makes another big change to its franchise relationship（Restaurant Business）",
+      "url": "https://www.restaurantbusinessonline.com/financing/its-new-value-standard-mcdonalds-makes-another-big-change-its-franchise-relationship",
+      "date": "2025",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's CEO says Gaza boycott campaign hurting MENA sales（The New Arab）",
+      "url": "https://www.newarab.com/news/mcdonalds-ceo-says-gaza-boycott-campaign-hurting-mena-sales",
+      "date": "2024",
+      "type": "二手"
+    },
+    {
+      "title": "Green Century proposal requests climate roadmap from McDonald's",
+      "url": "https://www.greencentury.com/green-century-proposal-requests-climate-roadmap-from-mcdonalds/",
+      "date": "2025",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's (MCD) statistics（StockAnalysis）",
+      "url": "https://stockanalysis.com/stocks/mcd/statistics/",
+      "date": "2026-11-10",
+      "type": "二手"
+    }
+  ],
+  "uncertain": [
+    "key_data_series",
+    "item_specific_extras",
+    "key_quotes"
+  ]
+}
