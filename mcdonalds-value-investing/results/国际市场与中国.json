@@ -5,7 +5,7 @@
     "中国：2017年1月麦当劳以约21亿美元把中国内地+香港业务80%卖给中信、中信资本、凯雷（中信集团+中信资本合计约52%，凯雷约28%，麦当劳留20%）；2023年11月麦当劳回购凯雷28%股份，持股升至48%（该业务估值约60亿美元）；2024年10月中信对其剩余19.23%间接持股以4.303亿美元出售给 Trustar Capital（原中信资本）旗下公司。结果是麦当劳持股48%、Trustar 系为控股方。",
     "中国门店：2023年公司宣布2028年达10,000家；2026年Q1末7,962家、Q3末（2026-09-30）8,395家；2026年计划新开1,000家以上；但2026 Q3 中国可比销售为负，使开店速度与单店产出之间的矛盾成为关注点。",
     "IDL 的授权经济学：IDL 授权商（含合资的中国、日本）向麦当劳支付“按销售额百分比”的特许权费，麦当劳不负担地产与资本开支；10-K 不披露费率。IDL 分部2025年加盟销售额352.9亿美元但分部营业利润（含公司成本）仅2.03亿美元，说明每1美元系统销售对应的总部收入比美国/IOM小得多，换来的是几乎零资本占用和快速扩张。",
-    "关键市场：日本（上市公司 McDonald's Holdings Company (Japan)，2025年合并销售额约2,701亿日元 [口径冲突，见不确定]，2026 Q3 日本领跑IDL可比销售增长）；法国（约1,530—1,589家餐厅，占多数为加盟 [口径不确定]）；法国属于IOM。2026年Q3 IOM 可比销售+1.4%，IDL +4.2%（中国为负），美国-0.2%。"
+    "关键市场（Q3 2026 8-K 原文）：IOM 多数市场可比销售为正，以德国、澳大利亚领先，法国拖累；IDL 所有地区可比为正，日本领先，中国为负。日本麦当劳控股（2702.T）FY2025（日本会计准则）合并销售额4,166亿日元（+2.7%）、营业利润532.6亿日元（+10.9%）；全店销售额+7.2%、既存店+5.7%。法国约1,530—1,589家（二手）。"
   ],
   "mechanism": "麦当劳国际业务是“三种不同的生意模型”：美国与IOM（英、法、德、加、澳、意、波、西等主要市场）是“自营+加盟+地产”的完整模型——公司拥有或长租土地与建筑，向加盟商收取租金（销售额的百分比）和特许权费，并保留一部分自营餐厅作为样板，所以利润厚、资本占用大，2025年IOM营业利润63.8亿美元，超过美国。IDL（日本、中国、巴西、中东等近百个国家和地区）则是“授权”模型：当地合作伙伴出钱出地、自己开店，麦当劳只收按销售额计提的特许权费，并提供品牌、菜单与运营体系，几乎不需要资本，但费率较低（具体费率未披露），而且还必须与合作方共同治理。中国是特例：2017年麦当劳把控股权卖给本土国资+私募，换回现金和“更低风险的授权使用费”，并保留20%股权（2023年提高到48%）以分享增长；公司通过 IDL 分部的“权益法收益”确认中国业务的股份收益，所以中国在利润表上主要通过“特许权费+权益收益”体现，而不是收入线。这样做的因果链条是：国际增长→更多门店→更多按销售额计费的特许权费→无需新增资本→自由现金流转化率提升，但代价是对当地运营的控制力与单店经济的“话语权”下降（中国可比销售转负时，总部只能通过合资董事会和营销协同施加影响）。",
   "metaphor": "IDL 像“把品牌授权给各地的‘连锁学校’”：总部出校名和课程（品牌+菜单+运营体系），当地合作伙伴出校舍和老师，总部按学费抽成，不出一分钱盖楼；中国则像“把一所大分校卖给当地股东，自己留一部分股份并回购”。备选比喻：美国+IOM 是“自己拥有土地和楼盘的房东”，IDL 是“只收品牌使用费的特许经销商”。贴切之处在于资本占用；不贴切之处在于授权方对各分校的管理控制力弱得多。",
@@ -15,9 +15,42 @@
       "unit": "百万美元",
       "basis": "GAAP，FY2025 10-K",
       "data": [
-        {"period": "2023 美国", "value": 5694}, {"period": "2024 美国", "value": 5733}, {"period": "2025 美国", "value": 5808},
-        {"period": "2023 IOM", "value": 5831}, {"period": "2024 IOM", "value": 5946}, {"period": "2025 IOM", "value": 6382},
-        {"period": "2023 IDL与公司", "value": 121}, {"period": "2024 IDL与公司", "value": 33}, {"period": "2025 IDL与公司", "value": 203}
+        {
+          "period": "2023 美国",
+          "value": 5694
+        },
+        {
+          "period": "2024 美国",
+          "value": 5733
+        },
+        {
+          "period": "2025 美国",
+          "value": 5808
+        },
+        {
+          "period": "2023 IOM",
+          "value": 5831
+        },
+        {
+          "period": "2024 IOM",
+          "value": 5946
+        },
+        {
+          "period": "2025 IOM",
+          "value": 6382
+        },
+        {
+          "period": "2023 IDL与公司",
+          "value": 121
+        },
+        {
+          "period": "2024 IDL与公司",
+          "value": 33
+        },
+        {
+          "period": "2025 IDL与公司",
+          "value": 203
+        }
       ],
       "chart_suggestion": "分组直方",
       "source": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
@@ -27,9 +60,42 @@
       "unit": "百万美元",
       "basis": "GAAP，10-K",
       "data": [
-        {"period": "2023 美国", "value": 49914}, {"period": "2024 美国", "value": 50272}, {"period": "2025 美国", "value": 51946},
-        {"period": "2023 IOM", "value": 38264}, {"period": "2024 IOM", "value": 39132}, {"period": "2025 IOM", "value": 42440},
-        {"period": "2023 IDL", "value": 31573}, {"period": "2024 IDL", "value": 31529}, {"period": "2025 IDL", "value": 35289}
+        {
+          "period": "2023 美国",
+          "value": 49914
+        },
+        {
+          "period": "2024 美国",
+          "value": 50272
+        },
+        {
+          "period": "2025 美国",
+          "value": 51946
+        },
+        {
+          "period": "2023 IOM",
+          "value": 38264
+        },
+        {
+          "period": "2024 IOM",
+          "value": 39132
+        },
+        {
+          "period": "2025 IOM",
+          "value": 42440
+        },
+        {
+          "period": "2023 IDL",
+          "value": 31573
+        },
+        {
+          "period": "2024 IDL",
+          "value": 31529
+        },
+        {
+          "period": "2025 IDL",
+          "value": 35289
+        }
       ],
       "chart_suggestion": "堆叠直方",
       "source": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
@@ -39,9 +105,42 @@
       "unit": "家",
       "basis": "10-K 年末数",
       "data": [
-        {"period": "2023 美国", "value": 13457}, {"period": "2024 美国", "value": 13557}, {"period": "2025 美国", "value": 13706},
-        {"period": "2023 IOM", "value": 10263}, {"period": "2024 IOM", "value": 10512}, {"period": "2025 IOM", "value": 10845},
-        {"period": "2023 IDL与公司", "value": 18102}, {"period": "2024 IDL与公司", "value": 19408}, {"period": "2025 IDL与公司", "value": 20805}
+        {
+          "period": "2023 美国",
+          "value": 13457
+        },
+        {
+          "period": "2024 美国",
+          "value": 13557
+        },
+        {
+          "period": "2025 美国",
+          "value": 13706
+        },
+        {
+          "period": "2023 IOM",
+          "value": 10263
+        },
+        {
+          "period": "2024 IOM",
+          "value": 10512
+        },
+        {
+          "period": "2025 IOM",
+          "value": 10845
+        },
+        {
+          "period": "2023 IDL与公司",
+          "value": 18102
+        },
+        {
+          "period": "2024 IDL与公司",
+          "value": 19408
+        },
+        {
+          "period": "2025 IDL与公司",
+          "value": 20805
+        }
       ],
       "chart_suggestion": "堆叠直方",
       "source": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
@@ -51,10 +150,22 @@
       "unit": "家",
       "basis": "公司/二手转述，口径含香港与否未统一",
       "data": [
-        {"period": "2017（出售时）约", "value": 2640},
-        {"period": "2026 Q1末", "value": 7962},
-        {"period": "2026 Q3末(9/30)", "value": 8395},
-        {"period": "2028 目标", "value": 10000}
+        {
+          "period": "2017（出售时）约",
+          "value": 2640
+        },
+        {
+          "period": "2026 Q1末",
+          "value": 7962
+        },
+        {
+          "period": "2026 Q3末(9/30)",
+          "value": 8395
+        },
+        {
+          "period": "2028 目标",
+          "value": 10000
+        }
       ],
       "chart_suggestion": "折线",
       "source": "https://sec-api.io/insights/mcdonald-s-mcd-q3-2026-earnings-sec-filing-analysis-us-guest-counts-value-reset-and-the-2028-unit-target"
@@ -64,7 +175,22 @@
       "unit": "%",
       "basis": "公司披露",
       "data": [
-        {"period": "美国", "value": 2.1}, {"period": "IOM", "value": 3.2}, {"period": "IDL", "value": 4.6}, {"period": "全球", "value": 3.1}
+        {
+          "period": "美国",
+          "value": 2.1
+        },
+        {
+          "period": "IOM",
+          "value": 3.2
+        },
+        {
+          "period": "IDL",
+          "value": 4.6
+        },
+        {
+          "period": "全球",
+          "value": 3.1
+        }
       ],
       "chart_suggestion": "直方",
       "source": "https://corporate.mcdonalds.com/corpmcd/our-stories/article/Q4-full-year-2025-results.html"
@@ -72,26 +198,57 @@
     {
       "series": "2026 Q3 可比销售",
       "unit": "%",
-      "basis": "公司披露（sec-api转述）",
+      "basis": "公司披露，8-K Ex.99.1 原文核对：Q3 2025 对比为 美国+2.4%、IOM+4.3%、IDL+4.7%、全球+3.6%",
       "data": [
-        {"period": "美国", "value": -0.2}, {"period": "IOM", "value": 1.4}, {"period": "IDL（中国为负）", "value": 4.2}, {"period": "全球", "value": 1.5}
+        {
+          "period": "美国",
+          "value": -0.2
+        },
+        {
+          "period": "IOM",
+          "value": 1.4
+        },
+        {
+          "period": "IDL（中国为负）",
+          "value": 4.2
+        },
+        {
+          "period": "全球",
+          "value": 1.5
+        }
       ],
       "chart_suggestion": "直方",
-      "source": "https://sec-api.io/insights/mcdonald-s-mcd-q3-2026-earnings-sec-filing-analysis-us-guest-counts-value-reset-and-the-2028-unit-target"
+      "source": "https://www.sec.gov/Archives/edgar/data/0000063908/000006390826000080/exhibit991-9302026.htm"
     }
   ],
   "item_specific_extras": {
     "china_ownership_timeline": [
-      {"date": "2017-01", "event": "麦当劳以约21亿美元出售中国内地与香港业务80%权益给中信、中信资本、凯雷；中信+中信资本约52%、凯雷约28%、麦当劳留20%；金拱门（Golden Arches）为新公司品牌；并获20年主特许权", "note": "各来源对中信/中信资本的拆分略有差异 [不确定]"},
-      {"date": "2023-11", "event": "麦当劳收购凯雷28%，持股由20%升至48%，隐含估值约60亿美元；中信财团仍持52%"},
-      {"date": "2024-10", "event": "中信有限公司同意将所持 Fast Food Holdings 的19.23%以4.303亿美元出售给 Trustar Capital 旗下公司，中信退出；Fast Food Holdings 持有 Grand Foods Holdings 的52%", "note": "交割状态未在检索中确认 [不确定]"}
+      {
+        "date": "2017-01",
+        "event": "麦当劳以约21亿美元出售中国内地与香港业务80%权益给中信、中信资本、凯雷；中信+中信资本约52%、凯雷约28%、麦当劳留20%；金拱门（Golden Arches）为新公司品牌；并获20年主特许权",
+        "note": "各来源对中信/中信资本的拆分略有差异 [不确定]"
+      },
+      {
+        "date": "2023-11",
+        "event": "麦当劳收购凯雷28%，持股由20%升至48%，隐含估值约60亿美元；中信财团仍持52%"
+      },
+      {
+        "date": "2024-10",
+        "event": "中信有限公司同意将所持 Fast Food Holdings 的19.23%以4.303亿美元出售给 Trustar Capital 旗下公司，中信退出；Fast Food Holdings 持有 Grand Foods Holdings 的52%",
+        "note": "2024-10-21 公告称交割需满足先决条件，并含约7,400万美元股东贷款转让；检索未找到任何交割完成的报道 [不确定]；Yicai另称Trustar将持FFHL约62%，其余38%为CCP Fast Food Holdings，与“中信财团合计52%（Grand Foods层面）”不同层级"
+      }
     ],
-    "segment_profit_share_2025": {"US": "46.9%", "IOM": "51.5%", "IDL_and_corporate": "1.6%（含总部公司成本，不代表IDL单独利润）"},
+    "segment_profit_share_2025": {
+      "US": "46.9%",
+      "IOM": "51.5%",
+      "IDL_and_corporate": "1.6%（含总部公司成本，不代表IDL单独利润）"
+    },
     "idl_economics": "按销售额百分比收特许权费（费率未披露）；资本占用极低；日本、中国属联营/关联安排（10-K称联营安排主要用于中国和日本）；IDL 占2025年总收入约9.0%（sec-api）",
     "key_markets": {
       "IOM_major_markets": "10-K常见表述为澳大利亚、加拿大、法国、德国、意大利、波兰、西班牙、英国等 [本次未在10-K摘录中复核]",
       "france": "约1,530—1,589家（2026年5月/10月二手来源），超过80%为加盟 [不确定]",
-      "japan": "上市公司 McDonald's Holdings Company (Japan)；2025年合计销售额约2,701亿日元 vs 2024年约2,735亿日元（MarketScreener）与japanir.jp“总门店销售额+7.2%”存在口径冲突；2026 Q3 日本领跑 IDL 可比增长；麦当劳对其持股约三分之一 [本次未复核，不确定]"
+      "japan": "McDonald's Holdings Company (Japan) FY2025（日本会计准则，二手转述）：合并销售额4,166.02亿日元（+2.7%），营业利润532.57亿日元（+10.9%）；全店销售额+7.2%，既存店+5.7%。此前看到的“2,701亿日元 vs 2,735亿日元”应为Reuters表中另一口径（可能为某单一科目/母体口径），与4,166亿日元的合并销售额不可调和，已弃用。全年系统销售额一手值未找到（仅有全年预测8,800亿日元、前9个月6,605亿日元）。麦当劳公司持股比例（约35%）未经一手核实 [不确定]",
+      "q3_2026_8k_commentary": "IOM：德国、澳大利亚领先，法国拖累；IDL：日本领先，中国为负；美国：客流为负、客单价为正部分抵消；8-K未提及英国，未披露分部门店数与分部营业利润"
     }
   },
   "value_investing_implications": "第一，多元化与长期确定性：门店分布在100多个国家，美国之外贡献约三分之二营业利润，IOM 已超过美国，分散了单一消费环境风险；但这些利润主要来自欧洲高成本市场，面临人工与牛肉通胀。第二，IDL 是“轻资产增长引擎”：2025年贡献约74%的净增门店，几乎无需总部资本，对自由现金流与ROIC有利，但分部利润极薄（2.03亿美元），所以对每股收益的短期拉动有限，更像“期权”而非主要利润来源。第三，中国是“被动持股的增长期权”：2017年出售降低了风险和资本占用，2023年回购使公司在中国增长中拿到更多权益收益，但2026年中国可比销售转负、开店目标（2028年10,000家）与单店产出之间存在张力，且控股方为 Trustar，公司仅有48%的非控制地位，信息披露与治理弱于自营。第四，定价权：IDL 授权费以销售额百分比计费，对通胀有名义保护，但低费率与合作伙伴谈判力使其议价空间弱于美国。第五，汇率：约三分之二利润为非美元，美元走强会稀释报告利润（2025年系统销售额报告增长7%、固定汇率5%的差别反映了汇率顺风）。总体：国际业务提高了“长期复利的跑道”，但不改变利润主要来自美国+IOM 地产与加盟收入的事实。",
@@ -101,19 +258,89 @@
     "2023年11月交易公告（麦当劳官网文章标题）：“McDonald's to Acquire Carlyle's Stake in McDonald's China”，交易后中信财团持52%，麦当劳持48%。",
     "10-K FY2025：IDL 授权商支付“a royalty based on a percent of sales”（按销售额百分比的特许权费），联营安排主要用于中国和日本。"
   ],
-  "data_confidence": "一手：FY2025 10-K（分部收入、营业利润、门店数、加盟销售额）、麦当劳官网关于2023年凯雷交易的文章；二手：中信出售剩余股份（路透社经 NST、DealStreetAsia 转述）、中国门店数（sec-api 转述Q3 2026 8-K及中文媒体）、法国与日本数据（Statista、Fooderise、MarketScreener、japanir.jp）。冲突处理：中信/中信资本持股拆分各来源不同，仅采用“合计约52%”；日本销售额口径冲突已标[不确定]；中国门店数口径（是否含香港）未统一。未取得：IDL 特许权费率、中国分国别利润、日本麦当劳公司的确切持股比例。",
+  "data_confidence": "一手：FY2025 10-K（分部收入、营业利润、门店数、加盟销售额）、麦当劳官网关于2023年凯雷交易的文章；二手：中信出售剩余股份（路透社经 NST、DealStreetAsia 转述）、中国门店数（sec-api 转述Q3 2026 8-K及中文媒体）、法国与日本数据（Statista、Fooderise、MarketScreener、japanir.jp）。冲突处理：中信/中信资本持股拆分各来源不同，仅采用“合计约52%”；日本销售额口径冲突已标[不确定]；中国门店数口径（是否含香港）未统一。未取得：IDL 特许权费率、中国分国别利润、日本麦当劳公司的确切持股比例。 补充：Q3 2026 分部可比销售与定性描述已用 8-K Ex.99.1 原文核对；日本数据仍为二手（MarketScreener、japanir.jp），未取得决算短信原文；Trustar 交割状态无公开确认。",
   "as_of_date": "2026-11-10（财务至FY2025及2026 Q3；中国门店至2026-09-30）",
   "sources": [
-    {"title": "McDonald's Form 10-K FY2025", "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm", "date": "2026-02", "type": "一手"},
-    {"title": "McDonald's Reports Q4 and Full Year 2025 Results", "url": "https://corporate.mcdonalds.com/corpmcd/our-stories/article/Q4-full-year-2025-results.html", "date": "2026-02-11", "type": "一手"},
-    {"title": "McDonald's 8-K Q3 2026 Exhibit 99.1", "url": "https://www.sec.gov/Archives/edgar/data/0000063908/000006390826000080/exhibit991-9302026.htm", "date": "2026-11-04", "type": "一手"},
-    {"title": "sec-api: McDonald's Q3 2026 earnings analysis", "url": "https://sec-api.io/insights/mcdonald-s-mcd-q3-2026-earnings-sec-filing-analysis-us-guest-counts-value-reset-and-the-2028-unit-target", "date": "2026-11-04", "type": "二手"},
-    {"title": "McDonald's to Acquire Carlyle's Stake in McDonald's China", "url": "https://corporate.mcdonalds.com/corpmcd/our-stories/article/mcd-to-acquire-carlyles-stake-mcdonalds-china.html", "date": "2023-11", "type": "一手"},
-    {"title": "Fox Business: McDonald's sells China, HK business to CITIC, Carlyle for $2.1B", "url": "https://www.foxbusiness.com/markets/mcdonalds-sells-china-hk-business-to-citic-carlyle-for-2-1b", "date": "2017-01", "type": "二手"},
-    {"title": "DealStreetAsia: CITIC to sell stake in McDonald's China, HK operations for $430m", "url": "https://dealstreetasia.com/stories/citic-mcdonalds-china-416715", "date": "2024-10", "type": "二手"},
-    {"title": "NST: CITIC to sell stake in McDonald's China, HK for US$430.3 mln", "url": "https://www.nst.com.my/amp/business/corporate/2024/10/1123334/citic-sell-stake-mcdonalds-china-hk-operations-us4303-mln", "date": "2024-10", "type": "二手"},
-    {"title": "MarketScreener: McDonald's Holdings Company (Japan) FY2025 results", "url": "https://www.marketscreener.com/news/mcdonald-s-holdings-company-ltd-reports-earnings-results-for-the-full-year-ended-december-31-2025-ce7e5adfdd81f12d", "date": "2026", "type": "二手"},
-    {"title": "L'Express Franchise / Fooderise: McDonald's France restaurant counts", "url": "https://www.fooderise.com/en/blog/mcdonalds-france-histoire-1979-2024", "date": "2026-05", "type": "二手"}
+    {
+      "title": "McDonald's Form 10-K FY2025",
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm",
+      "date": "2026-02",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's Reports Q4 and Full Year 2025 Results",
+      "url": "https://corporate.mcdonalds.com/corpmcd/our-stories/article/Q4-full-year-2025-results.html",
+      "date": "2026-02-11",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's 8-K Q3 2026 Exhibit 99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/0000063908/000006390826000080/exhibit991-9302026.htm",
+      "date": "2026-11-04",
+      "type": "一手"
+    },
+    {
+      "title": "sec-api: McDonald's Q3 2026 earnings analysis",
+      "url": "https://sec-api.io/insights/mcdonald-s-mcd-q3-2026-earnings-sec-filing-analysis-us-guest-counts-value-reset-and-the-2028-unit-target",
+      "date": "2026-11-04",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's to Acquire Carlyle's Stake in McDonald's China",
+      "url": "https://corporate.mcdonalds.com/corpmcd/our-stories/article/mcd-to-acquire-carlyles-stake-mcdonalds-china.html",
+      "date": "2023-11",
+      "type": "一手"
+    },
+    {
+      "title": "Fox Business: McDonald's sells China, HK business to CITIC, Carlyle for $2.1B",
+      "url": "https://www.foxbusiness.com/markets/mcdonalds-sells-china-hk-business-to-citic-carlyle-for-2-1b",
+      "date": "2017-01",
+      "type": "二手"
+    },
+    {
+      "title": "DealStreetAsia: CITIC to sell stake in McDonald's China, HK operations for $430m",
+      "url": "https://dealstreetasia.com/stories/citic-mcdonalds-china-416715",
+      "date": "2024-10",
+      "type": "二手"
+    },
+    {
+      "title": "NST: CITIC to sell stake in McDonald's China, HK for US$430.3 mln",
+      "url": "https://www.nst.com.my/amp/business/corporate/2024/10/1123334/citic-sell-stake-mcdonalds-china-hk-operations-us4303-mln",
+      "date": "2024-10",
+      "type": "二手"
+    },
+    {
+      "title": "MarketScreener: McDonald's Holdings Company (Japan) FY2025 results",
+      "url": "https://www.marketscreener.com/news/mcdonald-s-holdings-company-ltd-reports-earnings-results-for-the-full-year-ended-december-31-2025-ce7e5adfdd81f12d",
+      "date": "2026",
+      "type": "二手"
+    },
+    {
+      "title": "L'Express Franchise / Fooderise: McDonald's France restaurant counts",
+      "url": "https://www.fooderise.com/en/blog/mcdonalds-france-histoire-1979-2024",
+      "date": "2026-05",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's 8-K Ex.99.1 原文核对（Q3 2026）",
+      "url": "https://www.sec.gov/Archives/edgar/data/0000063908/000006390826000080/exhibit991-9302026.htm",
+      "date": "2026-11-04",
+      "type": "一手"
+    },
+    {
+      "title": "CITIC Limited HKEX 公告（2024-10-21，出售FFHL 19.23%）",
+      "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2024/1021/2024102100405.pdf",
+      "date": "2024-10-21",
+      "type": "一手"
+    }
   ],
-  "uncertain": ["中信/中信资本持股拆分", "中国门店数口径（是否含香港）", "中信剩余股权出售是否已交割", "日本销售额口径与麦当劳持股比例", "法国门店数与加盟比例", "IDL特许权费率", "IOM主要市场清单"]
+  "uncertain": [
+    "中信/中信资本持股拆分",
+    "中国门店数口径（是否含香港）",
+    "Trustar收购中信19.23%是否已交割",
+    "日本系统销售额一手值与麦当劳持股比例",
+    "法国门店数与加盟比例",
+    "IDL特许权费率",
+    "IOM主要市场清单"
+  ]
 }
