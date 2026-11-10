@@ -1,41 +1,235 @@
 {
-"core_facts": [
-"三脚凳（公司/加盟商/供应商）是麦当劳长期强调的关系框架，由Kroc时代形成；'自己当老板但不孤单'（in business for yourself, not by yourself）为加盟商口号。[口号与三脚凳为公司公开叙事，本次未逐一核对一手出处]",
-"QSC&V（质量、服务、清洁、价值）是店面运营的核心标准；汉堡大学（Hamburger University，1961年创办）用于培训经理与加盟商。[创办年份取自既有知识，本次未检索核实]",
-"CEO转折：Cantalupo（2003年重返）与Skinner接任后推行Plan to Win（'更好而非更大'），[具体年份与内容本次检索未得到确认]；Easterbrook 2019年因与员工关系被董事会解雇，之后Kempczinski接任。",
-"Easterbrook事件：2020年8月McDonald's起诉其隐瞒更多关系；2021年底和解，追回约1.05亿美元（现金+股票）；2023年SEC罚款40万美元，禁止其五年内担任上市公司高管/董事。",
-"2023年1月Kempczinski发起'Accelerating the Organization'，压平层级、关闭美国区域办公室，4月初远程通知裁员（报道称'少于1000人'）；此前2018年曾削减约5亿美元公司开销。",
-"管理层表述：2025年Q3电话会上强调'affordability'（亲民价格），承认低收入客群流量连续两年大幅下滑，坦率度中上。"
-],
-"mechanism": "文化如何产生价值：三脚凳把利益捆绑——供应商靠长期订单投入专用产能，加盟商靠品牌与系统赚钱，公司收租金与特许权使用费。QSC&V与汉堡大学让数万家店维持一致体验，品牌一致性才支撑得起租金溢价。治理上，公司赚的是加盟商销售额的一个百分比，所以高层必须不断处理'公司利益 vs 加盟商利益'的张力（折扣、数字化投入、涨价）。CEO更替影响战略节奏：Cantalupo/Skinner强调聚焦核心餐厅，Easterbrook转向科技与外送，Kempczinski面对危机（疫情、E. coli 2024）与通胀下的价值感。",
-"metaphor": "'麦当劳治理像一支靠三条腿平衡的凳子——任何一条腿过长，凳子就会倾斜'；'董事会是房东，加盟商是租户兼合伙人，管理层要在双方间反复协调'。",
-"key_data_series": [
-{"series":"CEO更替关键节点","unit":"事件","basis":"新闻与公司披露","data":[{"period":"2003","value":"Cantalupo/Skinner Plan to Win [不确定]"},{"period":"2015-2019","value":"Easterbrook任CEO"},{"period":"2019","value":"Easterbrook被解雇，Kempczinski接任"},{"period":"2020-08","value":"诉讼追偿"},{"period":"2021","value":"和解，追回约1.05亿美元"},{"period":"2023-01","value":"Accelerating the Organization"},{"period":"2023","value":"SEC罚款40万美元+5年禁令"}],"chart_suggestion":"时间线","source":"Restaurant Dive、KTVZ/AP、Restaurant Business"},
-{"series":"Easterbrook事件金额","unit":"美元","basis":"新闻报道","data":[{"period":"追回","value":105000000},{"period":"SEC罚款","value":400000}],"chart_suggestion":"直方","source":"同上"}
-],
-"item_specific_extras": {
-"three_legged_stool":{"公司":"品牌、地产、系统","加盟商":"经营者，约95%餐厅为加盟","供应商":"长期合作、专用产能"},
-"ceo_eras":[
-{"ceo":"Cantalupo / Skinner","focus":"回归核心、Plan to Win，提高单店销售与回报 [具体细节不确定]"},
-{"ceo":"Easterbrook","focus":"数字化、全天早餐、转型；2019年被解雇"},
-{"ceo":"Kempczinski","focus":"Accelerating the Arches、重组、价值与亲民定价"}],
-"accelerating_the_organization":{"time":"2023-01 memo; 2023-04 layoffs","scale":"少于1000人（报道）","moves":["关闭美国区域办公室","改为全国集中模式","远程通知裁员"]},
-"easterbrook_event":{"firing":"2019年，因违反公司政策","separation":"当时以'无过错'解雇，保留部分股权薪酬","clawback":"2020年起诉，2021年和解，追回约1.05亿美元","sec":"2023年罚款40万美元，禁止五年担任高管/董事；公司因配合未被罚款"}
-},
-"value_investing_implications": "对价投：1) 三脚凳与加盟商关系是护城河的一部分，一旦关系恶化（例如在价格战中让加盟商承担过多折扣成本），品牌一致性受损；2) 治理上，Easterbrook事件显示董事会最终采取行动、追回薪酬，属于纠错机制有效的证据，但'无过错'解雇最初保留了价值，说明初期判断有瑕疵；3) 重组与裁员显示管理层愿意压缩公司层级，对资本配置和费用控制是正面；4) 长期来看管理层稳定性良好（Kempczinski任期已逾六年），对巴菲特式'可预测性'有利，但对价格亲民与低收入客群流失的坦率承认也提示增长压力。",
-"controversies": "1) Easterbrook初始处理是否过轻；2) 加盟商对数字化投入、折扣促销与成本压力的不满长期存在（本次未检索到具体数字）；3) 重组是否削弱对加盟商的支持；4) Cantalupo/Skinner及汉堡大学相关细节本次检索未覆盖，需另查。",
-"key_quotes": [
-"'difficult discussions and decisions ahead'——Kempczinski，2023年1月内部备忘录（据报道）",
-"Kempczinski在2025年Q3电话会：强调affordability，称低收入客群流量疲弱已持续两年（据二手摘要转述）"
-],
-"data_confidence": "Easterbrook事件与2023重组来自新闻报道（Restaurant Dive、AP转载、Restaurant Business），可信度中高；三脚凳、QSC&V、汉堡大学、Cantalupo/Skinner部分来自既有知识，本次检索未取得一手来源，已标[不确定]。",
-"as_of_date": "2026-11-10",
-"sources": [
-{"title":"SEC fines ex-McDonald's CEO Steve Easterbrook - Restaurant Dive","url":"https://www.restaurantdive.com/news/sec-fines-ex-mcdonalds-ceo-steve-easterbrook-false-statements-termination/639944/","date":"2023","type":"二手"},
-{"title":"McDonald's claws back $105 million from fired CEO Steve Easterbrook","url":"https://ktvz.com/?p=752886","date":"2021","type":"二手"},
-{"title":"Read the full memo: McDonald's outlines plans for layoffs","url":"https://news.yahoo.com/read-full-memo-mcdonalds-outlines-133349184.html","date":"2023-01","type":"二手"},
-{"title":"McDonald's gears up for corporate layoffs - Restaurant Dive","url":"https://www.restaurantdive.com/news/mcdonalds-gears-up-for-corporate-layoffs-mcdonalds-pauses-office-operat/646612/","date":"2023-04","type":"二手"},
-{"title":"McDonald's Q3 2025 earnings call transcript","url":"https://www.fool.com/earnings/call-transcripts/2025/11/05/mcdonalds-mcd-q3-2025-earnings-call-transcript","date":"2025-11-05","type":"二手"}
-],
-"uncertain": ["core_facts(三脚凳/汉堡大学/Cantalupo/Skinner细节)","key_data_series(2003节点)","item_specific_extras(ceo_eras)","controversies"]
+ "core_facts": [
+  "三脚凳：公司官网历史页称Kroc把模式比作三条腿的凳子，三条腿为加盟商、供应商、员工（官方页与韩国官网口径）；也有文献把'公司/所有者-经营者/供应商'当三条腿，各源标法不一。'In business for yourself, but not by yourself'为Kroc推广的加盟口号（官方历史页）。",
+  "汉堡大学：1961年在伊利诺伊州Elk Grove Village一家新店地下室创办，由Fred Turner主导；首届约14-15人（各源不一）；1983年在Oak Brook建成约4000万美元的校园。",
+  "QSC：质量、服务、清洁，Turner是其架构者（Korea Herald讣告等）；'&V'(价值)形态本次未找到出处，按公司口径视为后加[不确定]。",
+  "2003年Plan to Win（Cantalupo、Bell、Skinner等制定）：把重心从扩张转向改善现有餐厅的服务、食品与环境；2004年Cantalupo心脏病猝逝，继任者Bell因癌症辞任，Skinner于2004年底接任，至2012年。",
+  "Easterbrook 2015年3月接替Thompson，任内推出Turnaround Plan/Velocity Growth Plan（再加盟、总部重组等），2019年11月被解雇；2021年和解追回约1.05亿美元；2023年SEC罚款40万美元并禁任高管/董事5年。",
+  "Kempczinski 2019年接任，2023年1月推Accelerating the Organization（<1000人裁员）；2026年9月投资者日公布NEXT计划：约85亿美元加盟商支持（含租金减免），并警告行业客流'在通胀高企时将持平'。"
+ ],
+ "mechanism": "文化如何产生价值：三脚凳把利益捆绑——供应商靠长期订单投入专用产能，加盟商靠品牌与系统赚钱，公司收租金与特许权使用费。QSC&V与汉堡大学让数万家店维持一致体验，品牌一致性才支撑得起租金溢价。治理上，公司赚的是加盟商销售额的一个百分比，所以高层必须不断处理'公司利益 vs 加盟商利益'的张力（折扣、数字化投入、涨价）。CEO更替影响战略节奏：Cantalupo/Skinner强调聚焦核心餐厅，Easterbrook转向科技与外送，Kempczinski面对危机（疫情、E. coli 2024）与通胀下的价值感。",
+ "metaphor": "'麦当劳治理像一支靠三条腿平衡的凳子——任何一条腿过长，凳子就会倾斜'；'董事会是房东，加盟商是租户兼合伙人，管理层要在双方间反复协调'。",
+ "key_data_series": [
+  {
+   "series": "CEO更替关键节点",
+   "unit": "事件",
+   "basis": "新闻与公司披露",
+   "data": [
+    {
+     "period": "2003",
+     "value": "Cantalupo/Skinner Plan to Win [不确定]"
+    },
+    {
+     "period": "2015-2019",
+     "value": "Easterbrook任CEO"
+    },
+    {
+     "period": "2019",
+     "value": "Easterbrook被解雇，Kempczinski接任"
+    },
+    {
+     "period": "2020-08",
+     "value": "诉讼追偿"
+    },
+    {
+     "period": "2021",
+     "value": "和解，追回约1.05亿美元"
+    },
+    {
+     "period": "2023-01",
+     "value": "Accelerating the Organization"
+    },
+    {
+     "period": "2023",
+     "value": "SEC罚款40万美元+5年禁令"
+    }
+   ],
+   "chart_suggestion": "时间线",
+   "source": "Restaurant Dive、KTVZ/AP、Restaurant Business"
+  },
+  {
+   "series": "Easterbrook事件金额",
+   "unit": "美元",
+   "basis": "新闻报道",
+   "data": [
+    {
+     "period": "追回",
+     "value": 105000000
+    },
+    {
+     "period": "SEC罚款",
+     "value": 400000
+    }
+   ],
+   "chart_suggestion": "直方",
+   "source": "同上"
+  }
+ ],
+ "item_specific_extras": {
+  "three_legged_stool": {
+   "说法": "官方历史页：加盟商、供应商、员工；另一些案例研究：公司/加盟商/供应商",
+   "口号": "In business for yourself, but not by yourself（Kroc）",
+   "供应商": "许多供应商始于与Kroc的握手协议"
+  },
+  "ceo_eras": [
+   {
+    "ceo": "Cantalupo / Skinner",
+    "focus": "回归核心、Plan to Win，提高单店销售与回报 [具体细节不确定]"
+   },
+   {
+    "ceo": "Easterbrook",
+    "focus": "数字化、全天早餐、转型；2019年被解雇"
+   },
+   {
+    "ceo": "Kempczinski",
+    "focus": "Accelerating the Arches、重组、价值与亲民定价"
+   }
+  ],
+  "accelerating_the_organization": {
+   "time": "2023-01 memo; 2023-04 layoffs",
+   "scale": "少于1000人（报道）",
+   "moves": [
+    "关闭美国区域办公室",
+    "改为全国集中模式",
+    "远程通知裁员"
+   ]
+  },
+  "easterbrook_event": {
+   "firing": "2019年，因违反公司政策",
+   "separation": "当时以'无过错'解雇，保留部分股权薪酬",
+   "clawback": "2020年起诉，2021年和解，追回约1.05亿美元",
+   "sec": "2023年罚款40万美元，禁止五年担任高管/董事；公司因配合未被罚款"
+  },
+  "ceo_timeline": [
+   {
+    "year": "2002-2003",
+    "event": "危机期：销售下滑、过度扩张；2003年1月Cantalupo重返任CEO，2003年Plan to Win（官方发布日期各源不一，一说4月7日）。",
+    "source": "Kellogg Insight、ICMR案例等二手"
+   },
+   {
+    "year": 2004,
+    "event": "Cantalupo心脏病猝逝；Bell接任后因癌症辞任（2005年初去世，本次未查证）；Skinner 2004年11月接任CEO。",
+    "source": "二手"
+   },
+   {
+    "year": "2004-2012",
+    "event": "Skinner任CEO，继续执行Plan to Win，被称为大规模落地者。",
+    "source": "Supermarket News、Fortune"
+   },
+   {
+    "year": "2012-2015",
+    "event": "Thompson任CEO，本次检索只确认其2015年3月被Easterbrook接替，起始年份[不确定]。",
+    "source": "Cattle Site等"
+   },
+   {
+    "year": "2015-2019",
+    "event": "Easterbrook：2015年5月Turnaround Plan视频、Velocity Growth Plan、再加盟、精简总部层级；全天早餐与迁址芝加哥西环本次未取得来源[不确定]。2019年11月被解雇。",
+    "source": "Restaurant Business、QSR等"
+   },
+   {
+    "year": "2019至今",
+    "event": "Kempczinski：2023年重组；2024年E. coli事件；2026年9月投资者日NEXT计划。",
+    "source": "见sources"
+   }
+  ],
+  "compensation_alignment_2025_proxy": {
+   "来源": "2026年DEF 14A（2026-04-07申报）",
+   "CEO总薪酬": "2025年约2057万美元，2024年约1820万美元（二手转述，未对照SCT原文）[不确定]",
+   "年度奖金STIP指标": "营业利润增长、系统销售额、新开店、战略记分卡（价值观、员工敬业度、加盟策略）；上限200%；2025年支付系数76.4%（营业利润与系统销售低于目标）",
+   "长期激励": "50% PRSU+50%期权；PRSU：EPS增长75%+ROIC 25%，相对S&P 500的TSR修正±25点，三年期，上限200%；2026年初归属的PRSU支付系数82.2%（ROIC超目标，EPS增长与相对TSR未达标）",
+   "一致性评价": "薪酬绑定利润、EPS与资本回报，且业绩不达标时支付低于目标，对股东较一致；CEO持股要求具体数字未取得"
+  },
+  "candor_examples": [
+   "2025年Q3电话会：承认低收入客群流量连续约两年大幅下滑。",
+   "2026年9月投资者日：称持续成本通胀与弱客流是行业'新常态'，预计受控市场行业客流在通胀高企时持平；推出约85亿美元的NEXT加盟商支持（租金减免、翻新资金），相当于承认加盟商盈利压力，股价当日下跌约5-6.5%。",
+   "2026年Q3（11月4日发布）：美国可比销售-0.2%，披露'负的可比客流大体被客单价上涨抵消'，管理层称价值措施后季内有改善。"
+  ]
+ },
+ "value_investing_implications": "对价投：1) 三脚凳与加盟商关系是护城河的一部分，一旦关系恶化（例如在价格战中让加盟商承担过多折扣成本），品牌一致性受损；2) 治理上，Easterbrook事件显示董事会最终采取行动、追回薪酬，属于纠错机制有效的证据，但'无过错'解雇最初保留了价值，说明初期判断有瑕疵；3) 重组与裁员显示管理层愿意压缩公司层级，对资本配置和费用控制是正面；4) 长期来看管理层稳定性良好（Kempczinski任期已逾六年），对巴菲特式'可预测性'有利，但对价格亲民与低收入客群流失的坦率承认也提示增长压力。",
+ "controversies": "1) Easterbrook初始处理偏轻（'无过错'解雇保留部分股权）；2) 加盟商盈利压力：NEXT计划本身说明问题存在，但具体数字争议；3) 重组是否削弱对加盟商的支持；4) 三脚凳第三条腿各源标法不一；5) Placer.ai估算2026上半年美国客流-4.5%，公司称无法验证第三方数据。",
+ "key_quotes": [
+  "'In business for yourself, but not by yourself'——Kroc推广口号（麦当劳官方历史页）",
+  "'difficult discussions and decisions ahead'——Kempczinski，2023年1月内部备忘录（据报道）",
+  "'We expect industry traffic growth in our wholly-owned markets will be flat while inflation remains elevated'——Kempczinski，2026年9月投资者日（TIKR转述）"
+ ],
+ "data_confidence": "Easterbrook事件、2023重组、2026投资者日与Q3 2026结果来自新闻与公司发布的二手报道，中高可信；2026 DEF 14A激励指标和支付系数来自SEC原文节选（一手，但薪酬表未读到，CEO总薪酬为二手）；三脚凳/汉堡大学来自公司官方历史页的检索摘要及二手；Bell去世、Thompson起始年份、全天早餐/总部迁址未查到来源。",
+ "as_of_date": "2026-11-10",
+ "sources": [
+  {
+   "title": "SEC fines ex-McDonald's CEO Steve Easterbrook - Restaurant Dive",
+   "url": "https://www.restaurantdive.com/news/sec-fines-ex-mcdonalds-ceo-steve-easterbrook-false-statements-termination/639944/",
+   "date": "2023",
+   "type": "二手"
+  },
+  {
+   "title": "McDonald's claws back $105 million from fired CEO Steve Easterbrook",
+   "url": "https://ktvz.com/?p=752886",
+   "date": "2021",
+   "type": "二手"
+  },
+  {
+   "title": "Read the full memo: McDonald's outlines plans for layoffs",
+   "url": "https://news.yahoo.com/read-full-memo-mcdonalds-outlines-133349184.html",
+   "date": "2023-01",
+   "type": "二手"
+  },
+  {
+   "title": "McDonald's gears up for corporate layoffs - Restaurant Dive",
+   "url": "https://www.restaurantdive.com/news/mcdonalds-gears-up-for-corporate-layoffs-mcdonalds-pauses-office-operat/646612/",
+   "date": "2023-04",
+   "type": "二手"
+  },
+  {
+   "title": "McDonald's Q3 2025 earnings call transcript",
+   "url": "https://www.fool.com/earnings/call-transcripts/2025/11/05/mcdonalds-mcd-q3-2025-earnings-call-transcript",
+   "date": "2025-11-05",
+   "type": "二手"
+  },
+  {
+   "title": "McDonald's Our History (official)",
+   "url": "https://www.mcdonalds.com/us/en-us/about-us/our-history.doc",
+   "date": "",
+   "type": "一手"
+  },
+  {
+   "title": "McDonald's 2026 Proxy Statement DEF 14A",
+   "url": "https://www.sec.gov/Archives/edgar/data/63908/000119312526145548/mcd-20260407.htm",
+   "date": "2026-04-07",
+   "type": "一手"
+  },
+  {
+   "title": "McDonald's Reports Q3 2026 Results (Exhibit 99.1)",
+   "url": "https://www.sec.gov/Archives/edgar/data/0000063908/000006390826000080/exhibit991-9302026.htm",
+   "date": "2026-11-04",
+   "type": "一手"
+  },
+  {
+   "title": "McDonald's Bets $8.5B on NEXT - TIKR",
+   "url": "https://www.tikr.com/blog/mcdonalds-bets-8-5-billion-on-next-as-its-ceo-warns-traffic-will-stay-flat",
+   "date": "2026-09",
+   "type": "二手"
+  },
+  {
+   "title": "McDonald's Turnaround / Plan to Win - Stratrix",
+   "url": "https://www.stratrix.com/turnaround/mcdonald-s-plan-to-win-turnaround",
+   "date": "",
+   "type": "二手"
+  },
+  {
+   "title": "Steve Easterbrook ousted - Restaurant Business",
+   "url": "https://restaurantbusinessonline.com/leadership/steve-easterbrook-ousted-mcdonalds-ceo",
+   "date": "2019-11",
+   "type": "二手"
+  },
+  {
+   "title": "Hamburger University 50th anniversary - QSR Web",
+   "url": "https://www.qsrweb.com/news/mcdonalds-hamburger-university-marks-50-years/",
+   "date": "2011",
+   "type": "二手"
+  }
+ ],
+ "uncertain": [
+  "core_facts(QSC&V中的V、三脚凳第三条腿口径)",
+  "item_specific_extras(Thompson起始年、Bell去世、全天早餐与总部迁址、CEO总薪酬数字)"
+ ]
 }

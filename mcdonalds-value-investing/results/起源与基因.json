@@ -1,45 +1,158 @@
 {
-"core_facts": [
-"1948年麦当劳兄弟在加州圣贝纳迪诺推出Speedee Service System：精简菜单、流水线分工，主打15美分汉堡。",
-"1954年Ray Kroc取得特许经营权；1961年以约270万美元买断兄弟的权益（多源一致）。",
-"Harry Sonneborn（1956年前后加入，1959年任首任总裁兼CEO至1967年）设计了公司控制店铺地产、向加盟商收租的模式；'Franchise Realty Corp'为其载体（成立年份1956/1957各源不一）。",
-"1965年4月IPO，发行价22.50美元，首日收盘约30美元（多源一致，Motley Fool个别说法为异常值）。",
-"FY2025 10-K：加盟店收入165.48亿美元（租金104.42亿、特许权使用费60.18亿、初始费0.88亿），约占总收入约61%（总收入约269亿为二手来源，占比为本人推算）；约95%的餐厅为加盟（二手来源）。",
-"这一基因延续至今：公司持有大量土地/建筑，向加盟商收取最低租金（基于公司对该站点的投资）加营业额比例租金。"
-],
-"mechanism": "钱的来源：加盟商卖汉堡，麦当劳不靠卖汉堡赚钱，而是当房东兼品牌方——收租金（以公司对站点的投资为底，再加按销售额的百分比）和特许权使用费（按销售额）。持续的原因：选址、签长期租约、买下土地，这些资产随通胀升值，租金随加盟商销售增长；公司只需少量运营成本，所以利润率高、资本回报稳定。因果链：Speedee系统让产品标准化、可复制 → Kroc用加盟快速扩张 → 早期加盟费很低无法养活公司 → Sonneborn用地产模式把现金流锁在租金上，并用该控制权约束加盟商（不达标可不续租）→ 1965年上市用资本市场资金买地、开店 → 今天形成'加盟商经营、公司收租+品牌费'的轻运营、重地产结构。",
-"metaphor": "备选一：'麦当劳是披着汉堡外衣的房东+品牌收费站'。备选二：'一台把标准化汉堡复制到全球的复印机，复印出来的每家店都要向母公司交房租和品牌费'。第一个更贴切，因为它直接点出利润来源是租金而非食物。",
-"key_data_series": [
-{"series":"加盟店收入构成（FY2025）","unit":"百万美元","basis":"GAAP，来源10-K","data":[{"period":"租金","value":10442},{"period":"特许权使用费","value":6018},{"period":"初始费","value":88},{"period":"合计","value":16548}],"chart_suggestion":"堆叠/饼","source":"McDonald's FY2025 10-K（SEC）"},
-{"series":"加盟店收入合计","unit":"百万美元","basis":"GAAP","data":[{"period":"FY2024","value":15715},{"period":"FY2025","value":16548}],"chart_suggestion":"直方","source":"McDonald's FY2025 10-K"},
-{"series":"关键历史节点","unit":"美元","basis":"历史记载","data":[{"period":"1961买断兄弟","value":2700000},{"period":"1965 IPO发行价","value":22.5},{"period":"1965 IPO首日收盘（约）","value":30}],"chart_suggestion":"时间线","source":"FundingUniverse、Motley Fool等二手来源"}
-],
-"item_specific_extras": {
-"timeline":[
-{"year":1940,"event":"麦当劳兄弟在圣贝纳迪诺开业（餐车式汉堡店）"},
-{"year":1948,"event":"推出Speedee Service System"},
-{"year":1954,"event":"Kroc取得特许权并开始推广"},
-{"year":"1956-57","event":"Sonneborn加入并建立地产公司（时间各源不一）"},
-{"year":1961,"event":"Kroc约270万美元买断兄弟"},
-{"year":1965,"event":"上市，22.50美元"}],
-"genes_still_alive":["标准化与可复制（Speedee→今日全球流程）","地产控制权（租金占加盟收入约63%）","加盟商为主（约95%）","资本市场融资扩张"],
-"sonneborn_quote_status":"'我们不做汉堡生意，我们做地产生意'的措辞主要来自2016年电影《The Founder》的演绎；流传的真实版本为'我们严格说不是做食品生意，我们做房地产生意……我们卖15美分汉堡只是因为它们是最能产生收入的东西，让租户付租金'，未能对照一手来源核实。",
-"real_estate_ownership":"自有土地/建筑比例二手来源冲突（约45%土地/70%建筑 vs 55%/80%），[不确定]，需核对10-K Properties一节。"
-},
-"value_investing_implications": "这些基因是麦当劳护城河的根：一，地产层面提供实物资产与通胀抵御——土地和租金随物价上涨；二，加盟模式让公司少投入运营资本，把店面经营风险转嫁给加盟商，资本回报高、现金流可预测；三，租金与特许权使用费按销售额挂钩，公司不必自己承担成本通胀，定价权取决于品牌力；四，租约制度赋予公司对加盟商的话语权，有助于品牌一致性。对长期复利：不需大量再投资（新店主要由加盟商出资，公司出地和部分装修），能把大部分自由现金流用于分红与回购。风险点：依赖品牌持续吸引客流；租金占加盟商成本比例过高会压缩其盈利、反伤长期关系。",
-"controversies": "1) Sonneborn名言的真实性与措辞存疑；2) Kroc 与兄弟的纠纷（是否有口头约定的'握手协议'版权费，电影与史实有分歧，本次来源未能证实持续版税）；3) 地产模式是否让公司对加盟商过度强势；4) 创始人叙事中 Kroc 被称为'创始人'是否妥当（兄弟才是原创者）。",
-"key_quotes": [
-"'We are not technically in the food business. We are in the real estate business.'——Harry Sonneborn（据流传转述，来源为二手，日期不详）[不确定]",
-"'我们不做汉堡生意，我们做地产生意'——电影《The Founder》(2016)台词，非经证实的原话"
-],
-"data_confidence": "加盟收入数据为10-K一手（FY2025）；IPO价格、1961买断金额来自多个二手来源，基本一致；Sonneborn的入职年份与地产公司设立时间、自有地产比例、总收入占比均存在冲突或为推算，已标注。本次未直接读取10-K全文，数字取自检索摘要。",
-"as_of_date": "2026-11-10（财务数据截至FY2025）",
-"sources": [
-{"title":"McDonald's Form 10-K FY2025","url":"https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm","date":"2026","type":"一手"},
-{"title":"Harry J. Sonneborn - Wikipedia","url":"https://en.wikipedia.org/wiki/Harry_J._Sonneborn","date":"","type":"二手"},
-{"title":"McDonald's Corporation History - FundingUniverse","url":"https://www.fundinguniverse.com/company-histories/mcdonald-s-corporation-history/","date":"","type":"二手"},
-{"title":"How McDonald's Built its Burger Empire - Motley Fool","url":"https://www.fool.com/investing/general/2013/04/15/how-mcdonalds-built-its-burger-empire.aspx","date":"2013-04-15","type":"二手"},
-{"title":"The Franchise Business Model - thinkinsights","url":"https://thinkinsights.net/strategy/franchise-business-model","date":"","type":"二手"}
-],
-"uncertain": ["key_quotes","item_specific_extras(自有地产比例、Sonneborn时间点)","key_data_series(总收入占比为推算)"]
+ "core_facts": [
+  "1948年麦当劳兄弟在加州圣贝纳迪诺推出Speedee Service System：精简菜单、流水线分工，主打15美分汉堡。",
+  "1954年Ray Kroc取得特许经营权；1961年以约270万美元买断兄弟的权益（多源一致）。",
+  "Harry Sonneborn（1956年前后加入，1959年任首任总裁兼CEO至1967年）设计了公司控制店铺地产、向加盟商收租的模式；'Franchise Realty Corp'为其载体（成立年份1956/1957各源不一）。",
+  "1965年4月IPO，发行价22.50美元，首日收盘约30美元（多源一致，Motley Fool个别说法为异常值）。",
+  "FY2025 10-K：加盟店收入165.48亿美元（租金104.42亿、特许权使用费60.18亿、初始费0.88亿），约占总收入约61%（总收入约269亿为二手来源，占比为本人推算）；约95%的餐厅为加盟（二手来源）。",
+  "这一基因延续至今：公司持有大量土地/建筑，向加盟商收取最低租金（基于公司对该站点的投资）加营业额比例租金。"
+ ],
+ "mechanism": "钱的来源：加盟商卖汉堡，麦当劳不靠卖汉堡赚钱，而是当房东兼品牌方——收租金（以公司对站点的投资为底，再加按销售额的百分比）和特许权使用费（按销售额）。持续的原因：选址、签长期租约、买下土地，这些资产随通胀升值，租金随加盟商销售增长；公司只需少量运营成本，所以利润率高、资本回报稳定。因果链：Speedee系统让产品标准化、可复制 → Kroc用加盟快速扩张 → 早期加盟费很低无法养活公司 → Sonneborn用地产模式把现金流锁在租金上，并用该控制权约束加盟商（不达标可不续租）→ 1965年上市用资本市场资金买地、开店 → 今天形成'加盟商经营、公司收租+品牌费'的轻运营、重地产结构。",
+ "metaphor": "备选一：'麦当劳是披着汉堡外衣的房东+品牌收费站'。备选二：'一台把标准化汉堡复制到全球的复印机，复印出来的每家店都要向母公司交房租和品牌费'。第一个更贴切，因为它直接点出利润来源是租金而非食物。",
+ "key_data_series": [
+  {
+   "series": "加盟店收入构成（FY2025）",
+   "unit": "百万美元",
+   "basis": "GAAP，来源10-K",
+   "data": [
+    {
+     "period": "租金",
+     "value": 10442
+    },
+    {
+     "period": "特许权使用费",
+     "value": 6018
+    },
+    {
+     "period": "初始费",
+     "value": 88
+    },
+    {
+     "period": "合计",
+     "value": 16548
+    }
+   ],
+   "chart_suggestion": "堆叠/饼",
+   "source": "McDonald's FY2025 10-K（SEC）"
+  },
+  {
+   "series": "加盟店收入合计",
+   "unit": "百万美元",
+   "basis": "GAAP",
+   "data": [
+    {
+     "period": "FY2024",
+     "value": 15715
+    },
+    {
+     "period": "FY2025",
+     "value": 16548
+    }
+   ],
+   "chart_suggestion": "直方",
+   "source": "McDonald's FY2025 10-K"
+  },
+  {
+   "series": "关键历史节点",
+   "unit": "美元",
+   "basis": "历史记载",
+   "data": [
+    {
+     "period": "1961买断兄弟",
+     "value": 2700000
+    },
+    {
+     "period": "1965 IPO发行价",
+     "value": 22.5
+    },
+    {
+     "period": "1965 IPO首日收盘（约）",
+     "value": 30
+    }
+   ],
+   "chart_suggestion": "时间线",
+   "source": "FundingUniverse、Motley Fool等二手来源"
+  }
+ ],
+ "item_specific_extras": {
+  "timeline": [
+   {
+    "year": 1940,
+    "event": "麦当劳兄弟在圣贝纳迪诺开业（餐车式汉堡店）"
+   },
+   {
+    "year": 1948,
+    "event": "推出Speedee Service System"
+   },
+   {
+    "year": 1954,
+    "event": "Kroc取得特许权并开始推广"
+   },
+   {
+    "year": "1956-57",
+    "event": "Sonneborn加入并建立地产公司（时间各源不一）"
+   },
+   {
+    "year": 1961,
+    "event": "Kroc约270万美元买断兄弟"
+   },
+   {
+    "year": 1965,
+    "event": "上市，22.50美元"
+   }
+  ],
+  "genes_still_alive": [
+   "标准化与可复制（Speedee→今日全球流程）",
+   "地产控制权（租金占加盟收入约63%）",
+   "加盟商为主（约95%）",
+   "资本市场融资扩张"
+  ],
+  "sonneborn_quote_status": "'我们不做汉堡生意，我们做地产生意'的措辞主要来自2016年电影《The Founder》的演绎；流传的真实版本为'我们严格说不是做食品生意，我们做房地产生意……我们卖15美分汉堡只是因为它们是最能产生收入的东西，让租户付租金'，未能对照一手来源核实。",
+  "real_estate_ownership": "以FY2025 10-K为准：约56%土地、约80%建筑自有；FY2015约45%/70%，为不同年份而非冲突（取自房地产引擎.json的10-K核对）。"
+ },
+ "value_investing_implications": "这些基因是麦当劳护城河的根：一，地产层面提供实物资产与通胀抵御——土地和租金随物价上涨；二，加盟模式让公司少投入运营资本，把店面经营风险转嫁给加盟商，资本回报高、现金流可预测；三，租金与特许权使用费按销售额挂钩，公司不必自己承担成本通胀，定价权取决于品牌力；四，租约制度赋予公司对加盟商的话语权，有助于品牌一致性。对长期复利：不需大量再投资（新店主要由加盟商出资，公司出地和部分装修），能把大部分自由现金流用于分红与回购。风险点：依赖品牌持续吸引客流；租金占加盟商成本比例过高会压缩其盈利、反伤长期关系。",
+ "controversies": "1) Sonneborn名言的真实性与措辞存疑；2) Kroc 与兄弟的纠纷（是否有口头约定的'握手协议'版权费，电影与史实有分歧，本次来源未能证实持续版税）；3) 地产模式是否让公司对加盟商过度强势；4) 创始人叙事中 Kroc 被称为'创始人'是否妥当（兄弟才是原创者）。",
+ "key_quotes": [
+  "'We are not technically in the food business. We are in the real estate business.'——网络广泛归于Sonneborn，但未找到原始出处，可能转引自John Love《Behind the Arches》(1995)，未核实 [不确定]",
+  "'You're not in the burger business; you're in the real estate business'——2016年电影《The Founder》台词，属虚构，不可作史实引用"
+ ],
+ "data_confidence": "加盟收入数据为10-K一手（FY2025）；IPO价格、1961买断金额来自多个二手来源，基本一致；Sonneborn的入职年份与地产公司设立时间、总收入占比均存在冲突或为推算，已标注。本次未直接读取10-K全文，数字取自检索摘要。 自有土地/建筑比例已按FY2025 10-K（约56%/80%）与FY2015（45%/70%）区分年份；名言口径与房地产引擎.json一致。",
+ "as_of_date": "2026-11-10（财务数据截至FY2025）",
+ "sources": [
+  {
+   "title": "McDonald's Form 10-K FY2025",
+   "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm",
+   "date": "2026",
+   "type": "一手"
+  },
+  {
+   "title": "Harry J. Sonneborn - Wikipedia",
+   "url": "https://en.wikipedia.org/wiki/Harry_J._Sonneborn",
+   "date": "",
+   "type": "二手"
+  },
+  {
+   "title": "McDonald's Corporation History - FundingUniverse",
+   "url": "https://www.fundinguniverse.com/company-histories/mcdonald-s-corporation-history/",
+   "date": "",
+   "type": "二手"
+  },
+  {
+   "title": "How McDonald's Built its Burger Empire - Motley Fool",
+   "url": "https://www.fool.com/investing/general/2013/04/15/how-mcdonalds-built-its-burger-empire.aspx",
+   "date": "2013-04-15",
+   "type": "二手"
+  },
+  {
+   "title": "The Franchise Business Model - thinkinsights",
+   "url": "https://thinkinsights.net/strategy/franchise-business-model",
+   "date": "",
+   "type": "二手"
+  }
+ ],
+ "uncertain": [
+  "key_quotes(Sonneborn名言出处)",
+  "item_specific_extras(Sonneborn入职年份/地产公司成立年份)",
+  "key_data_series(总收入占比为推算)"
+ ]
 }
