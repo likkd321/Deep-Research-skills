@@ -1,0 +1,193 @@
+{
+  "core_facts": [
+    "可比销售走出「V形后再回落」：全球可比销售2025年Q1 -1.0% → Q2 +3.8% → Q3 +3.6% → Q4 +5.7%（全年+3.1%），2026年Q1 +3.8% → Q2 +1.3% → Q3 +1.5%（前三季+2.1%）",
+    "美国是波动核心：2025年Q1 -3.6%（大肠杆菌余波+闰日+低收入客流流失）→ Q4 +6.8%（量价齐升）→ 2026年Q2 +0.8%、Q3 -0.2%（客流为负、客单价为正，7—8月小幅负、9月转正），2026年前三季+1.4%",
+    "利润端远比销售端稳：调整后EPS 2025年Q1 2.67 → Q2 3.19 → Q3 3.22 → Q4 3.12（全年12.20，GAAP 11.95），2026年Q1 2.83 → Q2 3.38 → Q3 3.57（同比+11%，前三季9.78、+8%）；美国可比销售为负的季度，营业利润仍+7%",
+    "价值战三波：2025年1月7日McValue（$5套餐+「买一件加1美元再一件」）→ 2025年9月Extra Value Meals（组合折扣从约11%提到至少15%，公司分担约一半成本）→ 2026年4月下旬「3美元以下每日平价菜单」（EDAP），但仅约60%—65%门店执行推荐价且砍掉了数字优惠，管理层把Q2约三分之二的客流缺口归因于此",
+    "低收入客群持续流失：美国快餐业低收入客群客流连续约两年「接近两位数」下滑（2025年Q3：低收入接近两位数下降、高收入接近两位数增长，管理层称「消费者分化」）；2026年油价上涨进一步压制低收入客流，公司计划2027年初全国推出新的入门级价值方案（已在约1,900家店测试、另约4,000家提前跟进，合计超过美国系统40%）",
+    "2024年10月大肠杆菌事件（Quarter Pounder洋葱丝，104人患病、34人住院、1人死亡）使美国2024年Q4可比销售-1.4%（2020年Q2以来最差），公司投入1亿美元恢复；管理层称预计2025年Q2初完全恢复"
+  ],
+  "mechanism": "一、可比销售=客流×客单价。快餐的长期健康靠客流，客单价靠提价和产品组合。2022—2024年通胀期间，麦当劳美国加盟商累计大幅提价（叠加加州20美元时薪），客单价支撑了销售额，但「麦当劳变贵了」的印象让对价格最敏感的低收入家庭（年收入约4.5万美元以下）减少光顾。低收入客群是快餐高频客户的重要组成，他们一走，客流就承压。\n\n二、2024年Q4—2025年Q1的「双重打击」：2024年10月大肠杆菌事件使约五分之一美国门店暂停售卖Quarter Pounder，落基山地区客流骤降，Q4美国可比销售-1.4%（但客流本身略有增长、客单价下降）；2025年Q1又叠加去年闰日的高基数和消费者信心走弱，美国可比销售-3.6%，全球-1.0%。\n\n三、用「价值」买回客流：（1）2025年1月推出McValue平台（$5套餐延续，加上「买一件加1美元再一件」和App专属优惠），首周客流同比近+9%（Placer.ai），但Numerator数据显示购买者94%本就是老顾客，增量有限；（2）2025年夏季靠营销与新品（Minecraft联名、McCrispy鸡柳条、7月10日以2.99美元回归的Snack Wrap）拉动，Q2—Q3美国+2.5%/+2.4%，但主要靠客单价，第三方数据Q3美国到店量仍-3.5%；（3）2025年9月重推Extra Value Meals（$5猪肉蛋满分套餐、$8巨无霸套餐等，约占美国交易30%），把组合折扣从约11%提到至少15%，公司分担约一半成本——Q4美国可比销售+6.8%，客流和客单价双双为正，并取得与竞争对手「最大的客流差距」。\n\n四、2026年为什么又掉下来：（1）高基数（2025年4月Minecraft联名）；（2）为腾出预算推「3美元以下」菜单，砍掉了「买一加一美元」和大量App数字优惠——而高频忠诚客户对数字优惠「极度敏感」，结果老顾客来得少了；（3）加盟商执行不一，只有约60%—65%门店采用推荐价格，消费者认知不足；（4）宏观：2026年油价上涨（伊朗冲突）、食材纸品中个位数通胀，低收入客群再度承压，行业客流在多个大市场持平到负；（5）国际：法国抗议事件、中国消费疲弱拖累IOM与IDL。于是Q2美国+0.8%、Q3 -0.2%（客流为负、客单价为正），CEO称「我们没有战略问题，只是没执行到位」，并撤换美国区总裁（Skye Anderson接任Joe Erlinger）。\n\n五、为什么EPS还在涨：公司收入主要按系统销售额收取租金和特许费，2026年前三季系统销售额仍+6%（含新店贡献约2.5个百分点和汇率），加盟利润增长、再加盟出售收益增加（Q3其他经营收益1.39亿 vs 上年0.37亿）、股本减少（摊薄股数7.083亿 vs 7.159亿）、税率略降，使调整后EPS Q3 +11%。也就是说，美国客流的问题主要先压在加盟商身上，短期不太影响公司利润——但这正是投资者担心的「滞后风险」。\n\n六、接下来看什么：2027年初全国推出入门级价值方案、85亿美元NEXT伙伴支持落地、美国客流能否在2026年Q4—2027年转正，以及低收入客群份额是否企稳。",
+  "metaphor": "1. 麦当劳的价值菜单是「抽水泵」：价格太高时客流（水位）下降，就必须不断开泵（打折、补贴）把顾客抽回来；泵一停（2026年砍掉数字优惠），水位立刻回落——贴切地说明了价值战的持续性成本。\n2. 美国消费者是「K形分叉的两条腿」：高收入那条腿越走越快、低收入那条腿越走越慢，麦当劳站在中间，靠高收入顾客提客单价、靠价值菜单拉低收入客流，两头都要照顾。\n3. 公司报表是「减震器」：门店客流的颠簸先由加盟商吸收，公司的EPS像装了减震的车厢一样平稳上行——但减震器长期吃力也会坏。",
+  "key_data_series": [
+    {
+      "series": "分部可比销售增长（季度）",
+      "unit": "%",
+      "basis": "公司披露口径（固定汇率，可比餐厅）",
+      "data": [
+        {"period": "2024Q4", "value": "全球+0.4；美国-1.4；IOM+0.1；IDL+4.1"},
+        {"period": "2025Q1", "value": "全球-1.0；美国-3.6；IOM-1.0；IDL+3.5"},
+        {"period": "2025Q2", "value": "全球+3.8；美国+2.5；IOM+4.0；IDL+5.6"},
+        {"period": "2025Q3", "value": "全球+3.6；美国+2.4；IOM+4.3；IDL+4.7"},
+        {"period": "2025Q4", "value": "全球+5.7；美国+6.8；IOM+5.2；IDL+4.5"},
+        {"period": "2025全年", "value": "全球+3.1；美国+2.1；IOM+3.2；IDL+4.6"},
+        {"period": "2026Q1", "value": "全球+3.8；美国+3.9；IOM+3.9；IDL+3.4"},
+        {"period": "2026Q2", "value": "全球+1.3；美国+0.8；IOM+1.5；IDL+1.9"},
+        {"period": "2026Q3", "value": "全球+1.5；美国-0.2；IOM+1.4；IDL+4.2"},
+        {"period": "2026前三季", "value": "全球+2.1；美国+1.4；IOM+2.2；IDL+3.2"}
+      ],
+      "chart_suggestion": "折线",
+      "source": "麦当劳各季度业绩公告（8-K Exhibit 99.1）及10-Q Q3 2026"
+    },
+    {
+      "series": "摊薄EPS（季度）",
+      "unit": "美元/股",
+      "basis": "GAAP与「剔除费用」调整后口径（主要剔除Accelerating the Organization重组费用）",
+      "data": [
+        {"period": "2025Q1", "value": "GAAP 2.60；调整后2.67"},
+        {"period": "2025Q2", "value": "GAAP 3.14；调整后3.19"},
+        {"period": "2025Q3", "value": "GAAP 3.18；调整后3.22"},
+        {"period": "2025Q4", "value": "GAAP 3.03；调整后3.12"},
+        {"period": "2025全年", "value": "GAAP 11.95；调整后12.20"},
+        {"period": "2026Q1", "value": "GAAP 2.78；调整后2.83"},
+        {"period": "2026Q2", "value": "GAAP 3.32；调整后3.38"},
+        {"period": "2026Q3", "value": "GAAP 3.51；调整后3.57"},
+        {"period": "2026前三季", "value": "GAAP 9.61；调整后9.78（+8%）"}
+      ],
+      "chart_suggestion": "直方",
+      "source": "麦当劳业绩公告、10-Q"
+    },
+    {
+      "series": "总收入（季度）",
+      "unit": "百万美元",
+      "basis": "GAAP",
+      "data": [
+        {"period": "2025Q1", "value": "5956"},
+        {"period": "2025Q2", "value": "6843"},
+        {"period": "2025Q3", "value": "7078"},
+        {"period": "2025Q4", "value": "约7010"},
+        {"period": "2026Q1", "value": "6517"},
+        {"period": "2026Q2", "value": "7099"},
+        {"period": "2026Q3", "value": "7157"}
+      ],
+      "chart_suggestion": "直方",
+      "source": "业绩公告（2025Q1、2026Q1由半年数减Q2推算）"
+    },
+    {
+      "series": "美国可比销售驱动：客流 vs 客单价（定性）",
+      "unit": "方向",
+      "basis": "公司业绩公告措辞；第三方到店量为Placer.ai口径，与公司客流口径不同",
+      "data": [
+        {"period": "2024Q4", "value": "客流略增、客单价下降（大肠杆菌）"},
+        {"period": "2025Q1", "value": "客流下降，低收入客群接近两位数下滑；Placer.ai到店量-2.6%"},
+        {"period": "2025Q2", "value": "主要由客单价驱动"},
+        {"period": "2025Q3", "value": "主要由客单价驱动；Placer.ai到店量-3.5%（7月-1.8%、8月-4.4%、9月-4.4%）"},
+        {"period": "2025Q4", "value": "客流与客单价双正（营销促销拉动）；Placer.ai约+5.3%"},
+        {"period": "2026Q1", "value": "主要由客单价驱动；Placer.ai约+0.6%"},
+        {"period": "2026Q2", "value": "客单价（含产品组合）为正，客流为负"},
+        {"period": "2026Q3", "value": "客流为负，基本被客单价抵消；7—8月小幅负、9月转正"}
+      ],
+      "chart_suggestion": "折线",
+      "source": "业绩公告、Restaurant Dive、Placer.ai、Reuters"
+    },
+    {
+      "series": "价值战公司出资（美国）",
+      "unit": "百万美元",
+      "basis": "管理层业绩会口述",
+      "data": [
+        {"period": "2024Q4 大肠杆菌恢复", "value": "100（加盟商65+营销35）"},
+        {"period": "2025年9月 EVM共担", "value": "约15"},
+        {"period": "2025Q4 EVM共担", "value": "约75（另约40增量营销）"},
+        {"period": "2026Q1 EVM共担", "value": "低于约35的原预估"}
+      ],
+      "chart_suggestion": "直方",
+      "source": "Q3 2025业绩会、BNN Bloomberg、Restaurant Dive"
+    },
+    {
+      "series": "美国快餐低/高收入客群客流同比（行业口径，管理层引述）",
+      "unit": "%（方向性）",
+      "basis": "管理层口述的QSR行业数据，非精确数字",
+      "data": [
+        {"period": "2025Q1", "value": "低收入：接近两位数下降"},
+        {"period": "2025Q2", "value": "低收入：再次两位数下降"},
+        {"period": "2025Q3", "value": "低收入：接近两位数下降；高收入：接近两位数增长"},
+        {"period": "2025Q4", "value": "低收入：持续承压，12月麦当劳低收入份额提升；高收入：保持"},
+        {"period": "2026Q1", "value": "公司称达成「提升低收入客群份额」目标，但油价上涨预计继续压制"},
+        {"period": "2026Q2—Q3", "value": "未给量化数字[不确定]"}
+      ],
+      "chart_suggestion": "折线",
+      "source": "各季度业绩会、Trefis、24/7 Wall St."
+    }
+  ],
+  "item_specific_extras": {
+    "latest_quarter_snapshot": {
+      "季度": "2026年Q3（截至9月30日，2026年11月4日公布）",
+      "全球可比销售": "+1.5%",
+      "美国可比销售": "-0.2%（客流负、客单价正；7—8月小幅负、9月转正、10月基线客流趋势改善）",
+      "IOM可比销售": "+1.4%（德国、澳大利亚领涨，法国拖累）",
+      "IDL可比销售": "+4.2%（日本领涨，中国为负）",
+      "系统销售额": "+4%（固定汇率+4%）",
+      "总收入": "71.57亿美元，+1%（低于市场预期约1.2亿—1.3亿美元）；加盟收入44.87亿（+3%），自营销售额24.80亿（-3%，再加盟所致）",
+      "营业利润": "35.95亿美元，+7%（剔除费用+8%）",
+      "摊薄EPS": "GAAP 3.51美元（+10%）；调整后3.57美元（+11%，高于约3.38—3.40的一致预期）",
+      "重组费用": "5,600万美元（2026全年预计约2.25亿）",
+      "股价反应": "当日盘中约+4%至约280美元；此前9月24日曾跌至52周低点约234美元",
+      "全年指引更新": "资本开支约37亿美元（区间37亿—39亿下沿）；毛开店2,500家（原2,600）、净开店约2,100；SG&A约占系统销售额2.2%；食材纸品通胀中个位数并延续至2027年；5万家店目标推迟至2028年"
+    },
+    "可比销售拆解要点": [
+      "2025年Q1的-3.6%中约有闰日高基数影响（全球剔除闰日约持平），其余来自大肠杆菌余波与低收入客群流失",
+      "2025年Q4的+6.8%是近年最强，靠Extra Value Meals、大富翁、Grinch套餐等营销，客流与客单价双正",
+      "2026年Q2/Q3的美国疲软约三分之二被管理层归因于自身价值执行失误（EDAP推荐价采纳率仅约60%—65%、砍掉数字优惠和「买一加1美元」），其余为宏观与高基数",
+      "IOM从2025年Q4 +5.2%降至2026年Q3 +1.4%，主要受法国拖累；IDL靠日本维持+4.2%"
+    ],
+    "价值战时间线": [
+      "2024年6月：$5套餐（可口可乐补贴后获加盟商通过），首次在一年多来提升低收入客流",
+      "2024年10月22日：大肠杆菌事件；11月公司投入1亿美元恢复",
+      "2025年1月7日：McValue平台上线（$5套餐+「买一件加1美元」+App优惠+本地优惠）",
+      "2025年7月10日：Snack Wrap以2.99美元回归",
+      "2025年9月：Extra Value Meals重推，组合折扣至少15%，98%加盟商投票赞成，公司分担约一半成本至2026年Q1末",
+      "2026年4月下旬：McValue下推出「3美元以下每日平价菜单」（EDAP）及4美元早餐优惠，同时取消「买一加1美元」、削减数字优惠",
+      "2026年8月：承认执行失误、撤换美国区总裁；下半年营销转向Extra Value Meals与数字限时优惠",
+      "2026年Q3：$5猪肉蛋满分套餐、$8巨无霸套餐重推；入门级价值方案8周测试（约1,900家店），约4,000家提前跟进，计划2027年初全国推出"
+    ],
+    "大肠杆菌事件影响": {
+      "事件": "2024年10月，CDC将O157:H7大肠杆菌疫情关联至Quarter Pounder上的洋葱丝（供应商Taylor Farms）",
+      "规模": "至少104人患病、34人住院、1人死亡（科罗拉多），集中在科罗拉多、蒙大拿、内布拉斯加、新墨西哥",
+      "经营冲击": "约五分之一美国门店暂停售卖Quarter Pounder；事件前美国可比销售为中个位数增长，Q4转为-1.4%（预期约-0.6%），为2020年Q2以来最差",
+      "公司应对": "1亿美元（6,500万直补受影响最重的加盟商，3,500万营销）；管理层称影响集中在落基山地区、预计2025年Q2初完全恢复",
+      "后续": "2025年Q1美国-3.6%中有部分为事件余波，2025年Q2转正后未再被单独提及"
+    }
+  },
+  "value_investing_implications": "1. 护城河没有被击穿，但「价格护城河」在变窄：麦当劳的核心护城河是规模带来的低成本和全民可及的价格。2022—2024年的累计提价让它一度失去「最便宜、最可靠」的心智，被迫用补贴和折扣修复——这说明它的定价权受制于低收入核心客群的承受力，不是无限的。好消息是，每次加大价值投入（$5套餐、EVM）客流都能快速回升（2025年Q4美国+6.8%），证明顾客黏性仍在。\n2. 确定性：公司层面高度确定——美国可比销售为负的季度，EPS仍+11%，因为收入按系统销售额抽成，并有新店、再加盟收益、回购托底。但这种确定性部分建立在加盟商吸收压力之上，若美国客流持续为负，2027年后的租金减免（85亿美元伙伴支持）和价值投入会慢慢回流到公司报表。\n3. 再投资需求：价值战本质上是一笔持续的「护城河维护费」，以折扣、营销和补贴形式出现；入门级价值方案、NEXT改造都需要钱。对所有者盈余而言，应视为长期经营成本而非一次性。\n4. 定价权与通胀抵御：在食材纸品中个位数通胀、2026年油价冲击下，麦当劳选择不提价甚至降价换客流，短期牺牲加盟商利润率；这对长期是正确的——快餐的复利来自客流与频次，而非单次提价。投资者应把「美国客流」而非「可比销售」当作首要指标。\n5. 长期复利：系统销售额仍以中个位数增长（新店+约2.5个百分点），加上利润率提升和回购，EPS中高个位数增长的轨迹未被破坏；2026年股价一度跌至约234美元（年内-20%、预期市盈率约18倍），对长期投资者意味着「好公司遇到可修复问题」的价格窗口——前提是2027年价值方案能让美国客流转正、低收入份额企稳。\n6. 管理层质量：管理层公开承认执行失误、迅速撤换美国负责人、把问题归因于自身而非宏观，是坦诚的信号；但两年内价值策略多次调整（McValue→EVM→EDAP→入门级方案），也暴露出在加盟体系下执行统一价格的难度。",
+  "controversies": "1. 价值战是否可持续：多头认为价值是快餐基础设施，公司有能力用规模赢；空头（如NOA、部分卖方）认为折扣把成本转嫁给加盟商、八成以上加盟商称增量客流不足以弥补毛利损失，且「补贴一停客流就掉」。\n2. 客流口径冲突：第三方Placer.ai到店量（如2025年Q3 -3.5%）与公司「客流跑赢同行」的说法并存，口径不同（到店量≠交易笔数），难以直接比较。\n3. 低收入客群问题是周期还是结构：管理层把它归因于宏观（通胀、油价），但两年持续接近两位数下滑，也可能反映快餐相对于超市自制食品的性价比结构性下降，以及GLP-1减重药物等长期因素[不确定]。\n4. EPS质量：2026年EPS增长中包含再加盟出售收益、汇率与回购贡献，剔除后的「核心」增速低于报表数。\n5. 2026年Q4与2027年展望：CFO明确表示「没说Q4美国可比销售会更好」，市场对入门级价值方案效果分歧较大。",
+  "key_quotes": [
+    {"quote": "We don't have a strategy problem. We simply didn't execute at the level we needed to.（我们没有战略问题，只是没有执行到所需水平。）", "speaker": "CEO Chris Kempczinski", "source": "Q2 2026业绩会（24/7 Wall St.转引）", "date": "2026-08-04"},
+    {"quote": "We're not expecting things to change.（我们不预期（高通胀、行业客流持平的）环境会改变。）", "speaker": "CEO Chris Kempczinski", "source": "CNBC采访（24/7 Wall St.转引）", "date": "2026-09"},
+    {"quote": "McDonald's is not going to get beat on value and affordability.（麦当劳不会在价值和可负担性上被打败。）", "speaker": "CEO Chris Kempczinski", "source": "Q4 2025业绩会", "date": "2026-02-11"},
+    {"quote": "McDonald's value leadership is working.（麦当劳的价值领导力正在奏效。）", "speaker": "CEO Chris Kempczinski", "source": "Q4 2025业绩公告", "date": "2026-02-11"},
+    {"quote": "we continue to see a bifurcated consumer base（我们继续看到分化的消费群体）", "speaker": "CEO Chris Kempczinski", "source": "Q3 2025业绩会", "date": "2025-11-05"},
+    {"quote": "we've learned the lesson over the last 18 months that you need to proceed very cautiously with that（过去18个月我们学到的教训是，（提价）必须非常谨慎）", "speaker": "CEO Chris Kempczinski", "source": "Q3 2026业绩会", "date": "2026-11-04"},
+    {"quote": "That frequent customer is super sensitive to digital offers.（高频顾客对数字优惠极其敏感。）", "speaker": "CEO Chris Kempczinski", "source": "Q3 2026业绩会", "date": "2026-11-04"},
+    {"quote": "I have 100% confidence that the U.S. will get that entry-level value（我百分之百相信美国会做好入门级价值）", "speaker": "CEO Chris Kempczinski", "source": "2026年投资者日", "date": "2026-09-23"},
+    {"quote": "the U.S. food safety issue is now largely behind us, and we expect to have fully recovered by the beginning of Q2（美国食品安全问题已基本过去，预计到Q2初完全恢复）", "speaker": "CEO Chris Kempczinski", "source": "Q4 2024业绩会", "date": "2025-02-10"}
+  ],
+  "data_confidence": "一手：各季度业绩公告（8-K Exhibit 99.1，Q4 2025、Q2 2026直接读取SEC原文）、10-Q Q3 2026（可比销售、EPS、收入、门店数直接读取）、Q3 2025/Q4 2025/Q3 2026业绩会实录、2026投资者日实录。2025年Q1、Q2与2026年Q1数据来自公司新闻稿转载（franchising.com、corporate.mcdonalds.com），与半年报交叉核对一致（如2026年Q1调整后EPS=6.21-3.38=2.83）。二手：Placer.ai到店量（第三方手机定位口径，与公司交易笔数口径不同）、低收入客群数据（管理层口述的行业数据，只有「接近两位数」等方向性描述，Q3 2025业绩会中CEO与CFO措辞不一致：接近两位数 vs 高个位数）、股价与估值（媒体报道）。冲突处理：Q3 2026一致预期EPS有3.38与3.40两种说法，均列出；Q3 2026收入「增长1%」以10-Q为准；2025年Q4收入约70.1亿为媒体数，未直接读取利润表。",
+  "as_of_date": "2026-11-10（最新为2026年Q3季报，2026年11月4日发布）",
+  "sources": [
+    {"title": "McDonald's Corp Form 10-Q Q3 2026", "url": "https://www.sec.gov/Archives/edgar/data/0000063908/000006390826000083/mcd-20260930.htm", "date": "2026-11", "type": "一手"},
+    {"title": "McDonald's Q2 2026 Earnings Release (8-K Exhibit 99.1)", "url": "https://www.sec.gov/Archives/edgar/data/0000063908/000006390826000067/exhibit991-6302026.htm", "date": "2026-08-04", "type": "一手"},
+    {"title": "McDonald's Q4 & FY2025 Earnings Release (8-K Exhibit 99.1)", "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000032/exhibit991-12312025.htm", "date": "2026-02-11", "type": "一手"},
+    {"title": "McDonald's Reports First Quarter 2026 Results", "url": "https://corporate.mcdonalds.com/corpmcd/our-stories/article/Q1-2026-results.html", "date": "2026-05-07", "type": "一手"},
+    {"title": "McDonald's Reports Second Quarter 2025 Results", "url": "https://corporate.mcdonalds.com/corpmcd/our-stories/article/Q2-2025-results.html", "date": "2025-08-06", "type": "一手"},
+    {"title": "McDonald's Reports First Quarter 2025 Results", "url": "https://www.franchising.com/news/20250501_mcdonald39s_reports_first_quarter_2025_results.html", "date": "2025-05-01", "type": "一手"},
+    {"title": "McDonald's (MCD) Q3 2026 Earnings Call Transcript (Motley Fool)", "url": "https://www.fool.com/earnings/call-transcripts/2026/11/04/mcdonalds-mcd-q3-2026-earnings-call-transcript/", "date": "2026-11-04", "type": "一手"},
+    {"title": "McDonald's Q4 2025 Earnings Call Transcript (Equibles)", "url": "https://equibles.com/stocks/mcd/documents/2c9736f8-1643-4215-81b5-2a56a8f3e3dd", "date": "2026-02-11", "type": "一手"},
+    {"title": "McDonald's (MCD) Q3 2025 Earnings Call Transcript (Motley Fool)", "url": "https://www.fool.com/earnings/call-transcripts/2025/11/05/mcdonalds-mcd-q3-2025-earnings-call-transcript", "date": "2025-11-05", "type": "一手"},
+    {"title": "McDonald's Investor Day 2026 Transcript", "url": "https://stockanalysis.com/stocks/mcd/transcripts/746101-investor-day-2026/", "date": "2026-09-23", "type": "一手"},
+    {"title": "McDonald's Says Botched Value Rollout Hurt Loyal Customer Visits (Benzinga via Tiger)", "url": "https://www.itiger.com/news/2657550140", "date": "2026-08-05", "type": "二手"},
+    {"title": "McDonald's Q1 2026: positive comp sales, value menu, innovation (Restaurant Dive)", "url": "https://www.restaurantdive.com/news/mcdonalds-q1-2026-positive-comp-sales-value-menu-innovation/819554/", "date": "2026-05", "type": "二手"},
+    {"title": "Why Has McDonald's Gone Quiet On Its Low-Income Customer? (Trefis)", "url": "https://www.trefis.com/stock/mcd/articles/615678/why-has-mcdonalds-gone-quiet-on-its-low-income-customer/2026-09-17", "date": "2026-09-17", "type": "二手"},
+    {"title": "McDonald's Breaks to a New 52-Week Low After the CEO Says Things Are Not Getting Better (24/7 Wall St.)", "url": "https://247wallst.com/investing/2026/09/24/mcdonalds-breaks-to-a-new-52-week-low-after-the-ceo-says-things-are-not-getting-better/", "date": "2026-09-24", "type": "二手"},
+    {"title": "McDonald's Q3 2026: Profit Beat, Revenue Miss, and a U.S. Traffic Problem (24/7 Wall St.)", "url": "https://247wallst.com/cards/mcdonald-s-q3-2026-earnings-mcd-01m6k73pzvks8eqe0sy605rdnb", "date": "2026-11-04", "type": "二手"},
+    {"title": "McDonald's sales soften after E. coli outbreak, but recovery is already underway (QSR Magazine)", "url": "https://www.qsrmagazine.com/story/mcdonalds-sales-soften-after-e-coli-outbreak-but-recovery-is-already-underway/", "date": "2025-02", "type": "二手"},
+    {"title": "McDonald's to spend $100 million to move past E. coli outbreak (BNN Bloomberg)", "url": "https://bnnbloomberg.ca/business/2024/11/15/mcdonalds-to-spend-100-million-to-move-past-e-coli-outbreak", "date": "2024-11-15", "type": "二手"},
+    {"title": "McDonald's McValue platform has yielded mixed results (Nation's Restaurant News)", "url": "https://www.nrn.com/quick-service/mcdonald-s-mcvalue-platform-has-yielded-mixed-results", "date": "2025", "type": "二手"},
+    {"title": "McDonald's is eating part of the cost of your $5 value meal (Axios)", "url": "https://www.axios.com/2025/11/05/mcdonalds-value-meal-subsidy-consumer-strain", "date": "2025-11-05", "type": "二手"},
+    {"title": "McDonald's Q3 preview report shows visitor slump (Benzinga, Placer.ai data)", "url": "https://www.benzinga.com/trading-ideas/previews/25/11/48609748/mcdonalds-q3-preview-report-shows-visitor-slump-can-value-meals-monopoly-help-guidance", "date": "2025-11", "type": "二手"},
+    {"title": "McDonald's Snack Wrap Surge Tests Supply and Sparks Sales Comeback (DesignRush)", "url": "https://news.designrush.com/mcdonalds-snack-wrap-surge-sales-supply-strain", "date": "2025-07", "type": "二手"}
+  ],
+  "uncertain": [
+    "key_data_series.美国快餐低/高收入客群客流同比（2026Q2—Q3）",
+    "controversies.低收入客群问题是周期还是结构（GLP-1等长期因素）"
+  ]
+}
