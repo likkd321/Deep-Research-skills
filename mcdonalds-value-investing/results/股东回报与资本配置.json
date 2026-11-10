@@ -1,0 +1,1648 @@
+{
+  "core_facts": [
+    "FY2025 10-K原文：公司‘已连续50年支付股息且每年都提高股息’；2025年每股股息7.17美元（季度1.77×3 + 第四季1.86），2026年9月再上调4%至季度1.93美元（2026年前9个月已宣告5.58美元），2000→2025年每股股息0.22→7.17美元（约15%/年复合；近10年约7.6%/年）",
+    "2000–2025年累计：股息约668亿美元 + 回购约799亿美元 = 约1,467亿美元，相当于同期净利润1,220亿的约120%、自由现金流1,047亿的约140%；近11年（2015–2025）合计约883亿，为同期FCF 609亿的约145%，差额靠举债（总债务2014年149亿→2025年400亿）",
+    "股本显著收缩：流通股由2000年13.05亿股降至2025年末7.11亿股（-45.5%）；2014–2025年-26%；2026年9月末7.06亿股；2025年回购670万股/20.2亿美元，均价约301美元（2016年均价约121美元，2018–2025加权均价约219美元）",
+    "股东权益自2016年起为负：2015年+70.9亿→2016年-22.0亿→2019年低点-82.1亿→2025年-17.9亿（2026年9月-3.43亿）；根因是回购与股息远超留存（库存股累计约793亿美元），非经营亏损；总债务400亿美元（2025年末），加权利率4.0%，97%为固定利率，39%为外币债务，到期梯度2027年32.0亿、2028年51.7亿、2029年36.4亿、2030年30.1亿、此后251.3亿",
+    "信用评级：S&P BBB+（短期A-2）、Moody's Baa1（P-2），均为投资级中档；2015年起从A/A2区间下调（S&P 2015年11月由A-降至BBB+，Moody's 2015年降至Baa1），2020年S&P曾列负面展望后恢复稳定，2025年评级被确认（后者来自二手来源）；债务/总资本105%，经营现金流/债务26%，营业利润/利息支出约7.8倍（2025年12,393/1,582）",
+    "长期TSR（10-K图表，含股息再投资）：2010–2015年MCD 181 vs 标普500 181（打平）；2015–2020年207 vs 203；2020–2025年160 vs 196；链式复合2010–2025年15年MCD约5.99倍（约12.7%/年）vs 标普500约7.20倍（约14.2%/年）；2015–2025年10年MCD约3.31倍 vs 标普500约3.98倍",
+    "资本开支用途：2025年资本开支33.7亿美元，主要用于新餐厅开设、其次为现有餐厅再投资；公司2025年新开近2,300家餐厅（含联营/特许市场），2026年指引资本开支37–39亿、约开2,600家（净增约2,100家），2027年再增3–5亿，目标2027年底5万家；2015–2025年资本开支仅占经营现金流的约30%–36%（2025年32%）"
+  ],
+  "mechanism": "这是一个‘现金流水管’：特许经营的租金和特许权使用费让经营现金流稳定在约100亿美元（2025年105.5亿），开新店只需约33.7亿资本开支，余下约72亿自由现金流本来就是‘股东的钱’。公司的资本配置顺序（10-K与历次财报披露的口径）是：先满足有回报的新店投资和再投资，再把几乎全部自由现金流以股息（优先、每年上调）和回购（弹性、视杠杆而定）返还；不够时用债务补足回购——2015–2016年加杠杆回购就是典型（2016年一年回购111亿美元）。回购减少股数，使EPS增速（约9.6%/年）高于营业利润增速（约5.7%/年），每年大约贡献1–2个百分点；股息是‘压舱石’，近10年每年上调约4–13%，与盈利增长同频。副作用是账面权益转负、债务/资本超过100%，但由于租金按销售额分成+物业在表内，债务偿还靠的是稳定现金流而不是资产变现。",
+  "metaphor": "首选：‘一口永远流水的水井，井主每年把水（自由现金流）几乎全部分给股东，还额外借桶多分了几年’——股息是每年多上调一点的定额水，回购是视水位和价格调节的放水闸。备选：‘高效的收租公司把租金全分掉，靠借钱把分红和回购做得更激进’；‘负权益不是亏空，而是把账面留存早早兑现给了股东’。",
+  "key_data_series": [
+    {
+      "series": "每股股息（宣告）",
+      "unit": "美元/股",
+      "basis": "按当年10-K‘Dividends declared per share’（2000–2006为当年报告值；2003–2006年因由年度宣告改为季度，年度数字存在时间节奏扭曲）",
+      "data": [
+        {
+          "period": "2000",
+          "value": 0.22
+        },
+        {
+          "period": "2001",
+          "value": 0.23
+        },
+        {
+          "period": "2002",
+          "value": 0.24
+        },
+        {
+          "period": "2003",
+          "value": 0.4
+        },
+        {
+          "period": "2004",
+          "value": 0.55
+        },
+        {
+          "period": "2005",
+          "value": 0.67
+        },
+        {
+          "period": "2006",
+          "value": 1.0
+        },
+        {
+          "period": "2007",
+          "value": 1.5
+        },
+        {
+          "period": "2008",
+          "value": 1.625
+        },
+        {
+          "period": "2009",
+          "value": 2.05
+        },
+        {
+          "period": "2010",
+          "value": 2.26
+        },
+        {
+          "period": "2011",
+          "value": 2.53
+        },
+        {
+          "period": "2012",
+          "value": 2.87
+        },
+        {
+          "period": "2013",
+          "value": 3.12
+        },
+        {
+          "period": "2014",
+          "value": 3.28
+        },
+        {
+          "period": "2015",
+          "value": 3.44
+        },
+        {
+          "period": "2016",
+          "value": 3.61
+        },
+        {
+          "period": "2017",
+          "value": 3.83
+        },
+        {
+          "period": "2018",
+          "value": 4.19
+        },
+        {
+          "period": "2019",
+          "value": 4.73
+        },
+        {
+          "period": "2020",
+          "value": 5.04
+        },
+        {
+          "period": "2021",
+          "value": 5.25
+        },
+        {
+          "period": "2022",
+          "value": 5.66
+        },
+        {
+          "period": "2023",
+          "value": 6.23
+        },
+        {
+          "period": "2024",
+          "value": 6.78
+        },
+        {
+          "period": "2025",
+          "value": 7.17
+        }
+      ],
+      "chart_suggestion": "折线",
+      "source": "McDonald's 各年度10-K（SEC EDGAR）；SEC XBRL companyfacts API"
+    },
+    {
+      "series": "股息支付额",
+      "unit": "百万美元",
+      "basis": "现金流量表‘Common stock cash dividends / Dividends paid’",
+      "data": [
+        {
+          "period": "2000",
+          "value": 281
+        },
+        {
+          "period": "2001",
+          "value": 288
+        },
+        {
+          "period": "2002",
+          "value": 297
+        },
+        {
+          "period": "2003",
+          "value": 504
+        },
+        {
+          "period": "2004",
+          "value": 695
+        },
+        {
+          "period": "2005",
+          "value": 842
+        },
+        {
+          "period": "2006",
+          "value": 1217
+        },
+        {
+          "period": "2007",
+          "value": 1766
+        },
+        {
+          "period": "2008",
+          "value": 1823
+        },
+        {
+          "period": "2009",
+          "value": 2236
+        },
+        {
+          "period": "2010",
+          "value": 2408
+        },
+        {
+          "period": "2011",
+          "value": 2610
+        },
+        {
+          "period": "2012",
+          "value": 2897
+        },
+        {
+          "period": "2013",
+          "value": 3115
+        },
+        {
+          "period": "2014",
+          "value": 3216
+        },
+        {
+          "period": "2015",
+          "value": 3230
+        },
+        {
+          "period": "2016",
+          "value": 3058
+        },
+        {
+          "period": "2017",
+          "value": 3089
+        },
+        {
+          "period": "2018",
+          "value": 3256
+        },
+        {
+          "period": "2019",
+          "value": 3582
+        },
+        {
+          "period": "2020",
+          "value": 3753
+        },
+        {
+          "period": "2021",
+          "value": 3919
+        },
+        {
+          "period": "2022",
+          "value": 4168
+        },
+        {
+          "period": "2023",
+          "value": 4533
+        },
+        {
+          "period": "2024",
+          "value": 4870
+        },
+        {
+          "period": "2025",
+          "value": 5115
+        }
+      ],
+      "chart_suggestion": "直方",
+      "source": "McDonald's 各年度10-K（SEC EDGAR）；SEC XBRL companyfacts API"
+    },
+    {
+      "series": "股票回购金额",
+      "unit": "百万美元",
+      "basis": "股东权益表‘Treasury stock purchases’口径（2000–2006为‘Treasury stock acquired’）",
+      "data": [
+        {
+          "period": "2000",
+          "value": 2002
+        },
+        {
+          "period": "2001",
+          "value": 1090
+        },
+        {
+          "period": "2002",
+          "value": 687
+        },
+        {
+          "period": "2003",
+          "value": 439
+        },
+        {
+          "period": "2004",
+          "value": 605
+        },
+        {
+          "period": "2005",
+          "value": 1228
+        },
+        {
+          "period": "2006",
+          "value": 3719
+        },
+        {
+          "period": "2007",
+          "value": 3949
+        },
+        {
+          "period": "2008",
+          "value": 3981
+        },
+        {
+          "period": "2009",
+          "value": 2854
+        },
+        {
+          "period": "2010",
+          "value": 2649
+        },
+        {
+          "period": "2011",
+          "value": 3373
+        },
+        {
+          "period": "2012",
+          "value": 2605
+        },
+        {
+          "period": "2013",
+          "value": 1811
+        },
+        {
+          "period": "2014",
+          "value": 3175
+        },
+        {
+          "period": "2015",
+          "value": 6182
+        },
+        {
+          "period": "2016",
+          "value": 11142
+        },
+        {
+          "period": "2017",
+          "value": 4651
+        },
+        {
+          "period": "2018",
+          "value": 5247
+        },
+        {
+          "period": "2019",
+          "value": 4980
+        },
+        {
+          "period": "2020",
+          "value": 874
+        },
+        {
+          "period": "2021",
+          "value": 846
+        },
+        {
+          "period": "2022",
+          "value": 3896
+        },
+        {
+          "period": "2023",
+          "value": 3105
+        },
+        {
+          "period": "2024",
+          "value": 2826
+        },
+        {
+          "period": "2025",
+          "value": 2016
+        }
+      ],
+      "chart_suggestion": "直方",
+      "source": "McDonald's 各年度10-K（SEC EDGAR）；SEC XBRL companyfacts API"
+    },
+    {
+      "series": "股东回报总额（股息+回购）",
+      "unit": "百万美元",
+      "basis": "自行加总",
+      "data": [
+        {
+          "period": "2000",
+          "value": 2283
+        },
+        {
+          "period": "2001",
+          "value": 1378
+        },
+        {
+          "period": "2002",
+          "value": 984
+        },
+        {
+          "period": "2003",
+          "value": 943
+        },
+        {
+          "period": "2004",
+          "value": 1300
+        },
+        {
+          "period": "2005",
+          "value": 2070
+        },
+        {
+          "period": "2006",
+          "value": 4936
+        },
+        {
+          "period": "2007",
+          "value": 5715
+        },
+        {
+          "period": "2008",
+          "value": 5804
+        },
+        {
+          "period": "2009",
+          "value": 5090
+        },
+        {
+          "period": "2010",
+          "value": 5057
+        },
+        {
+          "period": "2011",
+          "value": 5983
+        },
+        {
+          "period": "2012",
+          "value": 5502
+        },
+        {
+          "period": "2013",
+          "value": 4926
+        },
+        {
+          "period": "2014",
+          "value": 6391
+        },
+        {
+          "period": "2015",
+          "value": 9412
+        },
+        {
+          "period": "2016",
+          "value": 14200
+        },
+        {
+          "period": "2017",
+          "value": 7740
+        },
+        {
+          "period": "2018",
+          "value": 8503
+        },
+        {
+          "period": "2019",
+          "value": 8562
+        },
+        {
+          "period": "2020",
+          "value": 4627
+        },
+        {
+          "period": "2021",
+          "value": 4765
+        },
+        {
+          "period": "2022",
+          "value": 8064
+        },
+        {
+          "period": "2023",
+          "value": 7638
+        },
+        {
+          "period": "2024",
+          "value": 7696
+        },
+        {
+          "period": "2025",
+          "value": 7131
+        }
+      ],
+      "chart_suggestion": "堆叠",
+      "source": "McDonald's 各年度10-K（SEC EDGAR）；SEC XBRL companyfacts API（自行计算）",
+      "note": "2006年含Chipotle股份交换换入1,860万股（约7.4亿美元）不在现金回购内，故此处2006年回购37.19亿为财务报表‘库存股购买’口径"
+    },
+    {
+      "series": "股息支付率（股息支付额/净利润）",
+      "unit": "%",
+      "basis": "自行计算",
+      "data": [
+        {
+          "period": "2000",
+          "value": 14
+        },
+        {
+          "period": "2001",
+          "value": 18
+        },
+        {
+          "period": "2002",
+          "value": 33
+        },
+        {
+          "period": "2003",
+          "value": 34
+        },
+        {
+          "period": "2004",
+          "value": 30
+        },
+        {
+          "period": "2005",
+          "value": 32
+        },
+        {
+          "period": "2006",
+          "value": 34
+        },
+        {
+          "period": "2007",
+          "value": 74
+        },
+        {
+          "period": "2008",
+          "value": 42
+        },
+        {
+          "period": "2009",
+          "value": 49
+        },
+        {
+          "period": "2010",
+          "value": 49
+        },
+        {
+          "period": "2011",
+          "value": 47
+        },
+        {
+          "period": "2012",
+          "value": 53
+        },
+        {
+          "period": "2013",
+          "value": 56
+        },
+        {
+          "period": "2014",
+          "value": 68
+        },
+        {
+          "period": "2015",
+          "value": 71
+        },
+        {
+          "period": "2016",
+          "value": 65
+        },
+        {
+          "period": "2017",
+          "value": 59
+        },
+        {
+          "period": "2018",
+          "value": 55
+        },
+        {
+          "period": "2019",
+          "value": 59
+        },
+        {
+          "period": "2020",
+          "value": 79
+        },
+        {
+          "period": "2021",
+          "value": 52
+        },
+        {
+          "period": "2022",
+          "value": 67
+        },
+        {
+          "period": "2023",
+          "value": 54
+        },
+        {
+          "period": "2024",
+          "value": 59
+        },
+        {
+          "period": "2025",
+          "value": 60
+        }
+      ],
+      "chart_suggestion": "折线",
+      "source": "McDonald's 各年度10-K（SEC EDGAR）；SEC XBRL companyfacts API（自行计算）",
+      "note": "2007年74%受拉美减值（净利润被压低）影响，不具代表性"
+    },
+    {
+      "series": "总回报/净利润",
+      "unit": "%",
+      "basis": "自行计算",
+      "data": [
+        {
+          "period": "2000",
+          "value": 115
+        },
+        {
+          "period": "2001",
+          "value": 84
+        },
+        {
+          "period": "2002",
+          "value": 110
+        },
+        {
+          "period": "2003",
+          "value": 64
+        },
+        {
+          "period": "2004",
+          "value": 57
+        },
+        {
+          "period": "2005",
+          "value": 80
+        },
+        {
+          "period": "2006",
+          "value": 139
+        },
+        {
+          "period": "2007",
+          "value": 239
+        },
+        {
+          "period": "2008",
+          "value": 135
+        },
+        {
+          "period": "2009",
+          "value": 112
+        },
+        {
+          "period": "2010",
+          "value": 102
+        },
+        {
+          "period": "2011",
+          "value": 109
+        },
+        {
+          "period": "2012",
+          "value": 101
+        },
+        {
+          "period": "2013",
+          "value": 88
+        },
+        {
+          "period": "2014",
+          "value": 134
+        },
+        {
+          "period": "2015",
+          "value": 208
+        },
+        {
+          "period": "2016",
+          "value": 303
+        },
+        {
+          "period": "2017",
+          "value": 149
+        },
+        {
+          "period": "2018",
+          "value": 144
+        },
+        {
+          "period": "2019",
+          "value": 142
+        },
+        {
+          "period": "2020",
+          "value": 98
+        },
+        {
+          "period": "2021",
+          "value": 63
+        },
+        {
+          "period": "2022",
+          "value": 131
+        },
+        {
+          "period": "2023",
+          "value": 90
+        },
+        {
+          "period": "2024",
+          "value": 94
+        },
+        {
+          "period": "2025",
+          "value": 83
+        }
+      ],
+      "chart_suggestion": "折线",
+      "source": "McDonald's 各年度10-K（SEC EDGAR）；SEC XBRL companyfacts API（自行计算）"
+    },
+    {
+      "series": "总回报/自由现金流",
+      "unit": "%",
+      "basis": "自行计算（FCF=经营现金流－资本开支）",
+      "data": [
+        {
+          "period": "2000",
+          "value": 283
+        },
+        {
+          "period": "2001",
+          "value": 176
+        },
+        {
+          "period": "2002",
+          "value": 111
+        },
+        {
+          "period": "2003",
+          "value": 48
+        },
+        {
+          "period": "2004",
+          "value": 52
+        },
+        {
+          "period": "2005",
+          "value": 76
+        },
+        {
+          "period": "2006",
+          "value": 190
+        },
+        {
+          "period": "2007",
+          "value": 195
+        },
+        {
+          "period": "2008",
+          "value": 154
+        },
+        {
+          "period": "2009",
+          "value": 134
+        },
+        {
+          "period": "2010",
+          "value": 120
+        },
+        {
+          "period": "2011",
+          "value": 135
+        },
+        {
+          "period": "2012",
+          "value": 140
+        },
+        {
+          "period": "2013",
+          "value": 115
+        },
+        {
+          "period": "2014",
+          "value": 154
+        },
+        {
+          "period": "2015",
+          "value": 199
+        },
+        {
+          "period": "2016",
+          "value": 335
+        },
+        {
+          "period": "2017",
+          "value": 209
+        },
+        {
+          "period": "2018",
+          "value": 201
+        },
+        {
+          "period": "2019",
+          "value": 149
+        },
+        {
+          "period": "2020",
+          "value": 100
+        },
+        {
+          "period": "2021",
+          "value": 67
+        },
+        {
+          "period": "2022",
+          "value": 147
+        },
+        {
+          "period": "2023",
+          "value": 105
+        },
+        {
+          "period": "2024",
+          "value": 115
+        },
+        {
+          "period": "2025",
+          "value": 99
+        }
+      ],
+      "chart_suggestion": "折线",
+      "source": "McDonald's 各年度10-K（SEC EDGAR）；SEC XBRL companyfacts API（自行计算）",
+      "note": "2016年335%、2015年199%反映‘举债加杠杆回购’"
+    },
+    {
+      "series": "年末流通股数",
+      "unit": "百万股",
+      "basis": "10-K 年末流通股（2021–2025：745/731/723/715/711）",
+      "data": [
+        {
+          "period": "2000",
+          "value": 1305
+        },
+        {
+          "period": "2001",
+          "value": 1281
+        },
+        {
+          "period": "2002",
+          "value": 1268
+        },
+        {
+          "period": "2003",
+          "value": 1262
+        },
+        {
+          "period": "2004",
+          "value": 1270
+        },
+        {
+          "period": "2005",
+          "value": 1263
+        },
+        {
+          "period": "2006",
+          "value": 1204
+        },
+        {
+          "period": "2007",
+          "value": 1165
+        },
+        {
+          "period": "2008",
+          "value": 1115
+        },
+        {
+          "period": "2009",
+          "value": 1077
+        },
+        {
+          "period": "2010",
+          "value": 1054
+        },
+        {
+          "period": "2011",
+          "value": 1021
+        },
+        {
+          "period": "2012",
+          "value": 1003
+        },
+        {
+          "period": "2013",
+          "value": 990
+        },
+        {
+          "period": "2014",
+          "value": 963
+        },
+        {
+          "period": "2015",
+          "value": 907
+        },
+        {
+          "period": "2016",
+          "value": 819
+        },
+        {
+          "period": "2017",
+          "value": 794
+        },
+        {
+          "period": "2018",
+          "value": 767
+        },
+        {
+          "period": "2019",
+          "value": 746
+        },
+        {
+          "period": "2020",
+          "value": 745
+        },
+        {
+          "period": "2021",
+          "value": 745
+        },
+        {
+          "period": "2022",
+          "value": 731
+        },
+        {
+          "period": "2023",
+          "value": 723
+        },
+        {
+          "period": "2024",
+          "value": 715
+        },
+        {
+          "period": "2025",
+          "value": 711
+        }
+      ],
+      "chart_suggestion": "折线",
+      "source": "McDonald's 各年度10-K（SEC EDGAR）；SEC XBRL companyfacts API"
+    },
+    {
+      "series": "当年回购股数（2007起）",
+      "unit": "百万股",
+      "basis": "10-K‘Number of shares repurchased’",
+      "data": [
+        {
+          "period": "2007",
+          "value": 77.1
+        },
+        {
+          "period": "2008",
+          "value": 69.7
+        },
+        {
+          "period": "2009",
+          "value": 50.3
+        },
+        {
+          "period": "2010",
+          "value": 37.8
+        },
+        {
+          "period": "2011",
+          "value": 41.9
+        },
+        {
+          "period": "2012",
+          "value": 28.1
+        },
+        {
+          "period": "2013",
+          "value": 18.7
+        },
+        {
+          "period": "2014",
+          "value": 33.1
+        },
+        {
+          "period": "2015",
+          "value": 61.8
+        },
+        {
+          "period": "2016",
+          "value": 92.3
+        },
+        {
+          "period": "2017",
+          "value": 31.4
+        },
+        {
+          "period": "2018",
+          "value": 32.2
+        },
+        {
+          "period": "2019",
+          "value": 25.0
+        },
+        {
+          "period": "2020",
+          "value": 4.3
+        },
+        {
+          "period": "2021",
+          "value": 3.4
+        },
+        {
+          "period": "2022",
+          "value": 15.8
+        },
+        {
+          "period": "2023",
+          "value": 11.1
+        },
+        {
+          "period": "2024",
+          "value": 10.1
+        },
+        {
+          "period": "2025",
+          "value": 6.7
+        }
+      ],
+      "chart_suggestion": "直方",
+      "source": "各年度10-K MD&A；2012年来自FY2012 10-K（28.1）",
+      "note": "2006年含Chipotle交换；2000–2006年回购股数未逐年核实，不列"
+    },
+    {
+      "series": "回购均价（回购金额/回购股数）",
+      "unit": "美元/股",
+      "basis": "自行计算（回购金额/股数）",
+      "data": [
+        {
+          "period": "2007",
+          "value": 51.2
+        },
+        {
+          "period": "2008",
+          "value": 57.1
+        },
+        {
+          "period": "2009",
+          "value": 56.7
+        },
+        {
+          "period": "2010",
+          "value": 70.1
+        },
+        {
+          "period": "2011",
+          "value": 80.5
+        },
+        {
+          "period": "2012",
+          "value": 92.7
+        },
+        {
+          "period": "2013",
+          "value": 96.8
+        },
+        {
+          "period": "2014",
+          "value": 95.9
+        },
+        {
+          "period": "2015",
+          "value": 100.0
+        },
+        {
+          "period": "2016",
+          "value": 120.7
+        },
+        {
+          "period": "2017",
+          "value": 148.1
+        },
+        {
+          "period": "2018",
+          "value": 163.0
+        },
+        {
+          "period": "2019",
+          "value": 199.2
+        },
+        {
+          "period": "2020",
+          "value": 203.3
+        },
+        {
+          "period": "2021",
+          "value": 248.8
+        },
+        {
+          "period": "2022",
+          "value": 246.6
+        },
+        {
+          "period": "2023",
+          "value": 279.7
+        },
+        {
+          "period": "2024",
+          "value": 279.8
+        },
+        {
+          "period": "2025",
+          "value": 300.9
+        }
+      ],
+      "chart_suggestion": "折线",
+      "source": "McDonald's 各年度10-K（SEC EDGAR）；SEC XBRL companyfacts API（自行计算）",
+      "note": "均价与当年区间均价近似，不含税费；2016年均价120.7美元，2025年300.9美元"
+    },
+    {
+      "series": "总债务（年末）",
+      "unit": "百万美元",
+      "basis": "10-K总债务（含短期借款与一年内到期部分）",
+      "data": [
+        {
+          "period": "2000",
+          "value": 8474
+        },
+        {
+          "period": "2001",
+          "value": 8918
+        },
+        {
+          "period": "2002",
+          "value": 9979
+        },
+        {
+          "period": "2003",
+          "value": 9731
+        },
+        {
+          "period": "2004",
+          "value": 9220
+        },
+        {
+          "period": "2005",
+          "value": 10137
+        },
+        {
+          "period": "2006",
+          "value": 8434
+        },
+        {
+          "period": "2007",
+          "value": 9301
+        },
+        {
+          "period": "2008",
+          "value": 10218
+        },
+        {
+          "period": "2009",
+          "value": 10578
+        },
+        {
+          "period": "2010",
+          "value": 11505
+        },
+        {
+          "period": "2011",
+          "value": 12500
+        },
+        {
+          "period": "2012",
+          "value": 13633
+        },
+        {
+          "period": "2013",
+          "value": 14130
+        },
+        {
+          "period": "2014",
+          "value": 14936
+        },
+        {
+          "period": "2015",
+          "value": 24122
+        },
+        {
+          "period": "2016",
+          "value": 25956
+        },
+        {
+          "period": "2017",
+          "value": 29536
+        },
+        {
+          "period": "2018",
+          "value": 31075
+        },
+        {
+          "period": "2019",
+          "value": 34177
+        },
+        {
+          "period": "2020",
+          "value": 37440
+        },
+        {
+          "period": "2021",
+          "value": 35623
+        },
+        {
+          "period": "2022",
+          "value": 35903
+        },
+        {
+          "period": "2023",
+          "value": 39345
+        },
+        {
+          "period": "2024",
+          "value": 38424
+        },
+        {
+          "period": "2025",
+          "value": 39973
+        }
+      ],
+      "chart_suggestion": "折线",
+      "source": "McDonald's 各年度10-K（SEC EDGAR）；SEC XBRL companyfacts API"
+    },
+    {
+      "series": "股东权益（赤字）",
+      "unit": "百万美元",
+      "basis": "10-K年末总股东权益",
+      "data": [
+        {
+          "period": "2000",
+          "value": 9204
+        },
+        {
+          "period": "2001",
+          "value": 9488
+        },
+        {
+          "period": "2002",
+          "value": 10281
+        },
+        {
+          "period": "2003",
+          "value": 11982
+        },
+        {
+          "period": "2004",
+          "value": 14201
+        },
+        {
+          "period": "2005",
+          "value": 15146
+        },
+        {
+          "period": "2006",
+          "value": 15458
+        },
+        {
+          "period": "2007",
+          "value": 15280
+        },
+        {
+          "period": "2008",
+          "value": 13383
+        },
+        {
+          "period": "2009",
+          "value": 14034
+        },
+        {
+          "period": "2010",
+          "value": 14634
+        },
+        {
+          "period": "2011",
+          "value": 14390
+        },
+        {
+          "period": "2012",
+          "value": 15294
+        },
+        {
+          "period": "2013",
+          "value": 16010
+        },
+        {
+          "period": "2014",
+          "value": 12853
+        },
+        {
+          "period": "2015",
+          "value": 7088
+        },
+        {
+          "period": "2016",
+          "value": -2204
+        },
+        {
+          "period": "2017",
+          "value": -3268
+        },
+        {
+          "period": "2018",
+          "value": -6258
+        },
+        {
+          "period": "2019",
+          "value": -8210
+        },
+        {
+          "period": "2020",
+          "value": -7825
+        },
+        {
+          "period": "2021",
+          "value": -4601
+        },
+        {
+          "period": "2022",
+          "value": -6003
+        },
+        {
+          "period": "2023",
+          "value": -4707
+        },
+        {
+          "period": "2024",
+          "value": -3797
+        },
+        {
+          "period": "2025",
+          "value": -1791
+        }
+      ],
+      "chart_suggestion": "折线",
+      "source": "McDonald's 各年度10-K（SEC EDGAR）；SEC XBRL companyfacts API"
+    },
+    {
+      "series": "累计TSR指数（10-K股价表现图，起点=100，含股息再投资）",
+      "unit": "指数",
+      "basis": "S&P Capital IQ，来自各年度10-K",
+      "data": [
+        {
+          "period": "2010→2015",
+          "value": {
+            "MCD": 181,
+            "S&P500": 181,
+            "DJIA": 171
+          }
+        },
+        {
+          "period": "2015→2020",
+          "value": {
+            "MCD": 207,
+            "S&P500": 203,
+            "DJIA": 198
+          }
+        },
+        {
+          "period": "2017→2022",
+          "value": {
+            "MCD": 172,
+            "S&P500": 157,
+            "DJIA": 150
+          }
+        },
+        {
+          "period": "2020→2025",
+          "value": {
+            "MCD": 160,
+            "S&P500": 196,
+            "DJIA": 173
+          }
+        },
+        {
+          "period": "链式2010→2025（自行计算）",
+          "value": {
+            "MCD": "约5.99倍（约12.7%/年）",
+            "S&P500": "约7.20倍（约14.2%/年）"
+          }
+        },
+        {
+          "period": "链式2015→2025（自行计算）",
+          "value": {
+            "MCD": "约3.31倍（约12.7%/年）",
+            "S&P500": "约3.98倍（约14.8%/年）"
+          }
+        }
+      ],
+      "chart_suggestion": "直方",
+      "source": "FY2015/FY2020/FY2022/FY2025 10-K ‘Stock Performance Graph’",
+      "note": "2010年前（含2000–2010年）无逐年TSR对比，只能由年末股价+股息估算，本item未纳入；FY2025末收盘价未在一手资料中核实[不确定]"
+    },
+    {
+      "series": "年末股价",
+      "unit": "美元",
+      "basis": "各年度10-K‘Market price at year end’（2000–2020）",
+      "data": [
+        {
+          "period": "2000",
+          "value": 34.0
+        },
+        {
+          "period": "2001",
+          "value": 26.47
+        },
+        {
+          "period": "2002",
+          "value": 16.08
+        },
+        {
+          "period": "2003",
+          "value": 24.83
+        },
+        {
+          "period": "2004",
+          "value": 32.06
+        },
+        {
+          "period": "2005",
+          "value": 33.72
+        },
+        {
+          "period": "2006",
+          "value": 44.33
+        },
+        {
+          "period": "2007",
+          "value": 58.91
+        },
+        {
+          "period": "2008",
+          "value": 62.19
+        },
+        {
+          "period": "2009",
+          "value": 62.44
+        },
+        {
+          "period": "2010",
+          "value": 76.76
+        },
+        {
+          "period": "2011",
+          "value": 100.33
+        },
+        {
+          "period": "2012",
+          "value": 88.21
+        },
+        {
+          "period": "2013",
+          "value": 97.03
+        },
+        {
+          "period": "2014",
+          "value": 93.7
+        },
+        {
+          "period": "2015",
+          "value": 118.14
+        },
+        {
+          "period": "2016",
+          "value": 121.72
+        },
+        {
+          "period": "2017",
+          "value": 172.12
+        },
+        {
+          "period": "2018",
+          "value": 177.57
+        },
+        {
+          "period": "2019",
+          "value": 197.61
+        },
+        {
+          "period": "2020",
+          "value": 214.58
+        }
+      ],
+      "chart_suggestion": "折线",
+      "source": "FY2006/FY2009/FY2015/FY2020 10-K 选定财务数据",
+      "note": "2021–2025年末收盘价未在一手资料中核实，省略；2025年12月下旬约313–317美元（二手新闻）[不确定]"
+    }
+  ],
+  "item_specific_extras": {
+    "capital_allocation_record": {
+      "2000–2025累计": {
+        "股息": "约668亿美元",
+        "回购": "约799亿美元",
+        "合计": "约1,467亿美元",
+        "净利润合计": "约1,220亿美元",
+        "FCF合计": "约1,047亿美元"
+      },
+      "2015–2025累计": {
+        "股息": "约426亿美元",
+        "回购": "约458亿美元",
+        "合计": "约883亿美元",
+        "净利润": "约701亿",
+        "FCF": "约609亿"
+      },
+      "分阶段特征": {
+        "2000–2005": "净利润与现金流修复期：回购/股息合计占净利润34%–115%，股息快速抬升（0.22→0.67美元）",
+        "2006–2008": "Chipotle交换+大额回购，股息上调约50%/年（2006:1.00、2007:1.50）",
+        "2009–2014": "回购约18–40亿/年，股息稳增（2–3美元区间）",
+        "2015–2016": "‘举债加杠杆回购’：计划三年返还约300亿美元（较原目标增加约100亿，增量主要靠新增债务），2016年单年回购111亿、9,230万股，总债务从149亿增至241亿再至260亿",
+        "2017–2019": "年均回购约50亿，三年返还目标约250亿（2018年10-K）",
+        "2020–2021": "疫情暂停回购（2020年3月起），2020年仅回购8.7亿美元",
+        "2022–2025": "恢复回购，年均约28亿，更偏重股息，股息支付占净利润约55%–60%"
+      },
+      "capex_use": {
+        "2025": "33.7亿美元，主要用于新餐厅开设，其次现有餐厅再投资",
+        "2026指引": "37–39亿美元，约2,600家新开（美国及国际自营市场约750家，其余由特许/联营伙伴出资）",
+        "2027": "再增3–5亿美元，目标年底5万家餐厅",
+        "占经营现金流": "2025年32%，2015–2025年多在20%–40%"
+      },
+      "buyback_prices": "2007年均价约51美元；2013–2015年约97–100美元；2016年约121美元；2018年约163美元；2019–2020年约200美元；2021–2022年约247–249美元；2023–2024年约280美元；2025年约301美元；2007–2025加权均价约108美元、2016–2025加权均价约170美元，均低于2025年的约300美元股价，即长期回购总体账面盈利，但2021–2025年按约250–300美元回购的股份，对应EPS倍数更高",
+      "2026年前9个月": "回购620万股/17.7亿美元（折合均价约285美元），股息39.5亿美元；9月宣布季度股息上调4%至1.93美元（12月15日支付）"
+    },
+    "owner_earnings_conversion": {
+      "2025年": "经营现金流105.5亿－资本开支33.7亿＝自由现金流71.9亿，约为净利润的84%（公司指引2026年FCF转换率为低至中80%区间）；若假设约30–40%的资本开支为维持性（单家餐厅重建/改造），巴菲特式‘所有者收益’约85–90亿（接近净利润85.6亿），以2025年末市值（约7.11亿股×约300美元≈2,130亿美元）粗算FCF收益率约3.4%；该市值为估算，股价未核实[不确定]",
+      "2015–2025年": "累计所有者收益（≈FCF）约609亿美元，累计返还883亿美元，缺口约274亿由债务及现金存量补足"
+    },
+    "debt_structure_2025": {
+      "总债务": "399.7亿美元（债务口径前401.5亿）",
+      "固定利率占比": "97%",
+      "外币债务占比": "39%",
+      "加权平均利率": "4.0%",
+      "到期梯度": "2026年0（含约15亿短债重分类至长期，由2028年6月到期的循环信贷支持）、2027年32.0亿、2028年51.7亿、2029年36.4亿、2030年30.1亿、其后251.3亿",
+      "总债务/总资本": "105%",
+      "经营现金流/债务": "26%",
+      "债务/经营现金流": "约3.8倍",
+      "营业利润/利息支出": "约7.8倍",
+      "租赁负债": "148.4亿美元（经营124.9亿+融资23.5亿）另计",
+      "授权": "董事会2024年11月批准150亿美元借款授权，至2025年末尚余103亿美元"
+    },
+    "credit_rating_history": {
+      "S&P": "2001年1月AA（二手）→2003年5月由A+降至A→2015年5月A→A-→2015年11月BBB+（因计划发债支持股东回报）→2020年负面展望→稳定，现BBB+（二手：2025年4月确认）",
+      "Moody's": "2001年Aa2→2003年A2→2015年降至A3→Baa1（2015年11月，二手），现Baa1（二手：2025年7月确认）",
+      "Fitch": "2015年5月由A降至BBB+（二手）",
+      "评级公开口径": "FY2025 10-K原文：S&P与Moody's对商业票据评级A-2/P-2，长期债务BBB+/Baa1",
+      "说明": "2000–2014年评级节点来自二手新闻与学术文章，精确日期需核对评级机构；2026年评级状态未检索到新动作，视为未变[不确定]"
+    },
+    "dividend_streak": {
+      "连续增派股息年数": "FY2025 10-K原文‘paid dividends for 50 consecutive years and has increased the dividend amount every year’，即至少50年（含2025年）；2026年9月再上调意味着连续第51年上调（据2026年Q3 10-Q推断，需待年报确认）",
+      "分红贵族": "标普500股息贵族（连续25年+）资格显然满足，不另核实指数成分",
+      "近年年度涨幅": "2018年+9%、2019年+13%、2020年+7%、2021年+4%、2022年+8%、2023年+10%、2024年+9%、2025年+6%（宣告每股股息同比）",
+      "季度股息上调": "2024年第四季上调6%至1.77美元；2025年第四季上调5%至1.86美元；2026年9月上调4%至1.93美元"
+    },
+    "negative_equity_explained": "负权益来自累计回购（库存股790多亿美元）超过留存收益，而非亏损；留存收益仍有702.8亿美元（2025年）；公司现金流稳定，故评级机构以债务/EBITDA、现金流覆盖率而非账面权益评估信用。"
+  },
+  "value_investing_implications": "（1）股东友好度高：近乎全部自由现金流返还，连续50年上调股息，且在经营逆风期（2003、2015、2020）从未削减；（2）回购质量：2015–2016年在约100–120美元区间集中回购，后来股价升至300美元，回溯非常成功；2021–2025年在250–300美元区间回购，对应P/E约24–26倍，收益率偏低，属于‘中性偏弱’的回购；（3）杠杆是双刃剑：用约3.8倍经营现金流的债务把EPS推高，使得ROE等指标失真，利息支出占营业利润约13%，评级已降至BBB+/Baa1——这是一个‘有意识的杠杆化’，但留给‘大跌年份’的缓冲不如2014年以前；（4）长期TSR：2010–2025年落后标普500约1.5个百分点/年，说明‘稳定性≠跑赢大盘’，尤其2020–2025年MCD +60% vs 标普500 +96%；（5）好处是下行时更抗跌，2022年标普500 -18%时MCD TSR持平（128→128）；（6）资本开支处于上升期（2025年34亿→2026年约38亿）会压缩FCF增速，2027年目标5万家，对‘轻资产’叙事构成轻微逆风，但新店ROIC及特许经营的资本由加盟/联营伙伴分担。",
+  "controversies": "（1）杠杆回购是否‘最优’：批评者指出负权益、债务/总资本>100%使公司对利率与评级更敏感，2015–2016年举债回购后评级下调；（2）回购价格：2019年后均价接近或高于内在价值时仍在回购，若股价长期低于前期回购价则价值毁灭；（3）股息可持续性：股息占FCF约71%（2025年5,115/7,186），加上回购已接近100%，若同店销售持续疲弱而利息上升，增长将收敛；（4）TSR落后标普500：近10年低约1–2个百分点/年，其稳定性溢价是否值得；（5）部分评级节点来自二手资料；（6）自由现金流的‘维持性资本开支’估计存在主观性。",
+  "key_quotes": [
+    {
+      "quote": "The Company has paid dividends on its common stock for 50 consecutive years and has increased the dividend amount every year.（公司已连续50年派发股息，且每年都提高股息。）",
+      "speaker": "McDonald's 公司",
+      "source": "FY2025 10-K MD&A Share repurchases and dividends",
+      "date": "2026-02-24"
+    },
+    {
+      "quote": "This 5% increase in the quarterly dividend equates to a $7.44 per share annual dividend and reflects the Company's confidence in the ongoing strength and reliability of its cash flow.（季度股息上调5%，折合年度股息7.44美元，反映公司对现金流持续强劲和可靠的信心。）",
+      "speaker": "McDonald's 公司",
+      "source": "FY2025 10-K",
+      "date": "2026-02-24"
+    },
+    {
+      "quote": "management announced plans to optimize the Company's capital structure and increased the cash return to shareholders target to about $30 billion for the three-year period ending 2016 - a $10 billion increase over the previous target with incremental debt funding the vast majority of the increase.（管理层宣布优化资本结构，将三年（至2016年）向股东返还目标提高到约300亿美元，比此前目标增加100亿，新增部分绝大多数由债务融资。）",
+      "speaker": "McDonald's 公司管理层",
+      "source": "FY2015 10-K",
+      "date": "2016-02-25"
+    }
+  ],
+  "data_confidence": "一手为主：股息、回购、股数、债务、权益、评级（现行）、TSR指数均来自10-K原文及SEC XBRL companyfacts；回购均价、支付率、返还/FCF比等为自行计算；2000–2006年回购股数未核实；2012年回购股数来自FY2012 10-K；2000–2014年评级历史、2020–2026年评级确认来自二手新闻，已标[不确定]；FY2025年末股价、2021–2025年末股价、2000–2010年TSR对标普500的逐年对比均未取得一手数据，故未纳入或标[不确定]；‘股息贵族’资格及指数口径未核实；TSR链式倍数为对10-K五年窗口的简单相乘，窗口重叠年份（如2015）接口准确。GAAP口径，非调整后。",
+  "as_of_date": "2026-11-06（FY2025年度数据 + 2026年Q3 10-Q）",
+  "sources": [
+    {
+      "title": "McDonald's Form 10-K FY2025（股息、回购、债务、评级、TSR图）",
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm",
+      "date": "2026-02-24",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's Form 10-Q Q3 2026（2026前9个月回购/股息、股息上调）",
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000083/mcd-20260930.htm",
+      "date": "2026-11-06",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's Form 10-K FY2020（TSR 2015–2020、ROIC）",
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390821000013/mcd-20201231.htm",
+      "date": "2021-02-23",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's Form 10-K FY2022（TSR 2017–2022、回购股数）",
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390823000012/mcd-20221231.htm",
+      "date": "2023-02-24",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's Form 10-K FY2018（回购股数、250亿返还目标）",
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390819000010/mcd-12312018x10k.htm",
+      "date": "2019-02-22",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's Form 10-K FY2015（300亿返还计划、TSR 2010–2015、6年摘要）",
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390816000103/mcd-12312015x10k.htm",
+      "date": "2016-02-25",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's Form 10-K FY2012（2012年回购股数）",
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390813000010/mcd-12312012x10k.htm",
+      "date": "2013-02-25",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's Form 10-K FY2011 / FY2009 / FY2006（2007–2011回购股数、2000–2006摘要）",
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000119312507039707/d10k.htm",
+      "date": "2007-02-26",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's FY2017 10-K Exhibit 12（负债率、FCF）",
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390818000010/mcd-12312017xex12.htm",
+      "date": "2018-02-23",
+      "type": "一手"
+    },
+    {
+      "title": "SEC XBRL companyfacts API（McDonald's）",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json",
+      "date": "2026-11-10",
+      "type": "一手"
+    },
+    {
+      "title": "Fox Business: McDonald's credit downgraded to just 3 notches above junk at S&P（2015）",
+      "url": "https://www.foxbusiness.com/markets/mcdonalds-credit-downgraded-to-just-3-notches-above-junk-at-sp",
+      "date": "2015-11",
+      "type": "二手"
+    },
+    {
+      "title": "Fox Business: Moody's downgrades McDonald's on concerns about debt-funded shareholder returns",
+      "url": "https://www.foxbusiness.com/markets/moodys-downgrades-mcdonalds-on-concerns-about-debt-funded-shareholder-returns",
+      "date": "2015",
+      "type": "二手"
+    },
+    {
+      "title": "InvestmentGrade.com: McDonald's credit rating & NNN cap rate（2025–2026评级确认，二手）",
+      "url": "https://investmentgrade.com/mcdonalds-credit-rating-nnn-cap-rate/",
+      "date": "2026-05",
+      "type": "二手"
+    }
+  ],
+  "uncertain": [
+    "credit_rating_history（2000–2014及2020年后节点）",
+    "key_data_series.年末股价（2021–2025）",
+    "item_specific_extras.owner_earnings_conversion.市值与FCF收益率",
+    "dividend_streak.股息贵族资格",
+    "key_data_series.累计TSR（2010年前未覆盖）",
+    "key_data_series.当年回购股数（2000–2006）"
+  ]
+}

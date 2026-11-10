@@ -1,0 +1,1555 @@
+{
+  "core_facts": [
+    "2000→2025：营收 141.7亿→268.9亿美元（年复合仅约2.6%），营业利润 33.5亿→123.9亿（约5.4%），稀释EPS 1.46→11.95美元（约8.8%/年，另含回购贡献）；系统销售额约 402亿→1,394亿（约5.1%/年）",
+    "营业利润率结构性跃升：2000年23.7%→2002年低谷14.0%→2010–2014年约29–32%→2017年起稳定在38–46%，2025年46.1%（2026前9个月约47.6%）；营收却从2014年峰值281亿降至2020年192亿（再融资/再特许化把自营销售额换成高毛利租金与特许权使用费）",
+    "2003年危机：2002年营业利润仅21.3亿（含8.53亿美元重组/关店/减值费用，利润率14.0%），净利润8.93亿、EPS 0.70；2003年EPS 1.15，随后‘赢在当下（Plan to Win）’使2004–2006年EPS 1.79/2.04/2.83（2006含出售Chipotle的0.53美元，持续经营口径2.30）",
+    "2015年转型前后对比：2015年营业利润71.5亿、净利润45.3亿、EPS 4.80（低于2012年峰值）；转型后（再特许化约4,000家、G&A节省约5亿、加杠杆回购）2017年营业利润95.5亿、EPS 6.37，2019年EPS 7.88，2025年11.95；2015–2025营业利润复合约5.7%、EPS约9.6%",
+    "现金创造：经营现金流 2000年27.5亿→2025年105.5亿；资本开支2025年33.7亿（2026指引37–39亿，加速开店）；自由现金流 2025年71.9亿（FCF转换率约84%），2015–2025累计FCF约609亿美元；2000–2025累计约1,047亿",
+    "回报指标：公司披露的税后ROIC 2018年20.0%、2019年19.2%、2020年14.9%（疫情）、2021年21.5%、2022年22.6%、2023年25.2%、2024年21.8%、2025年20.3%；2018年前无同口径公开序列（仅有ROIIC/平均资产回报率，后者2015年20.9%、2016年23.0%、2017年29.0%）",
+    "规模：餐厅数 2000年28,603→2015年36,525→2025年45,356（2026年9月46,554，目标2027年底5万家），加盟比例约95%；系统销售额2025年1,394亿美元，营收/系统销售额比从2000年约35%降至2025年约19%（‘轻资产化’的量化体现）"
+  ],
+  "mechanism": "把这家公司想成‘收租+收品牌费的房东兼总部’：门店销售额是水源（系统销售额，2025年1,394亿美元），公司并不拿走全部，而是按销售额的一定比例收取租金（约11%量级）和特许权使用费（约4–5%）。当年（2000–2014）公司自营门店多，营收是‘卖汉堡的整笔销售额’，成本也全算自己头上，所以营收大、利润率仅20–30%。2015年起把大量自营门店再特许给加盟商，账面营收下降（‘少了卖汉堡的钱’），但留下来的是几乎没有食材和人工成本的租金与特许权使用费，所以营业利润率从约28%抬到约46%，营业利润却仍在增长。这笔稳定现金（经营现金流约100亿）扣掉约30多亿开新店的资本开支后，剩余大部分以股息和回购还给股东。利润增长的来源是三层叠加：同店销售（提价+客流）、净开店（每年约2%–5%的新增）、以及回购使每股盈利额外增长1–2个百分点。2003年和2015年的两次低谷则说明：当品牌热度/客流（食品质量、服务速度、菜单过于臃肿）出问题时，系统销售额增速放缓，公司再投入改革，之后利润才回升——即这门生意的‘周期’主要来自品牌运营而非地产。",
+  "metaphor": "首选：麦当劳是‘全球快餐界的收租+收品牌费的房东’——别人在它的地块和品牌下卖汉堡，它按流水抽成，利润率像包租婆而不像餐馆。备选1：‘一台把店铺流水转成稳定现金的收费闸机’，门店越多、流水越大，闸机上过的钱越多。备选2：‘连锁品牌的特许经营版税+物业公司’，营收缩水（2014→2020）正是把‘卖汉堡’的毛收入让给加盟商，换来‘只留净租金’的高质量利润。",
+  "key_data_series": [
+    {
+      "series": "营业收入",
+      "unit": "百万美元",
+      "basis": "GAAP（2000–2006为当年10-K持续经营口径，剔除Chipotle；2007起XBRL）",
+      "data": [
+        {
+          "period": "2000",
+          "value": 14172
+        },
+        {
+          "period": "2001",
+          "value": 14738
+        },
+        {
+          "period": "2002",
+          "value": 15201
+        },
+        {
+          "period": "2003",
+          "value": 16825
+        },
+        {
+          "period": "2004",
+          "value": 18594
+        },
+        {
+          "period": "2005",
+          "value": 19832
+        },
+        {
+          "period": "2006",
+          "value": 21586
+        },
+        {
+          "period": "2007",
+          "value": 22787
+        },
+        {
+          "period": "2008",
+          "value": 23522
+        },
+        {
+          "period": "2009",
+          "value": 22745
+        },
+        {
+          "period": "2010",
+          "value": 24075
+        },
+        {
+          "period": "2011",
+          "value": 27006
+        },
+        {
+          "period": "2012",
+          "value": 27567
+        },
+        {
+          "period": "2013",
+          "value": 28106
+        },
+        {
+          "period": "2014",
+          "value": 27441
+        },
+        {
+          "period": "2015",
+          "value": 25413
+        },
+        {
+          "period": "2016",
+          "value": 24622
+        },
+        {
+          "period": "2017",
+          "value": 22820
+        },
+        {
+          "period": "2018",
+          "value": 21258
+        },
+        {
+          "period": "2019",
+          "value": 21364
+        },
+        {
+          "period": "2020",
+          "value": 19208
+        },
+        {
+          "period": "2021",
+          "value": 23223
+        },
+        {
+          "period": "2022",
+          "value": 23183
+        },
+        {
+          "period": "2023",
+          "value": 25494
+        },
+        {
+          "period": "2024",
+          "value": 25920
+        },
+        {
+          "period": "2025",
+          "value": 26885
+        }
+      ],
+      "chart_suggestion": "折线",
+      "source": "McDonald's 各年度 10-K（SEC EDGAR, CIK 63908）；XBRL companyfacts API；2000–2006取自FY2006 10-K 11年摘要"
+    },
+    {
+      "series": "营业利润",
+      "unit": "百万美元",
+      "basis": "GAAP（含减值/重组等一次性项目，如2002年8.53亿、2007年约16亿拉美减值、2018年中国重组）",
+      "data": [
+        {
+          "period": "2000",
+          "value": 3352
+        },
+        {
+          "period": "2001",
+          "value": 2721
+        },
+        {
+          "period": "2002",
+          "value": 2128
+        },
+        {
+          "period": "2003",
+          "value": 2837
+        },
+        {
+          "period": "2004",
+          "value": 3538
+        },
+        {
+          "period": "2005",
+          "value": 3992
+        },
+        {
+          "period": "2006",
+          "value": 4445
+        },
+        {
+          "period": "2007",
+          "value": 3879
+        },
+        {
+          "period": "2008",
+          "value": 6443
+        },
+        {
+          "period": "2009",
+          "value": 6841
+        },
+        {
+          "period": "2010",
+          "value": 7473
+        },
+        {
+          "period": "2011",
+          "value": 8530
+        },
+        {
+          "period": "2012",
+          "value": 8605
+        },
+        {
+          "period": "2013",
+          "value": 8764
+        },
+        {
+          "period": "2014",
+          "value": 7949
+        },
+        {
+          "period": "2015",
+          "value": 7146
+        },
+        {
+          "period": "2016",
+          "value": 7745
+        },
+        {
+          "period": "2017",
+          "value": 9553
+        },
+        {
+          "period": "2018",
+          "value": 8823
+        },
+        {
+          "period": "2019",
+          "value": 9070
+        },
+        {
+          "period": "2020",
+          "value": 7324
+        },
+        {
+          "period": "2021",
+          "value": 10356
+        },
+        {
+          "period": "2022",
+          "value": 9371
+        },
+        {
+          "period": "2023",
+          "value": 11647
+        },
+        {
+          "period": "2024",
+          "value": 11712
+        },
+        {
+          "period": "2025",
+          "value": 12393
+        }
+      ],
+      "chart_suggestion": "折线",
+      "source": "McDonald's 各年度 10-K（SEC EDGAR, CIK 63908）；XBRL companyfacts API"
+    },
+    {
+      "series": "营业利润率（营业利润/营收）",
+      "unit": "%",
+      "basis": "GAAP，自行计算",
+      "data": [
+        {
+          "period": "2000",
+          "value": 23.7
+        },
+        {
+          "period": "2001",
+          "value": 18.5
+        },
+        {
+          "period": "2002",
+          "value": 14.0
+        },
+        {
+          "period": "2003",
+          "value": 16.9
+        },
+        {
+          "period": "2004",
+          "value": 19.0
+        },
+        {
+          "period": "2005",
+          "value": 20.1
+        },
+        {
+          "period": "2006",
+          "value": 20.6
+        },
+        {
+          "period": "2007",
+          "value": 17.0
+        },
+        {
+          "period": "2008",
+          "value": 27.4
+        },
+        {
+          "period": "2009",
+          "value": 30.1
+        },
+        {
+          "period": "2010",
+          "value": 31.0
+        },
+        {
+          "period": "2011",
+          "value": 31.6
+        },
+        {
+          "period": "2012",
+          "value": 31.2
+        },
+        {
+          "period": "2013",
+          "value": 31.2
+        },
+        {
+          "period": "2014",
+          "value": 29.0
+        },
+        {
+          "period": "2015",
+          "value": 28.1
+        },
+        {
+          "period": "2016",
+          "value": 31.5
+        },
+        {
+          "period": "2017",
+          "value": 41.9
+        },
+        {
+          "period": "2018",
+          "value": 41.5
+        },
+        {
+          "period": "2019",
+          "value": 42.5
+        },
+        {
+          "period": "2020",
+          "value": 38.1
+        },
+        {
+          "period": "2021",
+          "value": 44.6
+        },
+        {
+          "period": "2022",
+          "value": 40.4
+        },
+        {
+          "period": "2023",
+          "value": 45.7
+        },
+        {
+          "period": "2024",
+          "value": 45.2
+        },
+        {
+          "period": "2025",
+          "value": 46.1
+        }
+      ],
+      "chart_suggestion": "折线",
+      "source": "McDonald's 各年度 10-K（SEC EDGAR, CIK 63908）；XBRL companyfacts API（自行计算）",
+      "note": "2015年前后跃升主因再特许化改变了营收口径（自营销售额不再计入营收）"
+    },
+    {
+      "series": "净利润",
+      "unit": "百万美元",
+      "basis": "GAAP（2006含出售Chipotle所得；2017含税改影响；2020含疫情影响）",
+      "data": [
+        {
+          "period": "2000",
+          "value": 1977
+        },
+        {
+          "period": "2001",
+          "value": 1637
+        },
+        {
+          "period": "2002",
+          "value": 893
+        },
+        {
+          "period": "2003",
+          "value": 1471
+        },
+        {
+          "period": "2004",
+          "value": 2279
+        },
+        {
+          "period": "2005",
+          "value": 2602
+        },
+        {
+          "period": "2006",
+          "value": 3544
+        },
+        {
+          "period": "2007",
+          "value": 2395
+        },
+        {
+          "period": "2008",
+          "value": 4313
+        },
+        {
+          "period": "2009",
+          "value": 4551
+        },
+        {
+          "period": "2010",
+          "value": 4946
+        },
+        {
+          "period": "2011",
+          "value": 5503
+        },
+        {
+          "period": "2012",
+          "value": 5465
+        },
+        {
+          "period": "2013",
+          "value": 5586
+        },
+        {
+          "period": "2014",
+          "value": 4758
+        },
+        {
+          "period": "2015",
+          "value": 4529
+        },
+        {
+          "period": "2016",
+          "value": 4687
+        },
+        {
+          "period": "2017",
+          "value": 5192
+        },
+        {
+          "period": "2018",
+          "value": 5924
+        },
+        {
+          "period": "2019",
+          "value": 6025
+        },
+        {
+          "period": "2020",
+          "value": 4731
+        },
+        {
+          "period": "2021",
+          "value": 7545
+        },
+        {
+          "period": "2022",
+          "value": 6177
+        },
+        {
+          "period": "2023",
+          "value": 8469
+        },
+        {
+          "period": "2024",
+          "value": 8223
+        },
+        {
+          "period": "2025",
+          "value": 8563
+        }
+      ],
+      "chart_suggestion": "直方",
+      "source": "McDonald's 各年度 10-K（SEC EDGAR, CIK 63908）；XBRL companyfacts API"
+    },
+    {
+      "series": "稀释每股收益 EPS",
+      "unit": "美元/股",
+      "basis": "GAAP，当年报告值（2000–2006当年10-K口径；2006含Chipotle处置0.53美元，持续经营口径2.30）",
+      "data": [
+        {
+          "period": "2000",
+          "value": 1.46
+        },
+        {
+          "period": "2001",
+          "value": 1.25
+        },
+        {
+          "period": "2002",
+          "value": 0.7
+        },
+        {
+          "period": "2003",
+          "value": 1.15
+        },
+        {
+          "period": "2004",
+          "value": 1.79
+        },
+        {
+          "period": "2005",
+          "value": 2.04
+        },
+        {
+          "period": "2006",
+          "value": 2.83
+        },
+        {
+          "period": "2007",
+          "value": 1.98
+        },
+        {
+          "period": "2008",
+          "value": 3.76
+        },
+        {
+          "period": "2009",
+          "value": 4.11
+        },
+        {
+          "period": "2010",
+          "value": 4.58
+        },
+        {
+          "period": "2011",
+          "value": 5.27
+        },
+        {
+          "period": "2012",
+          "value": 5.36
+        },
+        {
+          "period": "2013",
+          "value": 5.55
+        },
+        {
+          "period": "2014",
+          "value": 4.82
+        },
+        {
+          "period": "2015",
+          "value": 4.8
+        },
+        {
+          "period": "2016",
+          "value": 5.44
+        },
+        {
+          "period": "2017",
+          "value": 6.37
+        },
+        {
+          "period": "2018",
+          "value": 7.54
+        },
+        {
+          "period": "2019",
+          "value": 7.88
+        },
+        {
+          "period": "2020",
+          "value": 6.31
+        },
+        {
+          "period": "2021",
+          "value": 10.04
+        },
+        {
+          "period": "2022",
+          "value": 8.33
+        },
+        {
+          "period": "2023",
+          "value": 11.56
+        },
+        {
+          "period": "2024",
+          "value": 11.39
+        },
+        {
+          "period": "2025",
+          "value": 11.95
+        }
+      ],
+      "chart_suggestion": "折线",
+      "source": "McDonald's 各年度 10-K（SEC EDGAR, CIK 63908）；XBRL companyfacts API；公司公告2025年调整后EPS 12.20"
+    },
+    {
+      "series": "经营活动现金流",
+      "unit": "百万美元",
+      "basis": "GAAP现金流量表",
+      "data": [
+        {
+          "period": "2000",
+          "value": 2751
+        },
+        {
+          "period": "2001",
+          "value": 2688
+        },
+        {
+          "period": "2002",
+          "value": 2890
+        },
+        {
+          "period": "2003",
+          "value": 3269
+        },
+        {
+          "period": "2004",
+          "value": 3904
+        },
+        {
+          "period": "2005",
+          "value": 4337
+        },
+        {
+          "period": "2006",
+          "value": 4341
+        },
+        {
+          "period": "2007",
+          "value": 4876
+        },
+        {
+          "period": "2008",
+          "value": 5917
+        },
+        {
+          "period": "2009",
+          "value": 5751
+        },
+        {
+          "period": "2010",
+          "value": 6342
+        },
+        {
+          "period": "2011",
+          "value": 7150
+        },
+        {
+          "period": "2012",
+          "value": 6966
+        },
+        {
+          "period": "2013",
+          "value": 7121
+        },
+        {
+          "period": "2014",
+          "value": 6730
+        },
+        {
+          "period": "2015",
+          "value": 6539
+        },
+        {
+          "period": "2016",
+          "value": 6060
+        },
+        {
+          "period": "2017",
+          "value": 5551
+        },
+        {
+          "period": "2018",
+          "value": 6967
+        },
+        {
+          "period": "2019",
+          "value": 8122
+        },
+        {
+          "period": "2020",
+          "value": 6265
+        },
+        {
+          "period": "2021",
+          "value": 9142
+        },
+        {
+          "period": "2022",
+          "value": 7387
+        },
+        {
+          "period": "2023",
+          "value": 9612
+        },
+        {
+          "period": "2024",
+          "value": 9447
+        },
+        {
+          "period": "2025",
+          "value": 10551
+        }
+      ],
+      "chart_suggestion": "折线",
+      "source": "McDonald's 各年度 10-K（SEC EDGAR, CIK 63908）；XBRL companyfacts API"
+    },
+    {
+      "series": "资本开支",
+      "unit": "百万美元",
+      "basis": "GAAP（购置不动产、厂房和设备）",
+      "data": [
+        {
+          "period": "2000",
+          "value": 1945
+        },
+        {
+          "period": "2001",
+          "value": 1906
+        },
+        {
+          "period": "2002",
+          "value": 2004
+        },
+        {
+          "period": "2003",
+          "value": 1307
+        },
+        {
+          "period": "2004",
+          "value": 1419
+        },
+        {
+          "period": "2005",
+          "value": 1607
+        },
+        {
+          "period": "2006",
+          "value": 1742
+        },
+        {
+          "period": "2007",
+          "value": 1947
+        },
+        {
+          "period": "2008",
+          "value": 2136
+        },
+        {
+          "period": "2009",
+          "value": 1952
+        },
+        {
+          "period": "2010",
+          "value": 2136
+        },
+        {
+          "period": "2011",
+          "value": 2730
+        },
+        {
+          "period": "2012",
+          "value": 3049
+        },
+        {
+          "period": "2013",
+          "value": 2825
+        },
+        {
+          "period": "2014",
+          "value": 2583
+        },
+        {
+          "period": "2015",
+          "value": 1814
+        },
+        {
+          "period": "2016",
+          "value": 1821
+        },
+        {
+          "period": "2017",
+          "value": 1854
+        },
+        {
+          "period": "2018",
+          "value": 2742
+        },
+        {
+          "period": "2019",
+          "value": 2394
+        },
+        {
+          "period": "2020",
+          "value": 1641
+        },
+        {
+          "period": "2021",
+          "value": 2040
+        },
+        {
+          "period": "2022",
+          "value": 1899
+        },
+        {
+          "period": "2023",
+          "value": 2357
+        },
+        {
+          "period": "2024",
+          "value": 2775
+        },
+        {
+          "period": "2025",
+          "value": 3365
+        }
+      ],
+      "chart_suggestion": "直方",
+      "source": "McDonald's 各年度 10-K（SEC EDGAR, CIK 63908）；XBRL companyfacts API",
+      "note": "2026年指引约37–39亿美元，2027年再增3–5亿；主要用于新开餐厅"
+    },
+    {
+      "series": "自由现金流 FCF（经营现金流－资本开支）",
+      "unit": "百万美元",
+      "basis": "自行计算，口径与公司披露一致",
+      "data": [
+        {
+          "period": "2000",
+          "value": 806
+        },
+        {
+          "period": "2001",
+          "value": 782
+        },
+        {
+          "period": "2002",
+          "value": 886
+        },
+        {
+          "period": "2003",
+          "value": 1962
+        },
+        {
+          "period": "2004",
+          "value": 2485
+        },
+        {
+          "period": "2005",
+          "value": 2730
+        },
+        {
+          "period": "2006",
+          "value": 2599
+        },
+        {
+          "period": "2007",
+          "value": 2929
+        },
+        {
+          "period": "2008",
+          "value": 3781
+        },
+        {
+          "period": "2009",
+          "value": 3799
+        },
+        {
+          "period": "2010",
+          "value": 4206
+        },
+        {
+          "period": "2011",
+          "value": 4420
+        },
+        {
+          "period": "2012",
+          "value": 3917
+        },
+        {
+          "period": "2013",
+          "value": 4296
+        },
+        {
+          "period": "2014",
+          "value": 4147
+        },
+        {
+          "period": "2015",
+          "value": 4725
+        },
+        {
+          "period": "2016",
+          "value": 4239
+        },
+        {
+          "period": "2017",
+          "value": 3697
+        },
+        {
+          "period": "2018",
+          "value": 4225
+        },
+        {
+          "period": "2019",
+          "value": 5728
+        },
+        {
+          "period": "2020",
+          "value": 4624
+        },
+        {
+          "period": "2021",
+          "value": 7102
+        },
+        {
+          "period": "2022",
+          "value": 5488
+        },
+        {
+          "period": "2023",
+          "value": 7255
+        },
+        {
+          "period": "2024",
+          "value": 6672
+        },
+        {
+          "period": "2025",
+          "value": 7186
+        }
+      ],
+      "chart_suggestion": "折线",
+      "source": "McDonald's 各年度 10-K（SEC EDGAR, CIK 63908）；XBRL companyfacts API（自行计算）；公司披露2025年FCF 71.9亿"
+    },
+    {
+      "series": "FCF转换率（FCF/净利润）",
+      "unit": "%",
+      "basis": "自行计算",
+      "data": [
+        {
+          "period": "2000",
+          "value": 41
+        },
+        {
+          "period": "2001",
+          "value": 48
+        },
+        {
+          "period": "2002",
+          "value": 99
+        },
+        {
+          "period": "2003",
+          "value": 133
+        },
+        {
+          "period": "2004",
+          "value": 109
+        },
+        {
+          "period": "2005",
+          "value": 105
+        },
+        {
+          "period": "2006",
+          "value": 73
+        },
+        {
+          "period": "2007",
+          "value": 122
+        },
+        {
+          "period": "2008",
+          "value": 88
+        },
+        {
+          "period": "2009",
+          "value": 83
+        },
+        {
+          "period": "2010",
+          "value": 85
+        },
+        {
+          "period": "2011",
+          "value": 80
+        },
+        {
+          "period": "2012",
+          "value": 72
+        },
+        {
+          "period": "2013",
+          "value": 77
+        },
+        {
+          "period": "2014",
+          "value": 87
+        },
+        {
+          "period": "2015",
+          "value": 104
+        },
+        {
+          "period": "2016",
+          "value": 90
+        },
+        {
+          "period": "2017",
+          "value": 71
+        },
+        {
+          "period": "2018",
+          "value": 71
+        },
+        {
+          "period": "2019",
+          "value": 95
+        },
+        {
+          "period": "2020",
+          "value": 98
+        },
+        {
+          "period": "2021",
+          "value": 94
+        },
+        {
+          "period": "2022",
+          "value": 89
+        },
+        {
+          "period": "2023",
+          "value": 86
+        },
+        {
+          "period": "2024",
+          "value": 81
+        },
+        {
+          "period": "2025",
+          "value": 84
+        }
+      ],
+      "chart_suggestion": "折线",
+      "source": "McDonald's 各年度 10-K（SEC EDGAR, CIK 63908）；XBRL companyfacts API（自行计算）",
+      "note": "2003–2007年>100%部分源于当年净利润被大额一次性费用压低；2007年净利润含拉美减值"
+    },
+    {
+      "series": "系统销售额（含自营、加盟、联营）",
+      "unit": "百万美元",
+      "basis": "2000–2002为FY2002 10-K报告值（含合作品牌）；2003起由‘加盟及联营销售额＋自营销售额’自行加总；2022年118,221、2025年139,365与公司披露118.2/139.4十亿一致",
+      "data": [
+        {
+          "period": "2000",
+          "value": 40181
+        },
+        {
+          "period": "2001",
+          "value": 40630
+        },
+        {
+          "period": "2002",
+          "value": 41526
+        },
+        {
+          "period": "2003",
+          "value": 45610
+        },
+        {
+          "period": "2004",
+          "value": 50807
+        },
+        {
+          "period": "2005",
+          "value": 53639
+        },
+        {
+          "period": "2006",
+          "value": 57463
+        },
+        {
+          "period": "2007",
+          "value": 63554
+        },
+        {
+          "period": "2008",
+          "value": 70693
+        },
+        {
+          "period": "2009",
+          "value": 72387
+        },
+        {
+          "period": "2010",
+          "value": 77380
+        },
+        {
+          "period": "2011",
+          "value": 85941
+        },
+        {
+          "period": "2012",
+          "value": 88290
+        },
+        {
+          "period": "2013",
+          "value": 89125
+        },
+        {
+          "period": "2014",
+          "value": 87786
+        },
+        {
+          "period": "2015",
+          "value": 82714
+        },
+        {
+          "period": "2016",
+          "value": 85002
+        },
+        {
+          "period": "2017",
+          "value": 90910
+        },
+        {
+          "period": "2018",
+          "value": 96147
+        },
+        {
+          "period": "2019",
+          "value": 100178
+        },
+        {
+          "period": "2020",
+          "value": 93317
+        },
+        {
+          "period": "2021",
+          "value": 112462
+        },
+        {
+          "period": "2022",
+          "value": 118221
+        },
+        {
+          "period": "2023",
+          "value": 129492
+        },
+        {
+          "period": "2024",
+          "value": 130715
+        },
+        {
+          "period": "2025",
+          "value": 139365
+        }
+      ],
+      "chart_suggestion": "折线",
+      "source": "FY2002/2006/2009/2015/2020/2022/2025 10-K",
+      "note": "2003–2006年为加盟联营销售额（含联营）+自营销售额；与公司当年披露的系统销售额可能因合作品牌口径有小幅差异"
+    },
+    {
+      "series": "营收/系统销售额",
+      "unit": "%",
+      "basis": "自行计算",
+      "data": [
+        {
+          "period": "2000",
+          "value": 35.3
+        },
+        {
+          "period": "2001",
+          "value": 36.3
+        },
+        {
+          "period": "2002",
+          "value": 36.6
+        },
+        {
+          "period": "2003",
+          "value": 36.9
+        },
+        {
+          "period": "2004",
+          "value": 36.6
+        },
+        {
+          "period": "2005",
+          "value": 37.0
+        },
+        {
+          "period": "2006",
+          "value": 37.6
+        },
+        {
+          "period": "2007",
+          "value": 35.9
+        },
+        {
+          "period": "2008",
+          "value": 33.3
+        },
+        {
+          "period": "2009",
+          "value": 31.4
+        },
+        {
+          "period": "2010",
+          "value": 31.1
+        },
+        {
+          "period": "2011",
+          "value": 31.4
+        },
+        {
+          "period": "2012",
+          "value": 31.2
+        },
+        {
+          "period": "2013",
+          "value": 31.5
+        },
+        {
+          "period": "2014",
+          "value": 31.3
+        },
+        {
+          "period": "2015",
+          "value": 30.7
+        },
+        {
+          "period": "2016",
+          "value": 29.0
+        },
+        {
+          "period": "2017",
+          "value": 25.1
+        },
+        {
+          "period": "2018",
+          "value": 22.1
+        },
+        {
+          "period": "2019",
+          "value": 21.3
+        },
+        {
+          "period": "2020",
+          "value": 20.6
+        },
+        {
+          "period": "2021",
+          "value": 20.6
+        },
+        {
+          "period": "2022",
+          "value": 19.6
+        },
+        {
+          "period": "2023",
+          "value": 19.7
+        },
+        {
+          "period": "2024",
+          "value": 19.8
+        },
+        {
+          "period": "2025",
+          "value": 19.3
+        }
+      ],
+      "chart_suggestion": "折线",
+      "source": "自行计算",
+      "note": "衡量‘轻资产化’：从约35%降至约19%"
+    },
+    {
+      "series": "全球餐厅数（年末）",
+      "unit": "家",
+      "basis": "10-K 系统餐厅总数（含自营、加盟、联营）",
+      "data": [
+        {
+          "period": "2000",
+          "value": 28603
+        },
+        {
+          "period": "2001",
+          "value": 29916
+        },
+        {
+          "period": "2002",
+          "value": 30876
+        },
+        {
+          "period": "2003",
+          "value": 30824
+        },
+        {
+          "period": "2004",
+          "value": 31152
+        },
+        {
+          "period": "2005",
+          "value": 31397
+        },
+        {
+          "period": "2006",
+          "value": 31667
+        },
+        {
+          "period": "2007",
+          "value": 31377
+        },
+        {
+          "period": "2008",
+          "value": 31967
+        },
+        {
+          "period": "2009",
+          "value": 32478
+        },
+        {
+          "period": "2010",
+          "value": 32737
+        },
+        {
+          "period": "2011",
+          "value": 33510
+        },
+        {
+          "period": "2012",
+          "value": 34480
+        },
+        {
+          "period": "2013",
+          "value": 35429
+        },
+        {
+          "period": "2014",
+          "value": 36258
+        },
+        {
+          "period": "2015",
+          "value": 36525
+        },
+        {
+          "period": "2016",
+          "value": 36899
+        },
+        {
+          "period": "2017",
+          "value": 37241
+        },
+        {
+          "period": "2018",
+          "value": 37855
+        },
+        {
+          "period": "2019",
+          "value": 38695
+        },
+        {
+          "period": "2020",
+          "value": 39198
+        },
+        {
+          "period": "2021",
+          "value": 40031
+        },
+        {
+          "period": "2022",
+          "value": 40275
+        },
+        {
+          "period": "2023",
+          "value": 41822
+        },
+        {
+          "period": "2024",
+          "value": 43477
+        },
+        {
+          "period": "2025",
+          "value": 45356
+        }
+      ],
+      "chart_suggestion": "折线",
+      "source": "各年度10-K selected financial data",
+      "note": "2026年9月末46,554家（FY2025年末45,356家）"
+    },
+    {
+      "series": "税后ROIC（公司披露）",
+      "unit": "%",
+      "basis": "公司披露‘持续经营税后ROIC’，见10-K Exhibit 12/99.1",
+      "data": [
+        {
+          "period": "2018",
+          "value": 20.0
+        },
+        {
+          "period": "2019",
+          "value": 19.2
+        },
+        {
+          "period": "2020",
+          "value": 14.9
+        },
+        {
+          "period": "2021",
+          "value": 21.5
+        },
+        {
+          "period": "2022",
+          "value": 22.6
+        },
+        {
+          "period": "2023",
+          "value": 25.2
+        },
+        {
+          "period": "2024",
+          "value": 21.8
+        },
+        {
+          "period": "2025",
+          "value": 20.3
+        }
+      ],
+      "chart_suggestion": "折线",
+      "source": "FY2020、FY2022、FY2025 10-K MD&A",
+      "note": "2016–2017年及更早无同口径公开序列[不确定]；替代指标：平均资产回报率（营业利润/13个月平均总资产）2015年20.9%、2016年23.0%、2017年29.0%（FY2017 10-K Exhibit 12）"
+    }
+  ],
+  "item_specific_extras": {
+    "crisis_2003_vs_transformation_2015": {
+      "2003前后": {
+        "2000年": "营收141.7亿，营业利润33.5亿（利润率23.7%），EPS 1.46",
+        "2002年低谷": "营收152.0亿，营业利润21.3亿（利润率14.0%，含8.53亿美元重组/关店/减值/技术核销费用，约合每股0.55美元），净利润8.93亿、EPS 0.70；FY2002年首次出现季度亏损[不确定，二手印象，未在10-K原文核实]",
+        "2003年": "营收168.3亿，营业利润28.4亿，净利润14.7亿、EPS 1.15（含4.08亿美元非麦当劳品牌处置及减值费用）；Cantalupo于2003年1月重掌CEO，提出‘Plan to Win’聚焦现有餐厅同店销售而非扩张",
+        "复苏": "2004年EPS 1.79、2005年2.04、2006年2.83（持续经营2.30）；2006年营业利润44.5亿；股息从2002年每股0.24美元升至2006年1.00美元",
+        "危机性质": "经营性（品牌/服务/菜单/过度扩张）而非财务性，未伤及特许经营现金流；2000–2003年净开店减少、资本开支从19.5亿降至13.1亿（2003年）"
+      },
+      "2015前后": {
+        "2015年前": "2012年起同店销售乏力；2014年营业利润79.5亿，2015年71.5亿，EPS 4.80，营业利润率28.1%，ROIIC三年期为-3.7%（FY2015 10-K）",
+        "转型措施": "2015年5月公布增长计划：再特许化约4,000家餐厅至2018年、年化G&A节省约5亿美元、三年向股东返还约300亿美元（比原目标增加100亿，增量主要靠新增债务融资）（FY2015 10-K）；2016年单年回购111.4亿美元、回购9,230万股",
+        "转型后": "2017年营业利润95.5亿（含出售中国/香港业务收益），营业利润率41.9%；2019年EPS 7.88、营业利润率42.5%；2021年EPS 10.04；2025年EPS 11.95、营业利润率46.1%、ROIC 20.3%",
+        "代价": "营收从2014年274亿降至2020年192亿；股东权益由2014年129亿转为2016年起为负；总债务从2014年149亿升至2025年400亿"
+      }
+    },
+    "period_averages": {
+      "营业利润率均值：2010–2014": "约30.8%",
+      "营业利润率均值：2019–2025": "约43.2%",
+      "稀释EPS复合增速：2003–2014": "约15.4%（从低基数起算，含回购）",
+      "稀释EPS复合增速：2015–2025": "约9.6%",
+      "营业利润复合增速：2015–2025": "约5.7%",
+      "系统销售额复合增速：2015–2025": "约5.4%",
+      "餐厅数复合增速：2015–2025": "约2.2%"
+    },
+    "latest_2026_ytd": {
+      "截至": "2026年9月30日（Q3 2026 10-Q，2026-11-06提交）",
+      "前9个月": "营收207.7亿（+5%，固定汇率+2%）、营业利润98.9亿（+7%，利润率约47.6%）、净利润68.3亿、稀释EPS 9.61（2025同期8.92）、经营现金流82.5亿、资本开支24.0亿（FCF约58.5亿）",
+      "Q3单季": "营收71.6亿、营业利润35.95亿、稀释EPS 3.51；系统销售额增4%；全球同店销售+1.5%，美国-0.2%；餐厅46,554家",
+      "其他": "2026年前9个月回购17.7亿美元（620万股）、股息39.5亿；9月宣布季度股息上调4%至1.93美元；股东权益-3.43亿（FY2025末-17.9亿）"
+    },
+    "derived_checks": "系统销售额2022年118,221百万/2025年139,365百万与公司披露一致；FCF 2025年71.86亿与公司披露71.9亿一致"
+  },
+  "value_investing_implications": "从巴菲特式视角：（1）长期复利质量：2000–2025年EPS复合约8.8%、营业利润约5.4%，增速不算惊艳，但盈利可预测性高——除2002–2003、2007（拉美减值）、2020（疫情）外，营业利润基本逐年创高，2021年起利润率稳定在40%以上。（2）轻资本再投资：资本开支仅占经营现金流的约1/3（2025年32%），FCF转换率常年80–100%，ROIC约20–25%，属于‘赚的钱能大部分拿出来分红回购’的类型。（3）定价权与通胀抵御：租金与特许权使用费按销售额百分比抽取，提价自动传导到收入，10-K也强调‘Company has demonstrated an ability to manage inflationary cost increases’（见key_quotes）。（4）风险：增长主要靠净开店（约2%）+提价，2024年全球同店销售-0.1%、2026年Q3美国同店-0.2%显示客流/价值感压力；2015年和2003年两次‘自我失误’说明品牌运营失误会让利润停滞数年；高杠杆+负权益使ROIC/ROE比较需要谨慎，ROIC口径不能直接对比其他公司。（5）估值前提：利润率已处历史高位，进一步提升空间有限，未来EPS增速更依赖销售增长（4–6%）、回购（约1%）和利率/税率稳定。",
+  "controversies": "（1）营业利润率跃升多少是‘真实效率提升’，多少只是‘营收口径变化’（再特许化使自营销售额退出营收），应结合营业利润额及系统销售额看；（2）EPS含一次性项目（2006年Chipotle、2007年拉美减值、2017年税改与出售中国业务、2020年疫情及2025–2026年重组费用），GAAP与调整后口径常有差异（2025年GAAP 11.95 vs 调整后12.20）；（3）ROIC仅2018年起有同口径披露，且公司明确提示与其他公司不可直接比较，回购导致的负权益使ROE失真；（4）2015年转型的‘债务融资回购’是否透支资产负债表：2015年起总债务从149亿升至400亿，但利息保障与现金流（经营现金流/债务26%）尚可。",
+  "key_quotes": [
+    {
+      "quote": "The Company's heavily franchised business model is designed to generate stable and predictable revenue, which is largely a function of franchisee sales, and resulting cash flow streams.（我们高度加盟化的商业模式旨在产生稳定、可预测的收入，其很大程度取决于加盟商销售额及由此产生的现金流。）",
+      "speaker": "McDonald's 公司",
+      "source": "FY2025 10-K（2026-02-24提交）MD&A Revenues",
+      "date": "2026-02-24"
+    },
+    {
+      "quote": "The Company has demonstrated an ability to manage inflationary cost increases effectively. This ability is because of rapid inventory turnover, the ability to adjust menu prices, cost controls and substantial property holdings, many of which are at fixed costs and partly financed by debt made less expensive by inflation.（公司已证明能有效应对成本通胀：库存周转快、可调整菜单价格、成本控制，以及大量固定成本且部分由因通胀而变便宜的债务融资的物业持有。）",
+      "speaker": "McDonald's 公司",
+      "source": "FY2020 10-K Effects of Changing Prices—Inflation",
+      "date": "2021-02-23"
+    },
+    {
+      "quote": "The Company's after-tax return on invested capital ('ROIC') from continuing operations is a metric that management believes measures capital-allocation effectiveness over time. Other companies may calculate ROIC differently, limiting the usefulness of the measure for comparisons with other companies.（公司税后ROIC衡量资本配置效果；其他公司可能采用不同口径，限制了跨公司比较的意义。）",
+      "speaker": "McDonald's 公司",
+      "source": "FY2025 10-K MD&A Non-GAAP 说明",
+      "date": "2026-02-24"
+    }
+  ],
+  "data_confidence": "一手为主：2000–2006取自FY2006 10-K‘11年摘要’（持续经营口径，已剔除Chipotle）；2007–2025营收/营业利润/净利润/EPS/经营现金流/资本开支取自SEC XBRL companyfacts（各年10-K，后续年份对旧年份的重列以最新为准，个别年份与当年原始披露可能有小幅差异，如2016年营收XBRL为246.2亿而FY2020 10-K五年表重列为247.7亿）；系统销售额2000–2002为FY2002 10-K报告值，2003–2025为‘加盟及联营销售额+自营销售额’自行加总（2022、2025与公司披露相符，其余年份可能与当时披露有±1%内差异）；ROIC仅2018–2025为公司披露，2000–2017无同口径公开序列（标[不确定]）；2002年‘首次季度亏损’的说法未在原始文件核实，已标[不确定]；FCF、利润率、FCF转换率均为自行计算。GAAP口径为主，调整后EPS仅在2025年作对比（12.20）。",
+  "as_of_date": "2026-11-06（FY2025年度数据 + 2026年Q3 10-Q）",
+  "sources": [
+    {
+      "title": "McDonald's Form 10-K FY2025",
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm",
+      "date": "2026-02-24",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's Form 10-K FY2020（5年摘要、ROIC）",
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390821000013/mcd-20201231.htm",
+      "date": "2021-02-23",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's Form 10-K FY2022（ROIC、系统销售额）",
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390823000012/mcd-20221231.htm",
+      "date": "2023-02-24",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's Form 10-K FY2018（ROIIC、再特许化）",
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390819000010/mcd-12312018x10k.htm",
+      "date": "2019-02-22",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's Form 10-K FY2015（6年摘要、转型计划）",
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390816000103/mcd-12312015x10k.htm",
+      "date": "2016-02-25",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's Form 10-K FY2009（2004–2009摘要）",
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000119312510042025/d10k.htm",
+      "date": "2010-02-26",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's Form 10-K FY2006（11年摘要1996–2006）",
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000119312507039707/d10k.htm",
+      "date": "2007-02-26",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's Form 10-K FY2002（系统销售额、2003危机前）",
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000104746903008450/a2105107z10-k.htm",
+      "date": "2003-03-12",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's FY2017 10-K Exhibit 12（平均资产回报率、负债率）",
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390818000010/mcd-12312017xex12.htm",
+      "date": "2018-02-23",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's Form 10-Q Q3 2026",
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000083/mcd-20260930.htm",
+      "date": "2026-11-06",
+      "type": "一手"
+    },
+    {
+      "title": "SEC XBRL companyfacts API（McDonald's）",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000063908.json",
+      "date": "2026-11-10",
+      "type": "一手"
+    },
+    {
+      "title": "Fortune: How McDonald's got CEO succession right（Cantalupo/Plan to Win背景）",
+      "url": "https://fortune.com/2011/08/23/how-mcdonalds-got-ceo-succession-right",
+      "date": "2011-08-23",
+      "type": "二手"
+    }
+  ],
+  "uncertain": [
+    "key_data_series.ROIC(2000–2017)",
+    "item_specific_extras.crisis_2003_vs_transformation_2015.2003前后.2002年低谷中‘首次季度亏损’说法",
+    "key_data_series.系统销售额(2003–2021逐年加总口径)"
+  ]
+}
