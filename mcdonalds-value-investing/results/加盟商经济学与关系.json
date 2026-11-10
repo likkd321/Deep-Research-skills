@@ -15,12 +15,30 @@
       "unit": "千美元/店/年",
       "basis": "公司管理层口述与行业媒体转述，非审计数据；扣利息、折旧、税、改造资本开支前",
       "data": [
-        {"period": "2020", "value": "约375—400（由2021年超500且较上年增约125推算）[不确定]"},
-        {"period": "2021", "value": "超过500（创纪录）"},
-        {"period": "2022", "value": "约400—420（较2021年每店下降约100）[不确定]"},
-        {"period": "2023", "value": "公司称为历史最好年份之一，具体数未披露[不确定]"},
-        {"period": "2025", "value": "约500（投资者日披露，且较2024年增长）"},
-        {"period": "2026E", "value": "约500（CEO：「right around that 500」，取决于Q4）"}
+        {
+          "period": "2020",
+          "value": "约375—400（由2021年超500且较上年增约125推算）[不确定]"
+        },
+        {
+          "period": "2021",
+          "value": "超过500（创纪录）"
+        },
+        {
+          "period": "2022",
+          "value": "约400—420（较2021年每店下降约100）[不确定]"
+        },
+        {
+          "period": "2023",
+          "value": "公司称为历史最好年份之一，具体数未披露[不确定]"
+        },
+        {
+          "period": "2025",
+          "value": "约500（投资者日披露，且较2024年增长）"
+        },
+        {
+          "period": "2026E",
+          "value": "约500（CEO：「right around that 500」，取决于Q4）"
+        }
       ],
       "chart_suggestion": "折线",
       "source": "Restaurant Business、Business Insider（2021年Q4业绩会）；麦当劳2026投资者日；Q3 2026业绩会"
@@ -30,12 +48,30 @@
       "unit": "千美元",
       "basis": "FDD第19项，开业满一年的传统店",
       "data": [
-        {"period": "2024 加盟店平均", "value": "3966"},
-        {"period": "2025 加盟店平均", "value": "4057"},
-        {"period": "2025 加盟店中位数", "value": "3887"},
-        {"period": "2025 全部本土传统店平均", "value": "4088"},
-        {"period": "2025 自营店（McOpCo）平均", "value": "4871"},
-        {"period": "2025 IOM前五大市场平均", "value": "超过4500（单店现金流约400）"}
+        {
+          "period": "2024 加盟店平均",
+          "value": "3966"
+        },
+        {
+          "period": "2025 加盟店平均",
+          "value": "4057"
+        },
+        {
+          "period": "2025 加盟店中位数",
+          "value": "3887"
+        },
+        {
+          "period": "2025 全部本土传统店平均",
+          "value": "4088"
+        },
+        {
+          "period": "2025 自营店（McOpCo）平均",
+          "value": "4871"
+        },
+        {
+          "period": "2025 IOM前五大市场平均",
+          "value": "超过4500（单店现金流约400）"
+        }
       ],
       "chart_suggestion": "直方",
       "source": "McDonald's 2026 FDD Item 19（经Franchise Chatter转述）；2026投资者日"
@@ -45,9 +81,18 @@
       "unit": "%",
       "basis": "GAAP，10-K分部数据计算：美国加盟收入÷美国加盟销售额（不含广告费）",
       "data": [
-        {"period": "2023", "value": "14.4（7,163/49,914）"},
-        {"period": "2024", "value": "14.3（7,211/50,272）"},
-        {"period": "2025", "value": "14.2（7,371/51,946）"}
+        {
+          "period": "2023",
+          "value": "14.4（7,163/49,914）"
+        },
+        {
+          "period": "2024",
+          "value": "14.3（7,211/50,272）"
+        },
+        {
+          "period": "2025",
+          "value": "14.2（7,371/51,946）"
+        }
       ],
       "chart_suggestion": "折线",
       "source": "McDonald's 10-K FY2025"
@@ -57,16 +102,46 @@
       "unit": "%",
       "basis": "GAAP，10-K分部数据计算",
       "data": [
-        {"period": "2023 美国", "value": "15.2"},
-        {"period": "2024 美国", "value": "13.0"},
-        {"period": "2025 美国", "value": "11.6"},
-        {"period": "2023 IOM", "value": "17.4"},
-        {"period": "2024 IOM", "value": "16.6"},
-        {"period": "2025 IOM", "value": "16.8"},
-        {"period": "2023 全公司", "value": "15.6"},
-        {"period": "2024 全公司", "value": "14.8"},
-        {"period": "2025 全公司", "value": "14.7"},
-        {"period": "2026前三季 全公司", "value": "14.5（1,064/7,322）"}
+        {
+          "period": "2023 美国",
+          "value": "15.2"
+        },
+        {
+          "period": "2024 美国",
+          "value": "13.0"
+        },
+        {
+          "period": "2025 美国",
+          "value": "11.6"
+        },
+        {
+          "period": "2023 IOM",
+          "value": "17.4"
+        },
+        {
+          "period": "2024 IOM",
+          "value": "16.6"
+        },
+        {
+          "period": "2025 IOM",
+          "value": "16.8"
+        },
+        {
+          "period": "2023 全公司",
+          "value": "15.6"
+        },
+        {
+          "period": "2024 全公司",
+          "value": "14.8"
+        },
+        {
+          "period": "2025 全公司",
+          "value": "14.7"
+        },
+        {
+          "period": "2026前三季 全公司",
+          "value": "14.5（1,064/7,322）"
+        }
       ],
       "chart_suggestion": "折线",
       "source": "McDonald's 10-K FY2025；10-Q Q3 2026"
@@ -76,10 +151,22 @@
       "unit": "%",
       "basis": "GAAP，10-K计算",
       "data": [
-        {"period": "2025 美国", "value": "82.5"},
-        {"period": "2025 IOM", "value": "81.8"},
-        {"period": "2025 IDL及公司", "value": "99.9"},
-        {"period": "2025 全公司", "value": "84.2"}
+        {
+          "period": "2025 美国",
+          "value": "82.5"
+        },
+        {
+          "period": "2025 IOM",
+          "value": "81.8"
+        },
+        {
+          "period": "2025 IDL及公司",
+          "value": "99.9"
+        },
+        {
+          "period": "2025 全公司",
+          "value": "84.2"
+        }
       ],
       "chart_suggestion": "直方",
       "source": "McDonald's 10-K FY2025；Q4 2025业绩公告"
@@ -89,14 +176,38 @@
       "unit": "家",
       "basis": "10-Q",
       "data": [
-        {"period": "2025-09 传统加盟", "value": "22280"},
-        {"period": "2025-09 发展授权", "value": "9459"},
-        {"period": "2025-09 外资关联", "value": "10807"},
-        {"period": "2025-09 自营", "value": "2053"},
-        {"period": "2026-09 传统加盟", "value": "22930"},
-        {"period": "2026-09 发展授权", "value": "9952"},
-        {"period": "2026-09 外资关联", "value": "11748"},
-        {"period": "2026-09 自营", "value": "1924"}
+        {
+          "period": "2025-09 传统加盟",
+          "value": "22280"
+        },
+        {
+          "period": "2025-09 发展授权",
+          "value": "9459"
+        },
+        {
+          "period": "2025-09 外资关联",
+          "value": "10807"
+        },
+        {
+          "period": "2025-09 自营",
+          "value": "2053"
+        },
+        {
+          "period": "2026-09 传统加盟",
+          "value": "22930"
+        },
+        {
+          "period": "2026-09 发展授权",
+          "value": "9952"
+        },
+        {
+          "period": "2026-09 外资关联",
+          "value": "11748"
+        },
+        {
+          "period": "2026-09 自营",
+          "value": "1924"
+        }
       ],
       "chart_suggestion": "堆叠",
       "source": "McDonald's 10-Q Q3 2026"
@@ -106,10 +217,22 @@
       "unit": "百万美元",
       "basis": "GAAP，其他经营（收益）费用中的出售餐厅业务收益",
       "data": [
-        {"period": "2023", "value": "103"},
-        {"period": "2024", "value": "94"},
-        {"period": "2025", "value": "133"},
-        {"period": "2026前三季", "value": "未单独披露；出售餐厅业务现金流入414（上年同期185），其他经营净收益245（上年同期1）[不确定]"}
+        {
+          "period": "2023",
+          "value": "103"
+        },
+        {
+          "period": "2024",
+          "value": "94"
+        },
+        {
+          "period": "2025",
+          "value": "133"
+        },
+        {
+          "period": "2026前三季",
+          "value": "未单独披露；出售餐厅业务现金流入414（上年同期185），其他经营净收益245（上年同期1）[不确定]"
+        }
       ],
       "chart_suggestion": "直方",
       "source": "McDonald's 10-K FY2025；10-Q Q3 2026"
@@ -120,14 +243,15 @@
       "口径说明": "美国传统加盟店，2025年，结合FDD第19项形式利润表与10-K分部数据推算，比例为约数",
       "平均单店销售额AUV": "约406万美元（加盟店）；中位数约389万",
       "食材纸品+人工+其他店内运营成本": "约74%—76%",
-      "扣占用成本前经营利润": "约24%—26%（FDD：销售300万时73.2万/24.4%，340万时86.4万/25.4%）",
-      "租金": "约9%—10%（基础租金与按销售额百分比租金取高者；2025年各店实际租金占销售额0%—33.37%，差异极大）[不确定]",
-      "特许权使用费": "4%（老店）或5%（2024年起新店、新加盟商、收购自营店者）",
+      "扣占用成本前经营利润": "约24%—26%（2026年版FDD第19项形式利润表，基于11,512家独立加盟商餐厅：销售300万时73.2万/24.4%，320万时79.5万/24.8%，340万时86.4万/25.4%；毛利率约71%—72%）。口径：未扣除租金、服务费（特许费）、折旧摊销、利息与所得税；约78%/72%/66%的加盟店分别超过上述三档利润水平",
+      "租金（FDD第6项条款）": "基础租金与按销售额百分比租金取高者（月销售额超过「基础租金÷百分比率」时按百分比计租）。较早版本FDD的百分比租金按麦当劳在该店的投资额分档：新建传统店（2020年1月1日后开业）投资额0—155万美元对应10.00%，逐档升至351万—361万美元对应15.75%，超过361万每多10万加0.25个百分点；迁址传统店（2013年7月1日后）8.50%—15.00%；小镇加油站店9.50%—11.50%、小镇零售店9.00%—11.00%；沃尔玛店内店14%—15.5%；续约新期租率不低于上期且低于8.50%者可上调至8.50%。2026年版FDD：2026年1月14日及以后开业的新建/迁址传统店百分比租金一般为销售额的6%—23%，并在首期前七年逐步上升（经第三方转述原文片段）",
+      "租金（实际平均占比，估算）": "约9%—10%（10-K测算租金+特许费合计约14.2%减特许费4%—5%得出）；2025年各加盟店实际有效租金占销售额0.00%—33.37%，差异极大[不确定]",
+      "特许权使用费": "5%：2024年1月1日后新开业餐厅、从公司（McOpCo）购入的餐厅、经优先购买权取得后转售的餐厅；4%：2024年前开业的存量餐厅、家族内转让、存量店续签新期、加盟商之间买卖存量店、原址重建（FDD第6项，经第三方转述）",
       "租金+特许费合计": "约14.2%（10-K测算）",
       "广告推广费": "不少于4%（进入加盟商自治的广告合作基金）",
-      "技术费等其他": "有，金额较小[不确定]",
+      "技术费等其他": "多项按月自动扣款的技术费（POS、点餐机、App、网络安全、微软授权等），单项从每年不到50美元到5,000美元以上不等，另有一次性部署费；合计金额FDD未汇总（第三方FDD摘要转述）",
       "单店经营现金流": "约50万美元，约占销售额11%—12%（扣利息、折旧、税、资本开支前）",
-      "初始投资": "约147.2万—280.7万美元（设备装修110万—185万为大头；含加盟费4.5万；土地建筑由公司提供）",
+      "初始投资": "2026年版FDD第7项：传统店约147.2万—280.7万美元（加盟费4.5万；设备装修招牌110万—185万；3个月租金0—31万；开业库存2万—3.9万；杂项5.5万—6.8万；培训差旅0.2万—4.3万；3个月备用金25万—45.2万）；较早版本为147.05万—264.2万。小镇加油站/零售店101.55万—186.45万；卫星店70.1万—141.15万。土地建筑由公司提供",
       "静态回本期": "约3—5年[估算]；公司口径NEXT改造后加盟商回本约4年",
       "改造负担": "标准大堂改造约40万—45万美元/店，由加盟商出资；NEXT全面部署增量约80万美元/店（IOM头部市场65万—70万），公司部分分担；新一轮10年改造周期预计2027—2028年开始",
       "加盟期限": "通常20年"
@@ -145,9 +269,21 @@
       "2026年9月23日：投资者日宣布85亿美元伙伴支持；截至Q3 2026业绩会，美国租金与资本支持的具体分配仍在与加盟商协商"
     ],
     "公司补贴记录": [
-      {"时间": "2024年Q4", "名目": "大肠杆菌事件恢复", "金额": "1亿美元（6,500万加盟商+3,500万营销）"},
-      {"时间": "2025年9月—2026年3月", "名目": "Extra Value Meals共同出资", "金额": "9月约1,500万+Q4约7,500万+约4,000万营销；2026年Q1按净负现金流影响50%分担，实际低于约3,500万预估"},
-      {"时间": "2027—2036年", "名目": "NEXT伙伴支持（租金减免+资本补贴）", "金额": "约85亿美元（2030年前约50亿；2027—2030年资本补贴累计约15亿—20亿），按剩余加盟期（平均约10年）摊销；公司自身回本约5—6年"}
+      {
+        "时间": "2024年Q4",
+        "名目": "大肠杆菌事件恢复",
+        "金额": "1亿美元（6,500万加盟商+3,500万营销）"
+      },
+      {
+        "时间": "2025年9月—2026年3月",
+        "名目": "Extra Value Meals共同出资",
+        "金额": "9月约1,500万+Q4约7,500万+约4,000万营销；2026年Q1按净负现金流影响50%分担，实际低于约3,500万预估"
+      },
+      {
+        "时间": "2027—2036年",
+        "名目": "NEXT伙伴支持（租金减免+资本补贴）",
+        "金额": "约85亿美元（2030年前约50亿；2027—2030年资本补贴累计约15亿—20亿），按剩余加盟期（平均约10年）摊销；公司自身回本约5—6年"
+      }
     ],
     "再加盟进程": {
       "加盟占比": "2026年初约95%，目标2028年底约98%（全球）",
@@ -161,50 +297,230 @@
       "加盟商应对": "提价（有加盟商提前提价5%—7%）、削减工时（中央谷地18家店工时同比下降近12%）、推迟设备与维修资本开支、增加点餐机",
       "对公司": "公司收入按销售额计提，提价反而支撑租金和特许费；但美国自营店利润率受压（与价值战、食材通胀叠加），且加剧全国性「价格太贵」的口碑问题",
       "后续": "2025—2026年加州是否继续上调快餐最低时薪及对单店现金流的量化影响，未找到权威数据[不确定]"
+    },
+    "FDD原件核对记录": {
+      "结论": "未能直接读取FDD原件PDF；第6/7/19项数字通过三个独立第三方FDD摘要（FDD Exchange、Franchise Chatter、WhichFranchise）交叉核对，2026年版第7项与第19项数字在两家摘要中完全一致，可信度中高",
+      "尝试途径": [
+        "Wisconsin DFI加盟登记检索（wdfi.org）：代理网关无法连接该站（502）",
+        "Minnesota CARDS（cards.commerce.state.mn.us）：返回403拒绝访问",
+        "California DFPI docqnet：跳转至受监管机构名单页，文档检索为前端动态应用，无法取得PDF",
+        "NASAA电子FDD库（nasaaefd.org，DocId=319348，McDonald's USA, LLC FDD）：搜索引擎可见原文片段，但下载与抓取均返回403",
+        "Franchimp托管的2019年版FDD PDF：返回403"
+      ],
+      "已核对要点": [
+        "第5项：初始加盟费4.5万美元（小镇店2.25万、卫星店500美元）",
+        "第6项：特许费4%或5%（条件见unit_economics）；广告推广费不少于4%；百分比租金分档见unit_economics；2026年1月14日后开业新店百分比租金一般6%—23%",
+        "第7项：传统店147.2万—280.7万美元（2026年版）",
+        "第19项：本土传统店2025年平均销售额408.8万美元（中位数391.7万）；加盟店405.7万（中位数388.7万）；自营店487.1万；形式利润表扣占用成本前经营利润24.4%—25.4%"
+      ],
+      "仍待原件确认": "2026年版第6项百分比租金完整分档表；第19项「经营利润」的精确定义与样本筛选口径"
     }
   },
   "value_investing_implications": "1. 护城河的另一面：麦当劳的护城河一半在品牌与规模，一半在「把最难的活外包给最有动力的人」。加盟商用自己的钱和身家经营门店，单店现金流约50万美元、远高于同行，这让加盟资格成为稀缺资产，公司对续约、扩店、价格执行具有很强的话语权——这是收租模式能长期维持约84%加盟利润率的根基。\n2. 确定性：公司收入按销售额而不是利润抽成，即使加盟商利润下降，公司的租金和特许费仍随系统销售额增长（2026年前三季美国可比销售仅+1.4%，加盟收入仍+5%、经营利润+7%）。短期看，加盟商的痛苦不会直接传导到公司报表，这是确定性来源；但长期看，加盟商现金流是整套系统的「地基」——现金流不足就不愿改造、不愿扩店、不愿执行价值菜单，最终会拖累销售额。巴菲特式投资者应把「美国加盟商单店现金流」当作领先指标跟踪。\n3. 再投资需求与资本负担在悄悄转移：85亿美元伙伴支持（大部分为租金减免）本质上是公司把一部分未来租金让给加盟商，换取约每店80万美元NEXT改造的执行。这意味着「轻资产收租」模式在未来十年需要更多「隐形资本」，公司自己估算回本5—6年。对所有者盈余而言，这是需要从未来租金中扣减的真实成本，应按每年约5亿—10亿美元的规模在估值中做调整[估算]。\n4. 定价权的边界：麦当劳的定价权不在公司而在加盟商与消费者之间——2023—2024年加盟商大幅提价（叠加加州时薪）导致低收入客群流失，公司随后不得不用补贴「买回」降价。这说明定价权有天花板：提价可以抵御通胀，但过度提价会损害客流这一真正的护城河。\n5. 通胀抵御：按销售额分成的租金与特许费天然随菜单价上涨，对公司是通胀保护；但成本通胀（食材中个位数、人工）由加盟商承担，挤压到一定程度就会逼公司让利（补贴、租金减免），所以公司的通胀抵御并非无代价。\n6. 长期复利：再加盟（目标98%）会把公司进一步推向纯收租模式，抬升利润率（目标2030年50%出头到中段）和自由现金流转化率（目标80%中高段），有利于长期复利；但再加盟收益属一次性，不应资本化进估值。",
   "controversies": "1. 加盟商到底赚不赚钱：公司口径（现金流较2018年+35%至+50%、2025年增长、「财务健康度业内领先」）与NOA口径（95%利润下降、近八成现金流不足以再投资）严重对立；公司称NOA代表性不足，NOA称公司从不披露加盟商盈利数据。真实分布未知，中位数加盟商可能显著低于均值。\n2. 85亿美元支持是否足够：媒体估计NEXT全套改造每店可能达120万美元以上，租金减免覆盖不了全部；租金与资本补贴的比例、美国所占份额、是否附带改造时限均未披露，投资者日当日股价一度跌6.5%。\n3. 价值战的成本由谁承担：公司主张价值是基础、要求加盟商执行推荐价格，NOA认为这是把成本转嫁给运营者，且约四分之三加盟商感到被迫降价、八成以上认为折扣带来的增量客流不足以弥补毛利损失。\n4. 再加盟是加分还是隐患：提升利润率但削弱公司对一线的掌控和试验能力；自营店利润率低也可能部分反映公司自身运营问题而非结构必然。\n5. 加州时薪的长期影响：就业流失数字多来自利益相关方（如行业智库称约9,500—19,000个岗位），学术研究结论不一，难以单独剥离对麦当劳的影响。",
   "key_quotes": [
-    {"quote": "Their financial health is industry-leading.（他们的财务健康度在业内领先。）", "speaker": "CFO Ian Borden", "source": "2026年投资者日", "date": "2026-09-23"},
-    {"quote": "about a four-year payback for franchisees after partnering（伙伴支持之后加盟商约四年回本）", "speaker": "CFO Ian Borden", "source": "2026年投资者日", "date": "2026-09-23"},
-    {"quote": "$8.5 billion is a cash number.（85亿美元是现金口径。）", "speaker": "CFO Ian Borden", "source": "2026年投资者日", "date": "2026-09-23"},
-    {"quote": "They've got a lot of borrowing capacity still. I feel very confident we'll be able to get this thing done.（他们仍有很大的借贷空间，我很有信心能把这件事做成。）", "speaker": "CEO Chris Kempczinski（回应加盟商改造资金压力）", "source": "转引自Lexpress Franchise", "date": "2026年9月"},
-    {"quote": "I think we're right around that 500.（我认为（单店现金流）大约在50万美元左右。）", "speaker": "CEO Chris Kempczinski", "source": "Q3 2026业绩会", "date": "2026-11-04"},
-    {"quote": "their cash flow grew versus the prior year（他们的现金流较上年增长）", "speaker": "CEO Chris Kempczinski（谈2025年美国加盟商）", "source": "Q4 2025业绩会", "date": "2026-02-11"},
-    {"quote": "这是一门「几分钱利润的生意，利润率10%—15%」，30%的折扣没有公司出钱不可持续（意译）", "speaker": "National Owners Association致会员信", "source": "Benzinga/NECN转述", "date": "2024年5月"},
-    {"quote": "Restaurant-level profitability continues to deteriorate, while rising operating costs, constrained pricing flexibility...（餐厅层面盈利持续恶化，运营成本上升、定价灵活性受限……）", "speaker": "National Owners Association", "source": "Lexpress Franchise转述NOA调查", "date": "2026-09-01"}
+    {
+      "quote": "Their financial health is industry-leading.（他们的财务健康度在业内领先。）",
+      "speaker": "CFO Ian Borden",
+      "source": "2026年投资者日",
+      "date": "2026-09-23"
+    },
+    {
+      "quote": "about a four-year payback for franchisees after partnering（伙伴支持之后加盟商约四年回本）",
+      "speaker": "CFO Ian Borden",
+      "source": "2026年投资者日",
+      "date": "2026-09-23"
+    },
+    {
+      "quote": "$8.5 billion is a cash number.（85亿美元是现金口径。）",
+      "speaker": "CFO Ian Borden",
+      "source": "2026年投资者日",
+      "date": "2026-09-23"
+    },
+    {
+      "quote": "They've got a lot of borrowing capacity still. I feel very confident we'll be able to get this thing done.（他们仍有很大的借贷空间，我很有信心能把这件事做成。）",
+      "speaker": "CEO Chris Kempczinski（回应加盟商改造资金压力）",
+      "source": "转引自Lexpress Franchise",
+      "date": "2026年9月"
+    },
+    {
+      "quote": "I think we're right around that 500.（我认为（单店现金流）大约在50万美元左右。）",
+      "speaker": "CEO Chris Kempczinski",
+      "source": "Q3 2026业绩会",
+      "date": "2026-11-04"
+    },
+    {
+      "quote": "their cash flow grew versus the prior year（他们的现金流较上年增长）",
+      "speaker": "CEO Chris Kempczinski（谈2025年美国加盟商）",
+      "source": "Q4 2025业绩会",
+      "date": "2026-02-11"
+    },
+    {
+      "quote": "这是一门「几分钱利润的生意，利润率10%—15%」，30%的折扣没有公司出钱不可持续（意译）",
+      "speaker": "National Owners Association致会员信",
+      "source": "Benzinga/NECN转述",
+      "date": "2024年5月"
+    },
+    {
+      "quote": "Restaurant-level profitability continues to deteriorate, while rising operating costs, constrained pricing flexibility...（餐厅层面盈利持续恶化，运营成本上升、定价灵活性受限……）",
+      "speaker": "National Owners Association",
+      "source": "Lexpress Franchise转述NOA调查",
+      "date": "2026-09-01"
+    }
   ],
-  "data_confidence": "一手：10-K FY2025（美国加盟销售额/加盟收入、自营利润率、出售餐厅收益）、10-Q Q3 2026（门店结构、自营利润）、2026投资者日实录（单店现金流约50万、85亿支持、改造成本、98%目标、回本期）、Q3 2025/Q4 2025/Q3 2026业绩会。FDD第19项数据（AUV、形式利润表、初始投资）经第三方网站Franchise Chatter转述，未直接读取原FDD，可信度中高。二手：NOA调查百分比（经Lexpress Franchise/Restaurant Business转述，样本约100余人、自选样本，代表性存疑）、2020—2023年单店现金流（媒体转述管理层口述）、加州时薪就业影响（利益相关方数据）。单店利润拆分（租金约9%—10%、扣占用前利润约25%—26%）为本研究按FDD与10-K推算，标注为估算。冲突处理：FDD不同网站初始投资区间不一（147万—273万 vs 147万—281万），采用引用2026年FDD逐项明细的版本；Q3 2026收入是否增长，以10-Q为准（+1%）。",
+  "data_confidence": "一手：10-K FY2025（美国加盟销售额/加盟收入、自营利润率、出售餐厅收益）、10-Q Q3 2026（门店结构、自营利润）、2026投资者日实录（单店现金流约50万、85亿支持、改造成本、98%目标、回本期）、Q3 2025/Q4 2025/Q3 2026业绩会。FDD第6/7/19项数据（租金分档、特许费条件、初始投资、AUV、形式利润表）经三家第三方FDD摘要（Franchise Chatter、FDD Exchange、WhichFranchise）交叉核对，2026年版数字两家一致；曾尝试Wisconsin DFI、Minnesota CARDS、California DFPI、NASAA电子FDD库读取原件，均因403/连接失败未果，可信度中高。二手：NOA调查百分比（经Lexpress Franchise/Restaurant Business转述，样本约100余人、自选样本，代表性存疑）、2020—2023年单店现金流（媒体转述管理层口述）、加州时薪就业影响（利益相关方数据）。单店利润拆分（租金约9%—10%、扣占用前利润约25%—26%）为本研究按FDD与10-K推算，标注为估算。冲突处理：FDD不同网站初始投资区间不一（147万—273万 vs 147万—281万），采用引用2026年FDD逐项明细的版本；Q3 2026收入是否增长，以10-Q为准（+1%）。",
   "as_of_date": "2026-11-10（最新数据为Q3 2026季报及2026年11月4日业绩会）",
   "sources": [
-    {"title": "McDonald's Corp Form 10-K FY2025", "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm", "date": "2026-02", "type": "一手"},
-    {"title": "McDonald's Corp Form 10-Q Q3 2026", "url": "https://www.sec.gov/Archives/edgar/data/0000063908/000006390826000083/mcd-20260930.htm", "date": "2026-11", "type": "一手"},
-    {"title": "McDonald's Q4 2025 Earnings Release (8-K Exhibit 99.1)", "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000032/exhibit991-12312025.htm", "date": "2026-02-11", "type": "一手"},
-    {"title": "McDonald's Investor Day 2026 Transcript", "url": "https://stockanalysis.com/stocks/mcd/transcripts/746101-investor-day-2026/", "date": "2026-09-23", "type": "一手"},
-    {"title": "McDonald's investor day: Remodels, training, chicken among growth plans (CNBC)", "url": "https://www.cnbc.com/2026/09/23/mcdonalds-investor-day-remodels-training-chicken-growth-plans.html", "date": "2026-09-23", "type": "二手"},
-    {"title": "McDonald's bets $8.5 billion on a productivity makeover (Fortune)", "url": "https://fortune.com/2026/09/24/mcdonalds-bets-8-5-billion-productivity-makeover-across-more-than-46000-restaurants/", "date": "2026-09-24", "type": "二手"},
-    {"title": "McDonald's (MCD) Q3 2026 Earnings Call Transcript (Motley Fool)", "url": "https://www.fool.com/earnings/call-transcripts/2026/11/04/mcdonalds-mcd-q3-2026-earnings-call-transcript/", "date": "2026-11-04", "type": "一手"},
-    {"title": "McDonald's Q4 2025 Earnings Call Transcript (Equibles)", "url": "https://equibles.com/stocks/mcd/documents/2c9736f8-1643-4215-81b5-2a56a8f3e3dd", "date": "2026-02-11", "type": "一手"},
-    {"title": "McDonald's (MCD) Q3 2025 Earnings Call Transcript (Motley Fool)", "url": "https://www.fool.com/earnings/call-transcripts/2025/11/05/mcdonalds-mcd-q3-2025-earnings-call-transcript", "date": "2025-11-05", "type": "一手"},
-    {"title": "McDonald's Franchise Review 2026: Costs, Fees, Average Revenues (FDD Item 7/19)", "url": "https://www.franchisechatter.com/2026/10/11/mcdonalds-franchise-review-2026-costs-fees-news-average-revenues-and-or-profits/", "date": "2026-10-11", "type": "二手"},
-    {"title": "McDonald's franchisees flag falling profits as remodel costs loom (NOA survey)", "url": "https://lexpress-franchise.com/en-us/news/mcdonalds-franchisees-flag-falling-profits-as-remodel-costs-loom/", "date": "2026-09-01", "type": "二手"},
-    {"title": "MCD unveils $8.5B franchise plan to drive 2030 goals (Tradingpedia/Reuters)", "url": "https://tradingpedia.com/2026/09/23/mcd-unveils-8-5b-franchise-plan-to-drive-2030-goals", "date": "2026-09-23", "type": "二手"},
-    {"title": "McDonald's Franchisee Rent Relief: What the $8.5B Plan Means (GetFDD)", "url": "https://getfdd.com/blog/mcdonalds-franchisee-rent-relief", "date": "2026-09", "type": "二手"},
-    {"title": "McDonald's Raises Royalty Fees (NACS)", "url": "https://www.convenience.org/stay-current/news/2023/september/22/2-mcdonalds-raises-royalty-fees_ops", "date": "2023-09-22", "type": "二手"},
-    {"title": "McDonald's franchisee group applauds $5 value meal, urges for more support (Benzinga)", "url": "https://www.benzinga.com/general/24/05/38986486/mcdonalds-franchisee-group-applauds-5-value-meal-urges-for-more-support", "date": "2024-05", "type": "二手"},
-    {"title": "McDonald's to spend $100 million to move past E. coli outbreak (BNN Bloomberg)", "url": "https://bnnbloomberg.ca/business/2024/11/15/mcdonalds-to-spend-100-million-to-move-past-e-coli-outbreak", "date": "2024-11-15", "type": "二手"},
-    {"title": "McDonald's says its US franchise restaurants have reached record average cash flows of more than $500,000 (Business Insider)", "url": "https://www.businessinsider.nl/mcdonalds-says-its-us-franchise-restaurants-have-reached-record-average-cash-flows-of-more-than-500000/", "date": "2022-01", "type": "二手"},
-    {"title": "Cash flow decline at McDonald's restaurants shows impact of inflation (Restaurant Business)", "url": "https://www.restaurantbusinessonline.com/financing/cash-flow-decline-mcdonalds-restaurants-shows-impact-inflation", "date": "2023", "type": "二手"},
-    {"title": "McDonald's CEO warns California minimum wage hike will hurt franchisees (Fox Business)", "url": "https://www-ak-ms.foxbusiness.com/markets/mcdonalds-ceo-warns-california-minimum-wage-hike-will-hurt-franchisees", "date": "2023-10", "type": "二手"},
-    {"title": "California McDonald's franchisee shares struggle with 'unprecedented' impact of new minimum wage (Fox Business)", "url": "https://foxbusiness.com/economy/california-mcdonalds-franchisee-shares-struggle-unprecedented-impact-new-minimum-wage", "date": "2024-04", "type": "二手"},
-    {"title": "McDonald's CEO plans 50,000 restaurants by 2027 despite margin pressure", "url": "https://www.mahoningmatters.com/news/business/article315690427.html", "date": "2026-05", "type": "二手"}
+    {
+      "title": "McDonald's Corp Form 10-K FY2025",
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm",
+      "date": "2026-02",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's Corp Form 10-Q Q3 2026",
+      "url": "https://www.sec.gov/Archives/edgar/data/0000063908/000006390826000083/mcd-20260930.htm",
+      "date": "2026-11",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's Q4 2025 Earnings Release (8-K Exhibit 99.1)",
+      "url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000032/exhibit991-12312025.htm",
+      "date": "2026-02-11",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's Investor Day 2026 Transcript",
+      "url": "https://stockanalysis.com/stocks/mcd/transcripts/746101-investor-day-2026/",
+      "date": "2026-09-23",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's investor day: Remodels, training, chicken among growth plans (CNBC)",
+      "url": "https://www.cnbc.com/2026/09/23/mcdonalds-investor-day-remodels-training-chicken-growth-plans.html",
+      "date": "2026-09-23",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's bets $8.5 billion on a productivity makeover (Fortune)",
+      "url": "https://fortune.com/2026/09/24/mcdonalds-bets-8-5-billion-productivity-makeover-across-more-than-46000-restaurants/",
+      "date": "2026-09-24",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's (MCD) Q3 2026 Earnings Call Transcript (Motley Fool)",
+      "url": "https://www.fool.com/earnings/call-transcripts/2026/11/04/mcdonalds-mcd-q3-2026-earnings-call-transcript/",
+      "date": "2026-11-04",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's Q4 2025 Earnings Call Transcript (Equibles)",
+      "url": "https://equibles.com/stocks/mcd/documents/2c9736f8-1643-4215-81b5-2a56a8f3e3dd",
+      "date": "2026-02-11",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's (MCD) Q3 2025 Earnings Call Transcript (Motley Fool)",
+      "url": "https://www.fool.com/earnings/call-transcripts/2025/11/05/mcdonalds-mcd-q3-2025-earnings-call-transcript",
+      "date": "2025-11-05",
+      "type": "一手"
+    },
+    {
+      "title": "McDonald's Franchise Review 2026: Costs, Fees, Average Revenues (FDD Item 7/19)",
+      "url": "https://www.franchisechatter.com/2026/10/11/mcdonalds-franchise-review-2026-costs-fees-news-average-revenues-and-or-profits/",
+      "date": "2026-10-11",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's franchisees flag falling profits as remodel costs loom (NOA survey)",
+      "url": "https://lexpress-franchise.com/en-us/news/mcdonalds-franchisees-flag-falling-profits-as-remodel-costs-loom/",
+      "date": "2026-09-01",
+      "type": "二手"
+    },
+    {
+      "title": "MCD unveils $8.5B franchise plan to drive 2030 goals (Tradingpedia/Reuters)",
+      "url": "https://tradingpedia.com/2026/09/23/mcd-unveils-8-5b-franchise-plan-to-drive-2030-goals",
+      "date": "2026-09-23",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's Franchisee Rent Relief: What the $8.5B Plan Means (GetFDD)",
+      "url": "https://getfdd.com/blog/mcdonalds-franchisee-rent-relief",
+      "date": "2026-09",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's Raises Royalty Fees (NACS)",
+      "url": "https://www.convenience.org/stay-current/news/2023/september/22/2-mcdonalds-raises-royalty-fees_ops",
+      "date": "2023-09-22",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's franchisee group applauds $5 value meal, urges for more support (Benzinga)",
+      "url": "https://www.benzinga.com/general/24/05/38986486/mcdonalds-franchisee-group-applauds-5-value-meal-urges-for-more-support",
+      "date": "2024-05",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's to spend $100 million to move past E. coli outbreak (BNN Bloomberg)",
+      "url": "https://bnnbloomberg.ca/business/2024/11/15/mcdonalds-to-spend-100-million-to-move-past-e-coli-outbreak",
+      "date": "2024-11-15",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's says its US franchise restaurants have reached record average cash flows of more than $500,000 (Business Insider)",
+      "url": "https://www.businessinsider.nl/mcdonalds-says-its-us-franchise-restaurants-have-reached-record-average-cash-flows-of-more-than-500000/",
+      "date": "2022-01",
+      "type": "二手"
+    },
+    {
+      "title": "Cash flow decline at McDonald's restaurants shows impact of inflation (Restaurant Business)",
+      "url": "https://www.restaurantbusinessonline.com/financing/cash-flow-decline-mcdonalds-restaurants-shows-impact-inflation",
+      "date": "2023",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's CEO warns California minimum wage hike will hurt franchisees (Fox Business)",
+      "url": "https://www-ak-ms.foxbusiness.com/markets/mcdonalds-ceo-warns-california-minimum-wage-hike-will-hurt-franchisees",
+      "date": "2023-10",
+      "type": "二手"
+    },
+    {
+      "title": "California McDonald's franchisee shares struggle with 'unprecedented' impact of new minimum wage (Fox Business)",
+      "url": "https://foxbusiness.com/economy/california-mcdonalds-franchisee-shares-struggle-unprecedented-impact-new-minimum-wage",
+      "date": "2024-04",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's CEO plans 50,000 restaurants by 2027 despite margin pressure",
+      "url": "https://www.mahoningmatters.com/news/business/article315690427.html",
+      "date": "2026-05",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's Franchise Cost & Fees (2026 FDD Guide, FDD Exchange)",
+      "url": "https://fddexchange.com/fdd/mcdonald-s-2026/",
+      "date": "2026",
+      "type": "二手"
+    },
+    {
+      "title": "McDonald's Franchise Disclosure Document Guide (WhichFranchise，含第6项租金分档)",
+      "url": "https://whichfranchise.org/mcdonalds",
+      "date": "2026",
+      "type": "二手"
+    },
+    {
+      "title": "Franchise Disclosure Document McDonald's USA, LLC（NASAA电子FDD库，原件，未能下载）",
+      "url": "https://nasaaefd.org/Franchise/Actions/DownloadFile.ashx?DocId=319348&isRegistered=true",
+      "date": "2026",
+      "type": "一手"
+    }
   ],
   "uncertain": [
     "key_data_series.美国加盟店平均单店经营现金流（2020、2022、2023年）",
     "key_data_series.再加盟收益（2026前三季）",
-    "item_specific_extras.unit_economics.租金",
-    "item_specific_extras.unit_economics.技术费等其他",
+    "item_specific_extras.unit_economics.租金（实际平均占比，估算）",
+    "item_specific_extras.FDD原件核对记录.仍待原件确认",
     "item_specific_extras.加州20美元时薪影响.后续"
   ]
 }
