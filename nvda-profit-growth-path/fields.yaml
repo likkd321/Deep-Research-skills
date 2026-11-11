@@ -1,0 +1,68 @@
+fields:
+  基本信息:
+    - name: item_name
+      description: 调研对象名称（与 outline 一致）
+      detail_level: 极简
+    - name: scope
+      description: 本 item 覆盖的范围与边界，写明不涉及的内容
+      detail_level: 简要
+    - name: as_of_date
+      description: 数据截止日期（YYYY-MM-DD），以及最新一手数据所属的期间
+      detail_level: 极简
+    - name: time_horizon_tag
+      description: 本 item 的结论主要影响哪一段：阶段1 / 阶段2 / 稳态（可多选），避免短期事实污染稳态假设
+      detail_level: 极简
+  核心事实:
+    - name: key_facts
+      description: 带数字的核心事实列表，每条写明数值、单位、期间/口径和来源（标注一手财报/电话会、二手分析/媒体、传闻三级）；数据日期混乱时写明数据所属期间
+      detail_level: 详细
+    - name: filing_verified
+      description: 已对照 SEC 原表（8-K/10-K/10-Q）或公司官方文件逐一核实的关键数字清单，写明文件名与位置
+      detail_level: 简要
+    - name: unverified_claims
+      description: 未能用一手来源核实的说法及其出处，说明可信度
+      detail_level: 简要
+    - name: data_tables
+      description: 需要逐年或逐季展示的数据表（如利润率类比的逐年营收/毛利率/净利率/净利润、电力预测的分年 GW、资本开支逐年值）；没有则写"无"
+      detail_level: 详细
+  量化推演:
+    - name: quant_low
+      description: 悲观情景下的关键量化取值，说明推导与触发条件
+      detail_level: 详细
+    - name: quant_base
+      description: 标准情景下的关键量化取值，说明推导
+      detail_level: 详细
+    - name: quant_high
+      description: 乐观情景下的关键量化取值，说明推导与触发条件
+      detail_level: 详细
+    - name: implied_rate
+      description: 由以上推演隐含的年增速、利润率、份额或周期长度（用小数，如 0.06 = 6%），三档分别列出
+      detail_level: 简要
+  对路径的影响:
+    - name: affected_params
+      description: 影响 g1 / N / gm（营收增速、期初/期末净利率、期末毛利率）/ M / g2 中的哪些
+      detail_level: 极简
+    - name: param_implication
+      description: 对受影响参数的具体含义：方向与建议取值区间，以及理由
+      detail_level: 详细
+    - name: base_rate_reference
+      description: 对应的历史类比或基数法则参照（同类公司增速、利润率衰减曲线等）
+      detail_level: 简要
+  判断质量:
+    - name: confidence
+      description: 本 item 结论的置信度（高/中/低）及原因
+      detail_level: 极简
+    - name: contradicting_evidence
+      description: 与标准情景判断相反的证据或观点，用来防止确认偏误
+      detail_level: 简要
+    - name: key_uncertainties
+      description: 最主要的不确定性
+      detail_level: 简要
+    - name: signals
+      description: 会改变判断的领先信号，以及可观察的时间点
+      detail_level: 简要
+  来源:
+    - name: sources
+      description: 来源列表，每条包含 title、url、date（YYYY-MM-DD）、tier（一手/二手/传闻）
+      detail_level: 详细
+uncertain: []

@@ -1,0 +1,160 @@
+topic: 英伟达（NVIDIA）未来 8–15 年的利润增长路径
+request: >-
+  独立研究英伟达未来 8–15 年的调整后归母净利润增长路径（阶段1 g1×N、阶段2 gm×M、未来稳态 g2，
+  悲观/标准/乐观三档），供长期持有人做估值输入；严格价格隔离，财报优先，最终输出约定格式的 JSON 加不超过 300 字的备忘录。
+started_at: "2026-11-11T03:46+00:00"
+handoff_file: /root/.claude/uploads/1671e8a1-f247-5b6a-8813-42be32f00a6b/66ff9c27-___________.md
+
+global_constraints: &gc >-
+  【价格隔离】全程不查、不用、不提股价、市值、市盈率、任何估值、目标价、评级（历史类比公司同样适用，例如不谈 Cisco 2000 年股价崩盘），
+  搜索摘要里出现就略过，增速只看业务本身。
+  【财报优先】关键数字读 sec.gov/Archives 上的 8-K、10-K、10-Q 原表（data.sec.gov 的 XBRL 接口可能无法访问）；网页摘要里的数字必须二次核对，
+  无法核实的写进 unverified_claims。
+  【不作锚】券商预测、管理层 TAM 口号、GTC 或发布会宣传口径只作参考，不能作锚。
+  【交接资料】开始前先读 handoff_file（第2节财报事实可直接复用；第3节是估计，需复核；FY16–FY24 一次性项目不用重做）。
+  【口径】公司层面调整后归母净利润，单位亿美元，财年截至1月下旬（FY2026 = 截至 2026-01-25）。
+  【时间】数据截至 2026-11-11，重点看 2024 年至今；历史类比类 item 可引用更早的年度财报数，但只取简要的年度数据；展望到约 2036 年。
+  【语言】JSON 文字用简体中文（数字、来源标题可保留英文）。
+
+items:
+  - name: 阶段1核实与TTM复核
+    category: 阶段1与TTM
+    description: >-
+      确认 Q3 FY2027（定于 2026-11-17 发布）是否已发布，并据此确定 TTM 窗口（已发布：Q4 FY26–Q3 FY27；未发布：Q3 FY26–Q2 FY27）。
+      重算 TTM 调整后归母净利润：股权投资收益的税率（从调节表倒推）、约 7.11 亿美元州递延税估值准备释放所在的季度、H20 项目、
+      并购无形资产摊销的规模（含 Groq 交易确认的 2,500 无形资产）以及保留还是剔除。
+      FY27 第四季度、FY28 营收约 +70% 指引的可信度：用官方逐字稿核对 Q4 FY27 毛利率见底 71–72%、FY28 毛利率 72–73%、营业费用增长 "low 50s"、
+      Rubin 约占 Q3 数据中心收入 20%、"明年约四分之一的业务由英伟达自身资产负债表支持"、云 backlog 超过 2 万亿美元等说法。
+      订单可见性口径：Blackwell+Rubin 约 5,000 亿美元、2027 年前约 1 万亿美元，要区分订单与确认收入，以及是否包含网络和 OpenAI 协议。
+      近 8 个季度指引与实际的偏差；供应与产能承诺 2,790 亿美元隐含的营收规模；
+      当前 TTM 是否处于周期高位、超额利润有多大（净利率、DSO、FCF/净利润、存货）。
+    constraints: *gc
+  - name: 毛利率路径与供应链成本
+    category: 阶段1与TTM
+    description: >-
+      毛利率是净利润的第一驱动，单列研究。HBM、通用内存涨价与 CoWoS、N3/N2、先进封装、HBM4、光模块和 CPO 的供给与价格（2025–2027），
+      英伟达能否转嫁：SK 海力士、三星、美光、台积电的财报与电话会，加上英伟达对毛利率的说明。
+      Rubin / Vera Rubin 的量产时点、机架级（NVL144/NVL576）ASP 与毛利结构，以及换代对每 GW 英伟达收入的影响。
+      给出 FY27–FY30 毛利率路径（低/标准/高）与驱动因素，并说明供给约束是否限制阶段1增速的上限。
+    constraints: *gc
+  - name: AI数据中心电力与新增GW
+    category: 阶段2市场规模
+    description: >-
+      自下而上推算市场规模的第一步：用 IEA（Energy and AI 报告及其更新）、EPRI、LBNL（2024 年美国数据中心能耗报告）、EIA、BloombergNEF、Grid Strategies 的数据，
+      以及美国并网队列和大负荷申请（PJM、ERCOT、Dominion、Georgia Power 等，含 FERC），
+      推算 2027、2030、2033、2036 年全球与美国 AI 数据中心的装机 GW 和每年新增 GW（低/标准/高）；
+      识别约束（电网、燃机、变压器、许可），给出 2029–2036 年新增 GW 的年增速。
+    constraints: *gc
+  - name: 每GW英伟达收入与自上而下资本开支
+    category: 阶段2市场规模
+    description: >-
+      每 GW 的资本开支拆分（IT 设备 vs 土建、电力、冷却），每 GW 对应的英伟达收入（上一轮用 PORTS-Pike 推算约 350–470 亿美元/GW，不是公司口径，需复核），
+      以及换代时单位算力成本下降与每 GW 美元上升的抵消。参照 OpenAI–NVIDIA 10GW、OpenAI–AMD 6GW、OpenAI–Broadcom 10GW 等协议的公开数字。
+      自上而下：前五大云厂商（Microsoft、Alphabet、Amazon、Meta、Oracle）2024–2026 年资本开支实际值与 2027 年指引（读各自 10-Q 或电话会），
+      其中计算和网络的占比；neocloud、主权 AI（沙特、阿联酋、欧洲、日韩）、企业。核对"2026 年近 8,000 亿、2027 年约 1.3 万亿"的说法。
+      推理与训练结构、单 token 成本下降与 Jevons 效应对算力总需求的影响。
+      最终给出 2030/2033/2036 年 AI 加速器加网络的市场规模（低/标准/高），并与电力 → GW 的自下而上结果交叉校验。
+    constraints: *gc
+  - name: ASIC份额路径
+    category: 阶段2竞争与份额
+    description: >-
+      博通 AI 半导体收入（FY2025–FY2026 季度实际值；FY27 约 1,150 亿、FY28 约 2,300 亿美元的说法需用博通 8-K 或逐字稿核对）、客户数、OpenAI 10GW 订单；
+      Marvell 定制 XPU 收入与指引；Google TPU（含外销给 Anthropic 的约 100 万颗、超过 1GW，以及与 Meta 的洽谈）、AWS Trainium2/3 与 Project Rainier、
+      Meta MTIA、Microsoft Maia、OpenAI 自研芯片的进展。推理专用芯片（如 Groq 类授权交易）对 GPU 份额的影响。
+      ASIC 占加速器支出比例在 2024–2026 年的估计与展望（第三方只作参考），给出 2028/2030/2033/2036 年英伟达在加速器支出中的份额（低/标准/高），
+      以及在 ASIC 竞争下英伟达毛利率能否守住 70% 以上的证据。大客户议价与定制化（Rubin CPX、NVLink Fusion 开放）。
+    constraints: *gc
+  - name: AMD与网络竞争
+    category: 阶段2竞争与份额
+    description: >-
+      AMD 数据中心与 Instinct 收入（Q3 2026 数据中心 85.5 亿美元需用 AMD 8-K 核对），MI400/MI450 与 Helios 的量产进度，OpenAI 6GW、Oracle、Meta 等订单，
+      以及 2027 年以后的目标。网络：英伟达网络收入（FY26 为 313.76 亿美元）与博通、Arista、Cisco 在 AI 后端网络（scale-up 与 scale-out）中的份额，
+      以及 Spectrum-X、InfiniBand、NVLink、CPO 的竞争地位。给出英伟达 GPU 相对 AMD 的份额与网络份额路径（低/标准/高）。
+    constraints: *gc
+  - name: GPU使用寿命与替换周期
+    category: 阶段2需求结构
+    description: >-
+      Amazon、Microsoft、Alphabet、Meta、Oracle 在 10-K/10-Q 中对服务器与网络设备折旧年限的调整（时间、原因、金额影响，引用原文）；
+      CoreWeave、Nebius 的 GPU 折旧政策、以 GPU 为抵押的债务与减值情况；H100、A100、H200、B200 每 GPU 小时的租赁价格走势（2024–2026），
+      以及老卡是否仍在出租。每代每瓦性能的提升，在电力受限时会不会促使客户 3–4 年就换代；正反两方的观点。
+      给出替换周期（年）的低/标准/高三档，以及装机增长放缓后"换代收入"占装机基数的稳态比例。
+    constraints: *gc
+  - name: 主导型硬件公司利润率类比
+    category: 阶段2利润率
+    description: >-
+      逐年整理（营收、毛利率、营业利润率、净利率、净利润）：Cisco FY1996–2012（FY2001 存货减记 22.5 亿美元）、Intel 1992–2015、
+      Qualcomm（QTL 与 QCT 的利润率、苹果自研基带）、Microsoft FY2000–2014（核实"最慢的一段净利润年增 6.3%"）、TSMC 与 ASML 作为利润率持续的对照，
+      以及英伟达自身 FY2019–20、FY2023 两次回调。各案例的净利率从峰值回落多少、多快，利润峰谷回撤多深、多久恢复，长期净利润 CAGR 是多少。
+      最终给出英伟达约 2035 年期末毛利率与净利率的区间（低/标准/高），并说明推理过程。
+      只用营收、利润率、利润数据，不涉及任何股价或估值。
+    constraints: *gc
+  - name: 基数法则与未来稳态g2
+    category: 稳态
+    description: >-
+      复核《The Base Rate Book》（Mauboussin、Callahan、Majd，2016）：起始销售额超过 500 亿美元的公司 10 年销售 CAGR 的分布、全样本 10 年净利润 CAGR 的分布、
+      IT 行业营业利润率的均值回归；以及 Counterpoint Global 后续的基数研究。超大公司能维持多高的增速、维持多久。
+      AI 基础设施会成为常青的持续支出，还是一次性建设？据此判断两阶段之后永续增速 g2 的合理区间：默认 6–8%，确信衰减取 3–5%，高于 10% 需要强证据，上限 15%。
+    constraints: *gc
+  - name: AI实验室收入与算力承诺
+    category: 消化期
+    description: >-
+      OpenAI、Anthropic、xAI 等在 2025–2026 年的收入（年化）、亏损与现金消耗、融资额（不引用估值），以及各自的算力承诺总额
+      （Oracle、Microsoft、AWS、CoreWeave、NVIDIA 10GW、AMD 6GW、Broadcom 10GW、Google TPU 等）；计算算力承诺与收入之比，并与可持续水平比较。
+      企业端与消费端 AI 变现的证据（Microsoft、Google、Amazon 披露的 AI 收入，token 用量，推理价格走势）。
+      判断需求能否持续，以及周期转向的信号。
+    constraints: *gc
+  - name: 英伟达自身融资链条
+    category: 消化期
+    description: >-
+      依据英伟达 10-K/10-Q 梳理：担保最大敞口 1,085 亿美元（SB Energy PORTS-Pike 上限 1,050 亿美元，触发条件与机制）；
+      对 OpenAI（含最高 1,000 亿美元意向的进展）、Anthropic、xAI、CoreWeave（含 63 亿美元容量兜底）、Lambda（回租）、Nebius 等的投资；
+      非上市股权 511.57 亿美元、H1 FY27 买入股权 424.04 亿美元；AI 云相关安排 560 亿美元；DSO 从 45 天升至 60 天、应收集中度、客户集中度（22% / 14%）。
+      FCF 只占净利润的 36% 的原因。投资收益对"调整后利润"的污染。
+      估算英伟达收入中由其自身资产负债表支撑的比例（低/标准/高）以及应打的折扣；neocloud 与数据中心债务链条（CoreWeave、Oracle 发债、Meta Hyperion SPV、私募信贷）的压力信号。
+    constraints: *gc
+  - name: 消化期历史类比
+    category: 消化期
+    description: >-
+      2000–2003 年电信/光纤泡沫（Lucent、Nortel 的供应商融资，Cisco FY2001）、半导体周期、英伟达 FY2019–20 与 FY2023 回调：
+      营收与净利润回撤的深度、持续时长，以及供应商融资支撑的收入有多少比例蒸发。给出英伟达消化期最可能出现的财年区间、
+      营收与净利润回撤幅度、持续时长（低/标准/高），并列出周期转向的领先信号（资本开支指引下调、GPU 租赁价格崩跌、DSO 和存货上升、实验室融资受阻）。
+      只用营收和利润数据，不涉及股价。
+    constraints: *gc
+  - name: 其他增量变量
+    category: 捎带
+    description: >-
+      中国与出口管制（10-K 称中国数据中心计算市场"实际上已被排除"，H20/H200 许可现状，目前指引为零，只看上行空间）；
+      主权 AI 作为独立需求来源；软件（AI Enterprise、Omniverse）、CPU（Grace/Vera，"FY28 CPU 收入翻倍"需核实）、
+      机器人与物理 AI、汽车的增量规模；税率（FY27 指引 16–18%，OBBBA、FDDEI、Pillar Two 对 FY28 以后的影响）。
+      每项给出对阶段1/阶段2/稳态利润的量级影响。
+    constraints: *gc
+
+execution:
+  mode: 经济
+  batch_size: 4
+  core_items: [阶段1核实与TTM复核, 每GW英伟达收入与自上而下资本开支, ASIC份额路径, 主导型硬件公司利润率类比, 英伟达自身融资链条]
+  core_items_note: 用户确认核心 item 单独成组（覆盖经济模式默认的合并分组），模型仍全部 sonnet
+  items_per_agent: 2
+  judgment_items:
+    - 阶段1核实与TTM复核
+    - 毛利率路径与供应链成本
+    - 每GW英伟达收入与自上而下资本开支
+    - ASIC份额路径
+    - 主导型硬件公司利润率类比
+    - 基数法则与未来稳态g2
+    - 英伟达自身融资链条
+    - 消化期历史类比
+  agent_groups:
+    # 第1批
+    - {agent: web-search-agent-deep, model: sonnet, items: [阶段1核实与TTM复核]}
+    - {agent: web-search-agent-deep, model: sonnet, items: [每GW英伟达收入与自上而下资本开支]}
+    - {agent: web-search-agent-deep, model: sonnet, items: [ASIC份额路径]}
+    - {agent: web-search-agent-deep, model: sonnet, items: [英伟达自身融资链条]}
+    # 第2批
+    - {agent: web-search-agent-deep, model: sonnet, items: [主导型硬件公司利润率类比]}
+    - {agent: web-search-agent-deep, model: sonnet, items: [毛利率路径与供应链成本, AMD与网络竞争]}
+    - {agent: web-search-agent, model: sonnet, items: [AI数据中心电力与新增GW, GPU使用寿命与替换周期]}
+    - {agent: web-search-agent-deep, model: sonnet, items: [AI实验室收入与算力承诺, 消化期历史类比]}
+    # 第3批
+    - {agent: web-search-agent-deep, model: sonnet, items: [基数法则与未来稳态g2, 其他增量变量]}
+  output_dir: ./nvda-profit-growth-path/results
