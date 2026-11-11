@@ -1,0 +1,542 @@
+{
+  "item_name": "AMD与网络竞争",
+  "scope": "覆盖：(1) AMD 数据中心/Instinct 收入（Q3 2026 数据中心 85.5 亿美元已用 AMD 8-K 与 10-Q 原表核对）、Q4 2026 指引与 2027 年管理层口径；(2) MI450/MI455X 与 Helios 机架的量产进度，OpenAI 6GW、Meta、Oracle、Anthropic 等订单与 AMD 的融资/认股权证安排，以及 2027 年以后的路线（MI500/MI600）；(3) 英伟达网络收入（FY26 313.76 亿美元已核对）与博通、Arista、Cisco 在 AI 后端网络（scale-up 与 scale-out，兼 scale-across）中的收入与份额，Spectrum-X、InfiniBand、NVLink、CPO 的竞争地位；(4) 英伟达 GPU 相对 AMD 的份额路径与英伟达在 AI 网络中的份额路径（低/标准/高，2027–2036）。不涉及：任何股价/市值/市盈率/估值/评级/并购作价（AMD 认股权证的公允价值与 Marvell–Lumentum 交易作价均不引用）；ASIC（TPU、Trainium、MTIA、XPU）的份额推导（由 ASIC份额路径 item 负责，本 item 只把其中‘AMD 及其他’拆开）；中国市场；Q3 FY27（2026-11-17 发布）数据。",
+  "as_of_date": "2026-11-11；AMD 最新一手数据为 Q3 2026（截至 2026-09-26，8-K 与 10-Q 于 2026-11-03 发布）；英伟达最新为 Q2 FY27（截至 2026-07-26，2026-08-26 发布）；博通 Q3 FY26（截至 2026-08-02，2026-09-02 发布）；Arista Q3 2026（2026-11-03）；Cisco Q4 FY26（截至 2026-07-25，2026-08-12 发布）；Dell’Oro 最新为 Q1 2026（2026-06-02 发布）",
+  "time_horizon_tag": "阶段1（2027–2028 份额与网络附加）、阶段2（2029–2036 份额漂移）；兼约束稳态（期末毛利率与份额）",
+  "key_facts": [
+    "【AMD 数据中心收入，一手 8-K Ex-99.1 + 10-Q 原表，已核对】Q3 2026 数据中心分部收入 8,546 百万美元（交接资料的‘85.5 亿’核实无误：8,546 百万=85.46 亿，8-K 文字取整为 8.5 billion），同比 +97%（Q3 2025：4,341），环比 +27%（Q2 2026：6,718）；前三季累计 21,039（上年同期 11,255，+87%）；Q1 2026 为约 58 亿（8-K 文字‘$5.8 billion’）。分部营业利润 2,882（营业利润率 33.7%，Q3 2025 为 24.7%）。AMD 总收入 13,377（+45%），GAAP 毛利率 54%、非 GAAP 56%；Q4 指引收入约 170 亿 ±3%（同比 +66%，环比 +27%），非 GAAP 毛利率约 55%。FY2025 数据中心收入 166 亿（Q4 2025 8-K 文字‘$16.6 billion’）。",
+    "【AMD 管理层口径，一手电话会（Singju Post 全文转写，2026-11-03）】Su：‘We started shipping MI455X in volume in the quarter’；Anthropic、Meta、Microsoft、OpenAI、Oracle 的‘first Helios racks’已上线；Helios 部署在 Q4 ‘increase substantially’；Hu：Q4 数据中心环比约 +50%，‘data center AI business surpass server business’，并且‘much higher than server business in terms of dollars’。2027：整体收入增速 ‘more than 80%’（‘more than twice the long term financial model’），服务器 CPU 收入翻倍，数据中心 AI ‘significantly more than double’，数据中心占总收入 >80%；‘demand is higher than supply’，AMD 称已锁定‘much of our growth next year’所需的晶圆、基板、先进封装与内存。MI500、MI600 与多 GW 前沿实验室客户在洽谈，未给 2028 年金额。管理层口径，仅作参考，不作锚。",
+    "【Instinct 收入拆分，推算，非公司披露】AMD 不单独披露 Instinct。以 8-K 的数据中心收入与管理层的口径反推：2026E 数据中心≈58+67+85+约128（Q4 按环比 +50%）≈338 亿；若 2026 年服务器 CPU 约 190 亿（‘>70% 增长’后的合理区间 180–200 亿），Instinct 2026E ≈ 130–150 亿美元（Q3 约 30 亿、Q4 约 70–75 亿，Q4 超过服务器 CPU 的约 55 亿）。2027E 由管理层口径推算：收入 >80% 增长 ≈ 942 亿以上，数据中心 >80% ≈ 750 亿以上；服务器翻倍≈380 亿；Instinct ≥ 约 370 亿（2.5 倍）。与‘约 3GW 计划部署到 2027 年’（BofA 分析师在电话会上提出，Su 未反驳）×‘每 GW 150–200 亿美元’（AMD 近一年的口径，由 TD Cowen 分析师在电话会上转述、Su 未否认）≈450–600 亿，量级相符，说明 2027 年金额取决于 GW 在年内的兑现节奏。",
+    "【AMD 订单与 GW，混合层级】OpenAI：6GW 多代协议（2025-10），首个 1GW 为 MI450 级、自 2026 年下半年起；OpenAI 的 Katti 称‘大规模部署从今年底开始，2027 年加速’（Advancing AI 2026 现场发言，iTWire 二手转述）；AMD 向 OpenAI 发出最多 1.6 亿股、行权价 0.01 美元的认股权证，按采购里程碑与市场条件分批生效（10-Q 一手：2025-10 与 2026-02 向两位客户各发 1.6 亿股；第二位客户 10-Q 未点名，二手称为 Meta）。Meta：最多 6GW 基于 AMD GPU 的基础设施，Helios 基于 Meta 的 Open Rack Wide（iTWire 二手）。Anthropic：最多 2GW，首个 1GW MI450 在 2027 上半年起，AMD 对 Anthropic 最多 50 亿美元股权投资（iTWire 二手；与 10-Q 披露的‘承诺投资私营 SI 公司最多 51 亿美元，至 FY2028 前完成’量级吻合）。Oracle：2025-10 宣布 50,000 颗 MI450 自 2026Q3 起（二手）。三家加总约 14GW 公开承诺，全部是‘最多/框架’，不是已签订单金额。",
+    "【AMD 的融资与表外支撑，一手 10-Q（2026-09-26）】采购承诺 487.6 亿美元（剩余 2026 年 112 亿、2027 年 222 亿、2028 年 50 亿、2029 年 38 亿、2030 年 42 亿、2031 年起 24 亿）；云算力承诺 61.8 亿；未起租数据中心租赁 133 亿（10–15 年，预计转租给商业伙伴）；担保 85 亿；认股权证按‘支付给客户的对价’冲减收入（报告收入已是净额）。存货 114.6 亿（上年末 79.2 亿，10-Q 原表），Q3 自由现金流仅 5.54 亿（电话会）。意味着 AMD 以自身资产负债表加股权让利换取 GW 级订单，与英伟达的融资模式同类（见融资链条 item）。",
+    "【AMD 的成本转嫁与毛利率，一手电话会】Su：‘given where the memory market is… we are also working with our customers to ensure those costs are shared’——HBM 与其他部件涨价只能与客户分摊，不能完全转嫁；‘每 GW 150–200 亿美元’的区间在 HBM 涨价后没有被调高。Hu：数据中心 AI 并入后稀释公司平均毛利率（Q4 指引非 GAAP 55%，Q3 56%），‘毛利美元大幅增长’。对比英伟达 GAAP 毛利率 75.0%（Q2 FY27）、指引 FY28 72–73%：AMD 数据中心分部营业利润率 33.7% vs 英伟达数据中心约 65%，说明 AMD 的‘价格杠杆’（认股权证、成本分摊）有限，不足以对英伟达形成大幅价格压制。",
+    "【英伟达网络收入，一手 CFO Commentary（已读原表）】FY26 数据中心网络 31,376 百万美元（FY25 12,990，+142%）——与‘313.76 亿’一致；Q4 FY26 10,980（Q3 FY26 8,187；Q4 FY25 3,024）；Q1 FY27 148 亿美元（CFO Commentary：‘Data Center networking revenue was a record $14.8 billion, up 199% y/y and up 35% q/q’）；Q2 FY27 公司只披露‘Networking 环比 +18%’与‘Spectrum-X 同比 2.6 倍’（电话会），美元数未在 CFO Commentary 单列，自行推算≈148×1.18≈175 亿美元（推算）。FY27 前两季累计约 323 亿，已超过全年 FY26 的 313.76 亿。网络占数据中心收入比例：FY26 16.2%、Q4 FY26 17.6%、Q1 FY27 19.7%、Q2 FY27 约 19.7%（推算）。Q4 FY26 CFO：网络同比增长‘主要来自 GB200/GB300 的 NVLink 72 scale-up 交换机’。",
+    "【英伟达网络产品地位，一手电话会/新闻稿】Q1 FY27（2026-05-20）：‘Spectrum-X… is now larger than all Ethernet network peers combined’（管理层口径）；InfiniBand ‘growing more than 4x year-over-year’，来自 XDR；Q2 FY27：Spectrum-X 同比 2.6 倍，‘largest and fastest growing network company in the world’；Vera Rubin 为第三代 NVLink-72 机架，并带来 Spectrum-6 SPX 以太网机架；2026-05-31 新闻稿：Spectrum-X Ethernet Photonics（首款 200Gb/s SerDes 的 CPO 交换机）‘now in production’，号称 5 倍能效、CoreWeave、Lambda、Oracle 为首批伙伴；Q4 FY26 电话会：‘nearly nine gigawatts’的 Blackwell 基础设施已部署，AWS 将通过 NVLink 接入其自研芯片（NVLink Fusion）。",
+    "【第三方份额口径，Dell’Oro 新闻稿（已读），仅交换机口径】2025 年 AI 后端以太网交换机：Celestica 与英伟达合计约 50% 份额，Arista 第三，Cisco 开始放量；2026Q1：以太网 AI 后端交换机销售翻倍以上，占 AI 集群数据中心交换机的约三分之二；InfiniBand 同比增长 3 倍以上（800Gbps 配合 Blackwell Ultra，且‘大量来自存量升级’）；以太网厂商排名：Celestica 第一、英伟达紧随其后、Arista 第三（含递延收入将与前两者接近）、Cisco 第四且份额增幅最大；两年前 InfiniBand 约占 AI 后端交换机销售的近 80%。1.6T 交换机 2H26 起放量，被认为会带来份额重洗。注意：这与英伟达自称‘Spectrum-X 大于所有以太网同行之和’不一致——Dell’Oro 把 Celestica（白盒/ODM，内置博通芯片）单列为一家，而英伟达以‘端到端平台’比较，且英伟达的网络收入大头是 NVLink（scale-up）而不是以太网交换机。",
+    "【博通 AI 网络，一手 8-K（前一 item 已核）+ 逐字稿二手】Q3 FY26（截至 2026-08-02）AI 半导体收入 167 亿美元（+221%、环比 +54%）；XPU 占其 73%，自行折算 AI 网络≈27%≈45 亿美元，‘AI networking revenue was up over two and a half times year on year’；Q4 指引 AI 收入 217 亿（+236%），‘XPU 与 AI 网络收入都将同比三倍’，折算 Q4 网络≈58 亿；FY26 AI 收入约 580 亿，自行估算 FY26 AI 网络≈160–170 亿美元。管理层：‘AI networking revenue is expected to grow just as fast as XPUs over the next few years’。产品：Tomahawk 6（102.4T，100G/200G SerDes）‘deployed in pretty much all of the AI hyperscalers that are building XPUs with us’，且被不使用博通 XPU 的客户采用；Tomahawk Ultra（以太网 scale-up，低时延）自 Q3 FY26 起开始部署；Tomahawk 7（200T，400G SerDes）刚流片；EML/CW 激光器需求‘far surpassing supply’。博通 CPO：TrendForce 称 51.2T Bailly CPO 交换机已进入量产并通过包括 Meta 在内的验证（二手）。",
+    "【Arista Q3 2026，二手（电话会转写，Business Wire 页面 403 未读）】收入 36.6 亿美元（+58.5%），FY26 约 133 亿（+48%），FY27 展望约 185 亿（+38–40%）；AI fabrics 目标：2026 年 35 亿 → 2027 年约 70 亿；Etherlink 客户超过 100 家；到 2027 年底‘>10GW、10 多种加速器’；scale-across 占今年 AI 约 30%（明年更高）；scale-up：2027 年试验、2028 年量产（ESUN 规范，与 AMD、微软合作设计），‘scale-up virtually 0’，2027 年无重大金额；毛利率 62–64%；采购承诺 114 亿。",
+    "【Cisco FY26 Q4（截至 2026-07-25），一手 8-K Ex-99.1（已读）】超大规模 AI 基础设施订单：Q4 40 亿美元，FY26 全年 93 亿（约为 FY25 的 4.5 倍）；FY26 确认收入约 40 亿，FY27 预计 75 亿美元（8-K 原文：‘Delivered approximately $4 billion of revenue in FY 2026; $7.5 billion expected in FY 2027’）；订单中约 60% 为 Silicon One 系统、40% 为光器件（电话会二手转述）；三家超大规模客户已采用 Silicon One P200 scale-across 系统。Cisco 的量级只有英伟达网络的约 1/8（FY26 约 40 亿 vs 313.76 亿美元），主要定位在 scale-across 与 scale-out。",
+    "【scale-up 的开放替代进度，二手】UALink 1.0 芯片 2H26 到实验室、产品 2027（联盟口径）；截至 2026-10 底没有厂商公开确认出货原生 UALink 交换机；AMD Helios 的 scale-up 实际用‘UALink over Ethernet’（UALoE）跑在博通 Tomahawk 6 上（聚合站点，单一来源）；OCP 于 2026-03 发布 ESUN 1.0（成员含 AMD、Arista、Cisco、Meta、微软、英伟达、OpenAI、Oracle、博通 等）；Arista 称 2027 试验、2028 量产。NVLink 是目前唯一大规模出货的 scale-up 交换结构（Blackwell 约 9GW、Vera Rubin NVL72 为 NVLink 6）。光互连 consolidation：Marvell 于 2026-11-02 宣布收购 Lumentum（全股票；本 item 不引用作价）。",
+    "【自行推算：2026E AI 网络厂商收入与英伟达占比（口径：数据中心 AI 网络，含 scale-up/scale-out 交换、NIC/DPU、互连，去重后；估算）】英伟达 FY27≈733 亿（Q1 148+Q2 约 175+Q3 约 195+Q4 约 215，后两季为估计）；博通 AI 网络约 165 亿；Arista AI fabrics 35 亿（其中约 8 亿为博通芯片，去重后约 27 亿）；Cisco 超大规模 AI 约 40 亿（含约 40% 光器件）；其他（Marvell 光 DSP/AEC、Credo、Celestica 与 HPE-Juniper 非博通部分、光模块等）约 50 亿。合计约 1,015 亿，英伟达占比约 72%（区间 65–78%）。局限：Google/AWS 等 ASIC 平台的自研网络（ICI/OCS、NeuronLink、EFA）多不对外计收入，会让实际‘全市场’英伟达占比低于 72%；Dell’Oro 的交换机口径下英伟达只是第二名。"
+  ],
+  "filing_verified": [
+    "AMD 8-K Ex-99.1（0000002488-26-000188，q32026991.htm，2026-11-03）：已读原表——Q3 2026 数据中心 8,546（Q3 2025 4,341；Q2 2026 6,718；九个月 21,039 vs 11,255），总收入 13,377，GAAP 毛利率 54%、非 GAAP 56%，数据中心营业利润 2,882；Q4 指引约 170 亿 ±3%、非 GAAP 毛利率约 55%。交接资料‘数据中心 85.5 亿’核实无误（85.46 亿）。",
+    "AMD 10-Q（0000002488-26-000191，amd-20260926.htm）：已读——采购承诺 48,761、云算力承诺 6,175、未起租数据中心租赁 133 亿、担保 85 亿、股权投资承诺最多 51 亿；认股权证 2025-10 与 2026-02 各向一位客户发行最多 1.6 亿股，行权价 0.01 美元；认股权证冲减收入的会计处理；毛利率变化说明。",
+    "AMD Q4 2025、Q1 2026、Q2 2026 8-K Ex-99.1（q42025991.htm、q12026991.htm、q22026991.htm）：已读文字——FY2025 数据中心 166 亿；Q1 2026 58 亿；Q2 2026 67 亿（+107%）。",
+    "英伟达 Q4 FY26 CFO Commentary（q4fy26cfocommentary.htm）：已读原表——FY26 数据中心网络 31,376（FY25 12,990），Q4 FY26 网络 10,980，Q3 FY26 8,187。FY26 的 313.76 亿核实无误。",
+    "英伟达 Q1 FY27 CFO Commentary（q1fy27cfocommentary.htm）：已读——数据中心计算 604 亿美元（原文 $60.4 billion）、网络 148 亿美元（$14.8 billion，环比 +35%）；Q1 FY27 官方逐字稿：Spectrum-X ‘larger than all Ethernet network peers combined’，InfiniBand 同比 4 倍以上。",
+    "英伟达 Q2 FY27 官方逐字稿（FactSet 校对稿，英伟达 IR）：已读——‘Networking … revenue growing 18% on a sequential basis’、Spectrum-X 同比 2.6 倍、Vera Rubin 每 GW 400 亿美元、2026 年 8 月开始 Vera Rubin 量产出货。",
+    "Cisco 8-K Ex-99.1（0000858877-26-000106，exhibit991pressrelease-q4f.htm）：已读——超大规模 AI 订单 Q4 40 亿、FY26 93 亿；FY26 收入约 40 亿、FY27 预计 75 亿。",
+    "Dell’Oro 新闻稿（2026-03-10、2026-06-02）：已读原文，第三方研究机构，归二手，但措辞已直接核对。"
+  ],
+  "unverified_claims": [
+    "Instinct 收入拆分（2026E 130–150 亿、2027E ≥370 亿）：AMD 不披露，来自数据中心总额与管理层口径（服务器翻倍、数据中心 >80% 收入、收入 +80%）的反推；服务器 CPU 2026 年约 190 亿的假设不确定，可信度中低。",
+    "Oracle 50,000 颗 MI450 自 2026Q3 起、Meta 最多 6GW、Anthropic 最多 2GW 与最多 50 亿美元股权投资：来自 iTWire、Forkast、cryptobriefing 等聚合媒体对 Advancing AI 2026 的转述，AMD 官方新闻稿本轮未读到；AMD 8-K 只确认 Anthropic、Meta、Microsoft、OpenAI、Oracle 在运行首批 Helios。可信度中；金额均为‘最多’。",
+    "‘每 GW 150–200 亿美元’的 AMD 口径：只在电话会分析师提问中出现，Su 未否认也未重申，可信度中低。",
+    "Arista 的 AI fabrics 目标（2026 年 35 亿、2027 年 70 亿）与 scale-up 时间表：来自电话会转写（Webull），Arista 官方 Business Wire 稿 403 未读；可信度中高（多家摘要一致）。",
+    "博通 AI 网络金额（≈27%×167 亿≈45 亿；FY26≈160–170 亿）：由‘XPU 占 73%’和‘XPU/网络 Q4 同比三倍’折算，博通不披露网络金额；可信度中。博通 FY27/FY28 约 1,150/2,300 亿的口径见 ASIC 份额路径 item，本 item 不重复。",
+    "英伟达 Q2 FY27 网络美元数（≈175 亿）：由 +18% 环比反推，公司未在 CFO Commentary 单列；Q3、Q4 FY27 网络为自行估计。",
+    "‘Helios 的 scale-up 用 UALink over Ethernet 跑在 Tomahawk 6 上’：单一聚合站点，未找到 AMD 或博通的一手确认。",
+    "TrendForce 对博通/英伟达 CPO 量产的描述（Bailly 51.2T、Spectrum-X CPO 400Tb/s、已向部分伙伴出货），CPO 开关市场 2027–2028 放量：二手，可信度中。",
+    "AMD 2025-11 分析师日长期模型（收入 CAGR >35%）与‘2030 年 HPC TAM 3 万亿、AI 加速器 1.4 万亿美元’：属管理层 TAM 口号，只作参考，未作锚，也未读到原文。",
+    "AMD 对 Meta 的 6GW 协议的第二份认股权证归属：10-Q 未点名，‘第二位客户为 Meta’是推断。"
+  ],
+  "data_tables": {
+    "表1_AMD数据中心分部收入_百万美元": {
+      "说明": "一手 8-K（Q1 与 Q4 2025 取自 8-K 文字取整值）。Q4 2026 为指引推算：总收入 17,000 ±3%，数据中心环比约 +50%。",
+      "列": [
+        "期间",
+        "数据中心收入",
+        "同比",
+        "备注"
+      ],
+      "行": [
+        [
+          "FY2025",
+          "约 16,600",
+          "+32%",
+          "Q4 2025 8-K 文字"
+        ],
+        [
+          "Q4 2025",
+          "约 5,350",
+          "—",
+          "由 FY25 − 前三季 11,255 推出"
+        ],
+        [
+          "Q1 2026",
+          "约 5,800",
+          "+57%",
+          "8-K 文字"
+        ],
+        [
+          "Q2 2026",
+          "6,718",
+          "+107%",
+          "8-K 原表"
+        ],
+        [
+          "Q3 2026",
+          "8,546",
+          "+97%",
+          "8-K 原表，环比 +27%"
+        ],
+        [
+          "Q4 2026E（指引推算）",
+          "约 12,800",
+          "约 +137%",
+          "管理层：环比约 +50%，Instinct 将超过服务器 CPU"
+        ],
+        [
+          "FY2026E",
+          "约 33,800",
+          "约 +104%",
+          "‘more than double’"
+        ]
+      ]
+    },
+    "表2_AMD_Instinct与英伟达计算收入_亿美元": {
+      "说明": "Instinct 为推算（AMD 不披露）；英伟达计算=数据中心计算，口径见 ASIC 份额路径 item 表4（日历年≈英伟达财年）。份额=英伟达/(英伟达+AMD Instinct)。",
+      "列": [
+        "期间",
+        "英伟达计算",
+        "AMD Instinct（推算）",
+        "英伟达份额（GPU 口径）",
+        "来源/假设"
+      ],
+      "行": [
+        [
+          "2025",
+          "约 1,624",
+          "约 65",
+          "约 96.2%",
+          "前一 item；AMD 约 65 亿为估计"
+        ],
+        [
+          "2026E",
+          "约 3,030",
+          "约 140",
+          "约 95.6%",
+          "英伟达 Q1+Q2 实际 + Q3/Q4 估算；AMD 见 key_facts"
+        ],
+        [
+          "2027E（管理层口径）",
+          "约 4,950",
+          "约 370",
+          "约 93.0%",
+          "英伟达 FY28 +70%；AMD 由 ‘收入 +80%、数据中心 >80%、服务器翻倍’ 反推，为下限"
+        ],
+        [
+          "2028E（标准）",
+          "约 5,900",
+          "约 680",
+          "约 89.7%",
+          "AMD 约 4.5GW×150 亿美元；与 ASIC item 的‘AMD 及其他 8%’一致"
+        ]
+      ]
+    },
+    "表3_AI网络厂商_最新口径": {
+      "说明": "金额单位亿美元；口径各不相同，均不可直接相加。",
+      "列": [
+        "厂商",
+        "口径",
+        "最新数据",
+        "来源层级"
+      ],
+      "行": [
+        [
+          "英伟达",
+          "数据中心网络收入（NVLink、InfiniBand、Spectrum-X、NIC/DPU 等）",
+          "FY26 313.76；Q4 FY26 109.8；Q1 FY27 148；Q2 FY27 约 175（推算）",
+          "一手 CFO Commentary；Q2 为推算"
+        ],
+        [
+          "博通",
+          "AI 网络（Tomahawk、Jericho、NIC、DSP 等）",
+          "Q3 FY26 约 45（27%×167）；FY26 约 160–170",
+          "一手 8-K 折算；金额为推算"
+        ],
+        [
+          "Arista",
+          "AI fabrics（scale-out+scale-across，不含 scale-up）",
+          "2026 目标 35；2027 目标 70；Q3 总收入 36.6",
+          "二手转写"
+        ],
+        [
+          "Cisco",
+          "超大规模 AI 基础设施（含约 40% 光器件）",
+          "FY26 收入约 40，FY27 预期 75；FY26 订单 93",
+          "一手 8-K"
+        ],
+        [
+          "Celestica",
+          "AI 后端以太网交换机（Dell’Oro 第一）",
+          "金额未披露；2025 与英伟达合计约 50% 份额（交换机口径）",
+          "二手 Dell’Oro"
+        ]
+      ]
+    },
+    "表4_份额路径_英伟达GPU相对AMD": {
+      "说明": "口径=英伟达计算 /（英伟达计算+AMD Instinct），不含 ASIC；与 ASIC 份额路径 item 的‘英伟达占加速器支出’保持一致后再剔除 ASIC：英伟达/(英伟达+AMD及其他)；AMD 单独略低于‘AMD 及其他’。自行估算。",
+      "列": [
+        "年份",
+        "低（AMD 强）",
+        "标准",
+        "高（英伟达守住）"
+      ],
+      "行": [
+        [
+          "2026E",
+          "—",
+          "约 95.6%",
+          "—"
+        ],
+        [
+          "2027",
+          "约 90%",
+          "约 93%",
+          "约 94.5%"
+        ],
+        [
+          "2028",
+          "约 86%",
+          "约 90%",
+          "约 92%"
+        ],
+        [
+          "2030",
+          "约 81%",
+          "约 86%",
+          "约 89%"
+        ],
+        [
+          "2033",
+          "约 76%",
+          "约 84%",
+          "约 88%"
+        ],
+        [
+          "2036",
+          "约 71%",
+          "约 81%",
+          "约 88%"
+        ]
+      ]
+    },
+    "表5_份额路径_英伟达网络份额": {
+      "说明": "口径=英伟达数据中心网络收入 /（英伟达+博通 AI 网络+Arista AI+Cisco 超大规模 AI+其他，去重后）；不含 Google/AWS 自研网络。自行估算，2026E 约 72%。",
+      "列": [
+        "年份",
+        "低",
+        "标准",
+        "高",
+        "标准档的主要驱动"
+      ],
+      "行": [
+        [
+          "2026E",
+          "—",
+          "约 72%",
+          "—",
+          "NVLink 72 scale-up 独占；Spectrum-X 与 InfiniBand 增长"
+        ],
+        [
+          "2028",
+          "约 58%",
+          "约 66%",
+          "约 70%",
+          "ASIC 份额升到约 22% 带来博通/Arista 附着；scale-up 开放标准 2028 量产"
+        ],
+        [
+          "2030",
+          "约 48%",
+          "约 60%",
+          "约 66%",
+          "Ethernet scale-up 渗透；CPO 竞争；英伟达网络随 GPU 与向外部集群销售 Spectrum-X 而守住"
+        ],
+        [
+          "2033",
+          "约 42%",
+          "约 55%",
+          "约 62%",
+          "—"
+        ],
+        [
+          "2036",
+          "约 38%",
+          "约 52%",
+          "约 60%",
+          "与 ASIC item 的英伟达加速器份额 52% 基本同步"
+        ]
+      ]
+    },
+    "表6_英伟达网络收入_自估_亿美元": {
+      "说明": "FY27 为 Q1 实际 148、Q2 推算 175、Q3/Q4 估算；FY28 起为标准档（数据中心增速取 ASIC item 与前一 item 的口径）。自行估算。",
+      "列": [
+        "财年",
+        "网络收入",
+        "占数据中心收入",
+        "同比"
+      ],
+      "行": [
+        [
+          "FY25",
+          "129.9",
+          "约 11%",
+          "—"
+        ],
+        [
+          "FY26",
+          "313.76",
+          "约 16.2%",
+          "+142%"
+        ],
+        [
+          "FY27E",
+          "约 733",
+          "约 19.7%",
+          "约 +134%"
+        ],
+        [
+          "FY28E",
+          "约 1,300",
+          "约 20–21%",
+          "约 +77%"
+        ]
+      ]
+    }
+  },
+  "quant_low": "【低档（AMD 与以太网开放生态快速渗透）】英伟达 GPU 份额（英伟达/(英伟达+AMD Instinct)）：2027 约 90%、2028 约 86%、2030 约 81%、2033 约 76%、2036 约 71%；英伟达 AI 网络份额：2028 约 58%、2030 约 48%、2033 约 42%、2036 约 38%。推导：①AMD 兑现全部公开 GW（OpenAI 6GW、Meta 6GW、Anthropic 2GW，约 14GW）并保持每 GW 约 150–200 亿美元，2028 年 Instinct 约 1,000 亿美元；与 ASIC item 低档 AMD 及其他 10–14% 一致；②Helios 的机架级竞争力经验证（AMD 自称 FP4 +15%、HBM 容量 +50%、每美元 token 最多 +30%，第三方未验证）；③scale-up 以太网（ESUN、UALink over Ethernet、Tomahawk Ultra）在 2027 年试验、2028 年量产，抢走 NVLink 的增量；Ethernet scale-out 把 Spectrum-X 之外的份额让给博通/Celestica/Arista/Cisco；④CPO 先由博通和多家 ODM 量产，英伟达在 CPO 上不再独占。触发条件：2027 年 Helios 每季度环比 >30% 且 OpenAI/Meta 追加订单；Dell’Oro 显示英伟达以太网份额跌破 20%；Arista 称 scale-up 2027 年金额超过 10 亿美元；英伟达网络环比增速低于 DC 总增速。",
+  "quant_base": "【标准档】英伟达 GPU 份额（相对 AMD）：2027 约 93%、2028 约 90%、2030 约 86%、2033 约 84%、2036 约 81%（AMD 约 7% → 10% → 14% → 16% → 19%）；英伟达 AI 网络份额：2026E 约 72% → 2028 约 66% → 2030 约 60% → 2033 约 55% → 2036 约 52%。推导：①AMD：2026E Instinct 约 140 亿，2027E ≥370 亿（管理层口径下限，内含 3GW 左右的 Helios 部署），2028E 约 680 亿（约 4.5GW×150 亿）；供给是共同约束（AMD 同样依赖台积电 N2/N3、CoWoS、HBM4，且 HBM 成本只能与客户分摊），所以 2027–2028 AMD 的上行被供给卡住，不取低档的 1,000 亿；2029 年以后 AMD 以 MI500/MI600 与‘多 GW 前沿实验室’增长，取每年份额 +1pt 左右而不是 +3pt，与 AMD 在服务器 CPU 上过去 7 年份额追赶速度（二手，未核对）相比偏低，因为 AI 加速器软件生态（CUDA vs ROCm）、机架级系统复杂度更高，且英伟达每年迭代一代；②网络：英伟达网络与 GPU 强绑定（Rubin 平台每 GW 400 亿美元含网络），网络收入占数据中心收入由 16% 升到约 20%，2028 年以前 scale-up 的开放替代只在试验阶段（Arista：2027 试验、2028 量产），英伟达 scale-up 份额接近 100%；scale-out 中 Ethernet 占 AI 后端交换机约三分之二，英伟达是以太网第二（仅次于 Celestica，Dell’Oro），所以英伟达网络份额的下降主要来自‘ASIC 份额上升带来的非英伟达附着’，下降幅度与英伟达加速器份额的下降基本同步（标准档比加速器份额低约 2pt）。③AMD 与网络都不会改变‘英伟达加速器份额’标准档（ASIC item：2030 年 62%），本 item 只是把其中非英伟达的约 38% 拆成 ASIC 约 28% 与 AMD 约 10%，两个 item 的结果不可叠加。",
+  "quant_high": "【高档（英伟达守住）】英伟达 GPU 份额（相对 AMD）：2027 约 94.5%、2028 约 92%、2030 约 89%、2033 约 88%、2036 约 88%；英伟达 AI 网络份额：2028 约 70%、2030 约 66%、2033 约 62%、2036 约 60%。推导：①AMD 2027–2028 受供给与良率（MI455X 为 2nm+3nm 的 12 芯粒、432GB HBM4）约束，只兑现 2027 年约 300 亿、2028 年约 500 亿，认股权证与成本分摊使其难以降价抢份额，AMD 数据中心分部营业利润率只有约 34%；②Rubin 与 NVLink 6 继续把‘一个 GW 的价值量’做大（每 GW 250 → 400 亿美元，且管理层暗示‘之后会更高’），客户为性能/瓦与每 token 成本选择英伟达，且英伟达对 AWS 开放 NVLink Fusion、与 Marvell 合作，把部分 ASIC 拉回自己的 scale-up 生态；③以太网 scale-up 迟于 2028 且体验落后 NVLink；④英伟达 Spectrum-X 在 Meta、Oracle 等以太网集群中继续增长，CPO 先发优势（Spectrum-X Ethernet Photonics 已量产）使其在 1.6T 周期保持份额。触发条件：Q4 FY27 与 FY28 Spectrum-X/NVLink 收入增速高于 DC 总增速；Helios 出货推迟；Dell’Oro 显示英伟达以太网份额回升至第一。",
+  "implied_rate": {
+    "说明": "小数；份额口径见 data_tables 表4、表5；AMD 收入为推算。‘份额年变化’= (2036 份额 / 2026E 份额)^(1/10) − 1。",
+    "悲观": {
+      "英伟达GPU份额(相对AMD)": {
+        "2027": 0.9,
+        "2028": 0.86,
+        "2030": 0.81,
+        "2033": 0.76,
+        "2036": 0.71,
+        "份额年变化": -0.0293
+      },
+      "英伟达AI网络份额": {
+        "2028": 0.58,
+        "2030": 0.48,
+        "2033": 0.42,
+        "2036": 0.38,
+        "份额年变化": -0.0619
+      },
+      "AMD Instinct收入2028_亿美元": 1000
+    },
+    "标准": {
+      "英伟达GPU份额(相对AMD)": {
+        "2027": 0.93,
+        "2028": 0.9,
+        "2030": 0.86,
+        "2033": 0.84,
+        "2036": 0.81,
+        "份额年变化": -0.0164
+      },
+      "英伟达AI网络份额": {
+        "2028": 0.66,
+        "2030": 0.6,
+        "2033": 0.55,
+        "2036": 0.52,
+        "份额年变化": -0.032
+      },
+      "AMD Instinct收入2028_亿美元": 680
+    },
+    "乐观": {
+      "英伟达GPU份额(相对AMD)": {
+        "2027": 0.945,
+        "2028": 0.92,
+        "2030": 0.89,
+        "2033": 0.88,
+        "2036": 0.88,
+        "份额年变化": -0.0082
+      },
+      "英伟达AI网络份额": {
+        "2028": 0.7,
+        "2030": 0.66,
+        "2033": 0.62,
+        "2036": 0.6,
+        "份额年变化": -0.0181
+      },
+      "AMD Instinct收入2028_亿美元": 500
+    },
+    "英伟达网络收入占数据中心收入": {
+      "FY26": 0.162,
+      "FY27E": 0.197,
+      "FY28E标准": 0.205
+    }
+  },
+  "affected_params": "主要影响 gm（阶段2营收增速：份额损失 2029–2036 年）与期末净利率（竞争对毛利率的约束）；次要影响 g1（2027–2028 年份额下降 2–3pt/年）、M（份额漂移开始的时点）；对 g2 仅限制上限。注意：与 ASIC份额路径 的结果重叠，不可相加。",
+  "param_implication": "1) g1：2027–2028 年英伟达对 AMD 的 GPU 份额下降约 2.5–3pt/年（93%→90%），相当于英伟达计算收入增速比‘加速器 GPU 总市场’低约 3%/年；但这一份额变化已包含在 ASIC item 的 70%（2028 年）总份额里，不得再单独扣；AMD 在 2027–2028 年受供给约束，AMD 的增量（约 +230 亿、+310 亿美元）是整个加速器市场增量（2027 年约 +2,500 亿）的约 9–12%，对英伟达 g1 的额外影响 ≤1pt/年。2) 网络是英伟达收入增长的结构性加速器：网络占数据中心收入由 FY26 的 16.2% 升到约 20%（FY27），FY27 网络同比约 +134%，快于计算；因此阶段1英伟达‘每 GW 收入’上升的一部分来自网络（NVLink 6、Spectrum-6、CPO），网络份额在 2028 年前不降，阶段1 g1 无需为网络竞争打折；真正的下行风险出现在 2028 年起 scale-up 开放标准量产。3) gm（阶段2）：英伟达加速器份额 2029–2036 年每年约 −1 到 −1.5pt（ASIC item），其中约 1/3（约 0.3–0.5pt/年）来自 AMD，其余来自 ASIC；网络份额比加速器份额低约 2pt（标准）至 10pt（低档）。若采用低档，阶段2 营收增速再下调约 1–2 个百分点/年。4) 期末毛利率：AMD 的数据中心分部营业利润率约 34%、整体非 GAAP 毛利率 55–56%，不具备以价格换份额的空间；英伟达毛利率 72–73%（FY28 指引）仅在 ASIC 议价、客户集中度与内存成本共同作用下才可能跌破 70%，AMD 本身不是主要压力源；Arista 毛利率 62–64% 说明网络可守住中高毛利，英伟达网络毛利率未披露，若向以太网价格靠拢，混合毛利率会被网络拖低约 0.3–0.6pt（自估：网络占 DC 收入 20%、网络毛利率比计算低 5–8pt）。",
+  "base_rate_reference": "定性类比（不涉及任何股价）：①Dell’Oro：两年内 InfiniBand 在 AI 后端交换机中的占比从约 80% 降到约三分之一，但英伟达通过 Spectrum-X 成为以太网第二，说明‘结构切换’不等于‘龙头丢份额’，网络份额下降速度应小于技术切换速度；②AMD 在服务器 CPU 上对 Intel 的追赶：约 7 年份额上升到三分之一以上（Mercury Research 口径，本轮未核对），可视为‘有竞争力的第二来源’的典型速度，对应标准档 AMD GPU 份额每年 +1pt 的假设；③AI 后端网络由英伟达近乎独占（InfiniBand 时代）向 Ethernet 多供应商开放（2024–2026）是类似于 2000 年代数据中心以太网从多厂商走向 Broadcom 芯片+白盒的过程，这种过程通常使龙头系统厂商（原 Cisco 在数据中心交换）份额持续下降而总需求上升，但龙头仍保留最高 ASP 的细分市场。",
+  "confidence": "中。AMD 2026 年数字：高（8-K/10-Q 原表）；AMD 2027 年 Instinct 金额：中低（间接推算，GW 兑现节奏不确定）；英伟达网络 FY26–Q1 FY27：高（CFO Commentary 原表），Q2 FY27 以后：中；2028 年以后的份额路径：低（缺少一手约束，依赖 scale-up 开放标准与 ASIC 的进展）；英伟达网络份额：中低（口径复杂，且受 Google/AWS 自研网络是否计入影响）。",
+  "contradicting_evidence": "支持‘标准档低估 AMD/开放网络’的证据：①AMD 在 Q3 2026 把全年指引上调，Helios 已由 Anthropic、Meta、Microsoft、OpenAI、Oracle 五家运行，2027 年收入 +80% 超过其长期模型的两倍，且 Q4 数据中心环比 +50%；②AMD 与 OpenAI（6GW）、Meta（最多 6GW）、Anthropic（最多 2GW）合计约 14GW 公开承诺，约为英伟达每 GW 400 亿美元口径下 5,600 亿美元的等价量；③Dell’Oro：以太网占 AI 后端交换机约三分之二且在扩大，Celestica 超过英伟达，Cisco 增幅最大；Cisco 的 AI 超大规模收入 FY26 约 40 亿 → FY27 75 亿（+88%）、Arista AI 35 亿 → 70 亿（+100%），都在以接近英伟达的速度增长；④博通称 Tomahawk 6 在‘几乎所有’AI 超大规模客户部署，包括不用博通 XPU 的客户，Tomahawk Ultra 已开始 scale-up 部署；⑤Arista 称 >10GW 部署、>10 种加速器，说明网络正在‘加速器中立化’；⑥Marvell–Lumentum 整合与博通 CPO 量产显示光互连领域有多个独立来源。支持‘标准档低估英伟达’的证据：①AMD 自己承认 HBM 涨价只能与客户分摊，且需用认股权证等换订单，议价能力弱；②英伟达 Q2 FY27 网络环比 +18%、InfiniBand 同比 4 倍，NVLink 仍是唯一大规模出货的 scale-up；③AMD 的 14GW 都是‘最多’，AMD 采购承诺 488 亿、自由现金流仅 5.5 亿，且 2027 年的收入口径受 HBM4 与 N2 供给约束；④英伟达网络与计算共同设计，网络份额很难脱离 GPU 份额单独下降。",
+  "key_uncertainties": "1）Instinct 的真实收入（AMD 不披露）与 2027 年 GW 兑现节奏（OpenAI/Meta/Anthropic 的资金与数据中心条件）；2）HBM4 与 N2/CoWoS 对 AMD 与英伟达的供给分配（两者共用同一批供应商）；3）scale-up 开放标准（ESUN/UALink/Tomahawk Ultra）2028 年量产时能否达到 NVLink 的时延与可靠性；4）网络口径：是否计入 Google/AWS 自研网络、光模块；5）CPO 的良率与 2027–2028 年放量速度（InP 激光器短缺是共同瓶颈）；6）认股权证与融资安排是否构成价格补贴，以及 AMD 的资产负债表能支撑多少 GW。",
+  "signals": "①2026-11-17 英伟达 Q3 FY27：网络收入金额与环比（Q2 约 175 亿，Q3 若 >190 亿说明 scale-up 延续）、Spectrum-X/InfiniBand 增速、Rubin 占比；②2026-12 上旬博通 Q4 FY26：AI 网络是否≈58 亿、Tomahawk Ultra/6 的 scale-up 订单、FY27 展望；③2027-02 AMD Q4 2026：Instinct 是否超过服务器 CPU、数据中心是否≈128 亿、2027 年 GW 兑现表述；④2027-02 Arista Q4 2026：scale-up 试验客户数、AI fabrics 2027 目标是否上调；⑤Dell’Oro 2Q26/3Q26 AI 后端交换机份额；⑥2027 年上半年 UALink/ESUN 实际硅片出货；⑦AMD 2027 年认股权证归属（里程碑）与份额摊薄披露；⑧Rubin Ultra 与 MI500 的发布节奏（2027–2028）。",
+  "sources": [
+    {
+      "title": "AMD 8-K Ex-99.1: AMD Reports Third Quarter 2026 Financial Results",
+      "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm",
+      "date": "2026-11-03",
+      "tier": "一手"
+    },
+    {
+      "title": "AMD Form 10-Q for quarter ended September 26, 2026",
+      "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000191/amd-20260926.htm",
+      "date": "2026-11-03",
+      "tier": "一手"
+    },
+    {
+      "title": "AMD 8-K Ex-99.1: Second Quarter 2026 Financial Results",
+      "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000121/q22026991.htm",
+      "date": "2026-08-04",
+      "tier": "一手"
+    },
+    {
+      "title": "AMD 8-K Ex-99.1: First Quarter 2026 Financial Results",
+      "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000072/q12026991.htm",
+      "date": "2026-05-05",
+      "tier": "一手"
+    },
+    {
+      "title": "AMD 8-K Ex-99.1: Fourth Quarter and Full Year 2025 Financial Results",
+      "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000014/q42025991.htm",
+      "date": "2026-02-03",
+      "tier": "一手"
+    },
+    {
+      "title": "AMD Q3 2026 Earnings Call Transcript (Singju Post)",
+      "url": "https://singjupost.com/amd-advanced-micro-devices-q3-2026-earnings-call-transcript/",
+      "date": "2026-11-03",
+      "tier": "二手"
+    },
+    {
+      "title": "iTWire: AMD launches Helios… books roughly 14 gigawatts of customer AI compute at Advancing AI 2026",
+      "url": "https://itwire.com/business-it-news/data/astounding-massive-dominant-ai-innovation-amd-launches-helios-against-nvidia-tips-up-to-us-5-billion-into-anthropic-and-books-roughly-14-gigawatts-of-customer-ai-compute-at-advanci",
+      "date": "2026-08-01",
+      "tier": "二手"
+    },
+    {
+      "title": "NVIDIA CFO Commentary Q4 FY2026 (networking revenue FY26 31,376)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000019/q4fy26cfocommentary.htm",
+      "date": "2026-02-25",
+      "tier": "一手"
+    },
+    {
+      "title": "NVIDIA CFO Commentary Q1 FY2027 (networking 14.8B)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000051/q1fy27cfocommentary.htm",
+      "date": "2026-05-20",
+      "tier": "一手"
+    },
+    {
+      "title": "NVIDIA CFO Commentary Q2 FY2027",
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27cfocommentary.htm",
+      "date": "2026-08-26",
+      "tier": "一手"
+    },
+    {
+      "title": "NVIDIA Q2 FY2027 Earnings Call corrected transcript (FactSet, NVIDIA IR)",
+      "url": "https://s201.q4cdn.com/141608511/files/content_files/TRANSCRIPT_-NVIDIA-Corp-NVDA-US-Q2-2027-Earnings-Call-26-August-2026-5_00-PM-ET.pdf",
+      "date": "2026-08-26",
+      "tier": "一手"
+    },
+    {
+      "title": "NVIDIA Q1 FY2027 Earnings Call corrected transcript (FactSet, NVIDIA IR)",
+      "url": "https://s201.q4cdn.com/141608511/files/doc_financials/2027/q1/NVDA-Q1-2027-Earnings-Call-20-May-2026-5_00-PM-ET.pdf",
+      "date": "2026-05-20",
+      "tier": "一手"
+    },
+    {
+      "title": "NVIDIA Q4 FY2026 Earnings Call corrected transcript (FactSet, NVIDIA IR)",
+      "url": "https://s201.q4cdn.com/141608511/files/doc_financials/2026/q4/NVDA-Q4-2026-Earnings-Call-25-February-2026-5_00-PM-ET.pdf",
+      "date": "2026-02-25",
+      "tier": "一手"
+    },
+    {
+      "title": "NVIDIA Vera Rubin Ramps Into Full Production (Spectrum-X Ethernet Photonics CPO in production)",
+      "url": "https://nvidianews.nvidia.com/news/vera-rubin-full-production-agentic-ai-factory",
+      "date": "2026-05-31",
+      "tier": "一手"
+    },
+    {
+      "title": "Broadcom Q3 FY2026 earnings call transcript (Webull)",
+      "url": "https://www.webull.com/news/15511095937917952",
+      "date": "2026-09-02",
+      "tier": "二手"
+    },
+    {
+      "title": "Broadcom 8-K Ex-99.1: Q3 FY2026 results",
+      "url": "https://www.sec.gov/Archives/edgar/data/0001730168/000173016826000076/avgo-08022026x8kxex99.htm",
+      "date": "2026-09-02",
+      "tier": "一手"
+    },
+    {
+      "title": "Arista Q3 2026 earnings call transcript (Webull)",
+      "url": "https://www.webull.com/news/15866284470803456",
+      "date": "2026-11-03",
+      "tier": "二手"
+    },
+    {
+      "title": "Cisco 8-K Ex-99.1: Q4 and FY2026 results",
+      "url": "https://www.sec.gov/Archives/edgar/data/0000858877/000085887726000106/exhibit991pressrelease-q4f.htm",
+      "date": "2026-08-12",
+      "tier": "一手"
+    },
+    {
+      "title": "MarketBeat: Cisco Systems Q4 earnings call highlights",
+      "url": "https://www.marketbeat.com/instant-alerts/cisco-systems-q4-earnings-call-highlights-2026-08-12/",
+      "date": "2026-08-12",
+      "tier": "二手"
+    },
+    {
+      "title": "Dell’Oro: Ethernet Extends Lead in AI Scale-Out Networks Despite Strong InfiniBand Rebound",
+      "url": "https://www.delloro.com/newsroom/ethernet-extends-lead-in-ai-scale-out-networks-despite-strong-infiniband-rebound/",
+      "date": "2026-06-02",
+      "tier": "二手"
+    },
+    {
+      "title": "Dell’Oro: Ethernet More Than Doubles Size of InfiniBand as the Leading Fabric for AI Scale-Out Networks in 2025",
+      "url": "https://www.delloro.com/news/ethernet-more-than-doubles-size-of-infiniband-as-the-leading-fabric-for-ai-scale-out-networks-in-2025/",
+      "date": "2026-03-10",
+      "tier": "二手"
+    },
+    {
+      "title": "TrendForce Press Center: CPO/optical items (Bailly, Spectrum-X CPO)",
+      "url": "https://www.trendforce.com/presscenter/news/20260727-13151.html",
+      "date": "2026-07-27",
+      "tier": "二手"
+    },
+    {
+      "title": "Tom's Hardware: UALink roadmap",
+      "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/ualink-roadmap-plots-course-to-optimized-ai-data-center-interconnects-examining-the-open-standard-designed-to-combat-vendor-lock-in-while-offering-cost-and-performance-optimization",
+      "date": "2026-09-01",
+      "tier": "二手"
+    },
+    {
+      "title": "Open Compute Project: Introducing ESUN, Ethernet for Scale-Up Networking",
+      "url": "https://www.opencompute.org/blog/introducing-esun-advancing-ethernet-for-scale-up-ai-infrastructure-at-ocp",
+      "date": "2025-10-13",
+      "tier": "二手"
+    },
+    {
+      "title": "TrendForce News: InP Shortage Emerges as AI Optical Interconnect Bottleneck",
+      "url": "https://trendforce.com/news/2026/08/06/news-inp-shortage-emerges-as-ai-optical-interconnect-bottleneck/",
+      "date": "2026-08-06",
+      "tier": "二手"
+    }
+  ],
+  "uncertain": [
+    "key_facts 中 Instinct 收入拆分（2026E/2027E，推算）[不确定]",
+    "key_facts 中 Oracle 50,000 颗 MI450、Meta 6GW、Anthropic 2GW 与 50 亿美元投资（聚合媒体转述）[不确定]",
+    "key_facts 中博通 AI 网络金额（由占比折算）与 Q2 FY27 英伟达网络金额（由 +18% 反推）[不确定]",
+    "key_facts 中 2026E AI 网络厂商去重汇总与英伟达 72% 占比 [不确定]",
+    "quant_low/quant_base/quant_high 中 2028–2036 年 GPU 份额与网络份额（自行估算）[不确定]",
+    "data_tables 表6 中 FY28E 英伟达网络收入 [不确定]",
+    "base_rate_reference 中 AMD 服务器 CPU 份额追赶速度（Mercury Research 口径，未核对）[不确定]"
+  ]
+}

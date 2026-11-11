@@ -1,0 +1,554 @@
+{
+  "item_name": "毛利率路径与供应链成本",
+  "scope": "覆盖：(1) 英伟达毛利率的一手事实与指引（FY25–Q3 FY27 指引，含 Q2 FY27 官方逐字稿对毛利率的重置）；(2) 上游成本与供给：SK 海力士、三星、美光（HBM/通用 DRAM 价格与供给）、台积电（N3/N2 晶圆、CoWoS 先进封装、价格与毛利率）、光模块/InP 激光器与 CPO 的供给；(3) Vera Rubin 量产时点、机架级 ASP 与成本结构、每 GW 英伟达收入的换代变化；(4) 英伟达转嫁成本的能力及证据；(5) FY27–FY30 毛利率路径（低/标准/高）与对净利润的敏感度；(6) 供给约束是否构成阶段1增速上限。不涉及：任何股价/市值/市盈率/估值/评级；FY29 以后的营收总量、ASIC/AMD 份额（由其他 item 负责，这里只取其对毛利率的方向性影响）；Q3 FY27（2026-11-17 发布）尚无数据；不重做 FY16–FY24 一次性项目。",
+  "as_of_date": "2026-11-11；英伟达最新一手数据为 Q2 FY2027（截至 2026-07-26，2026-08-26 发布），Q3 FY27 将于 2026-11-17 发布、尚无数据；上游：美光 FQ4-26（截至 2026-09-03，8-K 2026-09-30）、SK 海力士 3Q26（2026-10-28）、三星 3Q26（2026-10-29）、台积电 3Q26（2026-10-15）",
+  "time_horizon_tag": "阶段1（主要：FY27–FY30 毛利率路径与供给上限）；兼影响阶段2 的期初净利率与期末毛利率假设",
+  "key_facts": [
+    "【英伟达毛利率历史，一手 8-K/10-Q】GAAP 毛利率：FY25 75.0%；FY26 71.1%（含 H20 计提 45 亿美元，剔除后约 73.2%，自行折算）；Q2 FY26 72.4%；Q1 FY27 74.9%；Q2 FY27 75.0%（营收 962.2 亿，毛利 721.4 亿）。Q2 FY27 的 10-Q MD&A：毛利率较上年同期上升来自 Blackwell Ultra 产品组合改善；库存与过剩采购承诺的拨备净影响为 −0.8 个百分点（Q2）、−1.0 个百分点（上半年）。[一手：10-Q、CFO Commentary]",
+    "【指引重置，一手官方逐字稿（FactSet 校对稿，英伟达 IR 托管，2026-08-26）】CFO Kress：“we are experiencing extreme pricing conditions in memory. The magnitude of the price increase has exceeded our prior expectations and are headed even higher into next year.” 指引：Q3 FY27 GAAP/非 GAAP 毛利率 74.0% ±50bp；“margins to bottom in Q4 in the 71% to 72% range before settling at 72% to 73% in fiscal year 2028 as executed price increases take effect in Q1.” 对比：2026-02（Q4 FY26 电话会）与 2026-05（Q1 FY27 电话会）仍是“全年 mid-70s”。即 4 个月内全年毛利率中枢下调约 2–3 个百分点，原因是内存而非 TSMC。[一手]",
+    "【管理层转嫁口径】Kress：“executed price increases take effect in Q1”（FY28 Q1，即 2027-02 起）；并称“tighter memory supply is a symptom of the same demand surge that's driving our own growth”，“长期与三大内存厂深度合作，增加路线图所需产能”。Huang（Q4 FY26 电话会，2026-02-25）：毛利率“最重要的杠杆是每一代给客户的性能代际跃升”，只要每美元性能提升超过系统价格涨幅，就能维持毛利率。[一手逐字稿；属管理层口径，仅作参考，不作锚]",
+    "【英伟达供应承诺跃升，一手 CFO Commentary/10-Q】供应与产能承诺 Q1 FY27 约 1,190 亿 → Q2 FY27 2,790 亿美元，“primarily related to the procurement of memory”；到期分布：FY27 剩余期 920 亿、FY28 870 亿、FY29 880 亿、FY30 起约 120 亿（由前一 item 从 10-Q 附注读出）。存货 316 亿（较上季 258 亿 +22%），“为第三季度 Vera Rubin 导入做准备”。自行折算：2,790 亿约为当前年化销货成本（962 亿×0.25×4≈962 亿）的 2.9 倍，即公司已按涨价后的内存价格锁定未来约 3 年的供给；若 FY28–FY29 内存价格回落，这批承诺存在拨备风险（见 contradicting_evidence）。",
+    "【Vera Rubin 时点，一手】2026-05-31 英伟达新闻稿：Vera Rubin “ramping into full production”，Dell/HPE/Lenovo/Supermicro 及 Foxconn/Quanta/Wistron/Wiwynn 等已量产系统，“Production shipments of Vera Rubin are set to begin starting this fall”；Q2 FY27 电话会（2026-08-26）：“We commenced production shipments of Vera Rubin earlier this month”（即 2026 年 8 月），“已收到所有主要 hyperscaler、AI 云和系统 OEM 的采购订单”，Rubin 约占 Q3 数据中心收入 20%，“hyperscale 增长预计在 Q4 及 FY28 随 Vera Rubin 供应增加而重新加速”。机架名称：新闻稿用“Vera Rubin NVL72”（Oberon 机架，72 个 GPU 封装），2025 年旧称 NVL144 按 die 计数；Rubin Ultra/Kyber（NVL144，后续 NVL576）预计 2027，Feynman 2028（均为 GTC 2026 二手报道，来源之间在季度与配置上有出入，未获一手确认）。",
+    "【每 GW 英伟达收入，一手官方逐字稿（管理层口径）】Kress：“Since Hopper, our revenue opportunity has grown from roughly $18 billion per gigawatt to $25 billion with Blackwell, to $40 billion with Vera Rubin, which now spans Vera CPU, Rubin GPU, NVLink, InfiniBand or Ethernet and Groq LPU”；Huang：通用计算约 30–50 亿美元/GW，Hopper 180 亿，Grace Blackwell 250 亿，Vera Rubin 400 亿，“after that, it's going to be higher”。即 Vera Rubin 比 Blackwell 每 GW +60%，且口径扩大到含 CPU、网络和 Groq LPU，不是同口径的纯 GPU 涨价。管理层宣传口径，仅作参考。",
+    "【机架级 ASP，二手券商估计，非公司数据】GB300/GB200 NVL72 机架约 300–400 万美元（BofA 约 300 万；Morgan Stanley 350–400 万）；Vera Rubin VR200 NVL72：BofA 约 600 万；Morgan Stanley BOM 约 780 万（其中内存约 200 万，旧内存价格）；Bernstein 约 910 万（HBM4 约 53 美元/GB、Rubin GPU 约 5.5 万美元/颗、内存与存储约 320 万/架）；每架 72 颗 GPU × 288GB HBM4 = 20.7TB（自行核对算术一致）。三家差异很大，反映内存假设不同；英伟达不披露机架 ASP 或毛利结构。[二手，经 PC Gamer/Wccftech/TrendForce News/Tiger 转载，未读到券商原报告]",
+    "【美光 FQ4-26 一手 8-K（已读 Ex-99.1 原表）】2026-09-30 发布：营收 542.3 亿（上季 414.6 亿，上年同期 113.2 亿）；GAAP 毛利率 86.8%、非 GAAP 87.0%（上季 84.9%，上年同期 45.7%）；FY26 营收 1,331.9 亿、毛利率 81.1%；FQ1-27 指引营收 615 亿 ±15 亿、非 GAAP 毛利率约 86.25%；FY26 资本开支 273.7 亿。电话会（二手转写，earningswhispers）：2027 日历年“超过 75% 的产出已承诺”（含 26 份战略客户协议）；2027 年 HBM 价格“远高于 2026 年”，并因此“缩小与非 HBM 内存的毛利率差距”；2027–2028 的供需“比 2026 年更紧”，即使 2028 年新洁净室投产仍紧。",
+    "【SK 海力士 3Q26，二手（Korea Times、investingLive 等转载公司公告；公司新闻室页面未能直接读取）】营收 104.6155 万亿韩元（同比 +328%）、营业利润 83.3338 万亿（+632%，营业利润率约 79.7%，自行折算）、净利润 39.7756 万亿；DRAM 价格环比上涨“high-20% 区间”、NAND“mid-20%”；HBM 与其他 AI DRAM“卖到 2029 年”，2027–2028 年超过 50% 产能已被长期协议覆盖；HBM4 出货量与收入预计 4Q26 超过 HBM3E；M15X 年底满产；公司称供给短缺将持续到 2030 年（管理层口径）。",
+    "【三星 3Q26，一手公司新闻稿（news.samsung.com，已读）】合并营收 195.3 万亿韩元，营业利润 107.4 万亿；DS 部门营收 147.1 万亿、营业利润 106.5 万亿（利润率约 72.4%，自行折算）；“significantly scaled up sales of HBM4”；“Increasing AI-driven demand will far exceed the industry supply in comparison with 2026”；2026 年资本开支约 84.4 万亿韩元（DS 76.8 万亿）。电话会二手转写：HBM4 占 HBM 销售 60%，2027 年 HBM 供给已按目标价格售罄，供不应求可能持续到 2028 年；有韩国媒体称通用 DRAM 现在比 HBM 更赚钱（因通用 DRAM 按季议价、HBM 按年锁价）——这是 HBM 2027 年必须大幅涨价的原因之一。",
+    "【内存价格走势，二手 TrendForce】DRAM 合约价环比：2Q26 约 +80%，3Q26 约 +40%，4Q26 预计 +10–15%（TrendForce 9 月 30 日新闻稿，常规 DRAM；Commercial Times 转述的另一版本为约 +20%，两个数字不一致，以 TrendForce 原新闻稿为准）；NAND 4Q26 +15–20%；2027 年 HBM 混合 ASP 同比 +121%（TrendForce 2026-09-29 新闻稿，原文已读），原因是供给持续受限、HBM4 占比上升、2H27 HBM4e 放量；另有报道称 2027 年 HBM 合约价涨 70–140%，部分长期协议设有价格上限；12-Hi 36GB HBM4 单颗价格约 600 美元（2026）→ 约 1,300 美元（2027）（Seoul Economic Daily，经 Silicon Analysts 转引，单一来源，约 16.7 → 36.1 美元/GB，低于 Bernstein 的 53 美元/GB）。GPU/ASIC 厂商正评估把 HBM 由 12-Hi 降到 8-Hi 以降低成本并让同样的 DRAM 晶圆供更多 GPU，但 8-Hi 每 Gb 成本反而高 10–20%（TrendForce，原文已读）。",
+    "【台积电 3Q26，二手逐字稿（singjupost/webull 转写，未读 TSMC 6-K 原表）】营收约 467 亿美元，毛利率 66.4%（环比 −1.3 个百分点，主因 N2 初期爬坡稀释），4Q26 指引毛利率 65–67%；N2 占晶圆收入 8%，N3/N5/N7 为 33%/28%/10%；海外晶圆厂稀释“now closer to 2%”，未来几年扩大到 3–4%；N2 系列年产能 2027 年“more than double”；2026 年资本开支 600–640 亿美元重申，2026–2028 年“even more significantly higher than the past three years”；CoWoS“still the number one choice”，魏哲家：“Definitely we have a little bit shortage on the back end”；定价“very strategic”，逐字稿未确认涨价幅度。报道称：2027 年 1 月起晶圆涨价 3–6%（N2/N3 涨幅最大；Nikkei 报道为最高 10%，两者不一致）；CoWoS 另有 10–20% 涨价“正在考虑”，尚未确认。",
+    "【CoWoS 产能，二手，来源之间口径不一】2026 年底月产能 95,000（JPMorgan，12 英寸等效）到约 130,000 片（Silicon Analysts、Longport）不等，2027 年底 141,000（JPMorgan）/170,000（KGI）/200,000（TrendForce 转述）；英伟达占比普遍估计 50–60% 以上（供应链估计，非台积电披露）；供货周期报道为 52–78 周，85% 以上的 2026–2027 产能已被锁定（单一分析师估计）；Goldman 的晶圆产量 2026 127.5 万 → 2027 273 万 → 2028 348 万片（与月产能口径不吻合，月产能 130k→200k 只对应约 +40–55%，Goldman 口径为 +114%，不一致，需谨慎）。KGI 称因 HBM4 供给限制，英伟达 Rubin 系列 2026 年的 CoWoS 出货可能低于其分配额的 50%。",
+    "【光模块与 InP 激光器，二手 TrendForce/LEDinside/Yole】Lumentum CEO：InP 供需缺口“已超过 DRAM 和 NAND”；2026 年 3 月英伟达向两家关键供应商各承诺 20 亿美元并签订长期供货协议（报道未点名）；一家已把 6 英寸晶圆产能翻倍、计划 2027 年底再扩，另一家 2028 年才量产；分析师预计供需失衡持续到 2027 年以后；下游客户提前下单并支付大额预付款，价格被推高；LightCounting 4 月估计需求高于供给 30%，并认为 2026 年底可能缓解——与上述判断不一致。Yole 预计 2026–2027 年 800G 及以上光模块出货约 1.5 亿只。CPO 与可插拔光模块同样依赖 InP 激光器，CPO 另增大功率 CW 激光器需求。英伟达 Spectrum-X Ethernet Photonics（首款 CPO 交换机，200Gb/s SerDes）已“in production”（2026-05-31 新闻稿，一手）。",
+    "【自行推演：内存涨价对英伟达毛利率的解释力，推算，非公司数据】若英伟达销货成本率由 25.0%（75% 毛利率）升到 28.5%（Q4 FY27 底部 71.5%），增加 3.5 个百分点；GF Securities（经 TrendForce News 转述）称 VR200 系统 BOM 中内存占约 29%（英伟达偏好约 20%）。按 20% 份额×25% 成本率=5.0% 营收、29%×28.5%=8.3% 营收，内存占营收比例上升约 3.3 个百分点，几乎解释了 Q4 底部的全部下滑。这说明：毛利率重置主要是内存成本，在价格与成本同步上调下，毛利额（美元）继续增长，仅毛利率被稀释。",
+    "【自行推演：转嫁所需的价格涨幅】设 m=内存成本增加额占基准营收的比例，p=涨价幅度，则毛利率=1−(0.25+m)/(1+p)。FY28 指引 72–73% 对应：m=4% 时需 p≈5–6%；m=6% 时需 p≈10–12%；m=8% 时需 p≈18–20%。第三方估计 2027 年 HBM4 每机架比 2026 年增加约 40–75 万美元（按 16.7→36.1 或 53 美元/GB、20.7TB 算），再加 LPDDR/SSD，约占机架售价（600–910 万美元）的 5–9%，落在 m=6–8% 区间，即 FY28 达成 72–73% 需要约 10–20% 的系统价格上调或 Rubin 对 Blackwell 的更大每瓦性能溢价。",
+    "【敏感度，自行折算】FY28 营收若 7,000 亿美元，毛利率每 1 个百分点 = 毛利 70 亿美元，税后约 58 亿（税率 17%），约占 FY28 调整后净利润（约 3,800 亿，自估）的 1.5%；因营业利润率约 63–66%，净利润对毛利率的弹性约为每 1 个百分点 ≈ 1.5–1.6%，与营收规模无关。FY27 低/标准/高毛利率区间 73.2%/73.7%/73.9% 的差异对净利润影响不超过 1%，真正的分歧在 FY28–FY30。"
+  ],
+  "filing_verified": [
+    "美光 8-K Ex-99.1（0000723125-26-000018，a2026q4ex991-pressrelease.htm，2026-09-30）：已读原表，FQ4-26 营收 54,229 百万、GAAP 毛利 47,047（86.8%）、非 GAAP 毛利 47,204（87.0%）、FQ4-25 营收 11,315；FY26 营收 133,188、非 GAAP 毛利率 81.1%；FQ1-27 指引营收 615 亿 ±15 亿美元、非 GAAP 毛利率约 86.25%；FY26 净资本开支 273.7 亿美元（原文 $27.37 billion）。",
+    "英伟达 CFO Commentary Q2 FY27（sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27cfocommentary.htm）：已读，GAAP/非 GAAP 毛利率 75.0%/75.0%（上季 74.9%/75.0%，上年同期 72.4%/72.5%）；Q3 指引毛利率 74.0% ±50bp、营收 1,080 亿 ±2%；承诺从 1,190 亿增至 2,790 亿，“primarily related to the procurement of memory”；存货 316 亿，“为第三季度 Vera Rubin 导入”。",
+    "英伟达 10-Q（nvda-20260726.htm）MD&A：已读，毛利率 75.0% vs 72.4%；半年毛利率 75.0% vs 66.6%（上年含 H20 45 亿计提）；库存与过剩采购承诺拨备净影响 Q2 FY27 −0.8pt、H1 −1.0pt。",
+    "英伟达 Q2 FY27 官方逐字稿（FactSet 校对稿，s201.q4cdn.com/…/TRANSCRIPT_-NVIDIA-Corp-NVDA-US-Q2-2027-Earnings-Call-26-August-2026-5_00-PM-ET.pdf）：已读全文关键段，毛利率重置、Q4 71–72%/FY28 72–73%、价格上调 Q1 生效、Rubin 8 月量产出货、20% 占比、每 GW 18/25/40 亿美元、供给受限至少到 FY28 末均为原文。",
+    "英伟达 Q4 FY26（2026-02-25）与 Q1 FY27（2026-05-20）官方逐字稿：已读，两次均称全年毛利率 mid-70s；Q1 FY27 H100 租价年内 +20%、A100 +约 15%（管理层口径）。",
+    "英伟达 2026-05-31 新闻稿（nvidianews.nvidia.com/news/vera-rubin-full-production-agentic-ai-factory）：已读，“Production shipments of Vera Rubin are set to begin starting this fall”，Vera Rubin NVL72，Spectrum-X Ethernet Photonics 已量产。",
+    "三星 3Q26 业绩新闻稿（news.samsung.com，马来西亚站）：已读，营收 195.3 万亿、营业利润 107.4 万亿、DS 营收 147.1 万亿/利润 106.5 万亿、2026 资本开支约 84.4 万亿、2027 年 AI 需求“far exceed”供给。",
+    "TrendForce 新闻稿 2026-09-29（HBM 2027 混合 ASP +121%）与 2026-09-30（4Q26 DRAM +10–15%、NAND +15–20%）：已读原文；TrendForce 是研究机构，不是公司披露，故归为二手，但原文已直接核对。"
+  ],
+  "unverified_claims": [
+    "Bernstein “Vera Rubin 机架约 910 万美元、HBM4 2027 年约 53 美元/GB、Rubin GPU 约 5.5 万美元”：仅见 Wccftech/PC Gamer/TrendForce News 转述，Wccftech 原页面 403，未读到券商原报告；另有媒体报道为 940 万美元。可信度：中低，且与 Seoul Economic Daily 的 36 美元/GB 冲突。券商估计只作参考，不作锚。",
+    "Morgan Stanley VR200 NVL72 BOM 约 780 万（内存约 200 万）、BofA 约 600 万美元：经转载，旧内存价格假设，可信度低。",
+    "GF Securities “内存占 VR200 BOM 约 29%（偏好 20%）、英伟达把每颗 Vera CPU 的 SOCAMM 从 192GB 减到 96GB”：经 Wccftech→TrendForce News 两层转述，且 BOM 约 210 万美元与机架售价 600–910 万美元的口径关系不明；可信度低。",
+    "12-Hi 36GB HBM4 单颗约 600→1,300 美元（Seoul Economic Daily，经 Silicon Analysts 转引）：单一来源，可信度中低。",
+    "台积电 3Q26 数字与 CoWoS 涨价：来自逐字稿转写站点（部分文字有乱码），未读 TSMC 6-K/管理层报告原表；2027 年晶圆涨价 3–6% 与 Nikkei 的“最高 10%”不一致；CoWoS 10–20% 涨价是“考虑中”的报道，未被确认。",
+    "CoWoS 月产能（95k–141k/170k–200k 片）、英伟达占 50–60%、52–78 周供货周期、85% 已锁定：来源口径不同（12 英寸等效 vs 不同封装流程），不可互相比较，可信度低。",
+    "SK 海力士 3Q26 数字：公司新闻室页面未取得（404），使用 Korea Times、investingLive 等转载公司公告与电话会；数字在各转载间一致，但应以 DART 披露为准。可信度：中高。",
+    "美光、三星电话会的措辞（75% 已承诺、HBM4 占 60%、供不应求至 2028）：来自转写（earningswhispers/Chosun 摘要等），未读官方逐字稿；财务数字已由 8-K/新闻稿核对。",
+    "Lumentum CEO “InP 缺口超过 DRAM 与 NAND”、英伟达向两家光器件供应商各投 20 亿美元：TrendForce News/LEDinside 二手报道，供应商未点名，未找到原始公告。",
+    "Rubin Ultra/Kyber（NVL144→NVL576，2027）、Feynman（2028）：GTC 2026 的二手报道，来源之间在季度与配置上有出入；未读英伟达官方 GTC 资料。",
+    "“英伟达已执行的涨价”幅度：官方只说“executed price increases take effect in Q1”，未披露幅度、对象或是否含 Blackwell；FY28 毛利率 72–73% 能否实现取决于该幅度，无一手数据。"
+  ],
+  "data_tables": {
+    "表1_英伟达毛利率逐季": {
+      "说明": "单位 %。Q1 FY26–Q4 FY26 的‘当时非 GAAP’口径为不含 SBC 的旧口径；FY27 起公司非 GAAP 含 SBC，并重述历史。Q3 FY27 与 Q4 FY27 为指引。",
+      "列": [
+        "季度",
+        "GAAP 毛利率",
+        "非 GAAP（当时口径）",
+        "备注"
+      ],
+      "行": [
+        [
+          "Q3 FY25",
+          "74.6",
+          "75.0",
+          "一手 8-K（前一 item 已核）"
+        ],
+        [
+          "Q4 FY25",
+          "73.0",
+          "73.5",
+          "一手"
+        ],
+        [
+          "Q1 FY26",
+          "60.5",
+          "61.0",
+          "含 H20 计提 45 亿美元，剔除后约 71.3%"
+        ],
+        [
+          "Q2 FY26",
+          "72.4",
+          "72.7",
+          "一手 10-Q"
+        ],
+        [
+          "Q3 FY26",
+          "73.4",
+          "73.6",
+          "一手"
+        ],
+        [
+          "Q4 FY26",
+          "75.0",
+          "75.2",
+          "一手"
+        ],
+        [
+          "Q1 FY27",
+          "74.9",
+          "75.0",
+          "一手"
+        ],
+        [
+          "Q2 FY27",
+          "75.0",
+          "75.0",
+          "一手 10-Q/CFO Commentary"
+        ],
+        [
+          "Q3 FY27（指引）",
+          "74.0",
+          "74.0",
+          "±0.5pt，营收 1,080 亿"
+        ],
+        [
+          "Q4 FY27（官方展望）",
+          "71–72",
+          "71–72",
+          "‘底部’，一手逐字稿"
+        ],
+        [
+          "FY28（官方展望）",
+          "72–73",
+          "72–73",
+          "‘价格上调自 Q1 生效’"
+        ]
+      ]
+    },
+    "表2_上游供应商最新季度": {
+      "说明": "单位：美光为亿美元，其余为万亿韩元或亿美元见列；利润率均为自行折算。",
+      "列": [
+        "公司/期间",
+        "营收",
+        "利润率",
+        "关键供给/价格表述",
+        "来源层级"
+      ],
+      "行": [
+        [
+          "美光 FQ4-26（至 2026-09-03）",
+          "542.3 亿美元",
+          "毛利率 86.8%（GAAP）/87.0%（非 GAAP）；FQ1-27 指引约 86.25%",
+          "2027 年>75% 产出已承诺；2027–28 比 2026 更紧",
+          "8-K 一手；措辞二手"
+        ],
+        [
+          "SK 海力士 3Q26",
+          "104.6 万亿韩元",
+          "营业利润率约 79.7%（营业利润 83.3 万亿）",
+          "HBM 卖到 2029；2027–28 超 50% 产能长约；4Q26 HBM4>HBM3E",
+          "二手转载公告"
+        ],
+        [
+          "三星 3Q26",
+          "195.3 万亿韩元（DS 147.1 万亿）",
+          "DS 营业利润率约 72.4%（106.5 万亿）",
+          "2027 年 AI 需求‘far exceed’供给；HBM4 大幅放量",
+          "一手新闻稿"
+        ],
+        [
+          "台积电 3Q26",
+          "约 467 亿美元",
+          "毛利率 66.4%；4Q 指引 65–67%",
+          "N2 占 8%；后端有‘a little bit shortage’；2027 年晶圆涨价 3–6%（报道）",
+          "二手逐字稿"
+        ]
+      ]
+    },
+    "表3_内存与封装价格信号": {
+      "说明": "价格均为二手估计，不同来源口径不一致。",
+      "列": [
+        "项目",
+        "数值",
+        "期间",
+        "来源层级"
+      ],
+      "行": [
+        [
+          "DRAM 合约价环比",
+          "约 +80%/+40%/+10–15%（TrendForce 新闻稿）或 +20%（Commercial Times）",
+          "2Q26/3Q26/4Q26",
+          "二手"
+        ],
+        [
+          "SK 海力士 DRAM ASP 环比",
+          "high-20%",
+          "3Q26",
+          "二手转载公告"
+        ],
+        [
+          "HBM 混合 ASP 同比",
+          "+121%",
+          "2027",
+          "二手 TrendForce 新闻稿"
+        ],
+        [
+          "12-Hi 36GB HBM4 单价",
+          "约 600 → 约 1,300 美元（16.7→36.1 美元/GB）",
+          "2026→2027",
+          "二手单一来源"
+        ],
+        [
+          "Bernstein HBM4",
+          "约 16.6 → 约 53 美元/GB",
+          "当前→2027",
+          "二手经转述"
+        ],
+        [
+          "台积电晶圆价格",
+          "+3–6%（N2/N3 最高）；Nikkei 称最高 10%",
+          "2027-01 起",
+          "二手报道"
+        ],
+        [
+          "CoWoS 价格",
+          "+10–20%（考虑中）",
+          "2027",
+          "二手报道"
+        ],
+        [
+          "8-Hi 对 12-Hi 每 Gb 成本",
+          "+10–20%",
+          "2027",
+          "二手 TrendForce 原文已读"
+        ]
+      ]
+    },
+    "表4_机架与每GW": {
+      "说明": "机架 ASP 为券商估计；每 GW 为管理层口径。均不作锚。",
+      "列": [
+        "平台",
+        "机架 ASP（估计）",
+        "每 GW 英伟达收入机会（管理层口径）",
+        "备注"
+      ],
+      "行": [
+        [
+          "Hopper",
+          "—",
+          "约 180 亿美元",
+          "Huang/Kress"
+        ],
+        [
+          "Grace Blackwell（GB200/GB300 NVL72）",
+          "约 300–400 万美元（BofA/MS）",
+          "约 250 亿美元",
+          "—"
+        ],
+        [
+          "Vera Rubin NVL72",
+          "600 万（BofA）/780 万（MS BOM）/910 万（Bernstein）",
+          "约 400 亿美元（含 Vera CPU、Rubin GPU、NVLink、InfiniBand/以太网、Groq LPU）",
+          "每 GW +60%，口径更宽"
+        ],
+        [
+          "Rubin Ultra Kyber",
+          "—",
+          "‘higher’",
+          "2027（二手）"
+        ]
+      ]
+    },
+    "表5_毛利率路径FY27至FY30": {
+      "说明": "自行估算，非公司指引。FY27 由已发生的 Q1/Q2、Q3 指引和 Q4 展望加权（营收：低 3,978 亿/标准 4,148 亿/高 4,288 亿，Q3 分别 1,080/1,120/1,160 亿，Q4 分别 1,120/1,250/1,350 亿，自估）。",
+      "列": [
+        "财年",
+        "低",
+        "标准",
+        "高",
+        "标准档驱动"
+      ],
+      "行": [
+        [
+          "FY27",
+          "73.2%",
+          "73.7%",
+          "73.9%",
+          "H1 75.0%、Q3 74.0%、Q4 71.5% 底部加权"
+        ],
+        [
+          "FY28",
+          "69.5%",
+          "72.5%",
+          "74.0%",
+          "官方 72–73%；涨价 Q1 生效；Rubin 占比上升"
+        ],
+        [
+          "FY29",
+          "66.5%",
+          "72.5%",
+          "75.0%",
+          "Rubin Ultra/HBM4e；内存价格见顶后趋稳；N2 成本；ASIC 压价"
+        ],
+        [
+          "FY30",
+          "65.0%",
+          "72.0%",
+          "75.0%",
+          "供给缓和、竞争加剧、客户集中度议价"
+        ]
+      ]
+    },
+    "表6_毛利率敏感度网格": {
+      "说明": "毛利率=1−(0.25+m)/(1+p)，m=内存成本增加占基准营收比例，p=系统涨价幅度，单位 %。自行推算。",
+      "列": [
+        "m＼p",
+        "0%",
+        "5%",
+        "10%",
+        "15%",
+        "20%"
+      ],
+      "行": [
+        [
+          "4%",
+          "71.0",
+          "72.4",
+          "73.6",
+          "74.8",
+          "75.8"
+        ],
+        [
+          "6%",
+          "69.0",
+          "70.5",
+          "71.8",
+          "73.0",
+          "74.2"
+        ],
+        [
+          "8%",
+          "67.0",
+          "68.6",
+          "70.0",
+          "71.3",
+          "72.5"
+        ],
+        [
+          "10%",
+          "65.0",
+          "66.7",
+          "68.2",
+          "69.6",
+          "70.8"
+        ],
+        [
+          "12%",
+          "63.0",
+          "64.8",
+          "66.4",
+          "67.8",
+          "69.2"
+        ]
+      ]
+    }
+  },
+  "quant_low": "【低档（转嫁失败 + 内存持续涨 + 竞争压价）】毛利率：FY27 73.2%（Q3 73.5%、Q4 70.0%）；FY28 69.5%；FY29 66.5%；FY30 65.0%。推导：①2027 年内存成本占营收增加 m≈8–10%，而系统涨价只有 p≈5–8%（客户以 ASIC/AMD 议价、延长付款期已到 60 天 DSO，说明买方压力已显现），对应表6 约 67–69%；②台积电晶圆 +5–10%、CoWoS +20% 叠加 N2 稀释，再扣 1pt；③2,790 亿供应承诺中按旧价锁定的部分在内存价格回落时形成拨备（Q2 FY27 拨备净影响已达 −0.8pt，可能扩大到 −2pt）；④FY29–FY30 内存供给 2028 年后释放导致价格回落，英伟达不得不让利，ASIC 占比上升使其定价权下降。触发条件：FY28 Q1 涨价未落地、Q4 FY27 低于 71%、DSO 继续上升、客户转向 8-Hi/减配、主要云厂商公布更大的自研芯片部署。净利润含义：FY30 毛利率比标准档低 7pt ≈ 净利润低约 11%（1pt≈1.5–1.6%）。",
+  "quant_base": "【标准档】毛利率：FY27 73.7%；FY28 72.5%（官方区间 72–73% 的中值）；FY29 72.5%；FY30 72.0%。推导：①Q4 FY27 71.5% 为底部（官方），FY28 价格上调自 Q1 生效，Rubin 每 GW 收入 400 亿 vs Blackwell 250 亿，说明新平台带来的系统价值提升足以让英伟达保持毛利额增长，只是毛利率较 75% 峰值低约 2.5pt（内存成本被转嫁约六到七成）；②FY29：内存价格 2027–2028 供给仍紧（美光、三星、SK 海力士一致），2028 年新洁净室投产后涨幅才放缓，Rubin Ultra（HBM4e、可能 8-Hi 配置）抵消部分成本，N2 成本与 ASIC 竞争使价格上调空间有限，持平于 72.5%；③FY30：供给缓和使买方议价权回升，毛利率小幅降至 72.0%，高于 70% 阈值。与 ASIC 份额 item 的 FY28 70%→2030 62% 份额下滑方向一致，但毛利率下滑幅度远小于份额下滑，因为英伟达保留在最高端平台的定价权。",
+  "quant_high": "【高档】毛利率：FY27 73.9%；FY28 74.0%；FY29 75.0%；FY30 75.0%。推导：①涨价幅度大于内存成本（供给受限下英伟达可以提价，Micron/SK 海力士自身 80–87% 的毛利率说明价值链利润已向稀缺环节集中，英伟达同样稀缺）；②2028 年起内存新增产能（美光 FY27 资本开支超 500 亿、三星 2026 年 84 万亿韩元、SK 海力士 M15X）使 HBM 价格见顶回落，而英伟达定价具有刚性（长约 2,790 亿已按高价锁定，但对客户的价格维持），毛利率恢复到 75%；③Rubin 平台把 Vera CPU、Spectrum-X CPO、Groq LPU 纳入英伟达销售内容，软件与系统溢价提升。触发条件：Q4 FY27 底部浅于 71.5%、FY28 Q1 指引毛利率≥73%、HBM 合约价格上限条款生效。",
+  "implied_rate": {
+    "说明": "小数，毛利率为各财年全年值；‘年变化’为百分点/年。自行估算。",
+    "悲观": {
+      "FY27毛利率": 0.732,
+      "FY28毛利率": 0.695,
+      "FY29毛利率": 0.665,
+      "FY30毛利率": 0.65,
+      "FY27到FY30年均变化(百分点)": -0.0277
+    },
+    "标准": {
+      "FY27毛利率": 0.737,
+      "FY28毛利率": 0.725,
+      "FY29毛利率": 0.725,
+      "FY30毛利率": 0.72,
+      "FY27到FY30年均变化(百分点)": -0.0057
+    },
+    "乐观": {
+      "FY27毛利率": 0.739,
+      "FY28毛利率": 0.74,
+      "FY29毛利率": 0.75,
+      "FY30毛利率": 0.75,
+      "FY27到FY30年均变化(百分点)": 0.0037
+    },
+    "供给上限_营收增速": {
+      "FY28": "标准 0.70（官方），上限约 0.80–0.85（需 CoWoS 2027 底≥200k 片/月且 HBM4 良率超预期）",
+      "FY29": "标准约 0.30–0.40，供给上限约 0.45",
+      "FY30": "标准约 0.20–0.30，供给上限约 0.35（自估，见 param_implication）"
+    },
+    "毛利率弹性": "每 1pt 毛利率 ≈ 调整后净利润 1.5–1.6%"
+  },
+  "affected_params": "主要影响 g1（阶段1营收增速的上限，及净利润增速与营收增速之差）、N（阶段1年数：供给约束在 FY28 末前持续）、gm 中的期初净利率与期末毛利率（经毛利率路径向下传导）；对 M、g2 影响很小。",
+  "param_implication": "1) g1：毛利率路径本身会让净利润增速比营收增速每年低约 0–2 个百分点（FY27→FY28 标准档 −1.2pt 毛利率 ≈ −1.9% 净利润；低档 FY28 −4.2pt ≈ −6.5%）。因此阶段1净利润增速应取 min(营收增速上限, 供给上限) 再扣毛利率拖累：FY28 营收 +70%（官方，供给受限口径）在营业费用增速放缓至约 +45%（自估）的假设下，对应调整后净利润约 +67–70%（标准）、+60–62%（低）、+72–73%（高）。2) 供给约束是否限制阶段1上限：是，而且在 FY28 已经是约束上限本身，不是下方风险。证据链：英伟达 FY28 +70% 是‘supply-constrained’，需求‘much greater than 70%’，供给至少受限到 FY28 末；HBM（SK 海力士卖到 2029、三星 2027 年售罄、美光 2027 年超 75% 已承诺）、CoWoS（月产能 2026 底约 130k → 2027 底 170–200k，+30–55%，英伟达占一半以上）、N3/N2（N2 年产能 2027 年翻倍）、InP 激光器（缺口持续到 2027 年以后）四项同时受限；而营收可以快于出货，因 Rubin 每 GW 收入 +60%、机架价格大幅上调、内存涨价本身被转嫁进价格，所以 FY28 单位出货增速自估只有约 +35–45%、其余来自 ASP。3) FY29–FY30：2028 年封装产能（Goldman 口径 +27%）、HBM4e/新洁净室逐步释放，供给上限随之放松，但 ASP 增量（Rubin→Rubin Ultra）的幅度小于 Blackwell→Rubin，所以营收上限回落到约 +45%（FY29）、+35%（FY30）。这意味着阶段1的 N 不应机械取 5 年以上的 +50% 以上高速增长；供给上限与我对阶段1 g1 的建议一致：FY28 约 +70%，FY29 +30–40%，FY30 +20–30%（营收，仅为本 item 的供给侧上限，不含需求侧与份额的独立判断）。4) 期初净利率：TTM 调整后净利率 55.4%（前一 item）→ 若 FY28 毛利率 72.5%、营业费用增速 low-50s%（FY27）再放缓，FY28 净利率约 54–55%，与 FY27 全年约 55%（自估）基本持平。高档 FY30 净利率比标准高约 +2.5pt，低档低约 −5pt（毛利率差 ×0.83 税后）。5) 期末毛利率（阶段2）：以标准档 FY30 72% 为起点，阶段2 期末毛利率 65–70% 之内都合理；低档 65% 对应 ASIC 份额持续上升与客户集中度议价，与‘英伟达守住 70% 以上’的证据（Micron 与 SK 海力士利润率已高于英伟达，说明稀缺环节能守住利润，但不一定是英伟达）并存。",
+  "base_rate_reference": "定性类比（不涉及任何股价）：①英伟达自身周期：FY23 毛利率受库存减值拖累回落到约 56.9%（GAAP，前一轮保留为周期性），FY24 回升到 72.7%，FY25 75.0%——说明成本冲击在短期可被产品换代与提价消化，但只出现一个周期；②成本冲击由供应商抽走利润的类比：2021–2022 年台积电涨价与晶圆短缺时期，主要 fabless 厂商毛利率总体守住，苹果、AMD 通过提价与产品组合转嫁；③内存厂商自身利润率 72–87% 已显著超过其历史顶部（美光 FY18 约 59%、FY22 约 45–49%，来自历史年报，未在本轮重新核对），上一轮内存周期顶部利润率约 60%，当前 87% 极端，历史经验是 2–3 年内会回落，回落时内存成本会为英伟达让出 1–3 个百分点；④IT 行业营业利润率 5 年相关系数 0.62（Base Rate Book，交接资料），意味着英伟达毛利率回落并非随机，而是向均值回归，但回归速度慢。",
+  "confidence": "中。FY28 毛利率 72–73%：中高（官方指引，涨价已‘执行’，Q3 前三个季度指引偏保守，近 8 季单季毛利率指引与实际误差均在 ±0.7pt 内，H20 除外）；FY29–FY30 毛利率：低（缺乏一手约束，取决于内存价格回落时点与 ASIC 竞争）；供给上限判断：中（四个独立瓶颈方向一致，但 CoWoS 产能数字之间口径不一，单位出货的拆分为自估）。上游公司数字（美光、三星）有一手，SK 海力士与台积电为二手转载。",
+  "contradicting_evidence": "支持‘标准档偏乐观’的证据：①英伟达在 4 个月内把全年毛利率从 mid-70s 下调到 Q4 71–72% 且 Kress 称内存“headed even higher into next year”，意味着 FY28 的 72–73% 可能仍需再下修；②英伟达自己在削减 Vera 的 SOCAMM 容量（GF Securities 二手），GPU/ASIC 厂商考虑 12-Hi→8-Hi，说明买卖双方都在为成本让步，不是单向转嫁；③Micron 分析师问答提到‘有大客户在对 HBM 减配’；④DSO 由约 45 天升到约 60 天，是‘延长付款期’，说明买方已在要求让步；⑤2,790 亿供应承诺是按涨价后价格锁的，若内存价格 2028 年回落，英伟达账上承诺价格高于市场，形成拨备（Q2 拨备已 9.85 亿，净影响 −0.8pt）；⑥台积电 3Q26 毛利率 66.4% 并因 N2 与海外厂稀释而下行，2027 年涨价与 CoWoS 涨价叠加，成本从三个环节同时上升。支持‘标准档偏悲观’的证据：①英伟达是内存厂最大的客户之一，且在 3 家供应商处签长期协议（SK 集团 LOI 超 5,000 亿美元，二手）、需求 ‘much greater than 70%’，在供给受限时可提价；②美光、SK 海力士、三星的利润率已高于英伟达，若英伟达无法转嫁，它的毛利率会降到更低，但管理层仍给出 72–73%，说明其内部模型看到了转嫁路径；③H100 租价年内 +20%（管理层口径）显示老卡价值上升，客户有支付新卡溢价的能力；④内存涨价是‘需求冲击’的副产品，客户整体 EBITDA 与算力需求正在上升。",
+  "key_uncertainties": "1）英伟达已‘执行’涨价的幅度与适用范围（官方未披露），直接决定 FY28 72–73% 能否兑现；2）HBM4/HBM4e 2027 年的真实合约价（12-Hi 36 美元/GB vs 53 美元/GB 两种估计，相差 50%）；3）内存价格何时见顶：美光称 2027–2028 比 2026 更紧，TrendForce 4Q26 涨幅已由 +80%/+40% 放缓到 +10–20%，若 2027 年二季度起转平，内存成本拖累会在 FY29 缓解；4）CoWoS/N2 的真实产能与涨价幅度；5）2,790 亿供应承诺中固定价格与可调价格的比例；6）Rubin 良率与 Q4 FY27 出货节奏（Rubin 占比 20% 之后能否在 Q4 超过 40%）。",
+  "signals": "①2026-11-17 英伟达 Q3 FY27：毛利率是否在 74.0% ±0.5pt、Q4 毛利率指引是否仍为 71–72%、FY28 72–73% 是否维持/上调/下调、Rubin 占比、存货与 DSO、供应承诺新增额；②2026-12 美光 FQ1-27（毛利率约 86.25%）与 2027-01 台积电 4Q26（2027 年涨价与 CoWoS 产能确认）；③2027-01 TrendForce 1Q27 DRAM/HBM 合约价与 HBM4 实际成交价；④2027-02 英伟达 Q4 FY27 与 Q1 FY28：涨价效果与 Q1 FY28 毛利率；⑤2027 年 HBM 长约价格上限条款与 8-Hi 渗透率；⑥Rubin Ultra/Kyber 量产节奏（2027 年下半年）与 CPO 交换机的出货；⑦2028 年新洁净室（美光 ID1/ID2、三星 P5、SK M15X）投产带来的内存价格拐点。",
+  "sources": [
+    {
+      "title": "Micron 8-K Ex-99.1: Record FQ4 and FY2026 results",
+      "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000018/a2026q4ex991-pressrelease.htm",
+      "date": "2026-09-30",
+      "tier": "一手"
+    },
+    {
+      "title": "NVIDIA CFO Commentary Q2 FY2027",
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27cfocommentary.htm",
+      "date": "2026-08-26",
+      "tier": "一手"
+    },
+    {
+      "title": "NVIDIA Q2 FY2027 8-K press release",
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27pr.htm",
+      "date": "2026-08-26",
+      "tier": "一手"
+    },
+    {
+      "title": "NVIDIA 10-Q for quarter ended July 26, 2026",
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+      "date": "2026-08-26",
+      "tier": "一手"
+    },
+    {
+      "title": "NVIDIA Q2 FY2027 Earnings Call corrected transcript (FactSet, hosted by NVIDIA IR)",
+      "url": "https://s201.q4cdn.com/141608511/files/content_files/TRANSCRIPT_-NVIDIA-Corp-NVDA-US-Q2-2027-Earnings-Call-26-August-2026-5_00-PM-ET.pdf",
+      "date": "2026-08-26",
+      "tier": "一手"
+    },
+    {
+      "title": "NVIDIA Q1 FY2027 Earnings Call corrected transcript (FactSet)",
+      "url": "https://s201.q4cdn.com/141608511/files/doc_financials/2027/q1/NVDA-Q1-2027-Earnings-Call-20-May-2026-5_00-PM-ET.pdf",
+      "date": "2026-05-20",
+      "tier": "一手"
+    },
+    {
+      "title": "NVIDIA Q4 FY2026 Earnings Call corrected transcript (FactSet)",
+      "url": "https://s201.q4cdn.com/141608511/files/doc_financials/2026/q4/NVDA-Q4-2026-Earnings-Call-25-February-2026-5_00-PM-ET.pdf",
+      "date": "2026-02-25",
+      "tier": "一手"
+    },
+    {
+      "title": "NVIDIA Vera Rubin Ramps Into Full Production to Power Agentic AI Factories Worldwide",
+      "url": "https://nvidianews.nvidia.com/news/vera-rubin-full-production-agentic-ai-factory",
+      "date": "2026-05-31",
+      "tier": "一手"
+    },
+    {
+      "title": "Samsung Electronics Announces Third Quarter 2026 Results",
+      "url": "https://news.samsung.com/my/samsung-electronics-announces-third-quarter-2026-results",
+      "date": "2026-10-29",
+      "tier": "一手"
+    },
+    {
+      "title": "Micron FQ4 2026 earnings call transcript (earningswhispers)",
+      "url": "https://earningswhispers.com/transcript/MU/Q42026",
+      "date": "2026-09-30",
+      "tier": "二手"
+    },
+    {
+      "title": "The Korea Times: SK hynix pledges to return $75 bil. to shareholders (Q3 2026 results)",
+      "url": "https://www.koreatimes.co.kr/business/companies/20261028/sk-hynix-logs-record-q3-operating-profit-of-628-bil",
+      "date": "2026-10-28",
+      "tier": "二手"
+    },
+    {
+      "title": "investingLive: SK Hynix Q3 operating profit beats at 83tn won",
+      "url": "https://investinglive.com/stocks/sk-hynix-q3-operating-profit-beats-at-83tn-won-unveils-100tn-won-shareholder-payout-plan/",
+      "date": "2026-10-27",
+      "tier": "二手"
+    },
+    {
+      "title": "TrendForce: HBM Supply Constraints Persist, 2027 Price Outlook Revised Upward (blended ASP +121% YoY)",
+      "url": "https://www.trendforce.com/presscenter/news/20260929-13255.html",
+      "date": "2026-09-29",
+      "tier": "二手"
+    },
+    {
+      "title": "TrendForce: AI Server Demand Sustains Memory Contract Price Increases in 4Q26",
+      "url": "https://www.trendforce.com/presscenter/news/20260930-13258.html",
+      "date": "2026-09-30",
+      "tier": "二手"
+    },
+    {
+      "title": "TrendForce News: DRAM Prices Seen Rising 20% QoQ in 4Q26",
+      "url": "https://www.trendforce.com/news/2026-10-20/news-dram-prices-seen-rising-20-qoq-in-4q26-despite-slower-gains-ai-demand-tight-supply-support-outlook/",
+      "date": "2026-10-20",
+      "tier": "二手"
+    },
+    {
+      "title": "TrendForce News: NVIDIA Reportedly Halves Vera Rubin SOCAMM Capacity as Memory Costs Near 29% of System BOM",
+      "url": "https://www.trendforce.com/news/2026/07/28/news-nvidia-reportedly-halves-vera-rubin-socamm-capacity-as-memory-costs-near-29-of-system-bom/",
+      "date": "2026-07-28",
+      "tier": "二手"
+    },
+    {
+      "title": "Silicon Analysts: TrendForce Lifts 2027 HBM ASP Forecast to +121%; HBM4 Stack Seen Doubling to ~$1,300",
+      "url": "https://siliconanalysts.com/market/trendforce-lifts-2027-hbm-asp-forecast-to-121-hbm4-stack-seen-doubling-to-1-300-2026-10-01",
+      "date": "2026-10-01",
+      "tier": "二手"
+    },
+    {
+      "title": "TSMC Q3 2026 earnings call transcript (Singju Post)",
+      "url": "https://singjupost.com/?p=64658",
+      "date": "2026-10-15",
+      "tier": "二手"
+    },
+    {
+      "title": "aiweekly: TSMC Mulls Up to 20% CoWoS Hike and 2027 Wafer Price Rise (citing TrendForce)",
+      "url": "https://aiweekly.co/alerts/tsmc-mulls-up-to-20-cowos-hike-and-2027-wafer-price-rise",
+      "date": "2026-10-27",
+      "tier": "二手"
+    },
+    {
+      "title": "The Star/Nikkei: TSMC to raise chipmaking prices by up to 10% in 2027",
+      "url": "https://www.thestar.com.my/tech/tech-news/2026/07/21/tsmc-to-raise-chipmaking-prices-by-up-to-10-in-2027-nikkei-asia-reports",
+      "date": "2026-07-21",
+      "tier": "二手"
+    },
+    {
+      "title": "TrendForce News: InP Shortage Emerges as AI Optical Interconnect Bottleneck",
+      "url": "https://trendforce.com/news/2026/08/06/news-inp-shortage-emerges-as-ai-optical-interconnect-bottleneck/",
+      "date": "2026-08-06",
+      "tier": "二手"
+    },
+    {
+      "title": "Yole Group: Optical transceivers at the chokepoint of AI growth and supply chain constraints",
+      "url": "https://www.yolegroup.com/strategy-insights/opinion-optical-transceivers-at-the-chokepoint-of-ai-growth-and-supply-chain-constraints/",
+      "date": "2026-06-01",
+      "tier": "二手"
+    },
+    {
+      "title": "PC Gamer: A single Nvidia Vera Rubin rack is estimated to cost $7,803,148 (Morgan Stanley)",
+      "url": "https://pcgamer.com/hardware/a-single-nvidia-vera-rubin-rack-is-estimated-to-cost-usd7-803-148-with-over-usd2-million-of-that-figure-spent-on-memory-alone",
+      "date": "2026-06-01",
+      "tier": "二手"
+    },
+    {
+      "title": "Wccftech: Bernstein warns Vera Rubin racks will hit $9.1 million as HBM4 prices triple to $53/GB",
+      "url": "https://wccftech.com/bernstein-warns-nvidias-vera-rubin-racks-will-hit-9-1-million-as-hbm4-prices-triple-to-53-per-gigabyte/",
+      "date": "2026-06-03",
+      "tier": "二手"
+    },
+    {
+      "title": "Silicon Analysts: CoWoS lead times, AI bottleneck 2026",
+      "url": "https://siliconanalysts.com/analysis/cowos-lead-times-ai-bottleneck-2026",
+      "date": "2026-07-06",
+      "tier": "二手"
+    }
+  ],
+  "uncertain": [
+    "key_facts 中机架 ASP（600–910 万美元）与 HBM4 2027 年单价（36 vs 53 美元/GB）[不确定]",
+    "key_facts 中台积电 3Q26、CoWoS 产能与涨价幅度（二手，口径冲突）[不确定]",
+    "key_facts 中 SK 海力士 3Q26 数字（二手转载公告）[不确定]",
+    "quant_low/quant_base/quant_high 中 FY29–FY30 毛利率与 FY28 单位出货增速拆分（自行估算）[不确定]",
+    "param_implication 中供给上限（FY29 +45%、FY30 +35%）[不确定]",
+    "英伟达已执行涨价的幅度[不确定]"
+  ]
+}
