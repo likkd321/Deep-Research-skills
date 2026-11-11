@@ -1,0 +1,735 @@
+{
+  "item_name": "ASIC份额路径",
+  "scope": "覆盖：博通 AI 半导体收入（FY25–FY26 逐季，8-K 原表）、XPU 客户与 OpenAI/Anthropic/Meta/Google 的 GW 级订单、博通 AI XPV 融资平台；Marvell 定制 XPU；Google TPU 系统外销（含 Anthropic、Meta 传闻）；AWS Trainium、Meta MTIA、Microsoft Maia、OpenAI Jalapeño；Groq/Cerebras 类推理专用芯片对 GPU 份额的影响；2024–2026 年 ASIC 占加速器支出的自下而上估算；2028/2030/2033/2036 年英伟达在加速器支出中的份额（低/标准/高）；ASIC 竞争下英伟达毛利率能否守住 70%；大客户议价与 Rubin CPX、NVLink Fusion。口径：'加速器支出'=GPU/XPU/ASIC 计算芯片或其整机在供应商层面的收入，不含 scale-out 网络、CPU 与自建数据中心；英伟达取'数据中心计算'口径。不涉及：AMD 详细路径（见'AMD与网络竞争'item）、总市场规模（见'每GW…'item）、任何股价/市值/估值/评级。",
+  "as_of_date": "2026-11-11；最新一手数据：博通 Q3 FY26（截至 2026-08-02，8-K 于 2026-09-02、10-Q 于 2026-09-10）；Alphabet Q3 2026（截至 2026-09-30）；Amazon Q3 2026（截至 2026-09-30）；Marvell Q2 FY27（截至 2026-08-01）；英伟达 Q2 FY27（截至 2026-07-26，Q3 FY27 将于 2026-11-17 发布，尚未发布）。",
+  "time_horizon_tag": "阶段1、阶段2、稳态（阶段1：2026–2028 供给受限期的份额与毛利；阶段2：2029–2036 份额漂移与毛利衰减；稳态：对 g2 与期末毛利率的约束）",
+  "key_facts": [
+    "【博通 AI 半导体收入·逐季，一手 8-K+二手逐字稿】Q1 FY25 41亿美元（+77%）、Q2 FY25 44亿（+46%）、Q3 FY25 52亿（+63%）、Q4 FY25 约65亿（+74%；8-K 只给增速，65亿来自逐字稿）、FY25 约202亿（+65%）；Q1 FY26 84亿（+106%）、Q2 FY26 108亿（+143%）、Q3 FY26 167亿（+221%，环比+54%，8-K Ex-99.1 原文）、Q4 FY26 指引 217亿（+236%，8-K）。FY26 四季合计约576亿，与管理层口径'约580亿'吻合（FY26 口径为 2025-11 至 2026-10，约等于 CY2026）。",
+    "【博通 FY27/FY28 数字，二手逐字稿，8-K 无】Q3 FY26 电话会：已'锁定供应'使 FY27 AI 收入再翻倍至约1,150亿美元，并'有可见度'使 FY28 AI 半导体收入再翻倍至约2,300亿美元（Webull/MarketBeat 两份独立转写一致）。Q1 FY26 电话会（2026-03）说法是 FY27 AI 芯片收入'显著高于1,000亿'；Q2 FY26 电话会（2026-06）重申'超过1,000亿'。口径是否含 AI 网络，逐字稿未明说；8-K 新闻稿不含这两个数。这是管理层前瞻口径，不作锚。",
+    "【博通 XPU 与网络拆分】Q3 FY26：XPU 占 AI 收入73%、XPU 出货同比>3.5倍，AI 网络同比>2.5倍，管理层称网络未来几年增速'与 XPU 一样快'（二手逐字稿）。Q1 FY26 网络约占 AI 收入1/3，Q2 FY26 近40%（管理层称可能是高点）（二手）。自行估算 FY26 XPU 收入约408亿美元（8.4×2/3 + 10.8×0.6 + 16.7×0.73 + 21.7×0.75，Q4 占比为假设）。",
+    "【博通毛利率被 ASIC 摊薄，一手 8-K 自行折算】non-GAAP 毛利：Q3 FY26 221.91亿/295.91亿=75.0%，Q2 FY26 171.09亿/221.87亿=77.1%，Q3 FY25 124.99亿/159.52亿=78.4%；Q4 FY26 指引约73%（逐字稿，原因：XPU 占比上升与内存含量上升）；Q4 non-GAAP 营业利润率指引66%与去年持平（8-K）。10-Q：GAAP 毛利率 Q3 FY26 为69%（去年同期67%）。博通整机架销售时'转手更多非自家部件'，毛利率%下降但毛利美元上升（Q4 FY25 电话会）。",
+    "【博通订单与积压，二手逐字稿】Q4 FY25 电话会：AI 积压730亿美元（含 XPU、交换机、DSP、激光器，约18个月交付，管理层明说'不要当成未来18个月收入'），其中约200亿为非 XPU；Anthropic 先后下 TPU Ironwood 整机架订单100亿（Q3 FY25）+110亿（Q4 FY25，2026年末交付）；第五个 XPU 客户 10亿美元订单。Q2 FY26：当季 AI 订单超过300亿美元（出货108亿）。Q3 FY26：6个 XPU 客户。",
+    "【客户与 GW 级承诺，Q3 FY26 逐字稿（二手）+8-K（一手）】Anthropic：2026年 Ironwood 约1GW，2027年再部署 5GW 的 TPU v8i，2028年再增10GW，2027年将成博通最大 XPU 客户；OpenAI：Jalapeño 2027年部署1.3GW，2028年有可见度超过5GW（含后续代），将成第二大 XPU 客户；Meta：三代 MTIA 到2028年有可见度部署3GW；Google：未来数年每年'数百亿美元'TPU。一手 8-K（2026-04-06）：博通与 Google 签长期协议（开发并供应未来各代 TPU）和供应保障协议（网络及其他部件至2031年）；Anthropic 自2027年起经博通获得约3.5GW，且使用量'取决于 Anthropic 的持续商业成功'。注意：8-K 的约3.5GW 与 9 月电话会的 5GW（2027）+10GW（2028）口径不一致，后者是更新口径还是不同合同未知。",
+    "【OpenAI–博通10GW，二手】2025-10-13 联合公告：OpenAI 设计加速器与系统，博通部署机架与以太网，2026年下半年起、2029年底前完成，性质为 term sheet（OpenAI 官网页面 403 未直接读取，来自多家转载）。2026-06-24 双方发布首款芯片 Jalapeño（推理向，Celestica 负责机架集成，称每瓦性能'显著优于现有最先进'，未给基准；预计2026年底开始部署）。英伟达电话会称 OpenAI 已有与计划的承诺约12GW 英伟达算力（官方逐字稿）。",
+    "【博通自身也在做'循环融资'，10-Q 一手】2026年6月推出 AI XPV 平台（据逐字稿与 Apollo、Blackstone 合作），目标到2028年支持超过20GW 基于博通 XPU/网络的算力；首期350亿美元对应'超过1GW'（逐字稿指 Anthropic 的1GW）。博通为客户租赁义务向金融伙伴提供 backstop，最大潜在负债约290亿美元（违约时按未偿额85%与机架处置价值之差赔付，5年租期）；客户在需要时可向博通发行最高420亿美元的可转换票据。单一分销商客户占 Q3 FY26 净收入50%（前三季46%），前五大终端客户约占55%。",
+    "【Marvell，Q2 FY27 8-K 与 10-Q 一手】收入27.39亿美元（+37%），数据中心21.715亿（+46%，占79%），non-GAAP 毛利率58.9%；Q3 指引31.5亿±5%、non-GAAP 毛利率57.5–58.5%。管理层称定制业务将在 FY27 下半年'显著加速'（8-K）。2026-03-31 英伟达以20亿美元认购 Marvell Series A 可转换优先股（10-Q），并宣布 NVLink Fusion 战略合作；季后 Marvell 向某客户发行最多5,900万股认股权证（10-Q 未点名，二手称为 Google；与采购挂钩）。",
+    "【Marvell 定制 XPU 体量，二手】FY26 定制业务约15亿美元（投资者日摘要，未在 8-K 拆分）；FY27 总收入约120亿、FY28 约180亿（2026-08 上调），2026-10-06 投资者日称 FY28 总收入约200亿；定制收入 FY28'超过翻倍'、FY29 目标>120亿（此前>100亿）→推算 FY28 定制<40亿，仍远小于博通 XPU 体量；管理层 CY30 定制 TAM 2,350亿美元为口号，不作锚。",
+    "【Google TPU 外销，Alphabet Q3 2026 一手】8-K：Google Cloud 收入307.09亿美元（+103%），'TPU 系统销售是增长的重要贡献'。10-Q：2026 Q2 起确认 TPU 系统（硬件+软件+安装+保修）销售收入，'绝大多数将在2027年确认'；客户可能有权按预设价格回购（按退货权或财务担保处理）；云积压总计5,677亿美元（Cloud 5,608亿）；前三季购置固定资产1,319.5亿美元（上年同期636亿）。电话会：近100家 TPU 客户，包括 Anthropic（直接+经博通）、Apple、Citadel Securities 等，与 Oracle 以及与 Blackstone 合资的 Crux AI 合作交付 TPU 系统；TPU 8t/8i；2026全年资本开支指引1,950–2,050亿美元，2027年'显著增加'；Q4 TPU 系统销售继续放量，2027年'有意义的收入爬坡'；云业务已开始使用第三方算力。",
+    "【Anthropic–Google，一手新闻稿 2025-10-23】Anthropic 扩大使用 Google Cloud TPU，最多100万颗 TPU，2026年上线'远超1GW'，价值数百亿美元；Anthropic 自称'三种芯片平台'（TPU、Trainium、NVIDIA GPU）并行，Amazon 仍是主要训练伙伴。2025-11-18 Anthropic 与 Microsoft、NVIDIA 签约：承诺购买300亿美元 Azure 算力并另签最高1GW 的英伟达系统（Grace Blackwell 与 Vera Rubin），英伟达拟投最高100亿美元（二手汇总）。",
+    "【Meta–Google 洽谈，二手/传闻】2026-02-26 The Information/Reuters：Meta 签多年期、数十亿美元租用 Google TPU 云；另在谈2027年直接购买 TPU 部署于自有数据中心，Meta 与 Google 均未置评。Alphabet Q3 电话会（一手）只提及与 Meta 合作交付 Torch TPU 软件，未披露采购。TrendForce 2026-04 称 Meta 自研芯片延迟使 ASIC 服务器份额预测由近28%下调到约27%（二手）。Meta 同期与英伟达签多年协议（数百万颗 Blackwell/Rubin GPU，条款未披露）。Meta MTIA：2026-03-11 公布 MTIA 300/400/450/500 四代，450 预计2027年初量产、500 采用2nm，与博通合作延至2029年（二手）。",
+    "【AWS Trainium，Amazon Q3 2026 8-K/10-Q 一手+电话会二手】一手：2026年现金资本开支约2,200亿美元；AWS 增长39%（年化1,840亿），合同积压约5,780亿；Amazon 不披露 Trainium 收入。电话会（Jassy，二手转述）：Trainium 收入承诺>2,250亿美元（2026-04）；Q3 Graviton 与 Trainium 承诺同比>20倍；Trainium2 基本售罄（称性价比比同类 GPU 好约30%）、Trainium3 2026年初起出货且'几乎全部被预订'、Trainium4 约18个月后广泛可用且已被预订；自研芯片业务年化>200亿（Q1），'若计入自用约500亿'；Trainium 将于2027年底起在 AWS 之外提供。Anthropic 承诺最高5GW Trainium，OpenAI 约2GW Trainium（二手）。同时英伟达称 AWS 将从本季起至 FY29 Q2 额外部署200万颗英伟达 GPU（英伟达官方逐字稿）。",
+    "【Microsoft Maia，二手】2026-01 发布 Maia 200（台积电3nm、216GB HBM3e、称较其现有机队推理每美元性能高约30%），已在爱荷华州区域运行，用于 GPT-5.2 等模型推理与 Microsoft 365 Copilot；2025-06 The Information 称其前身 Braga 量产推迟至少6个月。规模未披露，对份额贡献暂可忽略。",
+    "【Groq 类推理专用芯片，一手 10-K/10-Q】英伟达2025-12与 Groq 签非独家许可（LPU 技术）并雇用部分员工，未购客户合同、产品或股权；总对价130亿美元交割时付清+约40亿美元一年内应付（含推算利息）；确认商誉144亿美元、无形资产25亿美元（5年摊销）；H1 FY27 已付29.44亿美元。Q2 FY27 官方逐字稿：Groq 3 LPX（机架级 LPU）已'全面量产'，将于本季向早期客户（Nebius 首发）放量；黄仁勋称 Groq 加速器是给'高 ASP、高交互速度'服务'外挂'的选项，'绝大多数数据中心仍将是 Vera Rubin NVLink-72'。Vera Rubin 平台每 GW 英伟达收入机会由 Hopper 约180亿→Blackwell 约250亿→Vera Rubin 约400亿美元（含 Vera CPU、NVLink、网络与 Groq LPU，管理层口径）。其他推理专用：OpenAI 与 Cerebras 签最高750MW、>100亿美元的合同（2026-01，二手）。",
+    "【Rubin CPX 与 NVLink Fusion】Rubin CPX 在 Q2 FY27 官方逐字稿和 CFO Commentary 中未出现；第三方（Tom's Hardware）称 CPX 已被 Groq 3 LPX 取代、从路线图移除——未获官方确认。NVLink Fusion：FY26 10-K 一手：'使超大规模云厂商与定制 ASIC 设计者能将自研 CPU/XPU 接入英伟达平台'；合作方含 Marvell（20亿美元优先股）、MediaTek、Alchip，英伟达另向 Intel 投资50亿美元（二手）；AWS 称下一代 Trainium4 同时支持 UALink 与 NVLink（单一来源，二手）；博通、AMD、Intel 支持 UALink 作为开放替代。",
+    "【英伟达毛利率，一手 8-K 与官方逐字稿】GAAP：FY25 75.0%，FY26 71.1%（含H20 45亿美元计提，剔除后自行折算约73.2%），Q2 FY26 72.4%，Q1 FY27 74.9%，Q2 FY27 75.0%；Q3 FY27 指引74.0%±0.5pt；Q2 FY27 逐字稿（FactSet 校对稿，英伟达官网托管）：内存价格'超出预期且明年更高'，Q4 FY27 毛利率将见底71–72%，FY28 回到72–73%，'已执行的涨价自 Q1 起生效'。FY28 收入约+70%（供给受限口径），供给至少到 FY28 末仍是瓶颈。",
+    "【英伟达自身数据，一手】数据中心计算收入：FY24 389.5亿、FY25 1,021.96亿、FY26 1,623.61亿美元；网络 FY26 313.76亿。数据中心 Q1 FY27 752.46亿、Q2 FY27 890.23亿（Hyperscale 487.10亿、ACIE 403.13亿）；Q3 指引总收入1,080亿±2%（不含中国数据中心计算）。黄仁勋称 ACIE（neocloud、主权、企业）'不买定制芯片'，是'无人看见的另一半'；Vera Rubin 约占 Q3 数据中心收入20%；CFO：依赖英伟达资产负债表支持的 AI 实验室约占明年业务的四分之一；DSO升至60天。",
+    "【第三方 ASIC 占比参考，二手，不作锚】TrendForce：2026年 ASIC 型 AI 服务器占出货27.8%（2026-01）→约27%（2026-04），GPU 约69.7%，2026年 ASIC 增速（约44.6%）快于 GPU（约16.1%）；Morgan Stanley（2024-12 旧文）：ASIC 占 AI 加速器销售11%（2024）→13%（2027）→可能15%（2030），明显低于2026 年实际走势；各家对 Nvidia 2026 份额的估计在75–85%之间。统计口径各不同（出货量 vs 金额、是否含 Google 自用）。"
+  ],
+  "filing_verified": [
+    "博通 8-K Ex-99.1（Q3 FY26，0001730168-26-000076，avgo-08022026x8kxex99.htm）：AI 半导体收入167亿、+221%、环比+54%；Q4 AI 指引217亿、+236%；总收入295.91亿；半导体分部208.39亿；non-GAAP 毛利221.91亿；Q4 收入指引348亿、non-GAAP 营业利润率66%。",
+    "博通历史 8-K Ex-99.1（Q4 FY24 至 Q2 FY26，共8份，sec.gov/Archives/edgar/data/1730168/…x8kxex99.htm）：Q4 FY24 AI 122亿、Q1 FY25 41亿、Q2 FY25 44亿+、Q3 FY25 52亿、Q1 FY26 84亿、Q2 FY26 108亿的 CEO 引语与增速；non-GAAP 毛利（Q2 FY26 171.09亿、Q3 FY25 124.99亿）。",
+    "博通 8-K（2026-04-06，0001193125-26-144028）：与 Google 的长期 TPU 协议与供应保障协议（至2031年）、Anthropic 自2027年约3.5GW、取决于 Anthropic 商业成功。",
+    "博通 10-Q（Q3 FY26，0001730168-26-000080，avgo-20260802.htm）：AI XPV 平台（>20GW、首期350亿、backstop 最大约290亿、客户可转债最高420亿）、单一分销商客户占50%、前五大终端客户约55%、GAAP 毛利率69%。",
+    "Marvell 8-K Ex-99.1（Q2 FY27，2026-08-27）与 10-Q（mrvl-20260801.htm）：收入27.39亿、数据中心21.715亿、non-GAAP 毛利率58.9%、Q3 指引；英伟达20亿美元 Series A 优先股（2026-03-31）；5,900万股客户认股权证。",
+    "Alphabet 8-K Ex-99.1（2026-10-28）、10-Q（goog-20260930.htm）、Q3 2026 官方逐字稿 PDF：Cloud +103%、TPU 系统销售确认政策与'绝大多数2027年确认'、积压5,677亿、前三季 PP&E 购置1,319.5亿、2026 资本开支指引1,950–2,050亿、近100家 TPU 客户。",
+    "Amazon 8-K Ex-99.1（2026-10-29）与 10-Q（amzn-20260930.htm）：2026资本开支约2,200亿美元；合同积压约5,780亿；公告中仅提及 TorchNeuron，不披露 Trainium 收入。",
+    "英伟达 FY26 10-K（nvda-20260125.htm）：数据中心计算/网络分项（FY24–FY26）；Groq 许可（130亿+约40亿、商誉144亿、无形资产25亿）；NVLink Fusion 表述；竞争者清单（含 Alphabet、Amazon、Microsoft、Alibaba、Baidu、Huawei 的自研芯片）。",
+    "英伟达 Q2 FY27 8-K、CFO Commentary 与 10-Q（nvda-20260726.htm）：毛利率75.0%、Q3 指引74%±0.5pt、数据中心收入890.23亿及分项、Groq 已付29.44亿；英伟达官网托管的 FactSet Q2 FY27 官方逐字稿：Q4 毛利率见底71–72%、FY28 72–73%、FY28 收入约+70%、Vera Rubin 约20%、每GW 收入机会、Groq 3 LPX 全面量产（原交接稿中这几项'第三方逐字稿未核实'的说法现已一手核实）。",
+    "Anthropic 官方公告（2025-10-23，anthropic.com/news/expanding-our-use-of-google-cloud-tpus-and-services，经 WebFetch 读取）：最多100万颗 TPU、2026年远超1GW、数百亿美元、三平台并行。"
+  ],
+  "unverified_claims": [
+    "博通 FY27 约1,150亿、FY28 约2,300亿美元：仅见于电话会逐字稿转写（Webull/MarketBeat 等，机器转写含错），博通 8-K 与 10-Q 均无此数；是否含网络未明；FY26 管理层口径'约580亿'与四季之和576亿一致。可信度：中高（多源一致）但属前瞻，且 Anthropic 部分'取决于商业成功'。",
+    "博通 Q4 FY25 AI 收入65亿、AI 积压730亿、Anthropic 100亿+110亿订单、Q2 FY26 AI 订单>300亿、网络占 AI 收入1/3 与近40%：来自第三方逐字稿与摘要，8-K 无；Dolphin Research 与 Motley Fool 转写一致，可信度中高。",
+    "博通：Anthropic 2027年5GW、2028年再10GW、OpenAI 2027年1.3GW/2028年>5GW、Meta 到2028年3GW、每GW 博通含量200–300亿美元、'成本不到GPU一半'、AI XPV 与 Apollo/Blackstone 合作：来自 Q3 FY26 逐字稿转写（Webull），10-Q 仅一手证实 XPV 平台、>20GW、首期350亿、backstop 290亿、可转债420亿。GW 与美元口径为管理层宣传，不作锚。",
+    "OpenAI–博通10GW（2025-10-13）的细节：OpenAI 官网 403，依赖多家转载；性质为 term sheet，非已确认采购订单。Jalapeño 的性能优势无基准数据。",
+    "Marvell 定制业务 FY26 约15亿、FY28 推算<40亿、FY29>120亿、CY30 定制 TAM 2,350亿、FY27 约120亿/FY28 约180亿→200亿：来自 Futurum/Quartr 等 AI 摘要，8-K 只给总收入与数据中心；二手，可信度中低。'Google 约1,200亿美元定制芯片协议'说法只见于一个摘要标题，无法核实，不采用。",
+    "Meta 租用/购买 Google TPU：仅 The Information/Reuters 报道，双方均未证实；Meta 购买 TPU 部署于自有数据中心为洽谈阶段，传闻级。",
+    "Amazon：Trainium 收入承诺>2,250亿美元、Q3 >20倍、芯片业务年化>200亿/>250亿、'计入自用约500亿'、Anthropic 最高5GW/OpenAI 约2GW Trainium、Trainium3/4 状态：来自电话会转述（The Register、MarketBeat），Amazon 10-Q/8-K 不披露；可信度中，且'承诺'不等于确认收入。",
+    "Microsoft Maia 200 性能与部署规模：仅厂商发布与媒体转述，无第三方基准。Maia 延迟传闻来自 The Information（2025-06）。",
+    "Rubin CPX 已被 Groq 3 LPX 取代：仅 Tom's Hardware 等推断，英伟达官方未确认；Rubin CPX 的订单/收入无一手数据。",
+    "AWS Trainium4 同时支持 NVLink Fusion：仅1个来源（Futurum 摘要/ServeTheHome 标题），未核实。",
+    "第三方 ASIC 份额预测（TrendForce 27%出货口径、Morgan Stanley 11%→13%→15%、'Nvidia 75–85%'）：口径不一、部分为旧文，只作参考。",
+    "本 item 对 AMD Instinct、MediaTek/Alchip/GUC 的收入、2024–2026 年 ASIC 金额占比，均为自行估算，没有一手拆分数据（见 data_tables 表4假设列）。"
+  ],
+  "data_tables": {
+    "表1_博通AI半导体收入逐季_亿美元": {
+      "说明": "FY 截至每年10–11月初；FY26≈CY2026。Q4 FY26 为指引。来源：8-K Ex-99.1（Q1 FY25–Q3 FY26 引语与增速）；Q4 FY25 的65亿与 FY25 的202亿来自逐字稿（二手）。",
+      "列": [
+        "季度",
+        "AI半导体收入",
+        "同比",
+        "环比",
+        "备注"
+      ],
+      "行": [
+        [
+          "Q1 FY25",
+          "41",
+          "+77%",
+          "—",
+          "8-K"
+        ],
+        [
+          "Q2 FY25",
+          "44",
+          "+46%",
+          "+7%",
+          "8-K"
+        ],
+        [
+          "Q3 FY25",
+          "52",
+          "+63%",
+          "+18%",
+          "8-K"
+        ],
+        [
+          "Q4 FY25",
+          "65",
+          "+74%",
+          "+25%",
+          "金额来自逐字稿"
+        ],
+        [
+          "FY25合计",
+          "约202",
+          "+65%",
+          "—",
+          "逐字稿"
+        ],
+        [
+          "Q1 FY26",
+          "84",
+          "+106%",
+          "+29%",
+          "8-K"
+        ],
+        [
+          "Q2 FY26",
+          "108",
+          "+143%",
+          "+29%",
+          "8-K"
+        ],
+        [
+          "Q3 FY26",
+          "167",
+          "+221%",
+          "+54%",
+          "8-K"
+        ],
+        [
+          "Q4 FY26指引",
+          "217",
+          "+236%",
+          "+30%",
+          "8-K 指引"
+        ],
+        [
+          "FY26合计(含指引)",
+          "约576",
+          "约+185%",
+          "—",
+          "管理层口径约580"
+        ],
+        [
+          "FY27管理层口径",
+          "约1,150",
+          "约+100%",
+          "—",
+          "逐字稿，非8-K"
+        ],
+        [
+          "FY28管理层口径",
+          "约2,300",
+          "约+100%",
+          "—",
+          "逐字稿，非8-K"
+        ]
+      ]
+    },
+    "表2_毛利率对比": {
+      "说明": "non-GAAP 毛利率由 8-K 原表自行折算；英伟达为 GAAP（8-K）。",
+      "列": [
+        "公司/期间",
+        "毛利率",
+        "备注"
+      ],
+      "行": [
+        [
+          "博通 Q3 FY25",
+          "78.4%",
+          "non-GAAP，124.99/159.52"
+        ],
+        [
+          "博通 Q2 FY26",
+          "77.1%",
+          "non-GAAP，171.09/221.87"
+        ],
+        [
+          "博通 Q3 FY26",
+          "75.0%",
+          "non-GAAP，221.91/295.91；GAAP 69%"
+        ],
+        [
+          "博通 Q4 FY26 指引",
+          "约73%",
+          "逐字稿，XPU 占比与内存含量上升"
+        ],
+        [
+          "Marvell Q2 FY27",
+          "58.9%",
+          "non-GAAP，8-K；Q3 指引57.5–58.5%"
+        ],
+        [
+          "英伟达 FY25",
+          "75.0%",
+          "10-K"
+        ],
+        [
+          "英伟达 FY26",
+          "71.1%",
+          "含H20 45亿计提；剔除后约73.2%（自行折算）"
+        ],
+        [
+          "英伟达 Q1 FY27",
+          "74.9%",
+          "8-K"
+        ],
+        [
+          "英伟达 Q2 FY27",
+          "75.0%",
+          "8-K"
+        ],
+        [
+          "英伟达 Q3 FY27 指引",
+          "74.0%±0.5pt",
+          "8-K"
+        ],
+        [
+          "英伟达 Q4 FY27",
+          "71–72%（谷底）",
+          "官方逐字稿"
+        ],
+        [
+          "英伟达 FY28",
+          "72–73%",
+          "官方逐字稿"
+        ]
+      ]
+    },
+    "表3_GW与每GW美元口径对照": {
+      "说明": "均为管理层或分析师口径，只作对照，不作锚。",
+      "列": [
+        "项目",
+        "口径",
+        "来源/层级"
+      ],
+      "行": [
+        [
+          "英伟达每GW收入机会",
+          "Hopper 约180亿→Blackwell 约250亿→Vera Rubin 约400亿美元",
+          "Q2 FY27 官方逐字稿，管理层"
+        ],
+        [
+          "博通每GW含量",
+          "约200–300亿美元，'不到GPU系统的一半成本'",
+          "Q3 FY26 逐字稿，管理层，二手转写"
+        ],
+        [
+          "TPU 整系统每GW",
+          "约350亿美元（分析师提问假设，Google 未确认）",
+          "Alphabet Q3 逐字稿，分析师口径"
+        ],
+        [
+          "博通 XPV 首期",
+          "350亿美元对应'超过1GW'",
+          "10-Q + 逐字稿"
+        ],
+        [
+          "Anthropic 算力来源",
+          "TPU：2026 约1GW、2027 +5GW、2028 +10GW（逐字稿）；Trainium 最高5GW（二手）；英伟达最高1GW（2025-11 公告）",
+          "混合层级"
+        ],
+        [
+          "OpenAI 算力来源",
+          "英伟达约12GW（英伟达口径）；博通 10GW 框架（2027 1.3GW、2028 >5GW）；AMD 6GW；AWS 约2GW Trainium；Cerebras 750MW",
+          "混合层级"
+        ],
+        [
+          "内部一致性检验",
+          "Anthropic 2027 年 5GW×200–300亿=1,000–1,500亿美元，已与博通整个 FY27 的1,150亿相当，说明 GW 承诺要么部分落在 FY28，要么按'取决于商业成功'打折",
+          "自行推算"
+        ]
+      ]
+    },
+    "表4_加速器支出自下而上与份额估算_亿美元": {
+      "说明": "口径=GPU/XPU/ASIC 计算芯片或整机在供应商层面的收入（不含 scale-out 网络、CPU、云厂商自用成本口径）。英伟达=数据中心计算；ASIC=博通 XPU+Marvell 定制+MediaTek/Alchip/GUC 等；AMD 为 Instinct 估算。博通财年错位约2个月近似为日历年。除英伟达计算收入外均含假设，属自行估算。",
+      "列": [
+        "期间(≈日历年)",
+        "英伟达计算",
+        "ASIC合计",
+        "AMD及其他",
+        "合计",
+        "英伟达份额",
+        "ASIC份额",
+        "AMD及其他份额",
+        "主要假设"
+      ],
+      "行": [
+        [
+          "2024",
+          "1,022",
+          "约115",
+          "约50",
+          "约1,187",
+          "约86%",
+          "约10%",
+          "约4%",
+          "FY25 实际；博通 FY24 AI 122亿中 XPU 约85亿(假设)，Marvell+其他约30亿"
+        ],
+        [
+          "2025",
+          "1,624",
+          "约185",
+          "约65",
+          "约1,874",
+          "约87%",
+          "约10%",
+          "约3.5%",
+          "FY26 实际；博通 FY25 XPU 约140亿(假设网络占约30%)"
+        ],
+        [
+          "2026E",
+          "约3,030",
+          "约580",
+          "约140",
+          "约3,750",
+          "约81%",
+          "约15.5%",
+          "约3.7%",
+          "英伟达 FY27：Q1+Q2 实际1,642.7亿+Q3约1,000亿+Q4约1,150亿(假设)，计算占80%(FY26为83.8%)；博通 XPU 日历年约500亿"
+        ],
+        [
+          "2027E(管理层口径)",
+          "约4,950",
+          "约980",
+          "约350",
+          "约6,280",
+          "约79%",
+          "约15.6%",
+          "约5.6%",
+          "英伟达 FY28 收入+70%≈6,900亿，数据中心92%、计算78%；博通 FY27 AI 1,150亿×75%=860亿+其他约120亿；全部为管理层口径，未打折"
+        ],
+        [
+          "2028E(管理层口径)",
+          "约6,440",
+          "约2,000",
+          "约600",
+          "约9,030",
+          "约71%",
+          "约22%",
+          "约7%",
+          "博通 FY28 2,300亿×75%+其他约270亿；英伟达 FY29 假设+30%；管理层口径，上限情景"
+        ]
+      ]
+    },
+    "表5_三档份额路径_英伟达占加速器支出": {
+      "说明": "自行估算；基准为表4的2026E约81%。括号为 ASIC 份额/AMD 及其他份额的对应取值。",
+      "列": [
+        "年份",
+        "低",
+        "标准",
+        "高"
+      ],
+      "行": [
+        [
+          "2026E(估算)",
+          "—",
+          "约81%",
+          "—"
+        ],
+        [
+          "2028",
+          "60%（ASIC 30%/AMD 10%）",
+          "70%（ASIC 22%/AMD 8%）",
+          "77%（ASIC 16%/AMD 7%）"
+        ],
+        [
+          "2030",
+          "50%（ASIC 38%/AMD 12%）",
+          "62%（ASIC 28%/AMD 10%）",
+          "71%（ASIC 20%/AMD 9%）"
+        ],
+        [
+          "2033",
+          "42%（ASIC 45%/AMD 13%）",
+          "56%（ASIC 33%/AMD 11%）",
+          "67%（ASIC 24%/AMD 9%）"
+        ],
+        [
+          "2036",
+          "35%（ASIC 51%/AMD 14%）",
+          "52%（ASIC 36%/AMD 12%）",
+          "64%（ASIC 27%/AMD 9%）"
+        ]
+      ]
+    },
+    "表6_ASIC与自研芯片进展速览": {
+      "列": [
+        "项目",
+        "最新一手/二手状态",
+        "层级"
+      ],
+      "行": [
+        [
+          "Google TPU",
+          "2026 Q2 起确认 TPU 系统销售，绝大多数在 2027；近100家客户；Anthropic 最多100万颗/2026年>1GW；Oracle、Crux AI 渠道",
+          "一手"
+        ],
+        [
+          "AWS Trainium",
+          "Trainium3 2026 年初出货；收入承诺>2,250亿（电话会）；2027年底起对外",
+          "二手"
+        ],
+        [
+          "Meta MTIA",
+          "MTIA 450 计划2027年初量产；500 为2nm；到2028年博通口径3GW",
+          "二手"
+        ],
+        [
+          "Microsoft Maia",
+          "Maia 200 已发布并在爱荷华运行，规模未披露",
+          "二手"
+        ],
+        [
+          "OpenAI Jalapeño",
+          "2026-06 发布，2026年底起部署，2027年1.3GW",
+          "二手"
+        ],
+        [
+          "Marvell",
+          "Q2 FY27 数据中心 21.7亿；定制 FY29>120亿(目标)；英伟达20亿美元入股",
+          "一手+二手"
+        ],
+        [
+          "Groq LPX / Cerebras",
+          "英伟达 Groq 3 LPX 全面量产（Nebius 首发）；OpenAI–Cerebras 750MW",
+          "一手+二手"
+        ]
+      ]
+    }
+  },
+  "quant_low": "【低档（ASIC 加速取代，英伟达份额低）】2028 年 60%、2030 年 50%、2033 年 42%、2036 年 35%；ASIC 份额2028年约30%→2036年约51%。推导：①博通 FY27/FY28 管理层口径（1,150/2,300亿）如数兑现且 Anthropic 5GW+10GW、OpenAI >5GW、Meta 3GW 全部落地，则2028 年博通 XPU 约1,700–2,000亿美元，仅此即占加速器支出约20–25%（表4）；若英伟达 FY29 增长只有约+10%（供给受限且客户转向自研），ASIC 份额2028 年即达30%。②Google 把 TPU 作为系统产品对外卖（近100家客户、Oracle/Crux AI 渠道）、AWS Trainium 2027 年底起外售、NVLink Fusion 把英伟达变成'互联标准'而不是'唯一计算'，使 ASIC 从'大客户自用'扩展到'第三方可买'；到2033–2036 年形成类似通用服务器 CPU 的'自研芯片占半数'格局。③毛利率：该档英伟达在 ASIC 可替代的推理/后训练负载上降价，2030 年毛利率回落到约62–65%，2035 年约58–62%。触发条件：Anthropic/OpenAI 融资顺利使 XPV 平台（>20GW）全部兑现；TPU 8i/Trainium3–4/MTIA 450–500 性价比被客户验证；英伟达 Q4 FY27 毛利率谷底低于71%且 FY28 未回到72%。",
+  "quant_base": "【标准档】英伟达占加速器支出：2026E 约81%（自下而上估算）→2028 年约70%（区间60–77%）→2030 年约62%→2033 年约56%→2036 年约52%；ASIC 份额约15.5%（2026E）→22%（2028）→28%（2030）→33%（2033）→36%（2036）；AMD 及其他约8–12%。推导：①以管理层口径自下而上（表4）：2027E 英伟达约79%、2028E 约71%（博通 FY28 达2,300亿且英伟达 FY29 +30%）；标准档取接近此值（70%），不再上调，因为博通 FY27–28 数字含 Anthropic 条件性订单且需要 HBM/N3/N2/CoWoS 供给，英伟达同样供给受限，双方都被供给约束，份额在2027年前基本稳定、2028年后才明显分化；②2029–2036 年份额漂移约每年下降1–1.5个百分点，类比超大规模云厂商在通用服务器 CPU 中自研 Arm 芯片的渗透速度（需要约8–10年从试点到近半新增容量，属定性类比，非一手数据）；③英伟达以全栈抵消：每GW 收入机会由约250亿升至约400亿美元（Vera Rubin，管理层口径）、ACIE（neocloud/主权/企业）'不买定制芯片'、Groq 3 LPX 把推理专用架构收进自己体系、NVLink Fusion 与 Marvell 入股把定制 XPU 拉进 NVLink 生态，故不取'五成以下'。④毛利率：官方指引 Q4 FY27 谷底71–72%、FY28 72–73%（内存涨价已部分转嫁），标准档认为 FY28–FY30 能守住70%以上；2031–2036 年随 ASIC 份额上升与议价缓慢下降，约2035 年期末毛利率在66–70%。能守住70%的主观概率：FY2030 约65%，2035 年约40%。口径提醒：英伟达如把 Groq 类 LPU 计入自家出货，则其'加速器份额'比纯 GPU 份额高约1–3个百分点；若按'云厂商自用成本价'而非供应商收入计 ASIC，则 ASIC 份额更高（Amazon 称自用折算后芯片业务体量约为对外口径的2.5倍）。",
+  "quant_high": "【高档（英伟达份额守得住）】2028 年 77%、2030 年 71%、2033 年 67%、2036 年 64%；ASIC 份额2028年约16%→2036年约27%。推导：①ASIC 管理层口径不及预期：博通 FY28 只实现约1,200–1,500亿（Anthropic/OpenAI 融资或'商业成功'条件未达，XPV backstop 290亿与可转债420亿的链条收紧），MTIA/Maia 继续延迟（TrendForce 已因 Meta 延迟下调 ASIC 份额）；②供给约束对英伟达有利：它拥有最大的 CoWoS/HBM/N3 承诺（供应与产能承诺2,790亿美元，交接稿数字），在供给受限期分配优先；③ACIE（占数据中心约45%，Q2 FY27 403亿/890亿）持续增长，且这部分客户不自研；Vera Rubin 每GW 收入机会提升使英伟达在同样 GW 下获得更多美元；④毛利率：2030 年仍约72–74%，2035 年约70–73%；ASIC 竞争只限制涨价幅度而非引发降价。触发条件：Q4 FY27 毛利率不低于72%、FY28 回到73%、Rubin 量产顺利并保持每年一代。",
+  "implied_rate": {
+    "说明": "小数；份额数据为自行估算。'份额年变化'=(2036份额/2026E份额)^(1/10)-1；'ASIC份额年漂移(百分点/年)'为2026E→2036 的平均值。毛利率区间为对2035年期末毛利率的判断。",
+    "悲观": {
+      "英伟达加速器份额": {
+        "2028": 0.6,
+        "2030": 0.5,
+        "2033": 0.42,
+        "2036": 0.35
+      },
+      "份额年变化_2026至2036": -0.0805,
+      "ASIC份额年漂移_百分点每年": 3.6,
+      "2035年期末毛利率": "0.58–0.62",
+      "毛利率守住70%以上的最后一年": "约FY2029"
+    },
+    "标准": {
+      "英伟达加速器份额": {
+        "2028": 0.7,
+        "2030": 0.62,
+        "2033": 0.56,
+        "2036": 0.52
+      },
+      "份额年变化_2026至2036": -0.0434,
+      "ASIC份额年漂移_百分点每年": 2.0,
+      "2035年期末毛利率": "0.66–0.70",
+      "毛利率守住70%以上的最后一年": "约FY2030–FY2031"
+    },
+    "乐观": {
+      "英伟达加速器份额": {
+        "2028": 0.77,
+        "2030": 0.71,
+        "2033": 0.67,
+        "2036": 0.64
+      },
+      "份额年变化_2026至2036": -0.0233,
+      "ASIC份额年漂移_百分点每年": 1.2,
+      "2035年期末毛利率": "0.70–0.73",
+      "毛利率守住70%以上的最后一年": "2035年仍≥70%"
+    }
+  },
+  "affected_params": "主要影响 g1（阶段1收入增速，受供给与份额分配）、gm（阶段2增速：营收增速与期末净利率/期初净利率之比，其中毛利率与份额均下行）、期末毛利率（N 参数中的期末毛利率）、M（份额漂移开始的时点），对 g2 仅限制上限。",
+  "param_implication": "1) g1：2026–2028 年份额基本稳定（标准档约81%→79%→70%），英伟达收入增速主要由总市场增长与供给决定，ASIC 的分流在此阶段不是首要变量；但需要比市场增速低约0–3个百分点（标准）、低约5–8个百分点（低档，2028年）。2) gm（阶段2）：英伟达收入增速≈加速器支出增速+份额年变化。标准档份额年变化约-4.3%，即阶段2收入增速应比加速器总市场增速低约4个百分点/年（低档约8个百分点，高档约2个百分点），这个折减应显式写入 gm 的'营收年增速'项。3) 期末毛利率：标准档66–70%，低档58–62%，高档70–73%；毛利率每低1个百分点约使期末净利率低0.8个百分点（税率16–18%且营业费用占比不变时的近似），再与 gm 公式中的(期末净利率/期初净利率)^(1/M)联动。FY28 官方指引72–73%，故 FY27–FY30 不必低于70%，下行应放在2031年后。4) M：份额漂移集中在2029–2036年，宜让阶段2覆盖这段；ASIC 与自研对增速的压制是缓慢的'侵蚀'而不是'断崖'，更大的断崖风险来自消化期（见其他 item）。5) g2：ASIC 份额2036年后仍在上升则不宜把 g2 取到上沿；建议与'基数法则'item 一起把 g2 取6%而不是8%。",
+  "base_rate_reference": "定性历史类比（不涉任何股价）：①超大规模云厂商在通用服务器 CPU 上自研 Arm 芯片，从2018年起用约8年渗透到约一半新增容量，英伟达在 AI 加速器上的自研替代速度更快（Google TPU 自2015年起、Trainium 自2020年起，已用近10年才达到约15%金额占比）；②主导型硬件公司在竞争者进入后毛利率下降多发生在价格战或换代失败时，而不是份额小幅下滑时（见'主导型硬件公司利润率类比'item）；③博通自身 XPU 毛利率被整机架转售摊薄，说明 ASIC 价值链的利润池也在变薄；第三方 TrendForce 2026年 ASIC 出货占比约27%、金额占比约15%，两种口径的差距表明'份额'要明确定义。",
+  "confidence": "中低。2026–2028 年份额：中（有博通/Alphabet/英伟达 8-K、10-Q 与官方逐字稿，主要不确定在 ASIC 金额占比的拆分与 AMD 假设）；2030 年以后：低（缺乏一手约束，主要靠定性类比与管理层 GW 承诺）；英伟达 FY28 毛利率72–73%：中高（官方指引，且已执行涨价）；2035年毛利率：低。",
+  "contradicting_evidence": "支持'标准档低估 ASIC'的证据：①Alphabet 10-Q 已把 TPU 系统销售计入 Cloud 收入，Cloud +103%，积压5,608亿美元，近100家客户，并有 Oracle、Crux AI 渠道——TPU 已不只是自用；②博通 AI 收入从 FY25 的约202亿升到 FY26 的约576亿，管理层称'需求超过 FY27 展望'；③Anthropic 同时拿 TPU（2027 年5GW+2028 年再10GW，逐字稿）、Trainium（最高5GW）与英伟达（最高1GW），明显偏向非 GPU；④Amazon Trainium 承诺>2,250亿美元、Trainium3 几乎已被订满；⑤OpenAI 同时与博通10GW、AMD 6GW、Cerebras 750MW、AWS 约2GW 签约。支持'标准档高估 ASIC'的证据：①英伟达 FY28 收入指引约+70%，且黄仁勋称 ACIE（占数据中心约45%）不买定制芯片；②TrendForce 因 Meta 自研延迟下调 ASIC 份额；③Maia 延迟、Meta MTIA 450 要到2027年初才量产；④博通管理层自己说供应（先进晶圆、基板、HBM）是约束，且 Anthropic 部分'取决于商业成功'；⑤英伟达已把 Vera Rubin 每GW 收入从约250亿提升到约400亿美元，并通过 Groq 3 LPX 覆盖低时延推理；⑥AWS 同时宣布额外部署200万颗英伟达 GPU，表明'自研+英伟达'并行而非替代。",
+  "key_uncertainties": "1）定义：'加速器支出'按供应商收入、出货量还是云厂商自用成本价计，ASIC 份额可从约15%变到约27%；2）博通 FY27/FY28 数字的口径（是否含网络、Anthropic 条件性订单、HBM 转手价值）；3）Anthropic/OpenAI 的偿付能力：博通 AI XPV（>20GW、backstop约290亿、可转债420亿）与英伟达的担保与投资（约三分之一业务由其资产负债表支撑）是同一条融资链，一旦收紧两边同时受影响，份额影响反而不确定；4）供给瓶颈（HBM、N3/N2、CoWoS、基板）在2028年后如何分配；5）英伟达把 LPU/Groq、CPU（Vera）纳入系统是否改变'加速器'统计；6）AMD 与 MediaTek/Alchip/GUC 的缺失数据；7）内存涨价对 ASIC 与 GPU 的转嫁能力差异。",
+  "signals": "①2026-11-17 英伟达 Q3 FY27：毛利率是否在74%±0.5pt 内、Q4 指引毛利率是否仍为71–72%、Rubin 占比、DSO、数据中心 Hyperscale 与 ACIE 增速；②2026年12月上旬博通 Q4 FY26 与 FY27 展望：AI 收入是否达217亿、FY27是否给出分项（XPU/网络）、是否出现 backstop 新增、客户数是否超过6个、Q1 FY27 毛利率；③Marvell Q3 FY27（约2026-11 末至12月初）定制业务拆分；④Alphabet Q4 2026（约2027-02）：2027 资本开支、TPU 系统销售金额；⑤Amazon Q4（约2027-02）Trainium3 放量、对外销售时间表；⑥Meta MTIA 450 2027 年初量产与 Meta 是否确认采购 TPU；⑦OpenAI Jalapeño 2026 年底首批部署的性能披露；⑧TrendForce/Omdia 对 ASIC 份额的更新；⑨博通/英伟达对 AI 实验室融资（XPV 第二期、英伟达担保）的进一步披露；⑩若英伟达 Q4 FY27 毛利率低于71%、或2027 年初客户对 Rubin 提出价格让步，应下调毛利率与份额假设。",
+  "sources": [
+    {
+      "title": "Broadcom 8-K Ex-99.1: Q3 FY2026 results (quarter ended 2026-08-02)",
+      "url": "https://www.sec.gov/Archives/edgar/data/0001730168/000173016826000076/avgo-08022026x8kxex99.htm",
+      "date": "2026-09-02",
+      "tier": "一手"
+    },
+    {
+      "title": "Broadcom 8-K Ex-99.1: Q2 FY2026 results",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000051/avgo-05032026x8kxex99.htm",
+      "date": "2026-06-03",
+      "tier": "一手"
+    },
+    {
+      "title": "Broadcom 8-K Ex-99.1: Q1 FY2026 results",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000011/avgo-02012026x8kxex99.htm",
+      "date": "2026-03-04",
+      "tier": "一手"
+    },
+    {
+      "title": "Broadcom 8-K Ex-99.1: Q4/FY2025 results",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000116/avgo-11022025x8kxex99.htm",
+      "date": "2025-12-11",
+      "tier": "一手"
+    },
+    {
+      "title": "Broadcom 8-K Ex-99.1: Q3 FY2025 results",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000094/avgo-08032025x8kxex99.htm",
+      "date": "2025-09-04",
+      "tier": "一手"
+    },
+    {
+      "title": "Broadcom 8-K Ex-99.1: Q2 FY2025 results",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000061/avgo-05042025x8kxex99.htm",
+      "date": "2025-06-05",
+      "tier": "一手"
+    },
+    {
+      "title": "Broadcom 8-K Ex-99.1: Q1 FY2025 results",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000009/avgo-02022025x8kxex99.htm",
+      "date": "2025-03-06",
+      "tier": "一手"
+    },
+    {
+      "title": "Broadcom 8-K Ex-99.1: Q4/FY2024 results",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016824000125/avgo-11032024x8kxex99.htm",
+      "date": "2024-12-12",
+      "tier": "一手"
+    },
+    {
+      "title": "Broadcom 8-K (Google long-term TPU agreement; Anthropic ~3.5GW from 2027)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000119312526144028/d87999d8k.htm",
+      "date": "2026-04-06",
+      "tier": "一手"
+    },
+    {
+      "title": "Broadcom 10-Q Q3 FY2026 (AI XPV platform, Backstop ~$29B, convertible notes up to $42B, customer concentration)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm",
+      "date": "2026-09-10",
+      "tier": "一手"
+    },
+    {
+      "title": "Broadcom Q3 2026 Earnings Call Transcript (Webull, machine transcript; FY27 ~$115B, FY28 ~$230B, GW by customer, $20-30B per GW)",
+      "url": "https://www.webull.com/news/15511095937917952",
+      "date": "2026-09-02",
+      "tier": "二手"
+    },
+    {
+      "title": "MarketBeat: Broadcom Q3 earnings call highlights",
+      "url": "https://www.marketbeat.com/instant-alerts/transcript-broadcom-q3-earnings-call-highlights-2026-09-02/",
+      "date": "2026-09-02",
+      "tier": "二手"
+    },
+    {
+      "title": "Motley Fool: Broadcom Q4 2025 earnings call transcript ($73B backlog, Anthropic $10B+$11B racks)",
+      "url": "https://www.fool.com/earnings/call-transcripts/2025/12/12/broadcom-avgo-q4-2025-earnings-call-transcript/",
+      "date": "2025-12-12",
+      "tier": "二手"
+    },
+    {
+      "title": "Marvell 8-K Ex-99.1: Q2 FY2027 results",
+      "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000022/q227_8kx812026ex-991.htm",
+      "date": "2026-08-27",
+      "tier": "一手"
+    },
+    {
+      "title": "Marvell 10-Q Q2 FY2027 (NVIDIA $2.0B Series A preferred; customer warrant; data center revenue)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000025/mrvl-20260801.htm",
+      "date": "2026-09-03",
+      "tier": "一手"
+    },
+    {
+      "title": "Quartr: Marvell Investor Day 2026 summary (AI-generated; custom FY29 >$12B)",
+      "url": "https://quartr.com/events/marvell-technology-inc-mrvl-investor-day-2026_3Yyakqd6",
+      "date": "2026-10-06",
+      "tier": "二手"
+    },
+    {
+      "title": "Futurum: Marvell Q2 FY2027 connectivity and custom silicon",
+      "url": "https://futurumgroup.com/insights/marvell-q2-fy-2027-connectivity-and-custom-silicon-fuel-ai-growth/",
+      "date": "2026-08-28",
+      "tier": "二手"
+    },
+    {
+      "title": "Alphabet 8-K Ex-99.1: Q3 2026 results",
+      "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+      "date": "2026-10-28",
+      "tier": "一手"
+    },
+    {
+      "title": "Alphabet 10-Q Q3 2026 (TPU systems product sales recognition; backlog; capex)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000084/goog-20260930.htm",
+      "date": "2026-10-29",
+      "tier": "一手"
+    },
+    {
+      "title": "Alphabet Q3 2026 earnings call transcript (official PDF)",
+      "url": "https://s206.q4cdn.com/479360582/files/doc_events/2026/Oct/28/2026_Q3_Earnings_Transcript.pdf",
+      "date": "2026-10-28",
+      "tier": "一手"
+    },
+    {
+      "title": "Anthropic: Expanding our use of Google Cloud TPUs and services (up to 1M TPUs, >1GW in 2026)",
+      "url": "https://www.anthropic.com/news/expanding-our-use-of-google-cloud-tpus-and-services",
+      "date": "2025-10-23",
+      "tier": "一手"
+    },
+    {
+      "title": "SiliconANGLE: Google, Meta reportedly strike multibillion-dollar AI chip deal",
+      "url": "https://siliconangle.com/2026/02/26/google-meta-reportedly-strike-new-multibillion-dollar-ai-chip-deal/",
+      "date": "2026-02-26",
+      "tier": "传闻"
+    },
+    {
+      "title": "Tom's Hardware: Meta may rent Google TPUs in 2026, buy in 2027",
+      "url": "https://www.tomshardware.com/tech-industry/billion-dollar-ai-chip-deal-between-google-and-meta-could-be-on-the-cards-would-involve-renting-google-cloud-tpus-next-year-outright-purchases-in-2027",
+      "date": "2025-11-25",
+      "tier": "传闻"
+    },
+    {
+      "title": "Amazon 8-K Ex-99.1: Q3 2026 results (2026 capex ~$220B)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000038/amzn-20260930xex991.htm",
+      "date": "2026-10-29",
+      "tier": "一手"
+    },
+    {
+      "title": "Amazon 10-Q Q3 2026 (performance obligations ~$578B)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000040/amzn-20260930.htm",
+      "date": "2026-10-30",
+      "tier": "一手"
+    },
+    {
+      "title": "The Register: Amazon chips business passes $20B run rate; Trainium commitments >$225B",
+      "url": "https://www.theregister.com/2026/04/29/amazon_chips_20b_business/",
+      "date": "2026-04-29",
+      "tier": "二手"
+    },
+    {
+      "title": "MarketBeat: Amazon Q3 2026 earnings call highlights (Graviton/Trainium commitments up >20x)",
+      "url": "https://www.marketbeat.com/instant-alerts/transcript-amazoncom-q3-earnings-call-highlights-2026-10-29/",
+      "date": "2026-10-29",
+      "tier": "二手"
+    },
+    {
+      "title": "NVIDIA Q2 FY2027 earnings call transcript (FactSet corrected, hosted by NVIDIA IR)",
+      "url": "https://s201.q4cdn.com/141608511/files/content_files/TRANSCRIPT_-NVIDIA-Corp-NVDA-US-Q2-2027-Earnings-Call-26-August-2026-5_00-PM-ET.pdf",
+      "date": "2026-08-26",
+      "tier": "一手"
+    },
+    {
+      "title": "NVIDIA Q2 FY2027 8-K press release",
+      "url": "https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000073/q2fy27pr.htm",
+      "date": "2026-08-26",
+      "tier": "一手"
+    },
+    {
+      "title": "NVIDIA Q2 FY2027 CFO Commentary",
+      "url": "https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000073/q2fy27cfocommentary.htm",
+      "date": "2026-08-26",
+      "tier": "一手"
+    },
+    {
+      "title": "NVIDIA Q2 FY2027 10-Q (Groq payment; liquidity)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+      "date": "2026-08-27",
+      "tier": "一手"
+    },
+    {
+      "title": "NVIDIA FY2026 10-K (Data Center compute/networking; Groq Note 2; NVLink Fusion; competitors)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+      "date": "2026-02-25",
+      "tier": "一手"
+    },
+    {
+      "title": "SDxCentral: NVIDIA Groq 3 LPX racks hit full production",
+      "url": "https://www.sdxcentral.com/news/nvidias-ultra-low-latency-ai-inference-lpx-racks-hit-full-production/",
+      "date": "2026-03-19",
+      "tier": "二手"
+    },
+    {
+      "title": "Tom's Hardware: NVIDIA's $20B Groq deal produces its first chip (Rubin CPX roadmap inference)",
+      "url": "https://www.tomshardware.com/tech-industry/semiconductors/nvidias-20-billion-groq-deal-produces-its-first-chip",
+      "date": "2026-03-16",
+      "tier": "二手"
+    },
+    {
+      "title": "Tom's Hardware: Why NVIDIA poured $2B into Marvell; NVLink Fusion soft lock-in",
+      "url": "https://www.tomshardware.com/tech-industry/nvidia-invests-2-billion-in-marvell-whose-biggest-clients-are-trying-to-replace-nvidia-chips",
+      "date": "2026-03-31",
+      "tier": "二手"
+    },
+    {
+      "title": "OpenAI and Broadcom announce strategic collaboration (10GW) - aggregated coverage",
+      "url": "https://insidehpc.com/2025/10/openai-and-broadcom-to-deploy-10-gw-of-openai-designed-ai-accelerators/",
+      "date": "2025-10-13",
+      "tier": "二手"
+    },
+    {
+      "title": "Engadget: Jalapeno is the first AI chip from OpenAI and Broadcom",
+      "url": "https://engadget.com/2201045/openai-broadcom-jalapeno-inference-processor-ai-accelerator",
+      "date": "2026-06-24",
+      "tier": "二手"
+    },
+    {
+      "title": "The Register: Meta unveils four generations of MTIA (March 2026)",
+      "url": "https://www.theregister.com/2026/03/12/meta_custom_chips/",
+      "date": "2026-03-12",
+      "tier": "二手"
+    },
+    {
+      "title": "Tom's Hardware / DCD: OpenAI signs $10B, 750MW deal with Cerebras",
+      "url": "https://www.datacenterdynamics.com/en/news/openai-signs-10-billion-deal-with-cerebras-with-750mw-of-big-chip-compute/",
+      "date": "2026-01-14",
+      "tier": "二手"
+    },
+    {
+      "title": "Microsoft Maia 200 announcement coverage (CampusTechnology)",
+      "url": "https://campustechnology.com/articles/2026/02/05/microsoft-unveils-maia-200-inference-chip-to-cut-ai-serving-costs.aspx",
+      "date": "2026-02-05",
+      "tier": "二手"
+    },
+    {
+      "title": "TrendForce press release: AI server shipments to grow >28% in 2026; ASIC share 27.8%",
+      "url": "https://www.trendforce.com/presscenter/news/20260120-12887.html",
+      "date": "2026-01-20",
+      "tier": "二手"
+    },
+    {
+      "title": "Microsoft, NVIDIA and Anthropic announce strategic partnerships (coverage)",
+      "url": "https://www.constellationr.com/insights/news/anthropic-microsoft-azure-nvidia-ink-30-billion-compute-pact",
+      "date": "2025-11-18",
+      "tier": "二手"
+    }
+  ],
+  "uncertain": [
+    "data_tables.表4 中 AMD 及其他、MediaTek/Alchip/GUC 的金额与 2024–2026 年 ASIC 金额占比",
+    "quant_low/quant_base/quant_high 中 2028–2036 年份额（自行估算）",
+    "博通 FY27/FY28 约1,150亿/2,300亿的口径（是否含网络）",
+    "Marvell 定制业务体量",
+    "Meta 租用/购买 Google TPU",
+    "Rubin CPX 现状",
+    "英伟达2035年毛利率判断"
+  ]
+}
