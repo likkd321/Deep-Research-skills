@@ -1,0 +1,81 @@
+{
+  "history": [[2016, 7.12], [2017, 16.97], [2018, 29.30], [2019, 37.73], [2020, 28.22], [2021, 45.30], [2022, 93.38], [2023, 58.06], [2024, 295.6], [2025, 720.1], [2026, 1161.2]],
+  "history_note": "公司层面调整后归母净利润（亿美元，财年截至1月下旬）。在 GAAP 净利润基础上剔除（税后）：股权投资公允价值变动、H20 计提与回拨、Arm 终止费、重组、法律和解、税改及其他一次性税项（含 FY26 州递延税估值准备释放 7.11 亿，已确认在 Q4 FY26）。保留 SBC、利息收入和并购无形资产摊销：TTM 税后约 5.6 亿，占 0.33%，影响可忽略；Groq 无形资产每年摊销约 5.3–5.7 亿，同样保留。FY23 的约 21.7 亿存货与采购承诺费用属于周期性项目，保留。FY16–FY24 直接复用交接资料；FY25–FY26 与 TTM 依据 sec.gov 上的 8-K、CFO Commentary、10-K、10-Q，以及 NVIDIA IR 的含 SBC 历史非 GAAP 调节表复核。股权收益税率按调节表的税影响行倒推，约 20.4%。",
+  "base": 0.47,
+  "years": 2,
+  "mid": -0.018,
+  "mid_years": 8,
+  "mature": 0.05,
+  "stage2_build": {
+    "revenue_growth": 0.014,
+    "net_margin_start": 0.48,
+    "net_margin_end": 0.37,
+    "gross_margin_end": 0.67,
+    "digestion": "标准档：营收约在 FY2029 见顶，消化期在 FY2030–FY2031。年营收较峰值回撤约 25%，调整后净利润回撤约 45%，约 4 年（FY2033 前后）回到峰值。诱因：AI 实验室 2028–29 年的资金缺口（OpenAI 承诺约为收入的 6–17 倍）、PORTS-Pike 担保在 FY2029 生效，以及 2,790 亿供应承诺中 FY28–FY29 到期的 1,750 亿（如再出现 FY23 式计提，税前约 400 亿）。路径只用端点 CAGR 表达，消化期的谷底藏在阶段2内部，不单独体现。"
+  },
+  "low": {
+    "base": 0.27, "years": 1, "mid": -0.080, "mid_years": 9, "mature": 0.035,
+    "why": "【阶段1】FY28 营收只增 50%，FY28 即见顶。第一年税前口径利润 +53%，扣除自身资产负债表撑起的收入：FY27–FY28 约 20–38% 的收入由英伟达出资、担保或延长账期支撑，利润折扣 60%，净折扣约 17%，得 +27%，N=1。【阶段2】营收年增速 −2.8%：加速器加网络市场取低档，2036 年约 5,800 亿，几乎没有增长；英伟达份额从约 81% 降到约 44%（取低档与标准档之间），营收 4,900→3,800 亿。期初质量调整后净利率 0.435（报表约 0.52），期末 0.264（报表 0.30，再扣稳态融资折扣 12%），期末毛利率约 0.58。gm=(1−0.028)×(0.264/0.435)^(1/9)−1≈−0.080。【消化期】FY29–FY31 营收回撤约 45%，净利润回撤约 75%，供应商融资撑起的收入约一半蒸发，与 Lucent、Nortel 部分相似。【稳态】份额和利润率出现结构性损失，g2 取 0.035。10 年净利润 CAGR 约 −5%。基数法则：超大公司十年内实际净利润下降的占 35.9%，这一档并不极端。"
+  },
+  "high": {
+    "base": 0.50, "years": 3, "mid": 0.061, "mid_years": 7, "mature": 0.07,
+    "why": "【阶段1】FY28 营收 +85–90%（供给上限约 +80–85%），FY29 约 +40%，FY30 约 +20%，峰值推迟到 FY2030。融资净折扣只有约 3%。三年利润 1,678.5→5,640 亿，g1≈0.50，N=3。【阶段2】营收年增速约 6.9%：市场取高档，2036 年约 2.9 万亿；英伟达份额守在约 64%，营收 11,800→18,800 亿。期初质量调整后净利率 0.478，期末 0.455（报表 0.46，类似 TSMC、ASML 那样利润率不回归均值），期末毛利率约 0.72。gm=(1+0.069)×(0.455/0.478)^(1/7)−1≈0.061。【消化期】只有一次浅回撤：营收约 −12%，净利润约 −25%，2 年恢复。【稳态】AI 成为常青基础设施支出，换代加上每 GW 价值量继续上升，g2 取 0.07，在常青默认区间内。10 年净利润 CAGR 约 17.7%：按基数法则，这个体量能做到的公司不到 1–5%，所以这一档是尾部乐观。"
+  },
+  "why": "【起点与周期位置】TTM（Q3 FY26–Q2 FY27；Q3 FY27 定于 2026-11-17 发布，尚未发布）调整后归母净利润 1,678.5 亿，净利率 55.4%，处在历史最高区间。按 45% 的中性净利率算，超额利润约 19%。另有两个信号：DSO 从 45 天升到 60 天，Q2 单季 FCF 只有净利润的 36%。路径因此设计为先涨后回落：阶段1 吃掉运行率缺口和 FY28 的增长，阶段2 把超额利润和份额还回去。\n【g1=0.47，N=2】第一年税前口径利润约 +78%，其中约 28 个百分点来自运行率缺口（Q2 FY27 年化 2,141 亿，比 TTM 高 28%）。依据有三：FY28 营收约 +70% 是官方初步展望、受供给约束；毛利率 Q4 FY27 见底 71–72%，FY28 回到 72–73%（要靠提价）；近 8 季营收平均超指引中值 5%。再扣自身资产负债表撑起的收入：标准档 FY28 约占 27%，CFO 原话是约四分之一，利润折扣 40%，净折扣约 11%。两年后利润约 3,610 亿（第一年约 2,800，第二年约 3,610），CAGR 约 0.47。N 取 2 的理由：市场规模、融资链条和 AI 实验室三个 item 都指向 FY28 是最后一个高增速年；FY29 营收约 +10%，即为峰值年；电力每年新增 GW 从 2027 年起持平在约 20GW。\n【gm=−0.018，M=8】营收年增速 0.014 的推导：加速器加网络市场 2026E 约 5,300 亿，标准档 2027 年约 8,300–9,100 亿，2036 年约 1.45 万亿。用电力交叉校验：每年新增约 16GW IT，加上 5.5 年替换周期带来的约 18% 换代，合计约 30GW IT，每 GW 约 440 亿，结果吻合。英伟达份额（ASIC 加 AMD）从约 81% 降到 2036 年约 52%，所以数据中心营收从 FY28 的约 6,400 亿只增长到约 7,540 亿；加上非数据中心业务约 480 亿，以及按一半计入的软件、独立 CPU 增量约 300 亿，阶段2 营收 7,465→8,320 亿。期初净利率：报表口径约 0.54，扣融资质量折扣后 0.48。期末净利率：报表口径 0.39，扣稳态折扣 4% 后 0.37。依据是受威胁主导厂商 7–10 年后的净利率保有比均值约 0.67（Cisco 0.76、Intel 0.52–0.66、Microsoft 0.62、Qualcomm 0.84），同时用费用拆解独立验证：毛利率 0.67、营业费用率升到约 17%、税率 18%。期末毛利率 0.67 取自 ASIC item 的 66–70% 与利润率类比的 65% 之间。gm=(1+0.014)×(0.37/0.48)^(1/8)−1≈−0.018。\n【g2=0.05】三个 item 的证据都指向增速会衰减：2033–2036 年市场标准年复合只有约 2.4%；新增 GW 平台化以后，增长只能靠换代和每 GW 价值量；ASIC 份额在 2036 年后可能仍在上升。基数法则 item 给出 3.5%/5.5%/7.5%，按概率加权约 5.4%，低于常青大象默认的 6–8%。我取 0.05。\n【基数校验】标准路径 10 年净利润 CAGR 约 6.5%，与超大公司名义十年净利润分布的中位区间（约 5–7%）相当。营收 10 年 CAGR 约 10.7%，几乎全部集中在前两年；起始销售额超过 500 亿的公司，十年维持超过 15% 的只占 0.9%。这条路径没有违背基数法则。",
+  "refs": [
+    {"label": "TTM 调整后归母净利润（Q3 FY26–Q2 FY27，亿美元）", "value": 1678.5, "note": "GAAP 1,928.8 − 税后股权收益 243.2 − 估值准备释放 7.1；股权收益税率 19–25% 对应 1,674–1,693；用非 GAAP 交叉验证得 1,678.7"},
+    {"label": "TTM 营收（亿美元）", "value": 3029.7, "note": "Q3 FY26–Q2 FY27 四季合计"},
+    {"label": "TTM 调整后净利率", "value": 0.554, "note": "GAAP 口径为 0.637，路径以 0.554 为期初"},
+    {"label": "上年同期 TTM 调整后净利润（亿美元）", "value": 877, "note": "含 H20 计提调整；TTM 同比约 +0.91，H1 同比约 +1.10"},
+    {"label": "Q2 FY27 年化调整后净利润（亿美元）", "value": 2141, "note": "比 TTM 高 28%，第一年增速里含这部分运行率缺口"},
+    {"label": "TTM 超额利润占比（按 45% 中性净利率）", "value": 0.19, "note": "按 35% 中性净利率为 0.37，按 52% 为 0.06"},
+    {"label": "3 年均值间的 5 年 CAGR", "value": 0.81, "note": "FY19–21 均值 37.1 → FY24–26 均值 725.6，复用交接资料"},
+    {"label": "FY27E 调整后净利润（标准，亿美元）", "value": 2285, "note": "自行推算，未扣融资质量折扣"},
+    {"label": "FY28E 调整后净利润（标准，亿美元）", "value": 3800, "note": "营收 +70%、毛利率 72.5%；未扣融资质量折扣"},
+    {"label": "FY28 自身资产负债表撑起的收入占比（标准）", "value": 0.27, "note": "利润折扣 40%，净折扣约 0.11；悲观 0.38 / 乐观 0.15"},
+    {"label": "每 GW 英伟达收入：Vera Rubin（亿美元）", "value": 400, "note": "Q2 FY27 电话会口径；Hopper 约 180、Blackwell 约 250"},
+    {"label": "2026E 加速器加网络市场（亿美元）", "value": 5300, "note": "供给侧与需求侧两种算法吻合；标准档 2030 年约 10,500、2036 年约 14,500"},
+    {"label": "英伟达加速器份额 2036（标准）", "value": 0.52, "note": "2026E 约 0.81；悲观 0.35 / 乐观 0.64"},
+    {"label": "期末净利率（报表口径，标准）", "value": 0.39, "note": "悲观 0.30 / 乐观 0.46；三档间距超过 6 个百分点的跨档阈值"},
+    {"label": "标准路径 10 年净利润 CAGR", "value": 0.065, "note": "悲观约 −0.05 / 乐观约 0.177"},
+    {"label": "起始销售额 >500 亿公司十年销售 CAGR >15% 的占比", "value": 0.009, "note": "Base Rate Book 原表；均为实际值。期限缩到 3 年为 0.06"}
+  ],
+  "signals": [
+    "Q3 FY27 实际结果（2026-11-17）：营收是否明显超过 1,080 亿指引，毛利率是否在 74% 左右；FY28 展望从 +70% 是上调还是下修",
+    "Q1 FY28 提价能否落地，以及 FY28 毛利率能否回到 72–73%；内存价格是否继续上行（2,790 亿采购承诺主要是内存）",
+    "DSO 是否从 60 天继续上升、应收集中度（前五大占 70%）、FCF 与净利润之比；担保、AI 云安排、对客户投资是否继续扩张",
+    "AI 实验室融资：OpenAI、Anthropic 的收入增速与算力承诺之比（Anthropic 算力占收入比超过约 55% 即为警戒）；CoreWeave、Oracle 的再融资与利息覆盖",
+    "前五大云厂商 2027 年资本开支是否接近 1.3 万亿（这是 +70% 成立的前提）；Microsoft 商业 RPO 最近一季环比已持平",
+    "博通 FY27 AI 收入是否达到约 1,150 亿、Google TPU 外销进度、AMD MI450 量产，以及 2028 年开放 scale-up 标准的量产时点",
+    "GPU 租赁价格（H100 一年期合同价）与云厂商折旧年限是否下调（Amazon 已从 6 年改为 5 年）",
+    "电力：2028 年后每年新增 GW 是否突破约 20GW 的平台，燃机和变压器交付期是否缩短",
+    "FY29 可见度：Rubin Ultra 订单、PORTS-Pike 首期起租进度、客户 2028 年资本开支计划"
+  ],
+  "confidence": {"g1": "中", "N": "中", "gm": "低", "M": "中低", "g2": "低"},
+  "sources": [
+    {"title": "NVIDIA Q2 FY2027 8-K press release", "url": "https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000073/q2fy27pr.htm", "date": "2026-08-26"},
+    {"title": "NVIDIA CFO Commentary Q2 FY2027", "url": "https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000073/q2fy27cfocommentary.htm", "date": "2026-08-26"},
+    {"title": "NVIDIA 10-Q for quarter ended July 26, 2026", "url": "https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000075/nvda-20260726.htm", "date": "2026-08-26"},
+    {"title": "NVIDIA Q2 FY2027 Earnings Call (FactSet Corrected Transcript, NVIDIA IR)", "url": "https://s201.q4cdn.com/141608511/files/content_files/TRANSCRIPT_-NVIDIA-Corp-NVDA-US-Q2-2027-Earnings-Call-26-August-2026-5_00-PM-ET.pdf", "date": "2026-08-26"},
+    {"title": "NVIDIA FY2026 Form 10-K", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm", "date": "2026-02-25"},
+    {"title": "NVIDIA Q3 FY2026 10-Q", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000230/nvda-20251026.htm", "date": "2025-11-19"},
+    {"title": "Historical Non-GAAP Financial Measures Including SBC (NVIDIA IR)", "url": "https://s201.q4cdn.com/141608511/files/doc_financials/2026/Q426/Historical-Non-GAAP-Financial-Measures-Including-SBC-full.pdf", "date": "2026-05-20"},
+    {"title": "NVIDIA Sets Conference Call for Third-Quarter Financial Results", "url": "https://nvidianews.nvidia.com/news/nvidia-sets-conference-call-for-third-quarter-financial-results-6928873", "date": "2026-10-28"},
+    {"title": "Broadcom 8-K Ex-99.1: Q3 FY2026 results", "url": "https://www.sec.gov/Archives/edgar/data/0001730168/000173016826000076/avgo-08022026x8kxex99.htm", "date": "2026-09-02"},
+    {"title": "AMD 8-K Ex-99.1: Third Quarter 2026 Financial Results", "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm", "date": "2026-11-03"},
+    {"title": "Alphabet Form 10-Q Q3 2026", "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000084/goog-20260930.htm", "date": "2026-10-28"},
+    {"title": "Microsoft Form 10-Q FY2027 Q1", "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436133/msft-20260930.htm", "date": "2026-10-28"},
+    {"title": "Amazon.com Form 10-Q Q3 2026", "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000040/amzn-20260930.htm", "date": "2026-10-29"},
+    {"title": "Anthropic, PBC Form S-1/A Amendment No. 2", "url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026072484/anthropicpbc-sx1ax2.htm", "date": "2026-11-10"},
+    {"title": "CoreWeave Third Quarter 2026 Results (8-K Ex-99.1)", "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm", "date": "2026-11-10"},
+    {"title": "Micron 8-K Ex-99.1: FQ4 and FY2026 results", "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000018/a2026q4ex991-pressrelease.htm", "date": "2026-09-30"},
+    {"title": "Meta FY2025 Form 10-K (servers and network assets 5.5 years)", "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026003942/meta-20251231.htm", "date": "2026-01-29"},
+    {"title": "Amazon FY2025 Form 10-K (servers & networking useful lives)", "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm", "date": "2026-02-06"},
+    {"title": "IEA Energy and AI - Executive summary", "url": "https://www.iea.org/reports/energy-and-ai/executive-summary", "date": "2025-04-10"},
+    {"title": "LBNL 2024 United States Data Center Energy Usage Report", "url": "https://eta-publications.lbl.gov/publications/2024-lbnl-data-center-energy-usage-report", "date": "2024-12-19"},
+    {"title": "PJM 2026 Long-Term Load Forecast", "url": "https://www.pjm.com/-/media/DotCom/committees-groups/subcommittees/las/2026/20260123/20260123-item-03---pjm-2026-long-term-load-forecast---presentation.pdf", "date": "2026-01-23"},
+    {"title": "Cisco FY2001 10-K", "url": "https://www.sec.gov/Archives/edgar/data/858877/0001095811-01-505065.txt", "date": "2001-09-24"},
+    {"title": "NVIDIA CFO Commentary Q4 and FY2019", "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581019000007/q4fy19cfocommentary.htm", "date": "2019-02-14"},
+    {"title": "The Base Rate Book (Mauboussin, Callahan, Majd)", "url": "https://josephnoko.com/wp-content/uploads/2024/04/The-Base-Rate-Book-Michael-Mauboussin.pdf", "date": "2016-09-26"}
+  ]
+}
