@@ -1,0 +1,194 @@
+{
+ "item_name": "AI数据中心电力与新增GW",
+ "scope": "覆盖：2027/2030/2033/2036 年全球与美国 AI 数据中心的累计装机 GW（设施用电口径，含 PUE 与冷却，非纯 IT 负载）与每年新增 GW（低/标准/高）；依据 IEA、EPRI、LBNL、EIA、BNEF、Grid Strategies、JLL、ABI 及 PJM/ERCOT 并网与大负荷队列；识别电网、燃机、变压器、许可约束；给出 2029–2036 年新增 GW 年增速。新增 GW 为毛新增（未扣除退役/替换，替换见'GPU使用寿命与替换周期'item）。不涉及：每 GW 英伟达收入与美元资本开支（见另一 item）、ASIC/AMD 份额、任何股价/市值/估值/评级。所有'AI 数据中心 GW'均是本 item 对公开'全部数据中心'预测按 AI 占比拆分后的估计，不是任何机构的直接口径。",
+ "as_of_date": "2026-11-11；最新一手/半一手数据：BNEF 美国数据中心预测（2026-07 更新，二手报道）、EIA STEO（2026-07）、PJM 2026 长期负荷预测（2026-01）及 2026-11-02 CRA 评审文件、ERCOT 大负荷队列更新（2026-06 至 09）、JLL 2026 全球数据中心展望（2026-01-06）、Grid Strategies 全国负荷增长报告（2025-11）。",
+ "time_horizon_tag": "阶段1、阶段2、稳态（2026–2028 受电力交付约束；2029–2036 的新增 GW 增速直接决定阶段2 的需求增速；稳态取决于新增是否趋于平台）",
+ "key_facts": [
+  "【IEA·二手转述，IEA 页面抓取被 403 拒绝】全球数据中心用电：2025 年约 485 TWh，2030 年约 945–950 TWh（约占全球用电 3%），2035 年基准情景约 1,200 TWh，情景范围 700–1,700 TWh（Lift-Off 比基准高约 45%，高效率情景低约 20%）。增量供应：可再生 +450 TWh、燃气 +175 TWh、核电约 +175 TWh（至 2035）。按负荷率 0.7 折算，基准情景全部数据中心装机约 79 GW(2025)→155 GW(2030)→196 GW(2035)，为本 item 估算，非 IEA 口径。来源：IEA Energy and AI 及 Key questions on energy and AI（二手）。",
+  "【LBNL 2024 美国数据中心能耗报告·二手核对多源一致】美国数据中心用电 2014 年 58 TWh→2023 年 176 TWh（占全美用电 4.4%）；2028 年预测 325–580 TWh（占 6.7%–12%）。2023→2028 年约翻倍至三倍。LBNL 报告编号 LBNL-2001637，2024-12 发布。2028 年低/高对应平均负荷约 37/66 GW，装机更高（负荷率约 0.6–0.8）。",
+  "【EPRI】2024 年版：美国数据中心 2030 年占美国用电 4.6%–9.1%（四情景，年增 3.7%–15%）；2026 年更新版（Powering Intelligence: Updated Scenarios）称 2030 年占 9%–17%，较 2024 年版上调约 60%，弗吉尼亚州占比 39%–57%（二手，未核对 EPRI 原文）。",
+  "【BNEF 美国】2025-12-01 版：2035 年美国数据中心需求 106 GW（较 2025-04 版约 78 GW 上调 36%）；2026-07 更新版（Bloomberg Law 2026-07-21 报道）：2035 年 194 GW（较 12 月版 +83%），约占美国用电 20%（现约 5.9%），基准情景仍有约 19 GW 缺口（含现场燃气）。BNEF 估计历史单年最大电网并网量约 10 GW。2030 年美国 118 GW 的说法仅见一篇二手文章，未核实。PJM 未来 5 年新增数据中心需求约 31 GW 超过新增发电（BNEF，二手）。",
+  "【Grid Strategies 2025-11 全国负荷增长报告】公用事业向 FERC 提交的预测：美国夏季峰值预测增量到 2030 年约 166 GW（二手摘要表述不一），其中数据中心约 90 GW（约占增量 55%）、工业制造约 30 GW、油气采矿约 10 GW；Grid Strategies 认为数据中心 2030 年前真实增量更接近 65 GW，公用事业预测高估约 40%（时间或幅度）。",
+  "【JLL 2026 全球数据中心展望，一手网页抓取，2026-01-06】全球数据中心容量约 103 GW（起点年份未明确，应为 2025）→2030 年 200 GW；AI 工作负载占比约 25%→50%（即 AI 约 26 GW→100 GW）；主要市场并网等待时间超过 4 年；设备平均交付 33 周（较 2020 年前 +50%）；2025 年超过半数项目延期 3 个月以上；都柏林、德州等地已要求'自带电源'。",
+  "【ABI Research】全球在运行数据中心 IT 容量 2025 年约 24.4 GW→2035 年 147.1 GW，十年新增约 122 GW，AI 专用容量在 2030 年代初成为多数。口径为 IT 负载，低于设施口径。Structure Research：AI 专用容量 2.3 GW→2030 年约 150 GW（极端高位，二手，仅作参考）。第三方汇总：2030 年全球数据中心容量中位数 217 GW（范围 173–301 GW），2025 年中位数 83 GW（二手汇总，口径不一）。",
+  "【EIA STEO·二手转述】2026 年 7 月版：美国用电 2026 年约 4,269 TWh、2027 年约 4,399 TWh，均创纪录，商业用电（数据中心主导）增速 2026 约 2.2–2.4%、2027 约 4.3–5.3%；弗吉尼亚、佐治亚、俄亥俄为主要增量区域。",
+  "【PJM 2026 长期负荷预测，PJM 一手文件标题已确认，细节经二手】夏季峰值 2025 年约 160 GW→2036 年约 222 GW（+66 GW，E&E News）→2046 年 253 GW；公用事业为 2030 年申报约 60 GW 大负荷，PJM 只接受 34 GW（削减 43%）。PJM 区域 2025 年已运行数据中心约 8.2 GW，另有约 41 GW 已签约或在建（Modo，二手）。2026-08、2026-11 PJM 负荷分析小组继续审阅 CRA 的数据中心预测方法评审。",
+  "【ERCOT 大负荷队列，ERCOT 官方 2026 年 4/7/9 月更新文件标题已确认，数字经二手】大负荷申请 2024 年底约 63 GW→2025 年底约 226–233 GW→2026-03 约 380–410 GW→2026-06 约 427–474 GW，约 87–90% 为数据中心；PUCT 批准的分批（Batch）流程自 2026-06-18 起，2026-07 ERCOT 称约 205 GW 符合 Batch Zero 资格。队列数字显著超过现实可建量（德州州长下令审计；历史上 ERCOT 约 60% 的并网申请、PJM 约 76% 从未签署并网协议）。",
+  "【设备约束·二手】燃机：GE Vernova 燃机积压与槽位 2026Q1 约 100 GW、Q2 约 116 GW，新订单已排到 2031 年交付；西门子能源积压约 69 GW；交付期 3 年以上，且存在重复下单导致积压虚高的可能。变压器：大型电力变压器平均交付约 128 周（Wood Mackenzie），变电站变压器交付期由 2023 年约 140 周拉长到 2026 年 160 周以上。Exelon 将'高概率'数据中心负荷由约 18 GW 下调到约 11 GW（2026-07-30，二手）。",
+  "【云厂商 2026 年资本开支，二手】亚马逊 2026 年指引约 2,200 亿美元（Q3 单季约 770 亿美元）；Alphabet 2026 指引 1,950–2,050 亿美元且表示 2027 年将显著增加；微软与 Meta 口径冲突，需读 10-Q 核对（本 item 不依赖）。四家 2026 年合计超过 7,200 亿美元（二手汇总）。仅用于说明建设强度，不作 GW 锚。"
+ ],
+ "filing_verified": "本 item 的核心数据来自政府与研究机构，不是 SEC 财报；以下为已核对项：①JLL 2026 全球数据中心展望页面（WebFetch 抓取原文核对 103→200 GW、AI 占比 25%→50%、并网等待 >4 年、设备交付 33 周）；②PJM 与 ERCOT 的官方文件标题与日期经搜索结果确认存在，但文件正文未能逐页读取，数字取自二手汇总；③DOE/LBNL 2024 报告的 176 TWh 与 325–580 TWh 区间经 DOE、LBNL、行业媒体多源一致。IEA、EPRI、BNEF、Grid Strategies、EIA 的数字未读原报告全文。",
+ "unverified_claims": [
+  "IEA 2030 年 945–950 TWh 与 2035 年 1,200 TWh：iea.org 抓取返回 403，仅有多家媒体与搜索摘要一致，中高可信；Carbon Credits 曾写 1,300 TWh，与 IEA 摘要不符，取 1,200。",
+  "BNEF 2035 年美国 194 GW 与 19 GW 缺口：仅见 Bloomberg Law、Latitude Media、Tom's Hardware 标题/摘要，未见正文；BNEF 的 GW 是装机还是峰值需求口径未明，可信度中。",
+  "BNEF 美国 2030 年 118 GW：仅一篇二手文章，未核实，不使用。",
+  "EPRI 2026 更新版 9%–17%：仅见 EPRI 简报转述，未读原文，可信度中。",
+  "ERCOT 队列 427/438/474 GW 的具体数字因日期不同而不同，均为二手；Batch Zero 约 205 GW 为 ERCOT 2026-07-28 演示的转述。",
+  "GE Vernova 116 GW、西门子能源 69 GW、变压器 128/160 周：来自 oilprice、Foley、Wood Mackenzie 的二手引用，未读公司财报或原文。",
+  "Exelon 下调数据中心负荷（18 GW→11 GW）：单一二手来源。",
+  "各云厂商 2026 年资本开支数字：来自媒体与聚合站，微软、Meta 数字相互冲突，需读 10-Q。",
+  "'AI 数据中心 GW'的拆分比例（2025 年约 25%、2030 年约 50%）来自 JLL，口径是工作负载占比，不是 GPU 机房的实际用电占比，可信度中低。",
+  "base_rate_reference 中的美国电力需求历史增速与 2000 年代燃机热潮取消情况为经验性描述，未经检索核实。"
+ ],
+ "data_tables": "【表1 全球 AI 数据中心累计装机 GW（设施口径，年末；2026 为估计起点）】\n年份 | 低 | 标准 | 高\n2026 | 28 | 35 | 42\n2027 | 42 | 55 | 70\n2028 | 56 | 75 | 98\n2029 | 68 | 95 | 128\n2030 | 80 | 115 | 160\n2031 | 90 | 134 | 190\n2032 | 100 | 152 | 220\n2033 | 110 | 170 | 252\n2034 | 118 | 188 | 290\n2035 | 124 | 205 | 330\n2036 | 130 | 222 | 370\n\n【表2 全球每年新增 GW（毛新增）】\n年份 | 低 | 标准 | 高\n2027 | 14 | 20 | 28\n2028 | 14 | 20 | 28\n2029 | 12 | 20 | 30\n2030 | 12 | 20 | 32\n2031 | 10 | 19 | 30\n2032 | 10 | 18 | 30\n2033 | 10 | 18 | 32\n2034 | 8 | 18 | 38\n2035 | 6 | 17 | 40\n2036 | 6 | 17 | 40\n\n【表3 美国 AI 数据中心累计装机 GW（标准占全球约 52–54%；低/高为独立估计）】\n年份 | 低 | 标准 | 高\n2027 | 22 | 30 | 38\n2030 | 42 | 62 | 90\n2033 | 56 | 88 | 135\n2036 | 66 | 112 | 190\n美国标准情景新增 GW：2027 约 12、2028–2030 约 11–12、2031–2033 约 9–10、2034–2036 约 8。\n\n【表4 2029–2036 年新增 GW 的年复合增速】\n低 -9.4%（12→6 GW）| 标准 -2.3%（20→17 GW）| 高 +4.2%（30→40 GW）。\n累计装机 2030→2036 年复合增速：低 8.4%、标准 11.6%、高 15.0%；2027→2030：低 24%、标准 28%、高 31%。\n\n【表5 公开预测对照（口径不同，仅作校验）】\nIEA 全部数据中心基准：约 79 GW(2025)→155 GW(2030)→196 GW(2035)（本文按负荷率 0.7 折算）；JLL 全部数据中心 103→200 GW(2030)，AI 约 100 GW(2030)；ABI IT 容量 24→147 GW(2035)；BNEF 美国全部数据中心 194 GW(2035)；本文标准情景全球 AI 115 GW(2030)、222 GW(2036)，处于 JLL 与 IEA 基准之间偏高、低于 BNEF 外推的位置。",
+ "quant_low": "低情景：全球 AI 数据中心装机 2027 年 42 GW、2030 年 80 GW、2033 年 110 GW、2036 年 130 GW；年新增由 2027 年 14 GW 降到 2036 年 6 GW，2029–2036 年新增年复合 -9.4%；美国 2027/2030/2033/2036 年 22/42/56/66 GW。推导：并网与设备交付被锁死——燃机新订单 2031 年才交付、变压器 128–160 周、PJM 只接受约 57% 的申报负荷，ERCOT 大负荷队列实际可兑现比例沿用历史（约 25–40%），再叠加 Grid Strategies 所说公用事业高估 40%；美国新增每年约 6–8 GW，低于 BNEF 估计的单年最大并网量 10 GW。触发条件：AI 实验室收入与算力承诺脱节引发资本开支下修；电价政治（居民电价上涨）促使州监管收紧大负荷准入；2027–2028 年出现明显消化期。对应 IEA 的高效率情景（2035 年约 -20%）与 LBNL 低端。",
+ "quant_base": "标准情景：全球 AI 数据中心装机 2027 年 55 GW、2030 年 115 GW、2033 年 170 GW、2036 年 222 GW；年新增 2027–2030 年约 20 GW 的平台，2031 年后缓降到 17 GW，2029–2036 年新增年复合 -2.3%；美国 30/62/88/112 GW，美国新增约 12→8 GW/年。推导：①2025 年 AI 约 26 GW（JLL：103 GW×25%）；②2030 年以 JLL 全部数据中心 200 GW×50%≈100 GW 为下限、以 BNEF 美国 194 GW(2035) 外推全球为上限，取中间偏高的 115 GW；③2035 年标准 205 GW，介于 IEA 基准（全部数据中心约 196 GW，AI 占其中约六成即约 120 GW）与 BNEF 外推（全球全部约 330 GW，AI 约七成约 230 GW）之间，更偏 BNEF，因为 BNEF 与 EPRI 在 2026 年连续大幅上调；④新增在 2027–2030 年受燃机与变压器约束平台化在约 20 GW/年（BNEF 的单年并网上限约 10 GW 仅指美国电网并网，另含现场发电与海外），之后随着 SMR、地热、现场燃气、自带电源逐步释放而不再增加，同时 GW 单位的效率提升被每 GW 计算量提高抵消。",
+ "quant_high": "高情景：全球 AI 数据中心装机 2027 年 70 GW、2030 年 160 GW、2033 年 252 GW、2036 年 370 GW；年新增 2027 年 28 GW，2030 年 32 GW，2036 年 40 GW，2029–2036 年新增年复合 +4.2%；美国 38/90/135/190 GW。推导：与 BNEF 2026-07 版（美国 194 GW、20% 用电）和 EPRI 2026 版（2030 年占美国用电 9%–17%）以及 IEA Lift-Off（2035 年约 1,700 TWh）的外推一致；需要的条件：美国单年并网 15 GW 以上（超过 BNEF 观察的历史最大值 10 GW 的 1.5 倍），自带电源（现场燃气轮机、燃料电池、核电 PPA）占新增的三分之一以上，推理需求的 Jevons 效应持续使总算力需求 5 年以上保持约 30% 的年增。触发条件：AI 收入兑现、模型 token 消耗继续指数增长、监管放宽自供电。",
+ "implied_rate": "累计装机年复合：2027→2030 年 低 24% / 标准 28% / 高 31%（0.24/0.28/0.31）；2030→2036 年 低 0.084 / 标准 0.116 / 高 0.150。2029–2036 年新增 GW 年复合：低 -0.094 / 标准 -0.023 / 高 +0.042。美国累计装机 2030→2036 年复合：低 0.07 / 标准 0.10 / 高 0.13（本 item 估算）。",
+ "affected_params": "g1、N、gm、M、g2（主要是阶段2的营收增速与消化期长度）",
+ "param_implication": "①g1/N：2027–2030 年标准情景每年新增约 20 GW，上限由燃机、变压器、并网而非需求决定，阶段1 的 GW 口径增速接近 0（20→20 GW），2026→2027 年新增翻倍之后增长要靠每 GW 英伟达美元含量上升，而不是 GW 数量；建议 N 取 2–4 年，阶段1 之后 GW 增速归零。②gm/M：2029–2036 年新增 GW 年复合在 -9% 到 +4% 之间、标准 -2%，因此阶段2 的营收增速不能由'新增 GW 增长'提供，只能来自每 GW 美元含量变化、份额与替换；若每 GW 美元含量不变，阶段2 的加速器需求规模基本是平的（标准）；建议阶段2 营收年增速区间 -5% 到 +8%，标准约 +2–4%（需叠加每 GW 与份额两个 item）。③g2：新增 GW 趋平意味着稳态增速取决于替换（见替换周期 item）与每 GW 美元含量，未支持高于 6–8% 的稳态；若电力约束持续到 2036 年，'装机越多越需要换代以提高每瓦产出'会成为主要需求来源。④电力是硬约束，需求不是：标准情景下 2027–2028 年 GW 缺口由现场发电填补的比例上升，成本上升会压低客户资本回报，是消化期出现的诱因之一。",
+ "base_rate_reference": "历史类比（以下两条历史数字为作者经验性记忆，未经本次检索核实，仅作方向参考）：美国电力需求 1950–1973 年高增长后增速骤降；云数据中心 2015–2023 年全球用电只增约 4 倍速度（LBNL：美国 2014–2023 年 58→176 TWh，年复合约 13%），即用电的高增长期很少持续超过 10 年；基数法则：Mauboussin 的 Base Rate Book 显示起点大的体量难以长期保持 15% 以上增速。电网设备约束的类比：2000 年代初美国燃机热潮（订单规模巨大，后大量取消，数字未核实），说明订单与积压需打折，当年的积压大部分并未交付。",
+ "confidence": "中低。2026–2028 年的新增 GW（约 20 GW/年）有队列、设备积压与云厂商资本开支三方面印证，置信度中；2030 年之后的绝对 GW 与新增增速取决于电源技术、监管与需求兑现，不同机构 2035 年全球数据中心用电的范围宽达 700–1,700 TWh，置信度低；AI 与非 AI 的拆分与美国占比为本 item 估计。",
+ "contradicting_evidence": "①更高方向：BNEF 在 2025-12 到 2026-07 间把美国 2035 年预测由 106 GW 提高到 194 GW（+83%），EPRI 2026 版上调约 60%，ERCOT 队列半年内由 226 GW 到 474 GW，说明预测连续低估；若这一趋势持续，标准情景偏低。②更低方向：Grid Strategies 认为公用事业预测高估约 40%，PJM 削减 43% 的申报，Exelon 下调高概率负荷约 40%，历史上并网队列只有 24–40% 最终落地；能效提升（IEA 高效率情景 2035 年低 20%）与推理芯片每瓦性能每代数倍提升可能使同样算力所需 GW 下降。③GW 口径本身会受'每瓦性能'影响：Nvidia 声称 Vera Rubin 每瓦吞吐 10 倍于 Grace Blackwell（厂商口径，不作锚），若真实，则 GW 数量与算力不再线性对应。",
+ "key_uncertainties": "①各机构'数据中心 GW'口径不同（IT 与设施、装机与峰值、全部与 AI），本 item 的拆分比例为估计；②并网队列的兑现率；③燃机、变压器、自带电源的增量节奏（2029 年后能否突破 20 GW/年的平台）；④电价与政治反应（居民电价）是否收紧大负荷准入；⑤算力需求端（AI 收入）能否支撑 2028 年之后的资本开支；⑥海外（中东、欧洲、亚洲）并网与主权 AI 项目的实际落地。",
+ "signals": "①2026-11-17 英伟达 Q3 FY27 财报与 2026-12 前后各云厂商对 2027 年资本开支的指引（Alphabet 已称 2027 年显著增加）；②2027 年 1 月 PJM 新一版长期负荷预测与 CRA 评审结论；③ERCOT Batch Zero 的批准量与首批并网时间（2026-12 至 2027-Q2）；④GE Vernova、西门子能源季度财报中的燃机积压与交付期（2027-01、2027-04）；⑤EIA STEO 月度中商业用电增速（每月）；⑥BNEF、IEA 的下一版预测（IEA Energy and AI 年度更新，通常 2027-04 前后）；⑦单季美国新增并网 GW 是否超过 BNEF 所说单年最大约 10 GW。",
+ "sources": [
+  {
+   "title": "IEA Energy and AI - Executive summary",
+   "url": "https://www.iea.org/reports/energy-and-ai/executive-summary",
+   "date": "2025-04-10",
+   "tier": "一手"
+  },
+  {
+   "title": "IEA Key questions on energy and AI (executive summary)",
+   "url": "https://iea.org/reports/key-questions-on-energy-and-ai/executive-summary",
+   "date": "2026-06-01",
+   "tier": "一手"
+  },
+  {
+   "title": "DCD: IEA data center energy consumption set to double by 2030 to 945TWh",
+   "url": "https://datacenterdynamics.com/en/news/iea-data-center-energy-consumption-set-to-double-by-2030-to-945twh",
+   "date": "2025-04-10",
+   "tier": "二手"
+  },
+  {
+   "title": "LBNL 2024 United States Data Center Energy Usage Report",
+   "url": "https://eta-publications.lbl.gov/publications/2024-lbnl-data-center-energy-usage-report",
+   "date": "2024-12-19",
+   "tier": "一手"
+  },
+  {
+   "title": "DOE: New report evaluating increase in electricity demand from data centers",
+   "url": "https://www.energy.gov/articles/doe-releases-new-report-evaluating-increase-electricity-demand-data-centers",
+   "date": "2024-12-20",
+   "tier": "一手"
+  },
+  {
+   "title": "EPRI Powering Intelligence 2024 (press release)",
+   "url": "https://prnewswire.com/news-releases/epri-study-data-centers-could-consume-up-to-9-of-us-electricity-generation-by-2030-302157970.html",
+   "date": "2024-05-28",
+   "tier": "二手"
+  },
+  {
+   "title": "Utility Dive: BloombergNEF US data center power demand could reach 106 GW by 2035",
+   "url": "https://www.utilitydive.com/news/us-data-center-power-demand-could-reach-106-gw-by-2035-bloombergnef/",
+   "date": "2025-12-01",
+   "tier": "二手"
+  },
+  {
+   "title": "Bloomberg Law: Data Centers on Track to Suck Up a Fifth of US Power Use by 2035",
+   "url": "https://news.bloomberglaw.com/esg/data-centers-on-track-to-suck-up-a-fifth-of-us-power-use-by-2035",
+   "date": "2026-07-21",
+   "tier": "二手"
+  },
+  {
+   "title": "Latitude Media: BNEF nearly doubled its forecast for US data center power demand",
+   "url": "https://www.latitudemedia.com/news/bnef-nearly-doubled-its-forecast-for-us-data-center-power-demand/",
+   "date": "2026-07-21",
+   "tier": "二手"
+  },
+  {
+   "title": "Grid Strategies National Load Growth Report 2025",
+   "url": "https://gridstrategiesllc.com/wp-content/uploads/Grid-Strategies-National-Load-Growth-Report-2025.pdf",
+   "date": "2025-11-01",
+   "tier": "一手"
+  },
+  {
+   "title": "Utility Dive: Some load forecasts using unrealistically high load factors (Grid Strategies)",
+   "url": "https://www.utilitydive.com/news/some-load-forecasts-using-unrealistically-high-load-factors-grid-strateg/805927/",
+   "date": "2025-11-01",
+   "tier": "二手"
+  },
+  {
+   "title": "JLL: Global data center sector to nearly double to 200GW (2026 Global Data Center Outlook)",
+   "url": "https://www.jll.com/en-uk/newsroom/global-data-center-sector-to-nearly-double-to-200gw-amid-ai-infrastructure-boom",
+   "date": "2026-01-06",
+   "tier": "二手"
+  },
+  {
+   "title": "ABI Research: Data center IT capacity AI workloads forecast",
+   "url": "https://abiresearch.com/news-resources/chart-data/data-center-it-capacity-ai-workloads-forecast",
+   "date": "2026-01-01",
+   "tier": "二手"
+  },
+  {
+   "title": "PJM 2026 Long-Term Load Forecast presentation",
+   "url": "https://www.pjm.com/-/media/DotCom/committees-groups/subcommittees/las/2026/20260123/20260123-item-03---pjm-2026-long-term-load-forecast---presentation.pdf",
+   "date": "2026-01-23",
+   "tier": "一手"
+  },
+  {
+   "title": "PJM LAS: Charles River Associates review of data center forecast",
+   "url": "https://www.pjm.com/-/media/DotCom/committees-groups/subcommittees/las/2026/20261102/20261102-item-03---charles-river-associates-review-of-data-center-forecast.pdf",
+   "date": "2026-11-02",
+   "tier": "一手"
+  },
+  {
+   "title": "E&E News: PJM trims projections of AI-driven electricity demand",
+   "url": "https://www.eenews.net/articles/pjm-trims-projections-of-ai-driven-electricity-demand/",
+   "date": "2026-01-01",
+   "tier": "二手"
+  },
+  {
+   "title": "ERCOT Interconnection and Grid Analysis Update (Sept 2026)",
+   "url": "https://www.ercot.com/files/docs/2026/09/17/10-Interconnection-and-Grid-Analysis-Update-REVISED.pdf",
+   "date": "2026-09-17",
+   "tier": "一手"
+  },
+  {
+   "title": "ERCOT Senate July 29 Panel 1: Assessing the Grid",
+   "url": "https://www.ercot.com/files/docs/2026/07/29/ERCOT-Senate-July-29-Panel-1-Assessing-The-Grid.pdf",
+   "date": "2026-07-29",
+   "tier": "一手"
+  },
+  {
+   "title": "BIC Magazine: Texas grid sees 233 GW of data center requests, how much is real",
+   "url": "https://www.bicmagazine.com/industry/powergen/texas-grid-sees-233-gw-data-center-requests-much-real/",
+   "date": "2026-01-01",
+   "tier": "二手"
+  },
+  {
+   "title": "Foley: How the data center boom is squeezing oilfield services (gas turbine backlog)",
+   "url": "https://www.foley.com/insights/publications/2026/07/how-the-data-center-boom-is-squeezing-oilfield-services-companies/",
+   "date": "2026-07-01",
+   "tier": "二手"
+  },
+  {
+   "title": "TNW: US power firms scramble for transformers and turbines",
+   "url": "https://thenextweb.com/news/us-power-companies-scramble-data-centre-equipment",
+   "date": "2026-01-01",
+   "tier": "二手"
+  },
+  {
+   "title": "EIA Short-Term Energy Outlook - electricity",
+   "url": "https://www.eia.gov/outlooks/steo/report/elec_coal_renew.php",
+   "date": "2026-07-07",
+   "tier": "一手"
+  },
+  {
+   "title": "Mining Weekly/Reuters: US power use to beat record highs in 2026 and 2027, EIA says",
+   "url": "https://www.miningweekly.com/article/us-power-use-to-beat-record-highs-in-2026-and-2027-as-ai-use-surges-eia-says-2026-07-08-1",
+   "date": "2026-07-08",
+   "tier": "二手"
+  }
+ ],
+ "uncertain": [
+  "time_horizon_tag 的阶段划分",
+  "AI 与非 AI 数据中心 GW 拆分比例",
+  "美国 AI 装机 GW 绝对值",
+  "2033–2036 年全球与美国装机 GW",
+  "BNEF 194 GW 的口径",
+  "ERCOT/PJM 队列兑现率",
+  "设备积压数字"
+ ]
+}

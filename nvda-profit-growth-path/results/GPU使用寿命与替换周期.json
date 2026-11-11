@@ -1,0 +1,191 @@
+{
+ "item_name": "GPU使用寿命与替换周期",
+ "scope": "覆盖：Amazon、Microsoft、Alphabet、Meta、Oracle 在 10-K/10-Q 中对服务器与网络设备折旧年限的调整（时间、原因、金额，引用原文，已在 sec.gov/Archives 原文核对）；CoreWeave、Nebius 的 GPU 折旧政策、GPU 担保债务与减值；H100/A100/H200/B200 的每 GPU 小时租赁价走势（2024–2026，二手）与老卡是否仍在出租；每代每瓦性能提升在电力受限时是否促使 3–4 年换代的正反观点；替换周期（年）低/标准/高三档与稳态'换代收入/装机基数'比例。不涉及：每 GW 英伟达收入、ASIC/AMD 份额、总 GW 预测（见另外 item）、任何股价/市值/估值/评级；本 item 中'低/标准/高'指替换周期长度的三档（低=周期短=换代需求大），请注意与其他 item 的方向区别。",
+ "as_of_date": "2026-11-11；一手财报：Amazon FY2025 10-K（2026-02）与 Q3 2026 10-Q（2026-10-30）、Meta FY2025 10-K 与 Q3 2026 10-Q（2026-10-22）、Microsoft FY2026 10-K（2026-07-29）与 FY2027Q1 10-Q（2026-10-28）、Alphabet FY2025 10-K（2026-02-05）与 Q3 2026 10-Q（2026-10-29）、Oracle FY2026 10-K（截至 2026-05-31）、CoreWeave FY2025 10-K（2026-03-02）、Nebius FY2025 年报（2026-04-30）。租赁价格数据截至 2026 年 9–10 月（二手）。",
+ "time_horizon_tag": "阶段2、稳态（阶段1 影响很小：2026–2028 年装机仍在高速增长，替换需求占比低；替换周期主要决定增长放缓后的需求底部与稳态 g2）",
+ "key_facts": [
+  "【Amazon·一手，FY2025 10-K 原文】'Effective January 1, 2025 we changed our estimate of the useful lives of a subset of our servers and networking equipment from six years to five years. The shorter useful lives are due to the increased pace of technology development, particularly in the area of artificial intelligence and machine learning.' 对 2025 年的影响：折旧与摊销增加 14 亿美元，净利润减少 10 亿美元（每股 0.10 美元），主要影响 AWS。此前：2024-01-01 服务器由 5 年改 6 年；表中当前口径'服务器与网络设备 5–6 年'。FY2024 10-K 预计该变更减少 2025 年营业利润约 7 亿美元（经搜索结果转述，原表未再核对）。Q3 2026 10-Q 中未发现新的年限变更。",
+  "【Meta·一手，FY2025 10-K 原文】'In January 2025, we completed an assessment of the useful lives of property and equipment, which resulted in an increase in the estimated useful lives of most servers and network assets to 5.5 years, effective January 1, 2025.' 影响：2025 年折旧费用减少 29.2 亿美元，净利润增加 25.9 亿美元（每股 1.00 美元，基于 2024-12-31 前投入使用的资产）。服务器与网络资产折旧费用 2023/2024/2025 年为 73.2/113.4/133.6 亿美元；物业设备减值 7.38/2.88/2.37 亿美元。MD&A 称费用增长'包含因服务器与网络资产使用年限延长而降低的折旧增速'。Q3 2026 10-Q 未见再次调整。",
+  "【Microsoft·一手，FY2022 10-K 与 FY2026 10-K 原文】2022 年 7 月评估后，'increase the estimated useful lives of both server and network equipment from four years to six years'，自 FY2023 起生效，原因：'investments in software that increased efficiencies in how we operate our server and network equipment, as well as advances in technology'；预计使 FY2023 营业利润增加 37 亿美元。此前 2020 年 7 月（FY2021）曾由 3 年延到 4 年。FY2026 10-K 现行政策：'servers and network equipment, two to six years'。FY2027Q1 10-Q（2026-10-28）未发现服务器年限新变更。二手报道称微软 FY2027 起将数据中心建筑与办公楼折旧年限由 15 年延到 25 年（未在原文核对，且与服务器无关）。",
+  "【Alphabet·一手，FY2022 10-K 原文】'In January 2023, we completed an assessment of the useful lives of our servers and network equipment, resulting in a change in the estimated useful life of our servers and certain network equipment to six years, which we expect to result in a reduction of depreciation of approximately $3.4 billion for the full fiscal year 2023'（此前为 4 年，服务器；变动明细见二手）。FY2025 10-K 现行政策：'We depreciate servers and network equipment generally over a period of six years.' 风险因素中写明预期技术进步等变化可能改变受益期。Q3 2026 10-Q 未见新的年限变更。",
+  "【Oracle·一手，FY2026 10-K（截至 2026-05-31）附注】PP&E 脚注：'Comprised primarily of servers and networking equipment with estimated useful life of six years'；财年 2026/2025/2024 的 PP&E 折旧费用为 76/39/31 亿美元，PP&E 净额由 435.2 亿美元增至 999.6 亿美元（FY2026 增长 2.3 倍，说明新装机占比极高）。搜索结果中'Oracle 2023 年由 4 年延到 5 年'的说法未在本次原文中核对，不使用。",
+  "【CoreWeave·一手，FY2025 10-K（2026-03-02）】技术设备折旧年限 6 年；2023-01-01 将数据中心计算设备由 5 年改为 6 年，'reflecting continuous advancements in hardware'（原文片段截断，原因表述以原表为准），当年降低总费用 2,000 万美元、EPS +0.10。长期资产减值：2023–2025 年'no material'（原文截断，减值金额未见披露）。债务：2025-12-31 总债务 216 亿美元，另有 37 亿美元未提取额度（循环信贷、DDTL 2.1、DDTL 3.0）；DDTL 借款以 GPU 服务器折旧成本为基础，借款由子公司股权及子公司'substantially all assets'的第一优先级抵押担保；2025 年净利息费用 12.29 亿美元，对比 2024 年 3.61 亿美元（+240%）。二手：DDTL 4.0 为 85 亿美元、A3 评级、由 Meta 合同现金流与 GPU 担保；DDTL 平均期限约 5.9 年，对比账面 6 年折旧（二手，未读债务附注逐项核对）。",
+  "【Nebius·一手，FY2025 年报（2026-04-30）】2025 年'Server and network equipment 4.0 years'；'Our main assets, GPUs, are currently depreciated over four years.' 2026 年 1 月评估后结论：'the estimated useful lives of such assets should be extended from four to five years'，自 2026-01-01 起按会计估计变更处理，原因表述为使用情况与利用率数据。二手估算：折旧下降约 20%，在旧口径下 2026Q2 折旧约 3.25 亿美元；本次检索未发现 Nebius 披露 GPU 减值。",
+  "【租赁价格·二手，均需核对】H100 一年期合同价（SemiAnalysis 转述）2025-10 约 1.70 美元/GPU·小时→2026-03 约 2.35 美元（+约 40%），逆转 2025 年较 2023–2024 高点下跌 60% 以上的趋势；Ornn 指数显示 H100 在 2026-05 出现价格尖峰后回落，2026-05-25 约 2.94 美元；2026-05 的按需价区间 1.38–11.01 美元（专业云 2.0–6.2 美元，Azure 8 卡节点约 12.3 美元/GPU）；A100 约 1.29–2.50 美元/GPU·小时（Akash 80GB 约 1.49 美元）；H200 约 2.5–7.0 美元；B200 Vast.ai 中位价 2026-06 约 4.5–4.7 美元。多源称 A100、H100、H200 租赁价 2026 年上半年到 8 月继续上行（TechNews 2026-08-04、DigitalCitizen 报道）。",
+  "【老卡仍在出租·二手】CoreWeave CEO 称 A100 已合同锁定到 2029 年且价格不变；一批到期 H100 在 CNBC 报道中以原价约 95% 立即续租（HWBusters 转述，未读 CoreWeave 财报电话会逐字稿核对）。英伟达称 A100 仍满负荷运行；Sprout 分析称微软 V100 机队实际服役 8.4 年超过 6 年账面寿命（二手，口径与样本未核）。",
+  "【每瓦性能与换代论·厂商口径，不作锚】英伟达称 Vera Rubin 相对 Grace Blackwell 每瓦推理吞吐约 10 倍、整机功耗约 2 倍、每 token 成本约 1/10（GTC/CES 2026，厂商口径，未见独立验证）。电力受限时，客户的论点是'每瓦产出'决定经济性。反方：英伟达与 CoreWeave 强调旧卡仍满租，物理寿命超过账面寿命。Burry 估计行业折旧年限过长使 2026–2028 年折旧低估约 1,760 亿美元（个人分析，不是事实，二手）。",
+  "【内部推算】账面年限现状：Amazon 5（部分）–6 年、Meta 5.5、Microsoft 最长 6、Alphabet 6、Oracle 6、CoreWeave 6、Nebius 5；加权看五家云厂商在 5–6 年，上一轮折旧年限调整方向：2020–2024 年普遍延长（3/4→5/6 年），2025 年起 Amazon 缩短、Nebius 与 Meta 延长，说明各家对 GPU 经济寿命判断仍分歧。"
+ ],
+ "filing_verified": "已读 sec.gov/Archives 原文并核对：①Amazon FY2025 10-K（amzn-20251231.htm）：六改五年原文、原因、折旧增加 14 亿/净利润减少 10 亿、表格'Five to six years'；②Meta FY2025 10-K（meta-20251231.htm）：5.5 年原文、折旧减少 29.2 亿/净利润增加 25.9 亿、服务器与网络折旧 133.6 亿/113.4 亿/73.2 亿、减值 2.37/2.88/7.38 亿；③Microsoft FY2022 10-K（msft-10k_20220630.htm）4→6 年与 37 亿美元，FY2026 10-K（msft-20260630.htm）'two to six years'；④Alphabet FY2022 10-K（goog-20221231.htm）4→6 年与 34 亿美元，FY2025 10-K（goog-20251231.htm）'generally six years'；⑤Oracle FY2026 10-K（orcl-20260531.htm）六年与 PP&E 表；⑥CoreWeave FY2025 10-K（crwv-20251231.htm）6 年、2023 年 5→6、总债务 216 亿、净利息 12.29 亿、DDTL 抵押；⑦Nebius FY2025 年报（nbis-20251231x20f.htm）GPU 4 年→2026 年 5 年。⑧Amazon/Meta/Microsoft/Alphabet 的 Q3 2026 10-Q 全文搜索'useful life'未发现新的服务器年限变更。",
+ "unverified_claims": [
+  "H100/A100/H200/B200 的租赁价格（SemiAnalysis、Ornn、Vast.ai、Akash、IntuitionLabs、TechNews 等）：均为二手聚合，页面日期与标签不一致，数字仅作方向参考。",
+  "CoreWeave A100 合同锁定到 2029 年、H100 以 95% 原价续租：来自 HWBusters 转述，未读 CoreWeave 财报电话会逐字稿，且两个二手来源时间点不同，可信度中。",
+  "CoreWeave DDTL 4.0 85 亿美元、A3 评级、DDTL 5.0 低于投资级、平均期限 5.9 年：二手博客，未逐项读 10-K 债务附注与评级机构公告。",
+  "CoreWeave 与 Nebius 的 GPU 减值：10-K 文本显示 CoreWeave '无重大'减值，其余未核；Nebius 未检索到减值披露，不排除存在小额减值。",
+  "Amazon 2020 年 3→4、2022 年 4→5 年的历史年限变更：来自二手文章，只核对了 FY2025 10-K 脚注的 2024（5→6）与 2025（6→5）。",
+  "Oracle 2023 年 4→5 年说法：二手来源相互冲突，未核对，不使用。",
+  "Microsoft 数据中心建筑折旧年限 15→25 年：仅二手（Baxtel/PYMNTS），与服务器无关。",
+  "英伟达'Vera Rubin 每瓦 10 倍'：厂商营销口径，无独立验证；V100 机队服役 8.4 年：Sprout 分析的二手转述。",
+  "Burry 提出的 1,760 亿美元折旧低估：个人估计，不作为事实。"
+ ],
+ "data_tables": "【表1 折旧年限调整一览（均为原文核对，除标注外）】\n公司 | 时间 | 变化 | 金额影响 | 理由\nMicrosoft | FY2021（2020-07） | 3→4 年 | 未核 | 二手\nMicrosoft | FY2023（2022-07 评估） | 4→6 年 | 营业利润 +37 亿美元 | 软件效率提升与技术进步\nAlphabet | 2023-01 | 4→6 年（服务器及部分网络） | 折旧 -34 亿美元（预计） | 年限评估\nAmazon | 2024-01-01 | 5→6 年（服务器） | 金额未核对 | 原文仅见 5→6 年脚注\nAmazon | 2025-01-01 | 6→5 年（部分服务器与网络） | 折旧 +14 亿美元、净利润 -10 亿美元（FY2025） | AI/ML 技术节奏加快\nMeta | 2025-01-01 | 约 4–5→5.5 年 | 折旧 -29.2 亿美元、净利润 +25.9 亿美元 | 年限评估\nOracle | FY2026 10-K | 服务器与网络约 6 年 | 无变更披露 | -\nCoreWeave | 2023-01-01 | 5→6 年 | 费用 -2,000 万美元 | 硬件持续进步\nNebius | 2026-01-01 | 4→5 年 | 折旧约 -20%（二手估算） | 使用与利用率数据\n\n【表2 GPU 每小时租赁价（二手，美元/GPU·小时，方向参考）】\n型号 | 2025 年趋势 | 2026 年水平\nH100 | 较 2023–24 年高点下跌 60%+，一年合同约 1.70（2025-10） | 一年合同约 2.35（2026-03）；指数 2026-05-25 约 2.94；按需 1.4–11\nA100 | 持续低位 | 约 1.3–2.5，仍有需求；CoreWeave 称已合同到 2029\nH200 | 2.5–7.0 区间 | 2026-08 报道继续上涨\nB200 | 初期高价 | Vast.ai 中位约 4.5–4.7（2026-06）\n\n【表3 替换周期三档与稳态换代收入比例（本 item 估算）】\n档位 | 替换周期 | 稳态按 GW 的年替换比例（1/周期） | 与新代同 GW 成本比 1.0–1.3 倍时按美元的比例 | 2036 年标准装机路径下的实际比例\n低（周期短）| 4 年 | 25% | 25%–33% | 约 8%（取决于 2032 年新增）\n标准 | 5.5 年 | 18% | 18%–24% | 约 9%\n高（周期长）| 7 年 | 14% | 14%–19% | 约 9%\n说明：增长未停止时被替换的是 L 年前那一批的新增，故 2036 年实际替换比例（约 8–9%）远低于稳态 1/L；若 2036 年后新增持平，则比例逐年爬升到 1/L 需要约一个周期。英伟达可获得份额还需乘以其在换代采购中的份额（与 ASIC item 联动）。",
+ "quant_low": "低档（替换周期短，4 年）：电力受限促使客户 3–4 年换代，稳态按 GW 的年替换比例约 25%（美元口径 25%–33%，因新机架每 GW 美元含量上升）；触发条件：①下一代每瓦性能提升达到 5 倍以上并被客户验证（Nvidia 称 Rubin 每瓦约 10 倍，厂商口径）；②并网与燃机约束持续（见电力 item，标准新增约 20 GW/年），使'在已通电的机房里换新卡'成为增加算力的最便宜方法；③租赁价格在 B200/Rubin 供给放量后回落到 H100 以下，使旧卡出租收益低于换新的边际收益；④会计年限向 Amazon 的 5 年甚至更短收敛。该档对英伟达是正面情景，因为稳态 g2 与阶段2 有换代收入支撑。",
+ "quant_base": "标准档（5.5 年）：与 Meta 的 5.5 年、Amazon 5 年与其他公司 6 年的账面年限加权接近，并留出'3–4 年主推理/训练、之后降级做推理与中小模型'的梯级使用；稳态按 GW 的年替换比例约 18%，美元口径约 18%–24%；因增长中的装机基数偏年轻，2036 年实际替换约占装机的 8–9%，稳态比例要到新增放缓后才接近 18%。推导：旧卡租赁价没有下滑反而上升（H100 一年期 1.70→2.35 美元，A100 合同到 2029 年），说明主流 GPU 经济寿命超过 4 年；但会计年限并没有普遍延长（Amazon 2025 年缩短，Nebius 仅延到 5 年），也说明经济寿命不是 7–8 年。",
+ "quant_high": "高档（替换周期长，7 年）：稳态按 GW 的年替换比例约 14%（美元口径 14%–19%）；条件：模型与服务的软件栈使旧卡长期保持经济价值（V100 实际服役 8.4 年的二手说法；A100 2020 年发布到 2029 年仍有合同，即约 9 年）；每代每瓦提升被推理服务的 token 价格下降与软件优化抵消；电力不再是最紧约束。该档对英伟达是负面情景，替换需求下降约 1/4（相对标准档）。注意账面折旧年限是会计估计，并不等于客户换代决策的周期。",
+ "implied_rate": "替换周期（年）：低 4 / 标准 5.5 / 高 7。稳态按 GW 的年替换比例：低 0.25 / 标准 0.18 / 高 0.14；美元口径（含每 GW 美元含量上升 0–30%）：低 0.25–0.33 / 标准 0.18–0.24 / 高 0.14–0.19。2036 年标准装机路径下的实际替换比例约 0.08–0.09（三档接近）。折旧年限延长 1 年对应年替换比例变化约 -3 个百分点（5.5→6.5 年：18%→15%）。",
+ "affected_params": "M、gm、g2（主要影响阶段2 的需求底部与稳态；对 g1 影响小）",
+ "param_implication": "①换代收入是增长放缓后需求不跌到新增量的底：以标准装机路径看，2036 年全球 AI 装机约 222 GW，替换周期 5.5 年时每年需要替换约 18 GW 级别的存量（与新增 17 GW 相当），因此'新增 GW 平台化'并不意味着加速器收入下降一半；若周期拉长到 7 年，替换量约下降 22%，对阶段2 的增速是 -1 到 -2 个百分点的拖累（本 item 估算）。②g2：稳态营收≈装机基数×(1/周期)×每 GW 美元含量，装机基数不再增长时，g2 只来自每 GW 美元含量与份额，难以支持 6–8%；标准档下 g2 建议 3–6%（具体取决于份额与利润率 item），低档（周期短）可到 6–8%，高档（周期长）3–4%。③M：阶段2 中期（2030 年代前半）是新增放缓但替换尚未爬升的时期，对应的消化期风险最大，建议在 2031–2034 年预留一次增速低点；④电力约束放大换代动机：在已通电的机房里更换，不需要新增并网，这使'换代'成为电力受限下的主路径；该判断与'每瓦性能每代 3–5 倍'相关，应给低档赋予与高档同等权重。",
+ "base_rate_reference": "同类类比（作者记忆与公开常识，未逐项检索）：企业级服务器与通信设备刷新周期历史上为 3–5 年（Cisco 路由与交换、Intel 服务器 CPU 时代），2010 年代云厂商将服务器账面年限由 3 年延到 4–6 年，主要原因是单机性能提升放缓与软件调度效率提升；网络设备与交换机常超过 7 年使用。GPU 的特殊性是每代每瓦提升仍然很大（厂商声称数倍），更接近 2000 年前后的光网络与 2005 年前后的 PC，在 3–4 年周期内被淘汰的风险更大；但老卡可以降级为推理使用，使经济寿命长于主训练寿命。",
+ "confidence": "中低。账面年限事实（原文）高度确定；租赁价格仅二手聚合，方向（旧卡未贬值甚至回升）可信度中；'电力受限下是否 3–4 年换代'没有一手数据，仅有 2026 年的短周期观察，结论依赖对 2027–2029 年新一代（Rubin、MI450）供给节奏的判断。",
+ "contradicting_evidence": "支持更短周期（4 年以下）：①Amazon 因'AI/ML 技术节奏加快'把部分服务器缩短到 5 年，并在 2024 年 Q4 记入提前退役的加速折旧（二手：约 9.2 亿美元）；②英伟达每年推出新架构，称每瓦数倍提升，电力受限时每 GW 产出决定收入；③Burry 等人认为账面 6 年高估了经济寿命；④GPU 抵押债务期限（约 5.9 年）与 6 年折旧几乎重合，使价格下行风险集中；⑤租赁价格 2026 年的上涨可能是供应紧张的暂时现象（内存与封装约束），并非旧卡长期价值的证明。支持更长周期（7 年以上）：①Microsoft、Alphabet、Oracle、CoreWeave 均用 6 年，Meta 5.5 年；Nebius 刚把 4 年延到 5 年；②A100（2020 年）仍在被合同锁定到 2029 年；③H100 到期后续租在原价约 95% 水平；④V100 实际服役 8.4 年（二手）。",
+ "key_uncertainties": "①旧卡租赁价在 B200/Rubin 大规模供给后的走势（2027 年）；②CoreWeave 与 Nebius 的 GPU 抵押贷款在 2028–2030 年到期时是否需要再融资或出现减值；③推理 token 价格下降后旧卡出租能否维持正现金流；④客户是否在电力受限时以'每瓦产出'为标准整批退役旧卡；⑤会计年限与经济寿命之间的差距是否会触发集中减值或年限缩短（Amazon 方向）；⑥换代采购中英伟达的份额（ASIC 在替换周期里更容易切入）。",
+ "signals": "①2026-11-17 英伟达 Q3 FY27 财报中对 Hopper/Blackwell 老机型出货与 Rubin 过渡的描述；②2027-02 起各公司 10-K 的折旧年限脚注是否再变（Amazon、Meta、Microsoft、Alphabet、Oracle；2027-01 至 2027-07）；③CoreWeave 与 Nebius 季度财报中的减值、合同续约价与到期 H100 续约率（每季度）；④H100/B200 一年期合同价与 Ornn/SemiAnalysis 指数月度走势（Rubin 2026 下半年放量后）；⑤CME/Silicon Data GPU 算力期货价格（二手提到已上线）；⑥GPU 抵押债务的二级市场利差与评级动作；⑦各厂商披露的在运行 A100/H100 台数与利用率。",
+ "sources": [
+  {
+   "title": "Amazon FY2025 Form 10-K (servers & networking useful lives, Note 1)",
+   "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm",
+   "date": "2026-02-06",
+   "tier": "一手"
+  },
+  {
+   "title": "Amazon Q3 2026 Form 10-Q",
+   "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000040/0001018724-26-000040-index.htm",
+   "date": "2026-10-30",
+   "tier": "一手"
+  },
+  {
+   "title": "Meta FY2025 Form 10-K (servers and network assets 5.5 years)",
+   "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026003942/meta-20251231.htm",
+   "date": "2026-01-29",
+   "tier": "一手"
+  },
+  {
+   "title": "Meta Q3 2026 Form 10-Q",
+   "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026066773/0001628280-26-066773-index.htm",
+   "date": "2026-10-22",
+   "tier": "一手"
+  },
+  {
+   "title": "Microsoft FY2022 Form 10-K (Change in accounting estimate, 4 to 6 years)",
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000156459022026876/0001564590-22-026876-index.htm",
+   "date": "2022-07-28",
+   "tier": "一手"
+  },
+  {
+   "title": "Microsoft FY2026 Form 10-K (servers and network equipment two to six years)",
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/0001193125-26-323660-index.htm",
+   "date": "2026-07-29",
+   "tier": "一手"
+  },
+  {
+   "title": "Microsoft FY2027 Q1 Form 10-Q",
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436133/0001193125-26-436133-index.htm",
+   "date": "2026-10-28",
+   "tier": "一手"
+  },
+  {
+   "title": "Alphabet FY2022 Form 10-K (servers six years, $3.4B depreciation reduction)",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204423000016/0001652044-23-000016-index.htm",
+   "date": "2023-02-03",
+   "tier": "一手"
+  },
+  {
+   "title": "Alphabet FY2025 Form 10-K (servers and network equipment generally six years)",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000018/0001652044-26-000018-index.htm",
+   "date": "2026-02-05",
+   "tier": "一手"
+  },
+  {
+   "title": "Alphabet Q3 2026 Form 10-Q",
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000084/0001652044-26-000084-index.htm",
+   "date": "2026-10-29",
+   "tier": "一手"
+  },
+  {
+   "title": "Oracle FY2026 Form 10-K (PP&E, servers six years)",
+   "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm",
+   "date": "2026-06-20",
+   "tier": "一手"
+  },
+  {
+   "title": "CoreWeave FY2025 Form 10-K (6-year technology equipment, DDTL debt)",
+   "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/0001769628-26-000104-index.htm",
+   "date": "2026-03-02",
+   "tier": "一手"
+  },
+  {
+   "title": "Nebius Group FY2025 annual report (GPUs four years; five years from 2026)",
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/0001104659-26-052948-index.htm",
+   "date": "2026-04-30",
+   "tier": "一手"
+  },
+  {
+   "title": "Nebius reports Q4 and FY2025 results (depreciation schedule 4 to 5 years)",
+   "url": "https://www.businesswire.com/news/home/20260212534404/en/",
+   "date": "2026-02-12",
+   "tier": "一手"
+  },
+  {
+   "title": "Hudson Labs: Amazon server and networking equipment useful life changes",
+   "url": "https://www.hudson-labs.com/research/amazon-server-depreciation-amzn",
+   "date": "2026-02-01",
+   "tier": "二手"
+  },
+  {
+   "title": "Bizety: GPU Depreciation: CoreWeave vs. Nebius",
+   "url": "https://bizety.com/?p=12396",
+   "date": "2026-02-01",
+   "tier": "二手"
+  },
+  {
+   "title": "CryptoBriefing: Nvidia H100 GPU rental costs surge 50% in six months (SemiAnalysis data)",
+   "url": "https://cryptobriefing.com/nvidia-h100-gpu-rental-costs-surge/",
+   "date": "2026-03-01",
+   "tier": "二手"
+  },
+  {
+   "title": "CryptoBriefing: H100 rental prices slide after early May surge (Ornn)",
+   "url": "https://cryptobriefing.com/h100-rental-prices-slide-ornn-ai/",
+   "date": "2026-05-26",
+   "tier": "二手"
+  },
+  {
+   "title": "IntuitionLabs: Cloud GPU rental prices comparison",
+   "url": "https://intuitionlabs.ai/articles/cloud-gpu-rental-prices-comparison",
+   "date": "2026-06-01",
+   "tier": "二手"
+  },
+  {
+   "title": "TechNews: Nvidia A100, H100 and H200 GPU rental rates continue to price upwards",
+   "url": "https://finance.technews.tw/2026/08/04/nvidia-a100-h100-and-h200-gpu-rental-rates-continue-to-price-upwards/",
+   "date": "2026-08-04",
+   "tier": "二手"
+  },
+  {
+   "title": "HWBusters: CoreWeave A100 contracts out to 2029",
+   "url": "https://hwbusters.com/?p=111165",
+   "date": "2026-01-01",
+   "tier": "二手"
+  },
+  {
+   "title": "FourWeekMBA: Jensen Huang restates the GPU durability thesis and the depreciation debate",
+   "url": "https://fourweekmba.com/ai-nvidia-gpu-depreciation-durability-debate-huang-2026/",
+   "date": "2026-01-01",
+   "tier": "二手"
+  },
+  {
+   "title": "SemiAnalysis: Vera Rubin NVL72 agentic inference",
+   "url": "https://newsletter.semianalysis.com/p/vera-rubin-nvl72-agentic-inference",
+   "date": "2026-01-01",
+   "tier": "二手"
+  }
+ ],
+ "uncertain": [
+  "CoreWeave A100/H100 续约价格细节",
+  "租赁价格绝对值",
+  "Amazon 2024 年 5→6 年的金额影响",
+  "替换周期三档取值",
+  "稳态换代收入比例",
+  "每瓦性能对换代决策的影响"
+ ]
+}
