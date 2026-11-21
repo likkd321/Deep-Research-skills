@@ -1,0 +1,155 @@
+{
+ "item_name": "Godot 房主迁移与热备方案普查",
+ "summary": "结论：Godot 4 生态里目前没有'成熟、已上线验证'的开箱即用房主迁移/热备方案。真正做到'影子热备+秒内接管'的只有 Understudy（0.1.0，单机测试）；GD-Sync 托管服务声称自动房主迁移且有已上线小游戏，但机制无法核实；其余多为'只选新房主、不迁移状态'的大厅层选举（gamespice、tngklp、Steam 大厅、Nakama 约定）。引擎官方提案 godot-proposals#7912 自 2023-09 仍未解决。建议验证实验：Understudy、GD-Sync、自研'Steam 大厅选举+定期快照'三条线。（查询日期 2026-11-21）",
+ "author_background": "各候选作者：Understudy=ags221（资源商店发布者，声明用 Claude 辅助编写，源码在 Zenodo）；GD-Sync=GD-Sync 团队（商业托管服务，GitHub GD-Sync/GD-Sync）；gamespice-platform/peer-to-peer=匿名组织 gamespice-platform，README 称用 Claude Code 构建；tngklp/godot-multiplayer-lobby-system=个人 tngklp；Photon Fusion Godot=Exit Games 官方；Signal Fish 客户端=Ambiguous-Interactive（自述大量 Claude/Codex 辅助）；NodeTunnel=社区插件组织，维护者 curtjs。Multiplayer Starter 见单独条目。",
+ "release_and_versions": "各候选版本：Understudy 0.1.0（2026-10-08 更新）；tngklp 大厅系统 v1.0.0（2026-06-08，商店 2026-06-10 更新，1 个提交）；Photon Fusion Godot 3.0.0-preview-684（2026-10-30，官方称预览版不建议生产）；gamespice peer-to-peer 25 个提交，最近推送 2026-11-20；GD-Sync 资源库条目已有二十余次编辑更新（持续维护）；godot-proposals#7912 创建于 2023-09-29 至今 open。（查询日期 2026-11-21）",
+ "repo_activity": "gamespice peer-to-peer：1 星 0 fork 25 提交；tngklp：5 星 0 fork 1 提交；Signal Fish：2 星 367 提交 29 个 open issue；microsoft/XBOX-Godot-Sample：244 星（与房主迁移无关）；NodeTunnel #25 host migration 2026-02-19 开，仅 2 条评论，维护者称优先级低、尝试未果；godot-proposals#7912 仅 4 条评论。Understudy 无 git 仓库（Zenodo）。整体：全部为极小社区项目，无一有可观 Star 量。（查询日期 2026-11-21）",
+ "license": "Understudy：CC0/MIT-0；GD-Sync 插件：资源库条目显示 BSD-2-Clause（未核对 LICENSE 文件）；gamespice：MIT；tngklp：MIT（有 LICENSE 文件）；Signal Fish：MIT；Photon Fusion Godot：Photon License（商业条款）。",
+ "docs_completeness": "Understudy 商店页有实测数据（8 人 29 次房主崩溃中位 228ms）但无独立文档核实；GD-Sync 有官网与文档站（docs.gd-sync.com 本会话网络不可达，未读）；gamespice 仅有选举规则 README，无状态迁移文档；tngklp README 明确未写状态迁移/选举顺序/超时；Nakama 官方文档有'客户端中继主机轮换'示例（示例代码自称不保证可运行）；Photon Fusion Godot 官方文档较全但处于预览期。",
+ "community_reviews": "整体几乎无社区评价。Understudy 商店 0 评价；tngklp 商店 1 条无文字好评（2026-06-20）；Photon Fusion Godot 商店 1 条好评（2026-09-25）；GD-Sync 只查到厂商自写的资源库条目，无独立评测；Godot 论坛有两个无解帖：'Passing Host in P2P game'（2025-04，GodotSteam，host 退出灰屏，无答案，https://forum.godotengine.org/t/passing-host-in-p2p-game/109411）与'How to check if the host left'（2026-02，只建议连 server_disconnected 信号，不迁移）；godot-proposals#7912 中 bikemurt 说明小团队靠 Steam P2P 无专用服务器所以急需。Reddit r/godot、Discord、YouTube：未查到专门的房主迁移讨论（搜索引擎未返回）。",
+ "user_claims_check": "核实用户已知信息：（1）'Godot 无内置房主迁移'——正确，godot-proposals#7912 自 2023-09 仍 open；（2）'Understudy 约 0.25 秒接手'——商店页自报中位 228ms/最大 262ms，正确但为作者自报、单机模拟；（3）'支持 Steam'——页面称经 GodotSteam，4 人 Steam 中继最大 235ms，属自报；（4）'测试都在同一台电脑'——正确，页面自己承认未跨家庭网络测试。其余用户陈述无法核实。",
+ "distribution_form": "Understudy：资源商店+Zenodo zip（纯 GDScript addon）；GD-Sync：资源库/商店 addon + 托管中继（需联网接入其服务，有免费档，LAN 模式免费）；gamespice/tngklp：GitHub 项目，tngklp 为含 Oracle Cloud 部署的完整项目而非 addon；Photon Fusion Godot：GDExtension 预编译包；Nakama/EOS/Steam：平台 SDK+Godot 封装。",
+ "self_reported_vs_independent": "全部关键数据均为作者/厂商自报，未找到任何第三方实测。Understudy 接管耗时来自作者单机模拟测试；GD-Sync'自动房主迁移'来自厂商描述；GD-Sync 的'5 款已上线游戏、5 万月活'来自官网展示页。",
+ "godot_version": "Understudy 4.5+；tngklp 4.5+（商店）/4.6（README）；gamespice 4.x（未指定小版本）；Signal Fish 4.3+；Photon Fusion Godot 4.6–4.7.2；GD-Sync Godot 4（未明确小版本）；Xbox 示例 4.5+。3.x 可移植：无明确的 3.x 方案（论坛旧帖建议用 C#/GDNative，非现成方案）。",
+ "builtin_features_used": "Understudy：引擎 ENet / GodotSteam，状态走自定义纯数据快照（详见 Understudy 单条）；tngklp：ENet 专用服务器+RPC，host_changed 信号；gamespice：WebRTC（可选）+自写 elect_host 选举；DanielSnd 的社区做法：自定义 MultiplayerPeer+Node.js socket.io 中继，并修改 SceneMultiplayer 内部（抑制 ID1 的 peer_disconnected、新增 transfer_peer_id_ownership）；其余为托管服务私有协议。",
+ "third_party_deps": "Understudy 无第三方（Steam 需 GodotSteam）；GD-Sync 依赖其托管后端；Photon 依赖 Photon 云与 GDExtension；Nakama 需 Nakama 服务器；EOS 需 EOSG 等 GDExtension；gamespice 可选 WebRTC 扩展。",
+ "interop_godotsteam_netfox": "Understudy 官方声称支持 GodotSteam；GD-Sync 声称集成 GodotSteam（好友加入）；Signal Fish 有可选 Steam P2P 身份引导；tngklp、gamespice 未提 Steam；Photon、Nakama：与 Steam 无直接集成（可拿 Steam 身份登录）。与 netfox 的兼容：均未查到，[不确定]。",
+ "engine_internals_dependency": "社区硬核做法（DanielSnd）必须改引擎内部（SceneMultiplayer replicator/cache），随 Godot 升级极易破坏，属不推荐路线；Understudy 号称纯 GDScript 不改引擎（单条调研另述）；GD-Sync/Photon 走私有协议，规避引擎内部但换来供应商绑定。",
+ "transport_matrix": "房主迁移可用性按传输层：ENet（Understudy、tngklp 可用；tngklp 为专用服务器上的大厅房主）；GodotSteam/SteamMultiplayerPeer（Understudy 自报可用；Steam 大厅所有权自动转移但只迁'所有者身份'，不迁游戏状态，且 SteamMultiplayerPeer 自身无迁移，论坛帖无解）；WebRTC（gamespice 可选，仅选举）；托管中继（GD-Sync、Nakama 中继、Photon 云：由服务做选举/轮换）。WebSocket：仅 DanielSnd 的 socket.io 自研路线。",
+ "topology_authority": "分三类：（a）真房主+影子热备：Understudy；（b）大厅层房主身份迁移、游戏状态自理：tngklp、gamespice、Steam 大厅、Nakama 中继（各端按相同排序规则选新主，如最低 session ID）、PlayFab 所有权迁移策略；（c）托管中继自动迁移：GD-Sync（状态如何迁移未公开）。Photon Fusion Godot 提供共享权威（Shared-Authority）与客户端-主机、专用服务器三种拓扑，未宣称房主迁移。",
+ "tick_and_sync_rate": "Understudy 参见单条；其余普查对象均未公开 tick/同步率或不适用。",
+ "input_pipeline": "不适用：普查类条目，各候选实现细节未逐一阅读源码",
+ "prediction_reconciliation": "不适用：普查类条目，普查未涉及",
+ "interpolation": "不适用：普查类条目，普查未涉及",
+ "snapshot_and_compression": "不适用：普查类条目，仅 Understudy 有差分快照（见其单条）；其余未公开",
+ "rpc_validation_channels": "不适用：普查类条目，普查未涉及",
+ "key_code_snippets": "不适用：普查类条目，本会话无法读取 GitHub 仓库源码（add_repo 未启用），仅读 README/商店页。可引用的关键规则：gamespice README：lobby.elect_host() 规则'稳定者优先→在场最久→最小 id'，各端本地计算无需消息；Nakama 文档：各客户端对 presences 做确定性排序（如最低 session ID）并在主机离开事件里重算。",
+ "shadow_sync": "仅 Understudy 有真正的影子副本（影子持续重放房主 tick，自报可同时有第三份待命）；其余候选无热备，新主只能依赖各客户端已持有的复制状态（Unity 文档同理：未同步到客户端的数据迁移后丢失）。GD-Sync：未公开。",
+ "host_disconnect_detection": "Godot 原生仅 multiplayer.server_disconnected 信号（客户端被动发现，论坛推荐）；Understudy 有心跳/抖动测试（自报'闪断链路'最大 242ms，细节见单条）；Steam 为 LobbyChatUpdate 回调；Nakama 为 presence leave 事件；tngklp/gamespice：未文档化超时阈值。",
+ "takeover_flow": "Understudy：影子提升为房主，约 0.25 秒（自报）；GD-Sync：仅声称，细节未知；gamespice：选举完成即换房主，无状态恢复；tngklp：host_changed 信号，状态恢复未文档；DanielSnd：服务器选新主→广播→客户端调用 transfer_peer_id_ownership 重绑节点所有权（需改引擎，作者自称 hacky 但测试有效）；论坛 GodotSteam 用户：新主无法接手场景（无解）。",
+ "reconnect_and_peer_ids": "Godot 的服务器 peer id 固定为 1，是房主迁移最大障碍（DanielSnd 需抑制 ID1 断线并重绑所有权）；Understudy 的重连与编号方案见其单条；其余候选未文档化。",
+ "strict_mode": "仅 Understudy 提供（影子重放比对可发现作弊房主，自报'每次修改均被报告'）；其余无。你的游戏不在意防透视，此项优先级低。",
+ "node_compat": "Understudy 要求状态为纯数据，不能依赖 CharacterBody2D 物理节点（见其单条，需重写）；大厅层选举类方案（gamespice、tngklp、Steam、Nakama）不限制节点，但状态迁移需自己做：最小做法=房主定期（如 5–10Hz 或每秒）把关键玩家/物品/Bot 状态快照广播给所有人，新主据此重建，工作量推断约 5–15 人天。",
+ "scale_10plus": "未查到任何候选的 10 人以上实测。tngklp MAX_CLIENTS=64（跨所有大厅）；GD-Sync/Photon 为托管服务，人数上限取决于套餐 [不确定]；Understudy 测试为 8 人。",
+ "bot_ai_placement": "Bot 若跑在房主上，则必须随快照迁移（Bot 位置/目标/血量/仓库等进入快照）；Understudy 的纯数据状态天然把 Bot 一并复制；其余方案需自行把 Bot 状态纳入快照。推断：Bot 逻辑改为确定性或'接手后重新决策'可大幅降低迁移复杂度。",
+ "owner_authority_model": "Photon Fusion Godot 的共享权威（Shared-Authority）与'每玩家掌管自己角色'最贴近，但无房主迁移承诺且为预览版；GD-Sync、自研方案可做 owner-authority，代价是 PvP 下需要房主/服务端仲裁命中与掉落，否则易作弊（你不在意防透视，但在意流畅）。",
+ "backend_crosscheck": "GD-Sync、Nakama、PlayFab 自带后端存储/账号，可与成长数据结合；Steam 方案需自建小后端，结算时由新旧房主各自上报给后端交叉校验。具体接法未深入调研 [不确定]。",
+ "interest_management": "不适用：普查类条目，普查未涉及",
+ "debug_tooling": "不适用：普查类条目，普查未涉及",
+ "known_issues": "godot-proposals#7912：Godot 服务器 ID 恒为 1、SceneMultiplayer 无所有权转移 API，任何方案都得绕开；#9214 与停滞的 PR #97910 是相关尝试；Understudy 0.1.0 仅单机测试、0 评价；gamespice 自述'头less 测试通过、很少真人测试'、5–15% 玩家对无法直连需中继；tngklp 1 提交、无状态迁移文档、端口硬编码 7777；NodeTunnel #25 维护者尝试未果；Photon Fusion Godot 官方称预览版；Signal Fish 提示 Godot 4.3 原生可能丢中继消息。",
+ "missing_features": "未发现：已上线游戏验证过的 Godot 房主迁移、公网实测报告、迁移时 Bot/物理状态的成熟示例、Steam 下带迁移的第三方评测。Easy Peasy Multiplayer 仅将房主迁移列为计划；LinkUx 未提；Signal Fish 页面未提故障转移。",
+ "real_network_risks": "自报数据全是同机环回测试，跨家庭网络、Steam 中继（SDR）抖动与丢包下的接管耗时未知；P2P 约 5–15% 玩家对无法直连需中继（gamespice 自述）；房主与影子同时掉线的概率未验证。Edgegap 文章提醒：迁移带来带宽与延迟开销，Tripwire 称其'项目风险太大收益太小'，商业游戏多选专用服务器。",
+ "maintenance_risk": "推断：Understudy、gamespice、tngklp 均为单人或匿名、AI 辅助的新项目，停更风险高；GD-Sync、Photon 为公司产品，维护风险低但有供应商绑定与服务关停风险（GD-Sync ToS 承诺停服时开源后端）。",
+ "combination_path": "推荐路径：以'严格服务端/客户端分离'的房主模式起步 → 先用 Steam 大厅所有权作为'选谁当新房主'（官方基础设施，零成本）→ 状态迁移用自己的定期快照，或评估 Understudy 的影子热备（若通过验证）→ 将来迁专用服务器时去掉迁移层。gamespice 的确定性选举规则与 Nakama 的'排序取最小 id'可直接借鉴。",
+ "migration_cost": "推断：自研'选举+快照'约 5–15 人天；接入 Understudy 需把游戏状态改为纯数据，约 10–25 人天（见其单条）；接入 GD-Sync 需重写网络层以其 API 为准，约 5–15 人天，但绑定其服务。",
+ "validation_experiment_ideas": "实验1（Understudy，1–2 天）：用 2D 原型+2 个 Bot，3 台机器/虚拟机，经 GodotSteam 中继，反复杀房主进程，通过标准：接管<1 秒、玩家位置/Bot/掉落不丢、重连后可继续。实验2（GD-Sync，半天–1 天）：同一原型，在房主 kill -9 时看是否自动迁移、动态生成物体与 Bot 是否保留；通过标准：状态连续，否则判定'只迁移身份不迁移状态'。实验3（自研，1–2 天）：Steam 大厅所有权+每秒快照广播到全部客户端，杀房主后新主重建；通过标准：10 次中 ≥9 次成功接续，丢失≤1 秒状态。附：每个实验都要在真实公网/不同家庭网络再跑一遍，补上自报数据的缺口。",
+ "rank": "成熟度排序（从高到低，均偏低）：1 GD-Sync（唯一有已上线游戏的托管服务，但迁移机制未核实）；2 Understudy（机制最完整且有实测，但 0.1.0、单机测试、0 评价、无上线）；3 Steam 大厅所有权/Nakama 中继轮换（官方机制成熟，但只迁身份不迁状态）；4 PlayFab/EOS 大厅所有权迁移（Godot 封装未核实）；5 gamespice peer-to-peer（确定性选举，1 星、无真人测试）；6 tngklp 大厅系统（1 提交、机制未文档化）；7 Photon Fusion Godot（预览版，无迁移承诺）；8 DanielSnd 引擎改造方案（未发布，需改引擎）；NodeTunnel/Easy Peasy/Signal Fish/LinkUx：无实现。值得做验证实验的前三名：Understudy、GD-Sync、自研'Steam 大厅选举+快照'。",
+ "community_diy": "社区常见自研做法：（1）确定性选举：各端按在场最久/最小 id 本地算出新主，无需通信（gamespice、Nakama 文档）；（2）定期把权威状态快照复制给所有客户端，新主据此重建（Unity 文档同理，未复制的数据会丢）；（3）借平台大厅所有权（Steam/PlayFab/EOS）决定新主；（4）自写中继+自定义 MultiplayerPeer 并改引擎所有权（DanielSnd）；（5）放弃迁移、改用专用服务器（Edgegap 等业界建议）。",
+ "sources": [
+  {
+   "title": "Understudy 资源商店页",
+   "url": "https://store.godotengine.org/asset/ags221/understudy/",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "godot-proposals #7912 Implement automatic host migration",
+   "url": "https://github.com/godotengine/godot-proposals/issues/7912",
+   "type": "社区",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "tngklp 大厅系统 商店页",
+   "url": "https://store.godotengine.org/asset/tngklp/multiplayer-lobby-system/",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "tngklp/godot-multiplayer-lobby-system",
+   "url": "https://github.com/tngklp/godot-multiplayer-lobby-system",
+   "type": "源码",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "gamespice-platform/peer-to-peer",
+   "url": "https://github.com/gamespice-platform/peer-to-peer",
+   "type": "源码",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "GD-Sync 官网",
+   "url": "https://www.gd-sync.com",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "NodeTunnel godot-plugin issue #25",
+   "url": "https://github.com/NodeTunnel/godot-plugin/issues/25",
+   "type": "社区",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Signal Fish Godot 客户端",
+   "url": "https://github.com/Ambiguous-Interactive/signal-fish-client-godot",
+   "type": "源码",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Godot 论坛 Passing Host in P2P game",
+   "url": "https://forum.godotengine.org/t/passing-host-in-p2p-game/109411",
+   "type": "社区",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Godot 论坛 How to check if the host left",
+   "url": "https://forum.godotengine.org/t/how-to-check-if-the-host-left-the-game-multiplayer/133115",
+   "type": "社区",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Photon Fusion Godot 商店页",
+   "url": "https://store.godotengine.org/asset/photon/photon-fusion/",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Nakama 客户端中继多人文档",
+   "url": "https://heroiclabs.com/docs/nakama/concepts/multiplayer/relayed/",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Edgegap：P2P/中继游戏中的房主迁移",
+   "url": "https://edgegap.com/blog/host-migration-in-peer-to-peer-or-relay-based-multiplayer-games",
+   "type": "社区",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Microsoft XBOX-Godot-Sample",
+   "url": "https://github.com/microsoft/XBOX-Godot-Sample",
+   "type": "源码",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "PlayFab 大厅所有权变更",
+   "url": "https://learn.microsoft.com/en-us/xbox/playfab/multiplayer/lobby/ownership-changes",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Heathen Steam 大厅所有者说明（第三方封装文档，Steam 官方文档未能核实）",
+   "url": "https://kb.heathen.group/old-kb/old-toolkit-for-steamworks/unreal/blueprint-nodes/functions/get-lobby-owner",
+   "type": "社区",
+   "accessed": "2026-11-21"
+  }
+ ],
+ "uncertain": [
+  "scale_10plus",
+  "backend_crosscheck",
+  "interop_godotsteam_netfox",
+  "self_reported_vs_independent",
+  "key_code_snippets",
+  "community_reviews",
+  "engine_internals_dependency"
+ ]
+}
