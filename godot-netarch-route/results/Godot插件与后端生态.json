@@ -1,0 +1,167 @@
+{
+ "summary": "结论：本生态里真正对三方案有价值的分三层。联机底座用 Godot 内置 SceneMultiplayer（Synchronizer/Spawner/visibility）+ ENet 或 GodotSteam 的 SteamMultiplayerPeer（已并入 GodotSteam 主仓，最新 4.24）；预测/插值/noray 可选 netfox 1.49.8（MIT）。记账/结算校验/匹配/大厅这一层，对“零基础个人开发者”最稳的是：自己的权威服务器（方案一协调员/方案二专服）用服务端凭据写入自托管或托管的普通后端（PocketBase/Supabase/Nakama/Talo 任选其一），客户端永远不直接写成长数据。Nakama（Apache-2.0，Godot 4 客户端）功能最全但最重；Talo（MIT）适合排行榜/存档/统计、对撤离装备的事务级结算偏弱；Supabase/PocketBase 要自己写校验逻辑；PlayFab 无官方通用 Godot SDK；SpacetimeDB 为 BSL 且官方 Godot SDK 依赖 C#，风险高。停服教训：Hathora 2026-03-04 宣布退出游戏托管、2026-05-05 关停（客户转交 Nitrado GameFabric）；SilentWolf 托管后端约 2025-11-01 前后下线（无官方公告，来源为第三方厂商博客）；Unity Multiplay 2026-03-31 终止。故一律“后端可替换”：把记账封装成自己的 HTTP/JSON 接口层。托管专服可选 Edgegap（Godot 插件 v1.0.9，2026-09-11）或 W4 Cloud（W4 Games，2024-10-10 发布，定价未公开）；方案一需要的“云端 headless 协调员”正是这类产品的用例。（查询日期 2026-11-21）",
+ "representative_cases": "1) netfox：官方 made-with-netfox 列出 Steam 上 5 款作品，含 2D 战术射击 PL4no-B（Godot，来自先前调研）。2) Nakama + Godot：Heroic Labs 官方示例 PocketBound 与 Godot 授权对战论坛讨论（forum.heroiclabs.com 'How to create Authoritative Match in Godot'），做法为服务器端 Go/Lua/TS 模块持有权威状态。3) Supabase 作游戏后端：Dev.to 实操指南，明确它“不是游戏服务器”，校验需自写服务器，Steam 登录需 Edge Function 桥接 OpenID 2.0。4) Talo：开源自托管后端，Godot 插件 MIT。5) Hathora/SilentWolf 为反面案例（均已停服）。6) 微软 XBOX Godot sample v0.2.0（2026-07-30）整合 GDK/Xbox/PlayFab，属参考样例而非商用 SDK。各项规模与营收未查到[不确定]。（查询日期 2026-11-21）",
+ "maturity_evidence_level": "官方文档/资产库页面：Edgegap、Nakama、Talo、PlayFab 条款；厂商博客：Hathora 退出报道（GamesBeat、Gameye、Edgegap 对比文，竞争对手来源偏倚）、Crux/supercraft 博客（自家产品推广，用于 SilentWolf 事实仅为弱证据）；论坛单帖：Godot/Heroic 论坛；先前调研沿用：netfox/GodotSteam 源码与仓库。无本人实测。W4 Cloud 定价、GD-Sync 额度、PocketBase 现状均未取得一手资料。",
+ "action_small": "适用性（本条为生态条目，按各组件在该场景的角色填写）：动作类 6–8 人：内置 SceneMultiplayer + ENet 足够；预测/回滚类手感需要 netfox（1.49.8，MIT，有 2D 射击上线案例）；后端（Nakama 等）只负责大厅、匹配与局后记账，不应放进实时同步路径；Nakama 的 authoritative match 在服务器端 Go/Lua/TS 跑逻辑，不是 Godot 场景，故不适合 Godot 物理/动作主逻辑[推断]。GD-Sync 为托管中继，延迟与扩展不透明，不建议做动作核心。推荐：专服（方案二）或协调员（方案一）+ netfox。",
+ "action_large": "适用性（本条为生态条目，按各组件在该场景的角色填写）：动作类 10–20 人：带宽与 CPU 随人数及 Bot 上升，需 visibility 过滤（内置 MultiplayerSynchronizer 的 visibility filter 与 netfox 可见性管理文档）；托管平台选 Edgegap（按容器时间与出口流量计费，具体价格未核实[不确定]）。Nakama 官方文档不以 20 人实时动作为卖点，仅作匹配/记账。不推荐 GD-Sync 与纯 P2P 中继承载 20 人。",
+ "strategy_small": "适用性（本条为生态条目，按各组件在该场景的角色填写）：策略类 6–8 人：延迟容忍高，可用 SceneMultiplayer 指令同步；后端 Nakama 授权对战（回合/指令制）可行但逻辑需在其服务端运行时重写[推断]；GD-Sync/Talo 能做轻量房间与存档，适合作原型。最容易的路线是内置 RPC + 你自己的服务器 + PocketBase/Supabase 记账。",
+ "strategy_large": "适用性（本条为生态条目，按各组件在该场景的角色填写）：策略类 10–20 人：指令式同步带宽低，ENet 专服或 Steam 中继均可承载；重点在 Bot 与视野裁剪（服务端维护 fog 并按玩家过滤）；后端选择同上，Nakama 的匹配/队伍/聊天可直接用，Supabase/PocketBase 只做记账。",
+ "authority_matrix": "按环节（生态角度）：移动/命中/拾取/开箱/Bot AI/视野裁剪/计时：由 Godot 专服或协调员进程持有（SceneMultiplayer 权威=服务器，netfox 的 NetworkTime 绑定服务器=host）；结算入库：只能由“持有服务端凭据的服务进程”写后端（PocketBase superuser/Supabase service_role/Nakama RPC 服务器密钥），客户端对后端只读自己的数据。方案三的玩家协调员不可信，不应持有后端写凭据；应由轻云函数（Edge Function/PocketBase hook/Nakama RPC）对多个客户端上报的结果做交叉校验后再入账[推断]。",
+ "tech_stack": "推荐组合（推断）：Godot 4.4+（netfox 1.49.8 测试至 4.4+）；SceneMultiplayer；传输 ENet（专服）或 SteamMultiplayerPeer（经 GodotSteam 4.24 的 Steam 中继）；预测/插值 netfox；后端三选一——(a) PocketBase 自托管单二进制（最轻）、(b) Supabase（Postgres+RLS+Edge Function，可用托管）、(c) Nakama（Apache-2.0，功能最全，Godot 4 客户端，服务器 v3.39.0 2026-05-20）；托管专服 Edgegap（Docker，Godot 插件 v1.0.9 2026-09-11，自带免费匹配/服务器浏览器说法）或 W4 Cloud；运维可选 VPS+Docker 兜底以避免锁定。Talo 可补排行榜/统计。（查询日期 2026-11-21）",
+ "steam_integration_path": "SteamMultiplayerPeer（已并入 GodotSteam 主仓，4.17 于 2025-12-09 起；4.24 于 2026-11-08 含安全修复）适合方案三与测试期房主；专服走 GodotSteam-Server 或自有 UDP/ENet 直连，Steam 票据（Auth Session Ticket）可由你的后端用 Steam Web API 校验，对应 Supabase 需 Edge Function 桥接，PocketBase 需自写钩子，Nakama 官方支持 Steam 认证[待核实]。代码复用：只要传输层隔离在 MultiplayerPeer 之下，上层 RPC/同步代码在 ENet 与 Steam 间基本不变。",
+ "godot_fit": "4/5。内置 SceneMultiplayer 能覆盖实体同步与权限；坑：Synchronizer 无内置预测/回滚（需 netfox）；GodotSteam 与 netfox 同用社区无人确认过（论坛 2026-08 帖）；Nakama 的权威对战跑在其服务端运行时而非 Godot；SpacetimeDB 官方 Godot SDK 依赖 C#；PlayFab 无官方通用 Godot SDK。",
+ "godot_version_compat": "netfox 1.49.8：Godot 4.4+（先前调研）；GodotSteam 4.15 对应 Godot 4.4.1/Steamworks 1.62，4.24 为当前；Edgegap 插件 v1.0.9 声称 Godot 4+；Talo 资产库显示 0.49.1(Godot 4.6)/1.2.0(Godot 4.7) 两种说法冲突[不确定]；SpacetimeDB 社区 GDScript SDK 需 Godot 4.4+ 且对应 SpacetimeDB 2.2.0–2.6.0；godot-playfab（Structed）MIT，针对 Godot 4.1/4.2，2026 状态未查到；Nakama Godot 4 客户端版本号与 Godot/服务器不对齐。",
+ "pros": "内置栈零依赖；netfox MIT 且活跃（1.1k 星）；GodotSteam/SteamMultiplayerPeer 已官方整合；Nakama Apache-2.0、自托管免费、功能齐全；PocketBase/Supabase/Talo 上手快且可自托管；Edgegap/W4 让“云端 headless 协调员”无需自管机器；多后端并存时可通过自有 HTTP 接口层替换。",
+ "cons": "托管服务停服频发（Hathora、SilentWolf、Unity Multiplay）；Nakama 运维与学习曲线重，服务端逻辑需 Go/Lua/TS；Supabase/PocketBase/Talo 不提供结算事务与反刷逻辑，需自写；SpacetimeDB 为 BSL 非开源；GD-Sync 闭源且额度/定价未核实；PlayFab 对 Godot 支持弱且有 6 个月无活动清理条款（对 Multiplayer Servers 构建）。",
+ "dev_difficulty": "3.5/5（后端层，推断）。零基础+Claude Code：PocketBase 或 Supabase 记账约 5–10 人天（含 Steam 票据校验、结算接口、事件日志表）；Nakama 约 10–20 人天；Edgegap 部署专服约 3–6 人天（Docker 与插件）。难点：把结算做成幂等、防重放，以及不依赖客户端写入。以上均为推断。",
+ "anticheat_coverage": "生态组件本身不提供反作弊。可防：刷物品/伪造结算/改经验（后端只接受服务端凭据写入，客户端只读）；恶意房主篡改结算（方案三需多方上报+云端交叉校验，非万无一失）；Steam 身份伪造（服务端校验 Steam 票据）。加速/瞬移/穿墙/改伤害需靠权威服务器逻辑，非后端能防。开图靠服务端视野过滤（Synchronizer visibility）。",
+ "anticheat_gaps": "自瞄、透视（客户端已知信息）、BOT 脚本化、云端无法验证房主声称的击杀/掉落（方案三），Steam 账号买卖/小号刷号。商业化后外挂收益上升，残余风险会随玩家与资产价值放大[推断]。",
+ "ops_cost": "推断估算：PocketBase 自托管 VPS 约 5–10 美元/月；Supabase 有免费档，付费起步约 25 美元/月[不确定，未核实当前价]；Nakama 自托管 VPS+Postgres 约 20–40 美元/月，托管 Heroic Cloud 价格未查到；Talo 自托管同量级；Edgegap 计价为容器运行与出口流量，具体单价未核实；W4 Cloud 定价未公开（仅订阅制说法）；GD-Sync 免费档超限付费，额度未核实；PlayFab Development Mode 限 1000 终身玩家。（查询日期 2026-11-21）",
+ "ops_complexity": "PocketBase 低；Supabase 低-中（托管）；Nakama 中-高（Go 模块、集群、迁移）；Edgegap/W4 中（Docker 镜像、构建流水线）；自管 VPS 专服中-高（监控、扩缩容、更新值守）。",
+ "vendor_lock_in_risk": "高风险实例：Hathora（2026-03-04 宣布、2026-05-05 关停；客户转交 Nitrado GameFabric，Agones 基础，需改 SDK 调用）；Unity Multiplay 2026-03-31 终止；SilentWolf 托管后端约 2025-11-01 下线（来源仅第三方博客，无官方公告）。中风险：GD-Sync、W4 Cloud、Edgegap（私有平台）。低风险：Nakama/PocketBase/Talo/Supabase（可自托管，数据可迁出）。SpacetimeDB BSL 的许可变化风险需关注。缓解：通过自写记账 API 隔离、专服容器镜像保持平台无关（Edgegap 提供 switch-from-hathora 指南印证容器可迁）。",
+ "bandwidth_per_player_estimate": "未查到这些后端的实测；记账流量极小（每局数 KB 到数十 KB 的 JSON，推断）；实时同步带宽主要由 SceneMultiplayer/netfox 决定，见其他 item。",
+ "host_migration_support": "Godot 内置与 netfox：无房主迁移（先前调研结论）。GD-Sync：资产库商店文案称自动房主迁移，闭源，机制无法核实。Steam 大厅所有权可转移，但游戏状态需自行转交。Edgegap/W4 云端协调员可规避迁移需求（方案一）。后端（Nakama 等）可作为接力时的“状态检查点存放处”和“局的记账主账”，但这需要自写。",
+ "persistence_data_model": "推荐（推断）：表 player（steam_id 主键）、item（GUID 不可变）、match（match_id、seed、版本）、event_log（追加式，每事件含 match_id、序号、幂等键）、wallet 或 ledger（双式流水）。局后：服务端提交 (match_id, 玩家, 经验增量, 撤离物品 GUID 列表, 金币增量)，后端事务内检查 match_id 未结算、物品 GUID 属于该玩家且尚未被消耗，再入账。Nakama 提供 Storage/Wallet 接口与事务；Supabase 可用 Postgres 函数+RLS；PocketBase 可用钩子+事务；Talo 偏存档/统计，缺少物品事务。",
+ "migrate_to_pure_c_difficulty": "2/5（仅后端层）：只要记账走独立接口，切到纯 C 专服只需把“谁来调用结算接口”从协调员改为专服进程，约 2–5 人天（推断）。联机层迁移难度见其他条目。",
+ "reusable_code": "后端 schema、结算接口、Steam 票据校验、事件日志格式、Docker 镜像与 CI、Godot 的 headless 导出配置、netfox/SceneMultiplayer 上层逻辑。",
+ "wasted_work": "若先绑定某托管中继（GD-Sync/Hathora 式 SDK）再迁出，需重写房间与匹配调用；若在 Supabase 客户端写策略（RLS 对客户端放权）做记账，转 C 后要推翻。避免：一开始就让客户端只读、服务进程写。",
+ "early_coding_rules": "1) 记账走自有 HTTP/JSON 接口，禁止业务代码直连具体后端 SDK。2) 所有物品/局/事件用 GUID 与幂等键。3) 客户端永远不持有写权限的后端凭据。4) 结算数据结构在 D4 与 C 间保持一致（match_id、版本）。5) 容器镜像与端口平台无关，不引入专有 SDK 调用。6) 每个 Godot 版本升级前锁定 netfox/GodotSteam 版本。",
+ "clever_points": "1) PocketBase/Supabase 只做存储，权威逻辑放服务端进程（Supabase 实操指南的做法）。2) Edgegap 的 switch-from-hathora 文档证明容器镜像可平移。3) Nakama 的 authoritative match + RPC 服务器密钥模式适合做“局后结算只信服务器”。4) netfox 的 noray 提供免服务器的 NAT 穿透/中继，适合方案三测试期。5) Gameye 强调“无需在服务器二进制中嵌 SDK”，降低锁定。",
+ "pitfalls": "1) SilentWolf、Hathora 停服（见 vendor_lock_in_risk）。2) 把 Steam 登录直接接 Supabase：需 Edge Function 桥接 OpenID 2.0（Dev.to 指南）。3) GodotSteam+netfox 同用无人确认（Godot 论坛 2026-08）。4) PlayFab 无官方 Godot SDK，GDScript 社区库（MizunagiKB）仅支持 Godot 3.5+，不支持 Godot 4。5) SpacetimeDB 官方 Godot SDK 依赖 C#，社区 GDScript SDK 滞后于服务端版本。6) PlayFab 条款：6 个月无活动可能删除 Multiplayer Servers 构建。7) Crux/supercraft 等博客为产品推广来源，需谨慎。",
+ "sources": [
+  {
+   "title": "Hathora acquired, will exit game infrastructure, hand customers to Nitrado",
+   "url": "https://gamesbeat.com/hathora-acquired-will-exit-game-infrastructure-biz-and-hand-over-customers-to-nitrado/",
+   "type": "新闻",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Gameye: game server shake up 2026",
+   "url": "https://gameye.com/blog/game-server-shake-up-2026/",
+   "type": "厂商博客(竞争对手)",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Edgegap: switch from Hathora",
+   "url": "https://docs.edgegap.com/docs/tools-and-integrations/switch-from-hathora",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Edgegap Godot 插件（Godot Asset Store）",
+   "url": "https://store.godotengine.org/asset/edgegap-godot/dedicated-game-server-hosting-for-godot/",
+   "type": "商店页",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "W4 Cloud Launches Today",
+   "url": "https://w4games.com/blog/w4-games-news-1/w4-cloud-launches-today-44",
+   "type": "官方博客",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "SilentWolf Shutdown: Godot Leaderboard Migration Guide",
+   "url": "https://crux.supercraft.host/blog/silentwolf-shutdown-migrate-to-gsb/",
+   "type": "厂商博客(自家产品推广)",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Godot Multiplayer Backend Services in 2026",
+   "url": "https://crux.supercraft.host/blog/godot-multiplayer-backend-services-what-indie-devs-use-2026/",
+   "type": "厂商博客",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Nakama Godot 客户端",
+   "url": "https://github.com/heroiclabs/nakama-godot",
+   "type": "官方仓库",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Nakama 发布说明",
+   "url": "https://heroiclabs.com/docs/nakama/getting-started/release-notes/",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Nakama 论坛：How to create Authoritative Match in Godot",
+   "url": "https://forum.heroiclabs.com/t/how-to-create-authoritative-match-in-godot/6290",
+   "type": "论坛单帖",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Talo Godot 插件",
+   "url": "https://github.com/TaloDev/godot",
+   "type": "官方仓库",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Talo hosting",
+   "url": "https://github.com/TaloDev/hosting",
+   "type": "官方仓库",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "SpacetimeDB SDK（Godot 商店）",
+   "url": "https://store.godotengine.org/asset/plaught-armor/spacetimedb-sdk/",
+   "type": "商店页",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Godot-SpacetimeDB-SDK（flametime）",
+   "url": "https://relatedrepos.com/gh/flametime/Godot-SpacetimeDB-SDK",
+   "type": "镜像",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "XBOX Godot Sample v0.2.0",
+   "url": "https://developer.microsoft.com/en-us/games/articles/2026/07/xbox-godot-sample-v0-2-0/",
+   "type": "官方博客",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "godot-playfab（Structed）",
+   "url": "https://GitHub.com/Structed/godot-playfab",
+   "type": "仓库",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "PlayFab Terms of Service",
+   "url": "https://developer.microsoft.com/en-us/games/products/playfab/terms/",
+   "type": "官方条款",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "GD-Sync 商店页",
+   "url": "https://store.godotengine.org/asset/gd-sync/gd-sync-godot-multiplayer-plugin/",
+   "type": "商店页",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Supabase as a game backend: a practical guide",
+   "url": "https://dev.to/adilbouchnita/supabase-as-a-game-backend-a-practical-guide-p2h",
+   "type": "Dev.to",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Godot 论坛：GodotSteam+netfox",
+   "url": "https://forum.godotengine.org/t/can-you-use-godotsteam-netfox-connection-syncing/142914",
+   "type": "论坛单帖",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "先前调研：替代与组合方案 / Steam发行联机实务（netfox 1.49.8、GodotSteam 4.24）",
+   "url": "/tmp/claude-0/-home-user-Deep-Research-skills/e1dc511d-8358-5fea-bbe9-0102422b34bd/scratchpad/prior/",
+   "type": "内部先前结果",
+   "accessed": "2026-11-21"
+  }
+ ],
+ "uncertain": [
+  "representative_cases",
+  "ops_cost",
+  "godot_version_compat",
+  "steam_integration_path",
+  "bandwidth_per_player_estimate",
+  "host_migration_support"
+ ]
+}

@@ -1,0 +1,226 @@
+{
+ "item_name": "方案三 D4+D2+轻云记账（零对局专服+玩家协调员接力）",
+ "summary": "结论：方案三“能做出来、测试期和好友房可用，但不适合作为 10–20 人正式商业化 PvP 搜打撤的终点”。①可行性：主线程在云主机用 Godot 4.7.2 实测，8 人局强杀协调员 7 次、16 人局 8 次全部接上，客户端冻结中位约 0.8–0.9 秒（71 次重连里 70 次 ≤1.2 秒，1 次因 ENet 连接重试卡 16 秒），状态最多回退 0.5 秒，物品 GUID 0 重复；玩家兼任协调员 20 人+20 Bot 仅约 2.8% 单核、上传约 294kbit/s。所以“崩溃冻结 1–3 秒重选+GUID 去重”在技术上成立，上一轮对 Understudy 热备（同机空窗中位 228ms）的结论也一致：真要亚秒接管只有热备影子。②硬坑都有解法但都要自己写：Godot 服务器 id 恒为 1、没有官方房主迁移（proposals #7912 自 2023-09 仍 open，#9214 与 PR #97910 无人评审）；所以必须“关旧 peer、新协调员 create_host、其余人重连”，身份一律用 SteamID 派生的 uid，不用 peer id；世界实体不要用 MultiplayerSpawner 管理（断线清场 #9214），改成“MatchState 纯数据+节点只做视图”。SteamMultiplayerPeer 是星形中继，不是真 Mesh，备份分发由协调员上行承担。③风险集中在信任与长局：搜打撤结构决定协调员死亡/撤离后想退出，换主在 30–50 分钟局里几乎必然发生（推断每局 3–8 次），所以“优雅让渡”要覆盖约八成换主，崩溃重选兜底；但“协调员是玩家”意味着恶意协调员可伪造开箱、伤害、击杀和自己的撤离，D2 备份又让全员内存里有全图（开图防不住）。轻云记账（host_epoch+多端交叉上报+物品 GUID 由 seed 可复算+loot_budget 封顶）只能把“凭空造物/超额结算”挡在预算内，挡不住预算内的串通刷、伪造击杀和开图。④适配：策略类与动作类 10–20 人都不推荐作发行架构；动作类 6–8 人、好友房/测试期可接受；策略类根本用不上 D4 的 0ms 走位。⑤转纯 C：协调员规则模块、MatchState、Bot、GUID、后端记账可复用，但 D2 快照分发、选主/让渡/重选、迁移期去重、多端对账、混沌压测脚本等推断 15–30 人天会白做（最难调的部分）。建议甜点区：从第一天就按“服务器形状”写代码，测试期直接用 headless 专服（本机/1 台 VPS），P2P 只做不接力的好友房；若坚持零专服，则只在好友房/测试期启用接力并把预算封顶。（人天均为推断；证据主要为上一轮研究、主线程实测与官方文档）（查询日期 2026-11-21）",
+ "representative_cases": "未找到“Godot 游戏 + 玩家兼任协调员 + 崩溃重选 + 轻云记账”整套组合的已上线案例（未查到）。可参照的真实做法：\n1. Among Us（Innersloth，Unity，4–15 人）：官方服务器是中继，房主客户端跑规则，各客户端管自己的移动，全员持有完整小状态，房主离开可移交 HostId；2020 年作弊潮后靠服务端检测和账号体系补救，没有改为权威专服；社区 Impostor 做服务端反作弊、Hindenburg 做“服务器充当房主”。启示：D4+中继在小状态休闲局可行，但作弊面大 [部分不确定]。\n2. Photon Fusion（Unity，Host Mode）：官方提供房主迁移，推荐约 30 秒快照间隔并明说“最近快照之后的变化会丢”，Shared Mode 无单点房主、对象自动过继，按 CCU 付费；Unity Netcode for Entities 迁移依赖 Relay+Lobby，选主延迟默认 120 秒、最低 5 秒；UE 有 Host Migration Core 插件。启示：业界主流是“周期快照+重开房”，秒级空窗，而不是无缝。\n3. Destiny 1→2（Bungie）、For Honor（Ubisoft，8 人，P2P 确定性模拟→专服，2017-07 宣布、2018-02 PC 上线）、Dead by Daylight（2018-12 宣布专服、2019 秋全平台）、Friday the 13th、Midnight Ghost Hunt（2023-02 先加 P2P 房主迁移，2023-03 就推专服）：都是“房主/P2P → 专服”，说明 P2P 接力常是过渡方案，成熟后走专服。\n4. Understudy（ags221，Godot 4.5+，0.1.0，单机测试、0 评价）：唯一实现“热备影子+亚秒接管”的 Godot 插件，上一轮同机实测空窗中位 228ms，但要求对局纯数据+确定性 step。\n5. 主线程本轮实测（Godot 4.7.2 headless，ENet 回环）：8 人局强杀 7 次、16 人局强杀 8 次全部续局，冻结中位约 0.8–0.9 秒，GUID 0 重复。属实验室数据，非上线案例。\n6. Godot 生态 Steam 上线案例：Cassette Beasts（最多 8 人）、Pratfall（4 人合作，Godot 4.6.1+C#）均未见房主接力；Godot 论坛《Passing Host in P2P game》提问至今无解答。反面：Poppy Playtime 上线 9 个月后删除迁移（出自上一轮路线专题，二手）。（查询日期 2026-11-21）",
+ "maturity_evidence_level": "分布：①官方文档/源码（Godot proposals #7912/#9214、PR #97910、ENet/Steam Sockets 超时默认值、Steam 大厅 API 文档、Photon Fusion/Unity NfE 迁移手册）约 30%；②实测：主线程 Godot 4.7.2 同机 ENet 回环强杀实测与 Understudy 同机实测，约 25%（局限：回环无真实网络抖动、无 Steam 中继、状态为简化 demo）；③厂商博客/GDC/官方公告（Bungie TWAB、Ubisoft、DBD、Marathon 安全文章）约 15%；④论坛单帖/社区项目（Godot 论坛、gamespice、tngklp、brogolem35）约 10%；⑤推断（带宽公式、人天、换主次数、作弊面评估）约 20%，文中已标“推断”。没有 Godot 上线案例证明整套方案在公网长期运行。用户上传报告的“20 人房约 5% 单核/120MB、¥60–120/月跑 20–40 局”未获独立来源，主线程实测的是玩家兼任协调员 2.8% 单核，口径不同。",
+ "action_small": "适配度中，仅限测试期/好友房，发行版不推荐。6–8 人动作类：玩家各管自己移动（0ms 走位，不用写预测回滚），协调员以 20–30Hz 汇总世界、跑子弹/Bot/箱子；8 人时协调员上行按 Understudy 实测公式约 0.7Mbit/s（8 人×30Hz，含影子增量），主线程实测的轻量版（1Hz 整份备份+事件增量）上传更低，家宽可承受。需要延迟补偿：协调员本人的命中 0 延迟、其他玩家带 RTT，会形成“房主优势”，需像 DBD 那样让协调员命中也过同一套回溯，或把子弹设计成由协调员模拟、客户端预表现。Steam SDR 中继会增加 10–40ms 左右延迟（推断，未实测）。风险：搜打撤中协调员极可能先死先退，换主频繁；好友信任场景可接受，陌生人匹配会遇到恶意协调员。同步频率建议 20Hz，近处 20–30Hz、远处 5–10Hz。推荐度：好友房/测试期可用；正式匹配改为 headless 专服。（推断为主）",
+ "action_large": "适配度低，不推荐。10–20 人动作类：协调员上行按公式 (N−1)×f×(Δ+h)×8，N=16、Δ=800B、f=30Hz 约 3Mbit/s，N=20 约 3.5–5Mbit/s（推断；20Hz 乘 2/3），主线程实测轻量版 20 人+20 Bot 仅约 294kbit/s，但那是简化状态+1Hz 备份，真实游戏必须自己再测。国内家宽上行常 20–50Mbit/s 可承受，但同家庭其他上传、Wi‑Fi 抖动、弱机协调员会导致卡顿；CPU 上 20 人+20 Bot 实测约 2.8% 单核，不是瓶颈，而 Bot 寻路/视线检测加真实渲染的真实游戏会更高（推断）。关键问题不是带宽而是信任与换主：10–20 人 30–50 分钟局推断换主 3–8 次，每次冻结约 1 秒（实测）加最多 0.5 秒回退，连续多次会被玩家感知为“卡一下”；开图/加速/伪造伤害无法防；D2 备份让全员内存持有全图。需要距离分层降频与 AOI（接口保留，D2 备份可只备“精简状态”）。推荐度：不推荐作发行方案，改走 headless 专服（方案一）。（推断）",
+ "strategy_small": "适配度中。策略类 6–8 人：点击/指令式、可容忍 100–200ms，协调员以 10–15Hz 同步，带宽极低（每人下行约 20–60kbit/s，推断），换主冻结 1 秒对慢节奏影响小，崩溃重选基本无感；协调员房主优势小；D4 的“0ms 走位”在策略类没有价值，只增加移动作弊面。信息隐藏（战争迷雾）在协调员全知模型下做不到，策略类对此更敏感。若只要免费零运维、好友/测试，可接受；否则策略类更适合直接做权威 headless 专服（方案二），服务器寻路执行、客户端无需预测。推荐度：测试期可用，发行版推荐方案二。（推断）",
+ "strategy_large": "适配度中低。策略类 10–20 人：同步 10Hz、远处 2–5Hz，协调员上行推断 0.5–1.5Mbit/s，换主冻结 1 秒可被慢节奏吸收，是方案三最能“吃住”的格子；但 Bot 数量多时协调员 AI/寻路成本上升（可降频到 2–5Hz 决策），长局连续换主的状态一致性（GUID 去重、孤儿锁、指令队列重放）仍要自己调；协调员全知导致战争迷雾和防透视无法实现，策略 PvP 往往对此敏感；经济类作弊（刷资源/伪造结算）靠 loot_budget 封顶。推荐度：非竞技/合作倾向可用，竞技 PvP 不推荐，建议方案二。（推断）",
+ "authority_matrix": "各环节权威（方案三，协调员 = 当前 host_epoch 下的某玩家）：\n移动：各玩家客户端（D4），协调员只能做软复核（速度包络、穿墙扫掠），自己的移动无人复核。\n开箱：协调员，加锁 owner_uid+expire_tick；换主时必须清孤儿锁（读条未完成的锁全部释放）。\n拾取/背包：协调员，物品 GUID 由协调员按 hash(seed, container_id, slot) 生成（可复算），换主后合并背包/尸体箱时全局去重。\n伤害/命中：协调员（子弹由协调员模拟或射手上报后回溯校验），恶意协调员可改伤害，无独立仲裁。\nBot AI：协调员（全部状态进 MatchState，换主后新协调员接着跑；寻路用 AStarGrid2D）。\n视野裁剪：做不到真正裁剪，协调员全知，D2 备份使每个客户端内存里也有精简全局状态，开图挂防不住（可只备份“非隐藏”状态以缓解，但接力就不完整，这是 D2 与防透视的根本矛盾）。\n计时：协调员，局内 tick 和阶段状态机可序列化，换主按 tick 续算。\n结算入库：轻云记账 API（不信任任何单端）：协调员与玩家本人（以及影子/备份端）用 (match_id, uid, event_seq) 各自上报，一致才入库，幂等；host_epoch 在云端递增，旧 epoch 的上报被拒；GUID 与 loot_budget 做合理性校验。",
+ "tech_stack": "Godot 4.7.x（主线程实测 4.7.2；GodotSteam 4.24 面向 4.5.2/4.7.2 引擎构建，GDExtension 版 Godot 4.4+）；GDScript；联机层：内置 SceneMultiplayer，传输开发期 ENetMultiplayerPeer、发行期 GodotSteam SteamMultiplayerPeer（Steam Sockets 中继，SDR）；自研“Transport/NetBootstrap 单点”便于切换；数据层：MatchState（纯数据，StreamPeerBuffer 序列化）+ 事件日志（event_seq）+ 周期快照；插件：可选 netfox 仅用于插值（NetworkTime 绑定 host，不支持换主），不使用 MultiplayerSpawner 管世界实体；选主：应用层心跳（静默 300–500ms 疑似+多数票，不依赖 ENet 5–30 秒或 Steam 10 秒超时）+ 稳定名单顺序+epoch；后端：极轻 HTTP API（PocketBase/自建 FastAPI+PostgreSQL，或 Nakama 自托管，均可；2026 年存活性需自行再核）；身份：GetAuthTicketForWebApi + 后端 ISteamUserAuth/AuthenticateUserTicket；托管：后端 1 台 2C2G 轻量云即可；工具：本机多实例脚本（--host/--client）与“连续杀主”混沌压测脚本。（查询日期 2026-11-21）",
+ "steam_integration_path": "走 SteamMultiplayerPeer（GodotSteam 4.x 主线，底层 2025-07 起为 SteamNetworkingSockets，默认走 Steam 中继/SDR，可回落 P2P）+ Steam 大厅（元数据、成员变更信号、SetLobbyOwner 仅现任大厅所有者可调用）。要点：Steam 大厅所有权自动转移但游戏状态不转移；连接是连向特定 Steam ID 的，协调员掉线连接即断，必须新协调员重建 host 其余人重连；peer id 在重连后重新分配；Steam ID 64 位而 Godot authority 为 32 位，需自定义 steam_mp_id 映射。对代码复用：传输层抽象后，ENet↔Steam 切换约 0.5–1 人天（推断）。开发期可用 AppID 480 冒烟，不稳定；正式需自己的 AppID/Playtest。（查询日期 2026-11-21）",
+ "godot_fit": "2/5。理由：Godot 内置高层多人 API 对“服务器=peer 1、断线即清场、peer id 每次重洗”的假设与房主接力正面冲突；官方无迁移（#7912 open），#9214/PR #97910 无进展。可原生使用的只有 SceneMultiplayer 的 RPC、传输抽象和 MultiplayerSynchronizer（仅限表现）。坑：①peer 1 固定：新协调员须新建 host、不能“升级”；②MultiplayerSpawner 在 authority 断线时删除其生成的节点（#9214），世界实体不能依赖它；③重连 peer id 重洗：一切以 uid 为键，维护 peer_id→uid 表；④SteamMultiplayerPeer 为星形中继，无真 Mesh（官方 mesh 为 ENet create_mesh/WebRTC，Steam 未验证 [不确定]），客户端到客户端经协调员转发；⑤ENet 默认 5–30 秒才发现断线，须应用层判死；主线程实测纯沉默超时在客户端卡顿时会误判导致分裂（双协调员），必须配 epoch+多数票；⑥实测 ENet 重连偶发 16 秒卡死（连接重试），需要自己限制重试和超时；⑦物理节点不适合进快照，状态必须是纯数据。解法都在应用层，可行但要自写不少。（查询日期 2026-11-21）",
+ "godot_version_compat": "已验证（来自本轮/上一轮）：Godot 4.7.2 headless + 内置 ENet（主线程实测）；GodotSteam 4.24（2026-11-08，面向 Godot 4.5.2/4.7.2，GDExtension 版 4.4+；4.24 修复可冒充 peer 1 的安全问题，具体细节未能独立核实 [不确定]）；Understudy 0.1.0 要求 Godot 4.5+；netfox 1.49.8 Godot 4.4+。SteamMultiplayerPeer + 房主接力的组合在 Godot 4.6/4.7 上未见公开验证 [不确定]。4.2.2 有可见性回归 #90908，避免使用。",
+ "pros": "①零对局服务器成本：对局算力和带宽全在玩家端，后端只剩一个极轻记账 API（单台最小轻量云即可）。②Steam SDR 中继免费、保护玩家 IP、省去端口转发。③0ms 自己走位，无需客户端预测/回滚，零基础最难的一块省掉。④协调员代码是“规则模块”，写好后可原样放进 headless 专服（见路线专题）。⑤实测可行：强杀协调员 15 次全部续局，冻结中位约 0.8–0.9 秒，GUID 0 重复，CPU 2.8% 单核/上传约 294kbit/s（实验室，轻量状态）。⑥优雅让渡可覆盖大部分换主（计划交接实测约 55ms，来自 Understudy，上一轮）。⑦MatchState+事件日志同时服务于崩溃续局、回放、审计，这部分与方案一/二通用。⑧好友房/测试期无服务器账单，适合验证玩法。",
+ "cons": "①协调员是玩家：可伪造开箱、拾取、伤害、击杀、撤离、Bot 行为，恶意或被外挂的协调员能搞砸全局；D4 移动也无人复核。②D2 全员持有精简全局状态，等于开图；视野裁剪、容器内容不下发做不到。③长局换主频繁：搜打撤里协调员死亡/撤离后想退出是常态（推断每局 3–8 次），冻结 1 秒+最多 0.5 秒回退，连续多次体验差；误判（Wi‑Fi 卡 100–300ms）会引发误接管与分裂，需 epoch+多数票。④难度和代码量最大：选主、让渡、重连、快照、去重、孤儿锁、epoch 仲裁、对账、混沌压测都要自己写，且大部分转 C 后白做。⑤协调员上行带宽与弱机/弱网：10–20 人带真实状态可能 3–5Mbit/s，协调员选择要按 RTT/帧耗时排序而非加入顺序。⑥房主优势（协调员自身命中 0 延迟）与不公平。⑦Godot 无官方支持，没有可参照的上线案例。⑧Steam 构建不一致（自动更新）会拒绝同局；协调员掉线时的玩家重连多一次大厅往返。⑨商业化后外挂与经济刷取会被放大（见 anticheat_gaps）。",
+ "dev_difficulty": "4.5/5（比方案一 3/5、纯 C 3.5–4/5 更难；零基础+Claude Code 最难的是“多进程混沌调试”）。主要难点：①MatchState 纯数据化与序列化（若原型是“节点即状态”，规则层基本重写 15–30 人天，推断）；②选主/让渡/误判分裂防护（epoch、多数票、心跳）；③换主瞬间的 GUID 去重、孤儿锁清理、飞行中子弹/读条瞬态清零；④SteamMultiplayerPeer 重连与 uid 重绑；⑤后端记账与交叉校验。人天（推断）：数据层+协调员规则模块 12–20；选主与优雅让渡 6–10；崩溃重选与重连 5–8；Steam 大厅与传输 3–5；GUID 去重/孤儿锁/epoch 与混沌压测 8–14；轻云记账+交叉校验 6–12；10–20 人降频/AOI/带宽优化 3–6；弱网/真实公网测试 4–8。联机相关合计约 47–83 人天，不含美术和玩法。主线程实测的 Godot 脚本原型可作为起点（8/16 人强杀成功），但那是同机回环、简化状态，工程量主要在真实游戏状态与公网。",
+ "anticheat_coverage": "能防住：①刷物品（后端）：GUID 由 seed 可复算，结算时检查带出物品要么是带入的、要么属于本局合法生成，同一 GUID 不能被两人带出，防换主期间复制/丢失；loot_budget 封顶单局总价值。②伪造结算/重复结算：host_epoch 云端递增，旧协调员上报被拒；(match_id, uid, event_seq) 幂等；多端（协调员+玩家本人/备份端）一致才入库，不一致标记争议局。③脑裂双结算：epoch 仲裁+多数票。④粗暴的超额造物/刷钱：合理性规则（单局价值上限、击杀数上限、撤离时间不早于撤离点开放）。⑤加速/瞬移/穿墙（D4）：仅当协调员诚实时做 0.25–0.5 秒速度包络+墙体扫掠复核，防普通客户端挂；协调员自己的移动无人复核。⑥恶意畸形包：RPC 参数白名单。⑦非协调员的客户端挂（改伤害、自瞄除外）：伤害由协调员裁决，普通玩家无法直接改。⑧开图：几乎不能（见 gaps）。⑨恶意房主：仅事后统计（多端不一致率、异常收益）与封禁；无法实时阻止。",
+ "anticheat_gaps": "防不住：①恶意/被外挂的协调员：可造假开箱、改伤害、杀人、保自己撤离，只要总价值在 loot_budget 内且 GUID 合法，后端分辨不出；双账号串通（协调员+队友）可在预算内定向“送装备”，需靠限频、单日收益上限、账号信誉；②预算内的串通刷与伪造击杀；③开图/透视：协调员全知，D2 备份又让全员内存有全局状态，Cheat Engine 读内存即可；④自瞄、自动扳机、容差内加速（D4 本身的缺陷，见方案一，5–15%）；⑤假延迟；⑥协调员 DoS/拔线利用换主：拔线逃死、故意制造冻结窗口，可限制每日触发和按设备/账号惩罚；⑦协调员被 DDoS（SDR 保护 IP，但可被举报击杀）；⑧多端交叉校验的“多端”往往只覆盖本人状态，别人的世界以协调员为准，所以协调员造的“别人死亡”无法被本人以外验证。商业化后风险会放大：有真钱/稀有装备价值后，黑产会批量开恶意协调员房；The Cycle: Frontier 有专服仍因作弊潮关服，说明搜打撤作弊压力极大，方案三比它更弱（推断：放大倍数无法量化）。缓解：正式经济走 headless 专服，P2P 房结算降权（不入正式仓库或打折）。",
+ "ops_cost": "对局零服务器：对局算力/带宽由玩家承担，运维费主要为记账后端。推断月成本：CCU 50 用 1 台最小轻量云（约 ¥30–100/月或 €4–10/月，请求量极低），CCU 500 约 ¥50–200（含数据库和日志），CCU 5000 约 ¥300–1500（后端 API 与数据库扩容，仍无对局带宽账单）；Steam SDR 免费；对比方案一/二 CCU 500 约 ¥300–1000，CCU 5000 约 ¥5000–20000（引自方案一，推断）。成本优势成立，但需把“弱协调员体验差导致玩家流失”和“作弊损失”折成隐性成本。用户上传报告的“1 台 ¥60–120 跑 20–40 局”针对专服，不适用本方案。[不确定：均为推断，未取得 2026 年报价]",
+ "ops_complexity": "低（无服务器进程池、无扩缩容、无区域部署）。后端部署一个 API+数据库，监控请求量/争议局比例/换主次数/epoch 异常；难点转移到“玩家端不可控”的运维：协调员质量、换主遥测（单局换主次数、耗时、熔断率）、热降级开关；更新：Steam 自动更新会导致构建不一致，需 build_id 校验。值守：个人开发者需处理争议局和封禁，没有服务器值守但有社区客服压力。",
+ "vendor_lock_in_risk": "低-中。Steam SDR/大厅属 Valve 平台，锁定在 Steam，但本项目本就 Steam 发行；GodotSteam 已活跃（2026-08 至 11 约 8 个发布），SteamMultiplayerPeer 已并入主线，expressobits 版已暂停开发（风险高）。后端避免绑定 SilentWolf（已停服）、Hathora（已关停）一类小厂闭源托管，用 PocketBase/Nakama/自建 HTTP+PostgreSQL 可迁出。Understudy 单人作者 0.1.0，维护风险高，不宜强依赖。",
+ "bandwidth_per_player_estimate": "协调员上行（推断公式，Understudy 实测校准）：≈(N−1)×f×(Δ+h)×8，h≈45B；N=10、Δ=500/800/1200B、30Hz 约 1.2/1.8/2.7Mbit/s；N=16 约 2.0/3.0/4.5Mbit/s；N=24 约 3.1/4.7/6.9Mbit/s；20Hz 乘 2/3。普通玩家下行约 130–300kbit/s（30Hz），上行（输入/自身位置）约 50kbit/s。主线程实测（轻量状态，1Hz 整份备份+事件增量）：20 人+20 Bot 协调员上传约 294kbit/s、CPU 约 2.8% 单核。两者差异来自状态大小与同步频率，真实游戏须自测；差分 p99 控制在约 1100B 内，避免 MTU 分片（Steam 小消息会合并，消息过 MTU 分片后丢一片整条作废）。",
+ "host_migration_support": "Godot 与 Steam 都不提供状态迁移：#7912 open；Steam 大厅所有权自动转移但不转移状态，崩溃/强杀可能不如正常退出及时 [跨引擎类比，不确定]。方案三的流程（实测验证了崩溃路径）：\n【优雅让渡（计划交接，覆盖约八成换主，推断）】协调员在退出/撤离/死亡后离场前，选定下任（存活且 RTT/帧耗时最好），把最新完整快照（≤50–80KB，推断）+事件 seq 推给下任并等确认（约 0.5 秒），SetLobbyOwner 指向下任，云端 host_epoch+1，其余人自动重连。\n【崩溃冻结重选】全员应用层判死：静默 300–500ms 疑似+多数票（>半数听不到才选主），确定性规则选继任者（名单顺序或 RTT 优先）；继任者关旧 peer、create_host、epoch+1 写大厅元数据；其余人 create_client 重连，按 SteamID 上报 uid；继任者用 MatchState 快照+事件增量重建，GUID 去重（同 GUID 保留一份）、清孤儿锁与瞬态（飞行子弹、未完成读条）；客户端冻结，完成后恢复。\n【实测】8 人强杀 7 次/16 人强杀 8 次全部接上，冻结中位约 0.8–0.9 秒，71 次重连 70 次 ≤1.2 秒；状态最多回退 0.5 秒；GUID 0 重复。\n【已知失败模式】①纯沉默超时判死在客户端进程卡顿时误判→分裂双协调员（实测），必须 epoch+多数票，旧协调员发现更高 epoch 自动降级；②ENet 连接重试偶发 16 秒卡死（实测）；③Wi‑Fi 抖动 100–300ms 误接管；④弱机/差网玩家被选为继任者；⑤Steam 重连每次约 1–3 秒（推断，未用 Steam 实测）；⑥全量快照 4–16KB 分片，丢一片整条作废；⑦房主死亡时世界实体被 Spawner 清场（#9214）；⑧换主瞬间人数溢出（setLobbyJoinable(false) 锁房）；⑨Steam 构建不一致拒绝同局。",
+ "persistence_data_model": "推断设计（多端不可信，所以比方案一复杂）：\n①账号表：steam_id、经验、等级、金钱（整数分）。\n②物品表：item_guid（本局地图战利品由 hash(seed, container_id, slot) 生成，后端可复算“本局可能出现的全部物品”；玩家带入物品用后端签发的 GUID）、template_id、owner_steam_id、location（仓库/本局携带/已销毁）、created_match_id、version。\n③局表：match_id、seed、map、loot_budget（后端开局签发，单局可生成物品总价值硬上限）、host_epoch、roster、状态。\n④开局：协调员携带大厅名单向后端申请 match_id，后端返回 seed、带入装备清单（签名）、loot_budget，并将带入物品标记 in_raid（出局前不能重复带入）。\n⑤事件：撤离/死亡/击杀/拾取/丢弃写入 MatchState 事件队列，带单调递增 event_seq；协调员与玩家本人（路线 A 再加影子）各自用 (match_id, uid, event_seq) 上报，后端收到两份一致才入库，重复忽略；换主后新协调员续用 event_seq，不重复记账。\n⑥host_epoch：每次换主调用 /match/host_changed，云端 epoch+1，要求多数名单成员证明，旧 epoch 上报一律拒绝，防脑裂双结算。\n⑦局末：双方上报 state_hash，不一致标争议局；争议局抽检上传录像，在后端用 headless Godot 复算。\n⑧Checkpoint（用户报告建议每 3 分钟云端落盘安全箱/关键物资，换主超过 8 秒熔断则按最近 Checkpoint 保底带出，限制每日触发防白嫖）：推断可行，防恶意拔线需限频。\n⑨防刷：禁止玩家间自由交易行，只做个人仓库+NPC 商人；经验与金钱按 loot_budget 与单局收益上限封顶；一致性：乐观锁+幂等键。\n⑩掉线未回玩家：按规则托管 Bot/判死，写进 MatchState；MatchState 同时用于崩溃续局、回放和审计。",
+ "migrate_to_pure_c_difficulty": "3/5（若前期遵守规则）到 4/5（若节点即状态）。分两档：①到方案一 D4-C（headless 协调员+客户端移动）：协调员规则模块基本原样搬上服务器，推断 8–20 人天（路线专题）：入场鉴权、协调员不再是玩家（本机也走消息）、后端 reporter 由玩家改为服务器、视野裁剪改真裁剪。②到纯 C（服务器管移动）：再加客户端预测与校正、远端插值、命中回溯，推断多花 15–35 人天（路线专题）。方案三特有负担：D2 快照分发、选主、让渡、重选、迁移去重、多端对账推断 15–30 人天白做；后端交叉校验降级为单一服务器上报（审计保留）。若从第一天就把 MatchState 与 step 写成数据层，迁移到 C 难度 2–3/5；若是“节点即状态”的原型，规则层重写 15–30 人天（推断）。人天均为推断，Claude Code 辅助、零基础。",
+ "reusable_code": "可复用：①协调员规则模块（开箱、拾取、掉落、伤害结算、撤离计时、阶段状态机），只读写 MatchState、只通过消息交互；②MatchState 序列化、事件日志（C 期用于崩溃落盘续局、回放、审计）；③Bot AI（AStarGrid2D 寻路、状态机）；④物品 GUID 方案（seed 可复算）、loot 表、背包/仓库模型；⑤后端记账 API、幂等入库、事件复算校验（reporter 从玩家换成服务器，交叉校验保留作审计）；⑥Steam 大厅、SteamID 身份、Auth Ticket 验证；⑦客户端表现层（事件驱动动画、远端插值、UI）；⑧网络调试工具与本机多实例脚本；⑨D4 期速度包络/穿墙复核（方案一继续用，纯 C 期作 sanity check）；⑩混沌压测脚本可改造成“服务器崩溃续局测试”（残值约三成）；⑪主线程实测原型（强杀/冻结/重连测试框架）可改作测试基础。",
+ "wasted_work": "会白做（转任何一档 C 后，推断 15–30 人天，另加约 6 人天压测）：①D2 事件增量+周期快照分发给全员内存；②选主与继任者排序（存活态、RTT、帧耗时）；③优雅让渡、冻结 1–3 秒重选、重开房重连流程；④迁移期 GUID 去重、孤儿锁清理、人数溢出锁房；⑤10–20 进程连续杀主的混沌压测脚本（残值约三成）；⑥host_epoch 多数票仲裁与多端交叉对账（C 期单一上报，仅留审计）；⑦SteamMultiplayerPeer P2P 专用调优（只保留好友房）；⑧协调员 0ms 视角下调好的交互手感在 C 期变 RTT 延迟需重调（DBD 前车之鉴）。避免：①测试期不做接力（掉线按 checkpoint 结算或作废）；②测试期直接用 headless 专服，P2P 只做不迁移的好友房；③序列化与事件日志照写，崩溃续局与回放要用；④真要接力只针对好友房并封顶预算。",
+ "early_coding_rules": "（为从方案三平滑切到 C 铺路，推断+案例依据）1. 所有规则放 server/ 模块，入口只有 handle_command(uid, cmd) 与 step(tick)，用 is_authority() 而非 get_unique_id()==1 判断。2. 协调员与本机玩家之间也走消息（loopback），禁止协调员直接调用本机玩家节点，否则搬上服务器出 DBD 式时序 bug。3. 一切主键用 SteamID 派生 uid+match_id+GUID，peer id 仅作路由，维护 peer_id↔uid 表，重连按 uid 认领原角色。4. MatchState 纯数据为唯一真相，节点仅为视图；掉线实体转为离线/Bot 托管，不删除；不依赖 Spawner 断线清场（#9214）。5. 玩家意图命令化（带 tick+seq：move_dir、aim、fire、interact(container_id)），D4 期同样记录输入。6. 移动写成纯函数 apply_move(state, input, dt)，客户端和服务器共用，角色间不靠物理碰撞。7. Transport/NetBootstrap 单点可切换 ENet/Steam/loopback。8. 事件日志带单调 event_seq，所有结算事件幂等、可复算；物品 GUID 由 seed 可复算。9. 位置历史环形缓冲约 1 秒（D4 期速度包络，C 期回溯）。10. 交互两段式（客户端预表现，服务器/协调员确认）。11. 信息最小化接口：容器内容、远处实体按视野/距离下发的接口第一天就写好（D4 期全发）。12. 阶段与计时做成单一幂等状态机，可序列化。13. 应用层心跳+epoch 判死，不依赖传输层超时。14. 三种启动模式（--server/--host/--client）从第一周跑通，脚本每次改动本机起 1 服务器+3 客户端+延迟模拟回归。",
+ "clever_points": "①Understudy：热备影子按名单预先连好前 N 名，接管只需 epoch+1，同机实测空窗中位 228ms，计划交接约 55ms；“死亡后退出=quit_gracefully”规则把八成换主变成计划交接。②Photon Fusion：约 30 秒周期快照+明说最近快照后变化会丢，把预期管理写进文档。③Destiny 2：移动留在客户端、托管搬上云，“持久化变更直达数据中心不经 P2P”，对应本方案“记账直达云端、不信任单端”。④多端 (match_id, uid, event_seq) 幂等上报，两份一致才入库，换主重报不重复记账（上一轮房主接力专题设计）。⑤seed 可复算的 item_uid：后端复算“本局可能出现的全部物品”，挡住换主期间复制/丢失与凭空造物。⑥host_epoch：Understudy 旧房主发现更高 epoch 自动降级，防双房主。⑦用户报告的“3 分钟云端 Checkpoint+8 秒熔断保底带出”思路（出自星际战甲、绝地潜兵等，二手引用，核对需谨慎）。⑧禁用自由交易行+loot_budget 封顶（用户报告，引 Among Us/GTA Online/Pixelords 教训，二手）。⑨主线程实测框架：循环强杀协调员+断言“无 GUID 重复、无人数溢出、无孤儿锁”，可直接变成 CI 回归。",
+ "pitfalls": "①依赖传输层超时（ENet 默认 5–30 秒，Steam 约 10 秒）判死太慢；纯沉默超时判死在进程卡顿时误判→分裂（本轮实测）。②依赖 peer id 或 peer 1：重连后 peer id 重洗，Godot 服务器 id 固定为 1。③用 MultiplayerSpawner 管世界实体：authority 断线即清场（#9214）。④netfox 做 P2P 换主：NetworkTime 绑定 host，官方不支持（上一轮）。⑤把 CharacterBody2D/TileMap/NavigationAgent2D 当状态存：不可序列化、跨机不一致，必须纯数据（上一轮）。⑥ENet 重连偶发卡 16 秒（实测），需自己设重试上限。⑦弱机/差网玩家排到继任位：Understudy 按加入顺序排，需改 RTT/帧耗时。⑧10–20 人带真实状态上行可能 3–5Mbit/s，需降频/AOI；全量快照分片丢一片整条作废。⑨Steam 自动更新导致构建不一致；Windows Smart App Control 拦截未签名游戏（Pratfall 案例）。⑩把用户报告当事实：其“20 人房约 5% 单核/120MB、¥60–120 跑 20–40 局”未独立核实；其把 GTFO 写成 Arrowhead/Stingray 疑为混淆；案例引用须逐条复核。⑪测试期 D4 结算资产直接进正式经济会把作弊遗产带入，正式服应清档。⑫Poppy Playtime 上线 9 个月删除迁移（二手）：玩家体验与维护成本不划算时需有退路。⑬过早投入接力而非核心玩法：这部分转 C 后基本白做。",
+ "sources": [
+  {
+   "标题": "godot-proposals #7912 Implement automatic host migration in peer-to-peer games",
+   "URL": "https://github.com/godotengine/godot-proposals/issues/7912",
+   "类型": "官方提案（open）",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "godot-proposals #9214 Option to not delete nodes created by MultiplayerSpawner when its authority peer disconnects",
+   "URL": "https://github.com/godotengine/godot-proposals/issues/9214",
+   "类型": "官方提案",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "godot PR #97910 Add option to not delete nodes created by MultiplayerSpawner",
+   "URL": "https://github.com/godotengine/godot/pull/97910",
+   "类型": "源码 PR",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "Godot 文档 High-level multiplayer（服务器 ID 恒为 1）",
+   "URL": "https://docs.godotengine.org/en/4.6/tutorials/networking/high_level_multiplayer.html",
+   "类型": "官方文档",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "Godot 源码 thirdparty/enet/enet.h（ENET_PEER_TIMEOUT 默认值）",
+   "URL": "https://github.com/godotengine/godot/blob/master/thirdparty/enet/enet.h",
+   "类型": "源码",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "GameNetworkingSockets csteamnetworkingsockets.cpp（TimeoutConnected 默认 10000ms）",
+   "URL": "https://github.com/ValveSoftware/GameNetworkingSockets/blob/master/src/steamnetworkingsockets/clientlib/csteamnetworkingsockets.cpp",
+   "类型": "源码",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "Steamworks ISteamMatchmaking 文档（大厅所有权）",
+   "URL": "https://partner.steamgames.com/doc/api/ISteamMatchmaking",
+   "类型": "官方文档",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "Steamworks Steam Datagram Relay",
+   "URL": "https://partner.steamgames.com/doc/features/multiplayer/steamdatagramrelay",
+   "类型": "官方文档",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "Steamworks Web API ISteamUserAuth",
+   "URL": "https://partner.steamgames.com/doc/webapi/isteamuserauth",
+   "类型": "官方文档",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "GodotSteam 发布页（Codeberg，v4.24）",
+   "URL": "https://codeberg.org/godotsteam/godotsteam/releases",
+   "类型": "官方发布页",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "expressobits/steam-multiplayer-peer",
+   "URL": "https://github.com/expressobits/steam-multiplayer-peer",
+   "类型": "社区项目",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "brogolem35 Godot Rollback With Steam",
+   "URL": "https://brogolem35.github.io/rollback-with-godotsteam/",
+   "类型": "社区指南",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "Godot 论坛 Passing Host in P2P game",
+   "URL": "https://forum.godotengine.org/t/passing-host-in-p2p-game/109411",
+   "类型": "论坛单帖",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "Godot 论坛 Deciding on multiplayer architecture for Steam",
+   "URL": "https://forum.godotengine.org/t/deciding-on-multiplayer-architecture-for-steam/140817",
+   "类型": "论坛单帖",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "Understudy 0.1.0（Zenodo）",
+   "URL": "https://zenodo.org/records/23227195",
+   "类型": "社区插件源码",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "Photon Fusion Host Migration 手册",
+   "URL": "https://doc.photonengine.com/fusion/current/manual/host-migration",
+   "类型": "官方文档",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "Unity Netcode for Entities Host migration considerations",
+   "URL": "https://docs.unity3d.com/Packages/com.unity.netcode@1.7/manual/host-migration/host-migration-considerations.html",
+   "类型": "官方文档",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "Edgegap：Host migration in P2P or relay-based multiplayer games",
+   "URL": "https://edgegap.com/blog/host-migration-in-peer-to-peer-or-relay-based-multiplayer-games",
+   "类型": "厂商博客",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "This Week At Bungie – 05/25/2017（Destiny 2 网络）",
+   "URL": "https://www.bungie.net/7/en/News/article/45919",
+   "类型": "厂商官方博客",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "Marathon: Networking and Security（Bungie，2026-02-24）",
+   "URL": "https://bungie.net/7/en/news/article/marathonsecurity",
+   "类型": "厂商官方",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "Dead by Daylight Status Update – Dedicated Servers",
+   "URL": "https://devtrackers.gg/deadbydaylight/p/b54f09cb-status-update-dedicated-servers",
+   "类型": "厂商公告转载",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "Game Developer：YAGER 关停 The Cycle: Frontier",
+   "URL": "https://gamedeveloper.com/business/yager-sunsetting-the-cycle-frontier-after-cheaters-cause-irreparable-damage",
+   "类型": "行业媒体",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "Impostor（Among Us 开源服务器）",
+   "URL": "https://github.com/Impostor/Impostor",
+   "类型": "社区项目",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "Hindenburg（Among Us Server-As-A-Host）",
+   "URL": "https://github.com/SkeldJS/Hindenburg",
+   "类型": "社区项目",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "netfox 仓库与文档",
+   "URL": "https://github.com/foxssake/netfox",
+   "类型": "开源项目",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "Godot 源码 scene_replication_interface.cpp",
+   "URL": "https://github.com/godotengine/godot/blob/master/modules/multiplayer/scene_replication_interface.cpp",
+   "类型": "源码",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "本轮主线程云主机实测（Godot 4.7.2 headless，ENet 回环，强杀协调员）",
+   "URL": "本地实测，无 URL（结论由主线程提供）",
+   "类型": "实测",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "上一轮研究：房主接力与节点适配专题、Steam 发行联机实务、Understudy、Godot 房主迁移普查",
+   "URL": "/tmp/claude-0/-home-user-Deep-Research-skills/e1dc511d-8358-5fea-bbe9-0102422b34bd/scratchpad/prior/",
+   "类型": "本地结果文件",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "用户上传《D 方案独立游戏深度调研报告》",
+   "URL": "/tmp/claude-0/-home-user-Deep-Research-skills/e1dc511d-8358-5fea-bbe9-0102422b34bd/scratchpad/prior/用户上传_D方案调研报告.txt",
+   "类型": "用户上传（部分数值未核实）",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "本批已完成结果：路线专题、方案一、玩法架构适配",
+   "URL": "/home/user/Deep-Research-skills/godot-netarch-route/results/",
+   "类型": "本地结果文件",
+   "访问日期": "2026-11-21"
+  }
+ ],
+ "uncertain": [
+  "representative_cases",
+  "steam_integration_path",
+  "godot_fit",
+  "godot_version_compat",
+  "ops_cost",
+  "anticheat_gaps",
+  "host_migration_support",
+  "dev_difficulty",
+  "migrate_to_pure_c_difficulty",
+  "bandwidth_per_player_estimate"
+ ]
+}
