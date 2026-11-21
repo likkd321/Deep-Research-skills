@@ -1,0 +1,164 @@
+{
+ "summary": "本专题梳理 Godot 4 游戏在 Steam 发行时的联机实务：GodotSteam（含已并入的 SteamMultiplayerPeer）、Steam 大厅、Steam Networking Sockets/SDR 中继、AppID 480 与 Playtest 测试、房主掉线后的大厅所有权与重连、已上线案例。核心结论：Steam 只负责「找人、连线、转发、所有权名义转移」，不转移游戏状态，房主接力的状态迁移必须自己做。",
+ "author_background": "不适用：这是专题而非单一工具。相关维护者：GodotSteam 由 Gramps（Godot 社区常见维护者）维护，主仓库已迁往 codeberg.org/godotsteam；expressobits/steam-multiplayer-peer 是第三方 GDExtension，作者 2025-12 暂停开发。[不确定]：维护者个人背景未逐一核实。",
+ "release_and_versions": "GodotSteam 近期版本（来自 codeberg 发布页）：v4.24（2026-11-08，面向 Godot 4.5.2 与 4.7.2 的引擎构建，Steamworks SDK 1.65）、v4.24-gde（2026-11-07，GDExtension，4.4+）、v4.23.2（2026-10-20）、v4.23（2026-10-05）、v4.22.1（2026-09-04）。旧版 SDK 对应：SDK 1.63+ 对应 4.17；1.62 对应 4.14/4.16.2；1.61 对应 4.12–4.13；1.60 对应 4.6–4.11。独立的 GodotSteam MultiplayerPeer 仓库已退役，功能并入主线 4.x，其最后版本 4.16.2 增加了可选的 server_relay。（查询日期 2026-11-21）",
+ "repo_activity": "GodotSteam 发布节奏约每 2–6 周一次小版本（2026-08 至 2026-11 共约 8 个发布），维护活跃。主仓库在 Codeberg，GitHub 为部分过时的镜像。Star/Fork 具体数字：未查到（Codeberg 页面抓取受限）。（查询日期 2026-11-21）",
+ "license": "GodotSteam MultiplayerPeer 仓库页面标注 MIT 许可（官方 README 所述）；主 GodotSteam 同为 MIT（依据其生态通行说法，未逐字核对 LICENSE 文件）[不确定]。Steamworks SDK 本身受 Valve 的 Steamworks 协议约束，需自行遵守。",
+ "docs_completeness": "官方文档在 godotsteam.com（含 How-To Multiplayer Peer），但抓取时返回 403，无法直接读取全文。Valve 官方文档 partner.steamgames.com 完整但不给出数值（如消息大小常量值），需读 SDK 头文件。社区教程分散：Godot 论坛、itch.io devlog、brogolem35 的 rollback-with-godotsteam 指南。",
+ "community_reviews": [
+  "Godot 论坛《Passing Host in P2P game》：开发者反馈 GodotSteam 大厅房主离开后，关卡关闭、其他玩家灰屏；他怀疑因为只有房主 spawn 关卡，询问如何把当前状态交给 Steam 大厅指定的新房主；帖内至今无有效解答（来源：forum.godotengine.org/t/passing-host-in-p2p-game/109411）。",
+  "Godot 论坛《Deciding on multiplayer architecture for Steam》（Godot 4.7、PvP 物理游戏）：回复者建议 listen server 适合无排行榜/无真钱的场景；提醒房主带宽决定人数上限、Godot 对物理回滚重放无成熟方案（来源：forum.godotengine.org/t/deciding-on-multiplayer-architecture-for-steam/140817）。",
+  "Godot 论坛 AppID 480 帖：作者试过 480 测试，未成功；回复者认为用别人的 AppID 违反条款，建议先用 mock、再付费注册自己的 AppID。另一帖《GodotSteam lobbies not visible》有开发者称 480 下大厅时有时无（来源：forum.godotengine.org/t/131625、/127733）。",
+  "brogolem35 回滚网络指南（Godot 4.7.2）：中继模式「好用得多」、支持 RPC；真 P2P 延迟最低但需打洞、泄露 IP、不支持 RPC；作者发现 Steam P2P 接口会出现包损坏，自加 SHA256 校验（来源：brogolem35.github.io/rollback-with-godotsteam/）。",
+  "expressobits/steam-multiplayer-peer 作者 2025-12 暂停开发，推荐能用 GodotSteam 就用 GodotSteam；无通道支持（Issue #2）（来源：该仓库 README）。",
+  "资源库、Reddit、YouTube 评论：未系统查到。"
+ ],
+ "user_claims_check": "1) GodotSteam 4.24 于 2026-11-08 修复可冒充 peer 1 的安全问题：发布页确认 4.24 于 2026-11-08 发布，但发布页未列出变更内容，安全修复细节无法独立核实[不确定]。2) godotsteam.com 返回 403：属实（changelog 页 403）。3) 用户计划『房主接力』：Steam 大厅所有权会自动转移（见 builtin 官方文档），但状态不转移，说法需补充。4) AppID 480 可测试：Valve 允许，但共享大厅池、不稳定，仅适合冒烟测试。",
+ "distribution_form": "GodotSteam 提供两种形态：1) GDExtension 插件（带 -gde 后缀，Godot 4.4+，拖入 addons 即可，Godot 资源库有「GodotSteam GDExtension 4.4+」条目）；2) 预编译引擎与导出模板（版本如 4.24 对应 Godot 4.5.2 与 4.7.2）。SteamMultiplayerPeer 已并入主线，无需单独装。零基础开发者推荐 GDExtension 形态。",
+ "self_reported_vs_independent": "本专题数值多来自官方文档/SDK 头文件（可视为权威）：SendBufferSize 默认 512KB、单消息最大 512KB、SendRate 默认 256KB/s、Nagle 默认 5ms。中继延迟、带宽的实际表现：未查到第三方实测数据，需自己实测。SDR 能改善延迟的说法来自 Valve 自述。",
+ "godot_version": "GodotSteam 4.24：GDExtension 版 Godot 4.4+；引擎构建版明确 4.5.2 与 4.7.2。Godot 4.6 未在发布页单独列出，但按 GDExtension 4.4+ 声明应可用，建议实测[不确定]。",
+ "builtin_features_used": "GodotSteam 提供 SteamMultiplayerPeer（继承 MultiplayerPeer），可与引擎内置的 SceneMultiplayer、MultiplayerSpawner、MultiplayerSynchronizer、RPC 配合；底层 2025-07 起由 SteamNetworkingMessages 改为 SteamNetworkingSockets。大厅走 Steam.createLobby/joinLobby 等 API，与引擎多人 API 分离。",
+ "third_party_deps": "GodotSteam（GDExtension）+ Steamworks SDK（随插件，当前 1.65）；可选 expressobits/steam-multiplayer-peer（已暂停）；可选 Facepunch.Steamworks（仅 C# 路线，如 Pratfall）。需要根目录放 steam_appid.txt 做编辑器测试。",
+ "interop_godotsteam_netfox": "GodotSteam 的 SteamMultiplayerPeer 可直接作为 multiplayer.multiplayer_peer，与 netfox 一起用通常可行（netfox 走通用 MultiplayerPeer），但本次未找到 netfox 与 GodotSteam 的官方兼容声明[不确定]。已知坑：Steam ID 是 64 位，而 multiplayer_authority 是 32 位整数，不能直接用 Steam ID 当权限 ID（brogolem35 的指南用自定义 steam_mp_id）；GodotSteam 4.24 修复了可冒充 peer 1（服务器）的安全问题，务必升级到 4.24 或更新。",
+ "engine_internals_dependency": "GDExtension 形态不需要改引擎、不依赖引擎私有成员，随 Godot 小版本升级风险较低；引擎构建形态则必须等 GodotSteam 发布对应 Godot 版本（目前 4.5.2、4.7.2）。SDK 升级会带来 API 变更（如 GodotSteam 4.8 去掉 networking identity 系统，改为 Steam ID，不向下兼容）。",
+ "transport_matrix": "ENet：无 Steam，需端口转发，不适合发行；SteamMultiplayerPeer：中继（SDR，默认）与可选的 P2P 直连（Steam 自动在打洞失败时回落中继）；expressobits 版基于 Steam Sockets 但无通道；WebSocket/WebRTC/noray：与 Steam 无关，本次未研究。各传输下房主迁移：无任何传输内置迁移，Steam 大厅所有权会自动转移，但 MultiplayerPeer 的连接是连向特定房主 Steam ID 的，房主掉线连接即断，需要自己重建（推断）。",
+ "topology_authority": "Steam 推荐方案之一：以大厅房主作为中心（listen server），所有流量走房主，或玩家间直连。Godot 内置模型下 peer 1 为服务器；GodotSteam 的 peer 1 对应创建者。这与用户「严格区分服务器/客户端」路线一致。",
+ "tick_and_sync_rate": "Steam 层无逻辑帧率；默认发送速率 SendRateMin/Max 256KB/s，Nagle 5ms（steamnetworkingtypes.h，k_ESteamNetworkingConfig_*）。游戏的同步频率需自己定（常见 20–30Hz，推断）。",
+ "input_pipeline": "不适用：Steam 层不涉及输入管线，见 Understudy/Multiplayer Starter 专题。",
+ "prediction_reconciliation": "不适用：Steam 层不涉及预测校正。Godot 论坛有人指出 Godot 对物理回滚重放无成熟方案。",
+ "interpolation": "不适用。",
+ "snapshot_and_compression": "Steam 层：消息超过 MTU 会自动分片重组，单条最大 512KB；小消息会被合并。快照格式不适用。每包可用载荷约 1200 字节左右[不确定：未从文档查到确切数值，来自 SDK 常识]，建议单快照控制在一个包内。",
+ "rpc_validation_channels": "Steam 提供可靠与不可靠两种发送标志；expressobits 版不支持通道。GodotSteam 的 SteamMultiplayerPeer 通道支持：未查到[不确定]。信任模型：房主可伪造数据，论坛建议在无排行榜、无真钱时可接受。",
+ "key_code_snippets": "未能读取 GodotSteam 源码（Codeberg 返回无关内容，GitHub 路径 404），因此不提供原样摘录。建议后续用 git clone codeberg.org/godotsteam/godotsteam 本地读 sdk/steam_multiplayer_peer.cpp。",
+ "shadow_sync": "不适用：Steam 无状态热备能力。Steam 大厅只能存元数据（键最长 255 字符，聊天消息最大 4KB），不适合存游戏状态，状态同步需走 Networking Sockets。",
+ "host_disconnect_detection": "Steam 大厅层：成员离开会触发大厅更新；Steam 文档说「房主离开后另一成员会自动成为房主」。但据 Unity 社区类比，崩溃/强杀可能不如正常离开及时（跨引擎类比，不确定）。连接层：Sockets 有内部超时，具体阈值未查到[不确定]。建议自己加心跳（推断）。",
+ "takeover_flow": "推荐流程（推断）：1) 大厅房主自动转移，所有人监听 lobby_data_update/lobby_chat_update；2) 新房主用 Steam.getLobbyOwner 判断自己；3) 新房主在本地用热备数据启动服务器并创建新 SteamMultiplayerPeer host；4) 其他人 create_client 连新房主 Steam ID。Steam 文档：SetLobbyOwner 只能由现任房主调用，新房主须已在大厅，会触发全员 LobbyDataUpdate_t；因此「正常退出」可先指定接班人再离开，掉线则只能靠自动转移。Godot 论坛暂无成功案例。",
+ "reconnect_and_peer_ids": "SteamMultiplayerPeer 的 peer id 由插件分配，重连新房主后 id 会重新分配（推断）；应用层应使用 Steam ID 作为稳定玩家身份，不要依赖 peer id；注意 Steam ID 64 位与 Godot 32 位 authority 的不匹配。",
+ "strict_mode": "不适用：Steam 层无确定性校验。",
+ "node_compat": "不适用：与节点类型无关。Steam 层只传字节。",
+ "scale_10plus": "Steam 大厅上限 250 人（CreateLobby/SetLobbyMemberLimit）；实际瓶颈是房主上行带宽：每连接默认发送速率 256KB/s，N 人带宽约为 N × 每客户端流量。具体估算：10 人 × 20Hz × 200B ≈ 40KB/s（推断）。",
+ "bot_ai_placement": "Steam 层不涉及。与匹配配合：空位 Bot 补齐应在大厅元数据里记录真人数与 Bot 数（SetLobbyData 仅房主可写），Bot 由房主运行；房主迁移时 Bot 状态随游戏状态一起迁移（推断）。",
+ "owner_authority_model": "Steam 层面可行：Steam Networking Sockets 支持玩家间任意拓扑（Steam 文档称可全走房主或玩家直连）。SteamMultiplayerPeer 是以房主为中心的星形拓扑，玩家掌管自身角色仍可通过 Godot 的 multiplayer_authority 实现，但需注意 64 位 ID 问题。",
+ "backend_crosscheck": "Steam 提供 Auth Session Ticket（用于后端验证玩家身份）；本次未深入查。大厅元数据可携带对局 ID 给后端[推断]。",
+ "interest_management": "不适用：Steam 层不提供。",
+ "debug_tooling": "Steam 提供 GetConnectionRealTimeStatus（延迟、质量）、GetDetailedConnectionStatus（诊断文本）和 ISteamNetworkingUtils 的 ping 测量；SDK 另有 k_ESteamNetworkingConfig_* 的假丢包/假延迟调试选项（来自 SDK 常识，本次未逐项核对）[不确定]。",
+ "known_issues": "GodotSteam Issue：「调用 close() 后无法用 SteamMultiplayerPeer 加入另一个大厅」（GitHub issues 列表可见）；论坛：create_host 搭配 godotsteam_server 静默失败（Godot 4.6）；Forward+ 渲染器下从编辑器运行时 Steam 覆盖层可能不工作；Steam P2P 接口曾被报告出现包损坏（brogolem35，未被官方证实）；GodotSteam 4.24 之前存在可冒充 peer 1 的安全问题。",
+ "missing_features": "无内置房主迁移（Steam 只转移大厅所有权）；无状态热备；expressobits 版无通道；Playtest 无独立商店页。",
+ "real_network_risks": "中继增加延迟（Valve 自述通常改善质量，但 brogolem35 指出相对真 P2P 会「增加延迟」）；大消息分片；Nagle 默认 5ms 会合并小包，实时游戏可关闭（需用 NetworkingConfig 设置）；单消息最大 512KB，发送缓冲 512KB 满了返回 LimitExceeded；真 P2P 会泄露 IP；Windows Smart App Control 拦截未签名游戏（Pratfall 案例，需代码签名）。中继的具体带宽上限：未查到。",
+ "maintenance_risk": "GodotSteam 活跃（近期发布密集）；MultiplayerPeer 已并入主线降低分散风险；expressobits 版已暂停，风险高；单人维护者风险属推断。",
+ "combination_path": "可行路径（推断）：GodotSteam 大厅 + SteamMultiplayerPeer 作为 transport，上层用 Multiplayer Starter/Understudy 的权威与接力逻辑；先用 ENet 本地开发，再换 peer；Steam 大厅所有权事件作为触发接力的信号之一，同时自己加心跳。将来迁专用服务器时，Steam 的 CreateListenSocketP2P 与 SDR 可用于专用服务器（官方文档提及）。",
+ "migration_cost": "ENet 换成 SteamMultiplayerPeer：代码改动小（约 0.5–1 人天，推断）；接入大厅与匹配：约 2–4 人天；房主接力实际落地：数天至数周，取决于状态序列化（推断）。",
+ "validation_experiment_ideas": [
+  "实验1（半天）：两台机器用 AppID 480 + GodotSteam 建大厅、创建 SteamMultiplayerPeer，互发 RPC。通过标准：对方在大厅列表里能看到且连上并收发成功；不通过：大厅不可见（480 共享池问题），改为用自己的 Playtest AppID。",
+  "实验2（半天）：三个客户端在大厅中，房主正常退出并先 SetLobbyOwner，再测房主强杀进程。记录：LobbyDataUpdate/ChatUpdate 触发时间、新房主 getLobbyOwner 的值。通过标准：强杀后 N 秒内全员得到一致的新房主。",
+  "实验3（1天）：让新房主重建 host，其余玩家 create_client 重连。记录 peer id 是否变化、耗时。通过标准：重连后游戏继续且 Bot 状态保留。",
+  "实验4（半天）：在中继下测不同发送速率、包大小（200B/1KB/10KB）、有无 Nagle，记录 RTT 与丢包，判断是否满足顶视角 PvP 流畅度。"
+ ],
+ "sources": [
+  {
+   "title": "Steamworks ISteamMatchmaking 文档",
+   "url": "https://partner.steamgames.com/doc/api/ISteamMatchmaking",
+   "type": "官方文档",
+   "date": "2026-11-21"
+  },
+  {
+   "title": "Steamworks ISteamNetworkingSockets 文档",
+   "url": "https://partner.steamgames.com/doc/api/ISteamNetworkingSockets",
+   "type": "官方文档",
+   "date": "2026-11-21"
+  },
+  {
+   "title": "Steamworks Networking 总览",
+   "url": "https://partner.steamgames.com/doc/features/multiplayer/networking",
+   "type": "官方文档",
+   "date": "2026-11-21"
+  },
+  {
+   "title": "Steam Playtest 文档",
+   "url": "https://partner.steamgames.com/doc/features/playtest",
+   "type": "官方文档",
+   "date": "2026-11-21"
+  },
+  {
+   "title": "steamnetworkingtypes.h（ValveSoftware/GameNetworkingSockets）",
+   "url": "https://raw.githubusercontent.com/ValveSoftware/GameNetworkingSockets/master/include/steam/steamnetworkingtypes.h",
+   "type": "源码",
+   "date": "2026-11-21"
+  },
+  {
+   "title": "GodotSteam 发布页（Codeberg）",
+   "url": "https://codeberg.org/godotsteam/godotsteam/releases",
+   "type": "官方发布",
+   "date": "2026-11-21"
+  },
+  {
+   "title": "GodotSteam MultiplayerPeer（退役仓库）",
+   "url": "https://codeberg.org/godotsteam/multiplayerpeer",
+   "type": "源码/README",
+   "date": "2026-11-21"
+  },
+  {
+   "title": "expressobits/steam-multiplayer-peer",
+   "url": "https://github.com/expressobits/steam-multiplayer-peer",
+   "type": "源码/README",
+   "date": "2026-11-21"
+  },
+  {
+   "title": "Passing Host in P2P game",
+   "url": "https://forum.godotengine.org/t/passing-host-in-p2p-game/109411",
+   "type": "社区",
+   "date": "2026-11-21"
+  },
+  {
+   "title": "Deciding on multiplayer architecture for Steam",
+   "url": "https://forum.godotengine.org/t/deciding-on-multiplayer-architecture-for-steam/140817",
+   "type": "社区",
+   "date": "2026-11-21"
+  },
+  {
+   "title": "AppID 480 测试讨论",
+   "url": "https://forum.godotengine.org/t/if-i-want-to-test-the-online-multiplayer-functionality-using-steam-do-i-need-to-register-a-game-or-will-using-the-480-app-be-sufficient/131625",
+   "type": "社区",
+   "date": "2026-11-21"
+  },
+  {
+   "title": "Godot Rollback With Steam",
+   "url": "https://brogolem35.github.io/rollback-with-godotsteam/",
+   "type": "社区博客",
+   "date": "2026-11-21"
+  },
+  {
+   "title": "Pratfall 开发团队访谈（80.lv）",
+   "url": "https://80.lv/articles/indie-team-breaks-down-shipping-multiplayer-game-with-godot-4-6-using-c",
+   "type": "媒体",
+   "date": "2026-11-21"
+  },
+  {
+   "title": "Cassette Beasts Godot Showcase",
+   "url": "https://godotengine.org/article/godot-showcase-cassette-beasts/",
+   "type": "官方",
+   "date": "2026-11-21"
+  },
+  {
+   "title": "GamingOnLinux Cassette Beasts 多人更新",
+   "url": "https://www.gamingonlinux.com/2024/03/multiplayer-comes-to-cassette-beasts-on-may-20th/",
+   "type": "媒体",
+   "date": "2026-11-21"
+  }
+ ],
+ "shipped_cases": "已上线案例：Cassette Beasts（Godot，2024-05-20 加入最多 8 人联机，分享码加入、1v1 PvP；联机底层实现未查到）；Pratfall（4 人合作，Godot 4.6.1 + C#，开发期用 EOS，上线改为 SteamNetworkingSockets + Facepunch.Steamworks，经验：Windows Smart App Control 拦截需买代码签名）；Don't Pray（3D PvP，P2P，来源为引擎厂商博客，需核实）。未找到有房主接力的上线案例。",
+ "uncertain": [
+  "license",
+  "godot_version",
+  "interop_godotsteam_netfox",
+  "snapshot_and_compression",
+  "rpc_validation_channels",
+  "host_disconnect_detection",
+  "reconnect_and_peer_ids",
+  "debug_tooling",
+  "key_code_snippets",
+  "user_claims_check",
+  "real_network_risks",
+  "author_background"
+ ]
+}
