@@ -1,0 +1,128 @@
+{
+ "item_name": "云运维与成本",
+ "summary": "核心判断：以主线程实测（每房 20 人+20 Bot 约 2.8% 单核、101MB、上传 235–430kbit/s、每局约 90–160MB）按 ×3–×5 保守放大后，对局服务器的 CPU 与内存都不是瓶颈，瓶颈是“公网带宽/流量计费”和“区域数量”。月成本（推断，含对局服务器+记账后端，不含人力）：CCU 50 约 $15–60（自管 1–3 台小 VPS）；CCU 500 约 $120–400（自管）或 $450–1400（Edgegap/Gameye 按需）；CCU 5000 约 $1000–3500（自管，3 区域多台）或 $4500–14000（按需托管）。自管 VPS 在三个量级都最便宜，按需托管在低量级省值守、在高量级贵 4–5 倍；建议 CCU 500 以下自管（Hetzner 欧洲 + 香港/东京 + 美西各 1 台），并把开房调度写成可换底层的薄适配层。对用户上传报告“¥60–120/月香港 4C8G 跑 20–40 局（400–800 人）”的核实结论：价格量级有来源可佐证（阿里云香港 2 核 2G 30Mbps 约 ¥34/月、2 核 1G 约 ¥24/月、均为限量促销、月流量 1–2TB；4C8G 的香港具体价未查到），但 40 局只在实测值（回环、未放大）下勉强成立：CPU 约 1.1 核、内存约 4GB、公网带宽约 10–50Mbps，刚好在 30Mbps 峰值带宽和约 2TB 月流量的边缘；按 ×3–×5 保守值则 CPU 约 5 核、内存可能超 8GB、带宽 40–260Mbps，4C8G 只能稳跑约 10–20 局（200–400 人），不宜按 40 局规划。中国大陆服务器不要用：需要 ICP 备案与更多合规，且 Steam 全球玩家多在境外；香港节点无需 ICP 备案（推断，未查到一手原文），但从大陆访问港澳台可能出现较大延迟和丢包（腾讯云官方文档）。",
+ "representative_cases": "1) Edgegap 官方定价页：按需 $0.00115/vCPU/分钟、出站 $0.10/GB，私有机队裸金属 $280–350/台/月（来自已有结果，Edgegap 官方页，本次再核对一致，2026-11-21）。2) Gameye 官方成本对比页：按需 $0.07/vCPU/小时、预留 $0.035/vCPU/小时，流量全含，按秒计费、无最低会话时长（2026-11-21）。3) Hetzner：2026 年两次涨价（4 月 1 日、6 月 15 日），CX23 从 €3.99 涨到约 €5.49–5.99，新加坡的 CPX 约 €15–26，且新订单有容量限制（第三方评测与 Hetzner 价格调整页，2026-11-21）。4) Hathora 2026-05-05 关停、Unity Multiplay 一度终止（见方案二结果）——说明托管平台有停服风险。5) 未查到“个人开发者在 Godot 上自管多区域专服并公开成本”的一手案例 [不确定]。",
+ "maturity_evidence_level": "官方文档/定价页：Edgegap、Gameye、Vultr（超额 $0.01/GB）、Tencent Cloud 轻量文档（峰值带宽、港澳台延迟提示）、Steamworks SDR 文档；第三方评测/博客：Hetzner 涨价与新加坡价格、阿里云香港轻量价格（来自阿里云开发者社区文章，非官方价目页）、Lightsail 超额单价片段；实测：主线程 CPU/内存/带宽；推断：所有 CCU 月成本、保守放大倍数、人均在线与局数换算、每台机器可跑局数。腾讯云香港轻量具体价格、Gameye 最低消费、GameFabric 价格未查到。",
+ "action_small": "不适用：本条为云运维与成本专题。运维视角：动作类 6–8 人局每房服务器 CPU 与带宽小于 20 人局，一台 2 vCPU 可放约 10–20 房（推断，需压测）；动作类需 30–60 Hz 同步，对玩家到服务器 RTT 更敏感，建议至少“亚洲/欧洲/美西”三区，跨洋（150ms 以上）不推荐。",
+ "action_large": "不适用：本条为云运维与成本专题。运维视角：20 人动作局保守按每房 8–14% 单核（实测 2.8%×3–5）、内存 150–300MB、公网上传 1–6Mbps；每房每局流量保守 0.3–1.2GB；每 2 vCPU 机器稳妥放 8–10 房（推断，与方案二结果一致）。",
+ "strategy_small": "不适用：本条为云运维与成本专题。运维视角：策略类可容忍 150–300ms，同步频率低，带宽与 CPU 约为动作类的 1/3–1/2（推断），早期单区域（香港或东京或欧洲）即可，区域数可减少到 1–2。",
+ "strategy_large": "不适用：本条为云运维与成本专题。运维视角：同上，20 人策略局每房带宽约 0.2–1Mbps（推断），区域数可从 3 减到 2，托管按需平台的每局成本约 $0.06–0.10。",
+ "authority_matrix": "不适用：权威归属属于架构专题。运维相关的一条：只要局内权威在对局服务器，局结束后由服务器向记账后端提交结算（带局 ID 与签名），记账后端要做幂等，运维上记账后端必须有每日备份与事件日志。",
+ "tech_stack": "运维层推荐（推断）：对局服务器用 Godot 4 headless 导出 Linux 专服，每房一个进程，用 systemd 或 Docker 守护；开房调度用一个轻量后端 API 管理端口池（约 5–10 人天，来自方案二结果）；自管云：Hetzner（欧洲，含 20TB 流量）、香港/东京用 Vultr 或 DigitalOcean 或阿里云/腾讯云香港轻量、美西用 Vultr/Hetzner 美国；记账后端 PostgreSQL 或 SQLite+Litestream 单机，托管 PostgreSQL 约 $15–30/月；监控：UptimeRobot/Grafana Cloud 免费档+Discord 告警；日志用文件+每日备份；托管备选：Gameye（流量全含）或 Edgegap（流量另计）。",
+ "steam_integration_path": "Steam 的 SDR（Steam Datagram Relay）可让专服走 Valve 骨干网并隐藏服务器 IP，Epic 的虚幻文档称这能防 DDoS；服务器用 CreateHostedDedicatedServerListenSocket，由游戏协调端发中继票据，或在已知 SDR 数据中心内用 CreateListenSocketP2P 免票据（Steamworks 文档，2026-11-21）。Godot 中对接 SDR 需 GodotSteam 的 Networking Sockets 绑定，可行性与成本未查到 [不确定]；若不走 SDR，对局服务器暴露公网 IP，要自备防 DDoS。",
+ "godot_fit": "不适用：本条为云运维专题，Godot 适配另见方案一、二。运维相关：Godot 4 headless 专服已能稳定出 Linux 进程，单房 101MB 内存、约 2.8% 单核（实测），Docker 内 Godot 忽略 SIGTERM 需自定义处理（Gameye 指南，来自方案二结果）。",
+ "godot_version_compat": "实测环境为 Godot 4.7.2 headless（主线程）；本次未验证托管平台与 Godot 版本的组合 [不确定]。",
+ "pros": "云运维层面的优势（推断）：①单房资源极小，CCU 500 以下一两台小 VPS 就够；②自管 VPS 月费低（欧洲约 €6–20，香港约 ¥24–120 的促销档），流量欧洲含 20TB；③Gameye 流量全含、按秒计费，低量级无需值守；④Edgegap 当月无部署为 $0，适合测试期；⑤关闭 Bot 数量或降低同步频率可线性降低带宽。",
+ "cons": "①公网流量在亚洲/美国较贵（Hetzner 新加坡 0.5–5TB 起超出约 $8.49/TB，美国含 1TB；Lightsail 超额约 $0.09–0.14/GB；Vultr/DO 约 $0.01/GB）；②Hetzner 2026 年涨价且新订单有容量限制；③阿里云/腾讯云香港低价档限量、每日售罄、流量只有 1–2TB；④中国大陆线路跨境丢包；⑤个人开发者要自己值守，崩溃直接影响玩家；⑥按需托管在 CCU 高时比自管贵 4–5 倍，且有停服风险（Hathora 关停）。",
+ "dev_difficulty": "运维部分难度 3/5（推断）：自管 VPS+开房调度+排空更新约 10–20 人天（推断）；用 Gameye/Edgegap 约 3–7 人天（推断，使用现成 REST/插件）；监控告警 1–2 人天；备份与记账后端部署 2–3 人天。零基础+Claude Code 的主要难点是 Linux 运维、systemd/Docker、DNS/TLS、排空更新流程。",
+ "anticheat_coverage": "不适用：反作弊属于架构专题。运维相关：DDoS——Hetzner 的免费防护主要针对反射类攻击，社区教程明确说其对游戏 UDP（第四层）防护有限；OVHcloud 的游戏服务器自带 UDP 防护；Steam SDR 可隐藏服务器 IP（Epic 文档称能抗 DDoS）。",
+ "anticheat_gaps": "运维相关残余风险：①对局服务器公网 IP 暴露后，被 UDP 洪水打掉的风险随游戏知名度上升；②恶意玩家可通过刷房/连接洪水消耗 Edgegap 按需计费（需限速和票据校验）；③商业化后大流量下，监控和封号需要人手。",
+ "ops_cost": "{\"_说明\": \"以下全部为推断，不含人力；金额美元；1 台=约 2–4 vCPU 小机；假设峰值在线=CCU，平均在线=峰值×35%，每局 50 分钟；每局流量 实测 0.09–0.16GB、保守 0.3–1.2GB（公网×1.5–3、规则更重×3–5）\", \"房间换算\": \"CCU 50→峰值约 3 房；500→约 25 房；5000→约 250 房。每月局数约 770 / 7700 / 77000。每月出站流量（实测）约 70GB / 0.7TB / 7TB；保守约 230–920GB / 2.3–9.2TB / 23–92TB。\", \"保守CPU\": \"每房 8–14% 单核：3 房≈0.4 核，25 房≈3.5 核，250 房≈35 核（实测值约 1/3–1/5）。\", \"峰值带宽\": \"CCU50 约 3–20Mbps；CCU500 约 25–160Mbps（保守中位约 50Mbps）；CCU5000 约 250–1600Mbps（保守中位约 500Mbps，需多机多区域分摊）。\", \"CCU50\": {\"自管VPS\": \"$10–45（1–3 台 + 备份），加记账后端 $0–15，合计约 $15–60\", \"Edgegap\": \"约 $55–140（$0.07–0.18/局×770 局），加后端约 $60–160\", \"Gameye\": \"约 $45–110（$0.058/局×770，流量全含；最低消费未查到）\"}, \"CCU500\": {\"自管VPS\": \"$100–350（3 区域共 8–12 vCPU，含亚洲区流量超额约 $20–70），加后端 $20–60，合计约 $120–400\", \"Edgegap\": \"约 $540–1400，加后端约 $560–1450\", \"Gameye\": \"约 $450–900\"}, \"CCU5000\": {\"自管VPS\": \"$800–3000（约 30–60 vCPU 分三区，亚洲区流量 20–90TB 超额约 $200–700），加后端（托管 PG 高可用）$100–300，合计约 $1000–3500\", \"Edgegap\": \"约 $5400–14000（每局 1 vCPU；Edgegap 私有机队裸金属 $280–350/台可部分降低）\", \"Gameye\": \"约 $4500–9000；预留 $0.035/vCPU/小时 可降到约一半\"}, \"价格依据\": \"Hetzner CX23 €5.99/月起、欧洲 20TB 流量、新加坡 0.5–5TB 超额约 $8.49/TB（第三方评测，价格页 404）；Vultr/DO 超额 $0.01/GB；Lightsail 超额新加坡约 $0.12/GB、东京约 $0.14/GB（未标日期的 AWS FAQ 片段）；阿里云香港轻量 2核1G/30Mbps 约 ¥24/月（1024GB 月流量）、2核2G/30Mbps 约 ¥34/月（2048GB）限量；腾讯云香港具体价未查到。\", \"上传报告核实\": \"“¥60–120/月 香港 4C8G 跑 20–40 局（400–800 人）”：①价格量级基本合理但属于限量促销，4C8G 香港实价未查到 [不确定]；②按实测值：40 局约 1.1 核、4GB 内存、10–17Mbps（回环）至约 50Mbps（公网放大后），30Mbps 峰值带宽会卡住，月流量约 2TB 也只够平均约 25 房；③按保守值（×3–×5）：CPU 约 5 核、内存可超 8GB、带宽 40–260Mbps，4C8G 只能稳跑约 10–20 局（200–400 人）。结论：上限不被支撑，需压测后改写为约 10–20 局。\", \"来源日期\": \"2026-11-21\"}",
+ "ops_complexity": "个人开发者现实负担（推断）：①部署：systemd/Docker+端口池，约 10–20 人天；②扩缩容：CCU 500 以下手动加机即可，无需 Kubernetes；③区域：每区域 1 台，匹配按延迟选；CCU 50 建议只开 1–2 区以免玩家被切碎，CCU 500 开 3 区；④监控：进程存活、CPU、内存、tick 时间、断线率、每局时长，免费工具+Discord 告警；⑤更新：版本号强校验，排空（等进行中的局结束再重启），Steam 版本与服务器版本需同步发布；⑥值守：局长 30–50 分钟，崩溃会直接丢局，早期每周约 2–5 小时、发布日与活动日更高；⑦DDoS：防护有限，优先用 Steam SDR 或 Cloudflare Spectrum（付费）或 OVH 游戏防护；⑧备份：记账数据库每日备份+事件日志。",
+ "vendor_lock_in_risk": "托管平台有停服先例：Hathora 2026-05-05 停服，Unity Multiplay 一度终止（方案二结果）；Edgegap、Gameye 官方称使用标准容器，迁移成本低；VPS 也有涨价与容量限制（Hetzner 2026 年两次调整、新订单限量）。建议：把开房调度做成适配层，保留“自管 VPS 进程池”作退路；记账后端用标准 PostgreSQL，避免专有 BaaS。",
+ "bandwidth_per_player_estimate": "实测（主线程）：20 人+20 Bot 服务器总上传 235kbit/s，折合每人下行约 11.8kbit/s；每局 50 分钟约 88MB；60 Bot 约 427kbit/s/约 160MB。公网放大 1.5–3 倍、规则更重 ×3–×5，保守每局 0.3–1.2GB（推断），极端约 2.4GB。下行（客户端上传到服务器）约为服务器上传的 1/3–1/2（推断，未实测），入站流量云厂商一般不收费（Lightsail 文档明确入站不收费）。",
+ "host_migration_support": "不适用：本条为云运维专题。运维相关：自管/托管专服不需要房主接力，但服务器进程崩溃就丢局，建议每 10–30 秒落盘局内快照（推断）。",
+ "persistence_data_model": "不适用：数据模型属于其他专题。运维相关：记账后端写入量极低（每局每人 1 次结算），CCU 5000 约每月 77000 局×20 人≈155 万条结算，单机 PostgreSQL 足够；要点：结算接口幂等、事件日志追加式、每日备份并定期恢复演练。",
+ "migrate_to_pure_c_difficulty": "不适用：迁移难度见方案二与路线专题。运维相关：从自管 Godot 专服迁到纯 C 专服时，开房调度、监控、备份、区域布局可完全复用，只换服务器二进制；纯 C 每房 CPU 约 3.6%（实测，略高于 Godot 的 2.8%，二者接近）。",
+ "reusable_code": "可复用：开房调度 API（端口池/进程管理/Gameye 或 Edgegap 适配）、记账后端与 PostgreSQL 结构、监控告警、版本强校验与排空更新脚本、区域选择匹配逻辑、备份脚本。",
+ "wasted_work": "运维层几乎没有白做的：唯一风险是过早为大规模做 Kubernetes/Agones 或多区域自动扩缩容，CCU 500 以下用不上；避免办法：先手动 1 区→3 区，指标达到阈值再自动化。",
+ "early_coding_rules": "①服务器进程以环境变量/命令行读取端口、房间 ID、区域、密钥，不写死；②每局结束后进程退出，不长驻；③托管平台生命周期调用隔离成薄适配层；④服务器输出结构化日志与指标（tick 时间、玩家数、断线数）；⑤结算接口带局 ID、幂等；⑥协议里带版本号；⑦预留 SDR 或票据校验位。",
+ "clever_points": "①Gameye 与 Edgegap 按局/按分钟计费、空闲为 0，测试期零固定成本；②Hetzner 欧洲含 20TB 流量，把流量大户放欧洲；③Gameye 建议“基线用预留 $0.035、峰值用按需 $0.07”的混合；④Steam SDR 隐藏服务器 IP；⑤阿里云香港低价轻量档（约 ¥24–34/月、1–2TB 流量）适合测试期亚洲节点。",
+ "pitfalls": "①低价促销档限量、每日售罄、可能续费涨价（阿里云香港轻量）；②Hetzner 2026 涨价与新订单容量限制；③亚洲/美国节点流量超额远贵于欧洲；④Edgegap 出站流量 $0.10/GB 在大流量下很贵；⑤从大陆访问香港/港澳台线路可能丢包（腾讯云文档）；⑥Hathora 式平台停服；⑦把用户上传报告的 40 局/4C8G 当规划值——需先压测；⑧中国大陆服务器的 ICP 备案与合规成本，未查到一手细则 [不确定]。",
+ "sources": [
+  {
+   "标题": "Hetzner 价格调整页",
+   "URL": "https://docs.hetzner.com/general/infrastructure-and-availability/price-adjustment/",
+   "类型": "官方文档",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "Hetzner Cloud Pricing 2026: Price Hikes & CX Availability（bitdoze）",
+   "URL": "https://www.bitdoze.com/hetzner-cloud-cost-optimized-plans/",
+   "类型": "第三方评测",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "Hetzner 新加坡云页面",
+   "URL": "https://www.hetzner.com/cloud-singapore/",
+   "类型": "厂商官方",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "Edgegap 定价页",
+   "URL": "https://edgegap.com/pricing",
+   "类型": "厂商官方",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "Gameye 成本对比页",
+   "URL": "https://gameye.com/cost-comparison/",
+   "类型": "厂商官方",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "Tencent Cloud 轻量应用服务器套餐文档",
+   "URL": "https://www.tencentcloud.com/zh/document/product/1103/41264",
+   "类型": "官方文档",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "阿里云开发者社区：轻量香港 24 元/34 元套餐文章",
+   "URL": "https://developer.aliyun.com/article/1452334",
+   "类型": "第三方文章（非价目页）",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "Vultr 带宽超额费率",
+   "URL": "https://docs.vultr.com/support/platform/billing/what-is-the-bandwidth-overage-rate",
+   "类型": "官方文档",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "AWS Lightsail 数据传输额度",
+   "URL": "https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-faq-data-transfer-allowance.html",
+   "类型": "官方文档",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "AWS Lightsail 价格页",
+   "URL": "https://aws.amazon.com/lightsail/pricing",
+   "类型": "官方（未读到具体价格）",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "Hetzner 社区：游戏服务器 DDoS 防护",
+   "URL": "https://community.hetzner.com/tutorials/game-server-ddos-protection",
+   "类型": "官方社区教程",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "Steamworks：Steam Datagram Relay",
+   "URL": "https://partner.steamgames.com/doc/features/multiplayer/steamdatagramrelay",
+   "类型": "官方文档",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "GamingOnLinux：Steam 调查 2026 年 2 月简体中文激增",
+   "URL": "https://www.gamingonlinux.com/2026/03/steam-survey-for-february-2026-shows-a-big-swing-to-simplified-chinese",
+   "类型": "媒体",
+   "访问日期": "2026-11-21"
+  },
+  {
+   "标题": "主线程实测与方案二结果",
+   "URL": "/home/user/Deep-Research-skills/godot-netarch-route/results/方案二_纯C.json",
+   "类型": "实测/内部",
+   "访问日期": "2026-11-21"
+  }
+ ],
+ "uncertain": [
+  "ops_cost（所有 CCU 月成本为推断；腾讯云香港轻量 4C8G 具体价格、阿里云 4C8G 香港价格、Gameye 最低消费、GameFabric 价格未查到；Hetzner 价格来自第三方）",
+  "summary（上传报告 4C8G 价格未核实到一手）",
+  "steam_integration_path（GodotSteam 接 SDR 的可行性未查到）",
+  "pitfalls（大陆 ICP 备案细则未查到一手来源）",
+  "representative_cases（无 Godot 个人开发者公开成本案例）",
+  "bandwidth_per_player_estimate（放大倍数与客户端上行为推断）",
+  "godot_version_compat（托管平台与 Godot 版本组合未验证）",
+  "ops_complexity（Steam 玩家区域占比未查到国家级数据：语言占比 英语 38.25%、简体中文 23.97%（2026-08），2026-02 曾因春节达 54.6%，波动大；各区域延迟为推断）"
+ ]
+}
