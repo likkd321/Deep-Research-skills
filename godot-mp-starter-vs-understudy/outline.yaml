@@ -32,7 +32,7 @@ items:
       Godot 4 联机生态中可替代或与上面两者组合的方案：netfox（含 netfox.noray NAT 打洞/中继、netfox.extras；Step2 线索 v1.35.x 有物理步进回滚、
       无输入 RollbackSynchronizer、可见性过滤、网络模拟）、Godot 内置 SceneMultiplayer/MultiplayerSpawner/MultiplayerSynchronizer 路线、
       GodotSteam 的 SteamMultiplayerPeer（已并入主仓）、GD-Sync、Godot Rollback Netcode（Snopek）、2026 新出的 Klotho/LinkUx 等，
-      以及 Godot 生态中是否还有其他支持房主迁移的插件。重点评估它们对用户路线（房主→接力→专用服务器）的匹配度、与两者组合的可能。
+      （房主迁移/热备专用方案的普查由独立 item「Godot 房主迁移与热备方案普查」负责，本 item 不重复）。重点评估它们对用户路线（房主→接力→专用服务器）的匹配度、与两者组合的可能。
   - name: 房主接力与节点适配专题
     category: 专题（深度判断）
     description: >-
@@ -47,6 +47,17 @@ items:
       Godot 4 游戏在 Steam 上做联机的实务：GodotSteam（版本、与 Godot 4.5–4.7 的兼容）、Steam 大厅（Lobby）、Steam Networking Sockets /
       Steam Datagram Relay 中继、NAT 打洞、匹配、房主掉线后 Steam 大厅所有权转移与重连、Bot 补位与匹配的配合、中继下的延迟/带宽/包大小限制、
       Steam 测试（AppID 480 / Playtest）注意事项，以及已在 Steam 上线的 Godot 多人游戏案例与其经验。
+  - name: Godot 房主迁移与热备方案普查
+    category: 横向对照（用户追加）
+    description: >-
+      普查 Godot（4.x 优先，3.x 可移植的也记录）生态里支持"房主接力/房主迁移（host migration）"的方案和模板，最好带"热备影子/备用主机"：
+      Godot 资源商店（store.godotengine.org）与 Asset Library、GitHub/Codeberg/GitLab（关键词 host migration、host handoff、failover、
+      backup host、hot standby、shadow host、P2P authority transfer、"godot" + "migrate host" 等）、itch.io 资源、Reddit r/godot、
+      Godot 论坛与 Discord、YouTube 教程、GDC/博客文章、已上线的 Godot 多人游戏的做法；也包括带房主迁移的托管/中间件服务（如 GD-Sync、
+      Nakama、Photon、Epic Online Services、Steam 大厅所有权转移等）在 Godot 中的可用性。Understudy 与 Multiplayer Starter 已单独调研，此处只作参照。
+      对每个候选记录：名称/链接、作者、许可、Godot 版本、最近更新、Star 或下载量、是否真有房主迁移/热备、迁移机制（状态如何转移、接管耗时）、
+      是否支持 Steam、成熟度（有无已上线游戏使用）、与用户游戏的匹配度。最终给出"成熟度排序"和"值得做验证实验的前 2–3 名"；
+      找不到成熟方案也要如实说明，并归纳社区里常见的自研做法。
 execution:
   mode: 标准
   batch_size: 2
@@ -59,4 +70,5 @@ execution:
     - {agent: web-search-agent-deep, model: opus, items: [房主接力与节点适配专题]}
     - {agent: web-search-agent, model: sonnet, items: [替代与组合方案]}
     - {agent: web-search-agent, model: sonnet, items: [Steam 发行联机实务]}
+    - {agent: web-search-agent, model: sonnet, items: [Godot 房主迁移与热备方案普查]}  # 用户追加，提前插入第 1 批空位
   output_dir: ./results
