@@ -1,0 +1,223 @@
+{
+ "item_name": "房主接力与节点适配专题",
+ "summary": "结论：房主接力能做，但有一个硬前提：整局对局必须是一份能存成字节、再读回来的纯数据（下称 MatchState），CharacterBody2D、TileMapLayer、NavigationAgent2D、LightOccluder2D 只用来画画面或当同步查询工具，不保存对局。Godot 官方没有房主迁移：godot-proposals#7912 自 2023-09 一直 open；#9214 和实现它的 PR #97910 自 2024-10 没有任何评审。所以如果用高层 API（MultiplayerSpawner/Synchronizer），只能“重开房 + 用快照重建”。推断这种做法会卡 2–6 秒，并丢掉最多一个快照间隔的进度，做法与 Photon Fusion、Unity Netcode for Entities、UE 插件一致。Understudy 式的热备影子是目前唯一能做到亚秒接管、几乎不丢状态的路线（同机实测空窗中位 228ms）。推荐做法：①P1 阶段就把规则写成数据层（MatchState + step）；②移动用“一个 CharacterBody2D 当碰撞探针”，或纯网格碰撞；③Bot 的全部状态进 MatchState，寻路用 AStarGrid2D；④房主保持权威，不降成协调员，只把“自己的移动”作为可选的客户端权威折中；⑤16 人以内，房主上传推断约 2–3.5Mbit/s，可以承受。真正的瓶颈是客户端“整世界预测”的 CPU 开销；⑥结算走“房主与影子双份上报 + 物品 UID 可由种子复算”的后端交叉校验。总工作量推断 25–45 人天，其中后端 6–12 人天。（查询日期 2026-11-21）",
+ "community_reviews": "[不确定] 社区对“Godot 房主迁移”的评价，逐条注明来源：\n①godot-proposals#7912（PPillau 2023-09-29 开，至今 open，只有约 5 条实质评论）：\n- DanielSnd（2024-02-26）自写了 Node.js 中继和自定义 MultiplayerPeer。因为服务器 peer id 恒为 1，他只能屏蔽 ID1 的 peer_disconnected，再改 SceneMultiplayer 内部，加了 transfer_peer_id_ownership。他自称“pretty hacky”，但 demo 能跑。\n- flamenco687（2025-11-14）认为迁移与架构强相关，大部分只能留给开发者自己做，建议先推进 #9214 和 PR #97910。\n- bikemurt（2025-11-28）指出 GodotSteam P2P 很普遍、独立开发者普遍没有专用服务器，向社区求变通办法。\n- DanielSnd（2025-11-29）认为引擎最少只需提供 transfer_peer_id_ownership 和“取得复制器同步节点列表”两个接口，其余可以在模块或 GDExtension 里实现。\n②godot-proposals#9214（Loteny 2024-03-02，open，约 20 个赞）：诉求是“权威端断线后，MultiplayerSpawner 不要删掉它生成的节点”。维护者 AThousandShips 要求不要顶帖。Janonas（2024-10-07）提交了 PR #97910。\n③PR #97910（Janonas，open，里程碑 4.x，0 条评审）：作者自称不熟 C++，并说“在编辑器里有效，用旧导出模板导出后无效”。此后没有推进。\n④netfox 文档与维护者的态度：Godot 物理不确定，也没有在一帧内多次重算物理的接口，只能做状态同步（netfox discussions #272、rollback caveats）。物理手动步进的 PR #76462 从 2023-04 开到现在。2026-08 作者表示已无动力维护；2026-11 有人提议以实验特性合入（查询日期 2026-11-21）。\n⑤Godot 论坛“Passing Host in P2P game”（2025-04）：用 GodotSteam，房主退出后其他人灰屏，帖子无解。\n⑥Unity 论坛：用 NGO + Lobby + Relay 的开发者反映房主一走，客户端全部断开（2025 年帖）。Unity 官方文档也说明，默认的迁移实现只支持 Netcode for Entities，NGO 用户应改用 Distributed Authority。\n⑦UE 论坛与 Fab：几个房主迁移插件（Host Migration Core、Host Migration X、DarxDev V2）都自称“需要玩家重连，不是零中断”，崩溃时“最近一次快照之后的进度可能丢失”。\n⑧Edgegap 博客：房主迁移是重大技术难点，商业项目多选专用服务器。\nReddit r/godot、Discord：本次未直接检索到专门讨论 [不确定]。",
+ "self_reported_vs_independent": "本条各类数据的可信度分级：\n①实测（同机）：Understudy 的接管空窗、带宽、快照大小来自主线程 2026-11-21 的同机实测（见 Understudy.json）。8 人时房主上传约 703kbit/s、差分 p50 370B；16 人约 2154kbit/s、p50 566B。\n②源码核实：Godot 源码 scene/2d/physics/physics_body_2d.cpp 第 47 行——move_and_slide 在物理帧内取 physics delta，否则取渲染帧 delta；move_and_collide 用 body_test_motion 同步查询（第 79 行）。ENet 默认超时 ENET_PEER_TIMEOUT_MINIMUM=5000、MAXIMUM=30000（thirdparty/enet/enet.h）。Steam Networking Sockets 默认 TimeoutConnected=10000ms、SendBufferSize=512KB（GameNetworkingSockets 源码）。Understudy 客户端是整世界预测（understudy_client.gd 的 _predict_step 与 _reconcile，MAX_RESIM=60）。\n③官方文档：NavigationServer2D 的地图在物理帧末同步，可选后台异步，map_force_update 在 4.7 已弃用；Photon Fusion 推荐约 30 秒的迁移快照间隔；Unity Netcode for Entities 的大厅选主延迟默认 120 秒、最低 5 秒。\n④推断：10 人以上的带宽表、CPU 预算、各项人天、重开房空窗 2–6 秒，都是按以上数据外推，没有用户游戏原型的实测，均已标“推断”。\n没有任何真实公网或 Steam 中继下的第三方实测。",
+ "user_claims_check": "对 outline 中与本专题有关的说法逐条核实：\n①“Godot 无内置房主迁移”：正确。#7912 自 2023-09 一直 open；SceneMultiplayer 的服务器 id 恒为 1，没有所有权转移 API。\n②“#9214 与 PR #97910 是相关尝试”：正确，但范围很窄。它只加了一个选项 set_delete_spawned_nodes_on_peer_exit(false)，让“生成者断线后不删节点”。它不做选主，也不转移 id 1 的服务器身份。PR 仍是 open、0 评审，作者自称导出版无效。即使合入，也只能解决“节点不被删”，房主掉线后所有客户端照样触发 server_disconnected。\n③“Understudy 要求状态为纯数据、不能放物理节点”：方向正确，但可以细化。CharacterBody2D 仍可以在 step() 内当“同步碰撞探针”用（body_test_motion 是同步调用，见 node_compat），代价是放弃严格模式的跨机逐位一致；接力本身不受影响，因为影子总是采纳房主状态。\n④“move_and_slide 可复现”：只能有条件地复现。同一台机器、同一构建、同一输入、只撞静态墙时，结果可复现（推断，依据是同步查询的实现）。但跨机器不能保证逐位一致，另外有三个坑：在 _process 里调用会用渲染帧 delta（源码第 47 行）；只能在主线程调用（Understudy LESSONS）；会动的 Kinematic 体在 broadphase 里的位置要等下一次物理步才更新（netfox caveats）。",
+ "builtin_features_used": "与房主接力相关的 Godot 4 内置功能，逐个说明它们在迁移时的表现：\n①SceneMultiplayer / MultiplayerAPI：星型拓扑，客户端只连服务器，服务器 peer id 固定为 1。房主掉线时所有客户端触发 server_disconnected，会话直接结束，引擎层面没有接管的可能（#7912）。\n②MultiplayerSpawner：权威端断线时会删掉它生成的全部节点。#9214 / PR #97910 想加 delete_spawned_nodes_on_peer_exit 选项，未合入。\n③MultiplayerSynchronizer：有 replication_interval、delta_interval（变化才发）、public_visibility、set_visibility_for、add_visibility_filter，可以用来做 AOI。但它同步的是节点属性，新房主要靠本机已收到的副本重建，没同步过的东西会丢（Unity 旧 UNet 文档也有同样的说法）。\n④set_multiplayer_authority(peer_id)：可以实现“玩家掌管自己的角色”。但 id 绑定的是当前连接，换房主重连后 peer id 全变，必须用 SteamID 之类的稳定 uid 重新映射。\n⑤CharacterBody2D.move_and_slide / move_and_collide：内部调用 PhysicsServer2D.body_test_motion，同步查询当前空间；起点取 get_global_transform()；delta 在物理帧内为 1/physics_ticks，否则为渲染帧 delta（physics_body_2d.cpp 第 47 行）。俯视角要设 motion_mode=MOTION_MODE_FLOATING。\n⑥PhysicsServer2D：官方没有 space_step 手动步进（PR #76462 自 2023-04 open）。netfox 的 PhysicsDriver2D 需要打过补丁的引擎、Rapier 插件或 Blazium 分支。\n⑦NavigationServer2D：大多数改动在下一物理帧生效，地图在物理帧末同步，可选 map_set_use_async_iterations 后台异步；map_force_update 在 4.7 已弃用。NavigationAgent2D 的路径需要每物理帧调用 get_next_path_position 推进，RVO 避让通过 velocity_computed 信号回调。这些都不适合放进可重算的 step。\n⑧AStarGrid2D：纯计算、同步、整数网格，适合放进数据层。\n⑨TileMapLayer：get_used_cells、get_used_rect、get_cell_tile_data(...).get_custom_data，可以在加载时导出墙体网格。\n⑩LightOccluder2D / PointLight2D：纯渲染，与迁移无关。\n⑪序列化：StreamPeerBuffer（定长、紧凑，推荐）、var_to_bytes（方便但带类型头，体积大）、PackedByteArray.compress / decompress_dynamic(ZSTD)。\n⑫HTTPRequest：用于向后端上报结算。\n⑬外部：GodotSteam（Steam 大厅所有权自动转移、Steam Networking Sockets、GetAuthTicketForWebApi）。",
+ "interop_godotsteam_netfox": "GodotSteam：三条路线都要用它。\n①Steam 大厅：房主离开时 Steam 会自动把大厅所有者转给某个成员，可以作为路线 B（重开房）的“谁当新房主”的依据。但大厅里只迁身份，不迁游戏状态。新房主要以 SteamMultiplayerPeer.create_host 重新建房，其他人重新 connect，每条 Steam 连接要 1–2 秒（Understudy LESSONS）。\n②路线 A（Understudy）：Understudy 直接用 Steam Networking Sockets，不走 SteamMultiplayerPeer，不必重连（见 Understudy.json）。\n③超时：Steam 连接默认 TimeoutConnected=10 秒，靠它判断房主掉线太慢，必须自己做应用层心跳。\nnetfox：不解决迁移。它依赖 MultiplayerAPI，服务器是 id 1；它的 CharacterBody 回滚要乘 NetworkTime.physics_factor，还要处理 is_on_floor 滞后；物理回滚需要能手动步进的引擎。对零基础开发者来说，netfox 回滚 + 自研迁移叠在一起，复杂度太高，不推荐。可以单独借用 netfox.noray 做 NAT 打洞（Steam 发行一般用不上），或者参考 netfox.extras 的 RewindableStateMachine 写 Bot 状态机。",
+ "transport_matrix": "按传输层看三条路线的接力可用性：\n①Steam Networking Sockets / SDR 中继：路线 A（Understudy 自带 Steam 传输）可用，链路预先打开，不用重连。路线 B 可用，但要重开房：新 listen socket，所有人重新 connect，推断 1–3 秒。Steam 发行首选这一项。\n②SteamMultiplayerPeer（GodotSteam 的 MultiplayerPeer）：只适用路线 B。新房主调用 create_host，其他人调用 create_client(新房主 SteamID)，peer id 全部重新分配。\n③ENetMultiplayerPeer / ENetConnection：局域网或直连可用。跨公网时每个可能接任的人都要能接受入站连接（端口映射），Steam 发行不适用。\n④WebSocket / WebRTC：本专题不推荐，需要自建信令或中继服务器。\n⑤专用服务器（将来的 P4）：数据层 MatchState 与传输无关，可以原样搬上服务器。路线 A 可以让 headless 进程当房主、玩家当影子，服务器挂了还能接力回玩家机。",
+ "topology_authority": "四种拓扑与权威模型对照，按对用户游戏的适合程度排序（推断）：\n①房主全权威 + 热备影子（Understudy 模式）：所有人只发输入，房主算一切，影子逐 tick 跟随，名单顺序决定继任。接管约 0.23 秒，几乎不丢状态；代价是对局必须是纯数据，每台机器都要跑整世界预测。最符合“本局不依赖单一主机 + 流畅”的目标。\n②房主全权威 + 周期快照 + 重开房（Photon Fusion、Unity Netcode for Entities、UE 插件、Godot 自研的普遍做法）：房主定期把状态推给云端或继任者，掉线后选新主、建新房、所有人重连、按快照重建。Fusion 推荐约 30 秒的快照间隔，并明说“最近快照之后的变化会丢”；NfE 依赖 Relay 和 Lobby，选主延迟默认 120 秒、最低 5 秒。在 Godot 里能保留节点式写法，但仍需一个可序列化的数据层；推断空窗 2–6 秒。\n③玩家掌管自己角色 + 房主当协调员（Unity NGO Distributed Authority、Fiedler 的“谁交互谁拿权威”）：移动手感最好，房主掉线时丢得最少；但命中、拾取、Bot 仍需仲裁者，作弊面大，见 owner_authority_model。\n④专用服务器：最稳，但要花钱、要运维，属于将来的 P4。\n判断：用户的 P3/P4 路线以①为主、②为备选；③只用于“自己的移动”这一点。",
+ "tick_and_sync_rate": "建议参数（推断，按用户游戏）：\n①逻辑帧：60Hz（Understudy 硬性要求 physics_ticks_per_second=60）；走路线 B 可以用 30Hz 网络 tick。\n②状态下发：30Hz 差分（Understudy 默认每 2 tick 一次）；超过 16 人时可以考虑改成 20Hz，需要改 _physics_process 里的 t%2 条件。\n③Bot 决策：每 10–15 tick 一次（4–6Hz），并且错峰，保证每 tick 只有 1–2 个 Bot 在思考；A* 重规划每个 Bot 不超过 2Hz，每 tick 最多 1 次寻路查询。\n④路线 B 的迁移快照：每 0.5–1 秒给 1–2 名继任者发全量（可靠通道）。不建议发给所有人，16 人时会多出约 1–2Mbit/s 的上传。\n⑤掉线判定：应用层心跳 10–30Hz，房主状态包本身就可以当心跳；静默阈值 170–500ms，加多数票确认。不要依赖 ENet 默认 5–30 秒、Steam 默认 10 秒的超时。",
+ "snapshot_and_compression": "MatchState 的序列化建议（推断）：\n①用 StreamPeerBuffer 定长写，不用 Dictionary 或 var_to_bytes。坐标用 i32 千分之一像素，或 i16 的 1/8 像素；速度用 i16；朝向用 u8；血量和弹药用 u8 或 u16。\n②静态内容不进状态：地图、墙体网格、容器位置、战利品表都由 map_id + seed 推导。只存会变的部分：容器“已开”位图、地面物品、背包。\n③体积估算：16 名玩家约 12B/人；20 个 Bot 约 20B/个（含 AI 字段）；100 发子弹约 8B/发；300 个容器状态位约 40B；200 个地面物品约 8B/个；16 个背包约 60B/个。合计约 4–5KB，zstd 压缩后约 2–3KB。\n④每 33ms 的 XOR 差分：只有在动实体的约 6 字节变化，压缩后推断 400–900B。\n⑤MTU：Understudy 实测 12 人时 state_bytes p99 为 1165B，已接近约 1200B 的 MTU，要把差分控制在约 1100B 以内。全量（新加入、换主后第一帧、给待命的 1Hz FULL）4–16KB，会分片。\n⑥长局（30–50 分钟）里地面物品会越积越多：要定期合并或清理，或者给物品数量设上限，避免状态随时间膨胀。",
+ "shadow_sync": "热备与快照的取舍：\n①Understudy：影子和普通玩家一样收 30Hz 差分，另外附带最近 8 tick 实际应用的输入，所以影子始终停在房主最后一份真实状态上；待命每秒收一次 FULL。\n②Photon Fusion：只把最新快照传到 Photon Cloud，只给新房主，推荐约 30 秒一次。\n③Unity Netcode for Entities：周期快照上传到 Lobby，新快照覆盖旧的。\n④UE 的 Host Migration Core：靠标了 SaveGame 的变量。\n对用户游戏的判断（推断）：30–50 分钟的搜打撤里，30 秒的快照间隔意味着一次掉线就可能回退 30 秒的拾取和击杀，体验不可接受。最多容忍约 1 秒，也就是 Understudy 冷备的级别。\n路线 B 的最低配：房主每 0.5–1 秒给名单前 2 名继任者发全量。按 8KB 估算，约 64–128kbit/s/人。其余客户端用自己已收到的复制状态补齐显示。",
+ "host_disconnect_detection": "判定房主掉线的要点：\n①不要依赖传输层超时。ENet 默认 ENET_PEER_TIMEOUT_MINIMUM=5000ms、MAXIMUM=30000ms（Godot 自带 thirdparty/enet/enet.h）；Steam Networking Sockets 默认 TimeoutConnected=10000ms。靠这两个，掉线要 5–30 秒才发现。\n②做应用层判定：以房主状态包为心跳，静默超过阈值再加多数票。Understudy 的阈值是 detect_ms=170ms，加上 _majority 投票、房主侧自我切断、快速恢复、抖动链路主动交接。\n③路线 B 自研的推断参数：静默 300–500ms 进入“疑似”，并向其他成员询问；超过半数也听不到房主，才开始选主。选主规则所有人本地都能算：名单顺序或在场最久者优先；Steam 大厅所有者只作参考，以自己的 epoch 记录为准。\n④误判处理：旧房主恢复后，如果发现更高的 epoch，就降为普通玩家。没有 epoch 机制会出现“双房主”。",
+ "takeover_flow": "[不确定] 两条可执行的接管流程（推断）：\n【路线 A：Understudy】影子 _promote：epoch+1 → 对局里 remove_player(旧房主) → 广播名单 → 发出首帧全量。玩家已经预先连好名单前 5 名，不用重连。同机实测空窗中位 228ms。\n要自己补的只有游戏规则层：在 remove_player 里把旧房主的角色变成“掉线托管 Bot”或尸体加掉落，而不是直接删除。\n【路线 B：高层 API + 重开房】\n①每台机器都保存“最近一份 MatchState 快照（继任者）或复制状态（其他人）+ 名单 + epoch”；\n②判定房主掉线（见 host_disconnect_detection）；\n③按名单选出继任者，继任者关闭旧 peer，用 SteamMultiplayerPeer.create_host 建新房，把 epoch+1 写进 Steam 大厅元数据；\n④其他人收到大厅元数据后 create_client 连新房主，并用 SteamID 上报自己的 uid；\n⑤新房主用快照重建 MatchState，按数据重新 spawn 节点，再按 uid 把角色重新绑定到新的 peer id；\n⑥客户端从首帧全量继续。\n推断耗时：检测 0.3–0.5 秒，Steam 重连 1–3 秒，重建 0.2–1 秒，合计约 2–6 秒；丢失量最多一个快照间隔。",
+ "reconnect_and_peer_ids": "身份键：一律用稳定 uid，例如 SteamID 或由它派生的 16 位 id，不要用 peer id。Godot 高层 API 的 peer id 每次连接都会变，服务器又固定为 1。\nMatchState 里玩家实体以 uid 为键；路线 B 重连后，新房主维护一张 peer_id → uid 映射表。\n掉线重连回原角色：在 remove_player 里不删除实体，改为“离线”状态（由 Bot 托管或原地不动），保留 N 分钟；同一 uid 再 add_player 时直接恢复原实体。\n后端：match_id 加 uid 作为结算主键。",
+ "node_compat": "[不确定] 核心原则：MatchState（纯数据）是唯一真相；节点只用来画画面，或在 step() 内当同步查询工具。两条路线都需要这一层，所以要从 P1 就按这个原则写。逐个节点说明（推断为主，依据见引用）：\n【CharacterBody2D / move_and_slide】\n做法①“碰撞探针”（非严格模式，推荐零基础用）：场景里放一个 CharacterBody2D，collision_layer=0（不被别人检测到），collision_mask=墙层，motion_mode=FLOATING。step() 里每个实体依次把 global_position 和 velocity 设成数据值，调用 move_and_slide()，再把结果量化写回数据。\n可行的依据：move_and_collide 内部用 body_test_motion 同步查询，起点取 get_global_transform()（physics_body_2d.cpp 第 79、144 行）。所以同一个探针可以被房主副本、影子副本、预测副本轮流使用；墙是静态的，broadphase 早已就位。\n坑：\na. 必须在 _physics_process 调用链内调用，否则 delta 取渲染帧（第 47 行），结果就不可复现；\nb. 只能在主线程调用（Understudy LESSONS）；\nc. 跨机器不保证逐位一致，所以放弃严格模式；但影子总是采纳房主状态，接力不受影响；\nd. 玩家之间、玩家与 Bot 之间的碰撞不要靠物理。Kinematic 体在 broadphase 里的位置要等下一物理步才更新（netfox caveats），重算时会错。改为数据层的圆形分离，或者干脆不让角色互相碰撞（Multiplayer Starter 就是这么做的）。\n做法②纯网格碰撞（严格模式可用）：用整数做 AABB 对墙格的轴分离碰撞，约 100–200 行。\n【TileMapLayer】继续负责渲染。加载地图时用 get_used_cells 加 get_cell_tile_data().get_custom_data(\"solid\") 导出墙体网格（PackedByteArray）和 AStarGrid2D，step() 只读这张网格，不在 step 里查节点。门、可破坏墙的变化进 MatchState，变化时再 set_cell 刷新画面。\n【NavigationAgent2D / NavigationServer2D】不要放进 step。地图在物理帧末同步，可选后台异步；Understudy LESSONS 记录过影子追帧时查询得到空路径的问题；Agent 的路径需要每物理帧调用 get_next_path_position 推进，RVO 避让是异步回调，结果无法重放。改用 AStarGrid2D：同步、整数、可复现。Bot 的状态里只存 goal_cell 加短路径（≤32 格的 u16 列表），或者只存 goal 加 replan_at，读档后重算。路线 B 若坚持用 NavigationAgent2D，迁移时只保存 target_position，新房主重新设置 target 让它重新寻路，内部路径由 Agent 重建（官方文档：path 只在 target 改变或需要重新寻路时更新）。\n【LightOccluder2D / Light2D】纯表现，照常用。如果 Bot 的视线判定要用遮挡，在数据层用网格 DDA 射线判定，不要读光照。\n【Area2D、RayCast2D、动画、粒子】Area2D 拾取和 RayCast2D 命中改成数据层计算（圆与圆、射线与网格）。动画、粒子、音效由 MatchState 的事件队列驱动。\n工作量（推断，零基础 + Claude Code，按路线 A）：MatchState 骨架与序列化 3–5 人天；移动与碰撞 2–3（探针）或 4–6（纯网格）；射击与命中 3–5；容器、背包、掉落、撤离 5–8；Bot AI 加 AStarGrid2D 5–10；表现层绑定（节点由数据驱动、其他玩家插值、事件特效）3–6；接力整合与长局测试 4–8。合计约 25–45 人天。路线 B 节点写法本身可少 5–10 人天，但迁移层另需 8–15 人天，而且仍要有可序列化的数据层。",
+ "scale_10plus": "[不确定] 带宽公式：房主上传 ≈ (N−1) × f × (Δ+h) × 8。用 Understudy 实测校准：8 人时 7×30×(370+约45)×8 ≈ 0.70Mbit/s，16 人时 15×30×(566+约45)×8 ≈ 2.2Mbit/s，与实测 703kbit/s、2154kbit/s 吻合，所以包头开销 h 约 45B。\n按用户游戏推断的差分 Δ=500/800/1200B，f=30Hz：\nN=10：约 1.2 / 1.8 / 2.7Mbit/s；\nN=16：约 2.0 / 3.0 / 4.5Mbit/s；\nN=24：约 3.1 / 4.7 / 6.9Mbit/s；\nN=32：约 4.1 / 6.1 / 9.3Mbit/s。\n改成 f=20Hz 时以上数值乘 2/3。玩家下行约 f×(Δ+h)×8 ≈ 130–300kbit/s，上行（输入）约 50kbit/s。路线 A 的影子额外收 applied 块，16 人时约 0.7KB/包（推断）。\n判断：16 人以内，家宽上行（国内常见 20–50Mbit/s）可以承受；24 人以上要降频、做 AOI，或上专用服务器。\nCPU 才是真正瓶颈（推断）。Understudy 客户端做整世界预测，每秒 step 次数 ≈ 60 + 30×(RTT/16.7ms + 3)，RTT 100ms 时约 330 次/秒。单次 step 0.5ms 时约占单核 17%，2ms 时约占 66%，会掉帧。影子再加 60 次复算。\n对策：\n①预测副本里的 Bot 不跑 AI，只做惯性外推。可以在 understudy_client.gd 第 237 行 pred 创建后加一个标志位，属于一行级的改动；房主和影子的 runner 在 session 第 415 行另行创建，不受影响；\n②Bot 错峰低频决策；\n③A* 结果缓存进状态；\n④step 预算：16 人加 20 Bot 时，房主每 tick 控制在 0.5ms 以内。\nMTU：差分 p99 控制在约 1100B 以内（Understudy 实测 12 人时 p99 已到 1165B）。",
+ "interest_management": "AOI（只同步附近实体）的做法：\n①路线 B（高层 API）：可以加。用 MultiplayerSynchronizer.add_visibility_filter 或 set_visibility_for，房主每 10–15 tick 按距离（约 1.5 倍屏幕）重算可见性。推断能省 50–65% 的实体流量，约 1–3 人天。\n②路线 A（Understudy）：很难加。所有人共用一份信封，客户端整世界预测，影子逐字节比对。要做就得改 _send_state 为每个玩家单独编码，并让预测只覆盖局部，推断 5–10 人天，还会失去严格模式。\n判断：用户不在意防透视，16 人以内不做 AOI，先靠紧凑状态和降频。24 人以上再考虑 AOI 或专用服务器。",
+ "bot_ai_placement": "Bot 放在哪里跑：Bot 是“规则的一部分”，只在房主（和路线 A 的影子）上运行；全部状态都进 MatchState，迁移时随状态自动带走。\n要进状态的字段（推断）：位置和速度（定点）、血量、背包和装备、AI 模式枚举（巡逻、搜刮、追击、撤离、托管）、target_uid、goal_cell、短路径或 replan_at、think_at（下次决策的 tick）、记忆（最后看到敌人的位置和 tick）、每 Bot 或全局的 PRNG 状态（例如 u32 xorshift）。\n规则：\n①不要用全局 randf() 和 RandomNumberGenerator 默认实例。随机数状态必须进 MatchState，否则新房主算出的 Bot 行为会突变（非严格模式下只是行为跳变，严格模式下会被报 desync）；\n②不在 step 里用 NavigationServer、Timer 节点或信号回调，计时一律用 tick 计数；\n③如果用状态机，状态和进入时间都存数据，可以参考 netfox 的 RewindableStateMachine 思路。\n空位补 Bot：按真人数量在 add_player/remove_player 里增减。玩家（包括旧房主）掉线时把他的角色转为“托管 Bot”（设 is_bot 标志），长局里不会凭空消失一个人。\n迁移时：路线 A 不用做额外工作；路线 B 读快照后，路径统一重算。",
+ "owner_authority_model": "“每个玩家掌管自己角色、房主只当协调员”的利弊（推断，参考 Unity NGO Distributed Authority 和 Fiedler 的权威方案）：\n利：\n①自己的移动零延迟，不会被拉回，不需要预测和校正；\n②CharacterBody2D 可以在本机正常 move_and_slide，不需要重算，节点兼容性最好；\n③房主 CPU 负担轻；\n④房主掉线时，玩家角色的位置在各自手里，丢失更少。\n弊：\n①速度、穿墙、无敌、瞬移作弊都要靠房主做合理性夹取，比如最大位移 = 速度×dt×1.2 再加网格穿墙检查；有后端成长数据时这类作弊影响更大；\n②命中判定要在“射手说了算”和“房主仲裁”之间选，前者对被打者不公平，后者要自己做延迟补偿；\n③两人同时捡同一件物品、开同一个容器，仍需房主仲裁，而且拾取有 1 个 RTT 的延迟；\n④背包和结算必须由房主权威，否则后端交叉校验无从谈起；\n⑤Bot、子弹、容器仍归房主，迁移问题并没有消失；\n⑥在 Godot 高层 API 里，房主（id 1）一掉线 SceneMultiplayer 会话照样结束，Spawner 会删节点（#9214），所以这个模型也省不掉重开房。\n建议：不要把房主降为协调员。保持“房主权威：战斗、物品、Bot、结算”。如果实测手感不够，再加一个折中：玩家输入里携带本机算好的位置（量化 8–12 字节），房主按速度上限和墙格夹取后采纳。在 Understudy 中改 input_source 和 step 即可，推断 2–4 人天；在高层 API 中推断 3–6 人天。",
+ "backend_crosscheck": "可执行的设计（推断，约 6–12 人天，后端可以用 Nakama、PlayFab 或自建的小型 HTTP 服务）：\n①身份：客户端用 GodotSteam 的 GetAuthTicketForWebApi 取票据，后端调用 ISteamUserAuth/AuthenticateUserTicket 验证（必须在安全服务器上调用），拿到 SteamID。\n②开局：房主携带大厅成员名单申请 match_id。后端返回 seed、map_id 和每人带入的装备清单，并签名。每名参与者用 match_id 拉取同一份清单，add_player(uid) 时从清单读取装备，保证所有机器一致。\n③物品 UID 可复算：地图战利品由 hash(seed, container_id, slot) 生成唯一 item_uid，后端能用同样的 seed 复算出“本局可能出现的全部物品”。结算时检查带出的每件物品：要么是带入的，要么属于本局合法生成；同一个 uid 不能被两人同时带出，这能挡住接力期间的刷物品和丢物品。\n④事件与幂等：撤离、死亡、击杀都写进 MatchState 的事件队列，带单调递增的 event_seq。房主和影子（路线 A），或房主和该玩家本人（路线 B），各自用 (match_id, uid, event_seq) 上报。后端收到两份一致的上报才入库，重复上报直接忽略。这样换主后新房主重报不会重复记账。\n⑤局末：双方上报 state_hash（Understudy 有 UnderstudyWire.state_hash）。不一致时标记为争议局。争议局抽检可以上传 UnderstudyRecorder 录像（按 epoch 分段），在后端用 headless Godot 运行 understudy_replay 复算。\n⑥合理性规则：单局价值上限、击杀数上限、撤离时间不早于撤离点开放时间。\n⑦掉线未回的玩家：按游戏规则结算，例如托管存活或判死亡，规则要写进 MatchState。",
+ "key_code_snippets": "以下片段均为“推断示例”（按 Godot 4.5+ API 写，未实测），用来说明做法，不是从源码摘录。\n【1. 碰撞探针：数据驱动的 move_and_slide（非严格模式）】\n```gdscript\nclass_name WallProbe extends CharacterBody2D\n# 场景里只放一个：collision_layer = 0，collision_mask = 墙层，motion_mode = FLOATING\nfunc slide(pos_m: Vector2i, vel_m: Vector2i) -> Array:\n\t# pos_m/vel_m 为千分之一像素（及 /秒）的整数，存放在 MatchState 中\n\tglobal_position = Vector2(pos_m) / 1000.0\n\tvelocity = Vector2(vel_m) / 1000.0\n\tmove_and_slide()  # 必须在 _physics_process 调用链内，否则 delta 取渲染帧\n\treturn [Vector2i((global_position * 1000.0).round()), Vector2i((velocity * 1000.0).round())]\n```\n解读：move_and_slide 内部用 body_test_motion 同步查询，以当前 global_transform 为起点，所以同一个探针可以被多份对局副本轮流使用。结果马上量化回整数，保证 save_state 是紧凑、确定的字节。\n【2. 从 TileMapLayer 导出寻路网格】\n```gdscript\nfunc build_grid(walls: TileMapLayer) -> AStarGrid2D:\n\tvar g := AStarGrid2D.new()\n\tg.region = walls.get_used_rect()\n\tg.cell_size = Vector2(16, 16)\n\tg.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES\n\tg.update()\n\tfor c in walls.get_used_cells():\n\t\tvar td := walls.get_cell_tile_data(c)\n\t\tif td and td.get_custom_data(\"solid\"):\n\t\t\tg.set_point_solid(c, true)\n\treturn g  # 静态网格不进 save_state；门等动态格子以 MatchState 为准\n```\n解读：AStarGrid2D 是同步的纯计算，可以在 step() 内调用。注意：多份对局副本共用一张网格时，动态门不要直接 set_point_solid 改共享网格，要么每份副本各一张，要么在寻路后用状态再过滤一遍。\n【3. Bot 状态紧凑序列化】\n```gdscript\nfunc save_bot(b: StreamPeerBuffer, bot: BotData) -> void:\n\tb.put_32(bot.x); b.put_32(bot.y)      # 千分之一像素\n\tb.put_16(bot.vx); b.put_16(bot.vy)\n\tb.put_u8(bot.hp); b.put_u8(bot.mode)   # 巡逻/搜刮/追击/撤离/托管\n\tb.put_u16(bot.target_uid); b.put_u16(bot.goal_cell)\n\tb.put_u32(bot.think_at); b.put_u32(bot.rng)\n\tb.put_u8(bot.path.size())\n\tfor c in bot.path: b.put_u16(c)       # 或只存 goal，读档后重算\n```\n解读：Bot 的“想法”（目标、路径、下次决策时刻、随机数状态）都是数据，所以换房主后 Bot 会接着同一个计划走，不会“失忆”。\n【4. 路线 B：只给继任者发迁移快照】\n```gdscript\nfunc _on_snapshot_timer() -> void:  # 0.5–1 秒一次，仅房主\n\tvar raw := match_state.save_state()\n\tvar z := raw.compress(FileAccess.COMPRESSION_ZSTD)\n\tfor uid in successors.slice(0, 2):\n\t\t_recv_snapshot.rpc_id(peer_of(uid), epoch, match_state.tick, raw.size(), z)\n\n@rpc(\"authority\", \"call_remote\", \"reliable\", 2)\nfunc _recv_snapshot(e: int, t: int, n: int, z: PackedByteArray) -> void:\n\tif e >= epoch: last_snapshot = [t, z.decompress(n, FileAccess.COMPRESSION_ZSTD)]\n```\n解读：快照只发给名单前 2 名继任者，控制带宽。epoch 用来拒绝旧房主的过期快照。",
+ "debug_tooling": "接力相关的调试与验证工具：\n①Understudy 自带 tests/harness.py 与 report.py：杀房主、双杀、计划退出、闪断、恶劣网络，同机实测开箱可跑。还有 log_path 的 JSONL 统计、record_path 录像与 understudy_replay，可做跨机 desync 检测。\n②路线 B 要自己做：一个“kill -9 房主”的脚本（同机多开 headless），统计接管空窗、状态丢失量（快照 tick 与崩溃 tick 的差）、物品守恒（全图物品 uid 集合前后一致）。\n③Godot 编辑器调试器的网络分析器（Network Profiler）只能看高层 API 的流量。\n④Multiplayer Starter 的 F3/F4 和 tools/udp_proxy.py 可以借来模拟延迟与丢包。",
+ "known_issues": "引擎层：\n①#7912（2023-09 至今 open）：服务器 id 恒为 1，没有所有权转移 API；\n②#9214 / PR #97910（2024-10 至今 0 评审，作者自称导出版无效）：Spawner 会在权威端断线时删除节点；\n③PR #76462（2023-04 至今 open）：没有物理手动步进，作者 2026-08 表示无动力维护，物理维护者职位空缺（clayjohn 2026-02）；\n④move_and_slide 只能在主线程运行，而且在物理帧外调用时 delta 取渲染帧；\n⑤NavigationServer 在帧间同步，同帧或追帧循环里查询可能得到空路径；map_force_update 在 4.7 已弃用；\n⑥ENet 默认 5–30 秒、Steam 默认 10 秒才判断断线。\n方案层：\n⑦Understudy：0.1.0、单机测试；房主和其余所有玩家同时消失时影子不会接管；双重故障回退 0.7–1.1 秒；旧房主角色会被 remove_player 移除；整世界预测的 CPU 随 Bot 数量增长；\n⑧快照式迁移（Fusion、NfE、UE 插件）：官方都承认“最近快照之后的变化丢失”，并且需要重连。NfE 选主延迟默认 120 秒；Fusion 的迁移流程步骤多，文档标注仍在完善；\n⑨Fish-Net 官方文档：没有内置房主迁移，“可以自己做但很棘手”；\n⑩Unity NGO：默认迁移实现只支持 Netcode for Entities，NGO 用户要改用 Distributed Authority。",
+ "missing_features": "截至 2026-11-21 仍缺：\n①Godot 官方：房主迁移、所有权转移 API、物理手动步进、可回滚的导航。\n②社区：没有任何“已上线 Godot 游戏 + 房主迁移”的公开案例或公网实测，也没有搜打撤类“长局迁移 + Bot + 背包”的示例。\n③用户要自己补：MatchState 数据层、掉线角色托管规则、物品 UID 与后端校验、Steam 大厅与接力名单的对齐（大厅元数据以 epoch 和 auth 为准）、路线 B 的重开房流程、长局压测脚本。",
+ "real_network_risks": "[不确定] 推断为主：\n①Wi-Fi 突发卡顿 100–300ms，可能触发误接管（Understudy 阈值 170ms），需要实测误接管率。\n②Steam 中继加跨省或跨国 RTT 后，路线 B 每次重连 1–3 秒；路线 A 预先打开链路，可以避免。\n③房主上传：16 人约 2–4.5Mbit/s。家里有人同时上传时会过载，要降频或换主（Understudy 有 overload 场景模拟）。\n④全量快照 4–16KB 会分片，丢一片整条消息作废，换主后第一帧会变慢。\n⑤弱机、差网玩家可能排到继任位：Understudy 名单按加入顺序排，不按质量排，需要自己改成按 RTT 和帧耗时排序。\n⑥长局里多次换主：在搜打撤 PvP 里房主很可能中途死亡后想退出，所以“计划交接”是最常见的情况，比崩溃更常见（推断）。要做“死亡后退出 = quit_gracefully”的规则，计划交接实测约 55ms。\n⑦Steam 自动更新导致玩家构建不同，Understudy 的 build_id 会拒绝同局。",
+ "long_match_state_loss": "30–50 分钟长局里接管时的状态丢失（推断）：\n①丢失量按方案：Understudy 普通接管只有最后约 170ms 的输入被影子按相同输入重算，基本不丢；双重故障回退 0.7–1.1 秒；快照式迁移最多丢一个快照间隔（Fusion 推荐 30 秒，对搜打撤不可接受，自研应 ≤1 秒）。\n②最怕的四类问题：\n- 物品复制或丢失：回退期间捡起的物品回到地上，或回退前已上报后端。对策：物品 uid、事件幂等，后端只认“双方确认”的撤离。\n- 旧房主角色：直接删除会让他的装备凭空消失。对策：转托管 Bot，或原地留尸体加掉落。\n- 计时与随机：局内时钟、撤离点开放、空投等都按 tick 记在状态里，随机数状态进状态。\n- 状态膨胀：地面物品、尸体越积越多，要设上限和合并规则。\n③多次换主的累积风险：每次换主都可能换到更差的机器。可以给继任者设门槛（RTT < 120ms、帧耗时 < 50%），不达标的排到后面。\n④录像按 epoch 分段，后端争议复算时要按 epoch 拼接。",
+ "other_engines_lessons": "其他引擎可借鉴的做法：\n①Photon Fusion（Client Host 模式）：\n- 可借鉴：通过 HostMigrationToken 统一触发，所有人新建 Runner；新房主用 GetResumeSnapshotNetworkObjects 枚举旧对象，Spawn 后用 CopyStateFrom 复制状态；用 ShutdownReason.HostMigration 区分迁移和普通退出；建议只复制需要的 Behaviour。\n- 不可借鉴：30 秒的快照间隔，对搜打撤太长。\n②Unity Netcode for Entities：\n- 可借鉴：快照里同时带 tick 和已用时间；迁移后用稳定 ID 而不是网络 ID 重新链接引用；在连接实体上打 PlayerSpawned 标记，避免重复生成角色；迁移进行中用一个全局标记，阻止“世界创建时的初始化”覆盖已迁移的数据。\n- 不可借鉴：依赖 Relay 和 Lobby；选主延迟默认 120 秒、最低 5 秒。\n③Unity NGO Distributed Authority：会话所有者掉线后自动从在线客户端中提拔；标为 SessionOwner 的对象跟随新所有者；玩家对象默认锁定所有权。对应用户的做法：房主拥有的对象（Bot、容器、计时器）在换主时整体转给新房主，玩家角色绑定 uid。\n④Fish-Net：没有内置迁移（官方文档）。\n⑤Unreal：引擎没有内置迁移，Fab 插件用 SaveGame 标记的变量加重连，都不是零中断。\n⑥老 UNet、DirectPlay：只同步过的数据（SyncVar）能保留；DirectPlay 按名单版本号和最小编号选新主。\n⑦Glenn Fiedler 的“交互即拿权威”：适合物理堆叠，不适合 PvP 结算。\n总结：业界成熟做法都是“稳定 ID + 可序列化的权威数据 + 确定性选主 + 迁移期间暂停或冻结 + 迁移后修复引用”，区别只在快照频率和是否重连。Understudy 把快照频率推到 30Hz 并预先打开链路，是同一思路的极端版本。",
+ "recommended_plan": "可执行的改法与顺序（推断，零基础 + Claude Code）：\nP1 房主模式（同时打数据层地基）：MatchState（纯数据，StreamPeerBuffer 序列化）+ step(tick, inputs) + 节点视图层；移动用碰撞探针；Bot 进状态，用 AStarGrid2D；身份用 SteamID uid。先在单机里跑通 save→load→继续，验证结果一致。约 15–25 人天。\nP2 Steam 联机：先做验证实验 1–3，再决定走 A（Understudy）还是 B（高层 API + 快照重开房）。A 需 4–8 人天整合，B 需 8–15 人天自研迁移。\nP3 房主接力打磨：掉线托管、计划交接（死亡后退出）、继任者质量排序、长局压测。约 4–8 人天。\n后端：Steam 票据验证、match manifest、物品 uid 校验、双份上报幂等。约 6–12 人天。\nP4 专用服务器：MatchState 原样复用；A 让 headless 当房主，0–3 人天；B 去掉迁移层。\n总计约 25–45 人天（不含美术和玩法内容）。",
+ "engine_internals_dependency": "推荐路线不改引擎、不依赖私有成员：碰撞探针、AStarGrid2D、TileMapLayer 导出、StreamPeerBuffer 都是公开 API。\n不推荐：DanielSnd 式改 SceneMultiplayer 内部（transfer_peer_id_ownership），或给引擎打 PR #97910 / #76462 补丁再自编导出模板。随版本升级容易被破坏，PR #97910 作者也报告过导出版无效。\n风险点（推断）：move_and_slide 的内部实现（recovery、safe_margin）随小版本变化时，非严格模式不受影响，但录像跨版本回放会不一致。",
+ "combination_path": "组合路径（推断）：\n①首选：自写 MatchState 数据层 + Understudy（Steam 传输）+ GodotSteam 大厅 + 自建后端。节点只做视图和碰撞探针。可以先用 Multiplayer Starter 学“输入上传与服务器权威”的概念，但不要复用它的节点式模拟。\n②备选：自写 MatchState 数据层 + Godot 高层 API（SteamMultiplayerPeer、MultiplayerSynchronizer 只同步视图属性）+ 自研“继任者快照 + Steam 大厅选主 + 重开房”。适合验证实验里 Understudy 公网表现不过关的情况。\n③将来：同一份 MatchState 上专用服务器。\n关键在于两条路线共用同一个数据层，所以 P1 的数据层投资不会浪费。",
+ "migration_cost": "[不确定] 人天估算（推断）：\n①从“节点即状态”的原型（Multiplayer Starter 式）迁到数据层：规则层基本重写，15–30 人天，表现层约一半可复用。\n②数据层到 Understudy：4–8 人天（接 step/save/load、Steam 传输、大厅对齐、remove_player 托管）。\n③数据层到路线 B 自研迁移：8–15 人天。\n④后端交叉校验：6–12 人天。\n⑤AOI（仅路线 B）：1–3 人天。\n⑥10 人以上的优化（状态压缩、Bot 错峰、预测副本里 Bot 只外推）：3–6 人天。\n最省的路线是从一开始就写数据层，省掉 ①。",
+ "validation_experiment_ideas": "实验1（半天）move_and_slide 探针一致性：\n- 步骤：同一张 TileMapLayer 地图，用一个 WallProbe 驱动 3 份 MatchState 副本（模拟房主、影子、预测）；同一输入序列跑 3600 tick，中途在第 1000 tick 对其中一份 save→load 后继续。\n- 通过：3 份最终状态逐字节相同；在 _process 里错误调用时能复现不一致（证明 delta 坑存在）。\n- 不通过：同机同输入出现差异，就改用纯网格碰撞。\n实验2（1 天）Bot 迁移：\n- 步骤：20 个 Bot（AStarGrid2D、错峰决策、PRNG 进状态），每 30 秒把状态存盘，再在另一进程读回并继续。\n- 通过：读回后 Bot 路径与行为和不中断的对照组完全一致（同机），读档后 0 帧行为跳变；单 tick step 不超过 0.5ms。\n实验3（1–2 天）16 人带宽与 CPU：\n- 步骤：用 Understudy harness 思路跑 16 个 headless 进程加 20 个 Bot，--lat 60 --jitter 15 --loss 0.02。\n- 通过：房主上传 < 4Mbit/s，差分 p99 < 1100B，客户端 step 加重算占帧时间 < 25%（对比打开和关闭“预测副本 Bot 只外推”两种情况）。\n实验4（1–2 天）路线 B 重开房基线：\n- 步骤：SteamMultiplayerPeer + Steam 大厅，3–4 台真机，房主每 2 分钟 kill -9 一次，新房主按继任快照重建。\n- 通过：10 次中至少 9 次成功；空窗 < 6 秒；丢失 < 1 秒；全图物品 uid 集合守恒。用结果和 Understudy 的公网实验对比，决定 A 还是 B。\n实验5（1 天）后端交叉校验：\n- 步骤：mock 后端，测 match manifest、物品 uid 复算、双份上报幂等；人为制造“回退期间捡起的物品重复撤离”和“作弊房主改背包”两种情况。\n- 通过：两种情况都被拒绝或标记，正常对局 100% 入库。\n实验6（半天）长局计划交接：\n- 步骤：40 分钟对局，房主死亡后退出 5 次，外加 1 次双杀。\n- 通过：每次交接后旧房主的角色变成托管或尸体，物品不丢、不复制，结算一致。",
+ "maintenance_risk": "推断：路线 A 依赖 Understudy（匿名单作者、0.1.0、无仓库）。CC0/MIT-0 许可可以 fork 后自己维护，核心约 3,350 行 GDScript。\n路线 B 只依赖 Godot 官方 API 和 GodotSteam，维护风险低，但迁移层要自己维护。\n官方近期补上迁移的可能性低：#7912 三年未动，物理维护者职位空缺。",
+ "godot_version": "建议统一用 Godot 4.7.x（Understudy 要求 4.5+；Multiplayer Starter 要求 4.7；map_force_update 在 4.7 已弃用）。同一局的所有玩家必须是同一个构建（Understudy 的 build_id 会混入引擎 hash）。",
+ "strict_mode": "对本专题的判断（推断）：用户不在意防透视，而碰撞探针路线会让 step 无法跨机逐位一致，所以建议先不开严格模式。接力只依赖“影子采纳房主状态”，与严格模式无关。如果将来要用影子复核来抓作弊房主，移动和碰撞就要改成纯整数网格碰撞，Bot 不能用 NavigationServer，三角函数要换成 UnderstudyMath，推断要多花 4–8 人天。",
+ "prediction_reconciliation": "与节点共存相关的要点（推断）：Understudy 的客户端预测整个世界，每次校正都要 load_envelope 后重算多个 tick（understudy_client.gd 的 _reconcile），所以 step 里调用的碰撞探针每秒会被调用约 330 次乘以实体数，需要控制成本。路线 B 可以照 Multiplayer Starter 的做法只预测自己的角色，重放时只调用自己的 move_and_slide，Bot 和其他玩家用插值显示。",
+ "sources": [
+  {
+   "title": "godot-proposals #7912 Implement automatic host migration in peer-to-peer games",
+   "url": "https://github.com/godotengine/godot-proposals/issues/7912",
+   "type": "社区",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "godot-proposals #9214 Option to not delete nodes created by MultiplayerSpawner when its authority peer disconnects",
+   "url": "https://github.com/godotengine/godot-proposals/issues/9214",
+   "type": "社区",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "godot PR #97910 Add option to not delete nodes created by MultiplayerSpawner",
+   "url": "https://github.com/godotengine/godot/pull/97910",
+   "type": "源码",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "godot PR #76462 Add PhysicsServer2/3D::space_step() to step physics simulation manually",
+   "url": "https://github.com/godotengine/godot/pull/76462",
+   "type": "源码",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Godot 源码 scene/2d/physics/physics_body_2d.cpp（move_and_collide / body_test_motion / delta 取值）",
+   "url": "https://github.com/godotengine/godot/blob/master/scene/2d/physics/physics_body_2d.cpp",
+   "type": "源码",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Godot 源码 thirdparty/enet/enet.h（ENET_PEER_TIMEOUT 默认值）",
+   "url": "https://github.com/godotengine/godot/blob/master/thirdparty/enet/enet.h",
+   "type": "源码",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Godot 4.7 文档 NavigationServer2D",
+   "url": "https://docs.godotengine.org/en/stable/classes/class_navigationserver2d.html",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Godot 文档 NavigationAgent2D",
+   "url": "https://docs.godotengine.org/en/stable/classes/class_navigationagent2d.html",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "netfox Rollback caveats（CharacterBody、physics_factor、is_on_floor、无物理步进）",
+   "url": "https://foxssake.github.io/netfox/latest/netfox/tutorials/rollback-caveats/",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "netfox.extras Physics 指南（PhysicsDriver2D、Rapier、Blazium）",
+   "url": "https://foxssake.github.io/netfox/latest/netfox.extras/guides/physics",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "netfox discussion #272（Godot 物理不确定、状态同步）",
+   "url": "https://github.com/foxssake/netfox/discussions/272",
+   "type": "社区",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "GameNetworkingSockets 源码 csteamnetworkingsockets.cpp（TimeoutConnected 默认 10000ms）",
+   "url": "https://github.com/ValveSoftware/GameNetworkingSockets/blob/master/src/steamnetworkingsockets/clientlib/csteamnetworkingsockets.cpp",
+   "type": "源码",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Photon Fusion Host Migration 手册",
+   "url": "https://doc.photonengine.com/fusion/current/manual/host-migration",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Unity Netcode for Entities Host migration intro",
+   "url": "https://docs.unity3d.com/Packages/com.unity.netcode@1.7/manual/host-migration/host-migration-intro.html",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Unity Netcode for Entities Host migration considerations",
+   "url": "https://docs.unity3d.com/Packages/com.unity.netcode@1.7/manual/host-migration/host-migration-considerations.html",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Unity Multiplayer Services Session host migration",
+   "url": "https://docs.unity.com/en-us/mps-sdk/session-host-migration",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Unity NGO Distributed authority",
+   "url": "https://docs.unity3d.com/Packages/com.unity.netcode.gameobjects@2.11/manual/terms-concepts/distributed-authority.html",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Unity 论坛 Host Migration with Lobby, Relay and NGO",
+   "url": "https://discussions.unity.com/t/host-migration-in-multiplayer-game-which-uses-lobby-relay-and-netcode-for-gameobjects/923073",
+   "type": "社区",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Fish-Networking 文档（llms-full.txt：Host migration 无内置）",
+   "url": "https://fish-networking.gitbook.io/docs/llms-full.txt",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "UE 论坛 Host Migration Core 插件",
+   "url": "https://forums.unrealengine.com/t/host-migration-core-keep-your-multiplayer-games-alive-when-the-host-disconnects/2841852",
+   "type": "社区",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "UE 论坛 Host Migration Possible with Listen Servers?",
+   "url": "https://forums.unrealengine.com/t/host-migration-possible-with-client-server-listen-servers/384489",
+   "type": "社区",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Unity UNet Host Migration（旧文档，SyncVar 以外数据迁移后丢失）",
+   "url": "https://docs.unity3d.com/2018.4/Documentation/Manual/UNetHostMigration.html",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Microsoft DirectPlay Host Migration (Peer-to-Peer)",
+   "url": "https://learn.microsoft.com/en-us/openspecs/windows_protocols/mc-dpl8cs/c188116b-228c-4c39-9959-381845f3d1af",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Gaffer On Games: Networked Physics in Virtual Reality（权威方案）",
+   "url": "https://gafferongames.com/post/networked_physics_in_virtual_reality/",
+   "type": "社区",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Steamworks Web API ISteamUserAuth（AuthenticateUserTicket）",
+   "url": "https://partner.steamgames.com/doc/webapi/isteamuserauth",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Edgegap：Host migration in P2P or relay-based multiplayer games",
+   "url": "https://edgegap.com/blog/host-migration-in-peer-to-peer-or-relay-based-multiplayer-games",
+   "type": "社区",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Godot 论坛 Passing Host in P2P game",
+   "url": "https://forum.godotengine.org/t/passing-host-in-p2p-game/109411",
+   "type": "社区",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Understudy 0.1.0 源码（LESSONS.md、understudy_client.gd、understudy_lint.gd，Zenodo 10.5281/zenodo.23227194）",
+   "url": "https://doi.org/10.5281/zenodo.23227194",
+   "type": "源码",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "本项目参照结果 Understudy.json（2026-11-21 同机实测）",
+   "url": "file:///home/user/Deep-Research-skills/godot-mp-starter-vs-understudy/results/Understudy.json",
+   "type": "源码",
+   "accessed": "2026-11-21"
+  }
+ ],
+ "uncertain": [
+  "community_reviews",
+  "scale_10plus",
+  "node_compat",
+  "migration_cost",
+  "takeover_flow",
+  "real_network_risks"
+ ]
+}
