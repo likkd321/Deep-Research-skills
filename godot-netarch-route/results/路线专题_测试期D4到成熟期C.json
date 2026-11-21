@@ -1,0 +1,235 @@
+{
+  "item_name": "路线专题：测试期 D4 → 成熟期 C",
+  "summary": "结论：报告里的路线能走通，但前提是把“C”拆成两档来看。①“D4 玩家协调员 → 云端 headless 协调员、移动仍由客户端负责”（即方案一 D4-C）这一步确实顺滑。Destiny 1→2 走的正是这一步：Bungie 把 Mission Host 和 Physics Host 都搬进数据中心，但官方原话是“每个玩家对自己的移动与技能有权威”。Dead by Daylight 上了专服之后，命中仍由杀手客户端上报，过了一年才补上服务端校验。所以只要协调员代码从第一天起就不假设“本机有玩家”、和所有玩家（包括自己）都只用消息交流，这一步推断 8–20 人天。②“→ 纯 C（服务器管移动）”不是“导出 --headless 就完事”。它把移动的权威模型整个翻过来，必须补本机预测与校正、远端插值，以及命中的时间语义（服务端回溯，或“射手优先+校验”）。推断要多花 15–35 人天。Bungie 2026 年的搜打撤新作 Marathon 就从 Destiny 的客户端权威改成了全服务端权威，带逐发子弹回溯和服务端战争迷雾。③方案三特有的“D2 快照备份全员、选主、优雅让渡、冻结重选、迁移期 GUID 去重、多端交叉对账”在切到任何一档 C 后几乎全部白做，推断 15–30 人天，而且是最难调的部分；只在好友房里还有残值。④“甜点区”：从第一天就按“服务器形状”写代码，同一套服务器模块有三种启动方式：本机或 1 台 VPS 跑 headless 专服、好友房跑房主进程内嵌服务器、普通客户端。测试期直接用 headless 专服，好友房只做“房主内嵌、不做接力”。移动先用 D4-C 模型（客户端移动+服务端包络复核），但写成“输入→step”的形式，以后能翻成纯 C。这样比“先 D4 P2P 带接力、再切 C”推断省 20–40 人天，还绕开了 10–20 人长局里连续换主的调试泥潭。策略类玩法本来就不需要 0ms 走位，应直接做纯 C（指令式），D4 对它几乎没有收益。（查询日期 2026-11-21；人天均为推断）",
+  "representative_cases": "【P2P/房主制 → 专服的真实案例】\n1. Destiny 1 → Destiny 2（Bungie，自研 Tiger 引擎，PvE+PvP，6–12 人）。D1 由玩家主机承担托管职责，数据中心只跑脚本与任务逻辑。D2 的“Mission Host 与 Physics Host 都在我们的数据中心运行”，“你再也不会在 Raid 或 Trials 中遇到房主迁移”。但架构仍是“客户端-服务器与 P2P 的混合”：“服务器对游戏进程有权威，每个玩家对自己的移动和技能有权威”，以保证移动与射击的即时感。持久化角色的变更“直接发往安全数据中心，不经 P2P”。改了什么：托管从玩家搬上云，消灭迁移；移动权威没动。花了多久：随新作推出（2014→2017-09），不是热更新。白做的部分：D1 的房主迁移逻辑。来源：Bungie TWAB 2017-05-25（Matt Segur 原文）。用户报告的说法核实为基本正确。\n2. Marathon（Bungie，2026，搜打撤，与用户同品类）。官方《Networking and Security》（2026-02-24）称：专服对移动、射击、动作、背包有最终决定权；客户端预测、服务端纠正；服务端对每颗子弹做带回溯的瞄准补偿；服务端战争迷雾让客户端拿不到不该看见的玩家位置，容器内容在靠近前也不下发。Roblox 开发者论坛帖称 Marathon 团队在 Destiny 十余年客户端权威之后，面对了从客户端权威转到服务端权威的难题（二手说法）。启示：同一家公司、同一品类，最终仍选了纯 C。\n3. For Honor（Ubisoft，AnvilNext，8 人）。原架构是“没有房主的全网状 P2P 确定性模拟”，人人互发输入，有人退出就全员暂停并 Resync。2017-07-27 宣布做专服，“一小部分在线团队在做”，“这是一项大工程”。PC 于 2018-02-19 上线，主机于 2018-03-06 上线：距宣布约 7 个月，距发售（2017-02）约 1 年。效果：加入或退出不再暂停、无 Resync、彻底消除房主迁移、不再要求 NAT 类型。仍保留 P2P 的：人机、战役、自定义房。专服内部是否改为服务器模拟、还是仍由客户端确定性模拟加服务器中继，官方未披露 [不确定]。用户报告“耗费整整一年全面重构”的说法，时间量级大致对，“全面重构”无一手证据。\n4. Dead by Daylight（Behaviour，UE4，1v4）。原为杀手当房主的 P2P。2018-12 TGA 宣布迁专服，原定 2019 夏；2019-04 起 PTB 测试；后推迟到 2019 秋全平台，先做 PC 可回滚的 live test。测试暴露的问题：Huntress、Plague、Clown 的投射物延迟和命中问题，一次攻击命中多人，Trapper 一次放两个夹子，失明效果无限持续，与物体交互延迟。这些都是“原来在房主本机零延迟执行、搬上服务器后出现时序竞态”的典型问题。上线后命中仍由杀手客户端上报，服务器“偏向杀手”；2020-12 才常驻启用 Hit Validation，在杀手网络差时拒绝“只因延迟才打中”的命中。启示：专服上线时可以先保留客户端权威命中，再逐步补校验。\n5. Friday the 13th: The Game（Gun Media/IllFonic，UE4，1v7）。2017-05-26 发售时无专服，随机玩家当房主，房主早死怒退就炸局。主机专服 2018-09-10/14 上线，约在发售后 16 个月。2020-11 因版权诉讼与成本关闭专服，退回 P2P 匹配，数据库服务器保留进度。启示：保留 P2P/房主模式作为退路，让游戏在专服关闭后仍能苟活。\n6. Midnight Ghost Hunt（Vaulted Sky，UE4，4v4）。2023-02 Update 6 加入 P2P 房主迁移；2023-03-30 Update 7 推出“第一版专服”：官方 24/7 专服（美西、美东、欧洲）加玩家自建 Windows 专服（Nitrado 租用），P2P 继续保留。启示：UE 引擎原生的“监听服/专服同一套代码”让加专服很快，迁移功能则只服务于 P2P 轨。用户报告“后期并行引入专用服务器”核实为正确。\n7. Among Us（Innersloth，Unity，4–15 人）[部分不确定]。官方服务器是中继，房主客户端跑规则（会议、击杀判定等），各客户端管自己的移动。全员持有完整小状态，所以房主离开时可以移交 HostId 继续游戏。2020 年作弊潮后，官方靠服务端检测和账号体系补救，没有改成权威专服。社区服务器 Impostor 提供“服务端反作弊”与“必须是房主才能做的操作”校验；Hindenburg 类项目做“服务器充当房主”，相当于把协调员搬进服务器、移动仍归客户端，即 D4→D4-C 的同构做法。\n8. Valheim（Iron Gate，Unity）：反例式对照。所谓“专服”只是中继加托管，区域里的生物与物体由第一个进入的客户端（区域 owner）模拟，owner 网络差就拖累附近所有人；社区 Mod “Dedicated Simulation”才把模拟真正搬到服务器。启示：进程搬上云不等于权威模型改变。\n9. The Cycle: Frontier（YAGER，UE4，搜打撤）：反例。一开始就是专服加后端，2022-06 上线，2023-09-27 关服。官方称上线后不久涌入的作弊者赶走了玩家，追加反作弊供应商也挽回不了，游戏在财务上已不可行。社区报告提到远距吸物资、瞬移等“服务器过于信任客户端”类挂（未获官方证实）。启示：有专服但信任客户端，搜打撤一样会死。\n【Godot 生态】未查到“Godot 游戏从 P2P 房主制迁到专服”的公开复盘（未查到）。可参照的有：Multiplayer Starter（Godot 4.7，同一套代码支持 --host 与 --server，见上一轮研究）；netfox（1.49.8，已有 Steam 上线的 2D 射击 PL4no-B，见上一轮研究）。（查询日期 2026-11-21）",
+  "maturity_evidence_level": "厂商一手：Bungie TWAB 2017-05-25 原文（已逐字核对），Marathon 网络与安全公告（2026-02-24，经 marathondb 转载核对），Ubisoft 专服上线公告，Behaviour 开发者更新与专服状态更新，MGH Update 7 官方新闻，netfox 仓库文档 docs/faq.md 与 servers-clients-ownership.md（1.49.8，本地克隆阅读），Godot 官方文档（专服导出），Godot 源码 scene_replication_interface.cpp（可见性过滤只在权威端执行）。媒体二手：For Honor 时间线（Kotaku、Fandom），DBD Hit Validation（ComicBook 引述官方推文），F13 专服起止（GameSpot、Game Informer），The Cycle 关服（Game Developer、PC Gamer）。论坛与社区：DBD 命中仍由杀手上报（论坛帖），Valheim 区域 owner（托管商文档与 Mod 页），Among Us 架构（社区服务器 README 加常识）。推断：全部人天、带宽、甜点区对比与工作清单。未做实测：CPU、内存、双模式、重开房耗时由主线程实测合并。",
+  "action_small": "动作类 6–8 人：路线适配度中。①测试期 D4（玩家协调员）6–8 人完全可跑：房主上行推断 0.5–1.5 Mbit/s；协调员早死或撤离时，30–50 分钟局内要换主 1–3 次（推断）。②切 D4-C：Destiny 2、DBD 已证明“客户端管移动+服务器管其余”能上线，手感零损失，原协调员本人改为承受 RTT。命中判定若原本写在协调员侧（用各客户端上报的位置），代码可以原样搬；若是射手客户端自判，要加服务端校验（距离、视线、射速、弹量），推断 2–4 人天。③切纯 C：需要本机预测与校正（netfox RollbackSynchronizer 或 Multiplayer Starter 式手写），远端用插值（约 100ms 缓冲）。命中有两种做法：服务端回溯（hitscan/近战，需要位置历史环形缓冲），或投射物服务端模拟加客户端先行显示（netfox NetworkWeapon 模式，无需回溯）。同步频率推断 20–30Hz；带宽推断每客户端下行 30–80 kbps。推荐：小规模动作类按甜点区做。测试期直接上本机/VPS headless 跑 D4-C 模型；有陌生人匹配后再翻成纯 C。不推荐先做方案三的接力。",
+  "action_large": "动作类 10–20 人：路线适配度低（若坚持先做 D4 P2P 加接力）。①房主上行推断 2–3.5 Mbit/s（16 人，上一轮研究），20 人再加 Bot 会更高；用户报告估计“30–50 分钟内 3–8 次换主”，与 Poppy Playtime 9 个月后删除迁移的教训一致；这正是最难调、最终又白做的部分。②切 D4-C 顺滑度同 6–8 人，但服务器视野裁剪对“玩家位置”不能直接用：Godot 的 MultiplayerSynchronizer 可见性过滤由权威端执行（源码 _update_sync_visibility 先判 _has_authority）。客户端权威的玩家节点，其位置由客户端决定发给谁，要改成“客户端只发服务器 → 服务器持有的代理同步器按视野下发”，推断 2–4 人天。③纯 C：20 人加 Bot 时，客户端只预测自己，其他实体插值；服务端回溯缓冲 20–40 实体 × 1 秒很便宜。必须做兴趣管理（AOI），否则下行推断 100–200 kbps/人。推荐：直接走甜点区（headless 专服优先、好友房内嵌服务器），上线即纯 C 或 D4-C 加强复核；10–20 人陌生人局不建议用 P2P 接力做正式模式。",
+  "strategy_small": "策略类 6–8 人（慢节奏、指令式或点击移动、可容忍 100–200ms）：路线没有必要。D4 的核心卖点是“自己移动 0ms”，策略类用不上；点击移动本身就是“输入命令化”，服务器寻路、广播路径，客户端只做插值，不需要预测与回滚。netfox FAQ 明确不推荐 RTS 用回滚（实体多、重模拟开销大）。同步 10–15Hz 或事件驱动即可；带宽推断每客户端下行 10–30 kbps。推荐：一开始就做纯 C（指令式），测试期本机/VPS headless，好友房内嵌服务器；切换成本接近 0。",
+  "strategy_large": "策略类 10–20 人：同上，更应直接纯 C。服务器统一跑 20 人加 Bot 的寻路（AStarGrid2D，同步可复现）、视野裁剪、开箱判定。客户端不持有全图信息，天然防开图。D4 或接力在这里只增加复杂度：协调员一走，Bot 和全部单位的寻路状态都要迁移。带宽推断每客户端下行 20–60 kbps（加 AOI）；服务器 CPU 主要花在寻路与 Bot 上，主线程实测值可代入。推荐：纯 C 加指令式；P2P 只做好友房，不做接力。",
+  "authority_matrix": "按三阶段列权威归属（测试期 D4 → 成熟期 C1 = 方案一 D4-C → C2 = 纯 C）：\n· 移动：D4 归各客户端（0ms），协调员只能事后复核；C1 归各客户端，云端做速度包络、穿墙、瞬移复核（Destiny 2、DBD 同类做法）；C2 归服务器，客户端上传输入，本机预测并校正，远端插值。\n· 开箱：D4 由玩家协调员裁决（协调员本人知道所有容器内容，存在开图风险）；C1、C2 由服务器裁决，内容只在靠近时下发（Marathon 做法）。\n· 拾取：D4 由协调员裁决，GUID 加锁；C1、C2 由服务器裁决，GUID 由服务器签发。\n· 伤害/命中：D4 由协调员裁决，或射手自判再由协调员复核；C1 由服务器裁决，可沿用“射手上报+服务器校验”（DBD 2019–2020 即如此）；C2 由服务器裁决，配合回溯或服务端投射物模拟。\n· 服务器改变玩家位置（击退、定身、冲刺、传送）：D4、C1 只能向 owner 客户端发请求再由它执行，作弊端可以忽略，需要服务器事后核对；C2 由服务器直接施加，客户端要能预测，否则会被拉回。\n· Bot AI：D4 跑在协调员上（换主要迁移 Bot 状态）；C1、C2 跑在服务器上（代码可直接复用）。\n· 视野裁剪：D4 做不到（协调员有全图）；C1 能裁 Bot、物品、容器，玩家位置要改为“服务器代理同步器”才能裁；C2 全部可裁（set_visibility_for 或 netfox visibility_filter）。\n· 计时、阶段（撤离点开启、毒圈）：D4 归协调员，必须做成可迁移的幂等状态机；C1、C2 归服务器。\n· 结算入库：D4 由协调员上报，多端交叉校验，配合 host_epoch 与 loot_budget；C1、C2 由服务器凭服务器凭证直接上报，客户端上报只作参考（Destiny 2：持久化角色变更直达安全数据中心）。（推断为主，案例出处见 representative_cases）",
+  "tech_stack": "推荐栈（推断；版本以上一轮研究和主线程实测为准）：Godot 4.7.x（主线程以 4.7.2 实测）GDScript。联机层：内置 SceneMultiplayer（RPC 加 MultiplayerSynchronizer，只同步视图属性），Spawner 只用于纯表现。权威数据放自写的 MatchState 数据层，加 step(tick, inputs)。专服：同一工程导出 Linux Dedicated Server 预设（Strip Visuals），--headless 加自定义 --server 参数，运行时用 OS.has_feature(\"dedicated_server\")、DisplayServer.get_name()、OS.get_cmdline_user_args() 判断模式；systemd 托管，开启 flush_stdout_on_print。传输：专服用 ENet 直连（UDP）；好友房用 GodotSteam 的 SteamMultiplayerPeer（SDR 中继）。两者藏在自写的 Transport 接口后面。纯 C 阶段的手感：netfox 1.49.8 的 RollbackSynchronizer、TickInterpolator、NetworkSimulator，或照 Multiplayer Starter 手写“只预测自己”。netfox 的 NetworkTime 绑定 host，官方不支持 P2P 换主，与接力路线冲突。本地调试：编辑器 Debug > Customize Run Instances 同时起 1 个服务器加多个客户端（Godot 4.3+），或用 Multirun 插件。后端：轻量记账 API（具体选型见“Godot 插件与后端生态”条目），接口设计成 reporter 可以是“专服凭证”或“玩家协调员加 host_epoch”两种。托管：前期 1 台轻量 VPS 自管进程池，以后再考虑 Docker 或按需平台（Hathora 已关停，避免深度绑定）。",
+  "steam_integration_path": "[不确定] 测试期 D4：GodotSteam 大厅加 SteamMultiplayerPeer（SDR 中继，隐藏 IP，免费）。成熟期 C 有三条路（推断加官方文档）：①专服 ENet 直连 IP，客户端带 Steam Auth Ticket，服务器用 GodotSteam Server 校验（最简单，但暴露服务器 IP，要自己扛 DDoS）；②Steam Game Server 登录后用 SteamNetworkingSockets 监听，客户端按服务器 SteamID 经 SDR 连接 [不确定：Godot 侧需 GodotSteam Server 支持，未实测]；③官方“Hosted Dedicated Server + SDR 票据”：Valve 文档要求服务器位于 SDR 网络中“与 Valve 有合作关系”的数据中心，要向 Valve 提交公钥换证书，由自己的 game coordinator 签票，而且票据认证不能与 FakeIP 同用，对个人开发者门槛高。对复用的影响：大厅、好友邀请、Auth 票据、SteamID 作为 uid 都能复用；SteamMultiplayerPeer 只保留给好友房；只要传输层抽象过，换 ENet 推断 0.5–2 人天。",
+  "godot_fit": "评分：甜点区路线（服务器形状优先）4/5；原路线（D4 P2P 加接力 → C）2.5/5。有利：①Godot 4 不需要单独的服务器二进制，同一工程用 --headless 或专服导出预设即可，资源可 Strip Visuals 或 Remove（官方文档）；②SceneMultiplayer 的服务器固定为 peer 1，是为“专服/监听服”设计的，天然契合 C；③可见性过滤、RPC 权限、Synchronizer 都以“服务器持有状态”为默认最顺手的用法。不利：①没有官方房主迁移，godot-proposals#7912 自 2023-09 仍 open，Spawner 断线清场 #9214 及其 PR 未合并，所以 D4 接力只能自研或用 Understudy（见上一轮研究）；②可见性过滤在权威端执行（源码 _update_sync_visibility 先判 _has_authority），客户端权威的玩家节点无法在服务器侧裁剪，D4、C1 要自己加“服务器代理同步器”；③netfox 的 NetworkTime 硬绑定 host，P2P 换主不受支持（netfox 文档原文），等于说 netfox 只适合“监听服/专服”两头；④专服导出时，被 Remove 的资源若被场景引用会加载失败，服务器代码要避免依赖音频、贴图等客户端资源。",
+  "godot_version_compat": "[不确定] 主线程实测基线 Godot 4.7.2（headless）。netfox 1.49.8（仓库 plugin.cfg，查询日期 2026-11-21）。GodotSteam 的 SteamMultiplayerPeer 已于 2025-12 并入主仓（上一轮研究），4.24 以后修复了冒充 peer 1 的问题。Multiplayer Starter 对应 Godot 4.7。“Customize Run Instances”在 Godot 4.3 起提供 [不确定：每个实例是否都能设特性标签未复核]。组合“Godot 4.7.2 + netfox 1.49.8 + GodotSteam（含 MultiplayerPeer）”可同时启用 [不确定：本条目未实测，依据上一轮研究]。",
+  "pros": "原路线（测试期 D4 → 成熟期 C）的优点：①测试期服务器费用为零，Steam SDR 免费中继隐藏 IP，好友测试门槛低；②D4 移动 0ms，动作手感最好，而切到 C1 时手感不变（Destiny 2 先例）；③协调员逻辑若写成独立模块，可以原样搬上 headless，Bot、开箱、结算、GUID 都能复用；④保留 P2P 轨有长期价值：好友房、自定义房、专服关停后的退路（F13 专服关闭后退回 P2P 续命到 2024；For Honor、MGH 都保留了 P2P 轨）。甜点区路线（服务器形状优先）的额外优点：①测试期就在真实的“服务器—客户端”延迟下调玩法，不会出现 DBD 式“上专服后交互时序全乱”；②不写接力，省下最难、最终白做的 15–30 人天；③测试期就能开服务器视野裁剪与权威结算，作弊和刷物品问题提前暴露；④从 D4-C 翻成纯 C 时，只改移动这一个子系统。",
+  "cons": "原路线的缺点：①方案三的接力、快照、选主、让渡、冻结、GUID 去重、多端交叉对账在切 C 后几乎全部白做（推断 15–30 人天，再加混沌压测）；②测试期的协调员玩家有 0ms 特权并握有全图信息，平衡性和作弊数据失真；③“D4 → 纯 C”要翻转移动权威：补预测与校正、插值、命中时间语义，推断 15–35 人天，不是“导出即切”；④P2P 下写的代码容易出现“协调员直接调用本机玩家节点”“依赖 peer id 1 是玩家”“依赖 Spawner 断线清场”等隐性假设，搬上服务器后集中爆雷（DBD 测试期出现双夹子、无限失明、交互延迟）；⑤10–20 人长局连续换主可能让测试期口碑先崩（Poppy Playtime 删除迁移、F13 房主怒退）。甜点区路线的缺点：①测试期就要维护 1 台 VPS（费用很低，但要学 Linux、systemd、防火墙）；②全球测试者只连一个区域，远端玩家延迟高（D4-C 移动不受影响，交互与命中受影响）；③暴露服务器 IP，有被 DDoS 的风险（SDR 专服票据门槛高）。",
+  "dev_difficulty": "[不确定] （推断，零基础+Claude Code，只算联机相关，不含美术与玩法内容）原路线 X（D4 P2P 加接力 → C）难度 4.5/5：数据层 15–25 人天（共用、不白做）+ Steam P2P 接入 2–4 + 接力（快照、选主、让渡、冻结、GUID 去重）8–15 + 打磨 4–8 + 10–20 进程混沌压测 3–6 + 多端交叉对账后端 6–12，然后切 C1 8–20、再切纯 C 15–35。合计约 61–125 人天，其中约 20–40 人天白做。路线 X'（D4 P2P 不做接力 → C）难度 3.5/5：省掉接力，但测试期协调员掉线就炸局，10–20 人长局测试体验差。甜点区路线 Y 难度 3/5：数据层 15–25 + 服务器形状与三种启动模式 2–4 + VPS 部署与运维脚本 2–5 + 好友房内嵌服务器（SteamMultiplayerPeer）2–4 + 服务器移动复核 2–4 + 轻记账后端（服务器单一上报）4–8；以后翻纯 C 再加 12–30。合计约 39–80 人天。主要难点：①“服务器上没有本机玩家”的心智转变；②纯 C 阶段的预测与校正调参（校正阈值、平滑、击退类效果的预测）；③命中回溯与“射手优先”的公平性权衡（netfox FAQ：FPS 用回滚可行，但“偏向射手不易实现”）。",
+  "anticheat_coverage": "测试期 D4：开箱、拾取、伤害由协调员裁决，能防普通玩家改伤害、刷物品；协调员本人可以作恶（看全图、给自己刷物品、伪造结算），只能靠 host_epoch、loot_budget、多端交叉校验事后发现。C1（D4-C）：服务器裁决开箱、拾取、伤害、Bot、结算，可防改伤害、刷物品、伪造结算、恶意房主；速度包络与穿墙复核可防加速、瞬移、穿墙（DBD、Destiny 2 同类做法）；容器内容与 Bot、物品可做视野裁剪；玩家位置要走服务器代理同步器才能裁剪。C2（纯 C）：在 C1 基础上，服务器持有位置，加速、瞬移、穿墙、飞天从机制上消失；服务端战争迷雾（Marathon：客户端根本拿不到不该看见的玩家位置，容器靠近前不下发）可防开图与 ESP；服务器做逐发回溯与命中裁决，可防改命中、远距命中。",
+  "anticheat_gaps": "所有阶段都防不住：自瞄与自动射击（输入层作弊，只能靠统计检测或内核反作弊）、宏、多开组队勾结、现实交易（The Cycle 有人场外交易后丢包转移战利品）。D4 阶段特有：协调员作恶无法实时阻止；全图透视（协调员必须知道全图）。C1 特有：移动复核有容差，“小幅加速”“贴墙微瞬移”会落在容差内；被击退、定身的效果由客户端执行，作弊端可以忽略，服务器只能事后拉回或判违规。商业化后的放大（推断）：搜打撤的经济系统把作弊收益放大成可变现资产。The Cycle: Frontier 有专服仍因作弊潮在 15 个月内关服；Marathon 因此上线即全服务端权威加永封。D4 阶段的结算数据不应原样带入正式服（建议测试期结束时清档）。",
+  "ops_cost": "[不确定] （推断，具体以主线程实测与“云运维与成本”条目为准）测试期 D4：服务器费用为零，只需一个记账 API（免费额度或每月几美元）。甜点区测试期：1 台 1–2 核轻量 VPS，约每月 5–20 美元，可同时跑若干测试局（2D 像素、20 人以内，CPU 与内存占用由主线程实测代入）。成熟期 C：按并发局数线性增长。用户报告“¥60–120/月 4C8G 跑 20–40 局（400–800 人在线）”“20 人房约 5% 单核 / 120MB”尚待主线程实测核实，带宽通常比 CPU 先成为成本瓶颈（见 bandwidth_per_player_estimate）。路线成本差异：原路线把服务器费推迟到上线后，但多花 20–40 人天开发；甜点区每月多出 5–20 美元，换来省下这些人天和测试期数据真实。",
+  "ops_complexity": "测试期 D4：几乎零运维，但要远程收集换主遥测与崩溃日志。甜点区测试期：1 台 VPS，用 systemd 托管 N 个 headless 进程（每局一进程或一进程多房间）、防火墙放行 UDP 端口、版本与客户端强绑定（每次更新同步部署）、journald 日志。成熟期 C：多区域（至少美、欧、亚 2–3 个区域，推断）、开房调度与进程池、扩缩容、监控告警、DDoS 防护、更新窗口值守；个人开发者推断每周 2–6 小时值守。",
+  "vendor_lock_in_risk": "D4 阶段锁定 Steam（SDR、大厅），换平台要重做传输与大厅。托管平台风险：Hathora 已关停（上一轮研究与 outline 已记录），说明“按需专服平台”可能中途消失，建议自管 VPS 加 Docker 镜像保持可迁移。SDR 专服票据需要 Valve 证书与合作数据中心，本身就是一种锁定。netfox、GodotSteam 都是 MIT 开源，可自行维护（推断风险低到中）。",
+  "bandwidth_per_player_estimate": "[不确定] （推断，待主线程实测替换）2D 顶视角、20Hz、每实体位置+朝向+状态约 12–20 字节：20 名玩家加 10 个 Bot 不做 AOI 时，每客户端下行约 30 × 16B × 20Hz ≈ 9.6 KB/s ≈ 77 kbps，加上 UDP/ENet 头与事件约 100–150 kbps；做 AOI 后约 30–60 kbps。服务器上行约为“客户端数 × 每客户端下行”，20 人一局约 1–3 Mbit/s；客户端上行（输入或位置）约 5–15 kbps。D4 协调员玩家上行与服务器上行同量级（上一轮研究：16 人房主上行约 2–3.5 Mbit/s）。",
+  "host_migration_support": "本路线下房主接力只是测试期的临时品。Godot 没有官方迁移（#7912 open），Steam 只转移大厅所有权、不转移游戏状态（上一轮研究）。可行方案只有：自研“继任者快照+重开房”（推断卡 2–6 秒，可能丢一个快照间隔），或 Understudy 热备影子（同机实测空窗中位 228ms，公网未验证）。已知失败模式：迁移期人数溢出、GUID 物品翻倍、孤儿拾取锁、阶段切换（撤离点开启、毒圈）竞态（MGH 曾因阶段切换竞态临时停用迁移）、连续换主内存泄漏。切到 C 后，C 阶段本身不需要迁移；服务器进程崩溃时的处理改为“服务器侧每 N 秒落盘 MatchState、重启续局或按 checkpoint 结算”，可复用接力时写好的序列化代码。建议：测试期干脆不做接力，协调员掉线就按最近 checkpoint 结算或作废本局；只在“必须做 P2P 正式模式”时才投入接力。",
+  "persistence_data_model": "目标是让同一套数据模型贯穿 D4 与 C：①物品 GUID 采用“match_id + 发放序号”，或“种子+容器 id+槽位”可复算的方式，由权威端（协调员或服务器）签发；仓库侧幂等入库（GUID 唯一约束），重复上报直接丢弃。②事件日志（append-only）：loot_spawn、pickup、drop、kill、extract，每条带 tick 与 uid，结算时由事件流复算出撤离清单，再与上报清单比对。③结算记录：{match_id, reporter_kind（server 或 player_host）, reporter_epoch（host_epoch 或 server_instance_id）, uid, extracted_items[guid], xp, money, events_hash}。D4 期要求多端上报交叉一致，并受 loot_budget 上限约束；C 期由服务器凭服务器密钥单一上报，客户端报告只作审计。Destiny 2 的原则是“持久化角色变更直达安全数据中心，不经 P2P”。④uid 一律用 SteamID（64 位）或由它派生的 id，绝不用 peer id；match_id 加 uid 作为结算主键。⑤测试期 D4 数据建议标记 season=playtest，正式服清档，避免测试期被协调员伪造的资产流入正式经济。",
+  "migrate_to_pure_c_difficulty": "[不确定] 评分：从甜点区路线翻纯 C 为 3/5；从 D4 P2P（无服务器形状纪律）翻纯 C 为 4/5。工作清单（推断，零基础+Claude Code）：A. D4 → C1（headless 协调员，移动仍归客户端）：①去掉“本机即协调员”的假设，服务器无本机玩家，所有玩家走同一条消息通路，2–5 人天；②启动模式与专服导出预设（--server、Strip Visuals、systemd），1–2；③传输换 ENet 直连，加 Steam Auth Ticket 校验，1–3；④速度包络、穿墙、瞬移复核加位置历史缓冲，2–4；⑤玩家位置改为服务器代理同步器，以便视野裁剪，2–4；⑥结算改为服务器单一上报，后端加服务器凭证，1–3；⑦交互改成“客户端先播放动作、服务器确认”，避免 DBD 式交互延迟，1–3。小计 8–20 人天（若前期纪律好，取下限）。B. C1 → C2（纯 C）：①移动改为“输入命令 → step”，服务器跑，客户端预测加校正（netfox RollbackSynchronizer 1–3 人天，或手写 3–6），调参与平滑 2–4；②远端实体插值（TickInterpolator 或手写缓冲），1–2；③命中：hitscan 或近战做服务端回溯（位置历史+按客户端看到的 tick 回滚检测），3–6；投射物改为服务端模拟加客户端先行显示（NetworkWeapon 模式），2–4；④击退、冲刺、定身等由服务器施加，并在客户端预测里实现相同逻辑，2–5；⑤网络模拟器（NetworkSimulator，100–200ms 延迟加 2% 丢包）回归测试，2–4。小计 15–35 人天；若一开始就写成“输入→step”，可降到 12–25。",
+  "reusable_code": "能复用（前提是遵守 early_coding_rules）：①协调员规则模块：开箱、拾取、掉落、伤害结算、撤离计时、阶段状态机，只要它只读写 MatchState、只通过消息与玩家交互，就能原样搬进 headless；②数据层 MatchState、序列化（StreamPeerBuffer）、事件日志（接力写的序列化在 C 期改用于崩溃落盘续局与回放）；③Bot AI（AStarGrid2D 寻路、状态机）：本就跑在权威端；④物品 GUID 方案、loot 表、背包与仓库模型；⑤后端记账 API、幂等入库、事件复算校验（只是 reporter 从玩家换成服务器）；⑥Steam 大厅、好友邀请、SteamID 身份、Auth Ticket；⑦客户端表现层：动画与特效由事件驱动、远端插值、UI；⑧网络调试工具（F3/F4 叠加层、延迟模拟）；⑨D4 期的“速度包络、穿墙复核”在 C1 期继续用，在 C2 期改作客户端预测的合理性检查。Destiny 1→2、For Honor、MGH 都在保留原客户端代码的前提下加了服务器托管，说明表现层与规则层基本可复用。",
+  "wasted_work": "会白做（切到任何一档 C 后）：①D2 快照备份全员（事件增量+周期快照下发给每个玩家内存）；②选主与继任者排序（存活态、上行、RTT）；③优雅让渡、冻结 1–3 秒重选、重开房重连流程；④迁移期 GUID 去重、孤儿锁清理、人数溢出锁房；⑤10–20 进程连续杀主的混沌压测脚本（可改造成服务器崩溃续局测试，残值约三成）；⑥多端交叉对账与 host_epoch 仲裁（C 期由服务器单一上报，只留作审计）；⑦SteamMultiplayerPeer 的 P2P 专用调优（只保留给好友房）。合计推断 15–30 人天，再加约 6 人天压测。部分白做：协调员 0ms 视角下调好的交互手感，在 C 期变成 RTT 延迟，要重调（DBD 前车之鉴）。如何避免：①测试期不做接力，掉线就按 checkpoint 结算或作废；②测试期直接用 headless 专服（本机或 1 台 VPS），P2P 只做“房主内嵌服务器”的好友房，不迁移；③序列化与事件日志照样写，因为崩溃续局、回放、反作弊审计都要用；④真的需要接力（例如决定正式版长期走 P2P）时再做，并只针对好友房。",
+  "early_coding_rules": "（为“同一套代码跑 D4、监听服、headless 专服、将来纯 C”铺路；推断加案例依据）\n1. 权威边界抽象：所有规则代码放在 server/ 模块，入口只有 handle_command(uid, cmd) 与 step(tick)；用 is_authority() 判断，不用 is_server() 或 get_unique_id()==1 来表达“我是玩家房主”。\n2. 服务器无本机玩家：协调员与本机玩家之间也必须走消息（本机走 loopback），禁止协调员直接调用本机玩家节点的方法，否则搬上服务器就会出 DBD 式时序 bug。\n3. 输入与命令化：玩家意图统一成带 tick 与 seq 的命令（move_dir、aim、fire、interact(container_id)），D4 期移动可以由客户端执行，但同样记录输入，便于以后翻成纯 C 与回放。\n4. 移动写成纯函数：apply_move(state, input, dt) 在客户端和服务器都能调用（碰撞探针或网格碰撞），避免分散在 _physics_process 里难以重放；角色之间不靠物理互相碰撞。\n5. 传输层可替换：写一个 Transport/NetBootstrap 单点，可切换 ENet、SteamMultiplayerPeer、本地 loopback；上层只认 uid。\n6. 稳定 uid：一切主键用 SteamID 派生的 uid，加 match_id、GUID；peer id 只是临时路由，要有 peer_id ↔ uid 映射表，重连按 uid 认领原角色。\n7. 数据层与节点分离：MatchState 是唯一真相，节点只做视图或查询工具；Spawner 和 Synchronizer 只同步表现属性；不依赖 Spawner 的断线清场行为（#9214），掉线时实体转为离线或 Bot 托管，不删除。\n8. 位置历史环形缓冲：每个实体保留约 1 秒的 (tick, pos)，D4 期用于速度包络，C 期用于命中回溯。\n9. 交互两段式：客户端立即播放“开始开箱”表现，服务器确认后给结果，失败就回滚表现；不要假设交互零延迟。\n10. 信息最小化：容器内容、远处玩家与 Bot 的状态，按视野或距离下发的接口从第一天就写好（D4 期可以全发，接口保留），C 期再切换为真正裁剪。\n11. 阶段与计时做成单一幂等状态机，带 tick 时间戳，可序列化。\n12. 结算只信权威端：后端接口区分 reporter_kind，GUID 幂等，事件流可复算。\n13. 三种启动模式从第一周就跑通：--server（headless）、--host（内嵌服务器+本机客户端）、--client；CI 或脚本每次改动都在本机起 1 个服务器加 3 个客户端，配合延迟模拟回归。\n14. 服务器代码不引用会被 Strip/Remove 的资源（音频、贴图）；需要时用 load() 动态加载，或在服务器上跳过。",
+  "clever_points": "①Destiny 2：托管上云、移动留在客户端，“持久化变更直达数据中心”。用最小的权威改动消灭迁移，正好对应 D4 → C1。②DBD：专服上线时先保留客户端上报命中，一年后再补 Hit Validation，并且只在高延迟时拒绝“只因延迟命中”的打击，用渐进方式控制风险。PC 先做可回滚的 live test，再推全平台。③For Honor 与 MGH：正式 PvP 走专服，人机、自定义、好友房保留 P2P，形成双轨；MGH 还开放玩家自建 Windows 专服与 Nitrado 租服，分担官方服务器成本。④F13：专服关停后退回 P2P，数据库服务器保留进度，游戏得以延续；建议保留“房主内嵌服务器”模式作长期退路。⑤Marathon：服务端战争迷雾加“容器靠近前不下发内容”，对搜打撤的开图问题最对症；逐发回溯加冗余发送抗丢包。⑥netfox NetworkWeapon：投射物客户端先行生成，服务器接受后广播起始状态，再按距离阈值调和，不需要完整回溯，适合 2D 顶视角弹道。⑦Multiplayer Starter：同一工程同时支持 --host 与 --server，服务器模拟、客户端预测、重放共用同一个 _apply_movement（上一轮研究）。⑧Among Us 社区服务器：“服务器充当房主”，把房主规则搬进服务器而客户端不改，是 D4 → C1 的低成本样板。",
+  "pitfalls": "①把“导出 --headless”当成“切到 C”：进程上云不改变权威模型（Valheim 专服仍由区域 owner 客户端模拟，社区 Mod 才把模拟搬上服务器）；纯 C 必须补预测、校正与命中时间语义。②协调员本机零延迟写出来的交互，搬上服务器后爆出时序竞态（DBD 专服测试：双夹子、无限失明、投射物延迟、交互延迟，迫使全平台上线从 2019 夏推到秋）。③“专服 ≠ 反作弊”：The Cycle: Frontier 有专服仍因作弊潮在约 15 个月后关服。④把测试期的大量精力投入接力：Poppy Playtime 上线 9 个月后删除迁移；用户报告估计 10–20 人对称 PvP 一局换主 3–8 次；这些工作切 C 后白做。⑤依赖 peer id、依赖 peer 1 是玩家、依赖 Spawner 断线清场（#9214），搬上服务器或重连后整片失效。⑥用 netfox 做 P2P 换主：NetworkTime 绑定 host，官方不支持。⑦用 MultiplayerSynchronizer 的可见性给客户端权威节点做防开图：过滤在权威端执行，服务器管不了。⑧过早上 SDR 专服票据：需要 Valve 证书与合作数据中心，个人开发者先用 ENet 直连加 Auth Ticket。⑨测试期由 D4 协调员结算的资产直接进入正式经济，会把作弊遗产带进正式服；正式服应清档。⑩用户报告把 GTFO 写成 Arrowhead/Stingray，疑似与其他游戏混淆（GTFO 为 10 Chambers/Unity，未逐条核实）；该报告的案例细节引用前应逐条复核。",
+  "sources": [
+    {
+      "title": "This Week At Bungie – 05/25/2017（Matt Segur 谈 Destiny 2 网络：Mission/Physics Host 进数据中心、玩家对自身移动与技能有权威）",
+      "url": "https://www.bungie.net/7/en/News/article/45919",
+      "type": "厂商一手（原文经 destiny.bungie.org/bwu/176 镜像逐字核对）",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "BWU Archive 176（TWAB 2017-05-25 镜像全文）",
+      "url": "https://destiny.bungie.org/bwu/176",
+      "type": "镜像",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "Marathon: Networking and Security（Bungie，2026-02-24）",
+      "url": "https://bungie.net/7/en/news/article/marathonsecurity",
+      "type": "厂商一手",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "marathondb：Marathon Networking and Security 转载",
+      "url": "https://marathondb.gg/news/marathon-networking-and-security/",
+      "type": "转载",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "Roblox DevForum：Server Authority - Tech Deep Dive（提及 Marathon 从客户端权威转服务端权威）",
+      "url": "https://devforum.roblox.com/t/server-authority-tech-deep-dive-engineering-insights/4624565",
+      "type": "论坛（二手）",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "For Honor Now on Dedicated Servers on All Platforms（Ubisoft）",
+      "url": "https://www.ubisoft.com/en-us/game/for-honor/news-updates/2HayRoZjbJzSEJAhJMpeF7/for-honor-now-on-dedicated-servers-on-all-platforms",
+      "type": "厂商一手",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "For Honor 改版与专服预告（Ubisoft News 2017-07-27）",
+      "url": "https://news.ubisoft.com/en-us/article/1BWJsiaHlYzIQxvZYbxeve/for-honor-revamp-changes-for-season-34-detailed-dedicated-servers-incoming",
+      "type": "厂商一手",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "Kotaku：For Honor Is Finally Getting Dedicated Servers",
+      "url": "https://kotaku.com/for-honor-is-finally-getting-dedicated-servers-1797301086",
+      "type": "媒体",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "GDC 2019：Back to the Future! Working with Deterministic Simulation in For Honor",
+      "url": "https://gdcvault.com/play/1026322/contactUs",
+      "type": "会议演讲摘要",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "Input Delay in For Honor（Ubisoft 2018-04-12）",
+      "url": "https://www.ubisoft.com/en-us/game/for-honor/news-updates/4qgcoZf3m61lpWD8GlN4JO/input-delay-in-for-honor",
+      "type": "厂商一手",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "Dead by Daylight：Status Update – Dedicated Servers（推迟至 2019 秋、测试暴露的问题）",
+      "url": "https://devtrackers.gg/deadbydaylight/p/b54f09cb-status-update-dedicated-servers",
+      "type": "厂商一手（开发者追踪镜像）",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "Dead by Daylight Developer Update May 2019",
+      "url": "http://deadbydaylight.com/news/developer-update-may-2019/",
+      "type": "厂商一手",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "Dead by Daylight Dedicated Servers Are Coming",
+      "url": "https://deadbydaylight.com/news/dedicated-servers-are-coming-to-dead-by-daylight",
+      "type": "厂商一手",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "ComicBook：Dead by Daylight Hit Validation Feature（2020-12）",
+      "url": "https://comicbook.com/gaming/news/dead-by-daylight-hit-validation-feature",
+      "type": "媒体（引述官方）",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "GameSpot：Friday The 13th: The Game Will Lose Dedicated Servers",
+      "url": "https://gamespot.com/articles/friday-the-13th-the-game-will-lose-dedicated-servers/1100-6484039/",
+      "type": "媒体",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "Game Informer：Friday The 13th: The Game Servers Are Shutting Down（2020-11-03）",
+      "url": "https://gameinformer.com/2020/11/03/friday-the-13th-the-game-servers-are-shutting-down-but-theres-good-news",
+      "type": "媒体",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "Midnight Ghost Hunt Update 7 Live Now（第一版专服，2023-03-30）",
+      "url": "https://marlin-mouse-bp85.squarespace.com/news/2023/03/30/update-7-live-now",
+      "type": "厂商一手",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "NME：Midnight Ghost Hunt 情人节更新（Update 6 房主迁移）",
+      "url": "https://www.nme.com/news/midnight-ghost-hunt-unleashes-the-power-of-love-in-latest-update-3399186",
+      "type": "媒体",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "Game Developer：YAGER sunsetting The Cycle: Frontier after cheaters cause irreparable damage",
+      "url": "https://gamedeveloper.com/business/yager-sunsetting-the-cycle-frontier-after-cheaters-cause-irreparable-damage",
+      "type": "媒体",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "PC Gamer：The Cycle: Frontier 关服报道",
+      "url": "https://pcgamer.com/with-thousands-still-playing-this-extraction-shooter-is-shutting-down-after-barely-a-year-online",
+      "type": "媒体",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "Impostor（Among Us 开源服务器，服务端反作弊）",
+      "url": "https://github.com/Impostor/Impostor",
+      "type": "开源仓库",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "Hindenburg（Among Us 服务器，Server-As-A-Host）",
+      "url": "https://github.com/SkeldJS/Hindenburg",
+      "type": "开源仓库",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "Valheim 网络问题说明（区域 owner 模型）",
+      "url": "https://xgamingserver.com/docs/valheim/troubleshooting-network",
+      "type": "托管商文档（二手）",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "Valheim Mod：Dedicated Simulation",
+      "url": "https://thunderstore.io/c/valheim/p/Sarkastic_gg/Dedicated_Simulation/v/1.29.1/",
+      "type": "社区 Mod",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "Godot 文档：Exporting for dedicated servers",
+      "url": "https://docs.godotengine.org/en/stable/tutorials/export/exporting_for_dedicated_servers.html",
+      "type": "官方文档",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "Godot 源码：modules/multiplayer/scene_replication_interface.cpp（_update_sync_visibility 先判 _has_authority）",
+      "url": "https://github.com/godotengine/godot/blob/master/modules/multiplayer/scene_replication_interface.cpp",
+      "type": "源码",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "Godot 文档：High-level multiplayer（服务器 ID 恒为 1）",
+      "url": "https://docs.godotengine.org/en/4.6/tutorials/networking/high_level_multiplayer.html",
+      "type": "官方文档",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "netfox 仓库（plugin.cfg 1.49.8；docs/faq.md；docs/netfox/concepts/servers-clients-ownership.md；docs/netfox.extras/guides/network-weapon.md）",
+      "url": "https://github.com/foxssake/netfox",
+      "type": "开源仓库与文档",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "netfox 教程：Responsive player movement（输入归玩家、状态归服务器）",
+      "url": "https://foxssake.github.io/netfox/latest/netfox/tutorials/responsive-player-movement/",
+      "type": "官方文档",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "Steamworks 文档：Steam Datagram Relay（Hosted Dedicated Server、票据、证书）",
+      "url": "https://partner.steamgames.com/doc/features/multiplayer/steamdatagramrelay",
+      "type": "官方文档",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "Godot 论坛：Can the editor start multiple instances of the game?（Customize Run Instances）",
+      "url": "https://forum.godotengine.org/t/can-the-editor-start-multiple-instances-of-the-game/103120",
+      "type": "论坛",
+      "accessed": "2026-11-21"
+    },
+    {
+      "title": "上一轮研究结果（房主接力与节点适配专题、替代与组合方案、Multiplayer Starter、Steam 发行联机实务、Godot 房主迁移普查、Understudy）及用户上传《D 方案调研报告》纯文本",
+      "url": "本地：/tmp/claude-0/-home-user-Deep-Research-skills/e1dc511d-8358-5fea-bbe9-0102422b34bd/scratchpad/prior/",
+      "type": "既有研究（内部）",
+      "accessed": "2026-11-21"
+    }
+  ],
+  "uncertain": [
+    "representative_cases",
+    "godot_version_compat",
+    "steam_integration_path",
+    "ops_cost",
+    "bandwidth_per_player_estimate",
+    "dev_difficulty",
+    "migrate_to_pure_c_difficulty"
+  ]
+}
