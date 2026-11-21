@@ -1,0 +1,151 @@
+{
+ "item_name": "替代与组合方案",
+ "summary": "结论：与用户路线（房主→接力→专用服务器）最匹配的“替代/组合”是：①底座用 Godot 内置 SceneMultiplayer（ENet 或 GodotSteam 的 SteamMultiplayerPeer，已于 2025-12 并入 GodotSteam 主仓）；②预测/插值/可见性过滤/网络模拟可选 netfox 1.49.8（MIT，1.1k 星，已有 Steam 上线 2D 射击游戏 PL4no-B），但 netfox 的 NetworkTime 等绑定“服务器=host”，不做房主迁移，只适合“房主→专用服务器”这两头；③房主接力只能靠 Understudy（见另一条）或自研，与 netfox 同用大概率冲突（两者各有自己的 tick/预测体系，需二选一或自写适配）；④GD-Sync 声称自带房主迁移但是闭源托管、机制无法核实；⑤Snopek 回滚、Klotho 是“确定性回滚/锁步”路线，要改写成定点数/纯数据逻辑，对 30–50 分钟、带 Bot、CharacterBody2D 的 PvP 搜打撤不匹配；LinkUx 是 Steam/LAN 房主制替换层，无迁移。建议：先用内置 API+GodotSteam 做“严格区分服务器/客户端”的房主版，需要预测手感时再引入 netfox，房主接力另行用 Understudy 或自研验证。（查询日期 2026-11-21）",
+ "author_background": "netfox：Gálffy Tamás（GitHub elementbound，组织 foxssake），文档含 Forest Brawl 示例；MIT。GodotSteam：Gramps 主导，SteamMultiplayerPeer 新实现由 Chris Ridenour（FriarTruck，BippinBits 赞助）贡献并成为维护者（官方博客 2025-09）。GD-Sync：GD-Sync 团队（商业托管服务）。Godot Rollback Netcode：David Snopek（Snopek Games）。Klotho：xpTURN（Unity+Godot.NET 确定性框架，README 有英/韩/日/中文）。LinkUx：IUXGames（资源库，2026-04 提交）。（查询日期 2026-11-21）",
+ "release_and_versions": "netfox：本地 clone 的 plugin.cfg 为 1.49.8，最近提交 2026-11-09（Godot 4.4+ 测试修复、noray 错误回复处理）；2025-12 的 discussion 提到 v1.35.3，即约一年内从 1.35 升到 1.49，更新频繁。GodotSteam：4.15 MultiplayerPeer Stable（Godot 4.4.1，Steamworks 1.62）；4.16 于 2025-09-22；4.17 于 2025-12-09 并入 MultiplayerPeer；4.24 于 2026-11-08 发布 SteamMultiplayerPeer 安全修复。Snopek 回滚：Godot 4 版 v1.0.0-alpha10（2024-05-04），资源库仍标 1.0.0-alpha，未见 2024 年中后更新。Klotho：资源库 0.2.10（2026-06-07）后又出现 0.14.0 的编辑记录。LinkUx：2.1.2，资源库 2026-04-26 提交。GD-Sync：资源库条目有二十余次编辑。（查询日期 2026-11-21）",
+ "repo_activity": "netfox：1.1k 星、95 fork、33 个 open issue、28 个 PR、本地 clone 显示近期每周都有提交（浅克隆 50 提交范围内最早到 2026-09）。GD-Sync：169 星、14 fork、138 提交、12 个 open issue。Klotho：86 星、11 fork、113 提交。Snopek 回滚：GitLab 104 提交、13 个 release。LinkUx、GodotSteam 的星数未单独核实。（查询日期 2026-11-21）",
+ "license": "netfox 及 noray/extras：MIT（LICENSE 文件，Copyright 2023 Gálffy Tamás）。Klotho：Apache-2.0。LinkUx：MIT。Snopek 回滚：MIT。GD-Sync 插件：仓库页未显示许可证，[不确定]（服务本身为闭源托管）。GodotSteam：MIT（[不确定]，未在本次读取 LICENSE）。",
+ "docs_completeness": "netfox：文档站（foxssake.github.io/netfox）含概念、节点、指南、教程、FAQ、hosting 与 upgrading 页；仓库 docs/ 目录含 rollback-caveats、可见性管理、noray、network-simulator、physics 指南，文档完整度在同类里最高。Klotho：Docs 目录与 26 篇 Cookbook，多语言 README，但对 Godot 的 Steam/房主迁移未提。GD-Sync：官网+文档站（本次未读到文档站）。Snopek 回滚：有详细文档与 demo，但 Godot 4 版仍是 alpha。LinkUx：资源库页描述较简。（查询日期 2026-11-21）",
+ "community_reviews": "netfox：Steam 上有 5 款采用该库的作品列在官方 made-with-netfox 页（Bubble Battle、PL4no-B 2D 战术射击、Chrome Carnage、Nitro Turtles、Kick and Hide）；Godot 论坛 2026-08 一个帖子（https://forum.godotengine.org/t/can-you-use-godotsteam-netfox-connection-syncing/142914）里有人推荐用 netfox 的 TickInterpolator，但无人确认自己把 netfox 跑在 GodotSteam 上。GitHub discussion #272（2024-09）：社区说明 Godot 物理不确定，RigidBody 不适合参与回滚。GD-Sync：只查到资源商店用户评论称免费档对小型回合制够用、超限需付费，无独立评测。Klotho/LinkUx：未查到独立社区评价。Reddit、YouTube：未查到专项讨论（搜索引擎未返回）。",
+ "user_claims_check": "（1）Step2 线索“netfox v1.35.x 有物理步进回滚”：基本正确但已过时，当前 1.49.8；物理回滚由 netfox.extras 的 physics 指南提供，需要带物理步进的引擎构建/Rapier/Blazium（docs/netfox.extras/guides/physics.md）。（2）“无输入 RollbackSynchronizer”：有误，源码 addons/netfox/rollback/rollback-synchronizer.gd 有 input_properties 与 enable_input_broadcast，输入通道是其核心功能。（3）“可见性过滤”：正确，docs/netfox/guides/visibility-management.md，RollbackSynchronizer/StateSynchronizer 都有 visibility_filter。（4）“网络模拟”：正确，addons/netfox.extras/network-simulator.gd。（5）“SteamMultiplayerPeer 已并入主仓”：正确，GodotSteam 官方博客称 2025-12（4.17）并入 GodotSteam 主仓，独立 MultiplayerPeer 仓不再发新版。（6）“2026 新出的 Klotho/LinkUx”：Klotho 为 C#/.NET 专用，LinkUx 为 Steam/LAN 通用层；资源库提交分别在 2026 年，正确。（查询日期 2026-11-21）",
+ "distribution_form": "netfox 三个 addon（netfox、netfox.extras、netfox.noray）可放入 addons/，资源库 ID 2375/2376/2377；noray 可单独使用。GodotSteam：GDExtension 或预编译引擎（含 MultiplayerPeer）。GD-Sync：资源库插件+托管后端。Klotho：addons/klotho 且必须 Godot .NET（C#）。LinkUx：资源库 addon，Steam 模式要求 GodotSteam GDExtension。Snopek：GitLab/资源库 addon（Godot 4 alpha）。内置路线：无需安装。",
+ "self_reported_vs_independent": "本条目所有“能不能房主迁移/性能”均为作者或厂商自述：GD-Sync 官网自称自动房主迁移与 5 万月活；Klotho 自称跨平台确定性；netfox 的“可上线”由 Steam 上线游戏侧面佐证（来自官方展示页，非第三方评测）。我自己读了 netfox 源码与文档，但未实测运行。",
+ "godot_version": "netfox：Godot 4.x，CI 近期在多个 4.4+ 版本测试（2026-11-09 提交“Run tests on multiple Godot versions”），README 称示例按 4.1 写；GodotSteam MultiplayerPeer：4.16 起适配 Godot 4.4.1/4.5，当前主线版本号已到 4.24；LinkUx 4.4+；Klotho 4.4+（.NET 8）；Snopek Godot 4 版为 4.2 时代的 alpha；GD-Sync Godot 4。",
+ "builtin_features_used": "netfox 建立在引擎内置 SceneMultiplayer/RPC 之上（FAQ 称“在 Godot 多人工具之上构建而非替代”），用 multiplayer.is_server()、RPC、ProjectSettings 配置（netfox/rollback/history_limit 默认 64、input_redundancy 默认 3、input_delay 默认 0 等，见 addons/netfox/rollback/network-rollback.gd），并自带 SnapshotSerializer（dense/sparse/redundant）与 NetworkSchema 自定义序列化。内置路线自身提供：MultiplayerSpawner（场景复制）、MultiplayerSynchronizer（属性同步，replication_interval/delta_interval、可见性过滤 add_visibility_filter）、@rpc 的 authority/any_peer 与通道、set_multiplayer_authority 转移权限，这些是用户“严格区分服务器/客户端”的最直接基础。",
+ "third_party_deps": "netfox：核心无第三方依赖（带 netfox.internals、nohub.gd、trimsock.gd 与 vest 测试框架）；物理回滚需 Rapier 或带物理步进补丁的引擎；noray 需要一台 noray 服务器（自建，或 Edgegap 示例）。GodotSteam：依赖 Steam SDK/Steamworks 1.62+。GD-Sync：依赖其托管后端。Klotho：LiteNetLib 2.1.4（默认传输，可替换）。",
+ "interop_godotsteam_netfox": "netfox 通过标准 MultiplayerAPI 工作，理论上可把 multiplayer.multiplayer_peer 换成 SteamMultiplayerPeer；但官方文档的 docs 目录中没有 Steam 页面，网络上也未查到任何确认“netfox+GodotSteam”跑通的实测（Godot 论坛 2026-08 的帖子无人确认），故标注[不确定]。需要注意：netfox 的 NetworkTime 总是以 host 为基准（servers-clients-ownership.md 限制一节），而 SteamMultiplayerPeer 的 host 是 lobby 的 server 端；GodotSteam 4.24 之前不校验 peer ID，需升级到 4.24+。netfox 的 noray 是另一条 NAT 打洞/中继路线，若用 Steam 就没必要再用 noray（Steam 已提供中继），二者基本是互斥选择。",
+ "engine_internals_dependency": "netfox：不改引擎、不 fork，使用公开 API；但物理回滚需要带物理步进的构建（docs/netfox.extras/guides/physics.md），2D 顶视角像素游戏用 CharacterBody2D 而非物理刚体则不需要。GodotSteam 的 MultiplayerPeer 在“预编译引擎/GDExtension”两种形态间有版本约束（版本号需与 Godot 小版本匹配，如 4.16 对应 Godot 4.4.1/4.5）。Klotho/Snopek 回滚不依赖引擎私有成员，但要求自己的定点数/确定性运行时。",
+ "transport_matrix": "netfox：ENet 为主；noray 提供 NAT 打洞+中继的 ENet 路径；Steam 路径[不确定]（未见实测）。内置 SceneMultiplayer：ENet、WebSocket、WebRTC 官方支持；Steam 靠 GodotSteam。GodotSteam SteamMultiplayerPeer：Steam 大厅+Steam 中继。LinkUx：ENet（LAN）+Steam（SteamMultiplayerPeer）。GD-Sync：自家全球中继。Klotho：UDP（LiteNetLib）可替换。房主迁移：以上所有传输下都没有现成可用的房主迁移；仅 GD-Sync 自称有，仅 Understudy 有实测数据（见另一条）。",
+ "topology_authority": "netfox：服务器权威（nodes 由 host 持有），客户端预测+回滚，“peer-to-peer 官方不支持”，“多玩家各持有部分状态理论可行但未测试”（docs/netfox/concepts/servers-clients-ownership.md）。内置路线：任意拓扑，需自己写权威逻辑。LinkUx：listen-server。GD-Sync：房主+中继（自称）。Klotho：可选 P2P 锁步、回滚、服务器驱动、专用服务器四种。Snopek 回滚：P2P 确定性回滚。",
+ "tick_and_sync_rate": "netfox：tickrate 为项目设置（NetworkTime.tickrate，可与物理帧同步；tickrate 不一致时握手警告/断开/对齐到 host，见 network-tickrate-handshake.gd；回滚历史默认 64 tick）。内置 MultiplayerSynchronizer：由 replication_interval 决定（0=每帧）。具体常用值[不确定]，需按你的游戏定（建议 30 Hz 起步，参见 Multiplayer Starter 的 30Hz）。",
+ "input_pipeline": "netfox：玩家把输入写入 input_properties（常配合 netfox.extras 的 BaseNetInput），输入在 tick 内采样并按 input_redundancy（默认 3）冗余发送，服务器按 tick 消费；enable_input_broadcast 决定是否向其他客户端广播输入。注意：启用可见性过滤时必须关闭输入广播，否则只收到输入没有状态（visibility-management.md）。",
+ "prediction_reconciliation": "netfox：RollbackSynchronizer 保存 state/input 历史，收到服务器权威状态后回退到对应 tick 再重放（_rollback_tick），可选 enable_prediction；要求同一份逻辑在服务器和客户端都能重放，所有被读写的数据都要同步（faq.md）。不能重放的东西（如 Godot 物理刚体）需要特殊处理。",
+ "interpolation": "netfox：TickInterpolator（tick-interpolator.gd）与 interpolators.gd，支持按 tick 插值；display_offset 配置显示延迟（默认 0）。内置路线：无，需自行实现；LinkUx 的 LinkUxSynchronizer 带插值。",
+ "snapshot_and_compression": "netfox：支持完整状态与差异（diff）状态，full state 间隔和 diff ack 间隔可配（rollback-synchronizer.md）；serializers 目录有 dense/sparse/redundant 快照序列化与 NetworkSchema 自定义编码（可定义属性的位宽），这是内置 MultiplayerSynchronizer 缺少的压缩手段。典型包大小[不确定]（未实测）。",
+ "rpc_validation_channels": "netfox 与内置路线都沿用 @rpc 的权限（authority / any_peer）及通道机制，netfox 对输入/状态的传输走自己的 RPC，校验需游戏自己补（服务器应对客户端输入做范围/频率检查）。GodotSteam SteamMultiplayerPeer：独立版（expressobits）无通道支持；合并入主仓后的通道支持[不确定]（官方博客未提）。",
+ "key_code_snippets": "（读源码摘要，非逐段代码）1) addons/netfox/rollback/network-rollback.gd 顶部：history_limit 默认 64、input_delay 默认 0、input_redundancy 默认 3、enable_diff_states 默认 true——说明默认就是“服务器权威+冗余输入+差异状态”。2) addons/netfox/time/network-tickrate-handshake.gd：新 peer 加入时向 host 提交 tickrate，不一致时按 mismatch_action 警告/断开/调整。3) addons/netfox/rollback/rollback-synchronizer.gd 的 @export：state_properties、input_properties、enable_input_broadcast（默认 true）、enable_prediction（默认 false）。4) addons/netfox/network-time.gd:439 与 network-time-synchronizer.gd:150/178：用 multiplayer.is_server() 判定时间基准，这是“host 固定”的实际体现。",
+ "shadow_sync": "不适用：netfox、内置 API、GodotSteam、Klotho、LinkUx 均无影子/热备同步；GD-Sync 的迁移机制无法核实；Understudy 见另一条。",
+ "host_disconnect_detection": "内置：multiplayer.server_disconnected/peer_disconnected 信号，ENet 超时可调；GodotSteam：Steam 连接断开事件。netfox：沿用引擎信号，无专用心跳。GD-Sync：未查到文档。需要自己或靠 Understudy 实现“误判处理”。",
+ "takeover_flow": "不适用（netfox/内置/Steam/LinkUx 均无）。GD-Sync 称“自动房主迁移”，但未公开流程、耗时与状态保存范围，[不确定]。Klotho 的 Reconnect/Late Join 针对客户端而非房主迁移，官方页面未提房主迁移。",
+ "reconnect_and_peer_ids": "内置 ENet：peer id 由服务器分配，ID 1 固定为服务器，没有“换服务器”概念，这正是 godot-proposals#7912 未解决的核心。SteamMultiplayerPeer：4.24 前可被冒充 peer ID 1，4.24 后校验 Steam ID 与 host 一致、ID 至少 2。netfox 无重连机制说明（[不确定]）。Klotho 声明支持 Reconnect。",
+ "strict_mode": "不适用：仅 Understudy 有逐 tick 复核；Klotho/Snopek 的确定性模型天然可做不同步（desync）检测，但要求定点数确定性。",
+ "node_compat": "netfox：可保留 CharacterBody2D，TileMapLayer、NavigationAgent2D 在服务器上运行；但 _rollback_tick 内使用的状态都必须同步，且回滚重放时 move_and_slide 要确保可重复（docs rollback-caveats）。预计工作量（推断）：把玩家移动改成 _rollback_tick 约 1–3 人天，Bot/寻路保持服务器端不回滚。内置路线：完全保留。Klotho：需 C# 与自家 ECS/定点物理，无法沿用 CharacterBody2D、NavigationAgent2D，推断需重写（数周）。Snopek 回滚：需要 SG Physics/定点数，同样无法直接使用内置物理节点。LinkUx：保留节点。",
+ "scale_10plus": "netfox：服务器权威模型，人数主要受 CPU（每 tick 回滚重放）和广播带宽限制；README 与文档未给出人数上限，[不确定]；可用可见性过滤减少同步量。内置 MultiplayerSynchronizer：可用 visibility filter 做视野过滤；ENet 默认上限较高但你要自己做带宽预算。Klotho/Snopek：锁步/确定性回滚随人数增加会因最慢者拖累和回滚代价而恶化（推断）。Steam 大厅人数上限需查 Steamworks 文档（[不确定]）。",
+ "bot_ai_placement": "推荐：Bot AI 在“当前房主/服务器”上运行，作为服务器端实体，客户端只接收其状态；房主迁移时 Bot 状态必须随快照迁移（netfox 本身不做）。若用确定性方案（Klotho/Snopek），Bot 逻辑要放进确定性模拟内，所有客户端同步运行。",
+ "owner_authority_model": "netfox：官方说明“多人各持有部分状态理论可行但未测试”，且 NetworkTime 绑定 host；RollbackSynchronizer 要求输入由玩家所有、状态由服务器所有。内置路线：可用 set_multiplayer_authority 让每个玩家掌管自己的角色，房主当协调员，代价是客户端权威 = 易作弊但你说不在意防透视，延迟最低，流畅度最好；与“房主接力”配合时角色状态天然分散，迁移负担更小（推断）。",
+ "backend_crosscheck": "可行：不论哪条路线，局末由服务器/房主上报结算，后端交叉校验。netfox 的服务器权威结果可直接作为上报数据；GD-Sync 自带云存储与账号；其他路线需自建后端。",
+ "interest_management": "netfox：内置 visibility_filter（默认 true 全广播，可 per-peer 覆盖和回调，见 visibility-management.md）；内置 MultiplayerSynchronizer：public_visibility 与 add_visibility_filter 可做 AOI；其余未内置。",
+ "debug_tooling": "netfox：netfox.extras 的 NetworkSimulator（延迟/丢包模拟）、WindowTiler、NetworkPerformance、日志与 network-command-server；Godot 编辑器内置调试器提供网络分析器/监视器。Klotho 有 replay。Snopek 回滚有 replay/日志与 desync 调试工具（[不确定]，未读）。",
+ "known_issues": "netfox：33 个 open issue；物理回滚需特殊构建（extras physics 指南）；“节点被移出场景树会被当成已释放而注销”（faq.md），回滚要求逻辑可重复，否则会抖动（faq.md）；2026-11 仍在修 noray 错误回复和默认插值器空 Callable 等 bug。GodotSteam：4.24 前 peer ID 可被冒充（官方博客 2026-11-08 文章），独立 SMP 与主线混用类注册冲突；论坛有 godotsteam_server 的 create_host 静默失败报告（2026，未见结论）。Snopek：Godot 4 仍是 alpha。",
+ "missing_features": "netfox：房主迁移/P2P 官方不支持（NetworkTime 固定以 host 为准）、无大厅/匹配、无断线重连说明（[不确定]）、无 Steam 官方整合页、观战无。GodotSteam MultiplayerPeer：房主离开后的行为官方未说明。GD-Sync：闭源、需联网服务、价格/CCU 未公开。LinkUx：无房主迁移。Klotho：必须 C#。Snopek：无 Steam/大厅，Godot 4 alpha。内置：无预测/回滚/迁移。",
+ "real_network_risks": "netfox：回滚在高延迟/丢包时重放次数增加，30–50 分钟长局内 Bot+多玩家的 CPU 压力要实测；noray 中继会增加延迟并依赖自己的服务器。Steam 中继：延迟比直连高，数据报尺寸受 SteamNetworking 限制（[不确定]，未核实具体数值）。GD-Sync：所有流量经第三方全球中继，延迟与可用性受其影响，免费档数据量未公布。确定性路线（Klotho/Snopek）：不同 CPU/平台浮点差异与丢包导致回滚风暴/不同步风险。",
+ "maintenance_risk": "netfox：风险较低（推断）：1.1k 星、持续更新到 2026-11、有 5 款 Steam 作品使用，但主要为单一维护者 elementbound（推断）。GodotSteam：风险低（长期维护，Steamworks 跟进）。GD-Sync：商业服务，服务终止即失效（推断）。Klotho/LinkUx：新项目、版本快速迭代，API 可能不稳定。Snopek：Godot 4 alpha 近两年无更新迹象，风险高。",
+ "combination_path": "推荐组合（推断）：A) 开局：内置 SceneMultiplayer + GodotSteam SteamMultiplayerPeer（≥4.24）+ Steam 大厅，严格区分服务器/客户端；B) 手感增强：在同一架构里选用 netfox 的 RollbackSynchronizer/TickInterpolator/visibility_filter/NetworkSimulator，但不要直接把 netfox 的权威/时间绑定到会换人的房主上；C) 房主接力：用 Understudy 或自研“Steam 大厅选举+定期快照”，这一层与 netfox 的预测体系冲突风险高，建议仅在 netfox 作为“服务器内部逻辑”时选择性借用其 serializer/schema；D) 迁专用服务器：netfox、内置路线都天然支持（headless 服务器），最平滑。GD-Sync 与 Steam 路线重叠（同样是传输+大厅），不建议与 GodotSteam 同时用。Klotho/Snopek 与你的节点路线不兼容，不推荐。",
+ "migration_cost": "（推断）内置→netfox：玩家移动与同步属性迁移约 3–7 人天；netfox→专用服务器：几乎无重写（0.5–2 人天做 headless 导出与大厅）；任何方案→Understudy：需把游戏逻辑改成纯数据快照，量级数周（见 Understudy 条目）；→Klotho/Snopek：基本重写（数周到数月）；→GD-Sync：传输/大厅层重写约 3–5 人天，但锁定第三方服务。",
+ "validation_experiment_ideas": "1) netfox+SteamMultiplayerPeer 联通实验（1 天）：两台机器经 Steam 大厅，一人当房主，用 netfox 官方 CharacterBody 示例改 2D，观察 RollbackSynchronizer 是否正常同步；通过标准：两端位置差<1 个 tile、无持续回滚报错；不通过：NetworkTime 同步失败或 peer ID 冲突。2) netfox 房主退出实验（半天）：房主强退，记录客户端 server_disconnected 行为与 NetworkTime 状态，确认 netfox 无迁移。3) GD-Sync 房主迁移实验（1 天）：用 3 台机器创建大厅，房主强杀进程，通过标准：其余玩家自动选出新房主且场景状态保留、游戏继续；不通过：状态丢失。4) netfox NetworkSimulator 抗压（半天）：模拟 150ms+5% 丢包，8–10 个 Bot，观察 CPU 与回滚次数。",
+ "sources": [
+  {
+   "title": "foxssake/netfox 源码（本地 clone，plugin.cfg 1.49.8，docs/ 全部）",
+   "url": "https://github.com/foxssake/netfox",
+   "type": "源码",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "netfox Servers, clients, and ownership（本地 docs/netfox/concepts）",
+   "url": "https://foxssake.github.io/netfox/latest/netfox/concepts/servers-clients-ownership/",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "netfox discussion #272（物理确定性、v1.35.3）",
+   "url": "https://github.com/foxssake/netfox/discussions/272",
+   "type": "社区",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "netfox FAQ",
+   "url": "https://foxssake.github.io/netfox/latest/faq/",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Godot 论坛：Can you use GodotSteam + Netfox?",
+   "url": "https://forum.godotengine.org/t/can-you-use-godotsteam-netfox-connection-syncing/142914",
+   "type": "社区",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "GodotSteam MultiplayerPeer 博客分类（4.16、4.17 合并、4.24 安全修复）",
+   "url": "https://godotsteam.pages.dev/blog/category/multiplayerpeer",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "expressobits/steam-multiplayer-peer（已暂停）",
+   "url": "https://github.com/expressobits/steam-multiplayer-peer",
+   "type": "源码",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "GD-Sync 官网",
+   "url": "https://gd-sync.com",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "GD-Sync GitHub",
+   "url": "https://github.com/GD-Sync/GD-Sync",
+   "type": "源码",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Klotho（xpTURN）GitHub",
+   "url": "https://github.com/xpTURN/Klotho",
+   "type": "源码",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Klotho 资源库条目",
+   "url": "https://godotengine.org/asset-library/asset/5234",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "LinkUx 资源库条目",
+   "url": "https://godotengine.org/asset-library/asset/5085",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Godot Rollback Netcode (Godot 4) 资源库条目",
+   "url": "https://www.godotengine.org/asset-library/asset/2450",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Snopek godot-rollback-netcode GitLab",
+   "url": "https://gitlab.com/snopek-games/godot-rollback-netcode",
+   "type": "源码",
+   "accessed": "2026-11-21"
+  },
+  {
+   "title": "Understudy 商店页",
+   "url": "https://store.godotengine.org/asset/ags221/understudy/",
+   "type": "官方文档",
+   "accessed": "2026-11-21"
+  }
+ ],
+ "uncertain": [
+  "license",
+  "interop_godotsteam_netfox",
+  "tick_and_sync_rate",
+  "snapshot_and_compression",
+  "rpc_validation_channels",
+  "reconnect_and_peer_ids",
+  "scale_10plus",
+  "real_network_risks",
+  "debug_tooling",
+  "takeover_flow",
+  "community_reviews"
+ ]
+}
