@@ -1,0 +1,45 @@
+# 字段定义：Godot 4 2D 顶视角 6–20 人搜打撤 PvP 三种联机架构与"测试期 D4 → 成熟期 C"路线
+# required: true = 所有 item 必填（不适用写"不适用：原因"）；false = 相关时填
+# 真实性约定：一手来源优先；推断以"推断："开头；查不到写"未查到"；动态信息写"（查询日期 2026-11-21）"
+fields:
+  基本:
+    - {name: summary, description: 一段话结论（对该方案/专题的核心判断）, detail_level: 简要, required: true}
+    - {name: representative_cases, description: 采用类似做法的真实游戏/项目（名称、引擎、规模、做法、结果），注明来源, detail_level: 详细, required: true}
+    - {name: maturity_evidence_level, description: 本条结论的证据等级分布（官方文档/源码/厂商博客/论坛单帖/实测/推断）, detail_level: 简要, required: true}
+  玩法适配:
+    - {name: action_small, description: 动作类（实时射击/近战）6–8 人：适配度、同步频率、是否需要预测/延迟补偿、带宽、推荐与否, detail_level: 详细, required: true}
+    - {name: action_large, description: 动作类 10–20 人：同上, detail_level: 详细, required: true}
+    - {name: strategy_small, description: 策略类（慢节奏战术/指令式/可容忍延迟）6–8 人：同上, detail_level: 详细, required: true}
+    - {name: strategy_large, description: 策略类 10–20 人：同上, detail_level: 详细, required: true}
+  架构与技术栈:
+    - {name: authority_matrix, description: 按环节列权威归属（移动、开箱、拾取、伤害/命中、Bot AI、视野裁剪、计时、结算入库）, detail_level: 详细, required: true}
+    - {name: tech_stack, description: 推荐技术栈（Godot 版本、联机层、插件、传输、后端、托管/云、数据库、工具）, detail_level: 详细, required: true}
+    - {name: steam_integration_path, description: Steam 接入路径（SteamMultiplayerPeer 中继 / GodotSteam-Server / SDR 专服票据 / 不走 Steam）及对代码复用的影响, detail_level: 简要, required: false}
+    - {name: godot_fit, description: Godot 4 适配程度（1–5）与理由：引擎原生功能能用多少、坑在哪, detail_level: 详细, required: true}
+    - {name: godot_version_compat, description: 已验证的 Godot/插件版本组合, detail_level: 简要, required: false}
+  优劣与难度:
+    - {name: pros, description: 优势, detail_level: 详细, required: true}
+    - {name: cons, description: 劣势, detail_level: 详细, required: true}
+    - {name: dev_difficulty, description: 零基础+Claude Code 个人开发者的开发难度（1–5）、主要难点与人天估算（推断标注）, detail_level: 详细, required: true}
+  反作弊:
+    - {name: anticheat_coverage, description: 能防住哪些挂（加速、瞬移、穿墙、开图、自瞄、改伤害、刷物品、伪造结算、恶意房主）及做法, detail_level: 详细, required: true}
+    - {name: anticheat_gaps, description: 防不住的挂与残余风险，商业化后会放大多少, detail_level: 详细, required: true}
+  运维:
+    - {name: ops_cost, description: 运维成本（服务器/带宽/后端/托管平台月费，按 CCU 或局数估算；标注推断）, detail_level: 详细, required: true}
+    - {name: ops_complexity, description: 运维复杂度（部署、扩缩容、区域、监控、更新、值守）, detail_level: 简要, required: true}
+    - {name: vendor_lock_in_risk, description: 平台/后端停服与锁定风险（如 Hathora、SilentWolf 关停）, detail_level: 简要, required: false}
+    - {name: bandwidth_per_player_estimate, description: 每玩家/每局带宽估算或实测, detail_level: 简要, required: false}
+  接力与数据:
+    - {name: host_migration_support, description: 房主/协调员接力的支持情况、流程与已知失败模式, detail_level: 详细, required: false}
+    - {name: persistence_data_model, description: 成长数据（经验、撤离装备、金钱）的数据模型、物品 GUID、事件日志、结算防刷与一致性, detail_level: 详细, required: true}
+  路线:
+    - {name: migrate_to_pure_c_difficulty, description: 迁到纯 C 权威专服的难度（1–5）与工作清单（人天，推断标注）, detail_level: 详细, required: true}
+    - {name: reusable_code, description: 转 C 时可复用的代码/资产, detail_level: 详细, required: true}
+    - {name: wasted_work, description: 转 C 时会白做的工作及如何避免, detail_level: 详细, required: true}
+    - {name: early_coding_rules, description: 前期编码必须遵守的规则（为后期切换铺路）, detail_level: 详细, required: true}
+  借鉴:
+    - {name: clever_points, description: 值得借鉴的聪明做法（注明出自哪个游戏/项目）, detail_level: 详细, required: true}
+    - {name: pitfalls, description: 要避开的雷点（注明出处）, detail_level: 详细, required: true}
+  来源:
+    - {name: sources, description: 来源列表（标题、URL、类型、访问日期）, detail_level: 详细, required: true}
+uncertain: []

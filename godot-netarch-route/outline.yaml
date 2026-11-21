@@ -1,0 +1,76 @@
+topic: Godot 4 2D 顶视角 6–20 人搜打撤 PvP 三种联机架构对比（D4-C / 纯 C / D4+D2+轻云记账）与“测试期 D4 → 成熟期 C”路线可行性
+request: 零基础个人开发者用 Claude Code 写 Godot 4 的 2D 顶视角像素风 6–20 人搜打撤 PvP（动作或策略未定，每局 30–50 分钟，Bot 补位，局后记录经验、撤离装备、金钱），已把联机锁定在 D4-C、纯 C、D4+D2+轻云记账三种方案；请按动作/策略、6–8/10–20 人对比三者的玩法适配、优劣、难度、反作弊、运维成本、转纯 C 难度、技术栈与 Godot 适配、插件与可借鉴/避雷点，并彻底研究“测试期 D4 分布式权威+协调员 → 成熟期切 C”路线是否靠谱、切换是否流畅、会不会白做、前期编码与后期切换要做什么，必要处在云主机实测。
+started_at: 2026-11-21T07:10+00:00
+time_range: 2024 年至今
+context:
+  user_game: 2D 顶视角像素风；6–20 名玩家搜打撤 PvP；动作类还是策略类未定；每局 30–50 分钟；空位 Bot 补齐；局后记录玩家成长（经验、撤离装备、总计金钱）；Steam 发行；零基础个人开发者，用 Claude Code 写 Godot 4
+  schemes:
+    方案一_D4-C: 租轻量云服务器跑无画面对局协调进程（Godot 4 --headless），云端统一裁决开箱、拾取、开枪伤害、Bot AI、视野裁剪防开图、撤离结算入库；只把“玩家自身角色移动控制权”留在各自客户端（0ms 走位、省去客户端预测与回滚），云端定期做速度包络与穿墙复核防加速挂
+    方案二_纯C: 租轻量云服务器跑完全权威专服，客户端为纯哑终端，移动、交互、战斗、Bot AI、撤离结算全部客户端发指令、云端裁决后同步回各端；支持服务端视野裁剪防开图与直接写库
+    方案三_D4+D2+轻云记账: 无对局专服，依托 Steam SDR 等免费中继在玩家电脑上运行；常态 D4 分权（各玩家管自己移动，一名玩家兼任协调员管箱子、Bot AI、共享判定），D2 思路把精简世界状态以事件增量+周期快照备份给全员内存；协调员主动退局前优雅让渡、突发崩溃时冻结 1–3 秒重选新协调员并做物品 GUID 去重与孤儿锁清理续局；局外经验、仓库装备、金钱由极轻云端记账 API 配合 host_epoch 与多端交叉校验落库
+  route_question: 用户上传报告建议“测试期 D4 分布式权威+协调中心，成熟期切 C（导出 --headless 专服）”；需判断是否靠谱、切换是否流畅、是否白做、前期编码注意什么、后期切换多做哪些具体工作、如何选甜点区
+  prior_research_files: /tmp/claude-0/-home-user-Deep-Research-skills/e1dc511d-8358-5fea-bbe9-0102422b34bd/scratchpad/prior/（上一轮 6 个结果 JSON：Understudy 含同机实测、Multiplayer Starter 源码核实、房主接力与节点适配、替代与组合方案、房主迁移普查、Steam 实务；以及用户上传的《D 方案独立游戏深度调研报告》纯文本 用户上传_D方案调研报告.txt，其中“20 人房约 5% 单核 CPU / 120MB、¥60–120/月跑 20–40 局”等说法待核实）
+  container_tests: 主线程在云主机用 Godot 4.7.2 headless 实测：①20 人+Bot 的 2D 对局专服 CPU/内存/带宽；②同一份协调员代码“玩家兼任协调员 ↔ 无画面专服”双模式；③ENet 强杀协调员后重开房冻结时长（子 agent 无需重复这些实测，结论会由主线程合并）
+items:
+  - name: 路线专题：测试期 D4 → 成熟期 C
+    category: 核心（深度判断）
+    description: >-
+      判断“测试期 D4 分布式权威+协调员（玩家兼任，可带 D2 备份）→ 成熟期切 C（Godot --headless 权威专服）”路线是否靠谱：
+      ①业界 P2P/房主制转专服的真实案例（Dead by Daylight 2019、For Honor 2018、Friday the 13th、Midnight Ghost Hunt、Destiny 1→2、Among Us 盲中继、The Cycle: Frontier 等）具体改了什么、花了多久、哪些白做；
+      ②“D4（客户端管移动）”与“C（服务器管移动）”是两种权威模型，切过去是否必须补客户端预测/校正（netfox 或手写）、命中判定是否要重写；
+      ③哪些代码/资产能复用（协调员逻辑、数据层、Bot、物品 GUID、后端记账），哪些白做（迁移/选主/让渡/快照备份、P2P Steam 接入）；
+      ④前期编码规则（权威边界抽象、输入/命令化、传输层可替换、稳定 uid、数据层与节点分离、不依赖 Spawner 清场行为等）与后期切换工作清单（人天，推断标注）；
+      ⑤“甜点区”选择：例如“开发期就用 headless 专服本机跑（方案一/二同一套代码），P2P 只做好友房”是否比“先 D4 P2P 再切 C”更省。
+  - name: 方案一 D4-C 云端无头协调员+客户端移动权威
+    category: 核心（深度判断）
+    description: >-
+      评估方案一：业界“客户端移动权威 + 服务器裁决其余”的做法（Destiny 2 本地移动/技能权威、Among Us、Fortnite/Apex 等是否如此、MMO 常见做法），
+      Godot 4 实现方式（set_multiplayer_authority 给玩家节点、MultiplayerSynchronizer、服务器速度包络/穿墙复核、视野裁剪 set_visibility_for）；
+      客户端管移动时射击命中怎么判（射手说了算 vs 服务器回溯）、延迟补偿、近战/冲刺/击退/定身等“服务器改变玩家位置”的效果如何处理；
+      能防/防不住的挂（加速、瞬移、穿墙、飞天、自瞄、开图）；对动作类/策略类、6–8/10–20 人的适配；转纯 C 的难度。
+  - name: 玩法×架构适配（动作/策略 × 6–8/10–20 人）
+    category: 核心（深度判断）
+    description: >-
+      以玩法视角横向比较三方案：动作类（实时射击/近战，TTK 短）与策略类（慢节奏战术、指令式/点击移动、可容忍 100–200ms）在 6–8 人与 10–20 人下，
+      各需要的 tick/同步频率、是否需要客户端预测/回滚/延迟补偿、带宽（房主/服务器上行）、Bot 数量与 AI 开销、视野与信息隐藏需求、30–50 分钟长局的接力/掉线影响；
+      参考同类 2D 顶视角搜打撤与类似游戏（如 Dark and Darker 2D 化思路、Escape from Tarkov/ARC Raiders 的经验、Zero Sievert（单机）、Dungeonborne、The Cycle: Frontier、Among Us、Barotrauma、Northgard 等策略游戏的联机）；
+      给出每个“玩法×人数”格子推荐的方案与理由。
+  - name: 方案二 纯 C 权威专服
+    category: 方案
+    description: >-
+      评估方案二：Godot 4 --headless 专服实战（导出专服文档、已上线 Godot 专服游戏案例、性能/CPU 经验）；客户端预测与校正（netfox RollbackSynchronizer/TickInterpolator、Multiplayer Starter 式手写、seaciety/GodotMultiplayerDemo）；
+      延迟补偿与命中回溯；服务器视野裁剪（MultiplayerSynchronizer visibility）；开房调度与扩缩容（自管 VPS 进程池、Edgegap Godot 插件、Gameye、GameFabric/Agones、AWS GameLift；Hathora 已关停的教训）；
+      Steam 接入（GodotSteam-Server、SDR 专服票据 vs 直连 IP）；反作弊覆盖；对动作/策略、6–8/10–20 人的适配；运维成本与复杂度。
+  - name: 方案三 D4+D2+轻云记账（零对局专服+玩家协调员接力）
+    category: 方案
+    description: >-
+      评估方案三：结合上一轮研究（Understudy、房主接力专题、Steam 实务）与用户上传报告，复核“玩家兼任协调员 + 事件增量+周期快照备份 + 优雅让渡 + 崩溃冻结 1–3 秒重选 + GUID 去重/孤儿锁清理 + host_epoch 轻云记账”的可行性；
+      Godot 4 的硬坑（peer 1 固定、Spawner 断线清场 #9214、重连 peer id 重洗、SteamMultiplayerPeer 无真 Mesh）及解法；10–20 人 30–50 分钟连续换主、房主上行带宽、作弊协调员与伪造结算的风险；
+      轻云记账 API 如何做交叉校验（多端上报一致、物品 GUID 可复算、loot_budget）；对动作/策略、6–8/10–20 人的适配；转纯 C 的难度与可复用部分。
+  - name: Godot 插件与后端生态
+    category: 生态
+    description: >-
+      梳理对三方案有用的 Godot 4 插件、架构与后端（2024 年至今状态）：netfox（含 noray、extras/RewindableStateMachine）、GodotSteam/GodotSteam-Server/SteamMultiplayerPeer、Godot 内置 SceneMultiplayer/Synchronizer/Spawner 与 visibility、
+      Edgegap Godot 插件、W4 Cloud（W4 Games）、GD-Sync、Nakama（Godot SDK）、Talo、PlayFab、Supabase、PocketBase、Firebase、SpacetimeDB 等，用于“成长数据记账/结算校验/匹配/大厅”；
+      每个的许可、版本、Godot 版本兼容、维护活跃度、停服风险（SilentWolf/Hathora 关停）、适合哪种方案；以及值得借鉴的开源 Godot 联机项目/架构（如 seaciety/GodotMultiplayerDemo、Multiplayer Starter、Understudy 的可借鉴部件）。
+  - name: 云运维与成本
+    category: 生态
+    description: >-
+      估算方案一/二的对局服务器与三方案共用的记账后端的运维成本与复杂度：香港/新加坡/日本/美西/欧洲轻量云（腾讯云轻量、阿里云、AWS Lightsail、Hetzner、Vultr、DigitalOcean 等）2026 年价格与带宽/流量计费；
+      Steam 全球玩家的区域与延迟（需要几个区域）；按需托管平台（Edgegap、Gameye、GameFabric）计费；中国大陆服务器 ICP 备案与香港节点差异；
+      以“20 人一局、30–50 分钟、每局服务器带宽 X、CPU Y”给出 CCU 50/500/5000 时的月成本区间（带宽按主线程实测值可后续代入）；以及个人开发者值守、更新、监控、DDoS 的现实负担。
+execution:
+  mode: 标准
+  batch_size: 3
+  core_items: [路线专题：测试期 D4 → 成熟期 C, 方案一 D4-C 云端无头协调员+客户端移动权威, 玩法×架构适配（动作/策略 × 6–8/10–20 人）]
+  items_per_agent: 1
+  judgment_items: [路线专题：测试期 D4 → 成熟期 C, 方案一 D4-C 云端无头协调员+客户端移动权威, 玩法×架构适配（动作/策略 × 6–8/10–20 人）]
+  agent_groups:
+    - {agent: web-search-agent-deep, model: opus, items: [路线专题：测试期 D4 → 成熟期 C]}
+    - {agent: web-search-agent-deep, model: opus, items: [方案一 D4-C 云端无头协调员+客户端移动权威]}
+    - {agent: web-search-agent-deep, model: opus, items: [玩法×架构适配（动作/策略 × 6–8/10–20 人）]}
+    - {agent: web-search-agent, model: sonnet, items: [方案二 纯 C 权威专服]}
+    - {agent: web-search-agent, model: sonnet, items: [方案三 D4+D2+轻云记账（零对局专服+玩家协调员接力）]}
+    - {agent: web-search-agent, model: sonnet, items: [Godot 插件与后端生态]}
+    - {agent: web-search-agent, model: sonnet, items: [云运维与成本]}
+  output_dir: ./results
