@@ -1,0 +1,62 @@
+topic: Godot 4 多人联机工具 Multiplayer Starter 与 Understudy 深度对比（面向 2D 顶视角搜打撤 PvP + Bot 补位 + Steam 发行，联机路线：房主模式 → 房主接力 → 专用服务器）
+request: 零基础个人开发者用 Claude Code 写 Godot 4 的 2D 顶视角多人搜打撤 PvP（每局 30–50 分钟、Bot 补位、Steam 发行），计划先做房主模式、再做"房主接力"（房主掉线由他人接手）、将来可能上专用服务器；请深度对比 Multiplayer Starter 与 Understudy（结合源码核实已知信息、实现模式、适配性、风险、组合迁移），给出 3–5 个验证实验和 P3/P4 阶段的推荐方案，输出 HTML 报告。
+started_at: 2026-11-21T03:57+00:00
+time_range: 2025 年至今
+context:
+  user_game: 2D 顶视角像素风、多名玩家搜打撤 PvP、每局 30–50 分钟、空位 Bot 补齐、Steam 发行、Godot 4、用 Claude Code 开发、零基础个人开发者
+  netcode_plan: 先房主模式（代码严格区分服务器/客户端）→ 房主接力（房主掉线他人接手、本局继续）→ 将来可能迁专用服务器
+  priorities: 不在意防透视；更在意流畅度、本局不依赖单一主机
+  user_known_claims:
+    Multiplayer_Starter: MIT；最多 4 人（autoload/Net.gd 的 MAX_PLAYERS）；只支持 ENet、按 IP 加入、不支持 Steam；无房主迁移；服务器权威、客户端发带编号输入、本地预测+校正、远端约 100ms 延迟插值；30Hz；支持无画面专用服务器
+    Understudy: 0.1.0；CC0/MIT-0；Godot 4.5+；房主 + 影子热备副本、约 0.25 秒接手、可有第三份待命副本；继承 UnderstudyGame 实现 step/save_state/load_state，状态须为纯数据、不能放 Godot 物理节点；支持 ENet 与 GodotSteam（Steam 中继）；可选严格模式（确定性、可发现作弊房主）；测试都在同一台电脑
+items:
+  - name: Multiplayer Starter
+    category: 调研对象（核心）
+    description: >-
+      CodingQuests 的 Godot 4 联机入门模板。资源商店 https://store.godotengine.org/asset/codingquests/multiplayer-starter/ ，
+      源码 https://github.com/CodingQuests/godot-multiplayer-starter 。务必 git clone 或逐文件阅读源码（autoload/Net.gd 等），
+      引用具体文件/函数/常量，逐条核实 context.user_known_claims.Multiplayer_Starter；Step2 线索：商店页 1.0.0（unstable）、2026-10-17 更新、
+      要求 Godot 4.7、含准备大厅/回合/聊天/F3 网络检查器/F4 延迟旋钮/自动 bot、作者自述无防作弊/加密/NAT 穿透/房主迁移。
+      查作者 CodingQuests 背景（YouTube/其他仓库）与社区评价；评估对用户游戏（见 outline context）的适配性、扩到 10+ 人和 Steam 的改造点。
+  - name: Understudy
+    category: 调研对象（核心）
+    description: >-
+      ags221 的 Godot 房主热备接力框架。资源商店 https://store.godotengine.org/asset/ags221/understudy/ 。Step2 线索：没有 GitHub 仓库，
+      源码在 Zenodo DOI 10.5281/zenodo.23227194（understudy-0.1.0-addon.zip 与 understudy-0.1.0-full.zip，2026-10-08，CC0-1.0），
+      务必下载两个 zip 解压到独立空目录逐文件阅读源码（UnderstudyGame 接口、影子同步、掉线检测、接手、重连与编号、差分快照、
+      严格模式、确定性数学工具、lint、desync 检测器、ENet/GodotSteam 传输），引用具体文件/函数名；逐条核实 context.user_known_claims.Understudy；
+      查作者 ags221 的其他信息与作品、是否有论文/文档/讨论；评估与 CharacterBody2D 等节点的共存方式及对用户游戏的适配性。
+  - name: 替代与组合方案
+    category: 横向对照
+    description: >-
+      Godot 4 联机生态中可替代或与上面两者组合的方案：netfox（含 netfox.noray NAT 打洞/中继、netfox.extras；Step2 线索 v1.35.x 有物理步进回滚、
+      无输入 RollbackSynchronizer、可见性过滤、网络模拟）、Godot 内置 SceneMultiplayer/MultiplayerSpawner/MultiplayerSynchronizer 路线、
+      GodotSteam 的 SteamMultiplayerPeer（已并入主仓）、GD-Sync、Godot Rollback Netcode（Snopek）、2026 新出的 Klotho/LinkUx 等，
+      以及 Godot 生态中是否还有其他支持房主迁移的插件。重点评估它们对用户路线（房主→接力→专用服务器）的匹配度、与两者组合的可能。
+  - name: 房主接力与节点适配专题
+    category: 专题（深度判断）
+    description: >-
+      面向用户游戏的"房主接力"可行性专题：Godot 引擎房主迁移现状（godot-proposals#7912、#9214、PR #97910 及社区 hack 做法）；
+      CharacterBody2D / TileMapLayer / NavigationAgent2D / LightOccluder2D 与"纯数据状态 + 快照/序列化迁移"如何共存（例如数据层驱动节点、
+      move_and_slide 的可复现性、导航状态如何序列化）；Bot AI 状态迁移；"每个玩家掌管自己角色、房主只当协调员"的利弊；
+      扩到 10 人以上的带宽与兴趣管理估算；30–50 分钟长局下的接管中状态丢失；其他引擎（Unity Netcode/Fish-Net/Photon Fusion、Unreal）
+      房主迁移的成熟做法可借鉴的部分；后端成长数据与结算交叉校验的设计。给出可执行的改法和工作量估计（标注推断）。
+  - name: Steam 发行联机实务
+    category: 专题
+    description: >-
+      Godot 4 游戏在 Steam 上做联机的实务：GodotSteam（版本、与 Godot 4.5–4.7 的兼容）、Steam 大厅（Lobby）、Steam Networking Sockets /
+      Steam Datagram Relay 中继、NAT 打洞、匹配、房主掉线后 Steam 大厅所有权转移与重连、Bot 补位与匹配的配合、中继下的延迟/带宽/包大小限制、
+      Steam 测试（AppID 480 / Playtest）注意事项，以及已在 Steam 上线的 Godot 多人游戏案例与其经验。
+execution:
+  mode: 标准
+  batch_size: 2
+  core_items: [Multiplayer Starter, Understudy, 房主接力与节点适配专题]
+  items_per_agent: 1
+  judgment_items: [Understudy, 房主接力与节点适配专题]
+  agent_groups:
+    - {agent: web-search-agent-deep, model: opus, items: [Understudy]}
+    - {agent: web-search-agent, model: sonnet, items: [Multiplayer Starter]}
+    - {agent: web-search-agent-deep, model: opus, items: [房主接力与节点适配专题]}
+    - {agent: web-search-agent, model: sonnet, items: [替代与组合方案]}
+    - {agent: web-search-agent, model: sonnet, items: [Steam 发行联机实务]}
+  output_dir: ./results

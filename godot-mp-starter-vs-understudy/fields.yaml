@@ -1,0 +1,190 @@
+# 字段定义：Godot 4 多人联机工具 Multiplayer Starter vs Understudy 深度对比
+# required: true  = 所有 item 必填（不适用时写"不适用：原因"）
+# required: false = 与该 item 相关时必填，不相关可省略
+# 真实性约定：能读源码就读源码，引用"文件路径 + 函数/常量名"；推断内容以"推断："开头；查不到写"未查到"；动态信息写"（查询日期 2026-11-21）"
+fields:
+  基本信息:
+    - name: summary
+      description: 一句话定位（是什么、给谁用、核心卖点）
+      detail_level: 极简
+      required: true
+    - name: author_background
+      description: 作者/维护者是谁、背景（YouTube 频道、其他作品、公司），其他相关仓库
+      detail_level: 简要
+      required: false
+    - name: release_and_versions
+      description: 首次发布时间、版本历史（tag/release/资源商店版本）、最近更新时间（标注查询日期）
+      detail_level: 简要
+      required: false
+    - name: repo_activity
+      description: Star/Fork 数、提交总数与提交频率、Issue 与 PR 数量及典型内容、贡献者数（标注查询日期）
+      detail_level: 简要
+      required: false
+    - name: license
+      description: 许可证（核实用户给出的说法，引用 LICENSE 文件）
+      detail_level: 极简
+      required: false
+    - name: docs_completeness
+      description: 文档完整度：README、教程、示例项目、API 说明、视频
+      detail_level: 简要
+      required: false
+    - name: community_reviews
+      description: 社区评价（Reddit、Godot 论坛、Discord、YouTube 评论、资源商店评论等），逐条注明来源；查不到写"未查到"
+      detail_level: 详细
+      required: true
+    - name: user_claims_check
+      description: 用户已知信息逐条核实：正确 / 有误（给出纠正与证据）/ 无法核实
+      detail_level: 详细
+      required: false
+    - name: distribution_form
+      description: 分发形式（git 仓库 / Zenodo zip / 资源商店资产；完整项目 vs addon；如何集成进自己的项目）
+      detail_level: 简要
+      required: false
+    - name: self_reported_vs_independent
+      description: 关键性能/能力数据（如接管耗时、人数上限）是作者自报还是有第三方验证/自己实测
+      detail_level: 简要
+      required: true
+  技术栈:
+    - name: godot_version
+      description: 依赖的 Godot 版本（project.godot 的 config/features、文档声明）
+      detail_level: 极简
+      required: false
+    - name: builtin_features_used
+      description: 使用了哪些引擎内置功能（MultiplayerSpawner / MultiplayerSynchronizer / RPC / ENetMultiplayerPeer / SceneMultiplayer / 自定义序列化 / PacketPeer 等），引用文件
+      detail_level: 详细
+      required: true
+    - name: third_party_deps
+      description: 第三方依赖（插件、GDExtension、addons 目录）
+      detail_level: 简要
+      required: false
+    - name: interop_godotsteam_netfox
+      description: 能否与 GodotSteam（SteamMultiplayerPeer / Steam 中继）、netfox 一起用，有什么冲突或需要改的地方
+      detail_level: 详细
+      required: true
+    - name: engine_internals_dependency
+      description: 是否依赖 SceneMultiplayer 等引擎私有成员、是否需改引擎/fork；随 Godot 小版本升级被破坏的风险
+      detail_level: 简要
+      required: false
+    - name: transport_matrix
+      description: 传输层支持矩阵（ENet / SteamMultiplayerPeer / noray / WebSocket / WebRTC），以及各传输下房主迁移是否可用
+      detail_level: 详细
+      required: true
+  实现模式:
+    - name: topology_authority
+      description: 网络拓扑与权威模型（谁跑逻辑、谁拥有哪些对象），结合源码
+      detail_level: 详细
+      required: true
+    - name: tick_and_sync_rate
+      description: 逻辑帧率、每秒同步次数、相关常量所在文件
+      detail_level: 简要
+      required: true
+    - name: input_pipeline
+      description: 输入怎么采集、编号、打包、发送、服务器怎么消费
+      detail_level: 详细
+      required: false
+    - name: prediction_reconciliation
+      description: 客户端预测与服务器校正（回滚重放）的实现
+      detail_level: 详细
+      required: false
+    - name: interpolation
+      description: 远端实体插值/延迟显示机制与参数
+      detail_level: 简要
+      required: false
+    - name: snapshot_and_compression
+      description: 快照格式（完整/差异）、序列化方式、压缩方式、典型包大小
+      detail_level: 详细
+      required: false
+    - name: rpc_validation_channels
+      description: RPC 的权限/参数校验方式；可靠与不可靠通道怎么分、用哪些 channel
+      detail_level: 详细
+      required: false
+    - name: key_code_snippets
+      description: 3–6 段最关键的代码片段（每段≤25行，原样摘录并注明文件与函数）及逐段解读
+      detail_level: 详细
+      required: false
+  接力机制:
+    - name: shadow_sync
+      description: 影子/热备副本怎么同步（同步内容、频率、带宽）
+      detail_level: 详细
+      required: false
+    - name: host_disconnect_detection
+      description: 怎么检测房主掉线（心跳、超时阈值、误判处理）
+      detail_level: 详细
+      required: false
+    - name: takeover_flow
+      description: 接手流程：谁接、状态如何恢复、客户端如何重连新房主、实际耗时
+      detail_level: 详细
+      required: false
+    - name: reconnect_and_peer_ids
+      description: 重新连接与编号（peer id / 玩家 id）重新分配机制
+      detail_level: 详细
+      required: false
+    - name: strict_mode
+      description: 严格模式（确定性校验）怎么做比对、对游戏代码的要求、能发现什么作弊
+      detail_level: 详细
+      required: false
+  适配性:
+    - name: node_compat
+      description: 能否继续使用 CharacterBody2D、TileMapLayer、NavigationAgent2D、LightOccluder2D 等节点；若需改写为纯数据逻辑，具体改法与工作量估计（人天，标注推断）
+      detail_level: 详细
+      required: true
+    - name: scale_10plus
+      description: 扩展到 10 人以上需要改什么（人数上限、带宽估算、兴趣管理、CPU）
+      detail_level: 详细
+      required: true
+    - name: bot_ai_placement
+      description: Bot AI 在哪里运行、接力/迁移时 Bot 状态怎么迁移
+      detail_level: 详细
+      required: true
+    - name: owner_authority_model
+      description: 能否做到"每个玩家掌管自己的角色、房主只当协调员"，代价是什么
+      detail_level: 详细
+      required: true
+    - name: backend_crosscheck
+      description: 能否与"后端存成长数据、结算交叉校验"配合，怎么接
+      detail_level: 简要
+      required: true
+    - name: interest_management
+      description: 兴趣管理/可见性过滤（AOI，按视野只同步附近实体）是否内置、怎么加
+      detail_level: 简要
+      required: false
+    - name: debug_tooling
+      description: 调试工具（网络检查器、延迟/丢包模拟、回放、desync 检测器等）
+      detail_level: 简要
+      required: false
+  成熟度与风险:
+    - name: known_issues
+      description: 已知问题、Bug、限制（引用 Issue 或源码 TODO）
+      detail_level: 详细
+      required: true
+    - name: missing_features
+      description: 缺失功能（大厅、NAT 打洞、延迟补偿、断线重连、观战等）
+      detail_level: 详细
+      required: true
+    - name: real_network_risks
+      description: 放到真实公网和 Steam 中继环境可能出现的问题（延迟、丢包、MTU、带宽、Steam 中继限制）
+      detail_level: 详细
+      required: true
+    - name: maintenance_risk
+      description: 维护者停更风险评估（推断要标注）
+      detail_level: 简要
+      required: false
+  组合与迁移:
+    - name: combination_path
+      description: 与其他工具组合使用的可行路径（如先 Multiplayer Starter 学分离，再迁 Understudy 做接力）
+      detail_level: 详细
+      required: true
+    - name: migration_cost
+      description: 迁移成本估算（哪些代码可复用、哪些要重写、人天量级，标注推断）
+      detail_level: 简要
+      required: true
+    - name: validation_experiment_ideas
+      description: 建议用来验证可行性的小实验（半天–两天）：步骤 + 通过/不通过标准
+      detail_level: 详细
+      required: true
+  来源:
+    - name: sources
+      description: 来源列表，每条含标题、URL、类型（源码/官方文档/社区/视频）、访问日期
+      detail_level: 详细
+      required: true
+uncertain: []
