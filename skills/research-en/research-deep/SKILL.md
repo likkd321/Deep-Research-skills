@@ -21,7 +21,7 @@ Find `*/outline.yaml` file in current working directory, read items list, execut
 
 ### Step 3: Batch Execution
 - The dispatch unit is one group in `execution.agent_groups`: each group = one subagent (a core item is usually a group of one; other groups hold several items)
-- Batch by batch_size: at most batch_size subagents run at once per batch (need user approval before next batch; ask with AskUserQuestion options)
+- Batch by batch_size: at most batch_size subagents run at once per batch (need user approval before next batch; ask with AskUserQuestion options — unless the user has said to "run it all the way / stop asking", then proceed without asking)
 - Launch web-search-agent (background parallel, disable task output)
 
 **Model selection (driven by execution.mode, important)**: Read `execution.mode` from outline.yaml — one of `performance` / `standard` / `economy` (the Chinese names `性能` / `标准` / `经济` are equivalent; treat missing as `standard`; legacy numeric values `1` / `2` / `3` mean performance / standard / economy, and the older `efficiency` means `standard`) and choose each web-search-agent subagent's model accordingly.
@@ -133,7 +133,7 @@ Task is complete only after every item passes validation.
 
 ### Step 4: Wait and Monitor
 - Wait for current batch to complete
-- After each batch, in order: validate that batch's JSON → checkpoint (push to the research branch) → check for deepening needs and, if any, deepen while hot (see Step 6; don't wait for all batches to finish) → ask with AskUserQuestion whether to launch the next batch (the deepening plan can be folded into that same question)
+- After each batch, in order: validate that batch's JSON → checkpoint (push to the research branch) → check for deepening needs and, if any, **wake the original subagents and deepen while hot without asking first** (see Step 6; don't wait for all batches to finish), then re-validate → ask with AskUserQuestion whether to launch the next batch (skip the question if the user has authorized running all the way)
 - Launch next batch
 - Display progress
 
@@ -144,7 +144,7 @@ After all complete, output:
 - Output directory
 
 ### Step 6: Targeted Deepening (do it right after each batch while hot; reuse existing agents, do not cold-restart)
-After each batch (don't save it all for after the last batch), if an item has thin fields, a key figure backed by a single source, or conflicting numbers across sources:
+After each batch (don't save it all for after the last batch), if an item has thin fields, a key figure backed by a single source, or conflicting numbers across sources, **deepen by default without asking the user first** (deepening comes before the next batch; ask first only when it would need a cold-started agent or noticeably widen the research scope):
 - **Deepen while hot**: a subagent's context sits in the prompt cache, whose lifetime counts from that agent's last request (usually 1 hour in cloud sessions; 5 minutes under usage overage or in some local setups) and is renewed on every hit. Waking it inside that window is billed as cache reads (about a tenth of the input price); waking it later rewrites its whole context into the cache (about 2× the input price on the 1-hour tier) — still better than a cold restart, but far worse than deepening while hot. So deepen after each batch, before launching the next one; the deepening subagent counts toward the batch_size parallel cap, and Step 5 is just a final sweep.
 - **Prefer waking the still-alive subagent for that item** (for a multi-item group, the subagent that handled that group; continue the conversation with full context — use its agent id / SendMessage where the environment supports it) and give a specific deepening instruction, e.g. "the CTR range rests on one source; read each study's methodology, reconcile the conflicting numbers, and note the differing definitions."
 - **Who does the deepening**: deepening inside one item (reconciling numbers it has already seen, clarifying definitions, a few more searches) goes to that item's original subagent; **cross-item conflicts** (two items giving different values for the same figure) or new questions unrelated to the original research are settled by the main thread or by one new "review agent" that reads the relevant JSONs, reconciles them on a single definition, writes them back and re-validates — batch several small questions into that one review agent.

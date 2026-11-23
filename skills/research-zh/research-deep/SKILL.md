@@ -21,7 +21,7 @@ allowed-tools: Bash, Read, Write, Glob, WebSearch, Task
 
 ### Step 3: 分批执行
 - 派发单位是 `execution.agent_groups` 里的一组：每组 = 一个子agent（核心item通常一组一个，其余一组多个）
-- 按batch_size分批，每批最多 batch_size 个子agent同时运行（完成一批需要得到用户同意才可进行下一批，用 AskUserQuestion 可选项询问）
+- 按batch_size分批，每批最多 batch_size 个子agent同时运行（完成一批需要得到用户同意才可进行下一批，用 AskUserQuestion 可选项询问；用户已表示"一路做完/不用再问"时不再询问，直接推进）
 - 启动web-search-agent（后台并行，禁用task output）
 
 **模型指定（按 execution.mode 决定，重要）**：读取 outline.yaml 的 `execution.mode`，取值 `性能` / `标准` / `经济`（英文写法 `performance` / `standard` / `economy` 等价；缺省视为 `标准`；旧数字值 `1` / `2` / `3` 依次视为性能 / 标准 / 经济，更早的 `efficiency` 视为 `标准`），据此决定每个 web-search-agent 子 agent 的模型。
@@ -133,7 +133,7 @@ python ~/.claude/skills/research/validate_json.py -f {fields_path} -j {output_pa
 
 ### Step 4: 等待与监控
 - 等待当前批次完成
-- 每批完成后依次：校验该批JSON → checkpoint（push 到 research 分支）→ 检查补深点，有则趁热补深（见 Step 6，不要等全部批次跑完）→ 用 AskUserQuestion 询问是否开下一批（补深计划可与这一问合并成一次询问）
+- 每批完成后依次：校验该批JSON → checkpoint（push 到 research 分支）→ 检查补深点，有则**不必询问、直接唤醒原子agent趁热补深**（见 Step 6，不要等全部批次跑完），补完重新校验 → 用 AskUserQuestion 询问是否开下一批（用户已授权"一路做完"则跳过询问）
 - 启动下一批
 - 显示进度
 
@@ -144,7 +144,7 @@ python ~/.claude/skills/research/validate_json.py -f {fields_path} -j {output_pa
 - 输出目录
 
 ### Step 6: 定向补深（每批结束趁热做；复用已有agent，勿冷启动重跑）
-每批完成后（不要攒到全部批次跑完）若某item字段偏薄、关键数字仅靠单一来源、或多源数字冲突：
+每批完成后（不要攒到全部批次跑完）若某item字段偏薄、关键数字仅靠单一来源、或多源数字冲突，**默认直接补深、不先询问用户**（补深先于下一批；仅当需要冷启动新agent或会明显扩大调研范围时才先问）：
 - **趁热**：子agent的上下文存在提示缓存里，有效期从它最后一次请求起算（云端会话一般1小时；超额用量或某些本地环境为5分钟），命中即续时。缓存期内唤醒只按缓存读计费（约一成输入价）；过期后唤醒要把整段上下文重写进缓存（1小时档写入约2倍输入价），仍优于冷启动但远不如趁热。所以补深放在每批结束后、开下一批之前，补深的子agent计入 batch_size 并行上限；Step 5 汇总后只做最后一轮查漏。
 - **优先唤醒该item对应的、仍在会话中的子agent**（多item组即负责该组的子agent；带完整上下文继续对话，如环境支持用其agent id/SendMessage），给出具体补深指令，例如"CTR区间只有一个来源，去读各家方法学把冲突数字调和掉并注明口径差异"。
 - **补查分工**：item内部的补深（调和它见过的数字、澄清口径、补几次搜索）交给原子agent；**跨item的口径冲突**（两个item对同一数字给出不同值）或与原调研关系不大的新问题，由主线程统一，或新开一个"复核agent"集中处理——读相关JSON、按统一口径核对后写回并重新验证，多个小问题合并给同一个复核agent。
