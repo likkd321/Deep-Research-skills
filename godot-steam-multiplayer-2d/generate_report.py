@@ -231,9 +231,13 @@ def grid():
                    f'<ul class="nb">{neighbors(c)}</ul></template>')
     def tcell(v, tone_fn):
         tone, word = tone_fn(v)
-        return f'<td class="num tv t-{tone}" title="{E(word)}">{E(v if isinstance(v, str) else f"{v:g}")}</td>'
+        if isinstance(v, str):
+            sv = 5.0 if v.strip().startswith("<") else (_first_num(v) if _first_num(v) is not None else 999)
+        else:
+            sv = float(v)
+        return f'<td class="num tv t-{tone}" title="{E(word)}" data-v="{sv:g}">{E(v if isinstance(v, str) else f"{v:g}")}</td>'
     rows = "".join(
-        f'<tr data-mode="{c["mode"]}" data-lat="{c["lat"]}" data-mig="{MIG[c["mig"]]}" data-n="{NUM[c["n"]]}" data-level="{LEVEL[c["level"]][1]}" data-code="{c["code"]}">'
+        f'<tr data-mode="{c["mode"]}" data-lat="{c["lat"]}" data-mig="{MIG[c["mig"]]}" data-n="{NUM[c["n"]]}" data-level="{LEVEL[c["level"]][1]}" data-code="{c["code"]}" data-i="{c["id"]}">'
         f'<td class="num">{c["id"]}</td><td>{c["mode"]}</td><td>{c["lat"]}</td><td>{MIG[c["mig"]]}</td><td>{NUM[c["n"]]}</td>'
         f'<td>{badge(c["level"])}</td><td><b>{c["code"]}</b><br><span class="muted">{E(CODE_INFO[c["code"]][0])}</span></td><td>{E(c["method"])}</td><td>{E(c["pros"])}</td><td>{E(c["cons"])}</td><td>{E(c["tech"])}</td>'
         + tcell(c["diff"], tone_low_good) + tcell(c["claude"], tone_high_good)
@@ -253,13 +257,17 @@ def grid():
     cols = [2.5, 5, 5.5, 6, 5.5, 6.5, 6.5, 11.5, 11, 11, 9, 3.5, 4, 3.5, 4.5, 5]
     colg = "<colgroup>" + "".join(f'<col style="width:{w}%">' for w in cols) + "</colgroup>"
     out.append('<details class="dt wide" open><summary>24 格完整对照表（表头下拉可筛选）</summary>'
-               '<p class="muted ftip">在“模式 / 延迟 / 换主 / 人数 / 结论 / 联机模式”的表头下拉框里筛选，例如只看“可行”，或只看 D2。B、C、E 系要用云后端或租服务器，本报告按零服务器前提没有采用，选项里显示为灰色。<span id="fcount">显示 24 / 24 行</span> <button type="button" id="freset" class="go">清除筛选</button></p>'
-               '<div class="scroll"><table class="full" id="fulltbl">' + colg + '<thead><tr><th>#</th>'
+               '<p class="muted ftip">点“难度 / Claude / 稳定 / 工期 / 胜率”表头可排序（第一次点好的在前，再点反向；点“#”恢复原顺序），排序和筛选可叠加。在“模式 / 延迟 / 换主 / 人数 / 结论 / 联机模式”的表头下拉框里筛选，例如只看“可行”，或只看 D2。B、C、E 系要用云后端或租服务器，本报告按零服务器前提没有采用，选项里显示为灰色。<span id="fcount">显示 24 / 24 行</span> <button type="button" id="freset" class="go">清除筛选</button></p>'
+               '<div class="scroll"><table class="full" id="fulltbl">' + colg + '<thead><tr><th class="srt" data-k="i" data-dir="asc" title="点击恢复原顺序">#<i class="si"></i></th>'
                + fth("模式", "mode", ["PVE", "PVP"]) + fth("延迟", "lat", ["帧不敏感", "帧敏感"])
                + fth("换主", "mig", MIG) + fth("人数", "n", NUM)
                + fth("结论", "level", [v[1] for v in LEVEL.values()]) + fth_code()
                + '<th>推荐方式</th><th>利</th><th>弊</th><th>技术要求</th>'
-               '<th>难度</th><th>Claude</th><th>稳定</th><th>工期</th><th>胜率</th></tr></thead><tbody>' + rows + '</tbody></table></div></details>')
+               '<th class="srt" data-k="diff" data-dir="asc" title="点击排序：先易后难，再点反向">难度<i class="si">↕</i></th>'
+               '<th class="srt" data-k="claude" data-dir="desc" title="点击排序：把握高的在前，再点反向">Claude<i class="si">↕</i></th>'
+               '<th class="srt" data-k="stab" data-dir="desc" title="点击排序：稳定的在前，再点反向">稳定<i class="si">↕</i></th>'
+               '<th class="srt" data-k="weeks" data-dir="asc" title="点击排序：工期短的在前，再点反向">工期<i class="si">↕</i></th>'
+               '<th class="srt" data-k="win" data-dir="desc" title="点击排序：胜率高的在前，再点反向">胜率<i class="si">↕</i></th></tr></thead><tbody>' + rows + '</tbody></table></div></details>')
     return "".join(out)
 
 counts = {k: sum(1 for c in CELLS if c["level"] == k) for k in LEVEL}
@@ -311,6 +319,7 @@ td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
 details.wide{--ww:min(1760px,calc(100vw - 48px));width:var(--ww);margin-left:calc((100% - var(--ww)) / 2)}
 table.full{table-layout:fixed;min-width:1100px;font-size:13px;line-height:1.55}
 table.full th{position:sticky;top:0;background:var(--surface-2);z-index:1;vertical-align:bottom;white-space:nowrap}
+th.srt{cursor:pointer;user-select:none}th.srt:hover{color:var(--accent)}th.srt.on{color:var(--accent)}th.srt .si{font-style:normal;font-size:11px;margin-left:3px;color:var(--muted)}th.srt.on .si{color:var(--accent)}
 table.full td{word-break:break-word}table.full td:nth-child(-n+5){white-space:nowrap}
 table.full tbody tr:hover{background:var(--surface-2)}
 table.full .badge{font-size:12px;padding:0 6px}
@@ -456,7 +465,16 @@ pick(1);hint.textContent='默认展示首推组合 #1，改选条件后点确认
 var tb=document.getElementById('fulltbl'),fc=document.getElementById('fcount');
 function tf(){var f={};tb.querySelectorAll('thead select').forEach(function(s){if(s.value)f[s.dataset.col]=s.value;s.classList.toggle('set',!!s.value)});var n=0;
  tb.querySelectorAll('tbody tr').forEach(function(r){var ok=Object.keys(f).every(function(k){return r.dataset[k]===f[k]});r.hidden=!ok;if(ok)n++});fc.textContent='显示 '+n+' / 24 行';}
-tb.querySelector('thead').addEventListener('change',tf);document.getElementById('freset').onclick=function(){tb.querySelectorAll('thead select').forEach(function(s){s.value=''});tf()};
+tb.querySelector('thead').addEventListener('change',tf);
+var COL={diff:-5,claude:-4,stab:-3,weeks:-2,win:-1};
+tb.querySelectorAll('th.srt').forEach(function(th){th.addEventListener('click',function(e){if(e.target.tagName==='SELECT')return;
+ var k=th.dataset.k,body=tb.querySelector('tbody'),rows=[].slice.call(body.rows),cur=th.dataset.cur,dir;
+ if(k==='i'){dir='asc'}else{dir=cur?(cur==='asc'?'desc':'asc'):th.dataset.dir}
+ function val(r){if(k==='i')return +r.dataset.i;var cs=r.cells;return +cs[cs.length+COL[k]].dataset.v}
+ rows.sort(function(a,b){var d=val(a)-val(b);if(d===0)return (+a.dataset.i)-(+b.dataset.i);return dir==='asc'?d:-d});
+ rows.forEach(function(r){body.appendChild(r)});
+ tb.querySelectorAll('th.srt').forEach(function(h){delete h.dataset.cur;h.classList.remove('on');var i=h.querySelector('.si');if(i)i.textContent=h.dataset.k==='i'?'':'↕'});
+ if(k!=='i'){th.dataset.cur=dir;th.classList.add('on');th.querySelector('.si').textContent=dir==='asc'?'▲':'▼'}});});document.getElementById('freset').onclick=function(){tb.querySelectorAll('thead select').forEach(function(s){s.value=''});tf()};
 })();
 """
 
