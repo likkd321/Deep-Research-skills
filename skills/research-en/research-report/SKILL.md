@@ -56,11 +56,11 @@ Generate `generate_report.py` in `{topic}/` (the narrative text may live in `bui
 
 **HTML hard rules**:
 - **Light & dark background modes**: an in-page toggle button (top-right) plus following the system `prefers-color-scheme`; define both palettes with CSS variables (`:root` light + `[data-theme="dark"]`/media query dark), and set an explicit `background` on `body`. Persist the choice in `localStorage` (wrapped in try/catch).
-- Responsive: readable at phone width (~400px), ≥16px side gutter, no horizontal page scroll (wide tables and charts scroll inside their own containers).
+- **Desktop first**: the user mainly reads reports on a computer, so design and verify for desktop browsers (about 1280–1920px). On desktop, widen wide tables so they can be read in full without horizontal scrolling (they may break out of the text column); after an interaction (confirm, switching options) never force-scroll or jump the page position. Phone width is only a floor: stay readable at ~400px with no whole-page horizontal scroll (wide tables and charts may scroll inside their own containers). When desktop and phone needs conflict and cannot both be met, desktop wins.
 - Readability: clear typographic hierarchy; tabular-nums for table and axis figures; inline-SVG charts.
 
 ### Step 4: Build and Deliver
-1. Run `python {topic}/generate_report.py` to produce `{title-slug}.html`; screenshot and check the layout in light mode, dark mode and at phone width.
+1. Run `python {topic}/generate_report.py` to produce `{title-slug}.html`; screenshot and check the layout at desktop widths (e.g. 1440 / 1920px) in light and dark mode first, then glance at phone width to confirm nothing breaks.
 2. **Delivery (hard rule)**: **hand the user a one-click downloadable file** — deliver the HTML via `SendUserFile` (`display="attach"` download card). **Do NOT use the Artifact / web-deploy feature to publish it.** In a local CLI the file already sits in `{topic}/`; state the path and let the user open it directly.
 
 ## Output
