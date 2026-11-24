@@ -52,7 +52,9 @@ def tone_win(s):
 def metrics(c):
     d = tone_low_good(c["diff"]); cl = tone_high_good(c["claude"]); st = tone_high_good(c["stab"], ("稳", "一般", "不稳"))
     wk = tone_weeks(c["weeks"]); wn = tone_win(c["win"])
+    nm, desc = CODE_INFO[c["code"]]
     return ('<div class="kv">'
+            + f'<div class="m t-code mcode"><span class="ml">联机模式代号（全景表）</span><b class="codebig">{c["code"]}</b><em class="mw">{E(nm)}</em><span class="cdesc">{E(desc)}</span></div>'
             + metric("实现难度", dots(c["diff"]), *d)
             + metric("Claude 把握", dots(c["claude"]), *cl)
             + metric("网络稳定", dots(c["stab"]), *st)
@@ -169,6 +171,9 @@ def neighbors(c):
                    f'<span class="muted"> 难度 {o["diff"]:g} · Claude {o["claude"]:g} · 稳定 {o["stab"]:g} · 胜率 {E(o["win"])}</span></li>')
     return "".join(out)
 
+def codechip(c):
+    return f'<span class="codechip">联机模式 {c["code"]} · {E(CODE_INFO[c["code"]][0])}</span>'
+
 def overview_html(c):
     return ov_render(c, CELLS, MIG, NUM, {k: v[1] for k, v in LEVEL.items()}, badge)
 
@@ -212,7 +217,7 @@ def grid():
     # 预渲染详情模板
     for c in CELLS:
         out.append(f'<template id="t{c["id"]}"><div class="dhead"><span class="cid">#{c["id"]}</span>'
-                   f'<b>{c["mode"]} × {c["lat"]} × {MIG[c["mig"]]} × {NUM[c["n"]]}</b>{badge(c["level"])}</div>'
+                   f'<b>{c["mode"]} × {c["lat"]} × {MIG[c["mig"]]} × {NUM[c["n"]]}</b>{badge(c["level"])}{codechip(c)}</div>'
                    f'<p class="dnote">{E(c["note"])}</p>'
                    + metrics(c) +
                    '<nav class="dnav">本格目录：<a href="#" data-s="s-ev">速览</a><a href="#" data-s="s-impl">网络实现方案</a><a href="#" data-s="s-flow">房主离开流程</a><a href="#" data-s="s-mod">模块与工期</a><a href="#" data-s="s-code">编码难点</a><a href="#" data-s="s-test">测试</a><a href="#" data-s="s-mnt">上线维护</a><a href="#" data-s="s-risk">风险与降级</a><a href="#" data-s="s-case">先例</a><a href="#" data-s="s-arg">技术论证</a></nav>'
@@ -228,24 +233,31 @@ def grid():
         tone, word = tone_fn(v)
         return f'<td class="num tv t-{tone}" title="{E(word)}">{E(v if isinstance(v, str) else f"{v:g}")}</td>'
     rows = "".join(
-        f'<tr data-mode="{c["mode"]}" data-lat="{c["lat"]}" data-mig="{MIG[c["mig"]]}" data-n="{NUM[c["n"]]}" data-level="{LEVEL[c["level"]][1]}">'
+        f'<tr data-mode="{c["mode"]}" data-lat="{c["lat"]}" data-mig="{MIG[c["mig"]]}" data-n="{NUM[c["n"]]}" data-level="{LEVEL[c["level"]][1]}" data-code="{c["code"]}">'
         f'<td class="num">{c["id"]}</td><td>{c["mode"]}</td><td>{c["lat"]}</td><td>{MIG[c["mig"]]}</td><td>{NUM[c["n"]]}</td>'
-        f'<td>{badge(c["level"])}</td><td>{E(c["method"])}</td><td>{E(c["pros"])}</td><td>{E(c["cons"])}</td><td>{E(c["tech"])}</td>'
+        f'<td>{badge(c["level"])}</td><td><b>{c["code"]}</b><br><span class="muted">{E(CODE_INFO[c["code"]][0])}</span></td><td>{E(c["method"])}</td><td>{E(c["pros"])}</td><td>{E(c["cons"])}</td><td>{E(c["tech"])}</td>'
         + tcell(c["diff"], tone_low_good) + tcell(c["claude"], tone_high_good)
         + tcell(c["stab"], lambda v: tone_high_good(v, ("稳", "一般", "不稳"))) + tcell(c["weeks"], tone_weeks) + tcell(c["win"], tone_win)
         + '</tr>'
         for c in CELLS)
+    def fth_code():
+        used = {}
+        for c in CELLS:
+            used[c["code"]] = used.get(c["code"], 0) + 1
+        o = "".join(f'<option value="{k}">{k} {E(nm)}（{used[k]} 格）</option>' if k in used
+                    else f'<option value="{k}" disabled>{k} {E(nm)}（本报告未采用）</option>' for k, nm in TAXONOMY)
+        return f'<th class="fh"><span>联机模式</span><select data-col="code" aria-label="按联机模式筛选"><option value="">全部</option>{o}</select></th>'
     def fth(label, key, opts):
         o = "".join(f'<option value="{E(x)}">{E(x)}</option>' for x in opts)
         return f'<th class="fh"><span>{label}</span><select data-col="{key}" aria-label="筛选{label}"><option value="">全部</option>{o}</select></th>'
-    cols = [2.5, 5, 5.5, 6, 5.5, 6.5, 13.5, 12, 12, 10.5, 3.5, 4, 3.5, 4.5, 5.5]
+    cols = [2.5, 5, 5.5, 6, 5.5, 6.5, 6.5, 11.5, 11, 11, 9, 3.5, 4, 3.5, 4.5, 5]
     colg = "<colgroup>" + "".join(f'<col style="width:{w}%">' for w in cols) + "</colgroup>"
     out.append('<details class="dt wide" open><summary>24 格完整对照表（表头下拉可筛选）</summary>'
-               '<p class="muted ftip">在“模式 / 延迟 / 换主 / 人数 / 结论”的表头下拉框里筛选，例如只看“可行”。<span id="fcount">显示 24 / 24 行</span> <button type="button" id="freset" class="go">清除筛选</button></p>'
+               '<p class="muted ftip">在“模式 / 延迟 / 换主 / 人数 / 结论 / 联机模式”的表头下拉框里筛选，例如只看“可行”，或只看 D2。B、C、E 系要用云后端或租服务器，本报告按零服务器前提没有采用，选项里显示为灰色。<span id="fcount">显示 24 / 24 行</span> <button type="button" id="freset" class="go">清除筛选</button></p>'
                '<div class="scroll"><table class="full" id="fulltbl">' + colg + '<thead><tr><th>#</th>'
                + fth("模式", "mode", ["PVE", "PVP"]) + fth("延迟", "lat", ["帧不敏感", "帧敏感"])
                + fth("换主", "mig", MIG) + fth("人数", "n", NUM)
-               + fth("结论", "level", [v[1] for v in LEVEL.values()])
+               + fth("结论", "level", [v[1] for v in LEVEL.values()]) + fth_code()
                + '<th>推荐方式</th><th>利</th><th>弊</th><th>技术要求</th>'
                '<th>难度</th><th>Claude</th><th>稳定</th><th>工期</th><th>胜率</th></tr></thead><tbody>' + rows + '</tbody></table></div></details>')
     return "".join(out)
@@ -391,6 +403,10 @@ ol.fb li{margin:4px 0}
 .ovc.adv{border-left:4px solid var(--accent);background:color-mix(in srgb,var(--accent) 7%,var(--surface-1))}.ovc.adv p b{color:var(--text-primary)}
 .more{margin:18px 0 0;text-align:center}
 @media (max-width:720px){.ov{grid-template-columns:1fr}.bk{grid-template-columns:92px minmax(0,1fr) 52px;grid-template-areas:"n b w" "t t t"}}
+.codechip{display:inline-block;font-size:13px;font-weight:700;color:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:1px 10px;background:color-mix(in srgb,var(--accent) 10%,transparent)}
+.t-code{--tc:var(--accent);--tt:var(--accent);--tb:color-mix(in srgb,var(--accent) 12%,transparent)}
+.kv>.mcode{grid-column:span 2}.codebig{display:inline-block;font-size:26px;line-height:1.2;color:var(--accent);margin-right:8px;font-variant-numeric:tabular-nums}
+.kv .cdesc{display:block;font-size:12px;color:var(--text-secondary);margin-top:4px;line-height:1.5}
 h2.first{margin-top:28px;border-top:0}
 #picker,#detail{--wb:min(1280px,calc(100vw - 48px));width:var(--wb);margin-left:calc((100% - var(--wb)) / 2)}
 @media (max-width:720px){#picker,#detail{width:auto;margin-left:0}}
@@ -448,6 +464,24 @@ BODY = """
 <header class="top"><div><p class="muted">深度调研报告 · 2026-11</p><h1>{title}</h1><p class="sub">{sub}</p></div>
 <button id="theme" type="button">☾ 深色模式</button></header>
 
+<div class="card answer"><b>一句话答案：</b>能做，但成败几乎取决于你选哪一格。24 种情况里，<b>{top} 格首推、{ok} 格可行、{meh} 格勉强、{no} 格不建议</b>。最稳的是 <b>PVE 合作 × 帧不敏感 × 不换主 × 4–6 人</b>。凡是“帧敏感 PVP 加 7–12 人”或“帧敏感加无感换主”的组合，都不要押在第一款游戏上。决定难度的头号因素是<b>换主</b>，人数的影响其实最小。</div>
+
+<div class="stats">
+<div class="stat"><b>$0 / 月</b><span>Steam 大厅加中继网络（SDR）做联机，不需要租服务器</span><small>另有一次性上架费 $100，收入满 $1000 返还</small></div>
+<div class="stat"><b>约 30 秒</b><span>房主拔网线后，Steam 才通知其他人“房主走了”</span><small>社区实测个例；所以掉线检测必须自己写心跳</small></div>
+<div class="stat"><b>4 → 1 分</b><span>Claude 的把握度：从“大厅加房主同步”降到“无感换主”</span><small>满分 5；把握度看架构复杂度，人数影响很小</small></div>
+<div class="stat"><b>5.3 Mbps</b><span>12 人、帧敏感、原生同步不优化时，房主需要的上行带宽</span><small>公式估算；优化后约 1–1.5，帧不敏感约 0.45</small></div>
+</div>
+
+<nav class="card toc"><b>这份报告怎么讲</b><p style="margin:6px 0 0"><a href="#c5">↓ 24 种情况评估器与总表（紧接在本目录下方，报告主体）</a></p><ol>
+<li><a href="#c1">Steam 免费送了你哪些联机零件</a></li>
+<li><a href="#c2">Godot 这一侧：零件接得上，但房主固定是 1 号</a></li>
+<li><a href="#c3">四个开关，难度分别从哪来</a></li>
+<li><a href="#c4">Claude 能替你扛多少</a></li>
+<li><a href="#c6">上线以后：哪些格子做完就不太用管</a></li>
+<li><a href="#c7">我的建议：一条低风险的升级路线</a></li>
+</ol></nav>
+
 <h2 id="c5" class="first">24 种情况评估器（主表）</h2>
 <p class="muted">这是报告的主体：选好四个条件就能看到那一格的完整评估。下方是 24 格总表；推导过程、案例和建议在后面的章节。</p>
 <p>综合 19 个调研方向的证据，每格给出推荐方式、备选、利弊、技术要求，以及难度、Claude 把握度、网络稳定性（各 1–5 分）。另有两项估算：</p>
@@ -460,24 +494,7 @@ BODY = """
 {grid}
 
 
-<div class="card answer"><b>一句话答案：</b>能做，但成败几乎取决于你选哪一格。24 种情况里，<b>{top} 格首推、{ok} 格可行、{meh} 格勉强、{no} 格不建议</b>。最稳的是 <b>PVE 合作 × 帧不敏感 × 不换主 × 4–6 人</b>。凡是“帧敏感 PVP 加 7–12 人”或“帧敏感加无感换主”的组合，都不要押在第一款游戏上。决定难度的头号因素是<b>换主</b>，人数的影响其实最小。</div>
 
-<div class="stats">
-<div class="stat"><b>$0 / 月</b><span>Steam 大厅加中继网络（SDR）做联机，不需要租服务器</span><small>另有一次性上架费 $100，收入满 $1000 返还</small></div>
-<div class="stat"><b>约 30 秒</b><span>房主拔网线后，Steam 才通知其他人“房主走了”</span><small>社区实测个例；所以掉线检测必须自己写心跳</small></div>
-<div class="stat"><b>4 → 1 分</b><span>Claude 的把握度：从“大厅加房主同步”降到“无感换主”</span><small>满分 5；把握度看架构复杂度，人数影响很小</small></div>
-<div class="stat"><b>5.3 Mbps</b><span>12 人、帧敏感、原生同步不优化时，房主需要的上行带宽</span><small>公式估算；优化后约 1–1.5，帧不敏感约 0.45</small></div>
-</div>
-
-<nav class="card toc"><b>这份报告怎么讲</b><ol>
-<li style="list-style:none;margin-left:-22px"><a href="#c5">↑ 24 种情况评估器与总表（页面最上方）</a></li>
-<li><a href="#c1">Steam 免费送了你哪些联机零件</a></li>
-<li><a href="#c2">Godot 这一侧：零件接得上，但房主固定是 1 号</a></li>
-<li><a href="#c3">四个开关，难度分别从哪来</a></li>
-<li><a href="#c4">Claude 能替你扛多少</a></li>
-<li><a href="#c6">上线以后：哪些格子做完就不太用管</a></li>
-<li><a href="#c7">我的建议：一条低风险的升级路线</a></li>
-</ol></nav>
 
 <h2 id="c1">1. Steam 免费送了你哪些联机零件</h2>
 <p><b>问题：</b>不租服务器，光靠 Steam 能撑起一款联机游戏吗？<b>答案：能，而且你要的房间列表它也自带。</b></p>
@@ -730,4 +747,4 @@ def main_mobile():
     out.write_text(doc, encoding="utf-8")
     print(out)
 
-main_mobile()
+# main_mobile()  # 手机版已停止维护（用户要求），需要时再打开
