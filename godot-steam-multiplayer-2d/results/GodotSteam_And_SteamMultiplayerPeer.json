@@ -1,0 +1,90 @@
+{
+ "name": "GodotSteam_And_SteamMultiplayerPeer",
+ "category": "Godot技术栈",
+ "what_it_is": "GodotSteam 是 Steamworks SDK 的 Godot 4 绑定（可编译为引擎模块或 GDExtension，有预编译版）；SteamMultiplayerPeer 是把 Steam 网络（Steam Sockets/Lobby）接入 Godot 高层多人 API（RPC/Spawner/Synchronizer）的 MultiplayerPeer 实现，有 expressobits 第三方版和 GodotSteam 体系内的官方版两条线。",
+ "architecture_codes": "A1（状态同步房主·房主走散局）的传输层基础，也是 B1 的客户端传输；D1-D5 换主方案需另自研；lobby 模式下成员两两建连，事实上具备 D5 网状的传输基础但 RPC 仍按星型/peer1 使用。对应理由：create_host 固定 peer 1，丢失 peer 1 直接 close()，无换主。",
+ "core_capabilities": "1) GodotSteam：Lobby、好友、成就、Steam Networking Sockets/Messages 等全套 Steamworks 接口；2) SteamMultiplayerPeer：继承 MultiplayerPeer，可直接赋给 multiplayer.multiplayer_peer，使 @rpc、MultiplayerSpawner/Synchronizer 在 Steam 上工作；3) 经 Steam Datagram Relay 中继，免端口映射；4) 官方版用 create_lobby(LOBBY_TYPE_*) 建房并与 Lobby 绑定；expressobits 版基于 Steam Sockets，本身不要求 Lobby（其 demo 用 GodotSteam Lobby 做房间）。",
+ "quantitative_limits": "GameNetworkingSockets 源码口径：默认连接超时 10000ms（可调），单消息上限 512KB，默认发送速率 256KB/s。Lobby 房主转移：主动 LeaveLobby 即时；拔线约30s才收到离开回调（Facepunch.Steamworks issue #765）。人数/带宽/延迟的 Godot 端实测未取得[不确定]。",
+ "player_count_support": "4-6人：Steam 中继+星型拓扑完全够用；7-12人：传输层无硬限制，瓶颈在房主上行带宽与 Godot 同步节点数量（见高层API条目），无专门实测，[不确定]。",
+ "latency_profile": "中继模式有额外跳数，不对帧敏感（马里奥式实时动作）场景是风险；帧不敏感（三国志式回合/策略）完全适配。True P2P 可降延迟但会暴露 IP，且不能用 SteamMultiplayerPeer，需自己收发原始包（brogolem35 教程）。",
+ "host_migration_support": "不支持换主：MultiplayerPeer 是星型、房主 peer_id=1。仅支持“不换主”档；秒级/无感换主需自行实现（如重建 Lobby+重新 create_host+状态重建），无现成方案。",
+ "nat_traversal_and_relay_behavior": "经 Steam Datagram Relay（SDR）中继，无需端口映射，中继模式下 IP 不暴露；玩家可在 Steam 设置中关闭 Steam Networking 强制中继；Valve 承担中继费用（Steam通用策略，官方原文未复核）；直连成功率无公开数据。",
+ "late_join_and_reconnect_support": "传输层本身不提供中途加入状态同步，需配合 Lobby 重进+Spawner/Synchronizer 或自写 RPC 全量同步；重连需重新 join Lobby 并重建 peer，见 Disconnect_Reconnect_Late_Join 条目。",
+ "fit_pve_vs_pvp": "PVE 合作很适配（房主权威、简单）；PVP 受限于房主作弊与房主优势，且无预测/回滚，需要另写；传输层本身中立。",
+ "fit_frame_sensitive_vs_insensitive": "帧不敏感：适配；帧敏感：中继延迟+星型+ENet式可靠性尚可，但需自写预测/插值，勉强。",
+ "fit_host_migration_tiers": "不换主：适配；秒级换主：需自研，勉强；无感换主：不建议（该栈无状态镜像机制）。",
+ "fit_4_6_vs_7_12": "4-6人适配良好；7-12人技术上可行，但房主带宽/CPU 与同步节点数需自测。",
+ "scenario_matrix_verdict": "不换主×帧不敏感×4-12人×PVE：可行（置信度中高）；不换主×帧敏感×4-6人：可行偏勉强（中）；秒级/无感换主：不建议依赖此栈原生能力（高）。官方版 SteamMultiplayerPeer 的成熟度存在缺口（见 create_host 静默失败），需要 spike 验证。",
+ "implementation_difficulty": "3/5：接入 Lobby 与 peer 约几十行代码，但 Steam 初始化、AppID、版本匹配、Lobby 生命周期、调试多开较繁琐，且文档对 Godot 4.7 后新版较碎片化。",
+ "tech_requirements": "Steamworks 账号与 AppID（开发阶段可用 480 Spacewar，但有论坛称 480 下建房可能不真正成功，[不确定]）；steam_appid.txt；GodotSteam 预编译 GDExtension 或自编模块；Steam.steamInitEx；Lobby 创建/加入回调；创建 SteamMultiplayerPeer 并赋给 multiplayer；处理 Steam ID 64 位与 Godot peer id 32 位映射；Steam 客户端运行中。",
+ "godot_integration_status": "版本口径（官方 release policy）：Godot 4.6/4.7 为全支持，4.5 仅安全修复，≤4.4 EOL。GodotSteam 4.24 于 2026-11-07/08 发布，修复 4.17–4.23.2 的 peer ID 伪造问题（peer ID claim/bad peer rejection），应升级。GodotSteam 4.x 主仓（Codeberg godot4 分支 godotsteam_multiplayer_peer.cpp）自带 SteamMultiplayerPeer：无 create_mesh；host_with_lobby/connect_to_lobby 下成员两两建连（事实 mesh），客户端经房主中转默认关闭（4.16.2 起可选）；create_host 固定 peer 1，create_client 每次随机 peer ID，host_with_lobby 要求调用者已是 lobby owner；独立 multiplayerpeer 仓已退役并入主仓。SDK 1.65 需 GodotSteam≥4.21；GodotSteam 兼容说明提示 Godot 4.7 有断点。expressobits 版：GDExtension，Asset Library 标 Godot 4.4（EOL），作者2025-12起停更，不兼容 channels，不建议新项目采用。兼容矩阵：4.3/4.4 已 EOL；4.5 仅安全修复；4.6/4.7 用 GodotSteam≥4.21（推荐4.24）。",
+ "key_pitfalls": "0) 4.17–4.23.2 存在 peer ID 伪造漏洞，须升级到4.24；1) 论坛(4.6)报告 godotsteam_server 下 peer.create_host(virtual_port) 后服务器输出停止，疑似静默失败，无答复，建议提 Codeberg issue；2) expressobits 版不支持 channels（作者已移出计划）；3) 不支持 mesh，需 True P2P 时只能用旧 Steam 网络 API 自己收发包，RPC 不可用；4) Steam ID 64 位被 Godot 32 位 authority 截断（brogolem35 教程）；5) 报告：关闭 peer 后无法加入另一个 Lobby（GodotSteam issues 列表）；6) 论坛称“client 收到 authority=1”类问题；7) 版本错配（SDK/GodotSteam/Godot）导致无法加载。 另：create_client 每次随机 peer ID，重连后 peer id 会变，需应用层映射玩家身份；host_with_lobby 要求调用者已是 lobby owner。",
+ "estimated_dev_weeks_solo": "约1-2周完成接入 Steam 初始化、Lobby、peer、基础房间 UI；若遇 create_host/版本问题再加0.5-1周。假设已熟悉 Godot 高层 API。",
+ "reference_implementations": "expressobits/steam-multiplayer-peer（含 bomberman demo 分支与 Wiki）；godotsteam.com 文档与教程；brogolem35 的 rollback-with-godotsteam 教程；Asset 库“Steam or Local Multiplayer Lobby Template”。",
+ "test_and_debug_tooling": "需要运行中的 Steam 客户端；单机多开同一 Steam 账号受限，通常需第二台机器/第二账号，或本地用 ENet 作为替身再切换 peer；无内建延迟丢包模拟（可用 clumsy/网络限速）；对 Claude 自测闭环不友好，建议用抽象层让逻辑在 ENet 下自动测试。",
+ "claude_confidence": "3/5：Claude 熟悉 GodotSteam 3.x/Godot 3 示例，4.x 新 API（steamInitEx、peer 创建方法名）常有出入，且版本演进快。",
+ "common_claude_errors": "混用 Godot3 的 network_peer 与 Godot4 multiplayer_peer；使用过时的 Steam.steamInit 参数；虚构 create_host/create_lobby 参数；将 Steam ID 直接当 peer id；忘记 Steam.run_callbacks；authority 误设。",
+ "human_required_parts": "Steamworks 后台配置、AppID 与测试账号、版本组合选型与 spike 验证、Lobby 生命周期设计、真机双账号联调。",
+ "post_launch_stability": "3/5：依赖 Valve SDR，连接总体稳定；风险在第三方 peer 的维护、Steam 客户端不在线以及引擎升级兼容。",
+ "maintenance_burden": "中偏高：Godot 小版本升级需等 GodotSteam 同步；Steamworks SDK 版本映射需跟进；expressobits 版已停更，需自己 fork 维护；GodotSteam 维护者可见主力为 Gramps 一人加零星贡献者（Codeberg 页面）。",
+ "cost_per_month": "零服务器成本；Steam 上架一次性 $100/应用（Steamworks 费用，[不确定]本次未复核）；SDR 中继对开发者免费。",
+ "steam_only_restriction": "是，仅 Steam 玩家可联机；其他渠道发行需另备 ENet/其他传输层。",
+ "fallback_plan": "降级到 ENet 直连（IP 或 NAT 打洞/自建中继），或换用 expressobits/GodotSteam 另一版 peer，或用 Steam Lobby 仅做匹配+ENet 传输，或第三方 SDK（如 EOS、Epic）。",
+ "case_studies": "1) WEBFISHING：Godot 3.5+GodotSteam，Steam 大厅/房间码联机；上线后多次修大厅、房间码与 desync（口径：协调员转述，Steam News 页 https://store.steampowered.com/news/app/3146520 抓取为空，未亲自核验补丁条目）。2) Dome Keeper：Godot，联机2026-04-13免费更新，线上最多8人（PC/Xbox，来源：Xbox Wire/PCGames，已核）；仅房间码+好友；2026补丁多为重连丢状态（协调员转述，补丁原文本次未核到）。3) Buckshot Roulette：Godot，联机后有断线软锁补丁（协调员转述，未亲自核验）。各作品换主处理：均为房主制、不换主，房主退出即散局[不确定]；口碑要点集中在大厅/重连/desync。",
+ "risks": "官方版 peer 成熟度与文档不足、create_host 静默失败、GitHub 仓归档迁移带来链接失效、expressobits 停更、Godot 4.7 兼容断点、不支持换主。",
+ "evidence_date": "2025-12至2026-11的网页/论坛证据；Godot 4.7.x、GodotSteam 迁至 Codeberg 等版本信息变化快，可能过时",
+ "sources": [
+  {
+   "title": "expressobits/steam-multiplayer-peer",
+   "url": "https://github.com/expressobits/steam-multiplayer-peer",
+   "type": "一手"
+  },
+  {
+   "title": "GodotSteam Codeberg 仓库",
+   "url": "https://codeberg.org/godotsteam/godotsteam",
+   "type": "一手"
+  },
+  {
+   "title": "GodotSteam GitHub（已归档）",
+   "url": "https://github.com/GodotSteam/GodotSteam",
+   "type": "一手"
+  },
+  {
+   "title": "create_host with godotsteam_server fails silently",
+   "url": "https://forum.godotengine.org/t/create-host-with-godotsteam-server-fails-silently/137023",
+   "type": "二手(论坛)"
+  },
+  {
+   "title": "Godot Rollback With Steam",
+   "url": "https://brogolem35.github.io/rollback-with-godotsteam/",
+   "type": "二手"
+  },
+  {
+   "title": "Asset Library: Steam Multiplayer Peer",
+   "url": "https://godotengine.org/asset-library/asset/2258",
+   "type": "一手"
+  },
+  {
+   "title": "Facepunch.Steamworks issue #765（拔线约30s才收到离开回调，协调员转述）",
+   "url": "https://github.com/Facepunch/Facepunch.Steamworks/issues/765",
+   "type": "二手"
+  },
+  {
+   "title": "WEBFISHING Steam News",
+   "url": "https://store.steampowered.com/news/app/3146520",
+   "type": "一手(抓取为空)"
+  },
+  {
+   "title": "Dome Keeper Multiplayer is Here (Xbox Wire)",
+   "url": "https://news.xbox.com/en-us/2026/04/13/dome-keeper-multiplayer/",
+   "type": "一手"
+  }
+ ],
+ "uncertain": [
+  "quantitative_limits",
+  "player_count_support",
+  "case_studies",
+  "cost_per_month",
+  "tech_requirements"
+ ]
+}

@@ -1,0 +1,87 @@
+{
+ "name": "Disconnect_Reconnect_Late_Join",
+ "category": "Godot技术栈",
+ "what_it_is": "在 Godot+Steam 联机中，检测房主/玩家离线、断线重连、中途加入与优雅散局的做法；是不换主存档方案的基础能力。",
+ "architecture_codes": "A1 的“房主走散局”分支基础（房主离线即散局回大厅）；D2（状态快照迁移）与 D3（热备影子）的前置能力：快照与全量同步；客户端重连适用于 A1/B1。",
+ "core_capabilities": "1) 信号：multiplayer.peer_disconnected(id)（有人离开，服务器清理其节点）、multiplayer.server_disconnected（客户端失去房主）；2) 优雅离开：先逐个断开再 close()，否则可能不触发 peer_disconnected（pandaqi 教程）；3) Steam 侧：Steam.lobby_chat_update 监听成员进出，Steam.getLobbyOwner 查房主；4) 重连：客户端失连后启动计时器，重试连接/重进 Lobby，超时返回菜单；5) 状态重建：用 Spawner 生成必有实体，Synchronizer 设 Always，服务器通过 @rpc 补发缺失信息。",
+ "quantitative_limits": "口径：Steam GNS 默认连接超时10000ms（可调）；Lobby 房主转移：主动 LeaveLobby 即时，拔线约30s才收到离开回调（Facepunch.Steamworks issue #765）→ 掉线检测不能依赖 Lobby 回调，须自建心跳；单消息上限512KB（全量快照需分片），默认发送速率256KB/s。推荐起点（经验值，非官方）：心跳间隔约100ms量级，约170ms静默判疑似掉线+多数票确认（参考 Godot Understudy 做法，协调员转述）；重连窗口应用层定10-30s，超时回大厅。",
+ "player_count_support": "4-6人：重连与全量同步成本小；7-12人：全量同步包更大，需分批发送与限速。",
+ "latency_profile": "帧不敏感游戏可容忍数秒重连窗口；帧敏感需暂停/冻结或 AI 托管，需另设计。",
+ "host_migration_support": "本item即不换主基础：房主离线等同散局；教程指出房主恢复“可能但很少做”，需所有玩家已知状态、选举新主并重建全部连接。",
+ "nat_traversal_and_relay_behavior": "不适用（取决于传输层，Steam 中继下连接重建需重新 join Lobby/重建 peer）。",
+ "late_join_and_reconnect_support": "需自行实现。Spawner/Synchronizer 对晚加入有一定支持但存在 'Node not found' 与包顺序问题（4.2-4.6 多帖）；建议服务器在 peer_connected 后发送全量快照 RPC，客户端等待 spawned 信号再应用。",
+ "fit_pve_vs_pvp": "PVE 容易处理掉线（AI 托管/暂停）；PVP 需要判负/托管/重连窗口规则。",
+ "fit_frame_sensitive_vs_insensitive": "帧不敏感友好；帧敏感需要更严格的心跳与状态追赶。",
+ "fit_host_migration_tiers": "不换主：房主离线=散局并回大厅，易实现；秒级/无感换主：需快照镜像，本item不覆盖。",
+ "fit_4_6_vs_7_12": "4-6人易；7-12人全量同步与重连风暴需限流。",
+ "scenario_matrix_verdict": "不换主×任意×4-12人：可行（中高）；客户端重连：可行但需自写（中）；房主重连/换主：不建议（高）。",
+ "implementation_difficulty": "3/5：信号简单，但“全量状态同步+清理残留节点+Lobby 状态一致”工作量大；教程强调需从开发之初就设计，后期补很难。",
+ "tech_requirements": "peer_disconnected/server_disconnected 处理；close 前先 disconnect_peer；Lobby 成员/房主回调；心跳或应用层 ping（Godot 与 Steam 已有底层超时，应用层可补充）；重连计时器；服务器权威快照与 RPC；Spawner spawned 信号时序；断线玩家节点占位/AI 托管；Lobby 房主离开时删除 Lobby 或回大厅。",
+ "godot_integration_status": "版本口径：Godot 4.6/4.7 全支持。全部为自写逻辑。Steam 侧写法：GodotSteam 注册了 Steam.lobby_chat_update 信号（godotsteam.cpp 的 callbackLobbyChatUpdate），底层 LobbyChatUpdate_t 描述成员状态变化（加入/离开/掉线/被踢等），并非专门的房主变更事件；房主变更没有官方示例，实用做法为：在 lobby_chat_update 处理函数中重新调用 Steam.getLobbyOwner(lobby_id) 并与保存的 host id 比较，或定时轮询；社区例子仅在加入后读一次房主（Godot 4.4.1 论坛帖）。需对照所用 GodotSteam 版本源码确认。GodotSteam 自带 peer：丢失 peer 1 直接 close()，故房主掉线即触发 server_disconnected；create_client 每次随机 peer ID，重连后需映射身份。",
+ "key_pitfalls": "1) 不先 disconnect 就 close，peer_disconnected 不触发；2) 客户端节点已释放而 Synchronizer 仍发送→报错，需先 set_public_visibility(false) 再销毁；3) 只有 Spawner 的 authority 才能删除其节点；4) 晚加入 'Node not found'/缺失已生成节点（4.6 论坛），需 staging 场景或 RPC 全量推送；5) 断线玩家信号未清理产生杂散错误；6) Steam Lobby 成员掉线后短时间不可重进；7) True P2P 教程未覆盖房主离开/成员掉线处理；8) Steam ID 64 位与 peer id 映射，重连后 peer id 变化需映射回玩家身份。",
+ "estimated_dev_weeks_solo": "优雅散局+回大厅约1周；中途加入全量同步约1-2周；客户端重连含状态恢复约2-3周。假设借助 Claude。",
+ "reference_implementations": "pandaqi 的 Handling Disconnects & Reconnects 教程；论坛“how to check if the host left”；brogolem35 GodotSteam 教程（lobby_chat_update 接线）。",
+ "test_and_debug_tooling": "本地多开后强杀进程/关闭 peer 模拟掉线；用系统网络工具断网/限速；Steam 真机双账号测 Lobby 事件；断线用例可脚本化，对 Claude 自测较友好（ENet 下）。",
+ "claude_confidence": "3/5：信号与 RPC 部分较稳，全量同步时序与 Steam Lobby 回调版本差异易错。",
+ "common_claude_errors": "假设 peer_disconnected 总会触发；Godot3 的 network_peer_disconnected 旧信号名；忽略 Steam.run_callbacks；把 Steam ID 当 peer id；在 server_disconnected 里继续调用已失效的 multiplayer；重连后重复生成实体。",
+ "human_required_parts": "断线策略（暂停/托管/判负）、重连窗口与超时数值、全量同步范围与存档设计、Steam 回调实测。",
+ "post_launch_stability": "3/5：断线重连是玩家差评高发处，需充分测试。",
+ "maintenance_burden": "中高：随玩法新增状态都需同步进快照，需长期回归测试。",
+ "cost_per_month": "零服务器成本。",
+ "steam_only_restriction": "Lobby 回调部分仅 Steam；信号与全量同步逻辑可复用于其他传输层。",
+ "fallback_plan": "重连失败则回大厅并保留存档；中途加入不支持则房间锁定开局后不接收新玩家；仅支持大厅内重连。",
+ "case_studies": "1) WEBFISHING：Godot 3.5+GodotSteam，Steam 大厅/房间码联机；上线后多次修大厅、房间码与 desync（口径：协调员转述，Steam News 页 https://store.steampowered.com/news/app/3146520 抓取为空，未亲自核验补丁条目）。2) Dome Keeper：Godot，联机2026-04-13免费更新，线上最多8人（PC/Xbox，来源：Xbox Wire/PCGames，已核）；仅房间码+好友；2026补丁多为重连丢状态（协调员转述，补丁原文本次未核到）。3) Buckshot Roulette：Godot，联机后有断线软锁补丁（协调员转述，未亲自核验）。各作品换主处理：均为房主制、不换主，房主退出即散局[不确定]；口碑要点集中在大厅/重连/desync。",
+ "risks": "晚加入同步时序坑、Lobby 状态不一致、重连后身份映射错误、房主退出体验差。",
+ "evidence_date": "2025-12至2026-11的网页/论坛证据；Godot 4.7.x、GodotSteam 迁至 Codeberg 等版本信息变化快，可能过时",
+ "sources": [
+  {
+   "title": "Handling Disconnects & Reconnects (pandaqi)",
+   "url": "https://pandaqi.pages.dev/blog/tutorials/online-multiplayer/handling-disconnects-and-reconnects/",
+   "type": "二手"
+  },
+  {
+   "title": "How to check if the host left the game",
+   "url": "https://forum.godotengine.org/t/how-to-check-if-the-host-left-the-game-multiplayer/133115",
+   "type": "二手(论坛)"
+  },
+  {
+   "title": "Node not Found: MultiplayerSynchronizer on client late-joining",
+   "url": "https://forum.godotengine.org/t/node-not-found-multiplayersynchronizer-on-client-late-joining/137234",
+   "type": "二手(论坛)"
+  },
+  {
+   "title": "MultiplayerSynchronizer failing to sync for late-joiners",
+   "url": "https://forum.godotengine.org/t/multiplayersynchronizer-failing-to-sync-for-late-joiners/124269",
+   "type": "二手(论坛)"
+  },
+  {
+   "title": "Godot Rollback With Steam",
+   "url": "https://brogolem35.github.io/rollback-with-godotsteam/",
+   "type": "二手"
+  },
+  {
+   "title": "Godot 高层多人文档",
+   "url": "https://docs.godotengine.org/en/stable/tutorials/networking/high_level_multiplayer.html",
+   "type": "一手"
+  },
+  {
+   "title": "GodotSteam godotsteam.cpp（godot4 分支，lobby_chat_update 回调注册）",
+   "url": "https://www.Github.com/GodotSteam/GodotSteam/blob/godot4/godotsteam.cpp",
+   "type": "一手"
+  },
+  {
+   "title": "Facepunch.Steamworks issue #765",
+   "url": "https://github.com/Facepunch/Facepunch.Steamworks/issues/765",
+   "type": "二手(协调员转述)"
+  },
+  {
+   "title": "Dome Keeper Multiplayer is Here (Xbox Wire)",
+   "url": "https://news.xbox.com/en-us/2026/04/13/dome-keeper-multiplayer/",
+   "type": "一手"
+  }
+ ],
+ "uncertain": [
+  "case_studies",
+  "tech_requirements"
+ ]
+}

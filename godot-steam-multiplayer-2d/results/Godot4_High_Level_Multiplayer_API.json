@@ -1,0 +1,89 @@
+{
+ "name": "Godot4_High_Level_Multiplayer_API",
+ "category": "Godot技术栈",
+ "what_it_is": "Godot 4 内置的高层多人 API：基于 MultiplayerPeer（默认 ENet）的 RPC、MultiplayerSpawner（复制场景实例）、MultiplayerSynchronizer（复制属性），以 multiplayer authority 概念管理权限；拓扑为以服务器（peer id 1）为中心的星型。",
+ "architecture_codes": "A1（状态同步房主·房主走散局）的默认实现层；承载 B1 的客户端侧；不提供 A2 回滚（需 netfox 等另做）、D1-D5 换主（peer 1 固定）。",
+ "core_capabilities": "@rpc(mode: authority/any_peer, sync: call_remote/call_local, transfer: reliable/unreliable/unreliable_ordered, channel)；@rpc 默认等价 @rpc('authority','call_remote','reliable',0)；channel 为连接内独立流，channel 0 实际按三种传输模式分三条；Node.set_multiplayer_authority 按节点改权限；multiplayer.get_remote_sender_id() 取调用方；Spawner 按 spawn_function/可 spawn 场景列表复制，Synchronizer 支持复制模式（Always/On Change/Never）与可见性过滤（set_visibility_for/set_public_visibility），官方文档提示 spawn/despawn 受 Synchronizer 可见性影响。",
+ "quantitative_limits": "补查结果：未找到一手/可复核的 Spawner/Synchronizer 带宽基准（netfox 文档无带宽数据；Godot 官方博客仅谈设计）。可复核的只有方法论：Godot 网络分析器只统计高层 API 载荷字节，不含协议开销与压缩，会显著低于 Wireshark 实测（godot issue #91869 维护者说明），分析器可按 Synchronizer 拆分消耗与同步次数。仅有的量化估算为二手博客（Godot 4.5 ENet，4人、约30实体、30Hz，每玩家约100-180Kbps，方法未核实），保留并注明二手。建议以 Wireshark 自测为准。Steam 传输层上限（GNS 默认10s超时、512KB单消息、256KB/s默认发送速率）适用于走 Steam 的情形。",
+ "player_count_support": "4-6人：无压力；7-12人：星型下服务器上行线性增长，实体数多时需可见性过滤/降频，无官方上限；[不确定]缺实测。",
+ "latency_profile": "基于 UDP/ENet，延迟取决于传输层；无内建客户端预测/插值/回滚，帧敏感游戏需自写；帧不敏感游戏非常适配。",
+ "host_migration_support": "无内建换主：服务器 peer id 固定为1，断开即 server_disconnected；只适配不换主档。",
+ "nat_traversal_and_relay_behavior": "不适用（取决于所选 MultiplayerPeer）；默认 ENet 仅 UDP，需端口转发，无打洞/中继。",
+ "late_join_and_reconnect_support": "Spawner 对晚加入者会复制现有已生成节点，但社区反馈较多坑：晚加入报 'Node not found'、同步器路径未就绪、Spawner/Synchronizer 包顺序无保证（论坛 4.2-4.6 多帖）；常见做法是先加载 staging 场景再加入，或由服务器 RPC 推全量状态。",
+ "fit_pve_vs_pvp": "PVE 合作良好；PVP 需服务器权威+自写反作弊/校验，高层 API 不提供。",
+ "fit_frame_sensitive_vs_insensitive": "帧不敏感适配；帧敏感缺预测/插值/回滚，需自写或另用方案。",
+ "fit_host_migration_tiers": "不换主：适配；秒级/无感换主：不支持，需自建状态快照与重建网络。",
+ "fit_4_6_vs_7_12": "4-6人适配；7-12人需做可见性/频率优化，需要实测。",
+ "scenario_matrix_verdict": "不换主×帧不敏感×4-12人×PVE：可行（高）；不换主×帧敏感×4-6人：勉强-可行（中，需自写插值/预测）；换主：不建议（高）。",
+ "implementation_difficulty": "2-3/5：基本 RPC 简单；Spawner/Synchronizer 的路径一致性、authority、晚加入同步易出坑。",
+ "tech_requirements": "节点路径双端一致；每个 @rpc 方法在所有端声明；authority 设置时序；Spawner 的 spawn_function 与 spawn_path；Synchronizer 的 replication_config、visibility；客户端输入不可信、服务器校验与限频；自写插值/预测（如需）。",
+ "godot_integration_status": "版本口径：Godot 4.6/4.7 全支持，4.5 仅安全修复，≤4.4 EOL。内置无需插件。具体 4.x 间破坏性改动清单仍未取得权威文档，须查各版本 Release notes[不确定]；已知论坛反馈：4.5.1 Spawner peer 同步问题、4.6 下 Synchronizer 公共可见性关闭但 Spawner 仍生成。官方类参考对 MultiplayerSynchronizer 带“Here be dragons”提示。",
+ "key_pitfalls": "1) 节点路径不一致导致 RPC/同步失败；2) 所有 @rpc 必须在两端同路径声明，参数不检查签名；3) RPC 不能传 Object/Callable；4) 释放一个玩家节点导致其他同步断开（issue #100873）；5) 晚加入 'Node not found'；6) Synchronizer 可见性不影响 Spawner（4.6 论坛）；7) 用 Tween 同步又抖又费带宽；8) 网络分析器低估带宽；9) peer id 32 位与 Steam ID 不匹配。",
+ "estimated_dev_weeks_solo": "基础联机约1-2周，含 Spawner/Synchronizer 及晚加入约2-4周；预测/插值另加2-4周。假设借助 Claude。",
+ "reference_implementations": "Godot 官方 High-level multiplayer 文档与 multiplayer 示例项目；Packt《Essential Guide to Creating Multiplayer Games with Godot 4.0》；godotengine.org 的 multiplayer changes 4.0 report 系列文章。",
+ "test_and_debug_tooling": "编辑器内“调试→运行多个实例”本地多开，网络分析器与 Multiplayer 调试面板；延迟丢包可用系统工具（clumsy/tc）或自行包一层；本地多开使 Claude 自测闭环较友好。",
+ "claude_confidence": "3.5/5：基础 RPC 熟，Spawner/Synchronizer/authority 细节与 4.x 版本差异易错。",
+ "common_claude_errors": "用 Godot3 的 remote/master/puppet 关键字或 rpc_id 老写法；@rpc 参数顺序错（transfer_channel 必须最后）；authority 与 any_peer 混淆；忘记两端声明；在 _ready 里过早设置 authority；Synchronizer 用错 root_path。",
+ "human_required_parts": "同步粒度与带宽取舍、权威模型设计、晚加入与断线流程、预测/插值方案拍板、实机压测。",
+ "post_launch_stability": "3.5/5：ENet 成熟，但上层节点同步类存在已知边缘 bug，需自行兜底。",
+ "maintenance_burden": "中：随 Godot 小版本升级需回归测试；无第三方服务依赖。",
+ "cost_per_month": "零（引擎内置）；传输层成本取决于所选方案。",
+ "steam_only_restriction": "不适用（传输层无关，可搭配 ENet/Steam/WebRTC）。",
+ "fallback_plan": "在高层 API 之上弱化 Synchronizer，改用手写 RPC 快照；或使用第三方网络库/自建状态同步；或引入专用服务器。",
+ "case_studies": "1) WEBFISHING：Godot 3.5+GodotSteam，Steam 大厅/房间码联机；上线后多次修大厅、房间码与 desync（口径：协调员转述，Steam News 页 https://store.steampowered.com/news/app/3146520 抓取为空，未亲自核验补丁条目）。2) Dome Keeper：Godot，联机2026-04-13免费更新，线上最多8人（PC/Xbox，来源：Xbox Wire/PCGames，已核）；仅房间码+好友；2026补丁多为重连丢状态（协调员转述，补丁原文本次未核到）。3) Buckshot Roulette：Godot，联机后有断线软锁补丁（协调员转述，未亲自核验）。各作品换主处理：均为房主制、不换主，房主退出即散局[不确定]；口碑要点集中在大厅/重连/desync。（以上作品均为高层 API 的上层应用，数据来源见上）",
+ "risks": "文档标注不稳定、晚加入坑多、无预测/插值、带宽缺乏官方基准、版本间行为变化。",
+ "evidence_date": "2025-12至2026-11的网页/论坛证据；Godot 4.7.x、GodotSteam 迁至 Codeberg 等版本信息变化快，可能过时",
+ "sources": [
+  {
+   "title": "Godot 高层多人文档",
+   "url": "https://docs.godotengine.org/en/stable/tutorials/networking/high_level_multiplayer.html",
+   "type": "一手"
+  },
+  {
+   "title": "MultiplayerSynchronizer 类参考(4.3)",
+   "url": "https://docs.godotengine.org/en/4.3/classes/class_multiplayersynchronizer.html",
+   "type": "一手"
+  },
+  {
+   "title": "MultiplayerSynchronizer failing to sync for late-joiners",
+   "url": "https://forum.godotengine.org/t/multiplayersynchronizer-failing-to-sync-for-late-joiners/124269",
+   "type": "二手(论坛)"
+  },
+  {
+   "title": "MultiplayerSpawner Peer Sync issues in 4.5.1",
+   "url": "https://forum.godotengine.org/t/multiplayerspawner-peer-sync-issues-in-4-5-1/131944",
+   "type": "二手(论坛)"
+  },
+  {
+   "title": "Multiplayer changes in Godot 4.0 report 4",
+   "url": "https://godotengine.org/article/multiplayer-changes-godot-4-0-report-4",
+   "type": "一手"
+  },
+  {
+   "title": "Godot issue #91869 网络分析器带宽",
+   "url": "https://github.com/godotengine/godot/issues/91869",
+   "type": "一手"
+  },
+  {
+   "title": "Snapshot Bandwidth Budgeting 2026 (Godot 4.5 ENet)",
+   "url": "https://gamineai.com/blog/snapshot-bandwidth-budgeting-co-op-sessions-godot-4-5-enet-vs-unity-netcode-for-gameobjects-2026",
+   "type": "二手(方法未核实)"
+  },
+  {
+   "title": "Dome Keeper Multiplayer is Here (Xbox Wire)",
+   "url": "https://news.xbox.com/en-us/2026/04/13/dome-keeper-multiplayer/",
+   "type": "一手"
+  },
+  {
+   "title": "netfox",
+   "url": "https://github.com/foxssake/netfox",
+   "type": "一手(无带宽数据)"
+  }
+ ],
+ "uncertain": [
+  "quantitative_limits",
+  "player_count_support",
+  "godot_integration_status",
+  "case_studies"
+ ]
+}

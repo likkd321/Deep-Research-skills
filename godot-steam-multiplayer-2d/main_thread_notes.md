@@ -1,0 +1,19 @@
+# 主线程核实/跨item口径备忘
+- [2026-11-23 核实] GodotSteam peer ID 伪造漏洞（4.17–4.23.2）属实（oss-sec 2026/q4/518、openwall 2026/11/08/2）；CVE 编号有分歧：Mend/threatint 记 CVE-2026-123017（CVSS 6.5, CWE-290），oss-sec 原帖称仅已申请（CAN-2026-2042189）。PR #923 "Peer ID Claim Fix" 已于 2026-11-05 合入 godot4 分支，尚未确认有含修复的 release。用户不在意开挂→影响定级为"可被捣乱"，非阻断。
+- [2026-11-23 核实] GodotSteam 主仓已迁 Codeberg（Godot Asset Library 资源条目指向 codeberg.org/godotsteam/godotsteam）；"GitHub 于 2026-11-10 归档"具体日期未独立核实。
+- [跨item] Photon Fusion 2(Unity) host migration = 暂停+快照恢复（D2 类，非无感）；Fusion 3 for Godot 为预览版、官方不建议生产（build 684, 2026-10-26, Godot 4.6+）。D2 item 若写成无感需统一。
+- [跨item] Godot Understudy 真实存在：v0.1.0（2026-10-07/08，unstable，0 评价，Godot 4.5+，CC0/MIT-0，作者称由 Claude 编写），作者单机实测 8 人换主中位 228ms/最大 262ms，SDR 下 4 人最大 235ms；未跨网测试。
+- [跨item] Godot 内置高层 API 下房主固定 peer_id 1、无法移交（godot-proposals#7912 自 2023-09 未回应）→ 无感/秒级换主都需绕开或重建 MultiplayerAPI 层。
+- [补深结果] Steam Lobby 房主转移时延：主动 LeaveLobby 即时；拔线约 30s（Facepunch #765 单一社区报告）；SteamNetworkingSockets 默认超时 10s（GNS 源码，可调）→ Lobby owner 只能作最终共识，掉线检测需自建心跳。
+- [补深结果] Photon Fusion 官方价：100 CCU 免费（0.3TB/月）；500/1000/2000 CCU = $125/$250/$500 每月。
+- [补深结果] GodotSteam 4.x 自带 SteamMultiplayerPeer（multiplayerpeer 独立仓已退役并入主仓）：lobby 模式下成员两两连接（事实 mesh，客户端经房主中转默认关闭，4.16.2 起可选）；但无 create_mesh，host 固定 peer 1，peer1 丢失即 close() → 仍不能换主。expressobits 版明确不支持 mesh。
+- [D2] GodotSteam 源码：create_host 固定 peer 1；create_client 每次随机 peer ID → 换主后按 steam_id 重映射；host_with_lobby 要求已是 lobby owner → 崩溃迁移用 create_host/create_client+显式 SteamID+确定性选主。GNS：默认超时 10s、单消息上限 512KB、默认发送速率 256KB/s。
+- [D2] 分层建议 L0 回大厅(必做) / L1 优雅退出交接(~1周,性价比最高) / L2 周期快照+崩溃迁移 / L3 关键事件检查点。停顿推算：优雅 3-6s，崩溃 6-15s。
+- [D2补深] Liar's Bar = Unity+Mirror，2024-10 上线无换主（差评集中作弊+房主离开），2024-11-27 加换主，12-27 hotfix 修换主卡死；玩家反馈换主崩溃/黑屏/状态错乱（左轮 22/6）。Vanhove 2025 论文（Unity6+Mirror+FizzySteamworks）恢复约 1.43s（不含判死/重连）。Unity NfE：快照 2s，Lobby 选主默认 120s 建议改 5s；Fusion 2 快照默认 10s。停顿分段=判死(10s默认可调3-5s)+开房重连(数秒)+恢复(1-1.5s)。
+- [Steamworks] Lobby 上限 250 人、键长 255；Steam Direct $100（收入$1000后回收）；Playtest 免费独立 AppID。SDR 大陆 POP（GetSDRConfig appid=730）：阿里云 ctu/pek/pvg、腾讯云 tgd，含移动/电信/联通子节点；第三方 app 是否可用未证实。EOS Lobby 64 人（二手），可用 Device ID/Steam 登录。expressobits steam-multiplayer-peer 2025-12 暂停维护、功能并入 GodotSteam 4.x。
+- [终局胜率] 最稳首作：PVE×帧不敏感×不换主×2-4(上限4-6)；可单人玩、好友邀请/房间码为主、强制 SDR、锁定引擎/插件版本、房主离开干净回大厅。24格中仅 PVE×不敏感×不换主×4-6 为"可行高置信"。
+- [一手案例] WEBFISHING（Godot3.5+GodotSteam）上线1月内≥6个网络补丁：>50 活跃大厅搜不到/房间码失效（Lobby 搜索默认同区/近区→需 addRequestLobbyListDistanceFilter Worldwide）、旧版本服显示不可进、desync、踢人/封禁。Buckshot Roulette 让玩家端口转发 UDP 4379/4380（疑未强制 SDR）。Dome Keeper 联机（≤8人）无公开大厅只房间码+好友，2026 补丁多为重连丢状态。
+- [版本] GodotSteam 2026-07~11 约 9 个版本、多数含 API 改名/移除；4.24（2026-11-07/08）changelog 含"Fixed peer ID claim during setup" → 漏洞修复大概率已发版。Godot 4.6/4.7 全支持，4.5 仅安全修复，≤4.4 EOL。
+- [商业] Gamalytic 2025：8% 毛收入>$10万、65.9%<$1000；合作类占发行 5-6% 但销量 36-46%；多人游戏稳定在首发峰值约 6% CCU。
+- [承载力] 房主上行≈(N-1)×快照率×(载荷+包头)，6→12 人玩家实体部分约×4.4。估算：不敏感 6人0.12/12人0.45 Mbps；帧敏感 30Hz 原生不优化 1.2/5.3 Mbps；量化+差分 12人约1-1.5 Mbps。Godot sync_mtu=1350，超 MTU 状态静默丢弃。掉线：每人3%/局→至少一人掉线 6人17%、12人31%。
+- [7-12人案例] Webfishing 默认12人满房卡顿（原版无变化也发 actor 包）；MoreCompany 建议≤8；Crab Game 12+ 漂浮；PICO PARK 续作弃用 Steam 网络；Among Us 服务器转发+房主客户端判定；Goose Goose Duck 峰值~56万崩服+DDoS；R.E.P.O. Photon PUN，房间上限20。

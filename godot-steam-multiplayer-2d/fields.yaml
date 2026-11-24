@@ -1,0 +1,44 @@
+fields:
+  基本信息:
+    - {name: name, description: item名称, detail_level: 极简}
+    - {name: category, description: 所属类别（换主方案/Steam能力/Godot技术栈/同步方式/业界案例/AI编程能力/运营与胜率等）, detail_level: 极简}
+    - {name: what_it_is, description: 是什么、解决什么问题（1-3句）, detail_level: 简要}
+    - {name: architecture_codes, description: 对应用户全景表中的架构编码（A1/A2/A3/B1/D1-D5/C1-C3/E1等），以及为何对应, detail_level: 简要}
+  能力边界:
+    - {name: core_capabilities, description: 核心能力与关键机制, detail_level: 详细}
+    - {name: quantitative_limits, description: 量化上限/实测数据（人数、带宽KB/s、延迟ms、tick rate、实体数、换主停顿秒数等），注明来源口径, detail_level: 详细}
+    - {name: player_count_support, description: 对4-6人与7-12人的支持情况与差异, detail_level: 简要}
+    - {name: latency_profile, description: 延迟特性：对帧敏感（马里奥式）与帧不敏感（三国志式）的适配, detail_level: 简要}
+    - {name: host_migration_support, description: 对不换主/秒级换主/无感换主三档的支持情况, detail_level: 简要}
+    - {name: nat_traversal_and_relay_behavior, description: 打洞/中继行为：是否经 SDR 等中继、直连成功率、中继费用谁付、IP是否暴露（不适用填"不适用"）, detail_level: 简要}
+    - {name: late_join_and_reconnect_support, description: 中途加入与断线重连支持度（不适用填"不适用"）, detail_level: 简要}
+  二十四格适配:
+    - {name: fit_pve_vs_pvp, description: 对PVE与PVP的适配差异与理由, detail_level: 简要}
+    - {name: fit_frame_sensitive_vs_insensitive, description: 对帧敏感与帧不敏感的适配差异与理由, detail_level: 简要}
+    - {name: fit_host_migration_tiers, description: 对不换主/秒级换主/无感换主三档的适配与理由, detail_level: 简要}
+    - {name: fit_4_6_vs_7_12, description: 对4-6人与7-12人的适配差异与理由, detail_level: 简要}
+    - {name: scenario_matrix_verdict, description: 本item视角下对相关格子的结论（可行/勉强/不建议+置信度），可只覆盖相关维度组合, detail_level: 详细}
+  实现:
+    - {name: implementation_difficulty, description: 实现难度1-5分及理由（以"懂语法写得少+Claude编程"的个人开发者为基准）, detail_level: 简要}
+    - {name: tech_requirements, description: 需要掌握/实现的技术点清单, detail_level: 详细}
+    - {name: godot_integration_status, description: Godot 4 中的现状：现成插件/需自写部分/版本兼容（Godot 4.3-4.6）, detail_level: 详细}
+    - {name: key_pitfalls, description: 关键坑与典型bug, detail_level: 详细}
+    - {name: estimated_dev_weeks_solo, description: 个人开发者借助Claude完成该部分的粗略工期（周）与假设, detail_level: 简要}
+    - {name: reference_implementations, description: 可参考的开源范例/模板/教程链接, detail_level: 简要}
+    - {name: test_and_debug_tooling, description: 测试调试手段（本地多开、延迟丢包模拟、双账号），对Claude自测闭环的友好度, detail_level: 简要}
+  Claude把握度:
+    - {name: claude_confidence, description: Claude 写对该部分的把握度1-5分及理由, detail_level: 简要}
+    - {name: common_claude_errors, description: Claude 在该部分的典型错误（Godot3/4 API混用、@rpc错误、authority错误等）, detail_level: 简要}
+    - {name: human_required_parts, description: 需要开发者本人理解/调试/拍板的部分, detail_level: 简要}
+  运营:
+    - {name: post_launch_stability, description: 上线后网络连接稳定性评估（1-5分及理由）, detail_level: 简要}
+    - {name: maintenance_burden, description: 上线后维护负担（SDK/引擎升级、服务依赖、玩家反馈处理）, detail_level: 简要}
+    - {name: cost_per_month, description: 月成本（人民币/美元），区分零服务器与可选付费, detail_level: 极简}
+    - {name: steam_only_restriction, description: 是否限定Steam玩家、对其他渠道发行的影响（不适用填"不适用"）, detail_level: 极简}
+    - {name: fallback_plan, description: 方案失败时的降级路径, detail_level: 简要}
+  证据:
+    - {name: case_studies, description: "相关游戏案例列表：每条含 游戏名、引擎、网络方案、人数、换主处理、网络口碑/差评要点", detail_level: 详细}
+    - {name: risks, description: 主要风险, detail_level: 简要}
+    - {name: evidence_date, description: 主要证据的时间范围与是否可能过时, detail_level: 极简}
+    - {name: sources, description: 来源列表（标题+URL，标注一手/二手）, detail_level: 详细}
+uncertain: []

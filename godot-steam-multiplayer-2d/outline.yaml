@@ -1,0 +1,165 @@
+topic: 个人开发者借助Claude编程、用Godot引擎制作Steam联机2D游戏的可行性评估（24种情况）
+request: >-
+  个人开发者首款Steam联机2D游戏，用Godot+Claude编程、尽量只用Steam自带联机功能不租服务器；
+  按 PVE/PVP × 帧敏感/不敏感 × 不换主/秒级换主/无感换主 × 4-6人/7-12人 共24种情况，
+  逐一评估可选方式、利弊、实现难度、技术要求、Claude编程把握度与上线后网络稳定性（低维护），并大量参考业界独立游戏实现。
+started_at: "2026-11-23T16:20+00:00"
+constraints:
+  - 尽量不租服务器，充分使用Steam自带联机功能（Lobby/房间列表、Steam Networking Sockets、SDR中继）
+  - 完全不在意开挂/反作弊，先把游戏做起来（反作弊仅作背景）
+  - 玩家成长（经验、奖励等）记录在玩家本地存档即可（可配 Steam Cloud）
+  - 需要房间列表功能（显示等待中的房间）
+  - 玩家群：全球不限
+  - 开发者水平：懂一些语法，看得多写得少，主要依赖Claude写代码
+  - 极看重"终局胜率"与上线后低维护
+  - 参考资料：用户上传的《游戏网络联机模式大全景地图》（A1–A3/B1–B2/D1–D5/C1–C3/E1–E2 共15子类）
+time_range: 2023年至今（经典架构资料不受限）
+scenario_matrix:
+  dimensions:
+    mode: [PVE, PVP]
+    latency: [帧敏感（马里奥式）, 帧不敏感（三国志式）]
+    host_migration: [不换主, 近无感换主（秒级）, 无感换主]
+    players: [4-6人, 7-12人]
+  total: 24
+
+items:
+  # ---- 核心 item（各自单独一个 agent，深度判断）----
+  - name: D2_Snapshot_Host_Migration
+    category: 换主方案
+    description: >-
+      秒级换主（近无感）：状态快照/检查点迁移（D2）。暂停→选新主→快照搬家→重连；Steam Lobby房主自动转移
+      与 SteamMultiplayerPeer 下的实现路径；GTFO/星际战甲/绝地潜兵1/文明/骗子酒馆等的实际做法与停顿时长；
+      Godot 中有无现成方案、需要自写哪些模块、典型坑（道具复制、实体ID重映射、黑屏卡死）；
+      对 PVE/PVP、帧敏感/不敏感、4-6/7-12人各格的适配度与 Claude 能否写对。
+  - name: Seamless_Host_Migration_D3_D4
+    category: 换主方案
+    description: >-
+      无感换主：热备影子副本（D3）、分布式权威+玩家协调员（D4）、确定性锁步换发令员（D1）三条路线。
+      核实"Godot Understudy"是否真实存在及成熟度；Photon Fusion host migration 的做法与费用；Among Us 式中继；
+      在纯 Steam P2P（星型拓扑、SteamMultiplayerPeer 不支持 mesh）约束下能否做到真正无感；
+      对帧敏感/不敏感、PVE/PVP、人数各格是否可行，个人开发者+Claude 的现实胜率。
+  - name: Claude_Godot_Netcode_Capability
+    category: AI编程能力
+    description: >-
+      Claude 写 Godot 4 联机代码的能力边界：GDScript/Godot 4 训练数据量、Godot 3/4 API 混淆（rpc 注解、
+      MultiplayerSynchronizer 等）、GodotSteam 这种小众库的出错率、Godot MCP / Claude Code 工作流实践、
+      开发者实测反馈（2024-2026）；哪些网络任务 AI 擅长（大厅/RPC/状态同步）哪些不擅长（回滚、确定性、换主、
+      不可复现的时序 bug）；C# vs GDScript 对 Claude 把握度的影响；"懂语法写得少"的开发者在每类方案上需要自己扛的部分。
+  - name: Long_Term_Stability_Endgame_Odds
+    category: 运营与胜率
+    description: >-
+      上线后长期稳定性与终局胜率：零服务器方案的低维护设计；独立联机游戏上线后的典型网络故障与差评类型
+      （连不上、房主掉线散局、NAT/中继问题、版本不一致）；Steamworks SDK/Godot/GodotSteam 升级风险；
+      小众联机游戏匹配池过小"死服"与冷启动；独立联机游戏的商业成功率数据；哪类组合对首款游戏最稳。
+
+  # ---- 非核心 item（分组）----
+  - name: Steamworks_Networking_Suite
+    category: Steam能力
+    description: >-
+      Steamworks 联机套件全貌：ISteamMatchmaking Lobby（创建/搜索/过滤/房间列表/元数据/人数上限/房主转移）、
+      ISteamNetworkingSockets/Messages、Steam Datagram Relay（SDR）中继与 P2P 打洞、Listen Server 模式、
+      免费范围与带宽限制、全球及中国大陆连通性与延迟、Steam 好友邀请/Join Game/Rich Presence。
+  - name: Free_Supplementary_Services
+    category: Steam能力
+    description: >-
+      免费/近免费补充方案及与 Steam 无关的基线：EOS P2P/Lobby、Photon 免费档、W4 Cloud、Noray、
+      Godot 内置 ENet/WebRTC/WebSocket（ENet 需端口转发说明为何需要 SDR）；Steam Cloud/排行榜/统计/成就/库存
+      作为"轻后端"记录玩家成长（配合本地存档）；各自限制与长期免费风险。
+  - name: Steam_Policy_And_Matchmaking_Cold_Start
+    category: Steam能力
+    description: >-
+      Steam 平台政策与匹配池冷启动：Steam Networking 仅限 Steam 玩家的影响、上架费与流程、Playtest/Demo 联机测试、
+      玩家 IP 隐私（SDR 隐藏 IP）、Steam Deck；小人数游戏房间列表常空的应对（好友邀请优先、Remote Play Together 兜底、
+      Discord 社群、跨区匹配）。
+  - name: GodotSteam_And_SteamMultiplayerPeer
+    category: Godot技术栈
+    description: >-
+      GodotSteam（GDExtension/预编译模块版）与 SteamMultiplayerPeer（expressobits 版 vs godotsteam 官方版）
+      的成熟度、与 Godot 4.3–4.6 的版本兼容矩阵、维护活跃度/维护者数量、已知 bug（create_host 静默失败、
+      不支持 channels/mesh）、是否依赖 Lobby、文档与示例质量。
+  - name: Godot4_High_Level_Multiplayer_API
+    category: Godot技术栈
+    description: >-
+      Godot 4 高层多人 API：RPC（@rpc 注解、可靠/不可靠、channel）、MultiplayerSynchronizer/MultiplayerSpawner、
+      multiplayer authority、可见性过滤、带宽与性能实测、局限（星型拓扑、无内建预测/插值/换主）、4.x 版本间破坏性改动。
+  - name: Disconnect_Reconnect_Late_Join
+    category: Godot技术栈
+    description: >-
+      房主离线检测、断线重连与中途加入（不换主档的基础）：server_disconnected/peer_disconnected 信号、
+      Steam.getLobbyOwner 与 Lobby 房主变更回调、优雅散局与回大厅、中途加入时的全量状态同步、
+      客户端掉线后重进恢复、超时与心跳设计，在 Godot+Steam 下的实现方式与坑。
+  - name: Godot_Rollback_Prediction_Plugins
+    category: 帧敏感同步
+    description: >-
+      Godot 预测/回滚/延迟补偿插件：netfox（含 noray）、Godot Rollback Netcode（Snopek）、Delta Rollback、
+      SG Physics 2D 定点物理；成熟度、与 SteamMultiplayerPeer 兼容性、支持人数、实际商用案例、学习曲线。
+  - name: Deterministic_Lockstep_And_Turn_Based
+    category: 帧不敏感同步
+    description: >-
+      确定性锁步与指令/回合型联机（三国志式）：lockstep 原理、低频指令同步、文明/全面战争/战棋类做法、
+      Godot 中的确定性问题（浮点/物理非确定）与规避（自写逻辑、定点数）、desync 检测与调试；
+      帧不敏感游戏是否根本不需要锁步、直接用房主权威状态同步更简单。
+  - name: Case_Frame_Sensitive_PvP_Small
+    category: 业界案例
+    description: >-
+      案例：帧敏感 PvP/派对小人数 P2P 独立游戏——Stick Fight、Duck Game、Bopl Battle、洞穴探险2、Rivals of Aether、
+      Boomerang Fu、Brawlhalla 早期等：网络架构（回滚/延迟/房主权威）、引擎、人数、玩家对网络的口碑与差评。
+  - name: Home_Host_Capacity_And_Scaling
+    category: 承载力
+    description: >-
+      家用宽带房主承载力与人数扩展：4-6 vs 7-12 人星型拓扑下房主上行带宽需求估算（tick rate、快照大小、实体数）、
+      SDR 中继额外延迟、全球跨洲延迟、2D 游戏典型带宽实测；人数翻倍对房主 CPU/带宽、掉线概率、换主频率的影响。
+  - name: Case_7_12_Player_Indies
+    category: 业界案例
+    description: >-
+      案例：7-12 人及以上的 P2P/低成本独立联机游戏——Webfishing、Gang Beasts、Among Us、鹅鸭杀、Pico Park、
+      骗子酒馆、超级动物大逃杀、Lethal Company 扩人 mod 等：人数上去后用什么架构扛、是否租服、口碑与问题。
+  - name: Case_PVE_Coop_P2P_Indies
+    category: 业界案例
+    description: >-
+      案例：PVE 合作 P2P 独立游戏——致命公司、R.E.P.O.、Peak、Content Warning、深岩银河、雨中冒险2、绝地潜兵1、
+      Risk of Rain Returns 等：网络方案（Steam P2P/Photon/Facepunch）、人数、换主处理（多数不换主）、口碑。
+  - name: P2P_PvP_Fairness_Basics
+    category: PVP特性
+    description: >-
+      P2P 下 PvP 的公平性基础（用户不在意开挂，聚焦体验）：房主 0 延迟优势与补偿、怒退/拔线对 PvP 局的影响、
+      房主主观判定争议、小型 PvP 独立游戏如何在无专服下维持可接受体验。
+  - name: Godot_Steam_Commercial_Titles
+    category: 业界案例
+    description: >-
+      案例：用 Godot 做 Steam 联机的商业作品——Webfishing、Buckshot Roulette 多人版、Cassette Beasts、Brotato 联机、
+      Halls of Torment 等，以及 2025-2026 新作复盘（如 80.lv Godot 4.6 C# 联机团队复盘）：网络架构、用的插件、口碑与踩坑。
+  - name: Netcode_Testing_And_Reference_Impl
+    category: 开发工作流
+    description: >-
+      联机测试调试与开源参考实现：Godot 本地多实例调试、延迟/丢包模拟（Clumsy、tc netem）、Steam 双账号测试、
+      desync/状态日志；可供 Claude 参考的开源 Godot+Steam 范例与模板（expressobits 示例、cooties 等）；
+      如何让 Claude 形成"写-测-修"闭环弥补无法真机联调的短板。
+
+execution:
+  mode: 标准
+  batch_size: 3
+  core_items:
+    - D2_Snapshot_Host_Migration
+    - Seamless_Host_Migration_D3_D4
+    - Claude_Godot_Netcode_Capability
+    - Long_Term_Stability_Endgame_Odds
+  items_per_agent: 2-3
+  judgment_items:
+    - D2_Snapshot_Host_Migration
+    - Seamless_Host_Migration_D3_D4
+    - Claude_Godot_Netcode_Capability
+    - Long_Term_Stability_Endgame_Odds
+    - Home_Host_Capacity_And_Scaling
+  agent_groups:
+    - {agent: web-search-agent-deep, model: opus, items: [Seamless_Host_Migration_D3_D4]}
+    - {agent: web-search-agent-deep, model: opus, items: [D2_Snapshot_Host_Migration]}
+    - {agent: web-search-agent-deep, model: opus, items: [Claude_Godot_Netcode_Capability]}
+    - {agent: web-search-agent-deep, model: opus, items: [Long_Term_Stability_Endgame_Odds]}
+    - {agent: web-search-agent-deep, model: opus, items: [Home_Host_Capacity_And_Scaling, Case_7_12_Player_Indies]}
+    - {agent: web-search-agent, model: sonnet, items: [Steamworks_Networking_Suite, Free_Supplementary_Services, Steam_Policy_And_Matchmaking_Cold_Start]}
+    - {agent: web-search-agent, model: sonnet, items: [GodotSteam_And_SteamMultiplayerPeer, Godot4_High_Level_Multiplayer_API, Disconnect_Reconnect_Late_Join]}
+    - {agent: web-search-agent, model: sonnet, items: [Godot_Rollback_Prediction_Plugins, Deterministic_Lockstep_And_Turn_Based, Case_Frame_Sensitive_PvP_Small]}
+    - {agent: web-search-agent, model: sonnet, items: [Case_PVE_Coop_P2P_Indies, P2P_PvP_Fairness_Basics]}
+    - {agent: web-search-agent, model: sonnet, items: [Godot_Steam_Commercial_Titles, Netcode_Testing_And_Reference_Impl]}
+  output_dir: ./results
