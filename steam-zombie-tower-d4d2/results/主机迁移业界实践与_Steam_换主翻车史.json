@@ -1,0 +1,546 @@
+{
+  "name": "主机迁移业界实践与 Steam 换主翻车史",
+  "category": "动作联机与换主（核心）",
+  "research_scope": [
+    "引擎/中间件换主机制：Unity MPS SDK + Netcode for Entities、NGO Distributed Authority、Photon Fusion 2、Mirror、FishNet、EOS、Unreal 社区插件、GodotSteam SteamMultiplayerPeer——快照内容/频率、继任者选举、重连流程、停顿时长",
+    "知名游戏换主经验：CoD（MW2 引入换主、WWII 回退 P2P）、Halo 3、Destiny 1→2（取消换主）、Dead by Daylight（P2P→专服）、Helldivers 2、Warframe 等的触发条件、停顿与口碑",
+    "Steam 独立游戏换主补丁史一手核实：Liar's Bar（AppID 3097560）、Midnight Ghost Hunt（915810）、Bodycam（2406770），通过 Steam 官方新闻 API 全量拉取公告逐条核对日期/版本号/问题类型",
+    "脑裂（双房主）防护：Steam Lobby Owner 自动转移规则、host_term/epoch 单调号、旧房主复活后的降级处理",
+    "全楼纯数据快照大小推算（16 人、300–1,000 箱子、门/楼梯、直升机进度、rng.state、15–22 层）、备份频率与对象、全量 vs 增量日志、丢弃在途子弹的合理性、旁观者初始快照复用",
+    "心跳与判定参数（1Hz 心跳、4s 冻结/7s 失联、18s 回大厅）与业界/底层默认值对照；优雅交接 vs 崩溃/拔网线；错峰重连；按 64 位 steam_id 重建映射",
+    "掉线重连、Bot 临时接管、AFK 处理；无阶段检查点下 D2 失败时降级到 A1 + 即时状态体面结算",
+    "中途加入（JIP，只能以人类身份加入激战中房间）的技术结论：Lobby 层放行、全楼快照下发与增量追赶、楼层 AOI 首次同步、与换主/旁观快照共用序列化的改动量、房主上行冲击与失败回退、V1.0/V1.5 判定（不涉及装备平衡/顶替 Bot 等玩法协调）"
+  ],
+  "prior_claims_check": [
+    "原说法「实时动作中局换主比回合制更割裂，但因不刷额外 AI 尸潮且可丢弃空中 0.3 秒子弹，全楼快照仅 5–15 KB」→ 部分证实 → [推算] 用紧凑二进制（PackedByteArray/StreamPeerBuffer 手写定长字段）编码时：16 人×约 56 B≈0.9 KB + 1,000 箱开启位图 125 B + 每箱已取槽位掩码 1,000×1 B≈1 KB + 地面掉落 300×8 B≈2.4 KB + 门/楼梯/电梯 22 层×30×1 B≈0.66 KB + 直升机/计时/rng.state/epoch 等 <0.2 KB ≈ 典型 5.3 KB；最坏（每箱显式存 4 槽内容 12 KB）≈ 16 KB；zstd 压缩后约 2–10 KB。结论：5–15 KB 成立，但前提是『箱子内容由 seed+box_id 确定性生成、快照只存差异』且不使用 var_to_bytes(Dictionary 字符串键) 或 JSON（这两种编码会膨胀 3–6 倍到 30–90 KB）。『比回合制更割裂』为合理主观判断：业界实时游戏换主均有可见停顿（CoD 粉丝 wiki 称成功换主最长约 15 秒 https://callofduty.fandom.com/wiki/Host_Migration ；Gameye 称 P2P 换主停顿通常 5–15 秒 https://gameye.com/glossary/host-migration/ ），回合制（Liar's Bar）却仍出过『换主时进度卡住』。丢弃在途子弹合理：Bodycam V0.8 公布的可恢复项是位置/弹匣/击杀/掉落武器/模式状态，未包含飞行中弹体（https://store.steampowered.com/news/app/2406770，2026-09-02）。",
+    "原说法「换主备份只需每 2–3 秒给前 2 名候选继任者传 5–15 KB 全楼快照」→ 部分证实/建议修正 → 频率与业界一致：Unity MPS SDK WithHostMigration 默认快照间隔 3 秒、上传超时 5 秒（https://docs.unity.com/en-us/mps-sdk/session-host-migration ）；Photon Fusion 推荐 30 秒且只保留最新一份（https://doc.photonengine.com/fusion/v2/manual/advanced/host-migration ）。[推算] 带宽：15 KB÷2.5 s×2 人≈12 KB/s≈96 kbps 上行，可接受。纠偏点：纯周期全量快照会丢失最近 0–3 秒内的离散事件（开箱、感染、转化、直升机进度），导致『箱子被开两次/道具复制/感染回滚』；建议改为『每 8–10 秒全量 + 离散事件日志（带 seq）实时可靠推送给前 2 名候选』的混合方案，平均约 4 KB/s，丢失窗口降到约 1 个 RTT；玩家位置由各客户端自报（D4 分权）无需靠快照精确恢复。",
+    "原说法「Liar's Bar / Midnight Ghost Hunt / Bodycam 有换主翻车与补丁史」→ 证实 → 证据（Steam 官方新闻 API 全量拉取）：Liar's Bar 2024-12-27『Version 0.92 Hotfix』修复『休闲局换主时游戏进度卡住』；Midnight Ghost Hunt 2023-02-14 Update 6 上线换主→2023-06-23 Patch 0.2.1『临时关闭换主』→06-26 0.2.2 重开→06-29 0.2.3、07-14 0.2.4 连续修→2024-03-22 Full Release Patch 1.0.1『为防止迁移损坏问题再次关闭换主』，此后至 2026-07-31 的公告未见重开；Bodycam 2026-09-02 V0.8 首发换主→09-08 V0.8 #3 房主可刷数百实体远程崩溃他人→09-11 V0.8 #4 修复重托管后队伍设置/状态→09-25 V0.8 #6 修复『换主后人数超过上限』（2v2 Wingman）。来源：https://store.steampowered.com/news/app/3097560、https://store.steampowered.com/news/app/915810、https://store.steampowered.com/news/app/2406770。",
+    "原说法「《骗子酒馆》2024-11-27 上线 Beta 换主，12-27 补丁修复换主卡死；2026-07-02 已关停匹配专服」→ 证实（措辞微调）→ 2024-11-27 公告『WHOOA IT'S BIG!』：『Host Migration Is Finally Here!…This feature is currently in beta』；2024-12-27『Version 0.92 Hotfix』：『Resolved an issue causing game progression to stall during host migration in casual games』（是进度停滞而非程序崩溃）；2024-12-24『The Matchmaking Beta is Now Available!』称新匹配为 non-host-based、初期容量 3,000 同时在线；2026-07-02『LIAR'S DECK REMASTERED』：『Matchmaking is no longer server-based. Introduced a new automatic matchmaking system』——原文是『匹配不再基于服务器』，未直接写『关停』，但语义等同撤掉匹配专服。来源：https://store.steampowered.com/news/app/3097560（经 https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=3097560&count=300&feeds=steam_community_announcements 核实，访问 2026-11-25）。"
+  ],
+  "current_status": [
+    "Unity Multiplayer Services SDK（核实 2026-11-25）：会话换主分『选主』与『数据迁移』两部分；数据迁移默认实现仅支持 Netcode for Entities（默认 EntitiesMigrationDataHandler 需 NfE ≥1.7.0）；WithHostMigration 默认快照间隔 3 s、上传超时 5 s；快照存 Lobby 服务、单份上限 10 MiB 不可配、数据固定走 US Central 区；新房主随机选择、不排序；WebGL 不支持；NfE 1.5 文档标注实验性（需 ENABLE_HOST_MIGRATION 宏）。https://docs.unity.com/en-us/mps-sdk/session-host-migration 、https://docs.unity3d.com/Packages/com.unity.netcode@1.7/manual/host-migration/host-migration-limitations.html",
+    "Unity Netcode for GameObjects：官方不提供传统换主，改推 Distributed Authority（会话 owner 断开后自动从在线客户端提升新 owner，SessionOwner 对象自动转移，Distributable 对象重新分配），依赖 Unity 云端 DA 服务。https://docs.unity3d.com/Packages/com.unity.netcode.gameobjects@2.11/manual/terms-concepts/distributed-authority.html （核实 2026-11-25）",
+    "Photon Fusion 2：仅 Client-Host（HostMode）支持；快照推到 Photon Cloud 且只存最新一份，文档建议间隔 30 秒；换主时各端用 ShutdownReason.HostMigration 关闭旧 NetworkRunner，新建 Runner 并以 HostMigrationToken 调 StartGame，新房主在 HostMigrationResume 回调里重建对象；文档自称『并非简单任务』、页面仍标 work in progress。https://doc.photonengine.com/fusion/v2/manual/advanced/host-migration （核实 2026-11-25）",
+    "Mirror：FAQ 明确『换主未内置，能避免就避免』；UNet 的换主已随 Match 命名空间删除。https://mirror-networking.gitbook.io/docs/manual/faq 。FishNet：官方文档未找到内置换主 [不确定]。",
+    "Unreal：无内置换主（UE4 论坛官方/社区回复，ini 里的相关设置未被引擎使用）；UE5 有商业插件 Host Migration Core、Risecode Host Migration X（自称快照式、主机崩溃会丢失上次快照后的进度）。https://forums.unrealengine.com/t/host-migration-possible-with-client-server-listen-servers/384489 （核实 2026-11-25）",
+    "Epic Online Services：Bodycam 2026-11-13 公告称弃用某外部联机方案，改用 EOS + 自研重做联机层；EOS Lobby 的房主自动转移/禁用换主选项本次未能取到官方文档，[不确定]。",
+    "GodotSteam：仓库已迁至 Codeberg（https://codeberg.org/godotsteam/godotsteam ），最新 tag v4.24，主分支最新提交 2026-11-10；SteamMultiplayerPeer.host_with_lobby() 强制要求『调用者必须是 lobby owner』，connect_to_lobby() 会对房主以外成员也 add_peer（网状），但没有任何换主逻辑——换主需拆掉旧 MultiplayerPeer 重建，Godot 高层 API 的 peer_id 全部变化（源码 godotsteam_multiplayer_peer.cpp 第 599–660 行，提交 bc2a881）。建议锁定 GodotSteam 4.24（Godot 4.5/4.6 对应版本以 Codeberg release 为准）。",
+    "Steamworks ISteamMatchmaking（核实 2026-11-25）：『若当前 owner 离开，另一成员自动成为 owner』；SetLobbyOwner 只能由 owner 调用并触发全员 LobbyDataUpdate_t；SendLobbyChatMsg ≤4 KB；成员上限 250；SetLobbyData 无公开频率上限、会批量延迟发送。https://partner.steamgames.com/doc/api/ISteamMatchmaking 。owner 崩溃（非主动离开）后 Steam 多久完成转移：官方未公开 [不确定]。",
+    "三款 Steam 独立游戏现状（核实 2026-11-25）：Liar's Bar 换主自 2024-11-27 起在休闲局保留，排位已转非房主匹配，2026-11-13 Season 6 预告接入 EAC；Midnight Ghost Hunt 自 2024-03-22 起换主处于关闭状态，依赖官方/玩家自建专服；Bodycam 2026-09-02 起有换主，2026-11-13 宣布联机层改用 EOS + 自研重构。"
+  ],
+  "key_findings": [
+    "[事实] Liar's Bar 换主时间线：2024-10-14 公告称换主与快速匹配『需要新基础设施』；2024-11-27 以 beta 上线；2024-12-27 v0.92 热修『休闲局换主时进度卡住』及『匹配局有人在处决动画中离开导致卡住』；2025-12-23 又修『有人离开时回合卡在同一玩家』。https://store.steampowered.com/news/app/3097560",
+    "[事实] 即便是回合制、4 人一桌的 Liar's Bar，其『有人离开』类卡死在上线 13 个月后仍在修（2024-10-08 首次修『非房主离开打乱回合顺序』，2025-12-23 仍有同类修复），说明『离场/换主路径』是长期 bug 温床，而不是一次性功能。https://store.steampowered.com/news/app/3097560",
+    "[事实] Midnight Ghost Hunt（Coffee Stain 发行、UE 制作）换主从 2022-06 立项到 2023-02-14 上线花约 8 个月，中途扩充程序团队；上线 4 个月后临时关闭（2023-06-23），3 天后重开并加大量日志；2024-03-22 正式版 1.0.1 以『防止迁移损坏』再次关闭，至今公告未见重开，转而依赖官方 3 区专服（2023-03-30 上线）+ 玩家自建专服。https://store.steampowered.com/news/app/915810",
+    "[事实] MGH 官方描述的换主体验：『房主离开→剩余玩家暂停、选新房主、所有人重连新房主→从离开处继续』，与本项目 D2 设计同型；该团队也早在 2022-04-07 把 XP/碎片改为对局结束立即发放，以对抗『房主退出让别人拿不到进度』。https://store.steampowered.com/news/app/915810",
+    "[事实] Bodycam V0.8（2026-09-02）换主：新房主按 ping 选出；可恢复玩家位置、弹匣弹药、击杀/死亡、掉落武器、模式状态、旁观者状态、天气，Bot 状态在重托管后重建；2v2 Wingman 的当前回合直接重开；对局结束后不支持换主（房主离开全员回大厅）。在此之前（2024-12-11 V0.5.0）只能靠『中途离开的房主受惩罚』。https://store.steampowered.com/news/app/2406770",
+    "[事实] Bodycam 换主上线后 3 周内连出 3 个相关补丁（V0.8 #3 房主远程崩溃他人、#4 重托管后队伍设置/状态、#6 换主后人数超上限），2026-11-13 又宣布弃用已集成的外部联机技术、改用 EOS+自研重写联机层。https://store.steampowered.com/news/app/2406770",
+    "[事实] 业界大厂方向是『去掉换主』而非『做好换主』：Destiny 2 工程负责人 Matt Segur（2017-05-26）称『你再也不会在 Raid 或试炼中遭遇换主』（https://kotaku.com/bungie-explains-how-theyre-improving-destiny-2-servers-1795587013 ）；Dead by Daylight 2018-12-06 宣布 P2P（杀手当房主）迁专服，理由是连接质量依赖房主、可惩罚断线（https://deadbydaylight.com/news/dedicated-servers-are-coming-to-dead-by-daylight/ ）；CoD WWII 2017-11 临时回退 P2P 时 Sledgehammer 承认『P2P 带来换主等不一致体验』（https://www.digitaltrends.com/?p=1272445 ）。",
+    "[事实] CoD：MW2（2009）预告片首次展示换主，『找到新房主并立即让玩家重连』（Shacknews 2009-09-01 https://www.shacknews.com/article/60281/new-modern-warfare-2-multiplayer ）；粉丝 wiki 称成功换主最长约 15 秒、更长则多半失败（非官方数据）。",
+    "[事实] Helldivers 2（P2P 合作）多次补丁修换主后崩溃（虫洞突破中换主、客户端在等待状态操作终端、新房主名字不显示、换主导致战略目标无法完成），并刻意设计『换主时销毁 SOS 信标由新房主决定』——说明合作 PvE 换主的长尾 bug 主要在『进行中的交互/任务状态』。来源为媒体转载的补丁说明（https://www.pcgamer.com/games/third-person-shooter/helldivers-2-patch-fixes-ps5-hosts-accidentally-giving-damage-boosts-to-their-fellow-patriots-continues-to-tackle-crashes ）。",
+    "[事实] Unity NfE 换主已知限制正好是 AI 最易写错的点：新房主上 ghost ID 重新分配、连接网络 ID 从 1 重排、ghost owner 全部置 -1 直到原客户端重连、实体场景从初始状态重载（已销毁的预置物会复活）、早跑的系统会与迁移数据冲突产生重复（需在 HostMigrationInProgress 期间早退）。https://docs.unity3d.com/Packages/com.unity.netcode@1.7/manual/host-migration/host-migration-limitations.html",
+    "[事实] 底层超时对照：Valve GameNetworkingSockets 默认 TimeoutInitial=10000 ms、TimeoutConnected=10000 ms（csteamnetworkingsockets.cpp 第 76–77 行 https://github.com/ValveSoftware/GameNetworkingSockets ）；Unity Relay keepalive 超时 10 s，Lobby 选主延迟/移除玩家延迟默认 120 s、最低 5 s。所以若只靠底层断线回调，崩溃检测要 ≥10 s，必须自建应用层心跳。",
+    "[事实] Steam Lobby 只保证『owner 离开→自动换另一个成员』，不保证换成你的继任者；SetLobbyOwner 只有现任 owner 能调；房间列表元数据（激战中/人数）只能 owner 写 → 游戏层房主与 Steam lobby owner 必须做一致化。https://partner.steamgames.com/doc/api/ISteamMatchmaking",
+    "[推算] 全楼快照（紧凑二进制）典型 5.3 KB、最坏 16 KB、zstd 后约 2–10 KB；用 var_to_bytes(Dictionary 字符串键) 或 JSON 会膨胀到 30–90 KB（每条记录键名+Variant 类型头约 20–40 B）。输入见 prior_claims_check 第 1 条。",
+    "[推算] 备份带宽：纯全量 15 KB/2.5 s×2 候选≈12 KB/s；混合方案（10 s 全量 16 KB×2 + 事件日志 20 条/s×16 B×2）≈3.2+0.64≈3.8 KB/s，且事件丢失窗口从 0–2.5 s 降到约 1 RTT。",
+    "[推算] 停顿预算：主动退出优雅交接≈最后快照/日志已在继任者处 + HANDOFF 广播 + 客户端重连新房主（SDR 建连通常数百 ms 级 [不确定]）≈1–3 s；崩溃/拔线≈7 s 判死 + 1–2 s 新房主载入快照 + 1–3 s 错峰重连≈9–12 s，与 CoD『≤约 15 s』、Gameye『5–15 s』同档。因此『秒级换主』只对优雅交接成立，崩溃路径应对外描述为『约 10 秒冻结后续局』。",
+    "[主观] 三款 Steam 独立游戏的共同教训：①换主先以 beta/部分模式上线，②主要 bug 落在『换主瞬间正在进行的交互』（处决动画、回合、开箱/终端）和『人数/队伍/房间元数据一致性』，③小团队的现实路径是『保留换主 + 失败时体面结算/回大厅』，而 MGH 这类做不稳的直接关闭换主——本项目必须把 A1 降级当一等公民实现，而非补丁。",
+    "[主观] 本项目相对上述游戏的有利条件：2D、无物理同步、无额外 AI 尸潮、位置由客户端自报（D4），可迁移状态几乎全是离散数据；不利条件：40 分钟无检查点（一次失败损失全部进度）、母体=初始房主（房主离开同时丢失关键角色）、Godot 无现成换主中间件。",
+    "[不确定] Steam 后台在 owner 崩溃/拔网线后多久把 lobby owner 转给别人、多久向成员发出 LobbyChatUpdate(离开/断线)：Valve 未公开，社区也无测量数据，需实测（见 test_verification_points）。",
+    "[事实] Steam Lobby 层允许加入激战中房间无需特殊处理：新 lobby 默认 joinable；SetLobbyJoinable(false) 会让『好友/受邀者也无法加入且不出现在搜索中』；RequestLobbyList 只返回未满、public/invisible 且 joinable 的 lobby；SetLobbyJoinable/SetLobbyType/SetLobbyData 只有 owner 能调。https://partner.steamgames.com/doc/api/ISteamMatchmaking ；GodotSteam 绑定 setLobbyJoinable / setLobbyMemberLimit / setLobbyType / joinLobby（godotsteam.cpp 第 9238–9256 行）。",
+    "[推算] JIP 首包=同一份全楼快照，压缩后 2–10 KB（最坏原始 16 KB）；远低于单条消息上限 512 KB，应用层无需分片，GNS 按 MTU 1300 B 自动拆成约 2–13 个包；按开源 GNS 默认 256 KB/s 发送速率，发送耗时约 10–60 ms，加 SDR 往返 100–300 ms，从批准加入到首帧可玩约 0.3–1 s（不含加载场景资源）。",
+    "[推算] 房主上行冲击：每次 JIP 一次性 ≤16 KB 突发，约等于房主 20Hz 位置转发流 0.5–1 秒的量；即使 3 人同时加入（≤48 KB）也只需排队串行发送，影响可忽略。",
+    "[主观] JIP 判定：V1.0 可做（低风险）。理由：它与旁观者初始快照、D2 换主快照是同一个 serialize_world() + 事件日志 seq 锚定机制，D4 下其他玩家位置靠 20Hz 流自然补齐；在做完旁观与事件日志后，JIP 的增量工作只有『锚定 seq 的追赶缓冲 + 生成新人类玩家记录 + 入口楼层 AOI 订阅』。前提是旁观先落地；若 V1.0 工期吃紧，JIP 是第一批可砍项（用户已定位为添头），但不需要为它改架构。"
+  ],
+  "implementation_guidance": [
+    "版本：Godot 4.5.x/4.6.x + GodotSteam 4.24（Codeberg）；不要用 SteamMultiplayerPeer + MultiplayerSpawner/MultiplayerSynchronizer 承载世界状态，因为 host_with_lobby() 要求调用者是 lobby owner 且换主必须重建 peer、peer_id 全变；改用 Steam.sendMessageToUser(remote_steam_id, data:PackedByteArray, flags, channel) / Steam.receiveMessagesOnChannel(channel, max_messages) 自建消息层，所有玩家以 64 位 steam_id 为主键（GodotSteam godotsteam.cpp 第 9302–9307 行）。",
+    "通道划分建议：ch0=20Hz 位置（不可靠 flags=0）；ch1=权威事件与事件日志（可靠 flags=8）；ch2=快照分块（可靠，单块 ≤16 KB，避免与 ch1 抢占）；ch3=心跳/控制（可靠）。注意 ISteamNetworkingMessages 对同一对端底层是一条连接，不同 channel 之间是否存在队头阻塞未核实 [不确定]，快照分块尽量小。",
+    "状态机（每个客户端都跑）：IN_GAME →(1.5 s 未收任何房主包) SUSPECT（显示网络波动图标，本地移动继续，权威动作入队）→(4 s) FROZEN（全局冻结遮罩，向所有可达 peer 发 HOST_LOST(term)）→(7 s 且 继任者#1 也确认失联) ELECTING →继任者#1 升主：term+=1，载入本地最新快照+重放日志，广播 NEW_HOST(term, host_steam_id, snapshot_seq) →其余客户端按 rank×150 ms±随机 50 ms 错峰发 REJOIN(steam_id, last_seq, 自报位置/朝向) → RESUMING（新房主逐个下发 resync 快照）→ 全员 ACK 或 3 s 后 → IN_GAME。若 7 s 时继任者#1 不可达，则 #2 在 9 s 接手；总计 18 s 无 NEW_HOST → FALLBACK_A1（体面结算）。",
+    "继任者排序（房主每次全量快照时附带 succession=[sid1,sid2,sid3]）：排除 Bot、AFK、正在加载、旁观者；优先按『到其他玩家的平均 ping』（Bodycam 即按 ping 选主），其次在线时长/帧率；用 Steam.getSessionConnectionInfo(remote_steam_id, true, true) 采集连接质量。全体客户端都持有同一份 succession 列表，选举无需投票即可确定性得出。",
+    "脑裂防护：所有权威消息头带 host_term(u32) 与 host_sid；客户端只接受 term ≥ 本地 term 的消息，收到更高 term 立即切换；两人同 term 同时自立时按 succession 排名小者胜，败者降级并重新 REJOIN；新房主稳定后检查 Steam.getLobbyOwner(lobby_id)：若 owner 不是自己，由当前 owner 调 Steam.setLobbyOwner(lobby_id, new_host_sid)（只有 owner 能调），并由新房主写 lobby data『host_term』『host_sid』；旧房主网络恢复后只要看到 lobby data 或任意消息里 term 更大，就丢弃本地世界、以客户端身份 REJOIN（复用旁观者/中途加入的初始快照）。",
+    "快照格式（与旁观者初始快照、中途加入共用一个 serialize_world()/apply_world()）：头部 {magic, version, host_term, snapshot_seq, game_time_ms, rng_state(i64), rng_seed}；players[]（steam_id u64、role u8、floor u8、x/y f32 或 i16 定点、hp u16、status bits、inventory 8×(item u16,count u8)、bot_controlled bool）；boxes 开启位图 + 每箱已取槽位掩码（内容由 seed+box_id 确定性生成）；ground_items[]；doors/stairs/elevators 每层定长数组；heli {stage, progress, key_items_mask}；event_log_tail_seq。用 StreamPeerBuffer 手写，最后 PackedByteArray.compress(FileAccess.COMPRESSION_ZSTD)，附 CRC32/哈希校验；不要用 JSON（会把 64 位 steam_id 转成浮点丢精度）。",
+    "事件日志：房主每处理一个离散权威事件（开箱、拾取、开门、感染、转化、直升机进度、击倒）就生成 {seq, type, payload≤16 B} 并可靠发送给 succession 前 2 名；继任者保存『最新全量快照 + 其后日志』；全量快照建议 8–10 s 一次（或日志超过 200 条时提前发）。升主时 apply_world(snapshot) 后按 seq 顺序重放日志。",
+    "在途内容：飞行中子弹、未结算的命中、进行中的开箱读条直接丢弃（客户端恢复后可重试）；冻结期间所有计时器（直升机倒计时、感染倒计时、AFK 计时）暂停，恢复后继续，避免 Warframe 式『换主期间计时器继续走』的玩家抱怨。",
+    "优雅交接（房主主动退出/返回菜单）：①立即 flush 最新全量快照+日志给继任者#1 并等 ACK（≤1 s）；②广播 HANDOFF(term+1, new_host_sid)；③Steam.setLobbyOwner(lobby_id, new_host_sid)；④再 leaveLobby。目标停顿 1–3 s。崩溃路径走上面的超时状态机。",
+    "母体与掉线者：母体（初始房主）离开后其角色立即转 Bot 托管（母体不可彻底死亡，所以必须有人控制）；任一玩家掉线后角色由新房主上的 Bot 托管，steam_id 在 lobby 内重连（同一 lobby_id）即凭 steam_id 收回控制；AFK：60 s 无输入警告、90 s 转 Bot 托管且移出 succession。",
+    "降级 A1 + 体面结算：FALLBACK_A1 时每个客户端用自己持有的最新状态（候选者有全量快照，普通客户端用本地 AOI 状态 + 最后一次房主广播的计分）计算结算：已撤离/存活人类/僵尸/转化次数等，写入本地存档与 Steam Cloud，然后返回大厅；结算界面明确告知『房主断开，按即时状态结算』。",
+    "GDScript 伪代码骨架：\nconst T_SUSPECT := 1.5; const T_FREEZE := 4.0; const T_DEAD := 7.0; const T_DEAD_2ND := 9.0; const T_GIVEUP := 18.0\nvar host_term := 0; var host_sid := 0; var last_host_rx := 0.0\nfunc _on_packet(sender:int, hdr:Dictionary):\n  if hdr.term < host_term: return  # 旧房主的消息一律丢弃\n  if hdr.term > host_term: _adopt_new_host(hdr.term, sender)\n  if sender == host_sid: last_host_rx = Time.get_ticks_msec()/1000.0\nfunc _process(_d):\n  var gap = Time.get_ticks_msec()/1000.0 - last_host_rx\n  match state:\n    IN_GAME: if gap > T_SUSPECT: state = SUSPECT\n    SUSPECT: if gap > T_FREEZE: _freeze(); _broadcast_host_lost()\n    FROZEN: if gap > T_DEAD and my_rank()==0: _promote_self()\n            elif gap > T_DEAD_2ND and my_rank()==1 and not rank0_alive(): _promote_self()\n            elif gap > T_GIVEUP: _fallback_a1()",
+    "JIP ① Lobby 层：对局中保持 lobby 为 public 且 joinable，setLobbyData 写 phase=in_game、human_slots_free、spectator_slots_free、host_term、build_version；member limit = 最大玩家数 + 旁观席（满员 lobby 不会出现在搜索结果中）；加入者 joinLobby 后先比对 build_version 与 phase，再向房主发 JOIN_REQ(steam_id, build_version, want='human'|'spectator')；房主校验（人类名额、版本、是否已进入撤离终局阶段——可设『直升机最终阶段后禁止 JIP』）后回 JOIN_ACCEPT 或 JOIN_REJECT(reason)。换主冻结期间（FROZEN/ELECTING/RESUMING）房主无法响应，新加入者收到 lobby data 中 migrating=1 或 5 s 无应答则提示『房间正在切换房主，稍后重试』；新房主稳定后需成为 lobby owner 才能继续维护 joinable/元数据（与 D2 的 setLobbyOwner 一致化共用）。",
+    "JIP ② 快照与追赶：房主在接受加入的那一刻取 S=当前事件日志 seq，生成 serialize_world() 并在同一可靠通道（ch2 快照通道，或直接 ch1）先发 SNAPSHOT(S)，随后把 seq>S 的所有权威事件按顺序发给该加入者（同一通道可靠消息保证有序，因此不存在『快照到达前状态已变』的竞态）；加入者 apply_world(snapshot) 后逐条应用 seq>S 的事件、丢弃 seq≤S 的重复；全部追平后回 JOIN_SYNCED，房主再生成其人类角色（PLAYER_SPAWN 本身也是一条日志事件，所有人一致）。房主为单个加入者缓冲的事件上限建议 500 条，超出则放弃本次、重发新快照。",
+    "JIP ③ 楼层 AOI：快照已包含全楼离散状态（箱子/门/掉落/直升机），所以之后切换楼层无需再拉楼层快照；新玩家出生在固定入口楼层，房主在 JOIN_SYNCED 时把其加入该 floor_id 的订阅表，开始转发该层 20Hz 位置；客户端插值缓冲先攒 2–3 帧（100–150 ms）再显示他人，避免首帧闪跳。",
+    "JIP ④ 序列化复用改动量：serialize_world()/apply_world() 与旁观、D2 完全共用；JIP 专有代码只有 JOIN_REQ/ACCEPT/SYNCED 握手、seq 锚定缓冲、PLAYER_SPAWN 事件、入口楼层订阅四块（约 200–400 行 GDScript [推算]）。要求序列化从一开始就『按全楼、与当前视角无关』设计，不要只序列化房主当前所在楼层。",
+    "JIP ⑤ 带宽与失败回退：JIP 串行排队（同时只处理 1 个，其余排队，单个超时 10 s）；发送失败或 CRC 不符自动重发 1 次；仍失败则 JOIN_REJECT('sync_failed') 并让加入者留在 lobby 以旁观身份重试或回大厅；JIP 过程中发生换主则中止，等新房主进入 IN_GAME 后由加入者重新发 JOIN_REQ。"
+  ],
+  "pitfalls_and_failures": [
+    "Liar's Bar：①2024-12-27 v0.92 修『休闲局换主时进度卡住』；②同补丁修『匹配局有人在处决动画中离开导致卡住』；③2025-12-23 修『有人离开时回合卡在同一玩家』。教训：换主/离场瞬间正在播放的动画或回合状态机最易卡死，需要『任何进行中的演出在换主后都能被强制结束或重放』。https://store.steampowered.com/news/app/3097560",
+    "Midnight Ghost Hunt：2023-02-14 上线→2023-06-23 Patch 0.2.1 临时关闭（『我们大致知道哪里出错，需要更多时间』）→06-26 重开并加日志→06-29、07-14 连修→2024-03-22 Patch 1.0.1『为防止迁移损坏问题』再次关闭。教训：没有完善日志和状态校验时，换主后的『损坏状态』比『直接结束』更伤口碑；必须给快照加版本号与校验和，校验失败就走降级而不是硬续。https://store.steampowered.com/news/app/915810",
+    "Bodycam：V0.7.0（2025-11-25）先修『房主/客户端断线时复制错误』『断线客户端无法加入新房主』；V0.8（2026-09-02）上线换主后，#3（09-08）房主可刷数百实体远程崩溃他人、#4（09-11）重托管后房主队伍设置与队伍状态、#6（09-25）换主后人数超过模式上限；Wingman 当前回合直接重开、对局结束后不支持换主。教训：换主后要重新校验人数上限、队伍归属、房间元数据；无法精确恢复的子模式可选择『重开当前小节』。https://store.steampowered.com/news/app/2406770",
+    "Godot 社区实例：Godot 4.4.1 + GodotSteam 开发者反馈『房主离开后场景关闭、出现灰屏』，无现成答案（https://forum.godotengine.org/t/passing-host-in-p2p-game/109411 ）——Godot 高层多人 API 下服务器固定 peer_id=1，房主消失即 MultiplayerPeer 断开、所有 RPC/Spawner 失效。",
+    "Unity NfE 已知坑（可类推到自研）：ID 重新分配、owner 置 -1、场景对象从初始状态重载导致已销毁物体复活、早期系统与迁移数据冲突导致重复生成。对本项目即：已开过的箱子/被破坏的门在新房主上『复活』、Bot 被重复生成。https://docs.unity3d.com/Packages/com.unity.netcode@1.7/manual/host-migration/host-migration-limitations.html",
+    "Photon Fusion 社区坑：换主快照『几乎为空』（论坛 https://forum.photonengine.com/discussion/comment/62278/ ），根因多为对象未注册到快照或推送时机过早——自研时需在测试里断言快照字节数与对象数。",
+    "AI 编码最易写错：①用 JSON.stringify 序列化 steam_id（浮点丢精度，映射错人）；②继续用 multiplayer.get_unique_id()/peer_id 作玩家主键；③超时只依赖 network_messages_session_failed（默认 10 s 才触发）；④旧房主恢复后不降级，出现双房主各自推进世界；⑤冻结期间计时器继续跑；⑥新房主 apply 快照后忘了重放事件日志或重放两次（道具复制）；⑦把 rng 重新 randomize() 导致后续掉落与原房主不一致；⑧Bot 托管时重复实例化掉线者角色；⑨在非 owner 上调用 setLobbyOwner/setLobbyData（静默失败）。",
+    "Destiny 1 经验（二手分析）：物理主机在公共区域频繁换主（平均约 2 分 40 秒一次，出自社区分析 https://gist.github.com/nessus42/3738647a2052c4758c6f46f0464c47a6 ，[不确定]），Bungie 在 D2 直接改为服务器当主机——说明即使大厂能做到『几乎无感』换主，仍认为对 Raid/竞技不可接受。",
+    "CoD/Halo/Warframe 玩家口碑：换主被普遍视为挫败点（CoD 论坛称『大概一半成功』，Warframe 论坛有『冻结 20–45 秒后提示换主』『换主期间请冻结所有计时器』的长期请愿），均为社区说法、非官方数据。"
+  ],
+  "quantitative_params": [
+    {
+      "名称": "Unity MPS 快照间隔默认值",
+      "数值": "3",
+      "单位": "秒",
+      "口径": "WithHostMigration 自动快照",
+      "出处": "https://docs.unity.com/en-us/mps-sdk/session-host-migration [事实]"
+    },
+    {
+      "名称": "Unity MPS 快照上传超时",
+      "数值": "5",
+      "单位": "秒",
+      "口径": "默认",
+      "出处": "同上 [事实]"
+    },
+    {
+      "名称": "Unity 换主快照上限",
+      "数值": "10",
+      "单位": "MiB",
+      "口径": "单份，不可配",
+      "出处": "https://docs.unity3d.com/Packages/com.unity.netcode@1.7/manual/host-migration/host-migration-limitations.html [事实]"
+    },
+    {
+      "名称": "Unity Relay keepalive 超时",
+      "数值": "10",
+      "单位": "秒",
+      "口径": "固定",
+      "出处": "https://docs.unity3d.com/Packages/com.unity.netcode@1.5/manual/host-migration/host-migration-intro.html [事实]"
+    },
+    {
+      "名称": "Unity Lobby 选主延迟/移除玩家延迟",
+      "数值": "默认 120，最低 5",
+      "单位": "秒",
+      "口径": "Dashboard 可配",
+      "出处": "同上 [事实]"
+    },
+    {
+      "名称": "Photon Fusion 快照间隔建议",
+      "数值": "30",
+      "单位": "秒",
+      "口径": "文档推荐值，仅存最新一份",
+      "出处": "https://doc.photonengine.com/fusion/v2/manual/advanced/host-migration [事实]"
+    },
+    {
+      "名称": "GNS TimeoutInitial / TimeoutConnected",
+      "数值": "10000 / 10000",
+      "单位": "毫秒",
+      "口径": "开源 GameNetworkingSockets 默认",
+      "出处": "csteamnetworkingsockets.cpp 第 76–77 行 https://github.com/ValveSoftware/GameNetworkingSockets [事实]"
+    },
+    {
+      "名称": "GNS SendBufferSize",
+      "数值": "524288",
+      "单位": "字节",
+      "口径": "默认",
+      "出处": "同文件第 78 行；Steamworks 文档同 [事实]"
+    },
+    {
+      "名称": "GNS SendRateMin/Max",
+      "数值": "262144（开源版默认）",
+      "单位": "字节/秒",
+      "口径": "开源 GNS 第 84–85 行；Steamworks 文档写『默认 0 不限速』，两处口径不一致",
+      "出处": "[不确定] 需在 Steam 客户端版实测"
+    },
+    {
+      "名称": "单条消息发送上限",
+      "数值": "524288",
+      "单位": "字节",
+      "口径": "k_cbMaxSteamNetworkingSocketsMessageSizeSend",
+      "出处": "https://partner.steamgames.com/doc/api/steamnetworkingtypes [事实]"
+    },
+    {
+      "名称": "SendLobbyChatMsg 上限",
+      "数值": "4",
+      "单位": "KB",
+      "口径": "文本或二进制",
+      "出处": "https://partner.steamgames.com/doc/api/ISteamMatchmaking [事实]"
+    },
+    {
+      "名称": "Lobby 成员上限",
+      "数值": "250",
+      "单位": "人",
+      "口径": "CreateLobby/SetLobbyMemberLimit",
+      "出处": "同上 [事实]"
+    },
+    {
+      "名称": "CoD 成功换主时长",
+      "数值": "≤约 15",
+      "单位": "秒",
+      "口径": "粉丝 wiki，非官方",
+      "出处": "https://callofduty.fandom.com/wiki/Host_Migration [事实-二手]"
+    },
+    {
+      "名称": "P2P 换主可见停顿",
+      "数值": "5–15",
+      "单位": "秒",
+      "口径": "托管商词条，泛指",
+      "出处": "https://gameye.com/glossary/host-migration/ [事实-二手]"
+    },
+    {
+      "名称": "全楼快照（紧凑二进制）",
+      "数值": "典型 5.3，最坏 16；zstd 后 2–10",
+      "单位": "KB",
+      "口径": "16 人、1,000 箱、300 掉落、22 层×30 门",
+      "出处": "[推算] 见 prior_claims_check"
+    },
+    {
+      "名称": "全楼快照（var_to_bytes 字典/JSON）",
+      "数值": "30–90",
+      "单位": "KB",
+      "口径": "键名+类型头膨胀 3–6 倍",
+      "出处": "[推算]"
+    },
+    {
+      "名称": "推荐全量快照间隔",
+      "数值": "8–10（纯全量方案则 2–3）",
+      "单位": "秒",
+      "口径": "配合事件日志",
+      "出处": "[主观] 参考 Unity 3 s / Photon 30 s 之间"
+    },
+    {
+      "名称": "推荐备份对象",
+      "数值": "2",
+      "单位": "名候选",
+      "口径": "succession 前 2 名",
+      "出处": "[主观]"
+    },
+    {
+      "名称": "备份上行带宽",
+      "数值": "纯全量 ≈12；混合 ≈3.8",
+      "单位": "KB/s",
+      "口径": "房主上行",
+      "出处": "[推算] 15 KB/2.5 s×2；16 KB/10 s×2+20 条/s×16 B×2"
+    },
+    {
+      "名称": "显式心跳频率",
+      "数值": "1–2",
+      "单位": "Hz",
+      "口径": "另有 20Hz 位置流兼作隐式心跳",
+      "出处": "[主观]"
+    },
+    {
+      "名称": "SUSPECT / FREEZE / DEAD(#1) / DEAD(#2) / GIVEUP 阈值",
+      "数值": "1.5 / 4 / 7 / 9 / 18",
+      "单位": "秒",
+      "口径": "距上次收到房主任意包",
+      "出处": "[主观] 早于 GNS 10 s 超时，晚于 SDR 正常抖动"
+    },
+    {
+      "名称": "错峰重连间隔",
+      "数值": "rank×150 ±50",
+      "单位": "毫秒",
+      "口径": "16 人约 2.4 s 内全部重连",
+      "出处": "[主观]"
+    },
+    {
+      "名称": "预期停顿（优雅交接/崩溃）",
+      "数值": "1–3 / 9–12",
+      "单位": "秒",
+      "口径": "含判死、载入、重连",
+      "出处": "[推算]"
+    },
+    {
+      "名称": "AFK 警告/托管",
+      "数值": "60 / 90",
+      "单位": "秒",
+      "口径": "无输入",
+      "出处": "[主观]"
+    },
+    {
+      "名称": "掉线者 Bot 托管保留期",
+      "数值": "整局（可随时凭 steam_id 收回）",
+      "单位": "-",
+      "口径": "同一 lobby 内重连",
+      "出处": "[主观]"
+    },
+    {
+      "名称": "MGH 换主开发周期",
+      "数值": "约 8",
+      "单位": "月",
+      "口径": "2022-06 立项公告→2023-02-14 上线",
+      "出处": "https://store.steampowered.com/news/app/915810 [事实]"
+    },
+    {
+      "名称": "JIP 首包大小",
+      "数值": "压缩后 2–10（原始最坏 16）",
+      "单位": "KB",
+      "口径": "与换主/旁观同一快照",
+      "出处": "[推算]"
+    },
+    {
+      "名称": "JIP 批准到可玩耗时",
+      "数值": "0.3–1",
+      "单位": "秒",
+      "口径": "发送 10–60 ms + SDR RTT 100–300 ms，不含资源加载",
+      "出处": "[推算]"
+    },
+    {
+      "名称": "JIP 单加入者事件缓冲上限",
+      "数值": "500",
+      "单位": "条",
+      "口径": "超出则重发新快照",
+      "出处": "[主观]"
+    },
+    {
+      "名称": "JIP 超时",
+      "数值": "10",
+      "单位": "秒",
+      "口径": "单个加入者，重试 1 次",
+      "出处": "[主观]"
+    }
+  ],
+  "alternatives_comparison": [
+    "方案 A：完整 D2（快照+日志+选举+term+错峰重连）——代价 6–9 人周且长尾 bug 多；收益：母体房主崩溃后也能续 40 分钟局；对本项目：值得做，但必须与 A1 降级同时交付。",
+    "方案 B：仅优雅交接（主动退出时交接，崩溃则 A1 结算）——代价 2–3 人周；收益：覆盖『房主主动退出』这一最常见场景（Bodycam/MGH 都把『房主中途退出』列为主要痛点），停顿 1–3 s；对本项目：V1.0 最小必做。",
+    "方案 C：纯 A1（母体不退就打完、退则即时结算）——代价 1–2 人周；收益：最简单可靠；对本项目：作为所有失败路径的兜底，必须做。",
+    "方案 D：社区自建专服（MGH 2023-03-30 起官方+玩家自建专服、2024-01 专服独立成 Steam 工具）——代价：需 headless 服务端版本与 Steam 工具 AppID；收益：根治换主；对本项目：V1.5 C3 再评估。",
+    "方案 E：第三方中间件（Unity MPS/Photon Fusion/GD-Sync）——代价：换引擎或依赖付费云、违背 $0/月；Unity 快照固定走 US Central 区对中国大陆不利；对本项目：不值得。",
+    "方案 F：Destiny 2 / DbD 式租服务器当权威——违背 V1.0 硬约束；仅作为长期参考。"
+  ],
+  "project_implications": [
+    "推荐决策 1：把『换主』拆成三条路径并按优先级交付：优雅交接（V1.0 必做）→ A1 体面结算兜底（V1.0 必做）→ 崩溃/拔线 D2（V1.0 做 beta，可在设置里『实验性』开关，参照 Liar's Bar 以 beta 上线的做法）。理由：三款 Steam 先例都证明换主是长尾 bug 源，MGH 甚至两度关闭；兜底不完善时『卡死在损坏状态』比『体面结算』更伤评价。",
+    "推荐决策 2：对外宣称『房主离开约 1–3 秒交接；房主崩溃约 10 秒冻结后续局，失败则按即时状态结算』，不要宣称『秒级无感』。理由：业界 P2P 换主停顿普遍 5–15 s，崩溃检测受 GNS 10 s 默认超时与 Steam lobby 转移时延制约。",
+    "推荐决策 3：备份改为『全量 8–10 s + 事件日志实时』发给 succession 前 2 名，而不是纯 2–3 s 全量；快照/旁观者初始快照/中途加入共用同一个 serialize_world()，这样旁观功能顺带成为换主的日常回归测试（每次有人旁观都在验证序列化）。",
+    "推荐决策 4：从第一行联机代码起就以 steam_id 为主键、自建消息层，不依赖 Godot MultiplayerSpawner/peer_id；否则后期加换主需要大规模重构（Edgegap 引述 UE 项目做换主需『全面重构让每个功能都支持迁移』）。",
+    "推荐决策 5：母体=初始房主带来双重风险，建议母体角色与房主角色解耦：母体由谁控制与谁是房主无关，房主离开时母体由 Bot 托管；同时让 D2 继任者优先选『非母体、ping 最好』的人类玩家。",
+    "推荐决策 6：给每个快照加 version+CRC，新房主 apply 后做一致性自检（人数、母体存在、箱子位图长度、直升机阶段合法），失败直接进入 A1，不硬续——这是 MGH『迁移损坏』教训的直接对策。",
+    "对 D4 分权的利好：玩家位置/朝向由各客户端自报，换主后由客户端 REJOIN 时带回，快照里的位置只作兜底；因此 0.3 s 内子弹与几百毫秒位置误差都不影响续局，可迁移状态主要是离散事件，这是本项目做 D2 的最大结构优势。",
+    "JIP 结论：技术上 V1.0 可做且风险低，前提是旁观先实现、序列化从一开始按『全楼』设计；它与 D2 换主共享事件日志 seq 机制，三者（旁观/JIP/换主）共用一套代码可互相充当回归测试。"
+  ],
+  "mvp_scope": {
+    "V1.0 最小可行": [
+      "steam_id 主键 + 自建消息层与 host_term 头",
+      "serialize_world()/apply_world()（旁观/中途加入/换主共用）带版本与 CRC",
+      "优雅交接 HANDOFF + setLobbyOwner",
+      "1–2Hz 心跳 + SUSPECT/FREEZE/DEAD/GIVEUP 状态机",
+      "A1 体面结算与回大厅",
+      "掉线者/母体 Bot 托管与凭 steam_id 收回",
+      "崩溃路径 D2（标 beta）：继任者#1 载入快照+日志续局",
+      "中途加入（以人类身份）：复用旁观快照 + 事件日志 seq 锚定追赶 + 入口楼层 AOI 订阅；排在旁观之后，工期吃紧时可整体推迟而不改架构"
+    ],
+    "V1.5 再做": [
+      "继任者#2 级联接手",
+      "按 ping/帧率动态排序 succession",
+      "换主期间计时器冻结的细节打磨与 UI 动画",
+      "自动化混沌测试（随机杀房主进程/断网）纳入 CI",
+      "社区自建专服（C3）评估",
+      "JIP 并发加入（多人同时追赶）与按楼层选择出生点"
+    ],
+    "不建议做": [
+      "依赖 Unity/Photon 等云换主服务",
+      "每 0.5–1 s 高频全量快照",
+      "尝试恢复在途子弹/动画中间帧",
+      "多数派投票式复杂共识（16 人规模用确定性 succession + term 足够）"
+    ]
+  },
+  "effort_estimate": [
+    "[推算] 优雅交接 + A1 结算 + Bot 托管：2–3 人周（AI 难度：中；典型错误：非 owner 调 setLobbyOwner、结算重复写存档）。",
+    "[推算] 快照序列化（含旁观复用）+ 事件日志：2–3 人周（难度：中；典型错误：JSON 存 steam_id、rng 状态未存、重放日志重复）。",
+    "[推算] 崩溃路径选举 + term 脑裂防护 + 错峰重连 + 自检：2–3 人周（难度：难；典型错误：旧房主不降级、计时器不暂停、双重实例化）。",
+    "[推算] 中途加入（JIP）：在旁观与事件日志已完成的前提下 0.5–1 人周（AI 难度：易～中；典型错误：快照与事件之间漏发/重放、只序列化当前楼层、忘了在换主时中止 JIP、非 owner 调 setLobbyJoinable）；若事件日志尚未实现，则需 1.5–2 人周。验收点：对局第 5/20/35 分钟各中途加入 10 次，加入者看到的箱子/门/直升机状态与房主快照哈希一致，0 道具复制。",
+    "[推算] 合计约 6–9 人周，另需 2 人周混沌测试打磨；对照 MGH 专业团队约 8 个月、Bodycam 专门小组约 1.5 年，个人+双 AI 必须靠『2D、无物理、离散状态』的简化才可行。",
+    "必须人工把关的验收点：①强杀房主进程 / 拔网线 / 主动退出三种方式各 20 次以上，续局成功率与停顿；②换主后箱子不复活、道具不复制、人数不超限、母体存在；③旧房主 30 s 后恢复网络不会形成双房主；④A1 结算数值与快照一致。"
+  ],
+  "risk_rating": [
+    "致命（若不做 A1 兜底）：40 分钟无检查点对局一旦换主卡死=全员 40 分钟作废，直接引发差评（Liar's Bar、MGH 先例）。缓解：A1 体面结算必须先于 D2 完成。",
+    "麻烦但可解：崩溃路径 D2 的长尾 bug（进行中交互、计时器、元数据一致性）。触发：房主崩溃/断网恰逢开箱/感染/直升机阶段切换。缓解：事件日志 + 冻结计时器 + 自检失败降级 + 大量日志一键上传（Sentry 免费档）。",
+    "麻烦但可解：Steam lobby owner 与游戏房主不一致导致房间列表显示错误/无法写元数据。缓解：新房主稳定后由现 owner 调 setLobbyOwner，并以 lobby data host_term 广播。",
+    "低（JIP）：技术上是旁观初始同步的延伸，失败时可退回旁观或回大厅，不影响已在局内玩家；唯一需注意的是换主期间的 JIP 必须中止重来。",
+    "低：快照带宽与大小（≤16 KB、≤12 KB/s）。",
+    "[不确定] Steam 后台 owner 转移时延与 SDR 跨区重建连接时长，可能把崩溃路径停顿推到 15 s 以上，需实测。"
+  ],
+  "win_probability_inputs": [
+    "换主可靠性：做『优雅交接 + A1 兜底 + D2 beta』相比『只做 D2 无兜底』+15～+25 个百分点 [主观]（主要来自把『卡死』转为『体面结算』）。",
+    "换主可靠性：崩溃路径 D2 首发成功率预估 70–85% [主观]（参照 Bodycam 上线 3 周内 3 个相关补丁、MGH 两度关闭）；随 V1.0 后 2–3 个补丁迭代可升至 90%+ [主观]。",
+    "技术完成率：D2 全量范围使 V1.0 工期增加约 6–9 人周，技术完成率 −5～−10 个百分点 [推算/主观]；若 V1.0 只做优雅交接+A1，则 −2～−3。",
+    "上线稳定性：快照/旁观/中途加入共用序列化，可使旁观与换主的 bug 互相暴露，+3～+5 个百分点 [主观]。",
+    "长期低维护度：自研换主是长期维护负担（三款先例均持续出补丁），−3～−5 个百分点 [主观]。",
+    "技术完成率：JIP 若与旁观共用序列化，额外 −0.5～−1 个百分点 [主观]；若单独另写一套同步则 −3～−5，所以必须共用。"
+  ],
+  "test_verification_points": [
+    "实测 Steam lobby owner 转移时延：两到四台机器（或 Steam 账号+虚拟机），分别『主动 leaveLobby』『taskkill 强杀房主进程』『断开房主网卡』，记录其他成员收到 lobby_chat_update 与 getLobbyOwner() 变化的时间；红线：主动离开 <2 s；崩溃/断网记录分布（无红线，用于决定是否依赖 lobby owner 作触发）。可半自动（脚本 kill 进程）。",
+    "换主停顿：同上三种方式各 ≥20 次，指标=从房主消失到所有客户端恢复 IN_GAME 的时间、续局成功率；红线：优雅交接 ≤3 s 且成功率 ≥98%；崩溃 ≤15 s 且成功率 ≥85%，失败时 100% 进入 A1 结算而非卡死。",
+    "一致性：换主前后对比快照哈希/箱子位图/道具总数/人数/母体存在；红线：0 复制、0 复活、0 超员。可 headless 自动化（Godot --headless 多实例 + 本地回环或 Steam 测试账号）。",
+    "脑裂：用 clumsy/tc netem 让旧房主断网 10 s、30 s 后恢复；红线：恢复后 ≤2 s 内自动降级为客户端、无双房主日志。",
+    "快照大小与带宽：在 16 人、1,000 箱、300 掉落、22 层满载下打印压缩前后字节数与房主上行 KB/s；红线：压缩后 ≤16 KB、备份上行 ≤15 KB/s。可 headless 自动化。",
+    "网络劣化：clumsy 20% 丢包 + 200 ms 延迟下重复换主测试，确认 SUSPECT 不误判（误判率 <1%/小时）。",
+    "中国大陆：至少 1 名大陆玩家（经 SDR）作为普通客户端与继任者各测 10 次，记录重连新房主耗时。",
+    "JIP：headless 多实例脚本在对局不同时刻（含开箱/感染高频期、直升机阶段切换瞬间）发起中途加入，比较加入者追平后的世界哈希与房主一致；指标=批准到 JOIN_SYNCED 耗时、失败率；红线：耗时 ≤2 s（SDR 下 ≤3 s）、一致率 100%、换主期间发起的 JIP 100% 被中止并可重试。可 headless 自动化。"
+  ],
+  "china_mainland_notes": [
+    "换主时所有客户端要与新房主重新建立 Steam Networking 会话，经 SDR 中继时大陆玩家的重建时长与成功率未见公开数据 [不确定]，需实测；若明显偏慢，succession 排序应降低大陆跨区玩家的优先级（Bodycam 即按 ping 选主）。",
+    "不要采用 Unity MPS 换主：其迁移数据固定走 US Central 区（官方文档），对大陆玩家延迟不利。",
+    "合规/支付/社区渠道：本 item 不涉及。"
+  ],
+  "sources": [
+    {
+      "标题": "Liar's Bar 官方 Steam 公告（2024-10-14、11-24、11-27、12-24、12-27 v0.92、2025-12-23、2026-07-02、2026-11-13）",
+      "URL": "https://store.steampowered.com/news/app/3097560",
+      "日期": "访问 2026-11-25；经 Steam 新闻 API 全量拉取 https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=3097560&count=300&feeds=steam_community_announcements",
+      "类型与可信度": "补丁日志，一手，高"
+    },
+    {
+      "标题": "Midnight Ghost Hunt 官方 Steam 公告（2022-04-07 至 2025-06-26，含 2023-02-14 Update 6、2023-06-23 Patch 0.2.1、2024-03-22 Patch 1.0.1）",
+      "URL": "https://store.steampowered.com/news/app/915810",
+      "日期": "访问 2026-11-25；https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=915810&count=300&feeds=steam_community_announcements",
+      "类型与可信度": "补丁日志，一手，高"
+    },
+    {
+      "标题": "Bodycam 官方 Steam 公告（2024-12-11 V0.5.0、2025-11-25 V0.7.0、2026-09-02 V0.8、09-08/09-11/09-25 V0.8 #3/#4/#6、2026-11-13 v0.9）",
+      "URL": "https://store.steampowered.com/news/app/2406770",
+      "日期": "访问 2026-11-25；https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=2406770&count=300&feeds=steam_community_announcements",
+      "类型与可信度": "补丁日志，一手，高"
+    },
+    {
+      "标题": "Unity MPS SDK — Session host migration",
+      "URL": "https://docs.unity.com/en-us/mps-sdk/session-host-migration",
+      "日期": "访问 2026-11-25",
+      "类型与可信度": "官方文档，高"
+    },
+    {
+      "标题": "Unity Netcode for Entities 1.7 — Host migration limitations",
+      "URL": "https://docs.unity3d.com/Packages/com.unity.netcode@1.7/manual/host-migration/host-migration-limitations.html",
+      "日期": "访问 2026-11-25",
+      "类型与可信度": "官方文档，高"
+    },
+    {
+      "标题": "Unity Netcode for Entities 1.5 — Introduction to host migration",
+      "URL": "https://docs.unity3d.com/Packages/com.unity.netcode@1.5/manual/host-migration/host-migration-intro.html",
+      "日期": "访问 2026-11-25",
+      "类型与可信度": "官方文档，高"
+    },
+    {
+      "标题": "Unity Netcode for Entities 1.7 — Host migration considerations",
+      "URL": "https://docs.unity3d.com/Packages/com.unity.netcode@1.7/manual/host-migration/host-migration-considerations.html",
+      "日期": "访问 2026-11-25",
+      "类型与可信度": "官方文档，高"
+    },
+    {
+      "标题": "Unity NGO 2.11 — Distributed authority",
+      "URL": "https://docs.unity3d.com/Packages/com.unity.netcode.gameobjects@2.11/manual/terms-concepts/distributed-authority.html",
+      "日期": "访问 2026-11-25（据搜索摘要）",
+      "类型与可信度": "官方文档，中高"
+    },
+    {
+      "标题": "Photon Fusion 2 — Host Migration 手册",
+      "URL": "https://doc.photonengine.com/fusion/v2/manual/advanced/host-migration",
+      "日期": "访问 2026-11-25",
+      "类型与可信度": "官方文档，高"
+    },
+    {
+      "标题": "Photon 论坛 — Host migration snapshot is almost empty",
+      "URL": "https://forum.photonengine.com/discussion/comment/62278/",
+      "日期": "访问 2026-11-25（摘要）",
+      "类型与可信度": "社区，中"
+    },
+    {
+      "标题": "Mirror FAQ（换主未内置）",
+      "URL": "https://mirror-networking.gitbook.io/docs/manual/faq",
+      "日期": "访问 2026-11-25（摘要）",
+      "类型与可信度": "官方文档，中高"
+    },
+    {
+      "标题": "Unreal 论坛 — Host Migration Possible with Client-Server (Listen) Servers?",
+      "URL": "https://forums.unrealengine.com/t/host-migration-possible-with-client-server-listen-servers/384489",
+      "日期": "访问 2026-11-25（摘要）",
+      "类型与可信度": "社区，中"
+    },
+    {
+      "标题": "Steamworks ISteamMatchmaking 文档",
+      "URL": "https://partner.steamgames.com/doc/api/ISteamMatchmaking",
+      "日期": "访问 2026-11-25",
+      "类型与可信度": "官方文档，高"
+    },
+    {
+      "标题": "Steamworks steamnetworkingtypes 文档",
+      "URL": "https://partner.steamgames.com/doc/api/steamnetworkingtypes",
+      "日期": "访问 2026-11-25",
+      "类型与可信度": "官方文档，高"
+    },
+    {
+      "标题": "Valve GameNetworkingSockets 源码 csteamnetworkingsockets.cpp 第 76–87 行",
+      "URL": "https://github.com/ValveSoftware/GameNetworkingSockets/blob/master/src/steamnetworkingsockets/clientlib/csteamnetworkingsockets.cpp",
+      "日期": "访问 2026-11-25",
+      "类型与可信度": "源码，高"
+    },
+    {
+      "标题": "GodotSteam（Codeberg）godotsteam.cpp 第 9241–9307、9799–9834 行；godotsteam_multiplayer_peer.cpp 第 599–660 行，提交 bc2a881（2026-11-10），tag v4.24",
+      "URL": "https://codeberg.org/godotsteam/godotsteam",
+      "日期": "访问 2026-11-25",
+      "类型与可信度": "源码，高"
+    },
+    {
+      "标题": "Godot 论坛 — Passing Host in P2P game",
+      "URL": "https://forum.godotengine.org/t/passing-host-in-p2p-game/109411",
+      "日期": "访问 2026-11-25（摘要）",
+      "类型与可信度": "社区，中"
+    },
+    {
+      "标题": "Kotaku — Bungie Explains How They're Improving Destiny 2 Servers",
+      "URL": "https://kotaku.com/bungie-explains-how-theyre-improving-destiny-2-servers-1795587013",
+      "日期": "2017-05-26",
+      "类型与可信度": "媒体转述官方，中高"
+    },
+    {
+      "标题": "Dead by Daylight — Dedicated servers are coming",
+      "URL": "https://deadbydaylight.com/news/dedicated-servers-are-coming-to-dead-by-daylight/",
+      "日期": "2018-12-06",
+      "类型与可信度": "官方公告，高"
+    },
+    {
+      "标题": "Shacknews — New Modern Warfare 2 Multiplayer Footage Reveals Seamless Host Migration",
+      "URL": "https://www.shacknews.com/article/60281/new-modern-warfare-2-multiplayer",
+      "日期": "2009-09-01",
+      "类型与可信度": "媒体，中"
+    },
+    {
+      "标题": "Digital Trends — CoD WWII 回退 P2P",
+      "URL": "https://www.digitaltrends.com/?p=1272445",
+      "日期": "2017-11-13",
+      "类型与可信度": "媒体转述官方，中"
+    },
+    {
+      "标题": "Call of Duty Wiki — Host Migration",
+      "URL": "https://callofduty.fandom.com/wiki/Host_Migration",
+      "日期": "访问 2026-11-25（摘要，页面 402）",
+      "类型与可信度": "粉丝 wiki，低中"
+    },
+    {
+      "标题": "Gameye 词条 — Host migration",
+      "URL": "https://gameye.com/glossary/host-migration/",
+      "日期": "访问 2026-11-25",
+      "类型与可信度": "托管商，中低（有商业立场）"
+    },
+    {
+      "标题": "Edgegap — Host migration in P2P or relay-based games",
+      "URL": "https://edgegap.com/blog/host-migration-in-peer-to-peer-or-relay-based-multiplayer-games",
+      "日期": "访问 2026-11-25",
+      "类型与可信度": "托管商博客，中低（有商业立场）"
+    },
+    {
+      "标题": "PC Gamer — Helldivers 2 patch（换主相关修复）",
+      "URL": "https://www.pcgamer.com/games/third-person-shooter/helldivers-2-patch-fixes-ps5-hosts-accidentally-giving-damage-boosts-to-their-fellow-patriots-continues-to-tackle-crashes",
+      "日期": "访问 2026-11-25（摘要）",
+      "类型与可信度": "媒体转载补丁，中"
+    },
+    {
+      "标题": "Destiny 1 物理主机换主社区分析",
+      "URL": "https://gist.github.com/nessus42/3738647a2052c4758c6f46f0464c47a6",
+      "日期": "访问 2026-11-25（摘要）",
+      "类型与可信度": "社区分析，低中"
+    }
+  ],
+  "uncertain": [
+    "current_status（EOS Lobby 换主选项、FishNet 是否内置换主、Steam owner 崩溃后转移时延）",
+    "quantitative_params（GNS SendRate 默认值两处口径不一致）",
+    "key_findings（Steam 后台 owner 转移时延）",
+    "implementation_guidance（ISteamNetworkingMessages 跨 channel 队头阻塞）",
+    "china_mainland_notes（SDR 下大陆玩家重连新房主耗时）",
+    "pitfalls_and_failures（Destiny 1 换主频率为社区分析）"
+  ]
+}
