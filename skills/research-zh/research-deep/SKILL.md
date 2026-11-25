@@ -22,6 +22,7 @@ allowed-tools: Bash, Read, Write, Glob, WebSearch, Task
 ### Step 3: 分批执行
 - 派发单位是 `execution.agent_groups` 里的一组：每组 = 一个子agent（核心item通常一组一个，其余一组多个）
 - 按batch_size分批，每批最多 batch_size 个子agent同时运行（完成一批需要得到用户同意才可进行下一批，用 AskUserQuestion 可选项询问）
+- **每批 opus 与 sonnet 混编（控制 Opus 额度）**：同一批内 **opus 子 agent 最多 1 个**，其余并行名额用 sonnet 组补满（如 batch_size=3 时为 1 opus + 2 sonnet）；尽量不要让两个 opus 同批——opus 组比 sonnet 组多时，宁可某批少跑几个，也不要两个 opus 同批。趁热补深时唤醒的 opus 子 agent 同样占这 1 个 opus 名额。性能模式（全 opus）无法混编，按 batch_size 跑，但开跑前要提醒用户 Opus 额度消耗，并建议调小 batch_size。
 - 启动web-search-agent（后台并行，禁用task output）
 
 **模型指定（按 execution.mode 决定，重要）**：读取 outline.yaml 的 `execution.mode`，取值 `性能` / `标准` / `经济`（英文写法 `performance` / `standard` / `economy` 等价；缺省视为 `标准`；旧数字值 `1` / `2` / `3` 依次视为性能 / 标准 / 经济，更早的 `efficiency` 视为 `标准`），据此决定每个 web-search-agent 子 agent 的模型。

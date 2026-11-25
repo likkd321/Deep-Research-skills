@@ -132,7 +132,7 @@ Merge {step1_output}, {step2_output} and user's existing fields, generate two fi
   - core_items: Core items, each dispatched to its own subagent (performance/standard modes; confirm with AskUserQuestion; may be empty in economy mode)
   - items_per_agent: How many non-core items each subagent takes (applies to all items in economy mode; confirm with AskUserQuestion)
   - judgment_items: Items that need heavy deep judgment (generated from the criteria in research-deep Step 3; mark them in every mode): dispatched to `web-search-agent-deep` (effort high), and in standard mode also on Opus; all other items go to `web-search-agent` (effort medium)
-  - agent_groups: The actual dispatch groups derived from the above; each group = one subagent, formatted `{agent: web-search-agent|web-search-agent-deep, model: opus|sonnet, items: [item name, ...]}`; a group takes the highest agent type and model any of its items needs; put same-topic/same-source items together; order by priority (core groups first)
+  - agent_groups: The actual dispatch groups derived from the above; each group = one subagent, formatted `{agent: web-search-agent|web-search-agent-deep, model: opus|sonnet, items: [item name, ...]}`; a group takes the highest agent type and model any of its items needs; put same-topic/same-source items together; **arrange by batch**: each batch (batch_size groups) holds at most 1 opus group, with sonnet groups filling the rest — avoid two opus groups in one batch (to conserve Opus quota; see research-deep Step 3); within that constraint order by priority (core groups go into the earliest batches), and mark each group's batch with a comment in the outline
   - output_dir: Results output directory (default: ./results)
 
 **fields.yaml** (field definitions):

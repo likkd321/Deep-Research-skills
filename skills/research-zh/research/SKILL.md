@@ -132,7 +132,7 @@ prompt = f"""## 任务
   - core_items: 重点核心item列表，每个单独一个子agent（性能/标准模式；需AskUserQuestion确认；经济模式可留空）
   - items_per_agent: 非核心item每个子agent负责几个（经济模式下适用于全部item；需AskUserQuestion确认）
   - judgment_items: 需要大量深度判断的item（按research-deep Step 3的判定条件生成，三种模式都要标）：派 `web-search-agent-deep`（effort high），标准模式下同时用Opus；其余item派 `web-search-agent`（effort medium）
-  - agent_groups: 由以上各项生成的实际派发分组，每组 = 一个子agent，格式 `{agent: web-search-agent|web-search-agent-deep, model: opus|sonnet, items: [item名, ...]}`；同组的agent类型与模型都取组内最高需求；同主题/同来源的item尽量分到一组；按优先级排序（核心组在前）
+  - agent_groups: 由以上各项生成的实际派发分组，每组 = 一个子agent，格式 `{agent: web-search-agent|web-search-agent-deep, model: opus|sonnet, items: [item名, ...]}`；同组的agent类型与模型都取组内最高需求；同主题/同来源的item尽量分到一组；**按批次编排**：每批（batch_size 个组）最多放 1 个 opus 组、其余用 sonnet 组补满，尽量不要两个 opus 组同批（控制 Opus 额度，见 research-deep Step 3），在此前提下按优先级排序（核心组优先进入前几批），并在 outline 中用注释标出每组所属批次
   - output_dir: 结果输出目录（默认./results）
 
 **fields.yaml**（字段定义）：

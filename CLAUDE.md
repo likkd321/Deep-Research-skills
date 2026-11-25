@@ -37,6 +37,7 @@ master（及任何会合并回 master 的分支）只包含工具本身：
 - **三种模式相同**：最终 `research-report` 的跨 item 综合始终用 **opus**（一趟、最吃质量，不降档）。
 - **agent 类型与努力程度**（按任务性质选，与模式无关）：信息检索类用 `web-search-agent`（`effort: medium`），需要大量深度判断的用 `web-search-agent-deep`（`effort: high`）；模型仍按模式在派发时显式传。派发工具只能临时覆盖 `model`、不能覆盖 `effort`，所以努力程度靠 agent 类型区分；多 item 组取组内最高需求。
 - **派发**：网页/云端会话须在**派发时显式传 `model`**（此类环境不读 agent 文件的 model 字段）；本地 CLI 由 agent 文件的 `model` 提供默认（`web-search-agent` 为 sonnet、`web-search-agent-deep` 为 opus），与模式不符时派发时覆盖。
+- **每批 opus 与 sonnet 混编（控制 Opus 额度）**：同一批最多 1 个 opus 子 agent，其余并行名额用 sonnet 补满；尽量不要两个 opus 同批（opus 组多于 sonnet 组时宁可某批少跑几个）；趁热补深唤醒的 opus 也占这 1 个名额。`agent_groups` 按此编排批次（核心组优先进入前几批）。性能模式全 opus 无法混编，开跑前提醒额度并建议调小 `batch_size`。
 - deep 阶段不要用 Haiku。
 - 兼容旧 outline：旧数字值 `1` / `2` / `3` 依次按性能 / 标准 / 经济处理；更早的 `mode: efficiency` 按标准处理，`mode: performance` 即性能模式。
 

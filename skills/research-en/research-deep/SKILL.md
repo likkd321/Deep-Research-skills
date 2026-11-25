@@ -22,6 +22,7 @@ Find `*/outline.yaml` file in current working directory, read items list, execut
 ### Step 3: Batch Execution
 - The dispatch unit is one group in `execution.agent_groups`: each group = one subagent (a core item is usually a group of one; other groups hold several items)
 - Batch by batch_size: at most batch_size subagents run at once per batch (need user approval before next batch; ask with AskUserQuestion options)
+- **Mix opus with sonnet in every batch (to conserve Opus quota)**: a batch holds **at most 1 opus subagent**; fill the remaining parallel slots with sonnet groups (e.g. 1 opus + 2 sonnet when batch_size=3). Avoid putting two opus subagents in the same batch — if opus groups outnumber sonnet groups, run a smaller batch rather than pairing two opus. An opus subagent woken for hot deepening also takes that single opus slot. Performance mode (all opus) cannot be mixed: run it by batch_size, but warn the user about Opus quota before starting and suggest a smaller batch_size.
 - Launch web-search-agent (background parallel, disable task output)
 
 **Model selection (driven by execution.mode, important)**: Read `execution.mode` from outline.yaml — one of `performance` / `standard` / `economy` (the Chinese names `性能` / `标准` / `经济` are equivalent; treat missing as `standard`; legacy numeric values `1` / `2` / `3` mean performance / standard / economy, and the older `efficiency` means `standard`) and choose each web-search-agent subagent's model accordingly.
