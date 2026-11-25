@@ -6,7 +6,8 @@
     "16 个 Bot 在 22 层楼（每层 80×50 格）的跨层寻路 CPU 开销；NavigationServer2D 在 --headless 下是否可用",
     "全楼快照三种编码（var_to_bytes 字典 / JSON / 手写二进制）的大小、压缩后大小与耗时；JSON 对 64 位 steam_id 的精度影响",
     "22 层 × 2 个 TileMapLayer（地面 + 带碰撞的墙）的内存，全部加载 vs 只留 3 层",
-    "真实 ENet 本机回环：1 房主 + 15/23 客户端进程，20Hz send_bytes，房主上行带宽、包量与 CPU"
+    "真实 ENet 本机回环：1 房主 + 15/23 客户端进程，20Hz send_bytes，房主上行带宽、包量与 CPU",
+    "Linux 下设置 XDG_DATA_HOME 能否隔离多开实例的 user:// 目录"
   ],
   "prior_claims_check": [
     "上一轮「16 人同层房主上行约 0.6 Mbps」→ 证实（实测）：ENet 本机回环 16 人同层，房主上行 534–539 kbps、354–356 包/秒（ENet 统计不含 UDP/IP 头）；按每包 28 B UDP/IPv4 头补上后约 0.61 Mbps。证据：主线程 net_bench.gd 实测（2026-11-25，Godot 4.7.2）。",
@@ -33,7 +34,8 @@
     "[事实] ENet 16 人分散到 22 层（实际占用 11 层）：房主上行 69 kbps、236 包/秒，比同层省约 87%",
     "[事实] ENet 24 人同层：房主上行 1,205 kbps、546 包/秒、平均载荷 276 B",
     "[事实] 房主进程 CPU（16 人同层、60 FPS 上限）：20 秒测量窗加启动共 24.3 s 墙钟内用户态 0.33 s + 内核态 0.09 s，约占一个核心 1.7%，与只跑空循环的客户端进程（约 2.3%）同一量级——联机转发不是瓶颈",
-    "[推算] 换成 Steam SDR 后每包开销比 ENet 大（加密与中继头），16 人同层房主上行预计仍在 0.6–0.8 Mbps 量级；需上 Steam 实测"
+    "[推算] 换成 Steam SDR 后每包开销比 ENet 大（加密与中继头），16 人同层房主上行预计仍在 0.6–0.8 Mbps 量级；需上 Steam 实测",
+    "[事实] Linux 下设置环境变量 XDG_DATA_HOME 会改变 Godot 4.7.2 的 user:// 根目录（默认 ~/.local/share/godot/app_userdata/<项目名>，设置后变为 $XDG_DATA_HOME/godot/app_userdata/<项目名>），可用来隔离 headless 多开实例的存档与日志；OS.get_cmdline_user_args() 能读到 -- 之后的 --instance=N 参数（主线程实测）"
   ],
   "implementation_guidance": [
     "房主校验：每个玩家每 tick 只做 1 次 intersect_ray(prev_pos, new_pos, mask=墙|关闭的门)，命中就拉回到 hit.position - dir*2；门用独立 CollisionShape2D，开关门只切 disabled（在物理帧里切或 set_deferred）",
@@ -42,7 +44,8 @@
     "Bot 寻路：每层一个 AStarGrid2D（与 TileMapLayer 同尺寸），楼梯井在各层同一位置；跨层 = 两次 get_id_path；每个 Bot 每 0.5 s 重算一次即可",
     "若用 NavigationServer2D：建图后要等地图同步（连接 NavigationServer2D.map_changed 信号或等几帧）再查询，否则拿到空路径",
     "headless 房主/Bot 进程设置 Engine.max_fps（如 60），避免无渲染时空转",
-    "地图：桌面端 22 层全部常驻内存约 48 MB 可接受；房主必须加载全部楼层的碰撞（校验用），客户端可只加载当前层 ±1 层以省内存"
+    "地图：桌面端 22 层全部常驻内存约 48 MB 可接受；房主必须加载全部楼层的碰撞（校验用），客户端可只加载当前层 ±1 层以省内存",
+    "Linux/云端 VM 多开压测：每个实例用不同的 XDG_DATA_HOME（如 /tmp/inst_N）启动，并传 -- --instance=N；Windows 上 Customize Run Instances 共享 user://，需在代码里按 --instance=N 分子目录（Windows 的 APPDATA 覆盖未实测）"
   ],
   "pitfalls_and_failures": [
     "GDScript 里逐个遍历门线段做相交检测比物理射线慢约 4 倍，人数和门数一多就成倍增长（主线程实测）",
@@ -68,7 +71,8 @@
     "ENet 16 人同层房主上行 | 534–539 kbps、354–356 包/秒 | 不含 UDP/IP 头 | 主线程实测",
     "ENet 16 人分散 22 层 | 69 kbps、236 包/秒 | 占用 11 层 | 主线程实测",
     "ENet 24 人同层房主上行 | 1,205 kbps、546 包/秒 | 不含 UDP/IP 头 | 主线程实测",
-    "房主进程 CPU | 约 1.7% 单核 | 16 人同层、60 FPS 上限 | 主线程实测"
+    "房主进程 CPU | 约 1.7% 单核 | 16 人同层、60 FPS 上限 | 主线程实测",
+    "XDG_DATA_HOME 隔离 user:// | 有效 | Linux、Godot 4.7.2 headless | 主线程实测"
   ],
   "alternatives_comparison": [
     "穿门校验：物理射线（推荐，快且自动含墙与门）vs GDScript 线段循环（慢 4 倍，仅在没有碰撞体时用）",
