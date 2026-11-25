@@ -12,32 +12,35 @@
  "prior_claims_check": "无（item 未列 prior_claims）。另：任务中引用的批次 3 结论「每 0.2s 给相邻楼层发一次噪声摘要、每声源 4B、16 人额外约 15–20 kbps」未重新核实，仅在下文用 [推算] 复核其量级。",
  "current_status": [
   "[事实] Steam Voice API 官方文档存在于 partner.steamgames.com/doc/features/voice：StartVoiceRecording → GetAvailableVoice/GetVoice 取压缩数据 → 自行经网络发送 → 接收端 DecompressVoice 得到 16 位单声道 PCM，解码器支持 11025–48000Hz 采样率（核实日期 2026-11-25，经搜索摘要，未全文抓取）。",
-  "[事实] GodotSteam 社区版 changelog 提到 getDecompressedVoice() 封装 getVoice()+decompressVoice()，且 SteamMultiplayerPeer 已并入主项目（来自搜索摘要，2026-11-25；具体版本号 [不确定]，需锁定版本前查 godotsteam.com/changelog）。",
   "[事实] TwoVoip 插件（Godot 资源库，MIT，列出兼容 Godot 4.6，Opus 压缩，约 1 kB/s 目标）可作为 AudioEffectCapture+Opus 路线的现成实现（来自资源库摘要，2026-11-25）。",
-  "[不确定] 任务线索「GodotSteamKit 有 SteamVoice 节点」本次未能核实，缺：其仓库地址、版本与维护状态。",
-  "[事实] Godot 4.4→4.5 升级曾出现玩家听到自己声音的回归报告（forum.godotengine.org 帖 129933），说明语音路线对引擎版本敏感，建议锁定 Godot 版本后实测。"
+  "[事实] Godot 4.4→4.5 升级曾出现玩家听到自己声音的回归报告（forum.godotengine.org 帖 129933），说明语音路线对引擎版本敏感，建议锁定 Godot 版本后实测。",
+  "[事实] GodotSteamKit 确实存在：codeberg.org/godotsteam/godotsteamkit，默认分支 intro，更新于 2026-10-23；readme 明确列有 Steam Voice 自定义节点（'Steam Voice which come in a few different flavors'），另有 Steam Chat/Lobbies 起步套件；免费分件 + itch.io/Ko-fi 付费全量版（核实 2026-11-25；节点源码目录未能列出，具体 API 与版本 [不确定]）。",
+  "[事实] GodotSteam godot4 分支 godotsteam.cpp（codeberg，2026-11-25 直读源码）中 grep 不到 getDecompressedVoice，此前引用的该函数说法未获源码证实，按「不存在」处理，需自行串联 getVoice+decompressVoice。"
  ],
  "key_findings": [
   "[事实] Project Zomboid 噪音系统是基于半径的：僵尸对进入「世界声音」系统的声响作出调查；Build 42.19 指南称木工噪音约 15–20 格，并区分听觉/视觉/脚本事件等吸引通道（pzfans.com/what-attracts-zombies-to-bases/）。各玩家对具体半径、尖叫/犬吠是否吸引僵尸说法不一，wiki 本身有错误提醒，数值可信度中低。",
   "[事实] Dead by Daylight 恐惧半径主要由杀手基础移速决定：4.6 m/s 的多为 32 米，4.4 m/s 为 24 米，Wesker 40 米；由心跳声 + 分层追逐音乐两部分构成（deadbydaylight.wiki.gg 恐惧半径页及论坛）。对本项目启示：用「距离分档的音频层」传达危险，而非精确位置。",
   "[事实] Steam Voice 解码输出为单声道 16 位 PCM；采样率可 11025–48000，用 GetVoiceOptimalSampleRate 可降 CPU 但音质可能下降（Steamworks 文档）。",
-  "[不确定] 每路 Steam Voice 的码率：本次搜索未得官方数字；Steam 压缩使用 Opus 类编码，行业惯例语音 Opus 约 12–24 kbps。缺：Valve 官方或 GodotSteam 实测的 bytes/s。",
   "[事实] TwoVoip 宣称 Opus 压缩目标约 1 kB/s（≈8 kbps）（Godot 资源库摘要）。作为自建路线码率下限参考。",
   "[推算] 近距离语音带宽：人均同时说话路数受「说话占空比」限制。假设 16 人、同层近距离接收者 ≤4 路同时说话，每路 16 kbps（含包头约 20 kbps），接收端下行 ≈ 4×20=80 kbps；发送端对同层 k 个听众点对点则上行 =20 kbps×k。房主转发则房主上行 = 同时说话路数 × 听众数 × 20 kbps，16 人全说极端值约 16×15×20=4.8 Mbps 不可接受，需 AOI（仅同层/相邻层）+ VAD 门控后降至通常 <1 Mbps。[推算]",
   "[推算] 复核批次 3 声音通道：每 0.2s 一次摘要=5 Hz，每声源 4B，设相邻 ±1–2 层共 4 层各 8 个声源=32 源×4B=128B/包，加约 30B 头≈160B×5Hz=800B/s≈6.4 kbps/每接收端；房主向 15 个客户端各发则房主上行约 96 kbps，与「16 人额外 15–20 kbps」（按客户端计）量级一致或略保守。需按实际声源数再测。",
   "[主观] 声音分两类最省带宽：(a) 本地可推导声（他人脚步=由已同步的 20Hz 位置/速度推导；自己层内开门/开箱=由已同步事件推导）不单独发；(b) 非位置事件（枪声、爆炸、破门、电梯到达、僵尸嘶吼、Bot 行为）以「一次性事件包」由房主广播给 floor_id 在 ±2 层内的客户端，不需要 5Hz 轮询。",
   "[主观] 楼层处理：同层按 AudioStreamPlayer2D 距离衰减；相邻层用 1 档低通 + 音量下降（-12~-18 dB）+ 方向仅指向最近楼梯/电梯井（不给精确水平方向），这样既传达「楼上有动静」又保留紧张感，并让编码只需 (层差 2bit, 楼梯井 id, 类型 4–5bit, 强度 2–3bit)≈2–3B。",
   "[事实] Godot 音频总线可挂多个效果，AudioEffectLowPassFilter 可模拟「闷」的声音，Reverb 模拟空间；Stream Player 通过目标总线名引用，总线改名则回落 Master（docs.godotengine.org audio_buses/audio_effects）。AudioStreamPlayer2D 自带平移，max_distance/attenuation 的具体默认值本次未核（应查类参考）。",
-  "[主观] 近距离语音对游戏机制：Lethal Company/Content Warning/R.E.P.O. 类的价值在于「声音即风险/社交」，但本项目强调多层少人，同层说话人数少，价值在于队友协作与恐怖氛围，非必须；本次未能检索到这些游戏的具体机制细节（搜索只覆盖 DBD），相关说法为一般认知 [不确定]。",
-  "[事实] Godot 论坛已有基于 Steam Voice 的 proximity chat 示例（帖 138972，Godot 4.5.1，用 P2P 不可靠包发送语音缓冲），但代码不完整，仅作参考。"
+  "[事实] Godot 论坛已有基于 Steam Voice 的 proximity chat 示例（帖 138972，Godot 4.5.1，用 P2P 不可靠包发送语音缓冲），但代码不完整，仅作参考。",
+  "[事实] Steamworks ISteamUser 官方文档（partner.steamgames.com/doc/api/ISteamUser，2026-11-25）：GetVoice 输出为压缩数据，格式「任意、不用于直接播放」；应每帧调用、最多每秒不超过 4 次（at worst no more than four times a second）；压缩缓冲建议 ≥8KB；DecompressVoice 起始缓冲建议 20KiB；官方页未给码率/字节每秒/编码名。",
+  "[不确定] Steam Voice 实测码率：Steamworks 文档、Facepunch wiki、Heathen 文档均无；Valve 2011 公告称改用 SILK，带宽略增（store.steampowered.com/news/5100）；第三方 steam-audio-codec 称其是 opus 包的薄封装（逆向，非官方）。缺口：需自己对 GetVoice 返回 size 按秒累加实测（见 test_verification_points）。暂用 8–24 kbps [推算/惯例] 做规划。",
+  "[事实] GodotSteam godot4 分支源码核实（codeberg.org/godotsteam/godotsteam/src/branch/godot4/godotsteam.cpp 第 6155–6375 行、9595–9618 行绑定，2026-11-25）：startVoiceRecording() 无参无返回；stopVoiceRecording() 无参无返回；getAvailableVoice() 返回 Dictionary{size:int, result:VoiceResult}；getVoice(buffer_size=1024) 返回 {result, buffer:PackedByteArray, size}；decompressVoice(voice_data, sample_rate=11025, buffer_size=20480) 返回 {result, size(written), uncompressed:PackedByteArray}，sample_rate 被 CLAMP 到 11025–48000；getVoiceOptimalSampleRate() 返回 uint32。",
+  "[事实] Godot 4.7(latest/unstable 文档，2026-11-25) AudioStreamPlayer2D 默认值：max_distance=2000.0（像素）、attenuation=1.0、panning_strength=1.0、area_mask=0、volume_db=0.0（docs.godotengine.org/en/latest/classes/class_audiostreamplayer2d.html）。AudioEffectFilter 默认 cutoff_hz=2000.0、resonance=0.5、gain=1.0、db=FILTER_6DB(0)（class_audioeffectfilter.html；LowPassFilter 页本身不列默认值，继承自 Filter）。",
+  "[不确定] Lethal Company/Content Warning/R.E.P.O. 的语音中间件：本轮搜索无任何来源确认（未证实 Dissonance/Photon Voice 等），码率也无公开数字；仅有媒体称 Lethal Company 近距离语音是其走红的重要原因（PC Gamer）、R.E.P.O. 开发者称语音范围偏小并有嘴部随音量开合（PC Gamer/GamesRadar 摘要）、Content Warning 有近距离语音故障报告（Beebom）。玩家规模：R.E.P.O. 上线早期 Steam 评论已超 2.8 万（GamesRadar 标题），其余无数字。"
  ],
  "implementation_guidance": [
   "声音事件 enum：STEP_RUN, DOOR_BREAK, DOOR_OPEN, GUNSHOT, EXPLOSION, ELEVATOR, ZOMBIE_ROAR, ITEM_DROP, HELI 等（<32 种，5bit）。",
   "编码建议（[推算]）：event_type 5bit + floor_delta 3bit（-2..+2）+ shaft_id 3bit + intensity 3bit + 方位象限 2bit ≈ 16bit=2B；加 1B 时间偏移共 3–4B，与批次 3 的 4B/源一致。",
   "传输：事件包走 Steam Networking Messages 的 unreliable 通道（k_nSteamNetworkingSend_Unreliable），丢一个声音无害；关键声（直升机到达）用 reliable。",
   "客户端伪代码：func on_sound_event(e): var dz=abs(e.floor-my_floor); if dz==0: play_local(e.pos); elif dz<=2: play_muffled(e.shaft_pos, vol=-6*dz dB, bus='MuffledFloor'+str(dz)); 在 AudioServer 建 'Muffled1/2' 总线，各挂 AudioEffectLowPassFilter(cutoff_hz≈1200/600) [参数为推荐起点，须实测]。",
-  "AudioStreamPlayer2D：设 max_distance、attenuation 曲线和 bus；用对象池（每类 4–8 个 player）避免实例化开销；同一楼层外的声音不创建节点，只触发 2D 一次性 player 放在楼梯井位置。",
-  "语音路线 A（Steam Voice，推荐若做）：Steam.startVoiceRecording()；每帧 if Steam.getAvailableVoice().result==OK: var v=Steam.getVoice(); 按 20ms~50ms 打包发送；接收端 Steam.decompressVoice(buf, rate)→PCM→写入 AudioStreamGenerator 的 push_buffer；GodotSteam 具体函数签名随版本有差，锁定版本后查 godotsteam.com 文档 [不确定]。",
+  "AudioStreamPlayer2D：设 max_distance、attenuation 曲线和 bus；用对象池（每类 4–8 个 player）避免实例化开销；同一楼层外的声音不创建节点，只触发 2D 一次性 player 放在楼梯井位置。 默认 max_distance=2000px、attenuation=1.0、panning_strength=1.0（Godot 4.7 文档）；AudioEffectLowPassFilter 默认 cutoff_hz=2000（继承 AudioEffectFilter），若按层设 1200/600 需显式赋值。",
+  "语音路线 A（Steam Voice，GodotSteam godot4 分支源码已核实签名）：Steam.startVoiceRecording()；每帧 var a=Steam.getAvailableVoice(); if a.result==Steam.VOICE_RESULT_OK and a.size>0: var v=Steam.getVoice(8192)（官方建议缓冲≥8KB，GodotSteam 默认 1024 偏小）; 发送 v.buffer（每秒不超过约 4 次调用的官方上限内聚合，故单包约 250ms 语音，延迟下限约 250ms，需实测是否可接受）；接收端 var r=Steam.decompressVoice(buf, 48000或getVoiceOptimalSampleRate(), 20480); 取 r.uncompressed.slice(0,r.size) 的 16bit 单声道 PCM 转 Vector2 帧 push 到 AudioStreamGenerator 的 playback.push_buffer；停止用 stopVoiceRecording()。枚举常量名（如 VOICE_RESULT_OK）以源码为准 [不确定]。",
   "语音路线 B（AudioEffectCapture+Opus）：麦克风总线挂 AudioEffectCapture，get_buffer 取 PCM，经 TwoVoip 或 GDExtension Opus 编码；注意 4.4→4.5 回声回归与总线静音设置。",
   "转发拓扑：语音点对点（SteamNetworkingMessages 不可靠发送给同层 + 相邻层接收者）优于房主转发，避免房主上行放大并避免房主换主时语音中断；接收者列表由各端按 floor_id 与距离自行计算（需知道他人所在层，可由 20Hz 位置包得到）。"
  ],
@@ -50,13 +53,18 @@
  ],
  "quantitative_params": [
   "Steam Voice 解码输出 | 单声道 16bit PCM，采样率 11025–48000 Hz | 口径：DecompressVoice | Steamworks 文档",
-  "每路语音码率 | 约 8–24 kbps [不确定] | 口径：Opus 惯例与 TwoVoip 宣称 ~1kB/s | 无 Steam 官方数字",
   "DBD 恐惧半径 | 24/32/40 m | 杀手移速分档 | DBD wiki",
   "PZ 木工噪音半径 | 约 15–20 格 | 世界声音 | pzfans 指南（可信度中）",
   "声音事件包大小 | 3–4 B/源 [推算] | 编码设计",
   "跨层噪声摘要 | 5Hz×~32 源×4B≈6.4 kbps/接收端 [推算] | 本报告复核",
   "近距离语音下行 | 约 80 kbps（4 路并发）[推算] | 16 kbps/路+头",
-  "相邻层低通截止 | 1200/600 Hz [主观起点]"
+  "相邻层低通截止 | 1200/600 Hz [主观起点]",
+  "GetVoice 调用频率上限 | 约 4 次/秒（官方：at worst no more than four times a second）| ISteamUser 文档",
+  "GetVoice 压缩缓冲 | ≥8KB 建议；GodotSteam 默认 1024 | 官方 + 源码",
+  "DecompressVoice 缓冲 | 起始 20KiB（GodotSteam 默认 20480）、默认采样率 11025 | 源码",
+  "每路语音码率 | 无官方数字 [不确定]；规划用 8–24 kbps [推算]；需实测",
+  "AudioStreamPlayer2D 默认 | max_distance 2000、attenuation 1.0、panning_strength 1.0 | Godot 4.7 文档",
+  "AudioEffectFilter 默认 | cutoff_hz 2000、resonance 0.5、gain 1.0 | Godot 4.7 文档"
  ],
  "alternatives_comparison": [
   "仅本地推导声（零额外带宽）：代价是不能传非位置事件；收益最省；够用但缺枪声/破门。",
@@ -80,7 +88,8 @@
   "事件包带宽：16 个模拟客户端 + 脚本触发 50 个事件/秒，用 SteamNetworkingSockets 统计（GetConnectionRealTimeStatus）测上下行，红线：额外 <30 kbps/客户端，可 headless。",
   "低通/衰减听感：手工测试，非自动化。",
   "语音（如做）：2 机实测延迟（红线 <250ms 端到端）、丢包 10% 下可懂度、CPU 占用，需人工，无法 headless。",
-  "声音事件在换主后是否丢失/重复：自动化脚本杀房主测试。"
+  "声音事件在换主后是否丢失/重复：自动化脚本杀房主测试。",
+  "Steam Voice 实测码率：两台机器各开 startVoiceRecording，每帧累加 getVoice().size，按 10 秒窗口算 bytes/s，静音与持续说话各测；红线：持续说话 <3 kB/s（约 24 kbps）；需真实麦克风，无法 headless。"
  ],
  "china_mainland_notes": "[不确定] 本次未检索到大陆对游戏内实时语音的具体监管条文。一般认知 [主观]：面向大陆提供实时语音/文字交互若运营者在境内可能涉及网络安全/内容审核义务，而 Steam 全球版由 Valve 分发、V1.0 无自有服务器，风险较低；即便如此，仍建议提供本地屏蔽/静音，并避免录音上传。声音事件系统无合规问题。Steam 语音经 Valve 中继（SDR）在大陆的延迟/可用性本次未实测。",
  "sources": [
@@ -93,13 +102,20 @@
   "PZ 吸引僵尸指南 | https://pzfans.com/what-attracts-zombies-to-bases/ | 2026-11-25 | 社区（中）",
   "PZwiki Noise | https://pzwiki.net/wiki/Noise | 社区 wiki（仅标题级）",
   "DBD 恐惧半径 | https://deadbydaylight.wiki.gg/de/wiki/Terrorradius | 社区 wiki",
-  "Heathen Steam voice 说明 | https://kb.heathen.group/steam/features/voice | 第三方文档"
+  "Heathen Steam voice 说明 | https://kb.heathen.group/steam/features/voice | 第三方文档",
+  "ISteamUser API | https://partner.steamgames.com/doc/api/ISteamUser | 2026-11-25 | 官方文档",
+  "GodotSteam 源码 godotsteam.cpp | https://codeberg.org/godotsteam/godotsteam/src/branch/godot4/godotsteam.cpp | 2026-11-25 | 源码（直读）",
+  "GodotSteamKit | https://codeberg.org/godotsteam/godotsteamkit | 2026-11-25 | 源码仓库 readme",
+  "Godot 4.7 AudioStreamPlayer2D | https://docs.godotengine.org/en/latest/classes/class_audiostreamplayer2d.html | 2026-11-25 | 官方文档",
+  "Godot 4.7 AudioEffectFilter | https://docs.godotengine.org/en/latest/classes/class_audioeffectfilter.html | 2026-11-25 | 官方文档",
+  "Valve Steam 语音改用 SILK 公告 | https://store.steampowered.com/news/5100 | 2011 | 官方公告（仅搜索摘要）",
+  "Lethal Company 语音走红 | https://pcgamer.com/lethal-company-is-a-viral-hit-in-no-small-part-thanks-to-all-the-intense-shouting | 媒体"
  ],
  "uncertain": [
-  "current_status(GodotSteamKit/版本号)",
-  "key_findings(每路语音码率；Lethal Company/Content Warning 机制)",
-  "implementation_guidance(GodotSteam 函数签名)",
+  "key_findings(Steam Voice 实测码率；三款游戏语音中间件/码率)",
+  "implementation_guidance(枚举常量名、语音延迟)",
   "quantitative_params(语音码率)",
-  "china_mainland_notes"
+  "china_mainland_notes",
+  "current_status(GodotSteamKit 节点 API)"
  ]
 }

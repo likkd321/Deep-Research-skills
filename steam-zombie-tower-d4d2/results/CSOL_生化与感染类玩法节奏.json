@@ -14,7 +14,8 @@
  "current_status": [
   "核实日期 2026-11-25，基于检索摘要与有限页面；CSO 维基页面直接抓取返回 402，内容引自检索摘要。",
   "Halo Infinite 于 2023-06 加入 Infection 模式（Xbox Wire）；具体版本与现状未核实 [不确定]。",
-  "Project Winter 已有 Power Balance Vol 2 等多次角色平衡补丁，当前版本未核实 [不确定]。"
+  "Project Winter 已有 Power Balance Vol 2 等多次角色平衡补丁，当前版本未核实 [不确定]。",
+  "2026-11-25 补查：CS 1.6 ZP 4.3 默认 cvar 来自第三方源码拷贝；DbD 数值来自 wiki.gg Attacks 页；韩文 namu.wiki 与中文百科/NGA/贴吧本轮未能取得（搜索只返回 GameMeca/17173/萌娘百科摘要）。"
  ],
  "key_findings": [
   "[事实] CSO『Zombie: The Hero（Zombie Mod 3）』页面摘要给出回合时长 3 分钟、7 回合（来源：搜索摘要引用 https://cso.fandom.com/wiki/Zombie:_The_Hero ，页面本身 402 未能二次核实）；竞技设置最多 24 人。可信度中。启示：CSOL 本体是『3 分钟一小局 × 多局』，与本项目 40 分钟整局差一个数量级。",
@@ -29,9 +30,15 @@
   "[事实] Dread Hunger（8 人，2 名叛徒）：GamingTrend 评测 60 分，认为玩家无视『留在船上』的鼓励、缺少强制线性后玩法很快变干（搜索摘要）。启示：长局需要机制性迫使玩家按节奏行动，而不是靠鼓励。",
   "[事实] 自动平衡调参先例：RuleSmith（arXiv 2602.06232，2026）用 LLM 自博弈 + 贝叶斯优化把不对称阵营胜率差降到 0%；de Mesentier Silva 2017 等早期工作用智能体评估桌游/卡牌平衡；Morosan & Poli 用进化算法以胜率为目标。局限：胜率不是唯一目标，bot 水平过弱会失真。",
   "[不确定] CSOL 生化 2/3/4 的完整母体选择人数、补给规则、小局数：本轮仅得到 Hero 页 3 分钟/7 回合一个数据点。",
-  "[不确定] DbD 命中硬直具体数值：检索只确认 Lunge 约 6.9 m/s、攻击后冷却依命中/落空/击物三类而不同，未取得官方数值。https://deadbydaylight.wiki.gg/wiki/Lunge",
   "[不确定] CoD Infected、Barotrauma Husk、SCP:SL、Lethal Company 的节奏与长局玩家反馈：本轮无有效来源，不编造。",
-  "[不确定] 『多小局 vs 一整局』在换主、冷启动、主播切片上的直接证据：未找到实证；以下判断为 [主观]：小局制天然在局间换主，整局制必须靠 D2 在局内换主。"
+  "[不确定] 『多小局 vs 一整局』在换主、冷启动、主播切片上的直接证据：未找到实证；以下判断为 [主观]：小局制天然在局间换主，整局制必须靠 D2 在局内换主。",
+  "[事实] DbD 基础攻击冷却（wiki 实测抓取 2026-11-25）：命中幸存者 2.7 秒、落空 1.5 秒、击中障碍物 1.5 秒；补丁 6.1.0 把命中后冷却从 3 秒降到 2.7 秒；Lunge 目标速度约 6.9 m/s（默认 4.6 m/s 乘 1.5）。https://deadbydaylight.wiki.gg/wiki/Attacks 。『被命中后的幸存者加速』的数值本轮未核实（搜索未找到 150%×2 秒的依据，不要采用）[不确定]。启示：杀手命中后有 2.7 秒的硬直窗口，是『命中节奏』的先例，可借鉴为僵尸命中后的短暂收招。",
+  "[事实] CS 1.6 Zombie Plague 4.3 默认 cvar（源码 zombie_plague.sma，register_cvar 默认值，Docaner/csomodru-zvn 仓库内一份拷贝）：zp_delay=10（首个僵尸选出前的秒数，会略随机）、zp_zombie_first_hp=600（首僵尸血量，另一份配置写成倍率 2.0）、zp_multi_ratio=0.15（多重感染模式：僵尸数=人数×0.15）、zp_swarm_chance=20、zp_multi_chance=20（1/20 概率触发特殊模式）。https://github.com/Docaner/csomodru-zvn/blob/cf31a98012348786d559b89de2953a9ffcf82815/source/zpe_main_mode_b1.sma 。另一份 4.3 CSO 移植配置：zp_delay=20、zp_zombie_armor=0.75（僵尸只受 75% 伤害）、zp_knockback_nemesis=0.25（复仇者击退乘数 0.25）、zp_human_health=100。https://github.com/PowerSiderS/Termux-Zombie-4.3-CSO-For-CS1.6-Android/blob/a4c011fafea8e918c93d824d039348c049dcba48/addons/amxmodx/configs/zombieplague.cfg 。注意：二者是第三方拷贝，非原作者官方发布（AlliedModders 页被 Cloudflare 拦截）；回合时长使用 CS 自带 mp_roundtime，未在插件内。启示：母体延迟 10–20 秒、首僵尸血量 2×–6×、特殊母体用低概率触发，是业界默认。",
+  "[事实] CSO 韩服 2008 年 GameMeca 报道（2008-07-14）：僵尸一碰感染人类；僵尸占少数，人数可增减；人类至少一人撑到时间限制则人类胜；僵尸血量高、Boss 更高；快速连发武器可使僵尸持续硬直无法行动；人类弹药有限、不能建障碍；无具体回合时长/回合数。https://www.gamemeca.com/view.php?gid=119377 。启示：本项目『连发命中强减速/僵直』正是 CSO 原设计的核心手感。可信度中（早期版本）。",
+  "[事实] 另一篇韩文资料（GameMeca 检索摘要）：原作僵尸模式中，宿主僵尸 HP 10000、被感染者变成的普通僵尸 HP 3000 以下；普通僵尸感染 3 名人类可进化为宿主。可信度低中（摘要转述，页面未逐字核验）。",
+  "[事实] CSOL 国服版本差异（萌娘百科摘要）：生化 3（重铸）、生化 S（超越）中普通僵尸『暴走』的受伤提升效果降为 40%/30%；生化 4（暗夜）已在国服移除。母体选出比例/回合时长中文资料检索未得到数值（17173、萌娘百科、TapTap 均未展开）[不确定]。",
+  "[事实] Project Winter 玩家反馈：Steam 讨论『Shorter game mode when?』——『没人想玩一局 30–45 分钟、死了之后要空等 20+ 分钟的游戏』（死亡后空等）；https://steamcommunity.com/app/774861/discussions/0/2847921219518324236/ 。PC Gamer：叛徒常常前期太保守、后期被迫拔枪追杀幸存者，但作者也说『死得早观战也不介意』。https://www.pcgamer.com/lie-to-your-friends-in-project-winter-the-best-bullshitting-sim-on-pc/ 。TechSpot：一局往往最后变成杀光所有人，策略先被抛开。https://www.techspot.com/products/pc-games/project-winter.225933/ 。另有帖子称『叛徒随机且常常很弱，所以游戏等于 PVE』https://steamcommunity.com/app/774861/discussions/0/2268068817149464774/ 。",
+  "[事实] SCP: Secret Laboratory 玩家反馈（Steam 讨论，多为数年前）：『回合太长』帖称很多时候无聊是因为你死了而且没什么可看；有人说等待重生 15–60 分钟；有人说后期只剩 1–3 人时没有机会做任何事（接近滚雪球）。https://steamcommunity.com/app/700330/discussions/0/4034726264103023366/ ；https://steamcommunity.com/app/700330/discussions/0/1694914736011029225/ ；https://steamcommunity.com/app/700330/discussions/0/1696043263491791670/ 。Dread Hunger、Lockdown Protocol 的具体『中段无聊/滚雪球/挂机』评论未检索到（Steam 评论 API 经代理被重定向，无法抓取），不编造 [不确定]。启示：本项目『被感染后变小僵尸继续玩』与『救回人类』正是对症药，关键是死后/被感染后不能空等。"
  ],
  "implementation_guidance": [
   "Bot 自动对局调参（headless）：用固定随机种子 + N 次蒙特卡洛，每次记录 人类胜率、感染曲线(t, 僵尸数)、撤离完成时间；以 5–10 组参数网格(母体血量、药品刷新率、直升机进度时长)扫描，找出胜率落在目标带的区间。目标带见 quantitative_params（[主观]）。Godot 4.x 以 --headless 命令行启动，脚本参数传种子。",
@@ -41,7 +48,10 @@
  "pitfalls_and_failures": [
   "Bot 水平过弱使胜率模拟失真（RuleSmith 相关博客示例：LLM 智能体输给随机策略），需用真人对局校准。",
   "长局无阶段检查点：一旦人类被压制到低于阈值，剩余时间很长，玩家挂机/退出风险高 [主观]，Project Winter 抱怨过短局，Dread Hunger 抱怨无节奏约束，说明两端都有风险。",
-  "母体选择时机过早/过晚：ze_ztimer_min/max 的存在说明业界需要可调窗口。"
+  "母体选择时机过早/过晚：ze_ztimer_min/max 的存在说明业界需要可调窗口。",
+  "死亡/被淘汰后空等：Project Winter（20+ 分钟）与 SCP:SL（等重生 15–60 分钟）都被反复抱怨，是 40 分钟不重置整局最主要的流失点（社区轶事，链接见 key_findings）。",
+  "后期只剩少数人时无事可做（SCP:SL 玩家描述），对应本项目人类被压到个位数的无解局面。",
+  "AI 易错：把 ZP 的 zp_delay 当作回合时长；实际回合时长由 CS 引擎 mp_roundtime 决定。"
  ],
  "quantitative_params": [
   "CSO Zombie Hero 回合时长 / 3 / 分钟 / 一局 / https://cso.fandom.com/wiki/Zombie:_The_Hero（摘要）",
@@ -52,7 +62,15 @@
   "L4D 除颤器扣分 / 25 / 分 / 对抗模式 / Prima 指南摘要",
   "DbD Lunge 目标速度 / 6.9 / m/s / https://deadbydaylight.wiki.gg/wiki/Lunge",
   "Project Winter 主播抱怨局长 / 约 12 / 分钟 / Steam 讨论（社区）",
-  "本项目建议胜率带（人类 40–60% 撤离率）/ [主观] / 无出处 / [不确定]"
+  "本项目建议胜率带（人类 40–60% 撤离率）/ [主观] / 无出处 / [不确定]",
+  "DbD 命中后攻击冷却 / 2.7 / 秒 / 默认基础攻击，补丁 6.1.0 由 3 秒降至 2.7 / https://deadbydaylight.wiki.gg/wiki/Attacks",
+  "DbD 落空/击障碍后冷却 / 1.5 / 秒 / 同上",
+  "ZP 4.3 zp_delay / 10（另一份移植配置 20）/ 秒 / 首僵尸选出延迟 / register_cvar 默认值，见 key_findings",
+  "ZP 4.3 zp_zombie_first_hp / 600（或倍率 2.0）/ 点或倍 / 首僵尸血量 / 同上",
+  "ZP 4.3 zp_multi_ratio / 0.15 / 比例 / 僵尸数=人数×0.15（多重感染模式）/ 同上",
+  "ZP 4.3 zp_zombie_armor / 0.75 / 乘数 / 僵尸受 75% 伤害 / 移植配置",
+  "CSO 原作宿主僵尸 HP / 10000；普通僵尸 ≤3000 / 点 / GameMeca 摘要 / 可信度低中",
+  "Project Winter 死亡空等抱怨 / 20+ / 分钟 / Steam 玩家发帖 / 社区轶事"
  ],
  "alternatives_comparison": [
   "A. 一整局 40 分钟不重置：优势是单局叙事完整、撤离紧张；代价是中段疲软与挂机风险、局内换主必须可靠；对本项目是既定方向。",
@@ -63,7 +81,10 @@
   "CSOL 本体是 3 分钟小局，40 分钟整局没有直接先例，需要自行用 Bot 模拟验证滚雪球点。",
   "救回人类应降级回归（先例：Project Winter），撤离载具/直升机可设为反滚雪球旋钮。",
   "母体延迟选出窗口与中途加入规则可参考 Zombie Escape cvar。",
-  "证据薄弱，以上结论多为 [主观]。"
+  "证据薄弱，以上结论多为 [主观]。",
+  "补充：被感染者变小僵尸继续玩、且可被救回，天然规避了 Project Winter/SCP:SL 的『死后空等』；应保证被感染到重新参与之间不超过约 30 秒 [主观]。",
+  "补充：母体建议开局延迟 10–20 秒选出（ZP 默认），首母体血量 2×–6× 普通僵尸，本项目母体不会彻底死亡，可对应 CSO 宿主僵尸的高血量取向。",
+  "补充：命中节奏可参考 DbD 的 2.7 秒命中后冷却与 1.5 秒落空冷却，作为僵尸攻击收招的起点 [主观]。"
  ],
  "mvp_scope": {
   "V1.0 最小可行": [
@@ -110,7 +131,18 @@
   "GamingTrend Dread Hunger 评测 — https://gamingtrend.com/feature/reviews/dread-hunger-review-the-waters-not-as-deep-as-it-seems — 媒体",
   "DbD Wiki Lunge — https://deadbydaylight.wiki.gg/wiki/Lunge — 社区 wiki",
   "RuleSmith — https://arxiv.org/html/2602.06232v1 — 论文预印本 2026",
-  "AI playtesting 综述 — https://arxiv.org/abs/2304.08699v1 — 论文"
+  "AI playtesting 综述 — https://arxiv.org/abs/2304.08699v1 — 论文",
+  "DbD Wiki Attacks — https://deadbydaylight.wiki.gg/wiki/Attacks — 2026-11-25 — 社区 wiki — 中高",
+  "ZP 4.3 源码拷贝 — https://github.com/Docaner/csomodru-zvn/blob/cf31a98012348786d559b89de2953a9ffcf82815/source/zpe_main_mode_b1.sma — 源码（第三方拷贝）— 中",
+  "ZP 4.3 CSO 移植配置 — https://github.com/PowerSiderS/Termux-Zombie-4.3-CSO-For-CS1.6-Android/blob/a4c011fafea8e918c93d824d039348c049dcba48/addons/amxmodx/configs/zombieplague.cfg — 配置 — 中",
+  "GameMeca CSO 僵尸模式报道 — https://www.gamemeca.com/view.php?gid=119377 — 2008-07-14 — 韩文媒体 — 中（早期版本）",
+  "Project Winter Steam 讨论 Shorter game mode — https://steamcommunity.com/app/774861/discussions/0/2847921219518324236/ — 社区",
+  "Project Winter Steam 讨论 what a boring game — https://steamcommunity.com/app/774861/discussions/0/2268068817149464774/ — 社区",
+  "PC Gamer Project Winter — https://www.pcgamer.com/lie-to-your-friends-in-project-winter-the-best-bullshitting-sim-on-pc/ — 媒体",
+  "TechSpot Project Winter — https://www.techspot.com/products/pc-games/project-winter.225933/ — 媒体",
+  "SCP:SL 讨论 Rounds go on too long — https://steamcommunity.com/app/700330/discussions/0/4034726264103023366/ — 社区",
+  "SCP:SL 讨论 Respawn system — https://steamcommunity.com/app/700330/discussions/0/1694914736011029225/ — 社区",
+  "SCP:SL 讨论 Didn't spawn for over half an hour — https://steamcommunity.com/app/700330/discussions/0/1696043263491791670/ — 社区"
  ],
  "uncertain": [
   "research_scope",
