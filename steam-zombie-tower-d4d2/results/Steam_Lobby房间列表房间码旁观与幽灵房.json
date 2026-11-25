@@ -1,0 +1,130 @@
+{
+ "name": "Steam Lobby：房间列表、房间码、旁观与幽灵房",
+ "category": "Steam 网络基础设施",
+ "research_scope": [
+  "1. Lobby 成员上限、RequestLobbyList 返回条数上限、过滤器（结果数/距离/字符串/数值/近邻/空位）与元数据长度限制",
+  "2. SetLobbyJoinable / SetLobbyType 对“激战中房间仍可见”的影响",
+  "3. Lobby Owner 离开/崩溃的自动转移规则、LobbyChatUpdate 通知时延（实测是否存在）、幽灵大厅现象，及可执行的测试方法",
+  "4. 好友邀请、+connect_lobby、Rich Presence connect、GodotSteam 对应 API 与信号",
+  "5. 6 位房间码方案（lobby data 精确过滤）与 WEBFISHING 1.06/1.08 搜房补丁案例核实",
+  "6. AppID 480 共享池污染、必加过滤键、协议版本校验",
+  "7. 旁观者计入成员、激战中中途加入/旁观转参战的 Lobby 层实现"
+ ],
+ "prior_claims_check": [
+  "「Steam Lobby 拔网线约 15–30s 才通知」→ 无法核实 → 搜索 Steamworks 官方文档、Facepunch wiki、Steam 论坛、Stardock 论坛均无具体秒数；官方文档只说“成员离开/断开会发送 LobbyChatUpdate_t（EChatMemberStateChange 含 Disconnected）”，未给时延。该 15–30s 数字应降级为 [不确定]，需实测（方法见 test_verification_points）。来源：https://partner.steamgames.com/doc/api/ISteamMatchmaking（访问 2026-11-25）。",
+  "「RequestLobbyList 最多返回 50 条」→ 证实 → Steamworks 官方“Matchmaking”页：“Up to 50 results may be returned, though usually there are only a couple”，并说明默认排除满员房间、距离默认 nearby（https://partner.steamgames.com/doc/features/multiplayer/matchmaking，访问 2026-11-25）。AddRequestLobbyListResultCountFilter 可调小以加快下载，官方未提供上调到 50 以上的方法。",
+  "「WEBFISHING 1.06（2024-10-12）撞上 50 条上限、1.08（2024-10-17）修复默认距离过滤导致跨区代码房连不上」→ 部分证实/部分纠偏 → ①日期：WEBFISHING wiki 版本史记录 1.06=2024-10-12、1.07=2024-10-13、1.08=2024-10-16（不是 10-17）（https://webfishing.wiki.gg/wiki/Version_History）。②内容：搜索到的 Steam 公告摘要显示 1.08 补丁说明含“fixed issues surrounding unable to connect to code-only lobbies that were too far away”和“Lobby Browser's search will time out after a period”；另有一条开发者补丁说明提到修复“有超过 50 个活跃大厅时找不到服务器/无法用代码加入”，但摘要未标明版本号，且我未能抓到公告正文（Steam 公告页抓取只得标题）。因此“1.06 撞 50 上限”的版本归属为 [不确定]，“距离过滤导致代码房连不上”的机制与官方文档（默认距离 nearby）一致 [推算]。来源：https://steamcommunity.com/games/3146520/announcements/detail/4512135723843670969（标题可见）及搜索摘要。",
+  "「两步智能扩圈（防 50 上限与冷启动空房）、满员防隐身 max_members = 参战 + 旁观」→ 部分证实（设计思路成立，非 Valve 官方做法）→ 官方文档证实：默认排除满员房间（故用 max_members 预留旁观位可避免“满员后从列表消失”）、默认距离 nearby 会漏掉远区房间；两步扩圈=先 Default 再 Far/Worldwide，用 ResultCountFilter 控制条数，属合理设计 [主观]。"
+ ],
+ "current_status": [
+  "[事实] Steamworks 文档页 ISteamMatchmaking、Matchmaking 功能页（访问 2026-11-25）：Lobby 成员上限 250；搜索最多返回 50 条；API 页面无新增的“大厅上限提升”说明。",
+  "[事实] GodotSteam 主仓库已迁至 Codeberg，提交 bc2a881（2026-11-10）；Lobby API 均已绑定：requestLobbyList、addRequestLobbyList{String,Numerical,NearValue,FilterSlotsAvailable,Distance,ResultCount}Filter、createLobby、setLobbyData、setLobbyMemberData、setLobbyJoinable、setLobbyType、setLobbyMemberLimit、setLobbyOwner、inviteUserToLobby、activateGameOverlayInviteDialog、getLaunchCommandLine、setRichPresence；信号 lobby_match_list/lobby_created/lobby_joined/lobby_chat_update/lobby_data_update/lobby_invite/join_requested（godotsteam.cpp 第2855–3095行、第9735–9804行）。核实 2026-11-25。",
+  "[事实] WEBFISHING 版本史：1.06=2024-10-12、1.08=2024-10-16；后续 1.11 重做了大厅浏览器（wiki.gg，访问 2026-11-25）。"
+ ],
+ "key_findings": [
+  "[事实] Lobby 成员上限 250（CreateLobby 的 cMaxMembers 不得超过 250）；SetLobbyMemberLimit 可在运行期修改。来源 https://partner.steamgames.com/doc/api/ISteamMatchmaking。对本项目 16 人+旁观远低于上限。",
+  "[事实] RequestLobbyList 最多 50 条；默认排除满员房间；默认距离过滤为 k_ELobbyDistanceFilterDefault(=1，同区域或邻近区域)；枚举 Close(0)/Default(1)/Far/Worldwide。来源 https://partner.steamgames.com/doc/features/multiplayer/matchmaking 与 ISteamMatchmaking。",
+  "[事实] 过滤器类型：字符串比较、数值比较（ELobbyComparison -2..3，含不等于）、NearValue（只排序不排除，先调用的权重更大）、空位数、距离、最大结果数。过滤键长度同 k_nMaxLobbyKeyLength=255。过滤器数量上限官方未写 [不确定]。注意：过滤器只作用于下一次 RequestLobbyList，每次搜索前须重新设置（社区博客，低可信；官方文档表述为“before calling RequestLobbyList”）。",
+  "[事实] 元数据限制：键 ≤255 字符（k_nMaxLobbyKeyLength=255），值 ≤8192（k_cubChatMetadataMax=8192，GodotSteam 常量 CHAT_METADATA_MAX 值 8192，见 doc_classes/Steam.xml 第8396行）；总大小与单大厅键数量官方未写 [不确定]。",
+  "[事实] SetLobbyData 仅 owner 可写；“只有数据变化才会发送”，且连续调用会被批处理，在最后一次调用后发送；官方没有给出频率数字，只建议不要高频更新元数据 [事实：官方原文“Do not update the metadata on lobbies at a high frequency”见搜索摘要，未在页面逐字复核]。SetLobbyMemberData 无频率说明。",
+  "[事实] SetLobbyJoinable(false)：“no players can join, even if they are a friend or have been invited”，且不可加入的大厅不出现在搜索结果中；只有 owner 可调；默认 true。来源 ISteamMatchmaking 页。→ 对“激战中房间仍可见/可旁观/可中途加入”的直接含义：对局中不能把 joinable 设为 false，而应保持 true，用 lobby data（state=playing、slots）+ max_members 控制是否还能进。",
+  "[事实] SetLobbyType：Private(0) 仅邀请；FriendsOnly(1) 好友/受邀可加入但不出现在列表；Public(2) 搜索可见；Invisible(3) 搜索可返回但好友看不到；“一个用户只能在一个常规大厅，且最多两个 Invisible 大厅”。只有 owner 可改。对局中保持 Public 即可保持可见。",
+  "[事实] Owner 转移：“if the current owner leaves, another user in the lobby will become the owner automatically”；SetLobbyOwner 仅当前 owner 可调用，新 owner 必须已在大厅，每位成员收到 LobbyDataUpdate_t。官方未给自动转移的选择规则与时延。Owner 崩溃（非正常退出）的转移时延：无公开实测数据 [不确定]，需实测。",
+  "[事实] LobbyChatUpdate_t：加入/离开时发送，含变更用户、操作用户（如踢人）、EChatMemberStateChange 位标志（Entered、Left、Disconnected、Kicked、Banned）。崩溃/断网表现为 Disconnected（Facepunch wiki：“a user disconnected without leaving the lobby first”）。通知时延无实测来源 [不确定]。",
+  "[事实] 幽灵大厅：官方文档无“清理机制”说明；只有 owner 能删除元数据（若 owner 已崩溃则无人可清）。SteamDB 补丁说明记录 Steam 曾修复“退出多人游戏后重新主持导致 ghost lobby”的 bug（https://steamdb.info/patchnotes/19848470，类型：补丁日志，需注意日期）。社区线程（GodotSteam “lobbies not visible”、Unreal 论坛）多为过滤/区域问题。结论：大厅只在有成员时存在，owner 崩溃后 Steam 在判定断开后移除成员并转移 owner；客户端应对列表项做“加入前校验”（加入后读 lobby data 的 build_id/state，不合格立即离开）作为兜底 [推算]。",
+  "[事实] 好友邀请：InviteUserToLobby(lobby, steamID)；ActivateGameOverlayInviteDialog(lobby)（GodotSteam activateGameOverlayInviteDialog(lobby_id)）；游戏未运行时点击邀请会以命令行 +connect_lobby <64位lobby id> 启动游戏；游戏已运行则触发 GameLobbyJoinRequested_t（GodotSteam 信号 join_requested(lobby_id, steam_id)）；应实现 GetLaunchCommandLine（GodotSteam getLaunchCommandLine）。来源 Matchmaking 功能页。",
+  "[事实] Rich Presence：SetRichPresence(\"connect\", 命令行字符串) 会启用好友列表“加入游戏”；游戏运行中收到 GameRichPresenceJoinRequested_t，否则附加到启动命令行；每用户最多 30 键（官方页写 k_cchMaxRichPresenceKeys=30；GodotSteam doc_classes 写 20，口径冲突，以官方页为准且按 20 保守使用）；空字符串/NULL 删除键。来源 https://partner.steamgames.com/doc/api/ISteamFriends。",
+  "[推算] 6 位房间码方案：创建大厅时 SetLobbyData(\"code\",\"A7K2QX\")；加入时 addRequestLobbyListStringFilter(\"code\",\"A7K2QX\",EQUAL)+addRequestLobbyListDistanceFilter(WORLDWIDE)+addRequestLobbyListResultCountFilter(5) 再 requestLobbyList。过滤在 Steam 服务端执行（官方“filters”定义），故结果数远小于 50，不受 50 条上限影响 [推算]。码空间：去掉易混字符取 31 字符^6≈8.9 亿，碰撞概率可忽略，创建前仍应先搜一次确认无重复。编码 LobbyID 不可行：lobby ID 为 64 位，不能压入 6 位字符。",
+  "[事实/推算] WEBFISHING 案例：其房间码房间在 1.08 前跨区连不上（符合默认距离 nearby 过滤）；1.08 加入大厅浏览器搜索超时（见 prior_claims_check）。对本项目的启示：任何“按码精确搜索”必须设置 Worldwide 距离过滤，普通房间列表第一步用 Default，必要时第二步 Far/Worldwide。",
+  "[事实] AppID 480(Spacewar) 共享池：所有开发者与盗版共用，搜索结果会混入他人大厅（Godot 论坛 “AppID 480 has been having issues” 与 Steam 社区帖，低可信）；必须在大厅数据写入自家唯一键（如 game=zombie_tower_d4d2）并在每次搜索加字符串过滤；正式发行用自己的 AppID 后池子独立，但开发/测试期仍需此键。",
+  "[推算] 协议版本校验：lobby data 写 proto_ver 与 build_id；列表搜索时用数值过滤 proto_ver==N（addRequestLobbyListNumericalFilter）减少无效项；加入后再次校验，不一致则提示更新并离开。",
+  "[推算] 旁观与中途加入：max_members = 参战上限(16) + 旁观上限(例如 8) = 24，仍远小于 250；用 lobby data 的 role 计数（owner 维护 fighters/spectators 数）与成员 SetLobbyMemberData(\"role\",\"spec\")；满员判定由应用层完成。Steam 默认“排除满员房间”仅按 max_members，所以预留旁观位可使房间在参战已满时仍可见；中途加入人类身份：joinable 保持 true，加入后由房主按应用层状态机授予人类身份（或拒绝并转旁观）；旁观转参战：成员改写 SetLobbyMemberData 申请、房主批准，Lobby 层无特殊支持。",
+  "[推算] 两步扩圈：第一步 Default 距离、ResultCountFilter(50)、加 game 键与“状态”过滤；若结果<阈值（如 <8）再第二步 Worldwide 再搜一次并合并去重，避免 50 条被远区填满，也避免冷启动时本区无房。"
+ ],
+ "implementation_guidance": [
+  "创建：Steam.createLobby(Steam.LOBBY_TYPE_PUBLIC, 24)；回调 lobby_created(result, lobby_id) 后：setLobbyData(id,\"game\",\"zombie_tower_d4d2\"); setLobbyData(id,\"proto\",\"1\"); setLobbyData(id,\"build\",build_id); setLobbyData(id,\"state\",\"waiting\"|\"playing\"); setLobbyData(id,\"code\",room_code); setLobbyData(id,\"fighters\",\"3\"); setLobbyData(id,\"spectators\",\"0\")。每次变更尽量合并，少量写（会被批处理）。",
+  "搜索（每次先设过滤器，因为只对下一次有效）：Steam.addRequestLobbyListStringFilter(\"game\",\"zombie_tower_d4d2\",Steam.LOBBY_COMPARISON_EQUAL); Steam.addRequestLobbyListNumericalFilter(\"proto\",1,Steam.LOBBY_COMPARISON_EQUAL); Steam.addRequestLobbyListDistanceFilter(Steam.LOBBY_DISTANCE_FILTER_DEFAULT); Steam.addRequestLobbyListResultCountFilter(50); Steam.requestLobbyList()；在信号 lobby_match_list(lobbies:Array) 中遍历，用 getLobbyData(id,\"state\") 等字段渲染。若 lobbies.size()<8，则改 WORLDWIDE 再搜一次。",
+  "房间码加入：filter code==输入值 + distance WORLDWIDE + result count 5；找到后 Steam.joinLobby(id)；在 lobby_joined 信号里校验 build/proto 后再建 GNS 连接。",
+  "激战中保持可见：不要调用 setLobbyJoinable(false)；用 setLobbyData(id,\"state\",\"playing\")；满员由房主应用层拒绝；旁观位通过 setLobbyMemberLimit 在开局时设为 fighters+spectators。",
+  "邀请：Steam.activateGameOverlayInviteDialog(lobby_id)；启动参数：var cmd := Steam.getLaunchCommandLine() 或 OS.get_cmdline_args() 解析 +connect_lobby；运行中监听 Steam.join_requested.connect(_on_join_requested)；Rich Presence：Steam.setRichPresence(\"connect\", \"+connect_lobby %d\" % lobby_id)，并设置 status。",
+  "离开/换主：监听 lobby_chat_update(lobby_id, changed_id, making_change_id, chat_state)，chat_state 位标志 Entered=1/Left=2/Disconnected=4/Kicked=8/Banned=16；新 owner 在 getLobbyOwner 变化时接管，启动应用层房主逻辑（与 D2 换主流程联动，不要依赖 Lobby owner 作为唯一房主凭据，因为转移时延不确定）。",
+  "适用版本：Godot 4.7.x + GodotSteam v4.24-gde（SDK 1.65）；API 以 godotsteam.cpp bc2a881 为准。"
+ ],
+ "pitfalls_and_failures": [
+  "AI 易错：过滤器只对下一次 requestLobbyList 生效，忘记每次重设（社区博客，低可信；官方定义为“before calling”）。",
+  "AI 易错：开启对局后 setLobbyJoinable(false) 导致房间从列表消失、好友邀请也失效（官方文档原文）。",
+  "AI 易错：只设 Worldwide 不设结果数，导致一次拉取过多；或没设 game 键，在 480 共享池混入他人房间。",
+  "WEBFISHING：大厅数量超过 50 后找不到服务器/代码加入失败，代码房因默认距离过滤跨区连不上；1.08 修复并加入浏览器搜索超时（Steam 公告摘要，版本归属需复核）。",
+  "Steam 曾有 ghost lobby bug（SteamDB 补丁说明），说明服务端状态可能脏；客户端必须二次校验。",
+  "AppID 480 常出现搜不到房间的情况（Godot 论坛 forum.godotengine.org/t/godotsteam-lobbies-not-visible/127733 等），多半为区域过滤或池污染。",
+  "owner 崩溃转移时延无公开数据，不要把 15–30s 当作事实写入设计文档。",
+  "Rich Presence 键数口径：官方 30 vs GodotSteam 注释 20，按 20 使用。"
+ ],
+ "quantitative_params": [
+  "Lobby 最大成员数 / 250 / 人 / CreateLobby 参数上限 / ISteamMatchmaking 页",
+  "RequestLobbyList 最大返回 / 50 / 条 / 官方 Matchmaking 功能页",
+  "默认距离过滤 / Default(=1，同区或邻近区) / - / 同上",
+  "元数据键长上限 / 255 / 字符 / k_nMaxLobbyKeyLength",
+  "元数据值长上限 / 8192 / 字节 / k_cubChatMetadataMax（GodotSteam doc_classes）",
+  "每个用户 Rich Presence 键数 / 30（官方）或 20（GodotSteam 注释）/ 个 / ISteamFriends 页",
+  "每用户同时所在大厅 / 1 个常规 + 最多 2 个 Invisible / 个 / ELobbyType 说明",
+  "SetLobbyData 频率限制 / 官方未给出（批处理，仅变更时发送）/ - / [不确定]",
+  "过滤器个数上限 / 官方未给出 / - / [不确定]",
+  "Owner 崩溃转移时延 / 未找到公开实测 / s / [不确定]，待测",
+  "房间码空间 / 31^6≈8.87e8 / 种 / [推算]"
+ ],
+ "alternatives_comparison": [
+  "Lobby 元数据 code 精确过滤：成本低、服务端过滤、不受 50 条影响；推荐。",
+  "把 LobbyID 编码成房间码：64 位无法压进 6 位字符，不可行；若用较长码（如 13 位 base36）可行但用户体验差。",
+  "自建中心服务器存码→LobbyID：违背 $0 与无服务器约束，V1.0 不做。",
+  "Steam 好友邀请/Join Game：零成本，与房间码互补，必做。",
+  "单池子（等待中+激战中）一次搜索：简单；需要 state 字段区分显示，推荐。",
+  "旁观者走 Lobby 成员：与参战共用成员上限但不占 GNS 对局连接，推荐 max_members=参战+旁观。"
+ ],
+ "project_implications": [
+  "“单池子房间列表 + 房间码 + 好友邀请 + 激战中可旁观/中途加入”在 Lobby 层均可做，不需要自建服务器；关键是保持 joinable=true、预留旁观位、用 lobby data 表达状态、两步扩圈搜索。",
+  "Lobby owner 自动转移不可作为 D2 换主的唯一依据：时延与规则未公开，建议游戏自己指定继任者并在应用层通知，Lobby owner 仅作为大厅元数据写入者，房主换主后调用 SetLobbyOwner 同步（需旧 owner 在线时）；旧 owner 已崩溃时由 Steam 自动选新 owner，需要在 lobby_data_update/owner 变化后让新应用层房主接手写 lobby data。",
+  "开发与测试期使用 AppID 480 必须加 game 键过滤，上线换自有 AppID。",
+  "中途加入只能人类身份：Lobby 层只管入房，身份分配由房主在握手阶段决定，加入前先读 state/slots。"
+ ],
+ "mvp_scope": [
+  "V1.0：公共大厅 + 过滤键 + 房间码 + 邀请 + Rich Presence join + 两步扩圈 + 加入后校验 + 旁观位。",
+  "V1.5：列表分页/搜索排序（NearValue 按 ping）、房间密码、Owner 崩溃后自动清理逻辑。",
+  "不建议：自建房间码服务；把 Lobby owner 当唯一房主。"
+ ],
+ "effort_estimate": [
+  "[推算] 约 1–1.5 人周；AI 编码难度：中（异步信号与过滤顺序易错）；典型错误：过滤器未重设、joinable 误关、忘记 distance。人工验收：两账号跨区测试、房间码跨区加入、对局中可见、邀请冷启动。"
+ ],
+ "risk_rating": [
+  "麻烦但可解：owner 崩溃转移与 LobbyChatUpdate 时延未知（应用层心跳+继任者策略）；ghost lobby（加入后校验）；50 条上限（两步扩圈+服务端过滤）。无致命项。"
+ ],
+ "win_probability_inputs": [
+  "冷启动存活率：两步扩圈+房间码对用户找房有正向，约 +2~3 个百分点（[主观]）；换主可靠性：不依赖 Lobby owner 转移约 +1~2 个百分点（[主观]）；上线稳定性：加入后校验约 +1 个百分点（[主观]）。"
+ ],
+ "test_verification_points": [
+  "Owner 崩溃转移时延：账号 A 创建 Public 大厅，账号 B 加入；A 用任务管理器强杀进程/拔网线；B 记录 lobby_chat_update(Disconnected) 时刻、getLobbyOwner 变化时刻（每 0.5s 轮询）、第三账号 C 的 requestLobbyList 里该大厅消失时刻；各重复 10 次；红线：转移<30s（若>30s 则必须应用层换主）；可 headless 自动化（两台机器各一个 Godot 进程）。",
+  "房间码跨区：美区/中国大陆各一账号，Default 与 Worldwide 过滤各搜一次，记录命中率。",
+  "50 条上限：脚本批量创建 >60 个测试大厅（480 池，用独立 game 键），验证 count filter=50 与服务端 code 过滤后的实际返回。",
+  "joinable 对可见性：对局中 joinable=true 与 false 各测一次是否出现在搜索中（预期 false 消失）。",
+  "邀请冷启动：游戏未运行时点击邀请，检查 +connect_lobby 参数。"
+ ],
+ "china_mainland_notes": "Lobby/匹配走 Steam 后台，中国大陆玩家使用 Default 距离即可看到大陆邻近大厅；跨区（大陆↔海外）需 Far/Worldwide，且 SDR 连通性见另一 item。房间码必须用 Worldwide 过滤，否则大陆与海外朋友可能搜不到彼此（WEBFISHING 1.08 类似问题）。大陆是否有额外 Lobby 屏蔽未发现公开资料 [不确定]。",
+ "sources": [
+  "Steamworks 文档 ISteamMatchmaking：https://partner.steamgames.com/doc/api/ISteamMatchmaking，访问 2026-11-25，官方文档，高",
+  "Steamworks 文档 Matchmaking 功能页：https://partner.steamgames.com/doc/features/multiplayer/matchmaking，访问 2026-11-25，官方文档，高",
+  "Steamworks 文档 ISteamFriends（Rich Presence）：https://partner.steamgames.com/doc/api/ISteamFriends，访问 2026-11-25，官方文档，高",
+  "GodotSteam 源码（Codeberg）godotsteam.cpp / doc_classes/Steam.xml，提交 bc2a881（2026-11-10）：https://codeberg.org/godotsteam/godotsteam，源码，高",
+  "WEBFISHING 版本史：https://webfishing.wiki.gg/wiki/Version_History，访问 2026-11-25，社区 wiki，中",
+  "WEBFISHING 1.08 公告：https://steamcommunity.com/games/3146520/announcements/detail/4512135723843670969，访问 2026-11-25，官方公告（正文未能抓取，引用搜索摘要），中",
+  "SteamDB 补丁说明（ghost lobby 修复）：https://steamdb.info/patchnotes/19848470，补丁日志，中",
+  "Godot 论坛 GodotSteam lobbies not visible：https://forum.godotengine.org/t/godotsteam-lobbies-not-visible/127733，社区，低",
+  "Facepunch.Steamworks wiki（OnLobbyMemberDisconnected 等）：https://wiki.facepunch.com/steamworks/SteamMatchmaking.OnLobbyMemberDisconnected，社区文档，中",
+  "未找到：Lobby owner 崩溃转移与 LobbyChatUpdate 的社区实测时延数字（搜索过 Steamworks 文档、Facepunch、Stardock、Unity/Unreal 论坛）"
+ ],
+ "uncertain": [
+  "prior_claims_check（15–30s 无实测、WEBFISHING 版本归属）",
+  "key_findings（Owner 转移时延与规则、SetLobbyData 频率、过滤器数量上限、总元数据大小）",
+  "quantitative_params（频率限制、过滤器个数、转移时延）",
+  "china_mainland_notes（大陆专项无资料）"
+ ]
+}

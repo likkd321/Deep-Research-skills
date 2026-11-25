@@ -1,0 +1,137 @@
+{
+ "name": "GNS 底层参数：超时、心跳、缓冲、限速与通道",
+ "category": "Steam 网络基础设施",
+ "research_scope": [
+  "1. TimeoutInitial/TimeoutConnected 默认值、源码位置，及已建连接在对端崩溃/拔线时的实际判定时延（keepalive、reply timeout 如何叠加）",
+  "2. SendBufferSize 默认与 k_EResultLimitExceeded 触发条件；SendRateMin/Max 默认值（开源代码 256KB/s vs Steamworks 文档“0=不限”的口径冲突）及对 16 人房主（15 条连接）的影响",
+  "3. Nagle（5ms）、NoNagle 标志、单条消息上限、MTU/分片、包头字节",
+  "4. Lanes 能否隔离“移动包 vs 快照包”，GodotSteam 暴露情况；ISteamNetworkingMessages 各 channel 是否互相阻塞（队头阻塞）与两套接口取舍",
+  "5. FakePacketLag/Loss/Reorder/Jitter 在 GodotSteam 的可用性",
+  "6. getConnectionRealTimeStatus 可取指标与 GodotSteam 返回字典键，用于游戏内网络面板"
+ ],
+ "prior_claims_check": [
+  "「GNS 的 TimeoutInitial/TimeoutConnected 默认 10s，但已建连接实际静默断连需 10–21s（空闲链路可达 70s+）」→ 部分证实 → 默认值证实：csteamnetworkingsockets.cpp 第76-77行 DEFINE_CONNECTON_DEFAULT_CONFIGVAL(int32, TimeoutInitial, 10000,…) / TimeoutConnected 10000（毫秒）（https://github.com/ValveSoftware/GameNetworkingSockets/blob/master/src/steamnetworkingsockets/clientlib/csteamnetworkingsockets.cpp，master fb56c96，2026-11-24 克隆核实）。实际时延：steamnetworkingsockets_connections.cpp 第3600行 超时线=max(超时起点, 最后收包时间)+TimeoutConnected，且第3604行还要求 m_nReplyTimeoutsSinceLastRecv>=4（或无法端到端发送）才宣布断线；回复超时由 CalcConservativeTimeout 决定（≤1.25s，statsutils.h 第184行），超时后每 200ms 发一次“激进 ping”（k_usecAggressivePingInterval）。故活跃链路约 10–12s [推算]；链路 Idle 时 keepalive 间隔 60s（k_usecKeepAliveIntervalIdle），“70s+”是 60s keepalive+10s 的叠加推算 [推算]，源码里可见但无社区实测佐证；“21s”上限本次未找到来源 [不确定]。",
+  "「需自写应用层心跳（1Hz 心跳，4s 冻结 / 7s 失联）」→ 证实其必要性（部分证实具体数字）→ GNS 内建断线判定≥10s（见上），对“秒级换主”太慢；应用层心跳是合理做法。1Hz/4s/7s 是设计取值而非 GNS 规定 [主观]。也可直接把 TimeoutConnected 调小（如 4000–5000ms，connection 级 int32，可经 setConnectionConfigValueInt32 设置，GodotSteam 已绑定），但调小会让弱网玩家被误踢；建议两者并用。",
+  "「24 人无脑挂 MultiplayerSynchronizer 会触发 k_EResultLimitExceeded」→ 纠偏（条件被夸大）→ 源码 steamnetworkingsockets_snp.cpp 第320行：仅当“该连接待发字节总量 + 本条大小 > SendBufferSize(默认512KB)”才返回 -k_EResultLimitExceeded，是按连接计算而非按玩家人数。16人房主有15条连接，各自独立计数。要触发需要单连接持续发送速率超过发送速率上限（开源代码默认256KB/s）并积压≥2秒。24人×20Hz×约100B≈48KB/s 的典型同步量远不到此值 [推算]。真正的风险是：①单连接被大快照/大文件顶满（一次发数百KB可靠消息）；②对端卡死后积压；③发送到弱网玩家时可靠消息重传堆积。社区实例（Steamworks.NET issue #579，2023-10）是 Riptide 短时间灌 700 包×约95KB/s 触发，没有官方回复，其“125–200KB/s 限额”说法无来源 [不确定]。"
+ ],
+ "current_status": [
+  "[事实] 开源 GameNetworkingSockets 最新提交 fb56c96（2026-11-24 UTC-8），最新发布标签 v1.6.1（git ls-remote 核实 2026-11-25）。注意：Steam 客户端内置的 steamnetworkingsockets 库由 Valve 另行随 Steam 更新，与开源 master 同源但不保证同步；GodotSteam 调用的是 Steam 内置库（经 steam_api）而非自编译开源库。",
+  "[事实] GodotSteam 主仓库已迁至 Codeberg（codeberg.org/godotsteam/godotsteam），截至 2026-11-10 提交 bc2a881；GitHub 仓库只剩迁移说明。本次读取的绑定源码为该提交（核实 2026-11-25）。版本锁定建议见同批 GodotSteam item：Godot 4.7.2 + GodotSteam v4.24-gde（SDK 1.65）。",
+  "[事实] Steamworks 官方文档 steamnetworkingtypes 页对 SendRateMin/Max 写“Default is 0 (no-limit)”，对 SendBufferSize 写“Default is 512k (524288 bytes)”，NagleTime“Default is 5000us”（访问 2026-11-25）；而开源头文件与代码均为 SendRate 默认 256K。两者口径冲突，见 key_findings。"
+ ],
+ "key_findings": [
+  "[事实] TimeoutInitial=10000ms、TimeoutConnected=10000ms，范围 0..INT32_MAX，均为 connection 级配置；来源 https://github.com/ValveSoftware/GameNetworkingSockets/blob/master/src/steamnetworkingsockets/clientlib/csteamnetworkingsockets.cpp 第76-77行。",
+  "[事实] 已建连接超时判定（connections.cpp 第3585–3625行）：timeout 线 = max(m_usecWhenTimeoutStarted, m_usecTimeLastRecv) + TimeoutConnected；到线后还必须 m_nReplyTimeoutsSinceLastRecv>=4（或根本无法端到端发送）才调用 ConnectionTimedOut，转入 ProblemDetectedLocally。",
+  "[事实] 保活参数（steamnetworking_statsutils.h 第41–58行）：内联 ping 请求间隔 5–7s；活跃 keepalive 10s；空闲 keepalive 60s；开始超时后“激进 ping”200ms 一次；回复超时=min(最差近期ping×2+250ms, 1.25s)（steamnetworking_stats / statsutils 第182–188行）。",
+  "[推算] 活跃连接拔网线/崩溃（对端进程崩溃时 OS 通常不发 FIN，UDP 无连接，因此与拔线表现相同；若是对端调用 CloseConnection 则立即收到通知）：约 10–12s 判定断线（10s 线+回复超时起点偏移），极端偏慢可达 ~17–21s（首个回复超时迟迟未开始、需凑满4次）；输入=TimeoutConnected 10s + 回复超时≤1.25s×首轮。无社区实测佐证，需自测 [不确定]。",
+  "[推算] 空闲连接（无应用数据、仅靠 keepalive）可达 60s+10s≈70s。对本项目影响不大，因为游戏中 20Hz 持续有流量，连接始终处于 Active。",
+  "[事实] SendBufferSize 默认 512*1024=524288 字节，范围 4KB..256MB；snp.cpp 第320行：PendingBytesTotal()+cbData > SendBufferSize 即返回 -k_EResultLimitExceeded，且消息被丢弃（需自行处理）。PendingBytes 包含已入队未发出+等待重传的可靠数据。",
+  "[事实] SendRateMin/Max 开源默认均 256*1024（262144 B/s），范围 1024..256MB（csteamnetworkingsockets.cpp 第84-85行）；头文件注释写“default value is 256K”。snp.cpp 第4275-4285行 SNP_ClampSendRate：当 nMin==nMax 时直接关闭带宽估计、固定发送速率=nMin。即开源默认是固定 256KB/s 而非自适应。",
+  "[不确定] Steamworks 官方文档写“0 is no limit / Default is 0”。开源代码里 0 会被 Clamp 到下限 1024（snp.cpp 第4275行），因此“0=不限”与开源实现矛盾；文档很可能是旧文字或指 Steam 客户端内置库的另一行为。本次无法对 Steam 内置库做实测，故以开源 256KB/s 为保守口径，并建议 V1.0 显式设置 SendRateMin=SendRateMax 或 Min=64KB/Max=1MB 并实测 getConfigValue 读回。统一口径：设计带宽预算时按“每连接 ≤256KB/s”做最坏情形，显式覆盖后不依赖默认值。",
+  "[推算] 16 人房主（15 条出站连接）带宽：假设下行快照 20Hz×15 客户端，每客户端 1–3KB/s 级别（按 floor 的 AOI 裁剪）→ 远低于 256KB/s/连接；总上行 ≈15×(几十 KB/s)。限速不是瓶颈，瓶颈是房主家宽上行（家宽上行 5–30Mbps≈0.6–3.7MB/s）。",
+  "[事实] NagleTime 默认 5000µs（5ms），范围 0..20000µs；只对小于 MTU 的消息生效（头文件注释 steamnetworkingtypes.h 第1244-1251行）；k_nSteamNetworkingSend_NoNagle=1，k_nSteamNetworkingSend_NoDelay=4（仅不可靠），Reliable=8，ReliableNoNagle=9。GodotSteam 常量名 NETWORKING_SEND_NO_NAGLE / NETWORKING_SEND_RELIABLE_NO_NAGLE（godotsteam_constants.h 第149-157行）。移动包发送后 5ms 合包延迟可接受，但要“立即发”的事件用 NoNagle，或调用 flushMessagesOnConnection。",
+  "[事实] 单条消息上限：发送端 k_cbMaxSteamNetworkingSocketsMessageSizeSend=512*1024（steamnetworkingtypes.h 第846行）；不可靠消息超过 15×1100=16500 字节会被自动转为可靠（snp.h 第55行、snp.cpp 第327行）。MTU_PacketSize 默认 1300，下限 200（csteamnetworkingsockets.cpp 第87行）；单包最大加密载荷 1248 字节（internal.h 第283行，GCM tag 16 字节）。",
+  "[推算] 包头开销：UDP/IP 28 字节 + GNS 数据包头（序号等，约 十余字节）+ 16 字节 AES-GCM tag；不可靠消息段头 1 字节帧类型+消息序号 delta 编码（顺序发送时 0 额外字节、首条 4 字节）+长度；可靠段头含流偏移（1–5 字节）；非 0 号 lane 每段多少量字节。精确字节数随版本变化，不要硬编码，用 getConnectionRealTimeStatus 的 bytes_out_per_second 实测 [推算]。",
+  "[事实] Lanes：isteamnetworkingsockets.h 第420–486行：ConfigureConnectionLanes(hConn, nNumLanes, pPriorities, pWeights) 明确用于“控制队头阻塞”；不同 lane 的消息可乱序发送，每 lane 有自己的消息序号；数值越小优先级越高：文档原文“Lanes with higher numeric values will only be processed when all lanes with lower number values are empty”，即数值大的 lane 要等数值小的 lane 清空后才发送；同优先级按权重分带宽；Steam 上最多 255 条，建议 ≤8、3 条左右最佳；只能增加不能减少；非 0 号 lane 有少量线上开销；“只有同 lane 内的可靠消息保证有序”。",
+  "[事实] GodotSteam（Codeberg bc2a881）绑定了 configureConnectionLanes(connection, lanes, priorities Array, weights Array)，但 sendMessageToConnection(connection_handle, message, flags) 没有 lane 参数，因此无法指定发往哪条 lane，全部落在 lane 0（godotsteam.cpp 第3622–3630行、第3939–3955行）。sendMessages 虽有绑定，但实现里没有设置 m_idxLane，且 m_pData 赋值与 sizeof(messages[i]) 的写法可疑（疑似不可用）[不确定]，未做实机验证。结论：现阶段 lanes 在 GDScript 里基本不可用，除非给 GodotSteam 提 PR 或自编译加 lane 参数。",
+  "[事实] ISteamNetworkingMessages 的 channel 只是路由号：“Using different channels to talk to the same user will still use the same underlying connection”（isteamnetworkingmessages.h 第48–66行）；“Messages on different channels are not guaranteed to be received in the order”。代码层面 Messages 通过 _APISendMessageToConnection 发送，不设置 lane（csteamnetworkingmessages.cpp 第518行附近，无 Lane 引用），因此所有 channel 共用同一 lane 0。[推算] 同一连接上不同 channel 的可靠消息在发送队列上是同一条队列，一个丢包重传会造成后续可靠消息队头阻塞；不可靠消息不受重传阻塞，但共享 256KB/s 发送速率与 512KB 缓冲。",
+  "[事实] 调试用模拟网络配置为全局项：FakePacketLoss_Send/Recv(0–100%)、FakePacketLag_Send/Recv(0–5000ms，默认0)、FakePacketReorder_Send/Recv/Time、FakePacketDup_*、FakePacketJitter_*_Avg/Max/Pct、FakeRateLimit_*（steamnetworkingtypes.h 第1419–1500行；csteamnetworkingsockets.cpp 第43–45行）。GodotSteam 已绑定 setGlobalConfigValueFloat/Int32 与枚举 NETWORKING_CONFIG_FAKE_PACKET_LOSS_SEND、…_LAG_SEND、…_JITTER_*、…_REORDER_*、…_DUP_*、…_FAKE_RATE_LIMIT_*（godotsteam.cpp 第4281–4290行、第11436–11456行；枚举 DUP_RECV 拼写为 DUP_REVC）。在 Steam 内置库中是否生效未实测 [不确定]；应用层位置：socketthread.cpp 第1241行，在 UDP 收发层模拟，对 SDR 路径同样处在同一套 socket 线程内，理论上有效。",
+  "[事实] getConnectionRealTimeStatus(connection_handle, lanes, get_status=true) 返回字典：response、connection_status{state, ping, local_quality, remote_quality, packets_out_per_second, bytes_out_per_second, packets_in_per_second, bytes_in_per_second, send_rate, pending_unreliable, pending_reliable, sent_unacknowledged_reliable, queue_time(µs)}、lanes_status[{pending_unreliable, pending_reliable, sent_unacknowledged_reliable, queue_time}]（godotsteam.cpp 第3893–3935行）。可直接做网络面板。注意：lanes 参数传 0 时 new[0] 合法；传大于实际 lane 数会返回 InvalidParam。",
+  "[事实] 其他可用于面板：getConnectionInfo（状态、end reason、描述）、queue_time≈(pending)/send_rate±1MTU；jitter 字段（m_usecMaxJitter）GodotSteam 当前字典未导出 [事实：godotsteam.cpp 第3893-3935行无此键]。"
+ ],
+ "implementation_guidance": [
+  "建议连接建立后立即设置（GodotSteam v4.24，Godot 4.7.x；connection 级用 setConnectionConfigValueInt32(conn, Steam.NETWORKING_CONFIG_xxx, value)，全局用 setGlobalConfigValueInt32）：",
+  "  Steam.setConnectionConfigValueInt32(conn, Steam.NETWORKING_CONFIG_TIMEOUT_CONNECTED, 6000)  # 调小为约 6s，源码默认 10000；代价是弱网/切后台更易误断",
+  "  Steam.setConnectionConfigValueInt32(conn, Steam.NETWORKING_CONFIG_SEND_RATE_MIN, 128*1024); Steam.setConnectionConfigValueInt32(conn, Steam.NETWORKING_CONFIG_SEND_RATE_MAX, 1024*1024)  # 显式覆盖，避免依赖默认值冲突；Min≠Max 才启用带宽估计",
+  "  Steam.setConnectionConfigValueInt32(conn, Steam.NETWORKING_CONFIG_SEND_BUFFER_SIZE, 1024*1024)  # 可适当调大",
+  "发送：var r := Steam.sendMessageToConnection(conn, packet, Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY 或 NETWORKING_SEND_UNRELIABLE)；返回字典 r.result 需与 Steam.RESULT_OK 比较，Steam.RESULT_LIMIT_EXCEEDED 时不要重试，应丢帧并触发降频。",
+  "房主换主：应用层心跳 1Hz，4s 无心跳→客户端 UI 冻结提示，7s→发起换主；同时监听 network_connection_status_changed 回调（state=ProblemDetectedLocally/ClosedByPeer）作为更快路径。",
+  "网络面板（每 0.5–1s 一次）：var s := Steam.getConnectionRealTimeStatus(conn, 0, true); 读 s.connection_status.ping / local_quality / pending_reliable / queue_time / bytes_out_per_second。",
+  "调试注入：Steam.setGlobalConfigValueFloat(Steam.NETWORKING_CONFIG_FAKE_PACKET_LOSS_SEND, 5.0); Steam.setGlobalConfigValueInt32(Steam.NETWORKING_CONFIG_FAKE_PACKET_LAG_SEND, 80)。仅在 debug 构建启用，release 屏蔽。需先实测在 Steam 内置库生效。",
+  "移动包 vs 快照包隔离方案（因 lanes 在 GDScript 不可用）：①用不同发送标志：移动用 Unreliable+NoNagle，快照用 Reliable 但限制单条大小<64KB并分帧；②发送前检查 pending_reliable，超阈值就丢弃旧快照而非排队；③确需 lane 时考虑给 GodotSteam 的 sendMessageToConnection 提 PR 加 lane 参数。",
+  "消息大小：每条 <1100B 不可靠消息保证单包；快照可靠消息分块 ≤16KB。"
+ ],
+ "pitfalls_and_failures": [
+  "AI 易错：把 SendRateMax 当作“不限速”——开源默认 256KB/s 固定速率；写出 setConnectionConfigValueInt32 前要确认连接已创建。来源：steamnetworkingtypes.h 第1236–1243行。",
+  "AI 易错：TimeoutConnected 单位是毫秒，NagleTime 单位是微秒，别混。来源：steamnetworkingtypes.h 第1154–1157、1251行。",
+  "AI 易错：以为 sendMessageToConnection 返回 int；GodotSteam 返回 Dictionary{result, message_number}。来源：godotsteam.cpp 第3622行。",
+  "AI 易错：以为 channel/lane 可在 GodotSteam 里隔离流量；实际 sendMessageToConnection 无 lane 参数，Messages 的 channel 共享同一队列（见 key_findings）。",
+  "Steamworks.NET issue #579（2023-10-08）：突发发送触发 k_EResultLimitExceeded，无解决方案；https://github.com/rlabrecque/Steamworks.NET/issues/579。",
+  "文档口径冲突：Steamworks 官方页写 SendRate 默认 0=不限、开源代码 256KB/s；务必实测并显式设置。",
+  "getConnectionRealTimeStatus 的 lanes 参数在 GodotSteam 里 new SteamNetConnectionRealTimeLaneStatus_t[lanes] 且 lanes 过大会 InvalidParam；未对 lanes<0 做保护。",
+  "GodotSteam sendMessages 绑定疑似有缺陷（sizeof(messages[i]) 与 Release 过早）[不确定]，不要用。",
+  "对端崩溃时若调用方能 CloseConnection（如 Godot 崩溃退出前不会），其他情况下只能靠超时；SDR 路径下 Steam 中继可能更早通知 [不确定]，需实测。"
+ ],
+ "quantitative_params": [
+  "TimeoutInitial / 10000 / ms / connection 级、建连阶段 / csteamnetworkingsockets.cpp:76",
+  "TimeoutConnected / 10000 / ms / 已建连接最后收包后的宽限 / csteamnetworkingsockets.cpp:77",
+  "连接超时附加条件 / ≥4 次回复超时 / 次 / connections.cpp:3604",
+  "回复超时 / ≤1250 / ms / min(最差近期ping×2+250ms, 1250ms) / stats.h:184-187",
+  "激进 ping 间隔 / 200 / ms / 开始超时后 / statsutils.h:50",
+  "keepalive 间隔 / 活跃10、空闲60 / s / statsutils.h:57-58",
+  "内联 ping 请求 / 5–7 / s / statsutils.h:41-42",
+  "SendBufferSize / 524288 / byte / 每连接待发+重传可靠数据上限 / csteamnetworkingsockets.cpp:78",
+  "RecvBufferSize / 1048576 / byte / csteamnetworkingsockets.cpp:79",
+  "SendRateMin=SendRateMax / 262144 / B/s / 开源默认；Steamworks文档称0不限，冲突 / csteamnetworkingsockets.cpp:84-85",
+  "NagleTime / 5000 / µs / 0..20000 / csteamnetworkingsockets.cpp:86",
+  "MTU_PacketSize / 1300 / byte / 下限200 / csteamnetworkingsockets.cpp:87",
+  "最大加密载荷 / 1248 / byte / internal.h:283",
+  "最大发送消息 / 524288 / byte / steamnetworkingtypes.h:846",
+  "不可靠消息自动转可靠阈值 / 16500 / byte / snp.h:55",
+  "Lane 数上限 / 255（Steam），建议≤8 / 条 / isteamnetworkingsockets.h:445-448",
+  "Fake Lag 范围 / 0–5000 / ms / csteamnetworkingsockets.cpp:45",
+  "Messages 会话空闲超时 / 180 / s / csteamnetworkingmessages.cpp:36"
+ ],
+ "alternatives_comparison": [
+  "ISteamNetworkingSockets（面向连接）：可调 per-connection 配置、可见状态回调、可 CloseConnection；代价：需自己管理监听/连接/PollGroup。对本项目首选。",
+  "ISteamNetworkingMessages（面向 SteamID）：无需监听、写起来像 UDP；但无 lane、所有 channel 共队列、可配置项少、会话 3 分钟空闲超时；适合大厅期轻量消息，不适合对局主链路。",
+  "SteamMultiplayerPeer（GodotSteam 提供）：接入 Godot 高层多人 API 最省事；但底层同样走 GNS，limit/timeout 同样适用，参数要通过底层设置。",
+  "单连接多 lane（不可用于 GDScript）：理论最佳；现实代价是改 GodotSteam。",
+  "双连接（每对节点两条 connection，一条移动一条快照）：真正避免队头阻塞，但连接数翻倍、握手翻倍、换主复杂；V1.0 不推荐。",
+  "应用层限流（丢旧快照）：成本低、完全可控；推荐。"
+ ],
+ "project_implications": [
+  "GNS 的内建超时（约10–12s）不能满足“秒级换主”，必须有应用层心跳；建议把 TimeoutConnected 降到 ~6s 作为兜底，应用层 4s/7s 作为主判定。",
+  "默认发送速率/缓冲对 16 人房间足够（每连接几十 KB/s 量级），但要显式设置并在网络面板暴露 pending_reliable 与 queue_time，作为红线。",
+  "“24 人无脑 Synchronizer 触发 LimitExceeded”不是人数问题，而是单连接积压问题；大快照应拆分、限频。",
+  "GodotSteam 里不可用 lane，移动与快照要靠“发送标志+应用层丢旧帧+大小限制”隔离。",
+  "调试期强烈建议接入 FakePacketLoss/Lag（需先验证在 Steam 内置库生效），否则只能用 Clumsy 等系统级工具。"
+ ],
+ "mvp_scope": [
+  "V1.0：显式设置 Timeout/SendRate/SendBuffer；应用层心跳；网络面板读 getConnectionRealTimeStatus；快照限大小+丢旧帧；调试注入 Fake*。",
+  "V1.5：给 GodotSteam 加 lane 参数（PR 或自编译），把快照放独立 lane；带宽自适应（Min≠Max）。",
+  "不建议：V1.0 做双连接；依赖 ISteamNetworkingMessages 做对局主链路。"
+ ],
+ "effort_estimate": [
+  "[推算] 约 0.5–1 人周（参数设置+面板+心跳+丢帧策略）；AI 编码难度：中。典型错误：单位混淆、Dictionary 返回值误用、未检查 LimitExceeded。人工验收：拔网线/杀进程换主时延实测、限速下 pending_reliable 不无限增长。"
+ ],
+ "risk_rating": [
+  "麻烦但可解：内建超时偏慢（用应用层心跳缓解）；SendRate 默认口径冲突（显式设置+实测缓解）；GodotSteam lane 不可用（用降级方案）。无致命项。"
+ ],
+ "win_probability_inputs": [
+  "换主可靠性：心跳+降低 TimeoutConnected 约 +2~4 个百分点（[主观]）；上线稳定性：显式限速/缓冲+监控约 +1~2 个百分点（[主观]）；技术完成率：lane 不可用不影响 V1.0（0 个百分点）。"
+ ],
+ "test_verification_points": [
+  "断线时延：两台机器 SDR 连接，拔网线/taskkill/防火墙丢包，记录“最后收包→ProblemDetectedLocally 回调”秒数；红线：<=12s（默认），应用层心跳 <=7s；可 headless 自动化（两个 Godot 进程+iptables/ netem，Windows 用 Clumsy）。",
+  "SendRate 默认值：连接后 getConfigValue(SEND_RATE_MAX) 读回，并在本地灌 1MB/s 看 send_rate 与 LimitExceeded 触发点；红线：读回值写入文档。",
+  "Fake* 在 Steam 内置库的有效性：setGlobalConfigValueInt32(FAKE_PACKET_LAG_SEND, 200) 后看 ping 变化。",
+  "16 人房 15 连接 20Hz 下 bytes_out_per_second、pending_reliable、queue_time；红线：queue_time<100ms。"
+ ],
+ "china_mainland_notes": "无（本 item 为参数口径；大陆延迟/丢包与 SDR 连通性见另一条 SDR item）。注意大陆弱网下丢包更高，TimeoutConnected 不宜过低（建议≥5s）。",
+ "sources": [
+  "GNS 源码 csteamnetworkingsockets.cpp（默认值）：https://github.com/ValveSoftware/GameNetworkingSockets/blob/master/src/steamnetworkingsockets/clientlib/csteamnetworkingsockets.cpp，2026-11-25 克隆 fb56c96，源码，高",
+  "GNS connections.cpp / snp.cpp / statsutils.h / internal.h：同仓库对应路径，2026-11-25，源码，高",
+  "GNS 公共头文件 steamnetworkingtypes.h、isteamnetworkingsockets.h、isteamnetworkingmessages.h：https://github.com/ValveSoftware/GameNetworkingSockets/tree/master/include/steam，2026-11-25，源码，高",
+  "Steamworks 文档 steamnetworkingtypes：https://partner.steamgames.com/doc/api/steamnetworkingtypes，访问 2026-11-25，官方文档，中（与开源口径有差异）",
+  "Steamworks 文档 ISteamNetworkingUtils：https://partner.steamgames.com/doc/api/ISteamNetworkingUtils，2026-11-25，官方文档",
+  "GodotSteam 源码 godotsteam.cpp（Codeberg bc2a881）：https://codeberg.org/godotsteam/godotsteam，2026-11-10 提交，源码，高",
+  "Steamworks.NET issue #579：https://github.com/rlabrecque/Steamworks.NET/issues/579，2023-10-08，社区，低（无结论）",
+  "未找到：拔网线实测断线时延的社区测量（搜索过 Steamworks 文档、GitHub issue 269、Facepunch wiki，无数字）"
+ ],
+ "uncertain": [
+  "prior_claims_check（21s 上限与 70s 无实测）",
+  "key_findings（SendRate 默认口径、实测断线时延、Fake* 在 Steam 内置库生效性、sendMessages 可用性）",
+  "quantitative_params（SendRate 默认）",
+  "test_verification_points（待实测）"
+ ]
+}
