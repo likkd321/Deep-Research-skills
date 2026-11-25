@@ -1,0 +1,221 @@
+{
+ "name": "同类游戏商业与冷启动数据",
+ "category": "市场与执行（核心）",
+ "research_scope": [
+  "13 款指定对标作 + 11 款 2021–2026 社交推理/合作恐怖/大房间联机作的价格（美区/国区）、发售日、历史峰值 CCU、2026-10 月均/月峰 CCU、2026-11-25 实时在线、评论总数与好评率、评论语言分布（英/简中/俄/巴葡）、估算销量",
+  "基准率：2025 年 Steam 新作评论数分布（<10 条、≥500 条、≥1000 条占比）、评论→销量倍数（NB/Boxleiter）、联机游戏 CCU 衰减（平稳期 CCU/峰值）",
+  "「需 N 名真人才能开局」的死亡螺旋：用排队模型（Poisson 到达 + 5 分钟耐心）推算 12/8/4/2 真人开局门槛所需的同时在线人数，并对照样本",
+  "Bot/单人可玩 对长期留存的影响：单人/Bot 可玩组 vs 纯联机社交推理组 的 平稳期 CCU 占峰值比例对比",
+  "中国玩家占比（Steam 硬件调查语言份额 + 各对标作简中评论占比与简中好评率差）、国区定价换算与 Steam 退款规则（14 天/2 小时）对 40 分钟长局的影响",
+  "大房间（8–16 人）买断制独立联机作成败案例（Among Us、Dread Hunger、Lockdown Protocol、Dale & Dawson、Midnight Ghost Hunt、Project Winter、Feign 等）与 2–6 人好友开黑爆款（Lethal Company、Content Warning、R.E.P.O.、PEAK）传播差异",
+  "社交传播因子：主播/切片、近距离语音、搞笑时刻、首日免费等在爆款中的作用"
+ ],
+ "prior_claims_check": [
+  "原说法①「GameDiscoverCo（2023）：典型多人游戏平稳期 CCU 通常只剩峰值 ~6%（极佳案例 10–20%）」→ 核查结论：无法核实原出处 + 部分纠偏。证据：(a) 检索 GameDiscoverCo 公开文章未找到“6%”原句；其“近期 PC 游戏留存力”分析只给出 Top30 热门作中前 10 名平均保持峰值 0.27×、后 10 名 0.1×（且样本是头部热门，不是“典型多人游戏”）https://gameindustrylibrary.com/documents/gamediscoverco-plus-which-recent-pc-games-have-the-most-staying-power/insights （GameDiscoverCo Plus 摘要，仅见搜索摘要，原文 403/付费）；(b) 本轮自采 24 款同类作 SteamCharts 数据（https://steamcharts.com/app/<appid>，2026-11-25 访问）：2026-10 月均 CCU ÷ 历史峰值 的中位数 = 1.5%，2026-10 月峰 ÷ 历史峰值 的中位数 = 3.9%；按类型分：单人/Bot 可玩组（Project Zomboid 38.8%、Barotrauma 12.9%、PEAK 8.2%、Escape the Backrooms 8.1%、R.E.P.O. 6.6%、Reactive Drop 1.4%、Lethal Company 1.1%、WEBFISHING 0.7%）中位数 ≈7.4%；纯联机社交推理/PvP 组（Among Us 1.6%、Dread Hunger 0.7%、Dale & Dawson 0.5%、Liar's Bar 0.5%、Goose Goose Duck 0.4%、Midnight Ghost Hunt 0.12%、Unfortunate Spacemen 0.06%、Lockdown Protocol 2.6%、Feign 3.5%、Deceit 2 3.3%、Town of Salem 2 5.4%、Zombie Panic! Source 2.3%）中位数 ≈1.2%。结论：“~6%”大致对应“单人/Bot 可玩的幸存者”水平；对本项目最接近的“纯联机社交推理”类，平稳期更现实的是峰值的 0.5–2%，而且这些样本本身已是峰值≥748 的幸存者。",
+  "原说法②「Dale & Dawson（$7.99）峰值 6,465，2026-11-24 在线 6 人」→ 核查结论：证实（量级一致）。证据：Steam 商店 API 实测美区 $7.99 / 国区 ¥33（https://store.steampowered.com/api/appdetails?appids=2920570&cc=us ，2026-11-25）；SteamDB 记录历史峰值 6,465（2024-09-08，见 https://steamdb.info/app/2920570/charts/ 的搜索摘要；SteamDB 对本环境 403，未能直连）；SteamCharts 记历史峰值 6,432（采样口径差异）；Steam Web API GetNumberOfCurrentPlayers 在 2026-11-25 实测 8 人，SteamCharts 同日 7 人、24h 峰值 12 人；2026-10 月均 33.1 人、月峰 246 人（https://steamcharts.com/app/2920570）。",
+  "原说法③「VG Insights：Steam 合作游戏中位销量约为非合作的 8 倍（~40k vs ~5k）」→ 核查结论：部分证实，需加限定。证据：VG Insights《Rise of the Co-Op Games》（2024 年中）报告：合作作中位约 38k、非合作约 5k（≈7.6×），中位数处“好 627%”（≈7.3×），下四分位好 121%、上四分位好 1313%；2023 年合作作只占发行量 6% 却占销量 36%（https://vginsights.com/assets/reports/VGI_Rise_of_the_Co-Op_Games.pdf ；二手摘要 https://gamedevreports.substack.com/p/vg-insights-cooperative-games-on 、https://gameworldobserver.com/2024/07/03/co-op-game-sales-records-steam-vg-insights-report ）。限定：(a) 报告把“合作”定义为以 PvE 为主的游戏，本项目是 PvP 非对称感染，严格说不在该口径内；(b) 销量是评论倍数法估算，不是真实销量；(c) 数据止于 2024 年中，2025 年 R.E.P.O./PEAK 等“friendslop”潮后未见更新版；(d) 存在幸存者与题材选择偏差——做合作游戏的团队平均规模/预算可能本就更大。"
+ ],
+ "current_status": [
+  "核实日期均为 2026-11-25（Steam Web API 实时在线 + SteamCharts 月度表 + Steam 商店 appdetails/评论直方图）。",
+  "Project Zomboid（$24.99/¥93，2013-11-08 EA）：历史峰值 124,506（2026-08，B42 相关更新带动），2026-10 月均 48,319，实时 21,590；评论约 40.1 万、93.2% 好评。维护极活跃。",
+  "Barotrauma（$34.99/¥130，EA 2019-06，1.0 2023-03-13，最多 16 人，可用 Bot 补位、有单人模式）：历史峰值 19,528（2021-11），2026-10 月均 2,523，实时 1,453；评论约 6.7 万、93.5%。",
+  "Alien Swarm: Reactive Drop（免费，2017-04-20）：峰值 9,335，2026-10 月均 129，实时 81；评论约 2.6 万、94.6%，简中评论占 33%（全样本中简中占比第三高）。",
+  "Among Us（$2.99/¥15，2018-11-16，4–15 人）：峰值 438,524（2020-09），2026-10 月均 7,050，实时 2,534；评论约 74.6 万、91.9%。发售首月峰值仅 19 人，2019-06 起才过百。",
+  "WEBFISHING（$4.99/¥22，2024-10-11）：峰值 23,966（2024-11），2026-10 月均 175，实时 175；评论约 6.1 万、97.4%；英文评论 82%、简中仅 0.5%。",
+  "Liar's Bar（$6.99/¥29，EA 2024-10-02，2–4 人）：峰值 109,419（2024-10），2026-10 月均 542，实时 258；评论约 5.2 万、89.1%；简中 22.4%。",
+  "Dale & Dawson Stationery Supplies（$7.99/¥33，2024-08-30，社区称 4 人起、最多约 18 人）：峰值 6,432（SteamCharts）/6,465（SteamDB），2026-10 月均 33，实时 8；评论约 7.8–8.2 千、91%。",
+  "Project Winter（$9.99/¥37，2019-05-23，8 人）：SteamCharts 无该 appid 数据；实时 19（API），SteamSpy 昨日峰值 45；评论约 1.49 万、84.5%；简中 21.3%。历史峰值第三方数据互相矛盾（Raijin 1,623 / Steambase 2,865），[不确定]。",
+  "LOCKDOWN Protocol（$9.99/¥42，EA 2024-07-22，1.0 2025-11-18，商店现写“1 到 16 人”）：峰值 9,318（2024-09），2026-10 月均 238，实时 165；评论约 1.76 万、86.1%；简中 3.8%。",
+  "Lethal Company（$9.99/¥42，2023-10-23，4 人，可单人）：峰值 239,369（2023-12），2026-10 月均 2,733，实时 2,365；评论约 43.9 万、96.7%。",
+  "Content Warning（$4.95/¥20.46，2024-04-01 首日 24h 免费，4 人）：SteamDB/媒体记峰值 204,439，SteamCharts 只记到 63,320（采样漏峰）；2026-10 月均 755，实时 337；评论约 7.8 万、92.6%。",
+  "Dread Hunger（8 人，2022-01-26）：2023-12-01 下架、2024-01-01 关闭官方服务器、开放社区自建服工具；至今靠社区服仍有 2026-10 月均 743、实时 442；评论约 4.6–5.0 万、59.6%；简中评论占 84.5%。",
+  "Midnight Ghost Hunt（$19.99/¥74，EA 2022-04，1.0 2024-03-21，4v4 + Bot 补位）：峰值 4,801，2026-10 月均 5.6，实时 1；评论约 5.9 千、80.3%。",
+  "2024–2026 新作：R.E.P.O.（$9.99/¥35，2025-02-26，≤6 人）峰值 266,908、10 月均 17,538；PEAK（$7.99/¥33，2025-06-16，≤4 人）峰值 169,910、10 月均 13,877；MIMESIS（$9.99/¥38，2025-10-27）峰值 8,254、10 月均 511；Escape the Backrooms（1.0 2025-10-23）峰值 48,097、10 月均 3,910；Mage Arena（$2.99，2025-07-24）峰值 17,126、10 月均 22；Murky Divers（$8.99，2024）峰值 1,338、10 月均 13；Feign（$4.99，≤12 人，1.0 2025-11-22）峰值 2,688、10 月均 93。",
+  "Steam 平台现状：2026-10 硬件调查中简体中文用户 21.98%（环比 −9.41 个百分点，波动大）、英语 39.04%（https://store.steampowered.com/hwsurvey/ ）；退款规则仍为 14 天内且游玩 <2 小时（https://store.steampowered.com/steam_refunds/ ）。"
+ ],
+ "key_findings": [
+  "[事实] 基准率极低：2025 年 Steam 共发布 20,282 款游戏，只有 608 款（≈3.0%）拿到 1,000 条评论（Chris Zukowski，https://howtomarketagame.com/2026/01/27/what-the-hell-happened-in-2025/ ）；按 SteamDB 统计，2025 年近一半新作评论 <10 条、只有约 6.2% 超过 500 条（https://80.lv/articles/steam-earned-usd16b-in-2025-but-nearly-half-of-19-000-games-got-under-10-reviews ）。",
+  "[推算] 评论→销量：NB 数（GameDiscoverCo）2020 年作品均值 41、中位 38 份/条评论，好评 >90% 的中位约 30，约 70% 好评的接近 60（https://newsletter.gamediscover.co/p/how-that-game-sold-on-steam-using 及 https://www.gamedeveloper.com/business/how-that-game-sold-on-steam-using-the-nb-number-2 ）。本表统一用 总评论 × 30–50 估算：Dale & Dawson 8.2k → 25–41 万份；Lockdown Protocol 1.76 万 → 53–88 万；Liar's Bar 5.2 万 → 157–261 万；WEBFISHING 6.1 万 → 183–306 万；Barotrauma 6.7 万 → 202–337 万；Dread Hunger 5.0 万 → 149–249 万（低好评作倍数偏高，或至 300 万）；Midnight Ghost Hunt 5.9k → 18–29 万；MIMESIS 9.2k → 27–46 万；Feign 6.1k → 18–30 万；Mage Arena 1.86 万 → 56–93 万；Lethal Company 43.9 万 → 1,318–2,197 万；R.E.P.O. 36.9 万 → 1,107–1,844 万；PEAK 32.7 万 → 982–1,636 万（媒体报道 2025-08 已破 1,000 万，后称 1,100 万，口径为第三方估算 + 台上确认）。",
+  "[事实] 平稳期留存（自采）：24 款样本的 2026-10 月均 CCU / 历史峰值 中位数 1.5%，月峰/历史峰值 中位数 3.9%（SteamCharts，2026-11-25 访问，https://steamcharts.com/app/2920570 等）。",
+  "[推算] 单人/Bot 可玩 ≈ 6 倍留存：单人或 Bot 可玩组（PZ、Barotrauma、PEAK、Backrooms、R.E.P.O.、Reactive Drop、Lethal、WEBFISHING）月均/峰值 中位约 7.4%；纯联机社交推理/PvP 组（Among Us、Dread Hunger、D&D、Liar's Bar、GGD、MGH、Unfortunate Spacemen、Lockdown、Feign、Deceit 2、ToS2、ZPS）中位约 1.2%。7.4 ÷ 1.2 ≈ 6。注意：这是相关性，不是因果；单人组也同时是内容更新更多、题材更“耐玩”的作品。",
+  "[推算] 「需 N 真人开局」的门槛（Poisson 到达、玩家等待 5 分钟就离开、模拟 200 小时）：要 12 名真人才开局时，到达率 1 人/分钟只有 8% 的玩家能进对局，2 人/分钟 66%，4 人/分钟 99.7%；改成 4 名真人 + Bot 补满时，1 人/分钟即可 94%；2 名真人时 0.25 人/分钟即 83%。按 Little 定律（同时在线 ≈ 到达率 × (40 分钟局 + 3 分钟大厅)），12 真人开局需要同一区服同一时段约 170 人同时在线；4 真人 + Bot 约 40 人；2 真人 + Bot 约 10 人。",
+  "[推算] 结合留存率：若平稳期只剩峰值 1.2%（纯联机组中位），要长期维持 ~170 人同时在线，首发峰值须 ≈1.4 万（170 ÷ 1.2%）——样本里 Dale & Dawson（峰值 6.4k）、Lockdown Protocol（9.3k）、Midnight Ghost Hunt（4.8k）都没达到，后者已经“无人可匹配”；若做到 Bot 兜底 + 单人可玩并达到 ~7% 留存，维持 ~40 人只需峰值 ≈600。门槛相差约 20 倍以上。",
+  "[事实] 冷启动常常很慢：Among Us 2018-11 发售首月 Steam 峰值只有 19 人、月均 2.25 人，2019-06 才过百，2020-09 峰值 43.9 万（https://steamcharts.com/app/945360）；Barotrauma EA 首月峰值 1,496 后跌到月均 114–166，三年后才到峰值 1.95 万（https://steamcharts.com/app/602960）；Dread Hunger 2021 测试期月均约 140–230 人，2022 年正式版才冲到 10.78 万（https://steamcharts.com/app/1418630）。三者都是“先有能自洽运转的小局，再被主播放大”。",
+  "[事实] 大房间纯联机作的衰减：Dale & Dawson 首月月均 2,066 → 第 6 个月 258（12.5%）→ 第 26 个月 33（1.6%）；Liar's Bar 首月月均 19,758 → 第 5 个月 1,937 → 2026-10 的 542（2.7%）；Midnight Ghost Hunt 首月月均 1,610 → 第 4 个月 94（5.8%），后来 2026 年月均个位数，评论区普遍反映对局多为 Bot（https://steamcharts.com/app/915810 ；评论摘要 https://www.gamepressure.com/games/movie.asp?ID=38775 ）。",
+  "[事实] Dread Hunger 失败路径：8 人社交推理生存，峰值 107,982（2022 上半年），2023-11 宣布因玩家减少、服务器成本与频繁 DDoS，2023-12-01 下架、2024-01-01 关官方服并放出社区服工具（https://www.gamepressure.com/newsroom/2-years-ago-dread-hunger-was-a-steam-hit-now-its-about-to-die/z36463 ，https://delistedgames.com/?p=23607 ）。它的简中评论占 84.5%，好评只有 59.6%。",
+  "[事实] Lockdown Protocol 是最接近本项目的“幸存者”：社交推理 + 实时动作，EA 2024-07-22，峰值 9,318（2024-09），1.0（2025-11-18）后商店写“1 到 16 人”，2026-10 月均 238（2.6%），评论 1.76 万、86% 好评，$9.99。即便是它，平稳期也只剩一两百人。",
+  "[事实] 2–6 人好友开黑才是近年的爆款形态：Lethal Company（4 人，峰值 23.9 万）、Content Warning（4 人，首日免费领取 620 万、峰值 20.4 万，转付费后两个月又卖 220 万）、R.E.P.O.（≤6 人，峰值 26.7 万）、PEAK（≤4 人，峰值 17.0 万）。它们发售时大多没有公开匹配，靠好友邀请传播；R.E.P.O. 走红后开发者才去社区征求做公开匹配大厅的意见（https://pcgamer.com/games/horror/after-repo-kinda-blew-up-its-developer-asks-the-community-for-advice-on-how-to-make-matchmaking-lobbies ；Content Warning：https://gamedeveloper.com/business/content-warning-opens-to-near-205k-players-nets-6-2m-owners-at-launch 、https://www.gamesradar.com/games/co-op/turns-out-you-can-give-away-66-million-copies-of-your-game-add-a-price-later-and-still-sell-22-million-more-in-just-2-months ）。",
+  "[事实] 社交传播因子：Lethal Company 的走红被归因于近距离语音带来的“尖叫与喜剧”切片（https://pcgamer.com/lethal-company-is-a-viral-hit-in-no-small-part-thanks-to-all-the-intense-shouting ）；Liar's Bar 上线 3 周内同时在线破 10 万（https://gameworldobserver.com/2024/10/21/liars-bar-100k-ccu-steam-curve-animation-turkey-success ）。共性：第一人称、近距离语音、低价（$5–10）、10–20 分钟一局、容易出搞笑镜头。",
+  "[推算] 峰值“虚胖”程度：总评论 ÷ 历史峰值 CCU，Liar's Bar 0.48、Dread Hunger 0.46、Goose Goose Duck 0.13（免费），而 PZ 3.2、Barotrauma 3.5、Backrooms 3.1——社交推理类的峰值更多来自主播带来的短时尝鲜，转化成长期玩家/评论的比例更低。",
+  "[事实] 中国玩家占比：Steam 2026-10 硬件调查简体中文 21.98%（环比 −9.41 个百分点，月间波动大，https://store.steampowered.com/hwsurvey/ ）。各对标作简中评论占全部评论（Steam 商店按语言统计，2026-11-25）：Dread Hunger 84.5%、Goose Goose Duck 45.1%、Reactive Drop 33.3%、Liar's Bar 22.4%、Escape the Backrooms 21.3%、Project Winter 21.3%、MGH 12.3%、Barotrauma 11.6%、PEAK 5.7%、PZ 5.1%、MIMESIS 5.1%、R.E.P.O. 4.3%、Lockdown 3.8%、Lethal 3.5%、Content Warning 3.4%、Among Us 2.1%、WEBFISHING 0.5%；Dale & Dawson 的简中评论少到商店不单列。规律：多人社交推理/大房间类明显更吃中国玩家；合作恐怖类通常 3–6%。",
+  "[事实] 简中评论更苛刻：同一游戏的简中好评率普遍低于全球——Liar's Bar 82% vs 89%、PEAK 84% vs 94%、MIMESIS 71% vs 84%、Project Winter 77% vs 84.5%、MGH 70% vs 80%、Barotrauma 87% vs 93.5%、Lockdown 82% vs 86%、Deceit 2 47% vs 55%；例外是 Reactive Drop（96% vs 94.6%）、Escape the Backrooms（91% vs 89%）。（Steam 商店语言评论统计，2026-11-25）",
+  "[事实] 国区定价实测（Steam appdetails cc=cn vs cc=us，2026-11-25）：$2.99→¥15，$4.99→¥22，$6.99→¥29，$7.99→¥33，$9.99→¥35–42（R.E.P.O. ¥35、Backrooms/Project Winter ¥37、MIMESIS ¥38、Lethal/Lockdown ¥42），$19.99→¥74，$24.99→¥93，$34.99→¥130。本项目 ¥15–48 区间约等于美区 $2.99–11.99。",
+  "[事实] 退款：Steam 购买 14 天内且游玩 <2 小时可申请退款（https://store.steampowered.com/steam_refunds/ ，https://help.steampowered.com/en/faqs/view/5FDE-BA65-ACCE-A411 ）。对 40 分钟一局的游戏而言，玩家最多体验 2–3 局就到期限：只要首局遇到空房、全 Bot 或掉线，就很容易退款。",
+  "[事实] 独立开发者经验：一款“表现尚可但不算爆款”的独立游戏，发售几周后有 40 人同时在线就算不错；低于 10 人同时在线需要“极端手段”；纯联机游戏不建议定价超过 $15；解决办法包括合并模式、等待时可单人游玩、用 Bot 补位并加倒计时（Awesomenauts 开发者 Joost，https://joostdevblog.blogspot.com/2015/09/designing-matchmaking-for-smaller.html ）。",
+  "[主观] 对本项目最关键的一条：12–16 人大房间本身不是卖点，“2–4 个好友 + Bot 就能玩完整局，人多了更热闹”才是能活下去的形态。样本里没有一款“必须凑满 8 人以上才好玩”的买断制独立作在两年后还能保持峰值 3% 以上的月均。"
+ ],
+ "implementation_guidance": [
+  "适用：Godot 4.x + GodotSteam 4.x（API/信号名以所装版本的 docs 为准；以下为 GodotSteam 4 系列通用名）。目标：让冷启动期“1 个真人也能开局、2–4 人就热闹”。",
+  "1) 开局条件与 Bot 补位（V1.0 必做）：房间参数 min_humans_to_start = 1、target_slots = 12（可配 10–16）、fill_countdown_sec = 60（大厅已有 ≥2 真人时缩短为 30）；倒计时到期或房主点“开始”即用 Bot 补满；中途有人退出立刻由 Bot 接管其角色（保持人数与平衡）。伪代码：\nfunc _on_fill_timer_timeout():\n    var humans := lobby_members.size()\n    for i in range(target_slots - humans):\n        spawn_bot(next_free_slot(), difficulty_for(humans))\n    start_match()",
+  "2) 大厅列表与公开房间：建房 Steam.createLobby(Steam.LOBBY_TYPE_PUBLIC, 16)，在 lobby_created 信号里用 Steam.setLobbyData(lobby_id, \"humans\", str(n)) / \"state\"=\"waiting\"|\"in_match\" / \"floor_count\" / \"ver\" 写元数据；拉列表前调用 Steam.addRequestLobbyListDistanceFilter(Steam.LOBBY_DISTANCE_FILTER_WORLDWIDE)（冷启动期人少，别按地域切池）、Steam.addRequestLobbyListStringFilter(\"ver\", GAME_VER, Steam.LOBBY_COMPARISON_EQUAL)，再 Steam.requestLobbyList()，结果在 lobby_match_list(lobbies) 信号里处理。快速匹配 = 同一结果中挑 humans 最多且 state=waiting 的房间，没有就直接建房并开 Bot 倒计时，绝不让玩家看“搜索中”超过 60 秒。",
+  "3) 不展示“死服”信号：全局在线数（Steam.getNumberOfCurrentPlayers() → number_of_current_players 信号）只在 ≥200 时显示；房间列表为空时显示“创建房间（Bot 会自动补位）”，而不是“0 个房间”。",
+  "4) 首局保护（防 2 小时内退款）：首次启动默认进“单人 + Bot 教学局”（可跳过），保证不依赖他人就能在前 40 分钟体验到感染、反转、撤离三个高潮；把局长做成可配置（默认 40 分钟，另提供 15–20 分钟快速局供直播/新手）。",
+  "5) 埋点（$0）：每局结束本地记录 {humans_at_start, humans_at_end, bots, duration, region_guess, result, quit_reason}，经 Cloudflare Workers 免费档上报（与排障日志共用接口）；Steamworks 后台另看退款率、按语言评论、Wishlist 转化率。",
+  "6) 商店与发行：上线即提供简体中文（大房间社交类简中评论可占 20–80%）；美区 $7.99–9.99、国区 ¥33–42（参考同价位实测）；先开 Steam Playtest（独立 appid）和带联机的 Demo 参加 Next Fest，用于量 CCU、找主播；固定每周“开黑夜”时段把人集中起来（Joost 经验）。",
+  "7) 传播素材：给主播一键“直播模式”（隐藏房间码、开启夸张的感染/反转音效与屏幕提示、自动高光回放导出 15 秒片段）。V1.5 可评估 GodotSteam 的语音接口（Steam.startVoiceRecording()/getVoice()/decompressVoice()）做同楼层近距离语音，这是近年同类爆款的关键传播因子之一。"
+ ],
+ "pitfalls_and_failures": [
+  "把首发峰值当成“已经有玩家基础”：Liar's Bar 首月月均近 2 万人，26 个月后只剩 542；Dale & Dawson 从 2,066 跌到 33（SteamCharts）。按峰值规划 12 人真人匹配必然落空。",
+  "必须凑满真人才好玩 → 死亡螺旋：Midnight Ghost Hunt（4v4、$19.99）人少后对局多为 Bot，玩家评价“没人”，月均跌到个位数；Unfortunate Spacemen（16 人、免费）月均仅 7 人（SteamCharts）。Bot 只是补位，不能是“假装真人”的低质量填充——评论区会把它当作“死服”的证据。",
+  "定价过高的纯联机作：Midnight Ghost Hunt $19.99 是样本里最贵的纯 PvP 作之一，留存也最差；独立开发者经验认为纯联机作不宜超过 $15（https://joostdevblog.blogspot.com/2015/09/designing-matchmaking-for-smaller.html ）。",
+  "官方服务器成本与 DDoS 拖垮项目：Dread Hunger 以服务器成本和频繁 DDoS 为由关服（https://www.gamepressure.com/newsroom/2-years-ago-dread-hunger-was-a-steam-hit-now-its-about-to-die/z36463 ）。本项目只用 Steam Lobby/SDR、不租服，正好避开这一点；但它关服后靠社区服仍有数百人在线，说明“开放自建服”是一条好退路。",
+  "中国玩家口碑波动：大房间社交类简中评论占比可高达 84.5%（Dread Hunger），简中好评率普遍比全球低 5–13 个百分点；外挂、语言隔离、跨区延迟都会集中体现在简中差评里（本项目不做反作弊，要预留“房主踢人/投票踢人”）。",
+  "数据口径陷阱：SteamCharts 采样会漏掉短时峰值（Content Warning SteamCharts 记 63,320，SteamDB/媒体记 204,439）；Steam 评论直方图与商店“全部评测”总数也略有差异（如 Dale & Dawson 直方图 8,247 vs 商店 7,838）；SteamSpy 的部分新作数据停更（PEAK、MIMESIS 显示 0 评论）。引用时要注明来源与日期。",
+  "销量估算差异巨大：R.E.P.O. 早期 Gamalytic 估 310 万、VG Insights 估 150 万，后来 Alinea 估 2,870 万（https://wnhub.io/news/indie/item-47358 ，https://otakukart.com/r-e-p-o-has-sold-6-7-million-copies-on-steam-in-2026-generating-44-7-million-in-revenue/ ）。所有销量只能当数量级参考。",
+  "AI 编码易错点：把“开局条件”写成 lobby_members.size() >= max_members；把大厅过滤默认成地域近距离（LOBBY_DISTANCE_FILTER_DEFAULT）导致中外玩家互相看不到房间；Bot 接管掉线玩家时忘了继承物品/感染状态；在客户端显示真实全局在线数让游戏显得冷清。"
+ ],
+ "quantitative_params": [
+  "2025 年 Steam 新作数 / 20,282 / 款 / 全年 / Zukowski（howtomarketagame.com，2026-01-27）",
+  "2025 年拿到 ≥1,000 评论的新作 / 608（≈3.0%）/ 款 / 截至 2026-01 快照 / 同上",
+  "2025 年评论 <10 条的新作占比 / 近 50%（2024 年 43.56%）/ % / SteamDB / 80.lv 2025-12-15",
+  "2025 年评论 >500 条的新作占比 / ≈6.2%（2024 年 7.2%）/ % / SteamDB / 同上",
+  "评论→销量倍数（NB 数）/ 均值 41、中位 38；>90% 好评中位 ~30；~70% 好评 ~60 / 份每条评论 / 2020 年作品 / GameDiscoverCo",
+  "合作 vs 非合作 中位销量 / ~38–40k vs ~5k（≈7.6×）/ 份 / PvE 合作口径，2024 年中 / VG Insights",
+  "首日 CCU → 首周销量 / 中位 20.4×（无预购 21.8×）/ 倍 / 2025-03 Steam Top50 首发 / GameDiscoverCo 2025-05-13",
+  "历史峰值 CCU → 首周销量 / 中位 11.4× / 倍 / 同上",
+  "峰值出现时间 / 中位 2.5 天（无预购）、全部 3.5 天 / 天 / 同上",
+  "平稳期月均 CCU ÷ 历史峰值（24 款同类作）/ 中位 1.5%；单人/Bot 可玩组 ~7.4%；纯联机社交推理组 ~1.2% / % / 2026-10 月均 / SteamCharts 自采",
+  "平稳期月峰 CCU ÷ 历史峰值（24 款）/ 中位 3.9% / % / 2026-10 / SteamCharts 自采",
+  "12 真人开局所需同时在线 / ≈170（到达 4 人/分 × 43 分钟）/ 人 / 同一可互联玩家池、5 分钟耐心、≥99% 进局 / [推算] 排队模拟",
+  "4 真人 + Bot 开局所需同时在线 / ≈40（1 人/分，94% 进局）/ 人 / 同上 / [推算]",
+  "2 真人 + Bot 开局所需同时在线 / ≈10（0.25 人/分，83% 进局）/ 人 / 同上 / [推算]",
+  "“还算不错”的独立游戏发售数周后同时在线 / ~40 / 人 / 经验值 / Joost（Awesomenauts）",
+  "纯联机作定价上限建议 / $15 / 美元 / 经验值 / 同上",
+  "Steam 简体中文用户份额 / 21.98%（环比 −9.41pp）/ % / 2026-10 硬件调查 / store.steampowered.com/hwsurvey",
+  "Steam 英语用户份额 / 39.04% / % / 同上",
+  "同类作简中评论占比范围 / 0.5%（WEBFISHING）– 84.5%（Dread Hunger）；合作恐怖类常见 3–6%；社交推理大房间类 20%+ / % / 2026-11-25 / Steam 商店语言评论",
+  "简中好评率与全球差 / 通常低 4–13 个百分点 / pp / 同上",
+  "国区价格换算 / $7.99→¥33；$9.99→¥35–42；$4.99→¥20–22；$2.99→¥15 / CNY / 2026-11-25 / Steam appdetails cc=cn",
+  "Steam 退款窗口 / 14 天 & <2 小时游玩 / — / 官方 / store.steampowered.com/steam_refunds",
+  "Dale & Dawson / $7.99；峰值 6,465（SteamDB）；2026-10 月均 33；2026-11-25 实时 8；评论 ~7.8–8.2k、91% / — / 2026-11-25 / SteamCharts + Steam API",
+  "Lockdown Protocol / $9.99；峰值 9,318；月均 238；实时 165；评论 1.76 万、86% / — / 同上",
+  "Liar's Bar / $6.99；峰值 109,419；月均 542；实时 258；评论 5.2 万、89% / — / 同上",
+  "Barotrauma / $34.99；峰值 19,528；月均 2,523；实时 1,453；评论 6.7 万、93.5% / — / 同上",
+  "Among Us / $2.99；峰值 438,524；月均 7,050；实时 2,534；评论 74.6 万、92% / — / 同上",
+  "Project Zomboid / $24.99；峰值 124,506；月均 48,319；实时 21,590；评论 40.1 万、93% / — / 同上",
+  "Lethal Company / $9.99；峰值 239,369；月均 2,733；实时 2,365；评论 43.9 万、96.7% / — / 同上",
+  "Content Warning / $4.95；峰值 204,439（SteamDB）；月均 755；实时 337；评论 7.8 万、92.6% / — / 同上",
+  "Dread Hunger / 已下架；峰值 107,820；月均 743；实时 442；评论 ~5 万、59.6% / — / 同上",
+  "Midnight Ghost Hunt / $19.99；峰值 4,801；月均 5.6；实时 1；评论 5.9k、80% / — / 同上",
+  "WEBFISHING / $4.99；峰值 23,966；月均 175；实时 175；评论 6.1 万、97.4% / — / 同上",
+  "Project Winter / $9.99；峰值 [不确定]；实时 19；评论 1.49 万、84.5% / — / Steam API + 直方图",
+  "Alien Swarm: Reactive Drop / 免费；峰值 9,335；月均 129；实时 81；评论 2.6 万、94.6% / — / 同上",
+  "R.E.P.O. / $9.99；峰值 266,908；月均 17,538；评论 36.9 万、95.6% / — / 同上",
+  "PEAK / $7.99；峰值 169,910；月均 13,877；评论 32.7 万、93.8% / — / 同上",
+  "MIMESIS / $9.99；峰值 8,254；月均 511；评论 9.2k、84% / — / 同上"
+ ],
+ "alternatives_comparison": [
+  "A. 坚持 12–16 真人大房间、不做 Bot：代价——需要同区约 170 人同时在线才能稳定开局，对应首发峰值约 1.4 万；收益——真人社交最强；结论：不值得，冷启动期几乎必死。",
+  "B. 12–16 人上限 + 1 人即可开局、Bot 补位（本项目当前方案）：代价——Bot AI 工作量大，且 Bot 质量差会被当成“死服”；收益——开局门槛降到约 10–40 人同时在线，单人/小队也能打完整局；结论：值得，是 V1.0 底线。",
+  "C. 主打 2–4 人好友开黑（默认房间 4–6 真人 + Bot），12–16 人作为“派对房”可选：代价——宣传重心从“大逃杀式大房间”转向“好友+Bot”；收益——匹配 2023–2025 年 Lethal/Content Warning/R.E.P.O./PEAK 的传播结构，靠好友邀请自然扩散；结论：最推荐。",
+  "D. 免费游玩 / 首日免费 / 免费周末：代价——放弃部分收入，需要内购或后续转付费；收益——Content Warning 首日免费领取 620 万、峰值 20.4 万，转付费后两个月又卖 220 万；结论：可作为发售或周年活动的手段，不宜长期 F2P（Deceit 2、Unfortunate Spacemen、Town of Salem 2 等 F2P 作口碑和人数都一般）。",
+  "E. 开放社区自建服 / 模组（V1.5 C3）：代价——工具与文档；收益——Dread Hunger 关官方服后靠社区服仍有数百人在线；结论：作为长期低维护的退路值得做。"
+ ],
+ "project_implications": [
+  "1) 把“冷启动存活”定义为：发售 3 个月后，玩家任意时刻点进游戏都能在 60 秒内开始一局有意义的对局（不管有几个真人）。按这个定义，Bot 兜底 + 单人可玩不是锦上添花，而是生存条件。[主观]",
+  "2) 宣传与默认设置都应以“2–4 个好友 + Bot 撑起 12–16 人高楼”为核心卖点，真人大房间是“人多时的彩蛋”。依据：近年爆款都是 2–6 人好友开黑形态；大房间社交推理作（D&D、Liar's Bar、Dread Hunger、MGH）平稳期月均普遍 <1% 峰值。",
+  "3) 40 分钟一局在冷启动上有两个劣势：同时在线需求与局长成正比（Little 定律），而且不利于主播切片。建议保留 40 分钟完整局作为核心体验，另外提供 15–20 分钟快速局（较少楼层或更早出现直升机），用于新手、直播和 2 小时退款窗口内多体验几局。[主观]",
+  "4) 定价：建议美区 $7.99–9.99、国区 ¥33–42（与 Lethal/PEAK/R.E.P.O./Lockdown 同档）；不要超过 $15。首发 10–20% 折扣。",
+  "5) 中国大陆：同类社交/大房间作简中评论常占 20%+，必须首发就有完整简中；但简中评价更苛刻，且中外玩家不在同一时段在线——大厅过滤用 WORLDWIDE 而不是按地域切池，并依赖 SDR 改善跨境连接。",
+  "6) 商业预期（[推算]，供胜率模型）：样本中位“小爆款”（D&D、Lockdown、MGH、MIMESIS、Feign 这一档）峰值 2.7k–9.3k、评论 4–18k、估算 18–88 万份；但它们都是幸存者，2025 年只有 3% 的新作达到 1,000 条评论（约对应 3–5 万份）。首作个人开发者的合理基准：中位情形几百到几千份，达到 1,000 条评论的概率约 3–8%（联机/合作题材加成后）。[主观]",
+  "7) 运营：Playtest/Demo 阶段就测“同时在线 vs 开局等待时间 vs Bot 占比”，用数据决定默认房间人数；只要实测同时在线 <40，就把快速匹配默认改成“立即开局 + Bot”。"
+ ],
+ "mvp_scope": {
+  "V1.0 最小可行": [
+   "1 人即可开局，60 秒倒计时后 Bot 补满；掉线玩家由 Bot 接管",
+   "单人 + Bot 首局教学，可完整打完 40 分钟局",
+   "房间列表 WORLDWIDE 过滤 + 快速匹配（找不到就建房开 Bot）；空列表不显示“0 个房间”",
+   "完整简体中文；美区 $7.99–9.99 / 国区 ¥33–42",
+   "$0 埋点：每局真人数/Bot 数/时长/退出原因",
+   "Steam Playtest + 带联机的 Demo（Next Fest）"
+  ],
+  "V1.5 再做": [
+   "15–20 分钟快速局",
+   "同楼层近距离语音（Steam Voice）与直播模式/高光片段导出",
+   "社区自建专服（C3）与模组",
+   "固定“开黑夜”活动、免费周末"
+  ],
+  "不建议做": [
+   "必须凑满 N 名真人才开局的硬门槛",
+   "在主界面显示真实全局在线数（人少时）",
+   "长期 F2P + 内购",
+   "按地域切分大厅池"
+  ]
+ },
+ "effort_estimate": [
+  "本 item 涉及的冷启动功能（不含 Bot AI 本体，后者归 AI/玩法 item）：开局/补位/接管逻辑 1.5–2 人周、大厅列表与快速匹配 UX 1–1.5 人周、首局教学与快速局配置 1–2 人周、埋点上报 0.5 人周、商店页/定价/简中本地化/Playtest 运营 1–2 人周，合计约 5–8 人周 [推算]。",
+  "AI 编码难度：中。典型错误见 pitfalls（开局条件写死满员、大厅地域过滤、Bot 接管丢状态、显示真实在线数）。",
+  "必须人工把关：1 人开局到结算全流程；2 人 + 10 Bot 时 Bot 是否“像人但不冒充人”；首局 40 分钟内是否出现感染/反转/撤离三个高潮；大厅空时的文案与引导。"
+ ],
+ "risk_rating": [
+  "致命：若最终仍需 ≥8 名真人才有好体验——触发条件：Bot 质量差/单人局不好玩；依据：纯联机社交推理组平稳期中位只剩峰值 1.2%，维持 12 真人开局需峰值约 1.4 万，远超首作独立游戏的基准率。缓解：V1.0 把“单人带 Bot 好玩”列为发布红线。",
+  "麻烦但可解：首发曝光不足（2025 年近半新作评论 <10 条）——缓解：Playtest/Demo/Next Fest、主播素材、首日折扣或免费周末。",
+  "麻烦但可解：简中差评与跨区延迟——缓解：首发简中、WORLDWIDE 大厅 + SDR、房主踢人/投票踢人。",
+  "低：服务器成本与 DDoS（Dread Hunger 的死因之一）——本项目不租服、只用 Steam P2P/SDR，风险低。"
+ ],
+ "win_probability_inputs": [
+  "冷启动存活率（发售 3 个月后仍能随时开局）：有 Bot 兜底 + 单人可玩时 +25～35 个百分点（相对“需 12 真人开局”的基线），依据是两组留存相差约 6 倍、所需在线人数相差约 4–17 倍 [推算]。",
+  "冷启动存活率：若默认以“2–4 好友 + Bot”宣传与设计，而不是“16 人大房间”，再 +5～10 个百分点 [主观]（契合近年爆款传播结构）。",
+  "冷启动存活率：40 分钟固定长局、无快速局 −3～5 个百分点（同时在线需求 ∝ 局长，切片密度低）[主观]。",
+  "冷启动存活率（商业层面）：首作个人开发者达到 1,000 条评论的基准约 3%（全 Steam），联机合作题材加成后取 3–8% [推算/主观]；达到“能维持约 40 人同时在线”的基准约 10–20% [主观]。",
+  "长期低维护度：不租服 + 可开放社区服 +5 个百分点（Dread Hunger 关官方服后靠社区服仍存活）[主观]。"
+ ],
+ "test_verification_points": [
+  "排队/开局模拟（可 headless）：Python/GDScript 蒙特卡洛，按 Poisson 到达率 0.1–4 人/分、耐心 3/5/10 分钟、局长 15/40 分钟，输出进局率与等待中位数；红线：在 10 人同时在线下，进局率 ≥95%、等待中位数 ≤60 秒（靠 Bot 补位）。",
+  "Playtest 实测：采集 同时在线 CCU、每局开局真人数分布、Bot 占比、等待时长 P50/P90、局内退出率、D1/D7 回访；红线：等待 P90 ≤90 秒，真人中途退出率 ≤20%。",
+  "单人带 Bot 完整局（可 headless 跑 Bot vs Bot）：40 分钟内不卡死、能结算；人工验收是否好玩。",
+  "退款风险代理指标：首次游玩 2 小时内完成 ≥1 局完整局的比例 ≥80%；Steamworks 后台退款率对标同类（若 >10% 需排查首局体验）[主观阈值]。",
+  "语言/地区：Playtest 按语言统计反馈与评论，简中好评率与全球差距 ≤10 个百分点为合格。"
+ ],
+ "china_mainland_notes": [
+  "玩家占比：Steam 2026-10 简体中文用户 21.98%（月间波动可达 ±10 个百分点）；同类社交推理/大房间作简中评论占比 20–85%（Dread Hunger 84.5%、Goose Goose Duck 45%、Liar's Bar 22%、Project Winter 21%），合作恐怖类 3–6%。",
+  "口碑：简中好评率普遍比全球低 4–13 个百分点，发售前就要准备简中客服/公告。",
+  "定价：国区 ¥33–42 对应美区 $7.99–9.99；同档作品 R.E.P.O. 定 ¥35，比 Lethal/Lockdown 的 ¥42 更低。",
+  "退款：与全球一致，14 天 & <2 小时；40 分钟长局意味着首局体验决定退款。",
+  "社区渠道：Dread Hunger 走红被归因于中国头部主播带动（据开发者复盘的搜索摘要，原文 Medium 403 未能直读，[不确定]）；B 站切片、斗鱼/虎牙直播是大房间社交类在国内爆发的主要途径。",
+  "连接：大厅不按地域切池（WORLDWIDE），依赖 Steam SDR 改善跨境 P2P；中外高峰时段不同，等于把在线池切成两半，冷启动更依赖 Bot。"
+ ],
+ "sources": [
+  "SteamCharts 各游戏月度 CCU 表 — https://steamcharts.com/app/{108600,602960,563560,945360,3146520,3097560,2920570,2780980,1966720,2881650,1418630,915810,3241660,3527290,2827200,2064870,1436990,2963880,3716600,2140510,1943950,17500,1568590,408900} — 访问 2026-11-25 — 数据平台（采样，可能漏短时峰值）— 中高可信",
+  "Steam Web API GetNumberOfCurrentPlayers — https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=2920570 — 2026-11-25 实测 — API 实测 — 高",
+  "Steam 商店 appdetails（价格/发售日/分类/描述，cc=us & cc=cn）— https://store.steampowered.com/api/appdetails?appids=2920570&cc=cn — 2026-11-25 — API 实测 — 高",
+  "Steam 评论直方图（全部语言汇总）— https://store.steampowered.com/appreviewhistogram/2920570?l=english&review_score_preference=0 — 2026-11-25 — API 实测 — 中高（与商店总数略有差异）",
+  "Steam 商店页按语言评论统计（l=english/schinese/russian/brazilian）— https://store.steampowered.com/app/3527290/?l=schinese — 2026-11-25 — 一手页面 — 高",
+  "SteamSpy appdetails — https://steamspy.com/api.php?request=appdetails&appid=2920570 — 2026-11-25 — 数据平台（估算，部分新作停更）— 中",
+  "Steam 硬件与软件调查 2026-10 — https://store.steampowered.com/hwsurvey/ — 2026-11-25 — 官方 — 高（月间波动大）",
+  "Steam 退款政策 — https://store.steampowered.com/steam_refunds/ ；https://help.steampowered.com/en/faqs/view/5FDE-BA65-ACCE-A411 — 访问 2026-11-25 — 官方 — 高",
+  "Chris Zukowski《What the hell happened in 2025》— https://howtomarketagame.com/2026/01/27/what-the-hell-happened-in-2025/ — 2026-01-27 — 行业分析 — 中高",
+  "80.lv：2025 年近半新作 <10 条评论（SteamDB 数据）— https://80.lv/articles/steam-earned-usd16b-in-2025-but-nearly-half-of-19-000-games-got-under-10-reviews — 2025-12-15 — 媒体转述数据 — 中",
+  "GameDiscoverCo《How your Steam launch players relate》— https://newsletter.gamediscover.co/p/how-your-steam-launch-players-relate — 2025-05-13 — 行业分析 — 中高",
+  "GameDiscoverCo《How three tiny social games inverted Steam CCU curves》— https://newsletter.gamediscover.co/p/how-three-tiny-social-games-inverted — 2024-10-18 — 行业分析（付费墙，仅见导语）— 中",
+  "GameDiscoverCo NB 数 — https://newsletter.gamediscover.co/p/how-that-game-sold-on-steam-using ；https://www.gamedeveloper.com/business/how-that-game-sold-on-steam-using-the-nb-number-2 — 2021 — 行业方法 — 中高",
+  "VG Insights《Rise of the Co-Op Games》— https://vginsights.com/assets/reports/VGI_Rise_of_the_Co-Op_Games.pdf ；摘要 https://gamedevreports.substack.com/p/vg-insights-cooperative-games-on — 2024-07 — 数据平台报告 — 中（估算）",
+  "Joost van Dongen（Awesomenauts）《Designing matchmaking for smaller communities》— https://joostdevblog.blogspot.com/2015/09/designing-matchmaking-for-smaller.html — 2015-09 — 开发者经验 — 中（年代较早但机制通用）",
+  "Dread Hunger 下架与关服 — https://www.gamepressure.com/newsroom/2-years-ago-dread-hunger-was-a-steam-hit-now-its-about-to-die/z36463 ；https://delistedgames.com/?p=23607 — 2023-11 — 媒体/档案 — 中高",
+  "Content Warning 首日免费 620 万、峰值 20.4 万 — https://gamedeveloper.com/business/content-warning-opens-to-near-205k-players-nets-6-2m-owners-at-launch ；https://www.gamesradar.com/games/co-op/turns-out-you-can-give-away-66-million-copies-of-your-game-add-a-price-later-and-still-sell-22-million-more-in-just-2-months — 2024-04/06 — 媒体（引发行商）— 中高",
+  "Liar's Bar 三周破 10 万在线 — https://gameworldobserver.com/2024/10/21/liars-bar-100k-ccu-steam-curve-animation-turkey-success — 2024-10-21 — 媒体 — 中高",
+  "Lethal Company 近距离语音与传播 — https://pcgamer.com/lethal-company-is-a-viral-hit-in-no-small-part-thanks-to-all-the-intense-shouting — 2023-11 — 媒体 — 中",
+  "R.E.P.O. 爆红后征求匹配大厅建议 — https://pcgamer.com/games/horror/after-repo-kinda-blew-up-its-developer-asks-the-community-for-advice-on-how-to-make-matchmaking-lobbies — 2025 — 媒体（正文未能读取，仅标题）— 中",
+  "R.E.P.O. 销量估算分歧 — https://wnhub.io/news/indie/item-47358 ；https://otakukart.com/r-e-p-o-has-sold-6-7-million-copies-on-steam-in-2026-generating-44-7-million-in-revenue/ — 2025/2026 — 第三方估算 — 低中",
+  "PEAK 销量 1,000 万 — https://www.vgchartz.com/article/465514/peak-sales-top-10-million-units/ ；https://gamesradar.com/games/co-op/after-a-few-months-of-work-led-to-11-million-copies-sold-on-steam-peak-devs-embrace-what-many-companies-refuse-to-learn-were-not-going-to-continually-have-a-graph-go-up — 2025 — 媒体（第三方估算 + 台上确认）— 中",
+  "Midnight Ghost Hunt Epic 百万新玩家 / Bot 评论摘要 — https://godisageek.com/2023/07/midnight-ghost-hunt-hits-a-million-players-full-controller-support-is-coming/ ；https://www.gamepressure.com/games/movie.asp?ID=38775 — 2023 / 访问 2026-11 — 媒体 — 中",
+  "Dale & Dawson 销量估算 — https://raijin.gg/app/2920570/Dale__Dawson_Stationery_Supplies ；https://www.steampageanalyzer.com/games/2920570 — 访问 2026-11 — 第三方估算 — 低中",
+  "Lockdown Protocol EA/1.0 日期 — https://www.dekudeals.com/items/lockdown-protocol ；Steam 商店 appdetails（“1 到 16 人”）— 访问 2026-11-25 — 一手/零售 — 中高"
+ ],
+ "uncertain": [
+  "prior_claims_check",
+  "china_mainland_notes",
+  "win_probability_inputs",
+  "quantitative_params"
+ ]
+}
