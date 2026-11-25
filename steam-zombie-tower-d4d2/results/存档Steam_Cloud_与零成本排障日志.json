@@ -1,0 +1,114 @@
+{
+ "name": "存档、Steam Cloud 与零成本排障日志",
+ "category": "运维、发行与测试",
+ "research_scope": [
+  "Steam Cloud Auto-Cloud 与 ISteamRemoteStorage 配置、配额、路径、冲突",
+  "存档 schema 版本迁移与成长数据统一上报接口",
+  "sentry-godot 版本/功能与 Sentry 免费档、大陆可达性",
+  "Cloudflare Workers/R2 免费额度、workers.dev 大陆可达性、自定义域名",
+  "为什么不能把 Discord Webhook 直接放客户端",
+  "GlitchTip、Backtrace、Supabase、GitHub Issues API 等 $0 方案对比"
+ ],
+ "prior_claims_check": "无",
+ "current_status": [
+  "[事实] sentry-godot 最新可见版本 2.5.1（11 月 12 日）、2.5.0（11 月 10 日，新增 web tunneling 以规避广告拦截）；SDK 2.x 需要 Godot 4.5+，基于 sentry-native，MIT 协议（核实 2026-11-25，github.com/getsentry/sentry-godot）",
+  "[事实] Sentry 免费 Developer 档：5k 错误、1 GB 附件、5 GB 日志、30 天回溯、1 用户（sentry.io/pricing，2026-11-25；页面未明示是否按月）",
+  "[事实] Cloudflare Workers Free：10 万请求/天、每请求 CPU 10ms、请求体 100MB（取决于域名套餐）、50 子请求；R2 免费：10GB 存储、A 类 100 万次/月、B 类 1000 万次/月、出站免费（官方文档，2026-11-25）",
+  "[事实] GodotSteam 最新 4.24（11 月 8 日，Steamworks SDK 1.65）；GitHub 仓库已于 2026-11-10 归档，迁至 Codeberg（codeberg.org/godotsteam/godotsteam）——选型需关注后续维护与下载源",
+  "[事实] Steamworks Auto-Cloud 无需改代码，配额需自行设置，页面不给默认数值"
+ ],
+ "key_findings": [
+  "[事实] Steam Cloud 配额按「每用户每游戏」执行，需在 Steam Cloud Settings 填「Byte quota per user」与「Number of files allowed per user」，官方只建议「合理值」无具体默认 https://partner.steamgames.com/doc/features/cloud",
+  "[事实] Auto-Cloud 的 Root Path 由 Root/Subdirectory/Pattern/OS Restriction/Recursive 五部分构成，可精确到单个文件；WinAppDataLocal 对应 %USERPROFILE%\\AppData\\Local（同上）",
+  "[事实] 单次 FileWrite 上限 100MB；官方页面未写冲突解决细节（同上）。[推算] 本项目存档 <100KB，Auto-Cloud 足够，配额建议 5MB/20 个文件",
+  "[事实] 玩家可在 Steam 设置全局或按游戏关闭云同步；官方页面未说明游戏应如何处理，需自行容错（同上）",
+  "[事实] Godot 的 user:// 在 Windows 为 %APPDATA%\\Godot\\app_userdata\\<项目名>，不是 AppData\\Local。[推算] 若用 Auto-Cloud 需用 WinAppDataRoaming 并指向该子目录，或改用 GodotSteam RemoteStorage 手写（需实测确认路径）",
+  "[事实] sentry-godot 功能：崩溃报告、脚本错误、硬件信息、用户反馈、附件、结构化日志（2.2.0 起默认开启）、SentryScope.add_attachment()（GitHub releases）",
+  "[事实] Sentry 官方客服称不阻断中国境内流量，但没有为大陆专门优化；论坛回复称防火墙可能阻断；有 Huawei Cloud 实测 sentry.io 主域可通而 oNNN.ingest 子域被重置（来自搜索摘要，大陆实测缺失）",
+  "[不确定] Sentry DSN 在大陆玩家网络下的实际成功率：无一手实测。缓解：用自有域名 + Cloudflare Worker 做转发（tunnel）",
+  "[事实] Cloudflare 中国网络文档：R2 不支持在大陆建桶，自定义域名在大陆内不支持；Workers 属于中国网络产品，需 ICP 备案的域名才可走大陆合作网络；一条 GitHub 用户评论称 workers.dev 被 SNI 过滤（匿名反馈，非官方）",
+  "[不确定] workers.dev 在大陆的可达性：无官方结论，社区称不稳定。建议绑定自有域名（非 ICP 备案域名走海外节点，可达性仍需大陆多运营商实测）",
+  "[事实] Discord Webhook URL 本身即凭据，任何人拿到即可发消息；游戏客户端内嵌必然被反编译提取，导致刷屏/滥用（Trend Micro、Roblox DevForum 等案例）。结论：必须经自己的 Worker 代理并做限流与校验",
+  "[事实] GlitchTip 兼容 Sentry SDK/DSN，可自托管（MIT）；托管免费档据二手资料约 1000 事件/月 [不确定]，付费约 $15/月 10 万事件（二手比较站）",
+  "[不确定] Backtrace 免费档：本轮搜索无结果，未核实",
+  "[主观] 推荐组合：本地 JSON 存档 + Steam Cloud 做成长数据；排障日志优先 Cloudflare Worker + R2（自定义格式、可控）为主，Sentry 为崩溃补充"
+ ],
+ "implementation_guidance": [
+  "存档格式：JSON，顶层 {\"schema_version\":1,\"saved_at\":unix,\"profile\":{...},\"stats\":{...}}；写入先写 save.tmp 再 DirAccess.rename 覆盖，保留 save.bak 一份",
+  "迁移：var MIGRATIONS={1:_m1_to_2,...}; while d.schema_version<CURRENT: d=MIGRATIONS[d.schema_version].call(d)；遇到更高版本只读不覆盖并提示",
+  "冲突策略：用 saved_at + 累计游玩时长/总局数（单调递增字段）取较大者；成长类数值取 max 合并，避免回档",
+  "统一接口：autoload ProgressService，方法 submit_match_result(dict)；V1.0 实现 LocalSink（写本地并入 Steam Cloud），日后增加 HttpSink（POST 到 ¥30–60/月小服），两者实现同一 SinkBase",
+  "Steam Cloud 两条路：A) Steamworks 后台配置 Auto-Cloud（无需代码）；B) GodotSteam 的 Steam.fileWrite()/fileRead()/fileExists()/getFileCount() 手写。函数名需对照所用 GodotSteam 版本文档核实 [不确定]",
+  "Sentry：安装 sentry-godot 2.5.x（Godot 4.5+），Project Settings → Sentry → Options 填 DSN；崩溃时通过 SentryScope.add_attachment() 附上最近 N 行日志和存档摘要",
+  "一键上传日志：玩家点按钮 → 压缩 user://logs → HTTPRequest POST 到 https://logs.<自有域名>/upload（Worker），Worker 校验大小(<2MB)、IP 速率限制、写入 R2，并可转发 Discord 通知给开发者；Worker 内保存 Webhook 密钥",
+  "隐私：上传前提示并脱敏（去掉用户名、路径、Steam ID 需玩家同意）"
+ ],
+ "pitfalls_and_failures": [
+  "Steam 云同步被玩家关闭或离线：游戏必须可用本地存档运行，不可依赖云",
+  "Auto-Cloud 路径与 Godot user:// 路径不一致导致不同步 [推算]，必须在 Windows 实机核对",
+  "Discord Webhook 直接放客户端：必被提取并滥用，泄露后只能删除重建 https://devforum.roblox.com/t/if-youre-using-a-3rd-party-web-hook-for-discord-stop/1924934",
+  "Cloudflare Workers Free 每请求 CPU 10ms，不要在 Worker 里做压缩/解析大文件，只做转存",
+  "Sentry 免费档 5k 错误上限，循环错误可能很快耗尽，需在客户端去重/限频（beforeSend）",
+  "AI 编码易错：直接覆盖存档不写临时文件；忘记 schema_version；把云存档当唯一副本",
+  "GodotSteam 仓库归档迁移：旧 URL/下载脚本可能失效，需锁定版本并备份二进制"
+ ],
+ "quantitative_params": [
+  "Steam Cloud 单次写入上限 / 100 / MB / FileWrite 单调用 / 官方 cloud 文档",
+  "Steam Cloud 配额默认值 / 无公开默认 / 需自设 / 官方 cloud 文档 / [不确定]",
+  "Sentry Developer 免费档 / 5k 错误、1GB 附件、5GB 日志、30 天、1 用户 / sentry.io/pricing",
+  "Workers Free / 100000 请求/天 / CPU 10ms/请求 / 子请求 50 / 官方 limits 文档",
+  "R2 免费 / 10GB 存储、A 类 1M、B 类 10M 次/月、出站 $0 / 官方 pricing",
+  "Worker 请求体上限 / 100 / MB / 取决于域名套餐 / 官方",
+  "GlitchTip 托管付费入门 / 约 $15/月 10 万事件 / 二手比较站 / [不确定]",
+  "[推算] 日志上传估算：500 玩家 × 5% 上传 × 200KB ≈ 5MB，远低于所有免费额度"
+ ],
+ "alternatives_comparison": [
+  "Sentry 托管免费：功能全、集成现成；代价是大陆可达性未知、5k 错误上限。对本项目：值得做崩溃主力，但需 Worker 转发兜底",
+  "Cloudflare Worker + R2：完全可控、额度充足；代价是要写约 50 行 Worker、需自有域名、大陆可达性需测。值得：作为一键日志上传主路径",
+  "GlitchTip 自托管：兼容 Sentry SDK，但要有服务器；与「$0」冲突，现阶段不值得；V1.5 租小服时可顺带部署",
+  "GlitchTip 托管免费：额度小（约 1000/月 [不确定]），可作备选",
+  "Backtrace：免费档未核实 [不确定]",
+  "Supabase：可存日志表/文件，免费档有项目暂停机制 [不确定，未核实]；不比 R2 更简单",
+  "GitHub Issues API：需要 token，客户端内嵌不安全，仅适合经 Worker 转为 issue；公开 issue 有隐私风险；不建议",
+  "Discord Webhook：仅作为 Worker 后端通知通道，不暴露给客户端"
+ ],
+ "project_implications": "本项目存档体积很小，本地 JSON + Steam Cloud（Auto-Cloud 或手写）即可，重点是 schema_version、原子写入与「取最大值」合并，避免云冲突回档。排障方面推荐「自有域名 + Cloudflare Worker + R2」为主、sentry-godot 为辅：Worker 能同时转存日志、转发 Sentry 事件并转发 Discord 通知，且隐藏所有密钥。大陆玩家网络下 sentry.io 与 workers.dev 均无官方保证，上线前须在大陆多运营商实测，自定义域名是首选。GodotSteam 已迁 Codeberg 需锁定版本。统一的 ProgressService 接口让日后接小服上报只需新增 HttpSink。",
+ "mvp_scope": "V1.0：本地存档(schema+原子写+备份)、Steam Cloud(Auto-Cloud 或 GodotSteam 手写)、一键上传日志到 Worker/R2、sentry-godot 崩溃上报（可选）。V1.5：小服结果上报 HttpSink、日志面板检索、自动按 build 汇总。不建议：Discord Webhook 直连、自托管 Sentry、GitHub Issues 直传。",
+ "effort_estimate": "[推算] 存档+迁移 0.5 周；Steam Cloud 0.3 周；Worker+R2 上传 0.5 周；Sentry 接入 0.3 周；合计约 1.5 周。AI 编码难度：中（Worker 与存档易，云路径与冲突需人工）。必须人工把关：Windows 实机跨机器云同步、断网/关云行为、大陆网络上传成功。",
+ "risk_rating": "麻烦但可解：大陆可达性不确定（触发：玩家无法上传日志/Sentry 超时；缓解：自有域名、失败时导出本地 zip 让玩家手动发送）。存档回档风险：低，用单调字段合并。GodotSteam 仓库迁移：低。",
+ "win_probability_inputs": [
+  "上线稳定性：+1 到 +3 个百分点 [主观]（有日志上传才能远程排障）",
+  "长期低维护度：+1 个百分点 [主观]（$0 方案，无需运维）",
+  "技术完成率：影响很小 [主观]"
+ ],
+ "test_verification_points": [
+  "两台 Windows 机器用同一 Steam 账号测云同步与冲突（需自己的 AppID，不是 480）",
+  "关闭 Steam Cloud 后存档读写行为",
+  "大陆三大运营商分别 POST 日志到 Worker 自定义域名与 workers.dev，记录成功率/延迟（红线：成功率 ≥95%）",
+  "Sentry DSN 连通：大陆网络 curl oNNN.ingest 域名",
+  "Worker 限流与恶意大文件测试；均可脚本化，大陆测试需真人/云主机"
+ ],
+ "china_mainland_notes": "sentry.io 官方称不阻断但无大陆优化，社区有被重置的反馈，未实测；workers.dev 社区称被 SNI 过滤、无官方结论；Cloudflare 官方说大陆 R2 自定义域名不支持、Pages 不可用，走合作网络需 ICP 备案。建议：自有域名（海外解析）+ Worker 转发，上线前大陆实测，失败时提供本地导出日志文件的后备路径。[不确定]",
+ "sources": [
+  "Steam Cloud 官方文档 https://partner.steamgames.com/doc/features/cloud 访问 2026-11-25 官方文档",
+  "sentry-godot releases https://github.com/getsentry/sentry-godot/releases 访问 2026-11-25 源码/发布日志",
+  "sentry-godot README https://github.com/getsentry/sentry-godot 2026-11-25",
+  "Sentry 定价 https://sentry.io/pricing/ 2026-11-25 官方",
+  "Cloudflare Workers limits https://developers.cloudflare.com/workers/platform/limits/ 官方",
+  "Cloudflare R2 pricing https://developers.cloudflare.com/r2/pricing/ 官方",
+  "Cloudflare China Network https://developers.cloudflare.com/china-network/reference/available-products 官方（经搜索摘要）",
+  "Sentry 大陆支持 https://sentry.zendesk.com/hc/en-us/articles/23846111639323-Does-the-service-cover-the-China-Mainland-area 官方客服（经搜索摘要）",
+  "Sentry in China 论坛 https://forum.sentry.io/t/sentry-in-china/1291 社区",
+  "AppInChina https://appinchina.co/does-sentry-io-work-in-china/ 商业站，可信度中",
+  "Discord webhook 滥用 https://www.trendmicro.com/en_us/research/17/h/chat-app-discord-abused-cybercriminals-attack-roblox-players.html 安全研究",
+  "Roblox DevForum https://devforum.roblox.com/t/if-youre-using-a-3rd-party-web-hook-for-discord-stop/1924934 社区",
+  "GlitchTip 比较 https://betterstack.com/community/comparisons/sentry-vs-glitchtip/ 二手，可信度中低",
+  "GodotSteam releases https://github.com/GodotSteam/GodotSteam/releases 2026-11-25；Codeberg https://codeberg.org/godotsteam/godotsteam"
+ ],
+ "uncertain": [
+  "china_mainland_notes",
+  "key_findings",
+  "implementation_guidance",
+  "alternatives_comparison"
+ ]
+}

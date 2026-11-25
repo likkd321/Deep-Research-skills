@@ -1,0 +1,112 @@
+{
+ "name": "Steam 上架、AppID 480 与 Playtest",
+ "category": "运维、发行与测试",
+ "research_scope": [
+  "Steam Direct 费用、返还、审核、即将推出最短时长",
+  "AppID 480 限制与自有 AppID 后的 Steamworks 配置",
+  "Steam Playtest 流程/限制/与主 App 关系，Next Fest，愿望单转化",
+  "区域定价与大陆支付现状",
+  "Steam Deck 兼容性审核、beta 分支、SDK 1.63–1.65 变化",
+  "第三方依赖/素材许可与 CSOL 玩法 IP 边界"
+ ],
+ "prior_claims_check": "原说法「AppID 480 与免费 Steam Playtest 可用于真机测试」→ 部分证实/纠偏 → (1) AppID 480 可用于开发期联机真机测试，但全球开发者共用，lobby 查询会混入他人房间，需自定义元数据键过滤并设置 Worldwide 距离，社区还有 480 近期大厅不可见的报告 https://forum.godotengine.org/t/godotsteam-lobbies-not-visible/127733；(2) Steam Playtest 是主 App 的独立子 App，需要自有 AppID（即先付 $100 Steam Direct 创建主 App），免费，无需商店页公开即可用 key 方式测试，但开放/受限报名需主商店页 https://partner.steamgames.com/doc/features/playtest；(3) Playtest 不能与 480 混用。结论：480 用于早期代码联调，Playtest 用于真实玩家测试，二者阶段不同，不能互相替代。",
+ "current_status": [
+  "[事实] Steam Direct 费 $100/产品，不可退款，累计调整后总收入达 $1,000 可抵扣返还；预发布审核 1–5 天；前几款游戏商店页须「即将推出」至少 2 周，且付费到发行至少 21 天（官方 steamdirect 页，2026-11-25）",
+  "[事实] Steamworks SDK 1.65 发布于 2026-07-24（7/27、7/31 重发），1.64 于 2026-03-11；GodotSteam 4.24（2026-11-08）基于 SDK 1.65；GodotSteam GitHub 仓库 2026-11-10 归档迁 Codeberg",
+  "[事实] 最近一届 Next Fest 2026-10-19 至 10-26 已结束；下一届 2027-02-22 至 03-01（gamesradar/搜索摘要，需官方页复核）",
+  "[事实] Steam Deck 兼容性审核约一周完成（官方 compat 页）"
+ ],
+ "key_findings": [
+  "[事实] Steam Direct 费 $100/款，不可退款；累计 Adjusted Gross Revenue 达 $1,000 后可从付款中抵扣 https://partner.steamgames.com/steamdirect",
+  "[事实] 预发布审核 1–5 天；首几款游戏商店页须公开「即将推出」≥2 周，付费与发行间隔≥21 天（同上）",
+  "[事实] Playtest 是独立子 App，免费，不可收费或捆绑出售 key；不影响主游戏愿望单/评测；最多通常 5 万 key；用 Steam key 测试不要求商店页公开 https://partner.steamgames.com/doc/features/playtest",
+  "[事实] Playtest 不是保密测试（无 NDA）；受限报名由 Steam 随机选，可按国家过滤；也可用开放报名（同上）",
+  "[事实] Playtest 子 App 自己上传 depot 与构建，与主游戏构建独立（同上）",
+  "[事实] Beta 分支可设密码；默认分支为玩家实际收到的版本，构建须手动设为默认分支上线；页面未涉及回滚细节，[推算] 回滚=把旧 build 重新 setlive 到默认分支 https://partner.steamgames.com/doc/store/application/branches",
+  "[事实] AppID 480 为共享测试 ID，lobby 列表混入他人房间，需自定义元数据键过滤并设 Worldwide 距离；社区报告 480 近期出现看不到大厅的问题（forum.godotengine.org）[社区，可信度中]",
+  "[事实] Steam Deck 要求：默认手柄配置访问所有内容、屏幕文字最小 9px@1280x800（推荐 12px）、文字输入须用 Steam 屏幕键盘或手柄可用、30fps@800p；审核约一周 https://partner.steamgames.com/doc/steamhardware/compat",
+  "[事实] SDK 1.65：移除 ISteamUtils::IsRunningOnSteamDeck()，改用 IsRunningOnSteamHardware()；新增 IsRunningUnderProton()、ServerFriends() 与 popularamongfriends 过滤；无 Networking Sockets 破坏性变化 https://gamedev.net/news/4663-steamworks-sdk-165-has-been-released/ ；1.63 增 Linux/Android arm64、移除 ISteamMusicRemote（二手）；1.64 细节未获取 [不确定]",
+  "[事实] 区域定价提供汇率/购买力/多变量三种换算，可自设；最低价对应 $0.99 档；价格变更需 Valve 审核，通常发行 30 天后；涨价触发 30 天折扣冷却 https://partner.steamgames.com/doc/store/pricing",
+  "[事实] 愿望单转化：中位独立游戏首日约 12%，首周 15–20%，终身 20–30%（Steam Page Analyzer，二手）；Next Fest 一次只能参加一次，需商店页「即将推出」及公开 demo [社区/二手，可信度中]",
+  "[不确定] 国际版 Steam 在大陆是否提供支付宝/微信支付：官方页面抓取失败；2016 年媒体报道曾开通微信支付并移除过支付宝，近年信息不足，无法核实当前状态",
+  "[不确定] 国区 CNY 推荐价：官方定价页无 CNY 专项指引，¥15–48 定位属 [主观]",
+  "[推算] 总成本：$100 Direct + 0 Playtest + 0 480 = 最低约 ¥720（按 7.2 汇率）；返还条件 $1000 收入"
+ ],
+ "implementation_guidance": [
+  "开发期：SteamAppId=480，steam_appid.txt 写 480；GodotSteam 创建 lobby 时 Steam.setLobbyData(lobby, \"game_id\", \"zt_unique\")，查询前每次都 Steam.addRequestLobbyListStringFilter(\"game_id\",\"zt_unique\",Steam.LOBBY_COMPARISON_EQUAL) 与 addRequestLobbyListDistanceFilter(Steam.LOBBY_DISTANCE_FILTER_WORLDWIDE)（过滤只对下一次 requestLobbyList 生效）",
+  "拿到自有 AppID 后：Steamworks 配置 Cloud（Auto-Cloud 路径、配额）、Networking（使用 Steam Networking Sockets/SDR 无需额外开通，需确认）、Lobby 无需额外配置 [不确定]",
+  "测试流程：先 Playtest 子 App + 主 App beta 分支（带密码）；联机版本不兼容时用 beta 分支隔离，并在握手里带 build_id 校验",
+  "回滚：保留历史 build，需要时把旧 build setlive 到默认分支",
+  "Deck：使用 Steam Input（GodotSteam Input）、文字≥12px、提供手柄完整菜单",
+  "SDK 升级：改用 isRunningOnSteamHardware 等新接口前确认 GodotSteam 版本已封装 [不确定]"
+ ],
+ "pitfalls_and_failures": [
+  "480 共享大厅：不加过滤会拿到他人房间，且 lobby 数量上限问题 https://forum.godotengine.org/t/godotsteam-lobbies-not-visible/127733",
+  "过滤器只对下一次请求生效，AI 常写成一次性设置（bugnet.io 指南）",
+  "Playtest 无 NDA，不适合保密内容",
+  "涨价会触发 30 天折扣冷却；价格变更发行后 30 天才开放",
+  "商店页即将推出时间与 21 天等待期会拖延首发，需提前排期",
+  "GodotSteam 仓库归档迁移，下载源需更新",
+  "IsRunningOnSteamDeck 在 SDK 1.65 被移除，旧绑定调用会失败"
+ ],
+ "quantitative_params": [
+  "Steam Direct 费 / 100 / USD / 每产品 / 官方",
+  "返还门槛 / 1000 / USD / Adjusted Gross Revenue / 官方",
+  "审核时长 / 1–5 / 天 / 预发布 / 官方",
+  "即将推出最短 / 14 / 天 / 前几款游戏 / 官方",
+  "付费到发行等待 / 21 / 天 / 前几款 / 官方",
+  "Playtest key 上限 / 约 50000 / 个 / 通常可用 / 官方",
+  "Deck 最小文字 / 9 / px@1280x800 / 官方；推荐 12px",
+  "Deck 帧率 / 30 / fps@800p / 官方",
+  "Deck 审核 / 约 7 / 天 / 官方",
+  "发行首日转化 / 约 12% / 中位 / Steam Page Analyzer 二手",
+  "价格变更等待 / 30 / 天 / 官方",
+  "基础最低价 / $0.99 档 / 官方"
+ ],
+ "alternatives_comparison": [
+  "仅用 480：零成本，但共享大厅噪声大、无 Cloud/成就、无法 Playtest；仅限早期联调",
+  "自有 AppID + Playtest：$100，真实测试环境；值得",
+  "Itch.io/独立构建发测试包：绕开 Steam，但 Lobby/SDR 无法测；不适合本项目",
+  "Steam China（蒸汽平台）：需版号，不建议",
+  "CSOL 玩法借鉴：游戏机制不受版权保护，但美术/名称/音效/商标不能照搬；保持原创设定",
+  "Next Fest：需商店页与公开 demo，值得但要提前 ≥6 周提交 demo"
+ ],
+ "project_implications": "推荐路线：开发联调用 480 并加自定义键过滤，尽早（至少在测试 2 个月前）付 $100 创建主 App，使商店页尽早挂出攒愿望单，同时开 Playtest 子 App 做真实联机测试，主 App 的 beta 分支（带密码）做版本隔离与回滚。定价以 ¥15–48 区间为参考，用 Steamworks 的多变量换算再人工调整。大陆支付现状无法核实，不应据此做承诺；冷启动渠道以 B 站、小黑盒、Reddit、Discord 结合。Deck 优先做手柄支持是锦上添花，V1.0 不强求。CSOL 仅借鉴玩法循环，原创名称、美术与音频。",
+ "mvp_scope": "V1.0：自有 AppID、商店页即将推出≥2 周、Playtest、beta 分支回滚、中英文本地化、区域定价。V1.5：Deck 审核、Next Fest、更多语言。不建议：依赖 480 长期测试、Steam China、使用 CSOL 原素材。",
+ "effort_estimate": "[推算] 商店页素材与设置 1.5 周；Playtest 与分支配置 0.5 周；本地化中英 1 周；Deck 适配 1 周（后置）；合计约 3–4 周（含素材制作，不含营销）。AI 编码难度：易–中。人工把关：商店页合规、素材版权、定价、Deck 手柄。",
+ "risk_rating": "麻烦但可解：480 大厅噪声（缓解：自有 AppID）；商店页审核/素材合规；大陆支付与可达性不确定；IP 边界：低（只借玩法，避免商标与素材）。",
+ "win_probability_inputs": [
+  "冷启动存活率：+2 到 +5 个百分点（Playtest+Next Fest 提升曝光）[主观]",
+  "上线稳定性：+1 个百分点（beta 分支回滚）[主观]",
+  "个人+双AI执行率：-1 个百分点（上架流程繁琐）[主观]"
+ ],
+ "test_verification_points": [
+  "用 480 与自有 AppID 各测一次 Lobby 创建/过滤，记录混入他人房间数",
+  "Playtest 受限报名发放流程实测",
+  "Steamworks 后台模拟：beta 分支密码、setlive 回滚",
+  "Deck：1280x800 文字可读性、全手柄导航（Steam Deck 或 Proton 实测）",
+  "大陆玩家实际支付方式：用大陆账号实际走结算页核对（人工）；无法 headless"
+ ],
+ "china_mainland_notes": "国际版 Steam 在大陆提供 CNY 定价，但支付宝/微信支付当前可用性无法核实：官方页抓取失败，2016 年媒体称曾开通微信（经 Smart2Pay）、支付宝曾被移除，近年来源不足 [不确定]。区域定价 ¥15–48 属主观定位。冷启动渠道：B 站、小黑盒、QQ 群、贴吧等 [主观]。Steam 社区页在大陆不稳定。国际版销售无需版号，Steam China 需版号。",
+ "sources": [
+  "Steam Direct https://partner.steamgames.com/steamdirect 2026-11-25 官方",
+  "Playtest https://partner.steamgames.com/doc/features/playtest 官方",
+  "Branches https://partner.steamgames.com/doc/store/application/branches 官方",
+  "Pricing https://partner.steamgames.com/doc/store/pricing 官方",
+  "Deck compat https://partner.steamgames.com/doc/steamhardware/compat 官方",
+  "SDK 1.65 https://gamedev.net/news/4663-steamworks-sdk-165-has-been-released/ 二手转载官方",
+  "SDK 1.64 https://gamedev.net/news/2105-steamworks-sdk-164-has-been-released/ 二手",
+  "GodotSteam releases https://github.com/GodotSteam/GodotSteam/releases",
+  "Next Fest https://partner.steamgames.com/doc/marketing/upcoming_events/nextfest/2026october 官方（经搜索摘要）",
+  "GodotSteam lobby 480 https://forum.godotengine.org/t/godotsteam-lobbies-not-visible/127733 社区",
+  "转化率 https://www.steampageanalyzer.com/blog/steam-wishlist-conversion-rates 二手",
+  "Zukowski Next Fest https://howtomarketagame.com/2025/03/26/benchmarks-how-many-wishlists-can-i-get-from-steam-next-fest/ 社区数据",
+  "微信支付 2016 https://www.ifanr.com/738714 媒体，已过时"
+ ],
+ "uncertain": [
+  "china_mainland_notes",
+  "key_findings",
+  "implementation_guidance",
+  "effort_estimate"
+ ]
+}

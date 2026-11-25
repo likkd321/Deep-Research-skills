@@ -1,0 +1,104 @@
+{
+ "name": "高楼关卡内容生产与像素美术管线",
+ "category": "玩法、Bot 与先例",
+ "research_scope": [
+  "TileMapLayer 用法/性能与 22 层全载 vs 按需加载、headless 内存",
+  "楼层模板拼装/程序化生成（房间模板、WFC 插件、仅同步 seed）",
+  "搜刮表数据驱动与箱子静态编号+seed 一致性",
+  "像素美术来源（素材包/外包/AI）与 Steam AI 披露、授权",
+  "同类多层建筑游戏的楼层数与工作量参考"
+ ],
+ "prior_claims_check": "无（item 未列 prior_claims）。",
+ "current_status": [
+  "[事实] Godot 4.3 起 TileMap 节点被弃用，官方文档推荐用多个 TileMapLayer 节点（docs.godotengine.org 4.3 TileMap 页；核实 2026-11-25）。",
+  "[事实] Steam AI 披露规则于 2026-01 被 Valve 重写：只需披露「玩家会消费到的」AI 生成内容（美术/代码/声音等预生成内容、及运行时生成内容），开发效率类工具不用披露（PC Gamer/VGC/Slashdot 等 2026-01 报道；PC Gamer 全文抓取失败，仅得标题；官方 Steamworks 页本次未抓取）。",
+  "[事实] WFC 插件：AlexeyBond/godot-constraint-solving（资源库标 Godot 4.3，支持回溯与多线程）；AliasFactory 的 Fast WFC（C++，标 Godot 4.4）（资源库页，2026-11-25，维护活跃度 [不确定]）。",
+  "[事实] Kenney 全部素材为 CC0，可商用，无需署名（kenney.nl/support，2026-11-25）。",
+  "[不确定] 建议锁定的 Godot 版本：任务设定 4.x（>=4.3），具体小版本需开发者按 GodotSteam 兼容表选定。"
+ ],
+ "key_findings": [
+  "[事实] 论坛实测：TileMapLayer 数量本身对性能影响不大，真正开销是被渲染的 tile；把重图层设为不可见能大幅提升 FPS（forum.godotengine.org 多帖，如 116503，均为 Godot 4.3–4.6 社区经验，非基准）。对本项目：单屏只画当前层，非当前层 visible=false 即可。",
+  "[事实] 有帖反映 TileSet 的 PNG 贴图是显存主体（一例约 200MB），共享一个 TileSet 资源是关键（forum 帖 113746）。",
+  "[事实] TileMapLayer 有 quadrant_size 渲染分块属性，大图层可调；有物理/导航层时 set_cell 更慢（forum 帖 126593 等）。",
+  "[推算] 内存量级：一层 64×48=3072 格，每格约几十字节数据，22 层≈6.8 万格，纯数据 <10MB 量级；即使全部加载也可接受。headless 专服不存在，本项目房主同时是客户端，需要的是「逻辑数据」（碰撞/门/箱子位置）而非渲染，建议逻辑与表现分离，非当前层关闭 collision/navigation（TileMapLayer.enabled=false）。[推算，缺实测]",
+  "[不确定] headless 内存：本次未找到公开 headless 下 TileMapLayer 内存实测，需自己测。",
+  "[主观] 内容量：15–22 层若每层都手绘全新平面图工作量极大；使用「楼层类型模板」（标准办公层、商场层、停车层、屋顶、大堂等）+ 房间预制（每层从 6–12 个房间 prefab 拼）可把独特布局降到 ~6–10 张手工图，其余复用并换家具/搜刮表。",
+  "[推算] 工作量：开发者手工做一张 64×48 的中等楼层图（AI 辅助摆放）约 1–2 天；10 张唯一布局≈2–4 人周；加上素材改色/整合约 2–3 人周。",
+  "[主观] 程序化生成方案：只同步 seed（各端 RandomNumberGenerator.seed=同值，同序调用）可零带宽生成相同布局，但 AI 编码风险是「调用顺序不同导致不一致」；对「固定楼层 + 随机箱子内容」这种弱程序化最安全：布局手工固定，仅箱子内容/药品位置用 seed。",
+  "[事实] Godot 资源库有多个 WFC 插件，但 WFC 对「合理楼层平面（走廊连通/楼梯井对齐）」约束难写，且生成结果需验证连通（资源库摘要）。[主观] 不推荐 V1.0 用 WFC。",
+  "[事实] Kenney 素材 CC0；itch.io 素材包许可各不相同，有的禁止转售/再分发或 CC-ND，必须逐包读许可文本，且 itch 元数据与描述可能不一致（itch.io 多帖及 CraftPix 说明）。",
+  "[事实] Steam 披露：AI 预生成的美术需在商店页披露；不免除版权责任（2026-01 多家报道）。",
+  "[不确定] 同类多层俯视角游戏楼层数/工作量：本次未检索到具体数据。凭一般认知 [主观]：Project Zomboid 为多层建筑但是 2.5D 且 team 规模大；多数独立俯视角多层作品以 3–6 层为主，22 层极为罕见，建议实际可玩层数先定 8–12 层再拉伸。",
+  "[主观] 搜刮表：用 Godot Resource（.tres）或 JSON：loot_tables/{tier}.json，条目 {item_id, weight, min,max}；箱子 id 静态编号（场景内 export int chest_id），内容由 hash(seed, chest_id) 初始化 RNG，因此各端/换主后无需同步内容，只同步「已开启/已取走」位图。"
+ ],
+ "implementation_guidance": [
+  "楼层组织：Main/Floors/Floor_N(Node2D) 下各含 TileMapLayer(Ground, Wall, Props)；切层时 floor.visible=false 并对非当前层 TileMapLayer 设 enabled=false（Godot 4.3+）。后台层仍要有逻辑（Bot/僵尸可能在其他层），逻辑用独立数据结构（网格 PackedByteArray），不依赖 TileMap 节点。",
+  "按需加载：用 PackedScene 每层一个 .tscn，ResourceLoader.load_threaded_request 预加载相邻层；但本项目 40 分钟整局不重置、玩家来回跑，推荐全部实例化但仅当前层启用渲染（先实测，不够再优化）。",
+  "seed 方案：func chest_rng(seed:int, chest_id:int)->RandomNumberGenerator: var r=RandomNumberGenerator.new(); r.seed=hash([seed,chest_id]); return r。注意不要用全局 randi()。",
+  "loot table 抽取：加权随机，按 sum(weights) 取 r.randf()*sum 遍历；保证药品/撤离关键物品用「保底分配表」：开局先由房主按 seed 把 N 件关键物品分配到指定 chest_id 集合（需在难度上可达）。",
+  "关卡拼装：房间模板用 TileMapLayer 的 tile_map_pattern（TileMapLayer.get_pattern/set_pattern）复制房间图案；楼梯/电梯井在所有楼层固定同一坐标，保证 floor_id 切换后位置对齐。",
+  "Bot 导航：每层用 AStarGrid2D（Godot 内置）按格建图，跨层用楼梯井节点作为层间边；所有层共用同一坐标便于计算。",
+  "美术管线：统一 16×16 或 32×32 格，选一个主素材包保证风格统一；改色用 shader 或批处理调色盘。"
+ ],
+ "pitfalls_and_failures": [
+  "[事实] 把大量层同时可见会 GPU 填充浪费（forum 116503 讨论）；一定要关可见性。",
+  "[事实] 清除/卸载 tilemap 块再重载有「下一周期不显示」的报告（forum 帖 53518），故不要自己写分块加载。",
+  "[主观] AI 常见错误：用 randomize() 使各端不一致；在 _ready 里按节点树顺序给箱子编号导致不同端顺序不同（应写死 export id）；TileMapLayer 旧 TileMap API（set_cell 带 layer 参数）混用。",
+  "[事实] itch.io 许可描述与元数据可能不同步，部分仅允许自用不允许再分发素材原文件（itch.io 帖及说明）；游戏打包后素材文件也算再分发，需看条款。",
+  "[事实] AI 生成美术需披露，且可能出现风格不统一和版权风险（Valve 2026-01 规则报道）。"
+ ],
+ "quantitative_params": [
+  "22 层单层网格估算 | 64×48=3072 格/层，≈6.8 万格 | [推算]",
+  "Godot 版本 | TileMapLayer 自 4.3 | 官方文档",
+  "TileSet 显存 | 一例约 200MB（PNG 过大）| 论坛帖 113746 | 社区",
+  "Steam AI 披露 | 玩家消费内容需披露；开发工具豁免 | 2026-01 报道",
+  "人工工作量 | 唯一楼层布局 ~6–10 张，各 1–2 天 | [推算]",
+  "Kenney 许可 | CC0 | kenney.nl/support",
+  "存档的箱子状态 | 每箱 1 bit（已开）| [推算] 数百箱≈数十字节"
+ ],
+ "alternatives_comparison": [
+  "手工固定楼层 + 随机搜刮内容（推荐）：布局质量可控、同步简单；工作量集中在设计。",
+  "模板拼装（房间 prefab 随机排布）：每局布局多样，需解决连通性与楼梯对齐；代价中，值得作为 V1.5。",
+  "WFC 插件：生成自由度高，但约束难、调试难、AI 难以验证；不值得。",
+  "全程序化 seed 生成：带宽最省，但一致性（调用顺序/浮点）风险高；仅在小范围（箱子）使用。",
+  "素材包（Kenney CC0 / itch 付费包）：成本低，风格拼凑风险；值得，需逐包核许可。",
+  "外包像素美术：风格统一，成本高（[不确定] 价格未调研）。",
+  "AI 生成：快速，需 Steam 披露、版权与一致性风险，建议仅用于概念/占位，不用于最终资产。"
+ ],
+ "project_implications": [
+  "推荐：V1.0 先做 8–12 个真正可玩楼层（其余层用「房间模板复用 + 家具变体」），用固定布局 + seed 箱子内容；这样快照只需包含「箱子已开位图 + 地面物品 + 门状态」，布局无需入快照，换主零额外负担。",
+  "22 层全部实例化但仅当前层渲染，若内存/加载时间不达标再改为按需加载。",
+  "Bot 导航每层 AStarGrid2D，跨层靠楼梯井边，工作量中等，应在楼层布局固定后做。",
+  "美术：主包 + CC0 补充，避免 AI 最终资产以省去披露和版权争议；若使用须在商店页披露。"
+ ],
+ "mvp_scope": "V1.0：8–12 层手工布局（含天台）、6–10 张唯一模板、固定箱子 id + seed 搜刮、共用 TileSet、单一素材风格。V1.5：房间模板随机拼装、更多层数、AI 辅助概念稿。不建议：WFC 全楼生成、V1.0 外包全套美术、按层流式加载（除非实测需要）。",
+ "effort_estimate": "[推算] 楼层布局 3–5 人周 + 美术整合 2–3 人周 + 搜刮表与箱子系统 1–1.5 人周 + 导航图 1–2 人周，合计约 7–11 人周。AI 编码难度：中（TileMapLayer/AStar 易，seed 一致性难）。人工验收：各端打开同一箱子内容一致、楼梯对齐、全楼连通、关键物品可达。",
+ "risk_rating": "内容量：麻烦但可解（触发：每层都追求独特；缓解：模板复用、层数先少后多）。素材授权/AI 披露：低到中（缓解：逐包留存许可文本，披露表如实填）。seed 不一致：麻烦但可解（缓解：每箱独立 RNG + 自动化多端比对）。",
+ "win_probability_inputs": "[主观] 内容管线按推荐方案：个人+双AI执行率 +2~3 个百分点（降低返工）；若追求 22 层全独特：个人+双AI执行率 -5~8 个百分点；seed 一致性做好对换主可靠性影响 0~+1 个百分点。",
+ "test_verification_points": [
+  "22 层全实例化的内存/帧时间：Godot 监视器 Performance.get_monitor，红线：显存增量 <300MB，当前层 60FPS，可 headless 加载并读内存（渲染部分除外）。",
+  "seed 一致性：两进程以同一 seed 生成全部箱子内容，序列化比对哈希，可 headless 自动化。",
+  "楼层连通性：脚本遍历 AStarGrid2D 校验所有关键点可达，可自动化。",
+  "换主后箱子状态恢复：杀房主测试，验证已开位图一致。"
+ ],
+ "china_mainland_notes": "[主观] 素材采购（itch.io/Kenney）在大陆可访问性本次未测，itch 支付可能受限，可提前下载素材；国内外包/像素画师可作为替代渠道。AI 生成内容在大陆另有合规要求，但本项目面向 Steam 全球发行，具体合规 [不确定]。",
+ "sources": [
+  "Godot TileMap 文档（4.3） | https://docs.godotengine.org/en/4.3/classes/class_tilemap.html | 2026-11-25 | 官方文档",
+  "Godot 论坛 多 TileMapLayer 性能 | https://forum.godotengine.org/t/performance-issues-with-lots-of-tilemaplayers-for-large-3d-stacked-worlds/116503 | 2026-11-25 | 社区",
+  "Godot 论坛 大 TileSet 性能 | https://forum.godotengine.org/t/performance-issues-of-tilemaplayer-when-using-a-large-tileset/113746 | 社区",
+  "Godot 论坛 set_cell 延迟 | https://forum.godotengine.org/t/large-2d-tilemap-causes-4-5ms-lag-on-setcell-invocation/126593 | 社区",
+  "Godot 论坛 分块加载 | https://forum.godotengine.org/t/tilemap-chunkloading-efficiency/53518 | 社区",
+  "godot-constraint-solving WFC | https://www.Github.com/AlexeyBond/godot-constraint-solving | 源码仓库",
+  "Godot Fast WFC 资源库 | https://godotengine.org/asset-library/asset/4149 | 资源库页",
+  "PC Gamer Steam AI 披露更新 | https://www.pcgamer.com/software/ai/steam-updates-ai-disclosure-form-to-specify-that-its-focused-on-ai-generated-content-that-is-consumed-by-players-not-efficiency-tools-used-behind-the-scenes/ | 2026-01 | 媒体（仅标题）",
+  "VGC Valve 重写 AI 披露规则 | https://www.videogameschronicle.com/news/valve-has-significantly-rewritten-steams-rules-for-how-developers-much-disclose-ai-use | 2026-01 | 媒体（摘要）",
+  "Kenney 支持页 | https://kenney.nl/support | 2026-11-25 | 官方（CC0）",
+  "itch.io 素材许可示例 | https://itch.io/post/11649123 | 社区"
+ ],
+ "uncertain": [
+  "current_status(Godot 版本、WFC 维护度)",
+  "key_findings(headless 内存、同类游戏楼层数)",
+  "china_mainland_notes",
+  "alternatives_comparison(外包价格)"
+ ]
+}
