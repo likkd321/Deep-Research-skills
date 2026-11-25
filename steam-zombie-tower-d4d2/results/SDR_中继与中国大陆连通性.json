@@ -1,0 +1,210 @@
+{
+  "name": "SDR 中继与中国大陆连通性",
+  "category": "Steam 网络基础设施",
+  "research_scope": [
+    "实际请求 GetSDRConfig（appid 480 与 6 款独立联机游戏、CS2 730、Dota2 570、Apex/Rust/TF2/PUBG/Deadlock 对照，并分别带 realm=steamglobal / steamchina 参数），统计 POP 数量与中国大陆 POP，解释 partners 位掩码",
+    "用 CS2 SDR 配置的公开历史快照（DotaFlow/steam_api_dumps，2026-02-25 至 2026-11-10 共 42 次提交）核实完美世界 pw* 节点退役时间线",
+    "用 Globalping 公共探针（中国大陆 45–46 个，覆盖电信/联通/移动与云机房，2026-11-25 15:05 北京时间平峰）实测到 Valve 香港/东京/新加坡/首尔/关岛/洛杉矶/西雅图/法兰克福中继与 4 个大陆 CN 中继的 RTT、丢包、抖动；补充 RIPE Atlas 历史测量",
+    "读 GameNetworkingSockets 源码（2026-11-24 提交 fb56c96）核实 P2P_Transport_ICE_Enable 默认值、ICE 候选类型（含 IPv6）、路由选择罚分、超时默认值；读 GodotSteam 4.24 源码确认 GDScript 可调用的 API",
+    "国内 NAT/CGNAT/IPv6 现状与两名大陆玩家直连绕开境外中继的可行性；2026 年 3–6 月 Steam 客户端 P2P 直连回归事件",
+    "国内加速器（UU、迅游、雷神、Watt Toolkit）对 SDR 独立游戏的作用机制与是否需要开发者对接",
+    "Steam 在大陆的可用性（客户端/商店/社区/下载/支付、Steam China 蒸汽平台）、测试者招募渠道",
+    "混合大陆+海外同房时的房主选择算法与（批次 1 遗留）大陆玩家经 SDR 重新建连的时延预算"
+  ],
+  "prior_claims_check": [
+    "原说法①「GetSDRConfig/v1/ 显示第三方独立游戏获得 0 个中国大陆节点」→ 部分证实（需加限定条件）。证据：2026-11-25 实测 https://api.steampowered.com/ISteamApps/GetSDRConfig/v1/?appid=480 返回 37 个 POP（33 个带 relays），0 个中国大陆 POP；Valheim 892970、Among Us 945360、Lethal Company 1966720、Helldivers 2 553850、Deep Rock Galactic 548430、R.E.P.O. 3241660、PEAK 3527290、Content Warning 2881650 返回内容与 480 逐字节相同（md5 dfd92259…），Apex 1172470、Rust 252490、TF2 440、PUBG 578080、Deadlock 1422450 也是 0 个大陆中继。但纠偏：同一接口加 &realm=steamchina（Steam 客户端 steamnetworkingsockets 二进制里有字符串「&realm=steamchina」「&realm=steamglobal」，见 https://github.com/SteamTracking/GameTracking-CS2/blob/master/game/bin/win64/steamnetworkingsockets_strings.txt）时，appid 480/892970 返回 21 个 POP，其中 16 个是大陆 POP（12 个带 relays：ctum/ctut/ctuu/pekm/pekt/peku/pvgm/pvgt/pvgu/tgdm/tgdt/tgdu）。所以准确说法是：「国际版 Steam（realm=global）客户端下，第三方游戏获得 0 个大陆中继；只有 Steam China（蒸汽平台）客户端 realm 才会拿到大陆中继」。国内玩家绝大多数用国际版 Steam 购买与运行本项目这类游戏，因此对本项目结论不变。",
+    "原说法②「国内玩家统一经香港/东京/新加坡/首尔 4 个亚太中继转发」→ 部分证实/纠偏。global 配置里亚太带中继的 POP 实际有 hkg(10 台)、tyo(6)、sgp(6)、seo(4)、gum 关岛(2)、syd(4)，客户端按实测 ping 自动选，不存在「统一 4 个」。2026-11-25 平峰实测（Globalping 46 个大陆探针，ICMP 16 包）：香港中位 电信 22ms / 联通 39ms / 移动 42ms；东京 电信 64 / 联通 53 / 移动 67；首尔 87–95；新加坡对大陆普遍很差（联通中位 378ms，电信 146ms 且丢包 50%）。即大陆玩家实际主要落在香港，华东联通 9929/17621 落在东京（36ms），新加坡几乎不会被选中；关岛（中位 80–99ms）偶尔是备选。",
+    "原说法③「晚高峰常见 80–180ms RTT 伴抖动」→ 无法核实（本轮未做晚高峰实测）。平峰实测大陆→香港中继 RTT 中位 22–42ms、抖动（单探针 16 包标准差）中位 0.2ms、P90 1.4ms，远低于 80–180ms；80–180ms 更接近「大陆↔大陆经香港中继（两段之和 45–85ms）在晚高峰拥塞叠加」或「大陆↔东南亚/首尔房主」的口径。社区证据只有定性描述：Deep Rock Galactic 玩家 2026-05-11 报告大陆玩家全部经 hkg 中继、延迟高且频繁丢包（https://app.betahub.io/projects/pr-5632787018/issues/1359），V2EX 用户反映夜间跨网延迟升至白天约 3 倍（https://www.v2ex.com/t/1121610）。晚高峰数字须按 test_verification_points 的脚本在 20:00–23:00 北京时间复测。",
+    "原说法④「旧完美世界 pw* 节点已退役，CS2/Dota2 改为阿里云/腾讯云大陆节点（ctu/pek/pvg/tgd，partners: 2）」→ 证实，并补充时间线与细节。证据：DotaFlow/steam_api_dumps 仓库 CounterStrike2/public/GetSDRConfig.json 的提交历史（https://github.com/DotaFlow/steam_api_dumps）显示：2026-02-25 快照中阿里云/腾讯云节点与 pwg/pwj/pwu/pww/pwz/sha/shb 并存；2026-05-14→05-22 移除 sha/shb，05-22→06-06 移除 pwj，06-06→06-11 移除 pwu，06-11→07-01 移除 pwz，07-01 移除 pww，07-01→07-09 移除 pwg；2026-07-09 起只剩 16 个阿里云/腾讯云 POP。2026-11-25 实测 730：53 个 POP、45 个带中继，大陆 16 个（ctu/pek/pvg/tgd 4 个城市 × 汇总/移动/电信/联通 4 种线路，其中带 relays 的 12 个是分运营商节点，汇总节点 0 relays 只作 ping 参照），partners 全部为 2。Dota2 570 只保留上海 pvg/pvgm/pvgt/pvgu 4 个。"
+  ],
+  "current_status": [
+    "GetSDRConfig（核实 2026-11-25 07:00 UTC）：revision=1794268433；global 配置 37 个 POP、33 个带中继（共约 150 台 relay），亚太带中继：hkg 10、tyo 6、sgp 6、seo 4、gum 2、syd 4；另含 bom2/maa2 印度、dxb/dfjr 中东；fsn/hel（Hetzner）、eat、dsto 为 0 relays 的参照 POP。",
+    "partners 字段（核实 2026-11-25）：global 配置里只出现 partners=1 或 3，steamchina 配置里只出现 2 或 3；hkg/sgp/tyo/syd/eat 为 3（两个 realm 共用），大陆节点为 2。[推算] 位掩码含义：bit0(1)=国际版 Steam 可用，bit1(2)=Steam China（完美世界运营的蒸汽平台）可用。Valve 官方文档未公开该字段定义。",
+    "Valve 第一方例外（核实 2026-11-25）：CS2 730 的 global 配置额外下发 16 个大陆 POP（阿里云成都/北京/上海、腾讯广州，分电信/联通/移动线路），Dota2 570 下发上海 4 个；Deadlock、TF2 与所有被抽查的第三方游戏均没有。Steamworks 文档没有为第三方开放大陆中继的申请入口（https://partner.steamgames.com/doc/features/multiplayer/steamdatagramrelay ）[不确定：是否可私下申请]。",
+    "完美世界 pw* 节点（核实 2026-11-25）：2026-05 至 07 月分批下线，2026-07-09 起 CS2 配置中已无 pw*/sha/shb（见 prior_claims_check④）。",
+    "p2p_share_ip 字段（核实 2026-11-25）：所有 appid 均为 {cn:20, default:40, ru:20}。[不确定] 含义未公开，[推算] 很可能是用户选「默认」时决定是否为降低 ping 而共享 IP（启用 ICE）的阈值，中国与俄罗斯单独设为 20（单位可能是 ms）。",
+    "GameNetworkingSockets 开源库：master 提交 fb56c96（2026-11-24），仍在活跃维护；Steam 客户端内置版本为闭源构建。2026-03-13 前后 Steam 客户端出现「新版客户端不再尝试 STUN 直连、全部走 SDR」的回归（以色列/中东/中国玩家报告），Valve 成员 zpostfacto 于 2026-06-09 推 beta、06-10 进正式版修复（https://github.com/ValveSoftware/GameNetworkingSockets/issues/398 ）。",
+    "GodotSteam：已从 GitHub 迁到 Codeberg（https://codeberg.org/godotsteam/godotsteam ），godot4 分支 2026-11-10 发布 4.24（Steamworks SDK 1.65 对应 GodotSteam 4.21+），compatibility_minimum=Godot 4.4。建议锁定 GodotSteam 4.24 + 配套 SDK 1.65 的 GDExtension 版本。",
+    "Steam 在大陆：国际版客户端、商店、下载、支付整体可用；Steam 社区页长期被屏蔽/不稳定（https://appinchina.co/blog/the-complete-guide-to-steam-china/ ，2026-05-18 更新）。Steam China（蒸汽平台，2021-02-09 公测）需游戏取得版号（ISBN）并经国内发行商提交，2026 年约 536 款。2026 年 10 月 Steam 硬件调查简体中文用户占 21.98%（环比 -9.41 个百分点，波动大；https://store.steampowered.com/hwsurvey ）。"
+  ],
+  "key_findings": [
+    "[事实] 国际版 Steam 下，appid 480 与 8 款知名第三方 P2P 独立游戏的 SDR 配置逐字节相同：37 个 POP、33 个带中继、0 个中国大陆 POP（API 实测 2026-11-25，https://api.steampowered.com/ISteamApps/GetSDRConfig/v1/?appid=480 ）。",
+    "[事实] 同一接口带 &realm=steamchina 时，第三方 appid 也会拿到 12 个带中继的大陆 POP（阿里云成都/北京/上海、腾讯广州 × 电信/联通/移动），说明大陆中继是按客户端 realm 下发，不按游戏下发；国际版客户端的 realm 是 global，拿不到这些中继（API 实测 2026-11-25，https://api.steampowered.com/ISteamApps/GetSDRConfig/v1/?appid=480&realm=steamchina ）。",
+    "[事实] CS2/Dota2 是 Valve 第一方例外：730 的 global 配置含 16 个大陆 POP（partners=2），570 含上海 4 个；pw* 节点 2026-07-09 前已全部下线（API 实测，以及 DotaFlow/steam_api_dumps 历史快照）。",
+    "[事实] 平峰（2026-11-25 15:05 北京时间）大陆探针 ICMP RTT 到 Valve 中继（中位数，括号内为 P25–P75）：香港 hkg 电信 22(10–42)、联通 39(25–44)、移动 42(36–53)、云机房 30(9–41) ms，丢包约 0%；东京 tyo 电信 64、联通 53、移动 67 ms，电信平均丢包 15.6%；首尔 seo 87–95 ms；关岛 gum 80–99 ms；新加坡 sgp 电信 146ms 丢包 50%、联通 378ms、移动 144ms（Globalping 测量 https://api.globalping.io/v1/measurements/2nbh0dj4yQjmswQEK00021ZFe 等，探针 46 个，含 4 电信/9 联通/13 移动/7 云）。",
+    "[事实] 同一批探针到 CS2 专用的大陆中继（pvgt/tgdt/peku/pvgm）平峰中位 21–38ms，与到香港 22–42ms 相当：对华南/电信用户香港≈大陆节点，对华北/华东移动联通用户大陆节点约快 10–15ms（https://api.globalping.io/v1/measurements/2ofVk0BMKsJ1NJ7bt00021ZFe 等）。",
+    "[事实] 平峰抖动很小：到 hkg 的单探针 16 包标准差中位 0.2ms、P90 1.4ms、最大 32ms（张家界移动探针 58–196ms 波动）；到 tyo 中位 0.5ms、P90 7.3ms（同上 Globalping 原始 timings 计算）。",
+    "[推算] 两名大陆国际版 Steam 玩家走 SDR 的 RTT ≈ RTT(A→hkg)+RTT(hkg→B)（单中继路由，Valve 估算口径见 isteamnetworkingutils.h 的 EstimatePingTimeBetweenTwoLocations 注释）≈ 22~42 + 22~42 ≈ 45–85ms（平峰），而两人境内直连通常 20–50ms；晚高峰两段同时劣化时可能到 100ms 以上 [不确定]。",
+    "[推算] 大陆↔欧美同房：大陆→hkg 30 + hkg→sea 142（GetSDRConfig typical_pings）+ sea→美西玩家 ~20 ≈ 190ms；直连探针到 lax 中位 电信 155 / 移动 192 / 联通 294ms，到 fra 中位 电信 263 / 联通 167 / 移动 224ms（丢包 3–20%）。大陆↔欧洲经 SDR 约 200–260ms [推算，hkg-fra typical_pings 未下发，用直连 fra 数据估]。",
+    "[事实] GameNetworkingSockets 中 P2P_Transport_ICE_Enable 在 Steam 客户端构建下默认值为 -1（k_nSteamNetworkingConfig_P2P_Transport_ICE_Enable_Default，意为「用用户默认设置」），只有开源构建默认 All；值 ≤0 时不做 ICE（src/steamnetworkingsockets/clientlib/csteamnetworkingsockets.cpp 第 122–129 行；steamnetworkingsockets_p2p_ice.cpp 第 64–92 行，https://github.com/ValveSoftware/GameNetworkingSockets ）。",
+    "[事实] Steam 客户端「设置→游戏中→Steam 网络」IP 共享有 4 档：默认（「不共享 IP，除非这样做看来是避免过高 ping 所必需」）/ 永不 / 总是 / 仅好友（Steam 社区帖转引官方说明 https://steamcommunity.com/discussions/forum/0/4030224882296135633/ ）。直连必须双方都允许共享 IP。",
+    "[事实] ICE 支持 IPv6 候选（HostPublic/Reflexive，所有 IPv6 地址都视为 public），默认不配 TURN（SDR 担任中继）；路由选择以 ping 为分数加罚分，未确认连通 +10000、非提名 +100、非 LAN +10（ice_client_types.h 第 20–39 行，steamnetworkingsockets_p2p.h 第 28–31 行）。",
+    "[事实] 2026-03-13 至 06-10 期间 Steam 客户端回归导致「新客户端不再尝试 STUN 直连」，P2P 游戏全部走 SDR；Valve 2026-06-10 修复（GNS issue #398）。Deep Rock Galactic 大陆玩家 2026-05-11 的「全部经 hkg、高延迟丢包」报告正落在这一窗口内。",
+    "[事实] 中国 IPv6 活跃用户 8.69 亿、占网民 77.38%（2025-12），移动网络 IPv6 流量占比 70.85%，全网 34.55%（2026-06）（新华社转引《中国IPv6发展报告(2026)》，https://www.news.cn/tech/20260729/dbbaf8a077184270b62ca35bd297b31a/c.html ）。",
+    "[主观] 大陆家宽 IPv4 普遍在运营商级 NAT（CGNAT）之后，且 NAT 类型因省份/运营商差异大（V2EX 有广东移动从 NAT1 变 NAT4 的反馈 https://www.v2ex.com/t/1187566 ）；IPv4 打洞成功率无公开统计，IPv6 双方都有公网地址时直连成功率预计明显更高。两名大陆玩家能否绕开境外中继主要取决于 IP 共享设置和 IPv6，而不是 IPv4 打洞。",
+    "[事实] GodotSteam 4.24 暴露了所需全部 API：connectP2P(remote_steam_id, virtual_port, options:Dictionary)、createListenSocketP2P、setGlobalConfigValueInt32、getPOPList、getPingToDataCenter、getDirectPingToPOP、getLocalPingLocation、estimatePingTimeBetweenTwoLocations、getDetailedConnectionStatus、getConnectionRealTimeStatus，以及常量 NETWORKING_CONFIG_P2P_TRANSPORT_ICE_ENABLE / ICE_PENALTY / SDR_PENALTY / P2P_TRANSPORT_ICE_ALL 等（codeberg.org/godotsteam/godotsteam godotsteam.cpp 第 9315–9379、10042–10047、11502–11509 行）。",
+    "[事实] Valve 的 GNS 维护者明确表示该库「没有面向玩家的设置、不参与选对端」，按地区/最大延迟选人是各游戏自己的设计，可用 ping location 在连接前估算延迟（GNS issue #432，2026-09-30）。",
+    "[主观] 国内加速器（UU/迅游/雷神等）对 SDR 游戏的原理是把发往 Valve 中继 IP 段的 UDP 走自家专线，开发者不需要对接；前提是加速器游戏库收录了本游戏，或用户能用「自定义进程/通用 Steam 联机」模式。Watt Toolkit 是本地反向代理，只加速商店/社区等网页，不加速游戏 UDP（https://github.com/BeyondDimension/SteamTools ）。",
+    "[推算] 大陆玩家重新建连预算：中继网络就绪（启动时 InitRelayNetworkAccess，「通常几秒内完成」）+ Steam 后端信令 + 经中继握手（约 3×RTT，大陆经 hkg 约 0.15–0.3s）≈ 已初始化时 1–3s 可用；GNS 默认 TimeoutInitial=10000ms、TimeoutConnected=10000ms（csteamnetworkingsockets.cpp 第 76–77 行）。ICE 直连在 SDR 连上之后再升级，不阻塞首包。"
+  ],
+  "implementation_guidance": [
+    "适用版本：Godot 4.4–4.7 + GodotSteam 4.24（Codeberg godot4 分支，Steamworks SDK 1.65）；以下为 GDScript 2.0 伪代码，Steam 单例名为 Steam。",
+    "① 启动即初始化中继：在 Steam.steamInitEx() 成功后立刻调用 Steam.initRelayNetworkAccess()，监听 relay_network_status 信号（或轮询 Steam.getRelayNetworkStatus()）直到 available；大厅界面期间就完成，避免第一次建房/换主时再等几秒。",
+    "② 自测 POP 延迟并上报到 Lobby 成员数据：\n  var loc = Steam.getLocalPingLocation()  # 返回含 location(PackedByteArray) 与 age\n  Steam.setLobbyMemberData(lobby_id, \"ploc\", Steam.convertPingLocationToString(loc.location))\n  其他成员读取后用 Steam.parsePingLocationString(s) 还原，再用 Steam.estimatePingTimeBetweenTwoLocations(a, b) 得到任意两人经中继的估算 RTT（ms，负数表示未知）。",
+    "③ 房主/继任者选择（混合大陆+海外）：对每个候选 c 计算 cost(c) = max_i RTT(c,i) 为主，sum_i RTT(c,i)/n 为辅，取最小者；人数少的一方忍受全部延迟，所以用 max（最差玩家）而不是平均。D2 换主时继任者按 cost 排序，前 2 名提前建立备用连接。伪代码：\n  func pick_host(cands: Array) -> int:\n    var best := -1; var best_cost := INF\n    for c in cands:\n      var worst := 0.0; var total := 0.0\n      for p in members:\n        if p == c: continue\n        var r = Steam.estimatePingTimeBetweenTwoLocations(ploc[c], ploc[p])\n        if r < 0: r = 300\n        worst = max(worst, r); total += r\n      var cost = worst + 0.25 * total / max(1, members.size() - 1)\n      if cost < best_cost: best_cost = cost; best = c\n    return best",
+    "④ ICE 直连配置（让两名大陆玩家有机会绕开 hkg）：连接选项字典传给 connectP2P / createListenSocketP2P：\n  var opts := {Steam.NETWORKING_CONFIG_P2P_TRANSPORT_ICE_ENABLE: Steam.NETWORKING_CONFIG_P2P_TRANSPORT_ICE_ALL}\n  Steam.createListenSocketP2P(0, opts); Steam.connectP2P(host_id, 0, opts)\n  [不确定] Steam 闭源客户端是否仍会让用户的「永不」设置优先；开源代码里只有值 <0 时才询问平台。若担心暴露 IP，可改为 PUBLIC|PRIVATE 只对好友开启（自己判断 Steam.getFriendRelationship）。不要配置 TURN（P2P_TURN_ServerList 留空，SDR 就是中继）。",
+    "⑤ 可选：给 SDR 路由加罚分让 ICE 在差距不大时也优先直连，例如 opts[Steam.NETWORKING_CONFIG_P2P_TRANSPORT_SDR_PENALTY] = 10（单位 ms 口径，GNS 注释：路由分数以毫秒计，从 ping 开始再加罚分）。取值 5–15，过大可能让高丢包直连胜过稳定中继。",
+    "⑥ 连接质量可观测：每 2s 调 Steam.getConnectionRealTimeStatus(conn, 0, true) 取 ping、connection_quality_local/remote、out_bytes_per_sec 等；排障日志里附 Steam.getDetailedConnectionStatus(conn).status 字符串（含当前走的是 SDR 哪个 POP 还是 ICE 直连）。一键上传日志时带上本机 Steam.getPOPList() 与对 hkg/tyo/sgp/seo 的 Steam.getDirectPingToPOP(pop_id)。",
+    "⑦ POP ID 编码：3 字符码 'hkg' = (ord('h')<<16)|(ord('k')<<8)|ord('g')；4 字符码 'abcd' 编码为 0xddaabbcc（steamnetworkingtypes.h 第 1844 行 CalculateSteamNetworkingPOPIDFromString）。GDScript：func pop_id(s): var r = s.unicode_at(0)<<16 | s.unicode_at(1)<<8 | s.unicode_at(2); if s.length()==4: r |= s.unicode_at(3)<<24; return r",
+    "⑧ 换主重连时延预算（D2）：备用连接法优先——房主备份快照时，继任者前 2 名与所有成员保持已建立的 P2P 连接（只发 1Hz 心跳），母体房主离开时直接切换，不需要重新 connectP2P；若无备用连接，则所有客户端错峰 0–500ms 随机抖动后向新房主 connectP2P，UI 预算：P50 ≤2s、P95 ≤5s、超时 10s（保持 GNS 默认 TimeoutInitial=10000ms），超时后退回 A1 体面结算。",
+    "⑨ 大厅过滤：可在 Lobby 数据里写房主的 ping location 字符串，房间列表按 estimatePingTimeFromLocalHost 显示估算延迟并标注「>150ms 黄色、>250ms 红色」，不强制按地区隔离（GNS 维护者也建议由游戏自行实现）。"
+  ],
+  "pitfalls_and_failures": [
+    "[坑] 只看 appid=480 的 global 配置会得出「Steam 在中国没有中继」，只看 realm=steamchina 又会误以为第三方游戏也能用大陆中继——两者都要按 realm 区分（本次 API 实测）。",
+    "[坑] AI 编码常把 P2P_Transport_ICE_Enable 写成 true/1：1 只代表 Relay(TURN) 候选，不是「开启」；正确是 ICE_ALL(0x7fffffff) 或 PUBLIC(4)|PRIVATE(2)（steamnetworkingtypes.h 第 1732–1737 行）。",
+    "[坑] 选项必须在 connectP2P/createListenSocketP2P 创建时通过 options 传入；创建后再调 setConnectionConfigValueInt32 可能来不及，ICE 配置在初始化时被 Lock（steamnetworkingsockets_p2p_ice.cpp 第 81–85 行「Burn it into the connection config」）。",
+    "[失败案例] 2026-03 至 06 月 Steam 客户端回归：即使玩家设置共享 IP，新客户端也不再尝试 STUN，全部走 SDR；社区临时办法是在双方游戏目录放 steamwebrtc64.dll，Valve 2026-06-10 修复（https://github.com/ValveSoftware/GameNetworkingSockets/issues/398 ）。说明直连能力会随 Steam 客户端版本变化，测试要记录客户端版本。",
+    "[失败案例] Deep Rock Galactic 大陆玩家（2026-05-11）：Ctrl+\\ 网络信息显示全部经 hkg，P2P 失败，延迟高、丢包频繁，问题未见开发者回复（https://app.betahub.io/projects/pr-5632787018/issues/1359 ）。",
+    "[坑] 新加坡中继对大陆极差（联通中位 378ms、电信丢包 50%，本次实测），如果自己写「按地理选 POP」或强制某 POP 会很危险，应完全交给 SDR 自动选路。",
+    "[坑] 估算函数 estimatePingTimeBetweenTwoLocations 在中继网络未就绪或 ping 数据过期时返回负值（k_nSteamNetworkingPing_Failed/Unknown），房主选择代码必须处理负值，否则会把未知当 0ms 选成房主。",
+    "[坑] ICMP ping 与 SDR 实际走的 UDP 27015–27060 可能有不同 QoS，晚高峰运营商对 UDP 限速/丢包更明显；ICMP 数据只能作下限参考（主观，基于 V2EX 夜间跨网限速反馈 https://www.v2ex.com/t/1121610 ）。",
+    "[坑] Watt Toolkit 只做网页反代，玩家以为开了就能降游戏延迟；客服/FAQ 要写清楚。"
+  ],
+  "quantitative_params": [
+    "名称：global 配置 POP 数 / 数值：37（33 带中继） / 单位：个 / 口径：appid 480 及 8 款第三方游戏，2026-11-25 / 出处：GetSDRConfig API 实测",
+    "名称：global 配置大陆中继数（第三方） / 数值：0 / 单位：个 / 口径：同上 / 出处：API 实测",
+    "名称：steamchina realm 配置 POP 数 / 数值：21（16 带中继，其中大陆 12） / 单位：个 / 口径：appid 480、892970 带 &realm=steamchina / 出处：API 实测",
+    "名称：CS2 730 global 配置 / 数值：53 POP、45 带中继、大陆 16（12 带中继） / 单位：个 / 口径：2026-11-25 / 出处：API 实测",
+    "名称：亚太中继台数 / 数值：hkg 10、tyo 6、sgp 6、seo 4、gum 2、syd 4 / 单位：台 / 口径：global 配置 relays 数组长度 / 出处：API 实测",
+    "名称：大陆→hkg RTT 中位 / 数值：电信 22、联通 39、移动 42、云 30 / 单位：ms / 口径：ICMP 16 包，平峰 2026-11-25 15:05 北京时间，46 探针 / 出处：Globalping https://api.globalping.io/v1/measurements/2nbh0dj4yQjmswQEK00021ZFe",
+    "名称：大陆→tyo RTT 中位 / 数值：电信 64（丢包 15.6%）、联通 53、移动 67 / 单位：ms / 口径：同上 / 出处：Globalping https://api.globalping.io/v1/measurements/2tVXcFfVTuhcJl3Y000021ZFe",
+    "名称：大陆→seo RTT 中位 / 数值：电信 90、联通 87、移动 95 / 单位：ms / 口径：同上 / 出处：Globalping https://api.globalping.io/v1/measurements/2NT0cQjr8468JeH1700021ZFe",
+    "名称：大陆→sgp RTT 中位 / 数值：电信 146（丢包 50%）、联通 378（丢包 18%）、移动 144 / 单位：ms / 口径：同上 / 出处：Globalping https://api.globalping.io/v1/measurements/2IAWkj4mFBYH6MQRF00021ZFe",
+    "名称：大陆→gum 关岛 RTT 中位 / 数值：电信 99、联通 80、移动 99 / 单位：ms / 口径：同上 / 出处：Globalping https://api.globalping.io/v1/measurements/2FqzYOyBX9fkYLSEC00021ZFf",
+    "名称：大陆→大陆 CN 中继（pvgt/tgdt/peku/pvgm）RTT 中位 / 数值：21–38 / 单位：ms / 口径：同上（仅 CS2/Steam China 可用） / 出处：Globalping https://api.globalping.io/v1/measurements/2ofVk0BMKsJ1NJ7bt00021ZFe 等",
+    "名称：大陆→lax / sea / fra RTT 中位 / 数值：lax 电信 155、联通 294、移动 192；sea 180/219/217；fra 263/167/224 / 单位：ms / 口径：同上，丢包 1–20% / 出处：Globalping https://api.globalping.io/v1/measurements/2gApHNDbHnCewgSi800021ZFf 、https://api.globalping.io/v1/measurements/2Tl5P97zA9LPi8a7o00021ZFf 、https://api.globalping.io/v1/measurements/2hrn8ZyO9aB2Jefdj00021ZFf",
+    "名称：大陆→hkg 抖动 / 数值：中位 0.2、P90 1.4、最大 32 / 单位：ms（单探针 16 包标准差） / 口径：平峰 / 出处：Globalping 原始 timings 计算",
+    "名称：Valve 骨干 POP 间典型 ping / 数值：hkg-sgp 30、hkg-seo 36、hkg-tyo 49、seo-tyo 30、hkg-sea 142、tyo-sgp 81、lax-sea 23、fra-iad 85 / 单位：ms RTT / 口径：GetSDRConfig typical_pings / 出处：API 实测",
+    "名称：大陆↔大陆经 hkg 中继 RTT / 数值：45–85（平峰） / 单位：ms / 口径：[推算] 两段之和 / 出处：本 item 推算",
+    "名称：大陆↔美西经 SDR RTT / 数值：约 190 / 单位：ms / 口径：[推算] 30+142+20 / 出处：typical_pings + 实测",
+    "名称：大陆↔欧洲 RTT / 数值：约 170–270 / 单位：ms / 口径：[推算] 直连 fra 实测区间；经 SDR 预计 200–260 / 出处：Globalping 实测",
+    "名称：RIPE Atlas 历史（2025-06-12 13:13 北京时间）大陆→Valve 东京 45.121.184.141 / 数值：96–237，多数 102–127 / 单位：ms / 口径：单包，14 个大陆探针 / 出处：RIPE Atlas 测量 108990213 https://atlas.ripe.net/measurements/108990213/",
+    "名称：P2P_Transport_ICE_Enable 默认 / 数值：-1（用户默认）；开源构建 0x7fffffff / 单位：位掩码 / 口径：GNS 源码 / 出处：csteamnetworkingsockets.cpp 第 124–129 行",
+    "名称：ICE 位掩码 / 数值：Disable 0、Relay 1、Private 2、Public 4、All 0x7fffffff / 单位：— / 口径：— / 出处：steamnetworkingtypes.h 第 1732–1737 行",
+    "名称：ICE_Penalty / SDR_Penalty 默认 / 数值：0 / 0 / 单位：ms 分数 / 口径：路由选择罚分 / 出处：csteamnetworkingsockets.cpp 第 131、136 行",
+    "名称：路由罚分常量 / 数值：未确认连通 +10000、非提名 +100、非 LAN +10、非选中覆盖 +4000；等待主控方选非提名路由 1s / 单位：分 / s / 口径：— / 出处：steamnetworkingsockets_p2p.h 第 28–31 行、p2p.cpp 第 43 行",
+    "名称：TimeoutInitial / TimeoutConnected 默认 / 数值：10000 / 10000 / 单位：ms / 口径：连接级 / 出处：csteamnetworkingsockets.cpp 第 76–77 行",
+    "名称：p2p_share_ip / 数值：cn 20、default 40、ru 20 / 单位：[不确定] 可能是 ms 阈值 / 口径：GetSDRConfig / 出处：API 实测",
+    "名称：中国 IPv6 活跃用户 / 数值：8.69 亿（占网民 77.38%） / 单位：人 / 口径：2025-12 / 出处：新华社 2026-07-29",
+    "名称：Steam 简体中文用户占比 / 数值：21.98%（环比 -9.41 个百分点） / 单位：% / 口径：2026-10 硬件调查 / 出处：https://store.steampowered.com/hwsurvey",
+    "名称：重新建连预算（推荐） / 数值：P50 ≤2、P95 ≤5、超时 10 / 单位：s / 口径：[推算] 中继已初始化前提 / 出处：本 item 推算"
+  ],
+  "alternatives_comparison": [
+    "A. 纯 SDR（默认，不改 ICE）：代价 0；收益：稳定、隐藏 IP、大陆玩家落 hkg 平峰 22–42ms；大陆↔大陆约 45–85ms。对本项目：V1.0 基线，值得。",
+    "B. SDR + 显式开启 ICE（ICE_ALL 或仅好友）：代价约 0.5 人周 + 隐私说明；收益：两名大陆玩家（尤其 IPv6）可能降到 20–50ms，并摆脱境外拥塞；风险：受 Steam 客户端版本与用户设置影响（2026 年 3–6 月回归）。对本项目：值得，作为可开关选项。",
+    "C. 发行 Steam China（蒸汽平台）版拿大陆中继：代价是版号、国内发行商、独立 realm（与国际版玩家互通性未知），周期以年计；收益：大陆节点 21–38ms。对本项目：V1.0/V1.5 不建议。",
+    "D. 依赖国内加速器：开发者代价 0（可主动联系加速器收录、在商店页写推荐）；收益：改善大陆→hkg 首段与晚高峰丢包；风险：玩家需付费/装软件。对本项目：值得在 FAQ 推荐，不做技术对接。",
+    "E. 租国内云服务器自建中继/专服（阿里云/腾讯云）：违反 V1.0 不租服务器硬约束，且大陆服务器需 ICP/合规；对本项目：V1.5 C3 社区自建专服时再评估。",
+    "F. 第三方中继（Epic EOS P2P relay、Photon 等）：要换网络栈、额外账户体系，大陆节点同样不确定；对本项目：不值得。"
+  ],
+  "project_implications": [
+    "结论 1：全球含大陆玩家的风险从「致命」下调为「麻烦但可解」。国际版 Steam 下第三方游戏确实没有大陆中继，但大陆玩家到香港中继平峰只有 22–42ms、几乎无丢包，SDR 自动选路会避开对大陆很差的新加坡；真正的风险集中在晚高峰（未实测）和大陆↔欧美混房（约 190–260ms）。",
+    "结论 2：设计输入建议改为三档：① 大陆↔大陆同房经 hkg：平峰 45–85ms，晚高峰按 100–150ms 设计；② 大陆↔日韩港台/东南亚：60–120ms；③ 大陆↔欧美：190–260ms，丢包 3–5%。D4 分权移动（本地 0ms 跟手）正好适合这种情况，判定类（感染/开门/直升机）要容忍 250ms。",
+    "结论 3：房主（母体）在谁那里，对整体手感影响最大。大陆玩家占多数的房间，房主放在大陆玩家处最好；混房按「最差玩家 RTT 最小」原则选房主和继任者（implementation_guidance ③），不要默认按建房顺序。母体天然是初始房主这一设定会让「海外玩家建房、大陆玩家加入」时所有大陆玩家都付出跨洋延迟，建议允许开局前按 ping 自动选房主（母体身份与房主身份解耦，或开局时把母体分给最优房主人选）。",
+    "结论 4：开 ICE（至少对好友）是大陆玩家的低成本加分项：两名大陆好友（大陆玩家开黑的主流场景）有机会直连，绕开境外拥塞。代价是需要在设置里给出「允许直连（会向对方暴露 IP）」开关，默认跟随 Steam 设置。",
+    "结论 5：换主（D2）对大陆玩家的关键不是 SDR 速度而是「是否要重新建连」。推荐备用连接法：继任者前 2 名与所有成员提前保持连接，换主时 0 次握手；否则错峰重连预算 P95 ≤5s。",
+    "结论 6：不需要也不建议为大陆做任何开发者侧加速器对接或 Steam China 发行；在商店页/FAQ 写明「大陆玩家可用 UU/迅游等加速器，Watt Toolkit 只加速商店社区」即可。",
+    "结论 7：排障日志必须记录 getDetailedConnectionStatus 文本（走哪个 POP 或是否直连）与 Steam 客户端版本，否则无法区分「SDR 选路问题」「Steam 客户端回归」「玩家网络问题」。"
+  ],
+  "mvp_scope": {
+    "V1.0 最小可行": [
+      "启动即 initRelayNetworkAccess，等待中继就绪后才允许建房",
+      "Lobby 成员数据写 ping location；房间列表显示估算延迟",
+      "开局前按「最差玩家 RTT 最小」自动选房主；继任者排序同算法",
+      "connectP2P/createListenSocketP2P 传 ICE 选项（默认跟随 Steam 用户设置，设置里提供「对好友允许直连」开关）",
+      "换主备用连接（继任者前 2 名预连）+ 10s 超时退回 A1",
+      "排障日志：getDetailedConnectionStatus、getRealTimeStatus、各 POP ping、Steam 客户端版本",
+      "FAQ：加速器说明、Steam 设置「Steam 网络→IP 共享」说明"
+    ],
+    "V1.5 再做": [
+      "SDR_Penalty 调参（5–15）与直连/中继 A/B 数据统计",
+      "房间列表按延迟分组、跨区提示",
+      "联系 UU/迅游等申请收录本游戏",
+      "C3 社区自建专服时评估大陆云服务器"
+    ],
+    "不建议做": [
+      "Steam China（蒸汽平台）单独发行",
+      "自建/第三方中继替代 SDR",
+      "手动指定或强制某个 POP（尤其 sgp）",
+      "按国家硬性隔离房间"
+    ]
+  },
+  "effort_estimate": {
+    "人周": "[推算] 合计约 1.5–2.5 人周：中继初始化与 ping location 上报 0.3；房主/继任者选择算法 0.5；ICE 选项与设置开关 0.3；备用连接与重连预算 0.5–1（与 D2 换主 item 共享）；排障日志字段 0.2；大陆实测（需真人或云探针）0.3–0.5。",
+    "AI 编码难度": "中",
+    "典型错误": "把 ICE_ENABLE 写成 1；创建连接后才设选项；estimatePing 负值当 0；把 POP ID 当字符串传；在中继未就绪时调用 getLocalPingLocation 拿到空数据；把新加坡当亚洲默认节点。",
+    "必须人工把关的验收点": "两台不同运营商的大陆机器 + 一台海外机器同房，查看 getDetailedConnectionStatus 是否走 hkg/tyo；晚高峰 20:00–23:00 实测；Steam 设置分别为默认/永不/总是/仅好友时是否直连；换主时备用连接是否真的 0 握手。"
+  },
+  "risk_rating": {
+    "等级": "麻烦但可解",
+    "理由": "大陆→香港中继平峰实测 22–42ms 且几乎无丢包，SDR 自动选路可用；没有大陆中继的代价主要是大陆↔大陆多绕一段香港（+20–40ms）和晚高峰拥塞，D4 分权移动可吸收。",
+    "触发条件": "晚高峰大陆→hkg 丢包 >5% 或 RTT >150ms；大陆玩家所在房间房主在欧美；Steam 客户端再次出现直连回归；国际版 Steam 在大陆被进一步限制（客户端登录/CM 连接受阻属于致命级外部风险，目前无迹象）。",
+    "缓解措施或降级路径": "按 ping 选房主/继任者；开 ICE；推荐加速器；房间列表显示延迟引导大陆玩家同区组队；最坏情况下大陆玩家开大陆房、海外开海外房（软隔离）。"
+  },
+  "win_probability_inputs": [
+    "上线稳定性：本次实测把大陆→hkg 从「80–180ms 伴抖动」修正为平峰 22–42ms，相对上一轮假设 +3~+5 个百分点 [主观]；晚高峰未实测，保留 ±5 个百分点不确定。",
+    "动作手感达标率：按 ping 选房主（而非母体建房者固定为房主）对混房手感 +5~+8 个百分点 [主观]；不做则大陆玩家在海外房主房间常态 190–260ms。",
+    "换主可靠性：备用连接法比冷重连（1–5s、可能超时）+5~+10 个百分点 [推算：避免一次 10s 超时窗口内的失败]。",
+    "冷启动存活率：大陆玩家可正常联机是覆盖简体中文用户（2026-10 Steam 调查 21.98%）的前提，此项目前判断为可用，不扣分；若晚高峰实测丢包 >5%，-3~-5 个百分点 [主观]。",
+    "长期低维护度：依赖 Valve 中继、不对接加速器、不发 Steam China，维护成本低；Steam 客户端回归（如 2026 年 3–6 月）属于不可控外部因素，-1~-2 个百分点 [主观]。"
+  ],
+  "test_verification_points": [
+    "晚高峰云探针复测（可 headless 自动化）：北京时间 20:30 与 22:30 各跑一次，命令示例：curl -X POST https://api.globalping.io/v1/measurements -H 'content-type: application/json' -d '{\"type\":\"ping\",\"target\":\"103.28.54.163\",\"locations\":[{\"country\":\"CN\"}],\"limit\":48,\"measurementOptions\":{\"packets\":16}}'；目标依次换成 45.121.184.5(tyo)、146.66.152.36(seo)、185.25.180.18(gum)、162.254.195.52(lax)、155.133.226.68(fra)。中继 IP 会变，先从 GetSDRConfig 取最新 relays。采集：分运营商 RTT 中位/P95、丢包、16 包标准差。红线：大陆→hkg 中位 ≤60ms、P95 ≤120ms、丢包 ≤2%。",
+    "游戏内真机测试（需人工）：≥2 名不同运营商大陆玩家 + 1 名海外玩家，开 Steam 覆盖层网络信息或调用 getDetailedConnectionStatus，记录每条连接走 SDR 哪个 POP / ICE 直连、ping、connection_quality；红线：大陆↔大陆 RTT ≤100ms（晚高峰 ≤150ms），任一连接丢包 ≤3%。",
+    "ICE 矩阵（人工）：Steam「Steam 网络」设置 × {默认、永不、总是、仅好友} × 网络 {电信家宽、移动家宽、手机热点、校园网、IPv6 开/关}，记录直连是否成功与建立耗时；能 headless 的部分是日志解析。",
+    "重连时延：脚本让房主进程 kill -9，客户端记录从检测断线到对新房主 connectP2P 收到 connected 的耗时；有备用连接时应 ≈0；无备用连接红线 P95 ≤5s、超时率 0%（10 次 × 3 种网络）。可在两台 Windows 机器上半自动化。",
+    "混房房主选择回归测试（headless）：用伪造 ping location 矩阵（大陆 5 人、日本 2 人、美国 3 人）单元测试 pick_host 是否选出最差 RTT 最小者，负值是否被当成 300ms。"
+  ],
+  "china_mainland_notes": [
+    "可达性：国际版 Steam 客户端、商店、下载、支付整体可用；Steam 社区页长期被屏蔽/不稳定（appinchina 2026-05-18 更新）。Lobby 与 SDR 都走客户端内部连接，不依赖社区网页，联机本身可用。[不确定] 未实测大陆客户端登录 CM 服务器的成功率。",
+    "中继：国际版下第三方游戏 0 个大陆中继，大陆玩家主要走 hkg（平峰 22–42ms），华东联通部分走 tyo（36ms）；新加坡对大陆很差，不会也不应被选中。",
+    "延迟与丢包：平峰几乎无丢包、抖动 <2ms（P90）；晚高峰未实测 [不确定]；东京电信平峰也有 15.6% 平均丢包，说明部分线路质量差异大。",
+    "直连：Steam 默认不轻易共享 IP；大陆 IPv6 普及率高（活跃用户 77%），ICE 支持 IPv6，两名大陆好友直连是最有价值的优化；IPv4 普遍 CGNAT，打洞成功率无公开数据 [不确定]。",
+    "加速器：UU/迅游/雷神按游戏规则加速发往 Valve 中继的流量，开发者无需对接，可申请收录；Watt Toolkit 不加速游戏联机。",
+    "合规与支付：国际版 Steam 销售不需要版号；Steam China（蒸汽平台）需版号与国内发行商，不建议。国际版 Steam 在中国区提供人民币定价与本地支付（支付宝/微信支付）[不确定：本轮未抓取官方支付方式页]。",
+    "社区与测试者渠道 [主观]：Steam Playtest + 小黑盒、B 站（开发日志视频）、QQ 群、贴吧、NGA、机核、indienova、奶牛关；招募时按运营商（电信/联通/移动）与南北方分组，确保晚高峰时段有人测试。"
+  ],
+  "sources": [
+    "GetSDRConfig appid=480（global）| https://api.steampowered.com/ISteamApps/GetSDRConfig/v1/?appid=480 | 访问 2026-11-25 | API 实测 | 高",
+    "GetSDRConfig appid=480 realm=steamchina | https://api.steampowered.com/ISteamApps/GetSDRConfig/v1/?appid=480&realm=steamchina | 访问 2026-11-25 | API 实测 | 高",
+    "GetSDRConfig appid=730（CS2）/ 570（Dota2）| https://api.steampowered.com/ISteamApps/GetSDRConfig/v1/?appid=730 | 访问 2026-11-25 | API 实测 | 高",
+    "GetSDRConfig 对照：892970、945360、1966720、553850、548430、3241660、3527290、2881650、1172470、252490、440、578080、1422450 | https://api.steampowered.com/ISteamApps/GetSDRConfig/v1/?appid=<id> | 访问 2026-11-25 | API 实测 | 高",
+    "CS2 SDR 配置历史快照（42 次提交，2026-02-25 至 2026-11-10）| https://github.com/DotaFlow/steam_api_dumps/commits/master/CounterStrike2/public/GetSDRConfig.json | 访问 2026-11-25 | 数据平台（第三方自动抓取）| 中高",
+    "Steam 客户端 steamnetworkingsockets 字符串表（realm=steamchina、p2p_share_ip）| https://github.com/SteamTracking/GameTracking-CS2/blob/master/game/bin/win64/steamnetworkingsockets_strings.txt | 访问 2026-11-25 | 源码/二进制字符串 | 中高",
+    "GameNetworkingSockets 源码（commit fb56c96，2026-11-24）：csteamnetworkingsockets.cpp、steamnetworkingsockets_p2p_ice.cpp、steamnetworkingsockets_p2p.h、ice_client_types.h、steamnetworkingtypes.h、isteamnetworkingutils.h | https://github.com/ValveSoftware/GameNetworkingSockets | 访问 2026-11-25 | 源码 | 高",
+    "GNS issue #398 Major P2P issues in Israel（含中国报告，2026-06-10 修复）| https://github.com/ValveSoftware/GameNetworkingSockets/issues/398 | 2026-03-24 至 06-11 | 社区实测+维护者回复 | 高",
+    "GNS issue #432 Player Region Filtering（维护者回复 2026-09-30）| https://github.com/ValveSoftware/GameNetworkingSockets/issues/432 | 访问 2026-11-25 | 维护者回复 | 高",
+    "GodotSteam 4.24 源码（godot4 分支 bc2a881，2026-11-10）| https://codeberg.org/godotsteam/godotsteam | 访问 2026-11-25 | 源码 | 高",
+    "Steamworks 文档 Steam Datagram Relay | https://partner.steamgames.com/doc/features/multiplayer/steamdatagramrelay | 访问 2026-11-25 | 官方文档 | 高",
+    "Steamworks 文档 ISteamNetworkingSockets | https://partner.steamgames.com/doc/api/ISteamNetworkingSockets | 访问 2026-11-25 | 官方文档 | 高",
+    "Steam 社区帖：IP 共享四档设置原文 | https://steamcommunity.com/discussions/forum/0/4030224882296135633/ | 访问 2026-11-25 | 社区转引官方说明 | 中",
+    "Globalping 测量（大陆 46 探针 → hkg/tyo/sgp/seo/pvgt/tgdt/peku/pvgm，2026-11-25 07:05 UTC）| https://api.globalping.io/v1/measurements/2nbh0dj4yQjmswQEK00021ZFe ；https://api.globalping.io/v1/measurements/2tVXcFfVTuhcJl3Y000021ZFe ；https://api.globalping.io/v1/measurements/2IAWkj4mFBYH6MQRF00021ZFe ；https://api.globalping.io/v1/measurements/2NT0cQjr8468JeH1700021ZFe ；https://api.globalping.io/v1/measurements/2ofVk0BMKsJ1NJ7bt00021ZFe ；https://api.globalping.io/v1/measurements/2SkULAzfV3v6cr7kB00021ZFe ；https://api.globalping.io/v1/measurements/2V9MigojDWTdI92jL00021ZFe ；https://api.globalping.io/v1/measurements/2SVuEgyWmGyVB2lk000021ZFe | 2026-11-25 | 社区实测（本 item 发起，公共探针，结果约保留 7 天）| 中高",
+    "Globalping 测量（大陆 45 探针 → lax/sea/fra/gum，2026-11-25 07:08 UTC）| https://api.globalping.io/v1/measurements/2gApHNDbHnCewgSi800021ZFf ；https://api.globalping.io/v1/measurements/2Tl5P97zA9LPi8a7o00021ZFf ；https://api.globalping.io/v1/measurements/2hrn8ZyO9aB2Jefdj00021ZFf ；https://api.globalping.io/v1/measurements/2FqzYOyBX9fkYLSEC00021ZFf | 2026-11-25 | 社区实测 | 中高",
+    "RIPE Atlas 测量 108990213（大陆探针 → Valve 东京 45.121.184.141，2025-06-12）| https://atlas.ripe.net/measurements/108990213/ | 2025-06-12 | 社区实测 | 中",
+    "Deep Rock Galactic BetaHub #1359 大陆玩家经 hkg 高延迟丢包 | https://app.betahub.io/projects/pr-5632787018/issues/1359 | 2026-05-11 | 社区报告 | 中",
+    "V2EX 夜间跨网延迟/丢包反馈 | https://www.v2ex.com/t/1121610 | 访问 2026-11-25 | 社区 | 低中",
+    "V2EX 广东移动 NAT1→NAT4 反馈 | https://www.v2ex.com/t/1187566 | 访问 2026-11-25 | 社区 | 低中",
+    "新华社：中国IPv6发展报告(2026) 数据 | https://www.news.cn/tech/20260729/dbbaf8a077184270b62ca35bd297b31a/c.html | 2026-07-29 | 官方媒体 | 高",
+    "AppInChina：The Complete Guide to Steam China | https://appinchina.co/blog/the-complete-guide-to-steam-china/ | 更新 2026-05-18 | 行业博客 | 中",
+    "Steam 硬件与软件调查 2026-10（简体中文 21.98%）| https://store.steampowered.com/hwsurvey | 访问 2026-11-25 | 官方数据 | 高",
+    "Watt Toolkit（SteamTools）项目说明 | https://github.com/BeyondDimension/SteamTools | 访问 2026-11-25 | 源码/官方 README | 高"
+  ],
+  "uncertain": [
+    "prior_claims_check",
+    "current_status",
+    "key_findings",
+    "implementation_guidance",
+    "quantitative_params",
+    "china_mainland_notes"
+  ]
+}
