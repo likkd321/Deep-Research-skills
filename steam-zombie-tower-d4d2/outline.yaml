@@ -313,21 +313,24 @@ execution:
     - "SDR 中继与中国大陆连通性"
     - "带宽与包量测算：16 人同层峰值复核"
     - "零基础 + 双 AI 协作可行性"
+  batch_rule: "每批最多 1 个 opus 子 agent，其余并行名额用 sonnet 补满；尽量不要两个 opus 同批（用户 2026-11-25 指定，控制 Opus 额度；批次 1 在此规则前已跑完）"
   agent_groups:
-    # 批次 1：核心 3 组（Opus）
+    # 批次 1（已完成，规则前：3 opus）
     - {agent: web-search-agent-deep, model: opus, items: ["D4 分权移动的动作手感"]}
     - {agent: web-search-agent-deep, model: opus, items: ["主机迁移业界实践与 Steam 换主翻车史"]}
     - {agent: web-search-agent-deep, model: opus, items: ["同类游戏商业与冷启动数据"]}
-    # 批次 2：其余深度判断 3 组（Opus）
+    # 批次 2（进行中：1 opus + 1 sonnet）
     - {agent: web-search-agent-deep, model: opus, items: ["SDR 中继与中国大陆连通性"]}
-    - {agent: web-search-agent-deep, model: opus, items: ["带宽与包量测算：16 人同层峰值复核"]}
-    - {agent: web-search-agent-deep, model: opus, items: ["零基础 + 双 AI 协作可行性"]}
-    # 批次 3–5：检索类两两成组（Sonnet）
     - {agent: web-search-agent, model: sonnet, items: ["Godot 4 引擎现状与多人联机底层 API", "GodotSteam 插件与 SteamMultiplayerPeer 源码"]}
+    # 批次 3（1 opus + 2 sonnet）
+    - {agent: web-search-agent-deep, model: opus, items: ["带宽与包量测算：16 人同层峰值复核"]}
     - {agent: web-search-agent, model: sonnet, items: ["Understudy 源码审计与 Godot 换主生态", "全房主权威 + 预测回滚对照（netfox 等）"]}
     - {agent: web-search-agent, model: sonnet, items: ["GNS 底层参数：超时、心跳、缓冲、限速与通道", "Steam Lobby：房间列表、房间码、旁观与幽灵房"]}
+    # 批次 4（1 opus + 2 sonnet）
+    - {agent: web-search-agent-deep, model: opus, items: ["零基础 + 双 AI 协作可行性"]}
     - {agent: web-search-agent, model: sonnet, items: ["同类先例网络架构拆解", "CSOL 生化与感染类玩法节奏"]}
     - {agent: web-search-agent, model: sonnet, items: ["补位 Bot 跨楼层寻路与行为决策", "联机测试工具链与混沌压测"]}
+    # 批次 5（2 sonnet）
     - {agent: web-search-agent, model: sonnet, items: ["跨楼层声音情报与近距离语音", "高楼关卡内容生产与像素美术管线"]}
     - {agent: web-search-agent, model: sonnet, items: ["存档、Steam Cloud 与零成本排障日志", "Steam 上架、AppID 480 与 Playtest"]}
   output_dir: ./results
