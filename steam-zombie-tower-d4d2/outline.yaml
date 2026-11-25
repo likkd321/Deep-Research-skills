@@ -221,6 +221,7 @@ items:
       - "声音情报设计先例：Project Zomboid 噪音系统、Dead by Daylight 恐惧半径/心跳、Lethal Company 声音吸引怪物、Darkwood、Teleglitch 等"
       - "近距离语音：Lethal Company/Content Warning/R.E.P.O. 等的传播效应；Steam Voice API（GodotSteam getVoice/decompressVoice，线索：GodotSteamKit 有 SteamVoice 节点）与 Godot AudioEffectCapture + Opus 方案；每路语音带宽；房主转发 vs 点对点；大陆内容合规、举报/屏蔽需求"
       - "对 D4+D2 与带宽的影响，V1.0 是否做语音的建议"
+      - "（批次 3 结论可引用）带宽测算 item 的跨层声音通道模型：每 0.2 秒给相邻楼层发一次噪声摘要、每个声源 4 B，16 人额外约 15–20 kbps；可在此基础上细化声音事件分类与编码"
     prior_claims: []
 
   - name: "高楼关卡内容生产与像素美术管线"
@@ -280,7 +281,7 @@ items:
       - "Steam Direct 费用与返还条件、审核时长、商店页「即将推出」最短时长、发布前检查"
       - "AppID 480（Spacewar）开发测试的限制；拿到自己 AppID 后的 Steamworks 设置（Lobby、Networking、Cloud）"
       - "Steam Playtest 的流程、限制与主 App 的关系；Steam Next Fest；愿望单转化经验值；国内外社区与主播冷启动渠道（B 站、小黑盒、Reddit、Discord）"
-      - "区域定价（人民币推荐价、¥15–48 的定位）、大陆玩家购买支付现状；本地化（中英文）"
+      - "区域定价（人民币推荐价、¥15–48 的定位）、大陆玩家购买支付现状（SDR item 遗留：国际版 Steam 在大陆的支付宝/微信支付等是否可用，抓官方页面核实）；本地化（中英文）"
       - "Steam Deck 兼容性审核与手柄要求；beta 分支用于联机版本回滚；Steamworks SDK 近期更新（1.63–1.65）中与联机相关的变化"
       - "第三方依赖与素材许可（GodotSteam、Steamworks SDK 再分发、Understudy、字体音效）与借鉴 CSOL 玩法的 IP 边界"
     prior_claims:
