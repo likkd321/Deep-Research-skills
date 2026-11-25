@@ -1,0 +1,137 @@
+{
+  "name": "Godot 4 引擎现状与多人联机底层 API",
+  "category": "引擎与插件",
+  "research_scope": [
+    "1. Godot 4 最新 stable/beta 版本号、发布日期与维护策略（核实日 2026-11-25）",
+    "2. SceneMultiplayer 的 @rpc 包头结构、路径缓存、send_bytes/peer_packet 开销与 MultiplayerPeerExtension",
+    "3. MultiplayerSynchronizer/Spawner 的发包机制、delta、visibility 与带宽特性",
+    "4. godot-proposals #7912（换主）状态与 peer 1 固定为服务器的含义",
+    "5. --headless 下物理/导航/TileMapLayer 可用性；Customize Run Instances 多开与 user:// 隔离",
+    "6. GDScript 16 人×20Hz 打包/解包与线段碰撞性能（仅能给推算，无一手基准）"
+  ],
+  "prior_claims_check": [
+    "「最新稳定版为 4.7.2-stable（2026-08-18 发布；4.8-beta4 于 2026-11-18 发布）」→ 证实 → 官方博客 https://godotengine.org/article/maintenance-release-godot-4-7-2/ 标注 18 August 2026，称与 4.7.1 无已知不兼容；https://godotengine.org/article/dev-snapshot-godot-4-8-beta-4/ 为 2026-11-18 的 beta 4 帖，称可能是最后一个 beta。搜索未发现 4.7.3 或 4.8-rc1 官方帖（核实日 2026-11-25）。注：个别二手搜索摘要把 4.7.2 写成 24 Aug，与官方帖不符，以官方帖为准。",
+    "「godot-proposals #7912 仍未落地（open）」→ 证实 → https://github.com/godotengine/godot-proposals/issues/7912 状态 Open，标题 'Implement automatic host migration in peer-to-peer games'，无里程碑/负责人/关联 PR；2025-11 仍有评论提及停滞的 PR #97910 与较小提案 #9214。截至 2026-11-25 未见落地迹象。",
+    "「核心实体不用 MultiplayerSynchronizer，改用原版 ENet/SteamMultiplayerPeer + send_bytes + @rpc 写轻胶水」→ 部分证实（属设计结论而非事实）→ 源码 modules/multiplayer/scene_replication_interface.cpp 的 _send_sync 对每个 peer 每网络帧遍历其所有同步器、逐 peer 重复编码（无广播共享），单同步器元素头 4B net_id + 4B size；同步器本身按 1350B MTU 打包合并，并非每个同步器独立发包。因此不宜挂核心实体的理由是「逐 peer 重复编码 + 无法做楼层 AOI 之外的自定义量化/换主快照 + 权威固定」，而非「每个同步器独立发包」。",
+    "「无脑挂 MultiplayerSynchronizer 不合包，24 人可达 ~8.3 Mbps / 10,120 PPS」→ 无法核实 → 搜索官方文档、源码、GitHub issues 均未找到该数字的原始测量；源码只能说明机制（见 key_findings）。该数字可能来自某基准项目，但无一手链接，标 [不确定]，不要作为定量依据；本项目应自测。"
+  ],
+  "current_status": [
+    "[事实] 最新 stable：Godot 4.7.2（维护版，2026-08-18，57 个 bug 修复，含 MultiplayerSpawner 删除节点后停止复制的修复 GH-109864）。核实 2026-11-25。https://godotengine.org/article/maintenance-release-godot-4-7-2/",
+    "[事实] 4.7 系列发布于 2026-06（官方支持表写 June 2026，Full 支持）；4.7 带来官方 Asset Store 取代 Asset Library。https://docs.godotengine.org/en/latest/about/release_policy.html ，https://godotengine.org/releases/4.7/",
+    "[事实] 4.8 状态：beta 4（2026-11-18），官方称可能是最后一个 beta；beta 1 为 2026-10-15；无官方稳定版日期，支持表预估 Q4 2026。master version.py 为 4.8.0 beta。4.8 的 .NET 需 .NET 10（对 GDScript 项目无影响）。",
+    "[事实] 维护策略：每个稳定分支至少支持到下一稳定版发布并出第一个补丁；无 LTS；次版本每年 2-3 次；4.5 已仅安全/平台修复，4.4 及更早 EOL。",
+    "[事实] 对 GodotSteam：GodotSteam 4.24 的完整编译版对应 Godot 4.5.2 与 4.7.2，GDExtension 版声明 Godot 4.4+（Codeberg releases）；README 兼容表写明 4.20 因 Godot 4.7 把 callable_method_pointer.h 改名为 callable_mp.h 破坏旧版兼容。",
+    "[主观] 建议锁定：Godot 4.7.2-stable（开发全程不要跟 4.8 beta），GodotSteam v4.24-gde。4.8 稳定后至少等 4.8.1 且 GodotSteam 发布对应构建后再评估升级，V1.0 发售前冻结。"
+  ],
+  "key_findings": [
+    "[事实] RPC 包头：SceneRPCInterface 编码 1 字节命令/标志位 + node id（已被对端缓存时压缩为 1/2/4 字节）+ rpc 方法 id（1 或 2 字节）+（若参数不全是纯字节数组则 1 字节参数个数）+ 参数负载。最小典型 RPC（缓存已确认、1 字节 node id、1 字节方法 id、纯字节参数）约 3 字节 Godot 头，另加传输层（Steam/ENet）自身头。未确认缓存的对端第一次会收到完整 NodePath 字符串（长包）。来源：modules/multiplayer/scene_rpc_interface.cpp（master）https://github.com/godotengine/godot/blob/master/modules/multiplayer/scene_rpc_interface.cpp",
+    "[事实] 路径缓存：首次向某 peer 发 RPC 时通过 send_object_cache 协商路径→整数 id；该 peer 确认前一律走 32 位 id + 完整路径的长包，确认后才用 1/2/4 字节压缩 id。因此重建/改名节点会让缓存失效，高频 RPC 的节点应长期存在、路径稳定。",
+    "[事实] @rpc 默认 authority/call_remote/reliable/channel 0；any_peer 允许客户端调用；unreliable_ordered 对晚到包丢弃；channel 必须是最后一个参数；channel 0 实际是 3 个通道（每种传输模式各一）。来源：https://docs.godotengine.org/en/latest/tutorials/networking/high_level_multiplayer.html",
+    "[事实] send_bytes：SceneMultiplayer.send_bytes(bytes, id, mode, channel) 仅在负载前加 1 字节 NETWORK_COMMAND_RAW，对端触发 peer_packet(id, PackedByteArray) 信号，绕过 RPC 路径解析与 Variant 编码，是最薄的自定义协议入口。默认 mode=RELIABLE、channel=0、id=广播。来源：scene_multiplayer.cpp 第 439-453 行。",
+    "[事实] MultiplayerSynchronizer 发包：on_network_process 对每个 peer 的同步器集合每网络帧调用 _send_sync（unreliable）与 _send_delta（reliable）；同一 peer 的多个同步器状态会合并进同一包，包上限 sync_mtu=1350B、delta_mtu=65535B；每个同步器元素额外 4B net_id+4B size 头；超过 MTU 的单个同步器状态直接丢弃并报错。replication_interval/delta_interval 默认 0（每网络帧发送，不是固定 20Hz，需手动设 0.05s）。来源：scene_replication_interface.cpp 第 143-153、802-855 行；scene_replication_interface.h 第 93-94 行；MultiplayerSynchronizer.xml。",
+    "[事实] 同步器对每个 peer 单独编码（循环内逐 peer 调 get_state + encode），即使状态相同也不做一次编码多播；N 个观察者 = N 份重复序列化 CPU 与 N 份出站带宽。visibility 通过 visibility_changed / set_visibility_for 过滤，spawn 与 sync 可见性按 OR 组合。来源同上。",
+    "[推算] 带宽量级：以每个实体状态 ~20B 载荷 + 8B 元素头 + 传输头，N 实体 × 20Hz × 观察者数线性增长；具体 8.3 Mbps / 10,120 PPS 无法复现（缺输入假设）。方法：用 Godot 调试器 Network Profiler 或 Steam getConnectionRealTimeStatus 实测，见 test_verification_points。",
+    "[事实] godot-proposals #7912（自动换主）Open，创建于 2023-09-29，无里程碑；参考 PR #97910 停滞；社区折中是开放「改变 authority/列出被复制节点」等低层钩子。https://github.com/godotengine/godot-proposals/issues/7912",
+    "[事实] peer 1 固定为服务器：官方文档写明服务器 id 恒为 1、客户端为随机正整数；authority 默认归属 peer 1；SceneMultiplayer 的 server_relay（默认 true）让客户端间 RPC 经 peer 1 中继（scene_multiplayer.cpp 第 261、369 行）。换主意味着没有引擎级机制把 id 1 转给继任者，必须在应用层自建：重新建立 peer/重连或用自定义 MultiplayerPeerExtension 重映射 id。",
+    "[事实] --headless 等价于 --display-driver headless --audio-driver Dummy；--quit-after、--fixed-fps、--max-fps、--time-scale、--log-file、--path 均为官方命令行选项。Godot 无官方 --user-data-dir 参数：main.cpp 全文检索仅有 --headless/--xr-mode 等，无 user-data-dir（master，2026-11-25 核实）。https://docs.godotengine.org/en/latest/tutorials/editor/command_line_tutorial.html",
+    "[事实] Customize Run Instances：编辑器逐实例传不同启动参数（override_args/arguments）与 feature tags（run_instances_dialog.cpp、editor_run.cpp 的 get_argument_list_for_instance / apply_custom_features），所有实例共用同一个 user:// 目录（项目名决定）。要隔离存档需在代码里按实例参数自行改用 user://inst_N/ 子路径。",
+    "[事实] 导出为专用服务器时 headless 显示驱动 + Dummy 音频，Strip Visuals 把贴图/材质换为占位类（只保留尺寸）；官方文档未写物理与导航在 headless 下的行为。https://docs.godotengine.org/en/latest/tutorials/export/exporting_for_dedicated_servers.html",
+    "[推算] CharacterBody2D / PhysicsServer2D / NavigationServer2D / TileMapLayer 的物理与导航数据在 headless 下可用，理由：它们是独立于 DisplayServer/RenderingServer 的服务器；官方 headless 说明只替换显示与音频。但未找到官方明文保证，标 [不确定]，需实测（见 test_verification_points）。注意：用图集像素生成碰撞时须保留图片（官方提示）。",
+    "[不确定] GDScript 16 人×20Hz 打包/解包与线段碰撞：无一手基准。粗算：主机每秒入站 15×20=300 个上报包、出站按楼层 AOI 转发；每包 PackedByteArray decode/encode 数十次 API 调用，量级 µs~几十 µs，远低于 16.6ms 帧预算 [推算]。风险点是在 GDScript 里每帧对全体做 O(n²) 逐对射线/线段检测，应以空间哈希/楼层分桶限制。",
+    "[事实] 同步器 4.7.2 修复了「peer 删除自己用 MultiplayerSpawner 生成的节点后停止复制」(GH-109864)，说明 Spawner/Synchronizer 仍在修稳定性问题。https://godotengine.org/article/maintenance-release-godot-4-7-2/"
+  ],
+  "implementation_guidance": [
+    "适用版本：Godot 4.7.2 + GodotSteam v4.24（GDExtension，Godot 4.4+）。",
+    "核心实体（玩家位置/僵尸/子弹）走 send_bytes：var mp := multiplayer as SceneMultiplayer; mp.peer_packet.connect(_on_packet); mp.send_bytes(buf, 1, MultiplayerPeer.TRANSFER_MODE_UNRELIABLE, 1)。buf 首字节放自定义消息类型，用 PackedByteArray.encode_u16/encode_s16 做定点量化（坐标 ×16 取整 s16），避免 Variant 编码。",
+    "可靠低频事件（开箱、感染、转化、直升机进度、换主快照）用 @rpc('any_peer','call_remote','reliable',2) 并在函数首行 if multiplayer.get_remote_sender_id() != 1: return 校验来源；所有 @rpc 声明在主客户端必须一字不差，且声明在长期存在、路径固定的节点（如 /root/Net 的 autoload）上以利用路径缓存。",
+    "不可靠高频（20Hz 位置上报）：unreliable 通道 1；注意 GodotSteam 把 unreliable_ordered 映射为 Reliable（见 Item 2 源码），所以不要依赖 unreliable_ordered 来避免队头阻塞。",
+    "需要同步器时（如少量场景对象）：设 replication_interval = 0.05；用 set_visibility_for(peer, false) 或 add_visibility_filter 做楼层 AOI；减小 sync_mtu 不可超过实际路径 MTU（默认 1350）。",
+    "多开测试：编辑器 Debug > Customize Run Instances 勾选 Enable Multiple Instances，为每个实例设置不同的启动参数（如 -- --inst=2）与 feature tag；代码里 var inst := 0; for a in OS.get_cmdline_user_args(): if a.begins_with('--inst='): inst = int(a.substr(7)); 存档路径用 'user://inst_%d/save.json' % inst。Steam 同机多实例会被判定为同一账号，联调 Steam 需两台机器/两个账号（Steam 限制，非 Godot 限制）。",
+    "headless 自动化：godot --headless --path <proj> --quit-after 600 --fixed-fps 60 -- --bot-test，用 OS.has_feature('dedicated_server') 或 DisplayServer.get_name()=='headless' 判断运行环境。",
+    "换主（D2）：引擎不提供，必须应用层实现：继任者收到备份快照后以 create_host 重建房间、其他客户端重连并重新握手；不要尝试改 peer id 1 的含义。"
+  ],
+  "pitfalls_and_failures": [
+    "[事实] RPC 声明在两端必须一致（含 NodePath、函数、返回类型），参数列表不校验，不一致会产生难懂的报错——AI 编码最易写错。来源：官方 high_level_multiplayer 文档。",
+    "[事实] 同步器单个状态超过 sync_mtu(1350B) 会被丢弃并报 'Node states bigger than MTU will not be sent'，勿把大数组挂同步器。来源：scene_replication_interface.cpp 第 833 行。",
+    "[事实] 默认同步间隔为 0 = 每网络帧，不会自动限到 20Hz；忘记设 replication_interval 会让 60fps 时带宽放大 3 倍。来源：MultiplayerSynchronizer.xml。",
+    "[事实] spawn 流程要求被生成节点发出 ready，否则报 'An error happened during last spawn' 并清空队列（scene_replication_interface.cpp 第 128-135 行）。",
+    "[事实] 改变 MultiplayerSynchronizer 的 authority 只能在其 spawner 的 _enter_tree 回调内做，否则报错（源码第 242 行附近）。",
+    "[事实] 4.7.2 修复：peer 删除自己 Spawn 的节点后复制中断（GH-109864），说明该路径曾有 bug。",
+    "[推算] Customize Run Instances 的各实例共享 user://，同时写存档会互相覆盖；日志与 Steam Cloud 同理。需自己加实例子目录。",
+    "[主观] 个别搜索摘要给出的 4.7.2 日期（24 Aug）与官方不一致，引用版本日期时以 godotengine.org 官方帖为准。"
+  ],
+  "quantitative_params": [
+    "sync_mtu | 1350 | 字节 | SceneReplicationInterface 默认，可由 SceneMultiplayer.max_sync_packet_size 改 | scene_replication_interface.h 第 93 行",
+    "delta_mtu | 65535 | 字节 | 默认，可由 max_delta_packet_size 改 | 同上第 94 行",
+    "sync 元素头 | 4+4 | 字节/同步器 | net_id + size | scene_replication_interface.cpp _send_sync",
+    "sync 包头 | 3 | 字节 | 命令 + uint16 同步时间 | 同上",
+    "RPC 最小包头 | 约 3 | 字节 | 1 命令/标志 + 1 node id + 1 rpc id（缓存确认后，纯字节参数）| scene_rpc_interface.cpp [推算汇总]",
+    "RPC 未确认路径 | 1+4+(1~2)+参数+路径字符串 | 字节 | 首次调用 | 同上",
+    "send_bytes 开销 | 1 | 字节 | NETWORK_COMMAND_RAW | scene_multiplayer.cpp 第 449 行",
+    "replication_interval / delta_interval 默认 | 0.0 | 秒 | 0=每网络帧；范围 0~5 | MultiplayerSynchronizer.xml",
+    "server_relay 默认 | true | 布尔 | 客户端间包经 peer 1 | scene_multiplayer.h 第 123 行",
+    "服务器 peer id | 1 | 固定 | 官方文档",
+    "Godot 次版本节奏 | 2-3 次/年 | 官方 release policy",
+    "24 人 8.3 Mbps / 10,120 PPS | 无法核实 | prior_claims 提供，无一手来源 [不确定]"
+  ],
+  "alternatives_comparison": [
+    "方案 A：官方 MultiplayerSynchronizer/Spawner 全量复制。代价：逐 peer 重复编码、权威固定在一端、换主需大改；收益：零胶水、AI 易写。对本项目：仅适合少量低频场景对象，不适合玩家与僵尸等核心实体。",
+    "方案 B（推荐）：SceneMultiplayer + @rpc（低频可靠事件）+ send_bytes（高频自定义包）。代价：需自写序列化与 AOI；收益：最小包头、可定点量化、易做换主快照。",
+    "方案 C：MultiplayerPeerExtension 自定义传输（如直接对接 Steam Networking Sockets）。代价：自己管连接/ID/重连，GDScript 实现性能与正确性风险；收益：可控制 peer id 分配与换主。V1.0 不建议，作为换主不可行时的 V1.5 备选。",
+    "方案 D：ENet（内置）。代价：Steam 好友/NAT 穿透/SDR 需自处理；收益：成熟、bad ID 拒绝已内置。仅用于本地多开测试。"
+  ],
+  "project_implications": [
+    "本项目的核心实体不宜挂 MultiplayerSynchronizer：D4 分权移动要求每个客户端自己权威上报坐标、房主做协调校验，且需按 floor_id 做 AOI 并支持换主快照，这些用 send_bytes + 自定义二进制最直接。",
+    "peer 1 固定为服务器意味着 D2 换主在引擎层不存在（#7912 未落地）：必须设计成「房主备份快照→继任者新建主机→全员重连」的应用层流程，并在 Steam Lobby 里同步新房主 Steam ID。",
+    "版本策略：锁定 Godot 4.7.2 + GodotSteam v4.24-gde，不跟 4.8 beta；4.8 稳定并等 GodotSteam 出匹配构建后再评估。",
+    "headless 自动化测试（多 Bot 联机压测）可行性很高但仍需实测验证物理/导航行为；多开测试需处理 user:// 共用。",
+    "GDScript 性能：16 人×20Hz 级别预计无压力，但应避免每帧全体 O(n²)；这是推算，需实测。"
+  ],
+  "mvp_scope": [
+    "V1.0：SceneMultiplayer + @rpc 可靠事件 + send_bytes 20Hz 上报；楼层 AOI 手写；锁定 4.7.2。",
+    "V1.5：评估 MultiplayerPeerExtension 自定义传输、Spawner 管理场景对象、headless 回放工具。",
+    "不建议做：改引擎源码实现换主、依赖未合并 PR #97910、使用 4.8 beta 开发。"
+  ],
+  "effort_estimate": [
+    "[推算] 自写二进制协议 + AOI + RPC 校验层：约 3-5 人周（双 AI 编码）。AI 编码难度：中。典型错误：RPC 两端声明不一致、忘记校验 get_remote_sender_id、把 unreliable_ordered 当作不排队、同步器间隔未设。必须人工把关：RPC 声明一致性、包大小、多开 user:// 隔离、联机压测数据。"
+  ],
+  "risk_rating": [
+    "换主缺少引擎支持：麻烦但可解（应用层实现；降级为分权版 A1）。",
+    "4.8 stable 临近导致升级诱惑与 GodotSteam 兼容窗口：低（锁版本即可）。",
+    "同步器/Spawner 隐含 bug（如 GH-109864）：低（核心实体不使用）。",
+    "headless 物理/导航行为未经官方保证：低-麻烦（实测可验证）。"
+  ],
+  "win_probability_inputs": [
+    "技术完成率：自写协议路径明确，+0~+2 个百分点 [主观]；换主可靠性：引擎无支持，在换主可靠性上不加分，需依赖应用层实现，影响 -3~-5 个百分点相对于理想情况 [主观]；长期低维护度：锁版本 +2 [主观]。"
+  ],
+  "test_verification_points": [
+    "1. 包开销实测：用 Godot 调试器 Network Profiler 与 Steam getConnectionRealTimeStatus 记录 16 人 20Hz 下每连接 bytes_out_per_second 与 packets_out_per_second；红线：房主上行 < 1 Mbps（16 人）[主观]。可 headless 自动化（多 Bot 进程）。",
+    "2. headless：godot --headless --quit-after 3600 --fixed-fps 60 跑 CharacterBody2D + NavigationServer2D 寻路 + TileMapLayer 碰撞 16 个 Bot；采集 CPU%（红线单核 <50%）和帧时间。",
+    "3. 多开：Customize Run Instances 开 4 实例，验证 user:// 隔离子目录逻辑。",
+    "4. GDScript 压测：模拟 16 人×20Hz 解包 + 线段碰撞，测每秒耗时；红线 <2ms/帧。可 headless。"
+  ],
+  "china_mainland_notes": [
+    "无（本项目 Godot 引擎层面与大陆合规无直接关系；Godot 官方站点与 GitHub 在部分地区访问不稳，建议把锁定版本的编辑器/模板与 GodotSteam 压缩包自存备份）。"
+  ],
+  "sources": [
+    "Godot 4.7.2 维护发布公告 | https://godotengine.org/article/maintenance-release-godot-4-7-2/ | 2026-08-18，访问 2026-11-25 | 官方，高",
+    "Godot 4.8 beta 4 公告 | https://godotengine.org/article/dev-snapshot-godot-4-8-beta-4/ | 2026-11-18 | 官方，高",
+    "Godot 4.7 发布页 | https://godotengine.org/releases/4.7/ | 访问 2026-11-25 | 官方",
+    "Godot 发布策略 | https://docs.godotengine.org/en/latest/about/release_policy.html | 访问 2026-11-25 | 官方文档",
+    "High-level multiplayer 文档 | https://docs.godotengine.org/en/latest/tutorials/networking/high_level_multiplayer.html | 访问 2026-11-25 | 官方文档",
+    "命令行教程 | https://docs.godotengine.org/en/latest/tutorials/editor/command_line_tutorial.html | 访问 2026-11-25 | 官方文档",
+    "专用服务器导出文档 | https://docs.godotengine.org/en/latest/tutorials/export/exporting_for_dedicated_servers.html | 访问 2026-11-25 | 官方文档",
+    "scene_rpc_interface.cpp | https://github.com/godotengine/godot/blob/master/modules/multiplayer/scene_rpc_interface.cpp | master 访问 2026-11-25 | 源码",
+    "scene_replication_interface.cpp/.h | https://github.com/godotengine/godot/blob/master/modules/multiplayer/scene_replication_interface.cpp | 同上 | 源码",
+    "scene_multiplayer.cpp/.h | https://github.com/godotengine/godot/blob/master/modules/multiplayer/scene_multiplayer.cpp | 同上 | 源码",
+    "main/main.cpp（检索 user-data-dir 无结果）| https://github.com/godotengine/godot/blob/master/main/main.cpp | 同上 | 源码",
+    "editor/run/run_instances_dialog.cpp, editor_run.cpp | https://github.com/godotengine/godot/tree/master/editor/run | 同上 | 源码",
+    "godot-proposals #7912 | https://github.com/godotengine/godot-proposals/issues/7912 | 访问 2026-11-25 | 官方提案，高"
+  ],
+  "uncertain": [
+    "key_findings",
+    "quantitative_params",
+    "win_probability_inputs",
+    "effort_estimate"
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "name": "GodotSteam 插件与 SteamMultiplayerPeer 源码",
+  "category": "引擎与插件",
+  "research_scope": [
+    "1. GodotSteam 主仓库位置（Codeberg/GitHub）、最新版本、SDK 版本与 Godot 兼容矩阵",
+    "2. 2026-11 安全补丁：影响/修复版本、PR 号、CVE-2026-123017 是否存在",
+    "3. SteamMultiplayerPeer 源码行为：peer id、close()、Sockets vs Messages、channel/可靠性、发送失败处理",
+    "4. 暴露的 Networking Sockets/Messages/Utils 与 Lobby 函数/信号，及近一年改名重构",
+    "5. 与 expressobits/steam-multiplayer-peer 的冲突、GodotSteamKit 是什么",
+    "6. 导出时 DLL/so/steam_appid.txt 放置与版本锁定建议"
+  ],
+  "prior_claims_check": [
+    "「GodotSteam v4.24-gde 已迁至 Codeberg，修复 4.17–4.23.2 的 CVE-2026-123017 伪造 peer 1 漏洞」→ 证实（含一处需注意的细节）→ ①迁移属实：https://github.com/GodotSteam/GodotSteam 页面显示 'archived by the owner on Nov 10, 2026'，README 指向 https://codeberg.org/godotsteam/godotsteam ；②CVE 编号存在：MITRE CVE API https://cveawg.mitre.org/api/cve/CVE-2026-123017 状态 PUBLISHED，2026-11-05 发布，受影响 GodotSteam 4.17.0 至 ≤4.23.2（模块 SteamMultiplayerPeer，文件 godotsteam_multiplayer_peer.cpp/steam_packet_peer.cpp，例程 upgrade_peer / set_peer_id）；NVD https://services.nvd.nist.gov/rest/json/cves/2.0?cveId=CVE-2026-123017 状态 Deferred（尚未完成 NVD 分析），CVSS 3.1 次级评分 6.5 MEDIUM（C:L/I:L/A:N），描述为 'GodotSteam 4.17 through 4.23.2 trusts the peer value of 1 to mean that a player is the server'；③修复：Codeberg PR #923 'Peer ID Claim Fix'（2026-11-05 关闭）→ 随 v4.24-gde（2026-11-07）、v4.24（2026-11-08）发布，4.24 changelog 'Fixed: peer ID claim during setup and bad peer rejection'。注意：我最初用普通网页搜索查不到该编号，但直接查 MITRE/NVD API 能查到，因此「查无此编号」的结论不成立。",
+    "「SteamMultiplayerPeer 丢失 peer 1 会触发 close()；create_host() 写死 peer 1、create_client() 随机 peer ID」→ 证实 → 源码（Codeberg main，commit bc2a881，2026-11-10）godotsteam_multiplayer_peer.cpp：第 109-111 行 'if (p_peer_id == 1 && connection_status != CONNECTION_DISCONNECTED) close();'；第 505 行 'unique_id = 1; // Server is always peer ID 1'；第 524 行 'unique_id = generate_unique_id();'。",
+    "「2026 年 7–11 月 GodotSteam 发了 8 个独立版本（15 个标签），多含 API 改名」→ 部分证实 → Codeberg releases API 显示 2026-07 至 11 月版本：4.20.1、4.21、4.22、4.22.1、4.23、4.23.1、4.23.2、4.24 = 8 个版本；对应标签 4.20.1(2)、4.21(2)、4.22(2)、4.22.1(2)、4.23(2)、4.23.1(1)、4.23.2(2)、4.24(2) = 15 个，数字吻合。但「多含 API 改名」只部分成立：改名/破坏性变更主要在 4.20（Godot 4.7 头文件改名）与 4.21（ControllerPad→SteamControllerPad，SendMessages 增加参数）；4.22 起合并 GDExtension 与 godot4 分支；4.23 重做初始化与 SteamProjectSettings；4.23.2 移除 set_auto_init()/set_embed_callbacks()。来源：https://godotsteam.com/changelog/gdextension/ 与 README 兼容表。"
+  ],
+  "current_status": [
+    "[事实] 主仓库：https://codeberg.org/godotsteam/godotsteam（未归档，更新于 2026-11-10）；GitHub GodotSteam/GodotSteam 已于 2026-11-10 归档只读。核实 2026-11-25。",
+    "[事实] 最新版本：v4.24-gde（2026-11-07 22:20 +01:00，GDExtension，Godot 4.4+）与 v4.24（2026-11-08，完整编译版，含 Godot 4.5.2 与 4.7.2 变体），均配 Steamworks SDK 1.65。Codeberg releases API，核实 2026-11-25。",
+    "[事实] 兼容矩阵（README）：SDK 1.65 ↔ GodotSteam 4.21+；1.63-1.64 ↔ 4.17–4.20.1；1.62 ↔ 4.14–4.16.2。GDExtension 版声明 Godot 4.4+，但 issue #913/#915/#916 显示 4.22 对 Godot ≤4.5.2 曾崩溃，4.23 起修复；4.20 起因 Godot 4.7 头文件改名，旧完整版不兼容新 Godot。",
+    "[事实] 维护活跃度：2026-07 至 2026-11 每 2-3 周一个版本；开放议题含 #927 'Swap callbacks to manual dispatch'（2026-11-22，大型重写计划，可能带来 API 变动）、#922 relay_network_status 信号未触发、#925 getInput 空缓冲崩溃、#917/#908 间接 peer 的 steam id 查询缺陷。",
+    "[事实] MultiplayerPeer 已合并进主仓库（独立仓库 godotsteam/multiplayerpeer 已停更，只留给旧版本用户）。",
+    "[主观] 建议锁定：Godot 4.7.2-stable + GodotSteam v4.24-gde（SDK 1.65）；V1.0 发售前冻结，不跟随 #927 重写带来的 4.25+，除非有安全修复。至少保留一份 4.24-gde 压缩包与 steam_api64.dll/libsteam_api.so 的离线备份。核实日 2026-11-25。"
+  ],
+  "key_findings": [
+    "[事实] 漏洞机理：SteamMultiplayerPeer 握手时信任对端发来的 4 字节 PeerIDPacket 作为其 peer id，仅校验包大小；任何 lobby 内玩家可声明 peer id 1，在主机端占住空槽，在客户端则顶替真房主，使其 RPC/spawn/sync 通过 authority 检查。ENet 早已拒绝坏 ID，Steam 传输层没有。来源：Codeberg PR #923 https://codeberg.org/godotsteam/godotsteam/issues/923 ；披露文 https://axeghost.offprint.app/a/3mzhxoqpnh423-any-networked-co-player-can-act-as-the-server-in-a-godotsteam-game",
+    "[事实] 修复内容（4.24）：握手阶段检查 id<2 或已被占用即关闭连接并记录 Steam ID；并核对 peer 1 的 Steam ID 与 Steam 报告的房主一致。源码 _is_valid_peer_id_claim：若来者 Steam ID == host_steam_id 则只能声明 1，否则 id>=2 且未被占用（godotsteam_multiplayer_peer.cpp 第 571-576 行）；_poll 里无效声明会 disconnect_peer(true)（第 136-146 行）。",
+    "[事实] 影响版本：GodotSteam 4.17.0 至 4.23.2（MITRE CVE 记录）；披露文另称已退役的独立 multiplayerpeer 仓库 4.11-mp 至 4.16.2 同样受影响且无修复。修复版本：4.24 / 4.24-gde。披露时间线：2026-10-21 私下报告，2026-11-04 公开，2026-11-05 PR #923 合并与 CVE 发布。",
+    "[事实] 4.23.2 的 'poisoned client' 修复是另一个 bug（4.23.2 changelog：Added fix for 'poisoned client' bug），披露文明确指出 4.23.2 没有改握手逻辑，所以 4.23.2 不修 CVE-2026-123017。",
+    "[事实] 传输层：SteamMultiplayerPeer 走 Steam Networking Sockets（ISteamNetworkingSockets::CreateListenSocketP2P + ConnectP2P + PollGroup，SymmetricConnect=1），不是 Networking Messages；单消息上限 k_cbMaxSteamNetworkingSocketsMessageSendSize=512KB。源码第 485-496、551 行。注意 expressobits 的 README 称 GodotSteam 用 'Steam Messages' 是过时/错误描述。",
+    "[事实] create_host(virtual_port=0)：unique_id 恒为 1；create_client(steam_id, virtual_port=0)：unique_id = generate_unique_id()（Godot 随机正整数，官方文档写明客户端为随机正整数）。peer 在 Steam 连接建立后通过 'ping' 发送 PeerIDPacket 交换 id（steam_packet_peer.cpp）。",
+    "[事实] 丢失 peer 1：_disconnect_peer 里 peer_id==1 且仍连接时调用 close()，因此房主退出/断线会立刻拆掉整个 MultiplayerPeer；这与 D2 换主需求冲突，换主必须在 peer 层之上自己重建 peer。4.22.1 修了 close() 里 singleton 检查缺 '!' 的问题（issue #906/#858）。",
+    "[事实] 可靠性映射：TRANSFER_MODE_RELIABLE→k_nSteamNetworkingSend_Reliable；UNRELIABLE→Unreliable；UNRELIABLE_ORDERED→注释 'No equivalent'，实际也映射为 Reliable。另有 no_nagle/no_delay 属性叠加 NoNagle/NoDelay 标志。来源：_get_steam_packet_flags 第 700-721 行。",
+    "[事实] 通道：Godot channel 映射到 Steam lane（packet->m_idxLane），上限由项目设置 steam/multiplayer_peer/max_channels 控制，默认 4；超出会 WARN 并回落到 channel 0（steam_packet_peer.cpp）。Lane 影响的是发送优先级/带宽共享，不会让可靠消息在丢包时免于队头阻塞。",
+    "[事实] 发送缓冲满：SteamPacketPeer::send 调 SendMessages(1, messages, nullptr, false)，输出结果指针传 nullptr，且函数无论如何 return OK，因此 Steam 返回的错误（如发送缓冲超限 k_EResultLimitExceeded、连接无效）会被静默吞掉；Godot 层看不到。[推算] 缓冲上限由 Steam 配置 SendBufferSize（Steam 文档默认 512KB）决定，需实测确认。",
+    "[事实] 近一年 API 变化（CHANGELOG/README）：4.8 网络 identity 系统移除改用 Steam ID；4.9 sendMessages 返回 Array；4.19 大量 Voice 函数变化；4.20 Godot 4.7 头文件改名；4.21 ControllerPad→SteamControllerPad、SendMessages 新参数、SDK 1.65、移除 isSteamRunningOnSteamDeck；4.22 合并分支；4.23 重做初始化、SteamProjectSettings 改为类；4.23.2 移除 set_auto_init/set_embed_callbacks。",
+    "[事实] 暴露的网络 API（godotsteam.cpp bind_method）：sendMessageToConnection(connection_handle, message, flags)、sendMessages(connection_handle, messages, flags, delete_failed_messages)、receiveMessagesOnConnection(connection_handle, max_messages)、getConnectionRealTimeStatus(connection_handle, lanes, get_status=true)（返回 ping、quality、bytes/packets per second、pending_unreliable/reliable、queue_time 等）、getConnectionInfo、sendMessageToUser/receiveMessagesOnChannel（Messages）、setConnectionConfigValueInt32/Float/String、setGlobalConfigValueInt32/Float/String、getConfigValue、initRelayNetworkAccess。通用 setConfigValue 的绑定在当前源码里被注释掉（第 9377 行），应使用 set*ConfigValue* 系列。",
+    "[事实] FakePacketLag/Loss：枚举 NETWORKING_CONFIG_FAKE_PACKET_LAG_SEND/RECV、FAKE_PACKET_LOSS_SEND/RECV、JITTER_* 已绑定（godotsteam.cpp 第 11436-11445 行），通过 setGlobalConfigValueInt32/Float 设置即可注入延迟/丢包做测试；没有名为 setFakePacketLag 的函数。",
+    "[事实] 关键信号：lobby_created(connect, lobby_id)、lobby_joined(lobby, permissions, locked, response)、lobby_chat_update(lobby_id, changed_id, making_change_id, chat_state)、lobby_data_update、network_connection_status_changed、network_messages_session_request / _failed、relay_network_status。#922 报告 4.23.2 下 relay_network_status 不触发。",
+    "[事实] 其他已知缺陷：#894 重建 SteamMultiplayerPeer 后 create_host 返回 ERR_CANT_CREATE（open，需复用/彻底清理旧 peer）；#908/#917 server_relay=true 时客户端之间查不到彼此 Steam ID（open）；#905 restartAppIfNecessary 与自动初始化冲突。",
+    "[事实] GodotSteamKit：Codeberg godotsteam/godotsteamkit，'collection of extra tools for GodotSteam'，内容是自定义节点（成就图标、头像、用户名、语音）与 Starter Kits（聊天、排行榜、大厅）；最新标签 v1.1.2-starter-kits（2026-07-22）。未找到 1.1.3 标签，「1.1.3 要求 SDK 1.65」无法核实，标 [不确定]。它不是联网传输层。",
+    "[事实] expressobits/steam-multiplayer-peer：GDExtension，直接用 ISteamNetworkingSockets，类名同为 SteamMultiplayerPeer；README（2025-12）声明作者暂停开发并推荐 GodotSteam，已知无 channel 支持。GodotSteam 的 SteamMultiplayerPeer 现由 register_types.cpp 的 GDREGISTER_CLASS 注册，同一工程同时装两者会类名重复；官方未写明报错形式 [不确定]，做法是只装一个。"
+  ],
+  "implementation_guidance": [
+    "适用：Godot 4.7.2 + GodotSteam v4.24-gde（SDK 1.65）。",
+    "初始化：var r := Steam.steamInitEx(false, APP_ID) 之后每帧由插件自动处理回调（4.23 起 auto-init/embed callbacks 可选）；开发期用 steam_appid.txt（内容 480 仅测试），发售包不要附带 steam_appid.txt（GodotSteam 导出教程与 Valve 建议）。",
+    "建房：Steam.createLobby(Steam.LOBBY_TYPE_PUBLIC, 16)；在 lobby_created(connect, lobby_id) 里 var peer := SteamMultiplayerPeer.new(); var err := peer.host_with_lobby(lobby_id)（或 create_host(0)）；multiplayer.multiplayer_peer = peer。加入：Steam.joinLobby(id)，lobby_joined 后 peer.connect_to_lobby(lobby_id)（内部取 GetLobbyOwner 作为 host steam id 后 create_client）。",
+    "连接后立刻做二次校验（深度防御）：在 multiplayer.peer_connected 里 if id == 1 and peer.get_steam_id_for_peer_id(1) != Steam.getLobbyOwner(lobby_id): disconnect；这样即使回退到未修补版本也有保护。",
+    "丢 host 处理：监听 multiplayer.server_disconnected 与 Steam lobby_chat_update；因 peer 1 丢失会 close()，换主流程应先 multiplayer.multiplayer_peer = null，释放旧 SteamMultiplayerPeer，再新建 peer（#894：旧 peer 未释放会使 create_host 返回 ERR_CANT_CREATE）。",
+    "项目设置：steam/multiplayer_peer/max_channels 默认 4，需 >= 你使用的最大 channel+1；不要使用 unreliable_ordered（实际按可靠发）。",
+    "网络诊断：var st := Steam.getConnectionRealTimeStatus(conn, 1, true)，读 connection_status.ping / bytes_out_per_second / pending_reliable / queue_time；模拟：Steam.setGlobalConfigValueInt32(Steam.NETWORKING_CONFIG_FAKE_PACKET_LAG_SEND, 100)，LOSS 同理（取值为百分比 float 用 setGlobalConfigValueFloat）。",
+    "导出：GDExtension 版把 addons/godotsteam/ 整个目录随工程导出，steam_api64.dll（Windows 64）放在可执行文件旁（插件 zip 已含）；Linux 用 libsteam_api.so（注意 32/64 位同名，勿放错）；Mac 无需额外；发售包不带 steam_appid.txt。来源：godotsteam.com 导出教程。",
+    "版本锁定纪律：①README 兼容表为准；②工程里记录 GodotSteam 版本/SDK 版本/Godot 版本三元组；③CI 里检查 addons/godotsteam/godotsteam.gdextension 的版本字符串（注意 #924：4.24 自报 4.23.2）；④不要用编辑器内置的自动升级插件升级发布前版本。"
+  ],
+  "pitfalls_and_failures": [
+    "[事实] 4.17–4.23.2 握手不校验 peer id（CVE-2026-123017），任何大厅内玩家可冒充服务器；在 4.24 之前不得发布公测。来源：PR #923。",
+    "[事实] 4.24 版本字符串自报为 4.23.2（issue #924，已关），勿据此判断版本。",
+    "[事实] #894：重建 SteamMultiplayerPeer 再 create_host 失败 ERR_CANT_CREATE（open）；AI 常写出「退出房间后直接 new 一个 peer」的代码，需先彻底释放旧 peer 与 lobby。",
+    "[事实] #908/#917：server_relay=true 下客户端之间 get_steam_id_for_peer_id 失败（open），不要在客户端侧依赖查询其他客户端的 Steam ID，统一由房主下发。",
+    "[事实] 4.22 对 Godot ≤4.5.2 崩溃（#913/#915/#916，4.23 修复）；4.20 起旧 Godot 编译版与新 Godot 头文件不兼容，须使用与 Godot 版本匹配的构建。",
+    "[事实] 发送错误被吞（SendMessages 结果指针为 nullptr）；AI 不会意识到 send 返回 OK ≠ 已发送，重要事件需自带应用层确认。",
+    "[事实] unreliable_ordered 实为可靠发送，高频位置包若误设会造成丢包时队头阻塞。",
+    "[事实] #927 计划把回调改为手动派发的大型重写，4.25+ 可能有破坏性变动，勿盲升。",
+    "[事实] #922：relay_network_status 信号在 4.23.2+Godot 4.7.2 下不触发（open），不要依赖该信号判断 SDR 就绪，改轮询 getRelayNetworkStatus。",
+    "[推算] 开发期同机双开 Steam 账号会冲突（单 Steam 客户端一个账号），多人联调需两台机器或 Steam 家庭/测试账号。"
+  ],
+  "quantitative_params": [
+    "Steamworks SDK（GodotSteam 4.21–4.24）| 1.65 | 版本 | README 兼容表",
+    "GDExtension 最低 Godot | 4.4 | 版本 | release 说明",
+    "完整编译版 Godot 变体 | 4.5.2 与 4.7.2 | 版本 | v4.24 release",
+    "单消息最大 | 512 KB（k_cbMaxSteamNetworkingSocketsMessageSendSize）| 源码 _get_max_packet_size",
+    "max_channels 默认 | 4 | 项目设置 steam/multiplayer_peer/max_channels",
+    "create_host virtual_port 默认 | 0",
+    "host peer id | 1 | 固定",
+    "client peer id | 随机正整数（generate_unique_id）| 握手声明须 >=2 且不重复（4.24 起强制）",
+    "no_nagle / no_delay 默认 | false | 属性",
+    "SymmetricConnect | 1 | 监听 socket 选项",
+    "发布节奏 | 2026-07 至 11 月 8 版本/15 标签 | Codeberg releases",
+    "CVE-2026-123017 CVSS | 6.5 MEDIUM（MITRE 次级）；披露人评估 8.2 HIGH | NVD / 披露文",
+    "Steam 发送缓冲默认 | 512 KB（Steam 文档，k_ESteamNetworkingConfig_SendBufferSize）| [推算/未在本次核实]"
+  ],
+  "alternatives_comparison": [
+    "方案 A（推荐）：GodotSteam 4.24 官方 SteamMultiplayerPeer + 本项目应用层校验。代价：丢 host 即 close、需应用层换主；收益：维护活跃、已修补、与 lobby 紧耦合。",
+    "方案 B：expressobits/steam-multiplayer-peer（GDExtension，Sockets）。代价：作者已暂停、无 channel、类名与 GodotSteam 冲突；对本项目不值得。",
+    "方案 C：自建 MultiplayerPeerExtension 直接封装 Steam Sockets/Messages（用 GodotSteam 的 sendMessageToConnection 等）。代价：自己管 peer id/重连/握手校验，GDScript 性能与安全风险；收益：完全控制换主与 id 分配。V1.5 备选。",
+    "方案 D：GodotSteamKit。仅是 UI/节点工具集（大厅、头像、聊天），不是传输层；可参考其 Lobby starter kit 缩短开发，但需 SDK 1.65 兼容性自行核实。",
+    "方案 E：ENet + 自建中继。需服务器，违背 V1.0 零租服约束。"
+  ],
+  "project_implications": [
+    "必须使用 GodotSteam ≥4.24；之前版本存在大厅内可冒充房主的漏洞，而本项目玩家陌生人联机、房主即协调员，风险直接。",
+    "『丢 peer 1 即 close()』使 D2 换主必须由应用层重建：备份快照→继任者新 peer.create_host→其他客户端 connect_to_lobby 新房主。",
+    "由于发送错误被吞，应用层要为关键事件做确认/重发，并用 getConnectionRealTimeStatus 监控 pending_reliable 与 queue_time 判断拥塞。",
+    "不要使用 unreliable_ordered；位置上报用 unreliable 并带序号自行丢旧包。",
+    "不要装 expressobits 插件；GodotSteamKit 仅按需取用。"
+  ],
+  "mvp_scope": [
+    "V1.0：锁 4.24-gde；lobby + SteamMultiplayerPeer；握手后二次校验 peer 1；getConnectionRealTimeStatus 调试面板；Fake lag/loss 测试开关。",
+    "V1.5：自建 MultiplayerPeerExtension 或封装层；评估 #927 后的新版本升级。",
+    "不建议做：自己 fork 并修改 C++ 重编；依赖旧独立 multiplayerpeer 仓库。"
+  ],
+  "effort_estimate": [
+    "[推算] 集成 + 导出 + 大厅/房间码 + 校验 + 重建 peer 流程：约 2-3 人周。AI 编码难度：中。典型错误：忘记释放旧 peer、在 peer_connected 前查 Steam ID、把 steam_appid.txt 打进发售包、混用 Messages 与 Sockets API。必须人工把关：Steam 双机真实联调、断房主重建流程、导出包在干净机器上能启动。"
+  ],
+  "risk_rating": [
+    "握手漏洞：已在 4.24 修复，若不升级则致命；升级后为低。",
+    "GodotSteam 大版本回调重写（#927）与 API 改名：麻烦但可解（锁版本）。",
+    "单一维护者/平台迁移（GitHub 归档到 Codeberg）：低-麻烦（Codeberg 访问可能受限，需本地备份）。",
+    "发送错误被吞导致丢事件：麻烦但可解（应用层确认）。"
+  ],
+  "win_probability_inputs": [
+    "技术完成率：-1~-2 个百分点（插件坑多但已知）[主观]；换主可靠性：peer 层 close() 行为要求自建重建流程，-2~-4 个百分点 [主观]；上线稳定性：4.24 修补并锁版本 +1~+2 [主观]；长期低维护度：版本快速迭代与重写计划 -1~-2 [主观]。"
+  ],
+  "test_verification_points": [
+    "1. 握手安全回归：用两个 Steam 账号（或披露文 PoC 仓库 https://github.com/bitbutter/godot-security-pocs/tree/main/2026-11-godotsteam-peer-id-claim）验证 4.24 拒绝声明 id=1 的恶意客户端；通过红线：恶意客户端被断开且日志 'Rejected invalid peer ID claim'。",
+    "2. 断房主：房主杀进程/拔网线，测客户端 close() 触发延迟与重建成功率；红线 >95% 成功、<5s。",
+    "3. 发送缓冲：压测大批 reliable 包，读 getConnectionRealTimeStatus 的 pending_reliable，确认被吞错误的实际表现。",
+    "4. FakePacketLag/Loss：setGlobalConfigValue 注入 100ms/5% 丢包，测 20Hz 上报的丢包容忍。不可完全 headless（需 Steam 客户端运行）。",
+    "5. 导出包验证：干净 Windows 机器无 Steam 开发环境启动，检查 DLL 与 appid。"
+  ],
+  "china_mainland_notes": [
+    "Codeberg 与 GitHub 在大陆访问不稳定，建议自存 4.24-gde 压缩包与 SDK 1.65 DLL；Steam 网络（SDR 中继）在大陆的延迟/丢包由网络测试专项评估，本项未实测，标 [不确定]。"
+  ],
+  "sources": [
+    "GodotSteam 主仓库（Codeberg）| https://codeberg.org/godotsteam/godotsteam | 访问 2026-11-25 | 源码，高",
+    "Codeberg releases API（4.17–4.24 标签与日期）| https://codeberg.org/api/v1/repos/godotsteam/godotsteam/releases | 2026-11-25 | 官方发布",
+    "PR/Issue #923 Peer ID Claim Fix | https://codeberg.org/godotsteam/godotsteam/issues/923 | 2026-11-05 | 补丁日志",
+    "GDExtension Changelog | https://godotsteam.com/changelog/gdextension/ | 2026-11-25 | 官方文档",
+    "GitHub GodotSteam（已归档）| https://github.com/GodotSteam/GodotSteam | 2026-11-10 归档 | 官方",
+    "MITRE CVE API CVE-2026-123017 | https://cveawg.mitre.org/api/cve/CVE-2026-123017 | 2026-11-05 发布，2026-11-10 更新 | 数据平台，高",
+    "NVD CVE-2026-123017 | https://services.nvd.nist.gov/rest/json/cves/2.0?cveId=CVE-2026-123017 | 2026-11-12 | 数据平台，状态 Deferred",
+    "披露文 Any networked co-player can act as the server in a GodotSteam game | https://axeghost.offprint.app/a/3mzhxoqpnh423-any-networked-co-player-can-act-as-the-server-in-a-godotsteam-game | 2026-11-04 | 社区安全研究，中高",
+    "源码 godotsteam_multiplayer_peer.cpp / steam_packet_peer.cpp / godotsteam.cpp / register_types.cpp | https://codeberg.org/godotsteam/godotsteam (commit bc2a881, 2026-11-10) | 源码，高",
+    "Issues #894 #906 #908 #913 #917 #922 #924 #927 | https://codeberg.org/godotsteam/godotsteam/issues | 2026-11-25 | 社区/补丁日志",
+    "GodotSteamKit | https://codeberg.org/godotsteam/godotsteamkit | 2026-07-22 最新标签 | 官方",
+    "expressobits/steam-multiplayer-peer | https://github.com/expressobits/steam-multiplayer-peer | README 2025-12 | 社区，作者已暂停",
+    "GodotSteam 导出教程 | https://godotsteam.com/tutorials/exporting_shipping/ | 访问 2026-11-25 | 官方文档"
+  ],
+  "uncertain": [
+    "key_findings",
+    "quantitative_params",
+    "win_probability_inputs",
+    "china_mainland_notes",
+    "effort_estimate"
+  ]
+}
