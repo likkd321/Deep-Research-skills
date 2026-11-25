@@ -1,0 +1,115 @@
+{
+ "name": "补位 Bot 跨楼层寻路与行为决策",
+ "category": "玩法、Bot 与先例",
+ "research_scope": [
+  "Godot 4 导航：NavigationServer2D/Region2D/Link2D/AStarGrid2D 的多层图方案",
+  "headless 下导航可用性与 16 Bot × 15–22 层 CPU 预算",
+  "行为框架：LimboAI / Beehave / Utility AI 插件版本与 AI 编码友好度",
+  "人类 Bot 与僵尸 Bot 行为设计及与声音事件系统共用听觉",
+  "掉线玩家 Bot 接管要点",
+  "CS Bot / L4D AI Director 先例"
+ ],
+ "prior_claims_check": "无（item 未列 prior_claims）",
+ "current_status": [
+  "LimboAI：最新 v1.8.1（2026-08-20 发布，引擎构建更新到 Godot 4.7.2-stable）；v1.8.0（2026-06-19）加 Godot 4.7 支持；v1.7.0（2026-03-01）起要求 Godot 4.6 且不兼容旧版；GDExtension 版不需自编引擎。核实日期 2026-11-25，来源 github.com/limbonaut/limboai/releases（年份由页面时间戳推断，[不确定]个别日期年份）。",
+  "Beehave（GDScript 行为树）：最新 v2.9.3（8 月 18 日，兼容 Godot 4.7，修 4.7.1 单例冲突）；v2.9.2（12 月 2 日）对应 Godot 4.5；纯 GDScript，无需编译。核实 2026-11-25，页面未显示年份 [不确定]。",
+  "Utility AI：GitHub 搜到的 godot-utility-ai 仓库（Pennycook、viniciusgerevini）最近推送 2023-11 / 2024-04，基本停更，不建议依赖；Utility 评分建议自写 30 行代码。核实 2026-11-25。",
+  "Godot 官方文档已出到 4.7 系列（docs 4.7 页存在）。建议锁定：Godot 4.6 或 4.7 稳定版 + 与之匹配的 LimboAI 1.7.x/1.8.x；若选 Beehave 则 2.9.3。",
+  "NavigationLink2D 文档仍标注 Experimental，可能变更（核实 2026-11-25）。"
+ ],
+ "key_findings": [
+  "[事实] NavigationLink2D 用 start_position/end_position 各自吸附到搜索半径内最近导航多边形，找不到则链接自动失效；支持 bidirectional、navigation_layers、enter_cost、travel_cost。来源 https://docs.godotengine.org/en/stable/tutorials/navigation/navigation_using_navigationlinks.html",
+  "[事实] 链接本身不提供移动，穿越需游戏代码处理（触发区+传送/切层）。同上来源。对本项目正好：楼梯/电梯本来就是切层事件。",
+  "[事实] NavigationServer 修改在物理帧末同步，启动/换场景后首帧路径查询可能为空，需 await physics_frame 后再查。来源 https://docs.godotengine.org/en/stable/tutorials/navigation/navigation_using_navigationservers.html",
+  "[事实] AStarGrid2D：region/cell_size 改后需 update()（会清除固体/权重数据）；set_point_solid 与 set_point_weight_scale 无需 update；get_point_path 非线程安全；diagonal_mode 与 heuristic 可配。来源 https://docs.godotengine.org/en/stable/classes/class_astargrid2d.html",
+  "[推算] 推荐方案：不用 NavigationLink 跨层，而用『楼层内 AStarGrid2D（或每层一张 NavigationRegion2D）+ 楼层图（节点=每层的楼梯/电梯口，边=层内路径长度+换层代价）』的两级寻路：先在楼层图上用 AStar2D/AStar（<=22 层×约 4 出口≈90 节点）选出下一个换层口，再在当前层内求路径。这样每层只需一张小图，查询量极小。",
+  "[推算] CPU 预算：16 Bot，决策 tick 5Hz（每 200ms）、寻路只在目标变化或被阻挡时重算；层内 AStarGrid2D 一次查询通常远小于 1ms（格子几千量级，[不确定]需实测）；16×5=80 次决策/秒，总量可忽略，headless 压测可在单核跑满 10–16 玩家。",
+  "[事实] 搜索未找到官方文档说明 headless 下导航不可用；headless 仍运行物理循环，NavigationServer 按物理帧同步，因此查询应可用（[不确定]：缺少明确文献，需自测 godot --headless 路径查询）。",
+  "[事实] LimboAI：C++ 插件，行为树+状态机（LimboHSM），带编辑器与可视化调试器，GDExtension 无需自定义引擎。来源 https://github.com/limbonaut/limboai/releases 与 https://godotengine.org/asset-library/asset/4852",
+  "[事实] Beehave 2.9.x 纯 GDScript，已有 Godot 4.5/4.7 对应版本与调试器 V2。来源 https://github.com/bitbrain/beehave/releases",
+  "[主观] 对『零基础 + AI 写码』：极简 Bot 用 GDScript 手写有限状态机（每个角色 4–6 个状态）比引入行为树插件更不易出错；LimboAI 的 HSM 若想可视化调试可后续引入，但 GDExtension 需随 Godot 小版本升级而同步，增加维护负担。",
+  "[事实] L4D AI Director 以『制造戏剧性节奏、提升可重玩性』为设计目标（Valve GDC 2009 Mike Booth 演讲）。来源 https://cdn.fastly.steamstatic.com/apps/valve/2009/ai_systems_of_l4d_mike_booth.pdf ；具体强度循环细节未在本次检索中核实 [不确定]。",
+  "[主观] 僵尸 Bot 的『听声搜索』直接复用声音事件系统：声音事件 = (层 floor_id, 位置, 响度, 类型)，僵尸在本层听到则走向声源，跨层则以楼层图距离衰减响度，响度超阈值才改目标并走向最近楼梯口。",
+  "[主观] 掉线接管：把玩家实体的控制权标记为 bot_controlled=true，沿用同一实体与背包，仅切换输入源（真人输入→Bot 决策输出同样的输入结构），重连时切回；这样不需要重新生成实体或同步新状态。"
+ ],
+ "implementation_guidance": [
+  "数据结构：floors[i] = {grid: AStarGrid2D, exits: [{id, kind(stairs/elevator), pos, to_floor, to_exit}]}；楼层图用 AStar2D 或 Dictionary 邻接表，节点 id=exit_id。",
+  "寻路伪代码：func next_waypoint(bot, goal_floor, goal_pos): if bot.floor==goal_floor: return floors[bot.floor].grid.get_point_path(local_cell(bot.pos), local_cell(goal_pos)); else exit = floor_graph.get_id_path(cur_exit_proxy, target_exit)[0]; return 层内路径到该 exit.pos；到达 exit 触发既有的『换层』逻辑（与玩家同一函数）。",
+  "动态门：门关→grid.set_point_solid(cell,true)；门开→false；破门（僵尸）= 先 set 为高权重 set_point_weight_scale(cell,3.0) 而不是固体，让僵尸愿意走门并触发『攻击门』动作。无需 update()。",
+  "Tick：每个 Bot 用 Timer 或全局调度器每 0.2s 做一次决策；寻路按 Bot 序号错开（frame % 8 == bot_id % 8），避免同帧尖峰。",
+  "人类 Bot 状态：搜箱（目标=最近未开箱子）→ 守楼道（拿到枪后停在楼梯口）→ 救僵尸（持药且附近有小僵尸）→ 冲天台（持关键物品齐全）→ 逃跑（附近有僵尸且无枪）。用 Utility 打分（距离、危险度、背包），选分最高状态。",
+  "僵尸 Bot 状态：游荡 → 听声搜索 → 追击（视线内）→ 破门 → 包抄（对人类所在层选另一个楼梯口）。",
+  "听觉：class SoundEvent {floor, pos, loudness}; 全局 SoundBus.emit(ev)；Bot 在订阅里按 loudness - 距离衰减 - 层数*衰减 与听觉阈值比较。玩家音效与 Bot 听觉共用同一总线，保证 headless 下也触发。",
+  "headless：启动参数 godot --headless；首帧 await get_tree().physics_frame 后再查询；Bot 决策不依赖渲染节点。",
+  "版本：Godot 4.6/4.7 + 纯 GDScript，无需 GodotSteam 特殊处理（Bot 不走网络，由房主实体模拟）。"
+ ],
+ "pitfalls_and_failures": [
+  "AI 最容易写错：在 _ready 里立即调用 NavigationServer 查询得到空路径（需 await physics_frame）。来源 Godot 导航文档。",
+  "AStarGrid2D 调用 update() 会清掉所有 solid/权重，AI 常在改 region 后忘记重设。来源 AStarGrid2D 文档。",
+  "jumping_enabled 会忽略权重，若用权重表示门/危险区则勿开。来源 AStarGrid2D 文档。",
+  "allow_partial_path 搭配固体目标可能非常慢。来源 AStarGrid2D 文档。",
+  "get_point_path 非线程安全，若把 Bot 寻路放线程需加 Mutex。",
+  "NavigationLink2D 标记 Experimental，且链接端点距多边形过远会静默失效。",
+  "NavigationServer 的 map_force_update 会冲刷整个命令队列；GitHub 有 4.4.1 报告新建 map 后调用 force_update 状态不同步（3D 服务器，未核实 2D 影响）。来源 https://github.com/godotengine/godot/issues/104671 [不确定]",
+  "插件随 Godot 小版本强绑定（LimboAI 1.7.0 起不兼容旧 Godot），升级引擎时要同步升级插件。"
+ ],
+ "quantitative_params": [
+  "Bot 决策频率 / 5 / Hz / 推荐值 / [主观]",
+  "Bot 寻路重算触发 / 目标变化或被阻挡 / 事件 / 推荐 / [主观]",
+  "人数 Bot 上限 / 16 / 个 / 项目 profile 的最大玩家数 / 项目设定",
+  "楼层 / 15–22 / 层 / 项目设定",
+  "楼层图规模 / 约 60–90 / 节点 / 22 层×约 3–4 出口 / [推算]",
+  "听觉衰减：同层按距离线性衰减；每跨 1 层额外衰减 / 建议 30% / 响度 / [主观，需调参]",
+  "NavigationLink 连接半径 / 项目设置 navigation/2d/default_link_connection_radius / 官方文档，默认值 [不确定]",
+  "LimboAI 最新 / v1.8.1 / 2026-08-20 / GitHub releases",
+  "Beehave 最新 / v2.9.3 / 兼容 Godot 4.7 / GitHub releases"
+ ],
+ "alternatives_comparison": [
+  "手写 GDScript FSM + 简易 Utility 打分：代价最低、AI 易生成、易调试；对本项目最值得（推荐 V1.0）。",
+  "LimboAI（行为树+HSM）：编辑器与调试器强，C++ 性能好；代价是 GDExtension 绑定 Godot 版本、学习成本；V1.5 再考虑。",
+  "Beehave：纯 GDScript 行为树，跟着引擎升级方便；节点树调试直观，但 Bot 数量多时每帧 tick 的开销较高 [不确定]；备选。",
+  "NavigationRegion2D+NavigationAgent2D：官方方案，适合连续地形与避障；跨层需自己管理，单图多层使用 navigation_layers 或每层独立 map（需 NavigationServer 手动建 map）。对格子地图的大楼，AStarGrid2D 更简单可控。",
+  "单一大图+NavigationLink2D 连楼梯：可行，但链接 Experimental 且需要处理穿越，不如两级寻路清晰。"
+ ],
+ "project_implications": [
+  "推荐：两级寻路（层内 AStarGrid2D + 楼层图）+ 手写 FSM，Bot 全部由房主模拟（不占网络带宽，只发与真人一致的输入/状态）。",
+  "单人带 Bot：人类 Bot 的搜箱与守楼道能制造『有人在楼里』的氛围；僵尸 Bot 靠声音事件追踪制造紧张感，与核心玩法对齐。",
+  "掉线接管：因 Bot 共用玩家实体的输入接口，D2 换主时只需继承 bot_controlled 标记，利于整局不散架。",
+  "压测：headless 下起 16 Bot 无需渲染，CPU 预计极低（[推算]，需实测）。"
+ ],
+ "mvp_scope": [
+  "V1.0：层内 AStarGrid2D + 楼层图、4–6 状态 FSM、声音事件听觉、掉线接管（同一实体切输入源）。",
+  "V1.5：Utility 打分调参、L4D 式强度导演、包抄策略、LimboAI 可视化调试评估。",
+  "不建议：RVO 避障、NavigationLink 全局图、神经网络/学习型 Bot。"
+ ],
+ "effort_estimate": "[推算] 约 2–3 人周（寻路 0.5、FSM 与听觉 1、接管 0.5、调参 0.5–1）；AI 编码难度：中；典型错误：首帧查询为空、update() 清数据、状态机抖动（需滞回/最小停留时间）；人工验收：Bot 能跨楼层找到箱子并不卡门口、僵尸能被声音引到正确楼层、掉线接管后不重复刷物品。",
+ "risk_rating": "麻烦但可解：Bot 行为不自然/卡死；缓解：卡死检测（5 秒无进展则重选目标）、门口冲突时随机偏移。致命风险无。",
+ "win_probability_inputs": [
+  "技术完成率：+1~2 个百分点（Bot 方案简单可落地）[主观]",
+  "个人+双AI执行率：+1 个百分点（避免引入行为树插件）[主观]",
+  "冷启动存活率：+1~3 个百分点（单人带 Bot 好玩，降低开房门槛）[主观]"
+ ],
+ "test_verification_points": [
+  "headless 下 godot --headless 运行 16 Bot × 22 层，记录每帧 Bot 决策 CPU 占比；红线：单帧 Bot 决策 <2ms，整体 CPU <30% 单核；可 headless 自动化。",
+  "寻路卡死率：10 分钟内 Bot 无进展超 5 秒次数 <1 次/Bot；可自动化。",
+  "掉线接管：随机杀掉一个客户端进程，检查其实体 5 秒内转由 Bot 控制且无重复实体；可 headless 脚本化。"
+ ],
+ "china_mainland_notes": "无",
+ "sources": [
+  "Using NavigationLinks - https://docs.godotengine.org/en/stable/tutorials/navigation/navigation_using_navigationlinks.html - 访问 2026-11-25 - 官方文档",
+  "Using NavigationServer - https://docs.godotengine.org/en/stable/tutorials/navigation/navigation_using_navigationservers.html - 访问 2026-11-25 - 官方文档",
+  "AStarGrid2D - https://docs.godotengine.org/en/stable/classes/class_astargrid2d.html - 访问 2026-11-25 - 官方文档",
+  "LimboAI releases - https://github.com/limbonaut/limboai/releases - 访问 2026-11-25 - 官方发布页",
+  "LimboAI Asset Library (4.6+) - https://godotengine.org/asset-library/asset/4852 - 访问 2026-11-25",
+  "Beehave releases - https://github.com/bitbrain/beehave/releases - 访问 2026-11-25 - 官方发布页",
+  "Valve GDC 2009 The AI Systems of Left 4 Dead - https://cdn.fastly.steamstatic.com/apps/valve/2009/ai_systems_of_l4d_mike_booth.pdf - 2009 - 官方演讲（仅核实目标陈述）",
+  "Godot issue 104671 - https://github.com/godotengine/godot/issues/104671 - 社区 issue，未深读"
+ ],
+ "uncertain": [
+  "current_status",
+  "key_findings",
+  "quantitative_params",
+  "alternatives_comparison",
+  "test_verification_points"
+ ]
+}

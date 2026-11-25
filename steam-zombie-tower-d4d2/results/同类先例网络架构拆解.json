@@ -1,0 +1,132 @@
+{
+ "name": "同类先例网络架构拆解",
+ "category": "玩法、Bot 与先例",
+ "research_scope": [
+  "逐款拆解 Barotrauma / Project Zomboid(B42 多人) / Alien Swarm: Reactive Drop / Among Us(含 Hide n Seek) / Don't Starve Together / Project Winter 的人数上限、拓扑、移动同步、物品同步、换主与补位",
+  "核查 prior_claims 里 5 款的人数与拓扑说法",
+  "俯视角多楼层/多甲板的同步与渲染做法（PZ 楼层、Barotrauma 甲板）",
+  "2024–2026 的 2D/俯视角多人生存或社交恐怖新作（本轮检索未能锁定具体作品，见 uncertain）",
+  "提炼对本项目 D4+D2、楼层 AOI、海量箱子惰性同步的借鉴与规避结论",
+  "诚实声明：本轮网页检索对网络内部实现的公开一手资料很少，多数条目只能给出『有限证据 + [不确定]』"
+ ],
+ "prior_claims_check": [
+  "Alien Swarm: Reactive Drop（8p，A1+C3，Source 预测+延迟补偿）→ 部分证实 → Valve 开发者 wiki 确认 Source/Alien Swarm 提供 lag compensation（回溯 hitbox，StartLagCompensation/FinishLagCompensation），SteamDB 补丁说明显示 Reactive Drop 曾在 300ms 模拟延迟下对比并改进延迟补偿算法；『8 人上限』与『A1+C3』本轮未取得一手来源 [不确定]。来源：https://developer.valvesoftware.com/wiki/Lag_Compensation ；https://steamdb.info/patchnotes/13327783",
+  "Barotrauma（16p，A1+C3，感染+海量物品）→ 部分证实 → 官方 GitHub README 称其为 2D 在线多人游戏；Lua 模组文档的类成员(Character.ServerReadInput/ServerWritePosition、ClientWriteInput、Entity.Spawner、NeedsMidRoundSync 等)说明服务器处理输入并下发位置/实体事件，即服务器权威的事件制同步；游戏内托管走 Steamworks/EOS 网络，专服走 Lidgren。『16 人上限』本轮未取得一手来源 [不确定]。来源：https://github.com/FakeFishGames/Barotrauma ；https://evilfactory.github.io/LuaCsForBarotrauma/lua-docs/ ；Steam 论坛讨论 https://steamcommunity.com/app/602960/discussions/1/802344732346974486/",
+  "Project Zomboid（4–16p 监听服+箱子惰性同步）→ 部分纠偏/部分证实 → 开发者称 B42.13 不稳定分支多人『目前不建议单服超过 20 名玩家』（建议值，非硬上限），Steam 联机为 co-op 托管，也有专服；『箱子惰性同步』无一手来源，仅见玩家推测『容器首次打开时才生成战利品』[不确定]。来源：https://www.pcgamesn.com/project-zomboid/build-42-multiplayer-unstable ；https://steamcommunity.com/app/108600/discussions/0/3493131640453725734",
+  "Among Us Hide n Seek（15p 纯 D4 实时追杀）→ 无法核实『纯 D4』 → 一手资料显示 Hide n Seek 是 2022-12 官方加入的模式（PC Gamer 报道）；协议逆向仓库显示传输为 UDP 自研可靠层(Hazel)，含 PlayerPhysics/CustomNetworkTransform 对象，但未说明移动权威归属；15p 上限本轮未核实 [不确定]。来源：https://www.pcgamer.com/among-us-announces-official-hide-and-seek-mode ；https://www.Github.com/roobscoob/among-us-protocol",
+  "Don't Starve Together（可切预测开关）→ 部分证实 → Klei 官方支持文档称『默认使用移动预测，可能导致动作动画延迟、显示位置与服务器略有差异』；玩家社区有通过修改 USE_MOVEMENT_PREDICTION 关闭的做法，官方 bug 库有『预测开关在服务端/客户端可能不同步』的已修复条目；游戏内是否有官方 UI 开关未取得最新证据 [不确定]。来源：https://support.klei.com/hc/en-us/articles/360029555272 （WebFetch 403，内容引自检索摘要）；https://forums.kleientertainment.com/forums/topic/139089-movement-prediction-settings-for-dst/"
+ ],
+ "current_status": [
+  "核实日期 2026-11-25（仅检索摘要与少量页面）。",
+  "Project Zomboid：B42 多人以 42.13 不稳定分支于 2025-12-11 重新开放（PCGamesN）；已知限制：旧档不兼容、需禁用全部 Mod、ragdoll 暂移除；第三方博客称 2026-07-29 的 42.20 进入稳定分支，仅为二手说法 [不确定]。",
+  "Barotrauma：2015 年的 Lidgren 可靠 UDP 拥塞修复(v0.2.3.1)是已知早期补丁史；当前版本号与人数上限本轮未核实 [不确定]。",
+  "Reactive Drop / Among Us / DST / Project Winter：当前版本号本轮未核实，建议开发时再查。"
+ ],
+ "key_findings": [
+  "[事实] Barotrauma 早期联机卡顿源于对 Lidgren 可靠 UDP 的不当使用：消息被反复重发直至确认，造成拥塞，延迟聊天与所有可靠消息；拾取/丢弃/接线等物品操作都走可靠消息。修复为自研丢包检测、拥塞时降低或取消重发。作者只在 4–5 人局验证过。https://barotraumagame.com/uncategorized/test-build-with-an-attempt-to-fix-the-lag （2015-10-21）。借鉴：物品操作勿一律走可靠通道；对我们意味着箱子/物品事件需限流与合并。",
+  "[事实] Barotrauma 评论区实测客户端与服务器各约 30–50 包/秒，作者承认每个对象数据单独成消息，建议合并成 <1500 字节的少量大包。同上来源。借鉴：每 tick 合并同层事件为一个包。",
+  "[事实] Barotrauma 玩家反馈『对象数量是同步压力核心，柜子里的物品也增加负载』，常见『event desync (waiting for old event)』断线。https://steamcommunity.com/app/602960/discussions/0/600765324381448845 （社区，可信度中）。借鉴：海量箱子不能全量事件同步，必须惰性。",
+  "[事实] Barotrauma 的 Lua API 暴露 Client.NeedsMidRoundSync / MidRoundSyncTimeOut、LastSentEntityEventID / LastRecvEntityEventID：说明其用『实体事件 ID 序列 + 中途加入同步』机制，服务器权威。https://evilfactory.github.io/LuaCsForBarotrauma/lua-docs/ 。借鉴：给每个箱子/物品事件编号，晚加入者按快照+增量补齐。",
+  "[事实] Barotrauma 游戏内托管使用 Steamworks/EOS 网络、无需端口转发；专服使用 Lidgren 并需 UDP 27015/27016。社区指南。借鉴：我们走 Steam 网络，与其游戏内托管路线相近。",
+  "[事实] Project Zomboid B42.13 多人：开发者称不建议单服超过 20 人；ragdoll 被移除；建议白名单服或 Steam co-op。https://www.pcgamesn.com/project-zomboid/build-42-multiplayer-unstable （2025-12-11）。",
+  "[事实] PZ 玩家报告 B42 多人中『不在角色身上的容器弹窗被禁用，因同步问题』，以及带燃料条物品在 42.13 中无法移动直至重连。https://steamcommunity.com/app/108600/discussions/0/3493131640453725734 （社区）。借鉴：容器同步是已知薄弱点，需占用/锁定语义。",
+  "[不确定] PZ 容器战利品『首次打开时才生成』仅为玩家推测，未找到源码或开发者说明。",
+  "[事实] DST 官方支持文档：默认移动预测，可能使动画延迟并显示位置略有偏差；社区有关闭预测的改法；Klei bug 库有预测开关在服务端与客户端不一致的条目。借鉴：本项目 D4（客户端本地移动）等价于最强预测，需要允许玩家看到『位置略偏』的容忍度。",
+  "[事实] Valve 文档：Source 的 lag compensation 在 Alien Swarm 起可选『仅边界』模式以优化性能；SteamDB 记载 Reactive Drop 曾用 300ms 模拟延迟对比延迟补偿算法，并停止对旁观者运行延迟补偿。https://developer.valvesoftware.com/wiki/Lag_Compensation ；https://steamdb.info/patchnotes/13327783 。借鉴：旁观者不应占用权威计算。",
+  "[事实] Among Us 协议为 UDP 上的自研可靠层，含游戏列表、Redirect、ReselectServer 等消息，说明有中央房间服务与重定向；资料止于 Airship 更新。https://www.Github.com/roobscoob/among-us-protocol 。移动权威归属 [不确定]。",
+  "[推算] 多楼层 AOI：PZ 与 Barotrauma 公开资料均未找到『按楼层/甲板裁剪同步』的说明，因此无法证明同类先例做过；本项目 floor_id 过滤属于自行设计，需自测。",
+  "[不确定] Project Winter 的拓扑、人数、换主做法：检索无结果，未核实。",
+  "[不确定] 2024–2026 的 2D/俯视角多人生存或社交恐怖新作：本轮未锁定具体作品，不编造。"
+ ],
+ "implementation_guidance": [
+  "借鉴 1（事件序列号）：每个箱子/地面物品变更产生 (floor_id, entity_id, seq) 事件；房主为每个客户端记录 last_acked_seq，晚加入时发快照 + 增量；对应 Barotrauma 的 LastSentEntityEventID 思路。适用 Godot 4.x 任意版本，GodotSteam 只作传输。",
+  "借鉴 2（合并小包）：每 50ms 一帧，按 floor_id 把该层所有事件打成一个 PackedByteArray，用 send_p2p_packet/Steam Messages 的不可靠通道发位置、可靠通道发开箱/感染；避免每个对象一条消息。",
+  "借鉴 3（惰性箱子）：箱子只在玩家打开时由房主按『箱子编号 + 全局种子』确定性生成内容（伪代码：items = gen(seed ^ chest_id)），只同步『已被打开/已被改动』的差异；未开箱子永不上网。PZ 是否如此未证实，此为设计建议 [主观]。",
+  "借鉴 4（旁观者）：旁观者只收广播，不参与命中/延迟补偿计算，参照 Reactive Drop 对旁观者关闭延迟补偿。",
+  "所有数值均需在 headless 测试中复核，本条无一手参数。"
+ ],
+ "pitfalls_and_failures": [
+  "可靠通道滥用造成拥塞与全局延迟（Barotrauma 2015，https://barotraumagame.com/uncategorized/test-build-with-an-attempt-to-fix-the-lag ）。AI 易把所有 RPC 都写成 reliable。",
+  "海量对象同步导致 desync 与断线（Barotrauma 社区反馈，https://steamcommunity.com/app/602960/discussions/0/600765324381448845 ）。",
+  "PZ 多人容器与物品同步缺陷：非随身容器弹窗被禁用、燃料条物品卡住（https://steamcommunity.com/app/108600/discussions/0/3493131640453725734 ）。",
+  "DST 预测开关在服务端与客户端状态不一致的 bug（Klei bug tracker，条目 r48511）。",
+  "PZ 玩家反馈位置不同步、角色瞬移直到重启服务器（社区，anecdotal）。"
+ ],
+ "quantitative_params": [
+  "Barotrauma 早期实测包率 / 约 30–50 / 包/秒（客户端与服务器各自）/ 2015 评论者实测 / https://barotraumagame.com/uncategorized/test-build-with-an-attempt-to-fix-the-lag",
+  "PZ 单服建议人数上限 / 不建议超过 20 / 人 / 开发者建议非硬限 / https://www.pcgamesn.com/project-zomboid/build-42-multiplayer-unstable",
+  "Barotrauma 专服默认端口 / UDP 27015、27016 / 端口 / 社区指南 / Daedalic 支持页",
+  "Reactive Drop 延迟补偿测试条件 / 300ms 模拟延迟 / ms / SteamDB 补丁说明 / https://steamdb.info/patchnotes/13327783",
+  "各游戏人数上限（Reactive Drop 8、Barotrauma 16、Among Us HnS 15、DST 6 默认）/ 未核实 / 人 / 仅为 prior_claims 引用 / [不确定]"
+ ],
+ "alternatives_comparison": [
+  "A. 事件序列号 + 快照增量（Barotrauma 式）：代价是需要实现事件日志与 ack；收益是中途加入和换主可复用同一机制；对本项目值得。",
+  "B. 全量周期广播：实现最简单；但海量箱子带宽爆炸；不值得。",
+  "C. 纯服务器权威 + 预测回滚（Source/Reactive Drop 式）：手感与防作弊最好；但需要专服或房主承担全部模拟，且本项目放弃反作弊；V1.0 不值得。",
+  "D. 客户端权威移动（D4）：0ms 手感、实现简单；代价是位置偏差需房主校验；与 DST 默认预测哲学类似，值得。"
+ ],
+ "project_implications": [
+  "同类先例公开资料对『多楼层同步』几乎无直接先例，楼层 AOI 属本项目自行设计，应在 headless 测试中重点验证。",
+  "Barotrauma 的教训最直接：不要对大量小对象走可靠通道，海量物品要事件化+合并；因此箱子惰性同步应只同步『被改动』的箱子。",
+  "DST 与 Reactive Drop 说明：预测/延迟补偿会带来位置偏差，玩家可接受；D4 路线合理，但应给出『位置略偏』的容错（如命中判定放宽）。",
+  "旁观者不参与权威计算，降低房主负担。",
+  "此结论受证据稀薄限制，信心为中低。"
+ ],
+ "mvp_scope": {
+  "V1.0 最小可行": [
+   "事件序列号 + 快照增量同步箱子/物品",
+   "按 floor_id 合并包",
+   "不可靠位置/可靠关键事件分通道"
+  ],
+  "V1.5 再做": [
+   "旁观者降级通道",
+   "更精细的带宽自适应"
+  ],
+  "不建议做": [
+   "全量周期广播所有箱子",
+   "对每个对象单独 reliable 消息"
+  ]
+ },
+ "effort_estimate": [
+  "[推算] 事件序列号+快照增量+AOI 合包：约 2–3 人周；AI 编码难度：中；典型错误：所有消息写成 reliable、seq 回绕、晚加入快照与增量之间丢事件。人工验收：晚加入后箱子状态与房主一致；断线重连后无重复拾取。"
+ ],
+ "risk_rating": [
+  "麻烦但可解：箱子/物品同步复杂度与带宽（触发：同层 16 人高频开箱）；缓解：惰性生成+差异同步+限流。",
+  "低：先例资料不足本身不构成技术风险，但会提高自测负担。"
+ ],
+ "win_probability_inputs": [
+  "换主可靠性 / 上线稳定性：采纳事件序列号机制 +2～4 个百分点 [主观]，依据：Barotrauma 同类机制支撑中途加入。",
+  "技术完成率：先例稀薄使多楼层 AOI 无参照，-1～2 个百分点 [主观]。"
+ ],
+ "test_verification_points": [
+  "headless 16 客户端同层开箱压测：采集包率、字节/秒、丢包后 desync 率；红线：每客户端下行 < 30KB/s [主观]；可 headless。",
+  "晚加入快照一致性：随机时刻加入 100 次，校验箱子状态哈希一致；可 headless。",
+  "可靠通道占比统计：红线 reliable 包 < 10% [主观]。"
+ ],
+ "china_mainland_notes": "无（本 item 未涉及；Steam Networking/SDR 的大陆连通性见 SDR 专项 item）。",
+ "sources": [
+  "Barotrauma 测试版修复卡顿 — https://barotraumagame.com/uncategorized/test-build-with-an-attempt-to-fix-the-lag — 2015-10-21 — 开发者博客 — 可信度高",
+  "PCGamesN: PZ B42 多人 — https://www.pcgamesn.com/project-zomboid/build-42-multiplayer-unstable — 2025-12-11 — 媒体转述官方 — 中高",
+  "Valve Developer Wiki Lag Compensation — https://developer.valvesoftware.com/wiki/Lag_Compensation — 访问 2026-11-25 — 官方文档 — 高",
+  "SteamDB Reactive Drop 补丁 — https://steamdb.info/patchnotes/13327783 — 补丁日志 — 中高（仅检索摘要）",
+  "Among Us 协议逆向 — https://www.Github.com/roobscoob/among-us-protocol — 社区逆向，止于 Airship — 中",
+  "PC Gamer: Among Us Hide n Seek — https://www.pcgamer.com/among-us-announces-official-hide-and-seek-mode — 媒体",
+  "Klei 网络排障指南 — https://support.klei.com/hc/en-us/articles/360029555272 — 官方（WebFetch 403，仅检索摘要）",
+  "Klei 论坛 DST 预测讨论 — https://forums.kleientertainment.com/forums/topic/139089-movement-prediction-settings-for-dst/ — 社区",
+  "LuaCs for Barotrauma 文档 — https://evilfactory.github.io/LuaCsForBarotrauma/lua-docs/ — 社区文档，类成员即源码反射 — 中",
+  "Barotrauma Steam 论坛 — https://steamcommunity.com/app/602960/discussions/1/802344732346974486/ — 社区",
+  "PZ Steam 论坛 loot — https://steamcommunity.com/app/108600/discussions/0/3493131640453725734 — 社区推测"
+ ],
+ "uncertain": [
+  "research_scope",
+  "prior_claims_check",
+  "current_status",
+  "key_findings",
+  "implementation_guidance",
+  "quantitative_params",
+  "project_implications",
+  "win_probability_inputs",
+  "test_verification_points",
+  "effort_estimate"
+ ]
+}

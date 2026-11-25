@@ -1,0 +1,129 @@
+{
+ "name": "CSOL 生化与感染类玩法节奏",
+ "category": "玩法、Bot 与先例",
+ "research_scope": [
+  "CSOL 生化模式（Zombie Mutation/Hero 等）规则与回合时长、小局数；Zombie Escape/Plague mod 的回合结构",
+  "Halo Infection、COD Infected、L4D 对抗、DbD、Project Winter、Barotrauma Husk 的节奏与反滚雪球",
+  "长局（30–60 分钟）社交对抗/生存游戏的中段疲软、滚雪球、翻盘、挂机反馈",
+  "双向转化（救回人类）与撤离型胜利条件先例",
+  "headless Bot 自动对局调参的先例",
+  "多小局 vs 一整局在换主、冷启动、主播切片上的差异",
+  "诚实声明：本轮检索对节奏数据一手来源很少，大量条目只能标 [不确定]"
+ ],
+ "prior_claims_check": "无",
+ "current_status": [
+  "核实日期 2026-11-25，基于检索摘要与有限页面；CSO 维基页面直接抓取返回 402，内容引自检索摘要。",
+  "Halo Infinite 于 2023-06 加入 Infection 模式（Xbox Wire）；具体版本与现状未核实 [不确定]。",
+  "Project Winter 已有 Power Balance Vol 2 等多次角色平衡补丁，当前版本未核实 [不确定]。"
+ ],
+ "key_findings": [
+  "[事实] CSO『Zombie: The Hero（Zombie Mod 3）』页面摘要给出回合时长 3 分钟、7 回合（来源：搜索摘要引用 https://cso.fandom.com/wiki/Zombie:_The_Hero ，页面本身 402 未能二次核实）；竞技设置最多 24 人。可信度中。启示：CSOL 本体是『3 分钟一小局 × 多局』，与本项目 40 分钟整局差一个数量级。",
+  "[事实] CSO『Zombie: The Mutation（Zombie Mod 2）』中，僵尸感染同一回合内 3 名人类可进化为宿主僵尸（https://cso.fandom.com/wiki/Zombie:_The_Mutation ，来自搜索摘要）。启示：以击杀数奖励僵尸方的滚雪球反而是设计意图，需要人类侧补偿。",
+  "[事实] CSO『Zombie 4: Darkness』的僵尸方须在时限内感染人类，无英雄与进化系统（https://cso.fandom.com/wiki/Zombie_4:_Darkness ，搜索摘要）。",
+  "[事实] CSO Zombie Union：无感染传播，僵尸可加入任一阵营；僵尸对击退/硬直抗性更高，物资来自补给箱，僵尸回血上限 100（搜索摘要）。启示：僵尸抗击退与本项目『命中强减速/僵直』的取向一致。",
+  "[事实] Source 版 Zombie Escape 的 cvar：ze_ztimer_min/ze_ztimer_max 控制母体僵尸在开局后多久被选出；ze_max_rounds 控制换图前回合数；ze_zspawn_latejoin 控制是否允许中途以僵尸身份加入；人类到达地图终点则胜，否则僵尸胜（https://github.com/samuelmaddock/zombie-escape ，默认值页面未给出）。启示：『母体延迟选出 + 中途加入只能以僵尸/人类固定身份』有现成先例。",
+  "[事实] ZP Special 增加了『撤离图时间耗尽、人类未逃出则僵尸得分』的 cvar（https://www.github.com/PerfectScrash/ZP-Special-Final ，搜索摘要）。启示：撤离型模式需要明确的超时判负规则。",
+  "[事实] Halo Infection：目标是尽量保持未感染，僵尸杀光幸存者结束；Bungie 2011-05 的 Alpha Zombies 变体让 Alpha 僵尸略多血（约 4 发手枪）并将大厅扩到 12 人（halopedia.org/Infection，搜索摘要）。启示：母体血厚、小人数起手，是业界通用反滚雪球做法。",
+  "[事实] L4D 对抗：8 人两队，每轮两半场互换阵营，按分数决胜；一方救起倒地队友会扣分（如除颤器扣 25 分，Prima/bit-tech 摘要）。启示：L4D 用『互换阵营』抵消先后手优势，属多小局制。",
+  "[事实] Project Winter：Steam 讨论曾有主播抱怨一局约 12 分钟、要求缩短；评测指出『明显偏向叛徒』；补丁中『被队友救起的幸存者总是以无技能基础幸存者复活』『破坏撤离载具会按幸存者数量减少座位』（https://steamdb.info/patchnotes/ 系列、https://steamcommunity.com/app/774861/discussions/0/2847921219518324236 ）。启示：救回人类要降级回归、撤离载具座位数可成为反滚雪球旋钮。",
+  "[事实] Dread Hunger（8 人，2 名叛徒）：GamingTrend 评测 60 分，认为玩家无视『留在船上』的鼓励、缺少强制线性后玩法很快变干（搜索摘要）。启示：长局需要机制性迫使玩家按节奏行动，而不是靠鼓励。",
+  "[事实] 自动平衡调参先例：RuleSmith（arXiv 2602.06232，2026）用 LLM 自博弈 + 贝叶斯优化把不对称阵营胜率差降到 0%；de Mesentier Silva 2017 等早期工作用智能体评估桌游/卡牌平衡；Morosan & Poli 用进化算法以胜率为目标。局限：胜率不是唯一目标，bot 水平过弱会失真。",
+  "[不确定] CSOL 生化 2/3/4 的完整母体选择人数、补给规则、小局数：本轮仅得到 Hero 页 3 分钟/7 回合一个数据点。",
+  "[不确定] DbD 命中硬直具体数值：检索只确认 Lunge 约 6.9 m/s、攻击后冷却依命中/落空/击物三类而不同，未取得官方数值。https://deadbydaylight.wiki.gg/wiki/Lunge",
+  "[不确定] CoD Infected、Barotrauma Husk、SCP:SL、Lethal Company 的节奏与长局玩家反馈：本轮无有效来源，不编造。",
+  "[不确定] 『多小局 vs 一整局』在换主、冷启动、主播切片上的直接证据：未找到实证；以下判断为 [主观]：小局制天然在局间换主，整局制必须靠 D2 在局内换主。"
+ ],
+ "implementation_guidance": [
+  "Bot 自动对局调参（headless）：用固定随机种子 + N 次蒙特卡洛，每次记录 人类胜率、感染曲线(t, 僵尸数)、撤离完成时间；以 5–10 组参数网格(母体血量、药品刷新率、直升机进度时长)扫描，找出胜率落在目标带的区间。目标带见 quantitative_params（[主观]）。Godot 4.x 以 --headless 命令行启动，脚本参数传种子。",
+  "滚雪球点判定：当 僵尸数/总人数 超过阈值（初值建议 0.6 [主观]）且转化药品剩余 < 1 人份时标记为不可逆点，统计出现时间中位数。",
+  "反滚雪球旋钮：药品刷新随人类数下降而增加；直升机座位随存活数调整（参考 Project Winter）；救回的人类降级回归（参考 Project Winter）。"
+ ],
+ "pitfalls_and_failures": [
+  "Bot 水平过弱使胜率模拟失真（RuleSmith 相关博客示例：LLM 智能体输给随机策略），需用真人对局校准。",
+  "长局无阶段检查点：一旦人类被压制到低于阈值，剩余时间很长，玩家挂机/退出风险高 [主观]，Project Winter 抱怨过短局，Dread Hunger 抱怨无节奏约束，说明两端都有风险。",
+  "母体选择时机过早/过晚：ze_ztimer_min/max 的存在说明业界需要可调窗口。"
+ ],
+ "quantitative_params": [
+  "CSO Zombie Hero 回合时长 / 3 / 分钟 / 一局 / https://cso.fandom.com/wiki/Zombie:_The_Hero（摘要）",
+  "CSO Zombie Hero 回合数 / 7 / 回合 / 一场 / 同上",
+  "CSO Hero 竞技人数 / 24 / 人 / 同上",
+  "CSO Mutation 宿主进化条件 / 单回合感染 3 人 / 人 / https://cso.fandom.com/wiki/Zombie:_The_Mutation（摘要）",
+  "Halo Alpha Zombies 血量 / 约 4 发手枪致死 / 发 / halopedia.org/Infection（摘要）",
+  "L4D 除颤器扣分 / 25 / 分 / 对抗模式 / Prima 指南摘要",
+  "DbD Lunge 目标速度 / 6.9 / m/s / https://deadbydaylight.wiki.gg/wiki/Lunge",
+  "Project Winter 主播抱怨局长 / 约 12 / 分钟 / Steam 讨论（社区）",
+  "本项目建议胜率带（人类 40–60% 撤离率）/ [主观] / 无出处 / [不确定]"
+ ],
+ "alternatives_comparison": [
+  "A. 一整局 40 分钟不重置：优势是单局叙事完整、撤离紧张；代价是中段疲软与挂机风险、局内换主必须可靠；对本项目是既定方向。",
+  "B. 多小局（CSOL 式 3 分钟×7）：优势是局间自然换主、冷启动与主播切片友好；代价是丢失搜刮+撤离的大局规划；不符合核心体验。",
+  "C. 折中：整局内设置软阶段（如广播事件、直升机来电倒计时）：成本低，可缓解中段疲软，建议采纳 [主观]。"
+ ],
+ "project_implications": [
+  "CSOL 本体是 3 分钟小局，40 分钟整局没有直接先例，需要自行用 Bot 模拟验证滚雪球点。",
+  "救回人类应降级回归（先例：Project Winter），撤离载具/直升机可设为反滚雪球旋钮。",
+  "母体延迟选出窗口与中途加入规则可参考 Zombie Escape cvar。",
+  "证据薄弱，以上结论多为 [主观]。"
+ ],
+ "mvp_scope": {
+  "V1.0 最小可行": [
+   "headless Bot 对局+胜率统计脚本",
+   "母体血厚+转化药品刷新可调",
+   "直升机进度与座位数可调"
+  ],
+  "V1.5 再做": [
+   "软阶段事件",
+   "观战/切片友好镜头"
+  ],
+  "不建议做": [
+   "V1.0 做多小局制并存的双模式"
+  ]
+ },
+ "effort_estimate": [
+  "[推算] headless 模拟与调参管线：1.5–2 人周；AI 编码难度：中；典型错误：随机种子未固定、Bot 太弱失真。人工验收：胜率带落在目标区且多种子稳定。"
+ ],
+ "risk_rating": [
+  "麻烦但可解：长局中段疲软与挂机；缓解：软阶段、观战、Bot 补位。",
+  "低：缺少先例数据不构成技术阻塞。"
+ ],
+ "win_probability_inputs": [
+  "动作手感达标率/长期留存：使用 Bot 模拟调参 +2～4 个百分点 [主观]。",
+  "冷启动存活率：整局制对主播切片不友好 -1～3 个百分点 [主观]。"
+ ],
+ "test_verification_points": [
+  "headless 全 Bot 对局 ≥500 局：采集人类撤离率、感染曲线、局长中位数；红线（建议）：人类撤离率 35–65% [主观]；可 headless。",
+  "1 真人 + Bot 对局：中位局长 35–45 分钟；可 headless。",
+  "人工试玩 3 局，记录最低人数时间段玩家挂机情况。"
+ ],
+ "china_mainland_notes": "CSOL 在中国大陆有长期玩家基础（生化模式本土知名度高）[主观]，可作为宣传钩子；本轮无合规/支付专项结论，其余写无。",
+ "sources": [
+  "CSO Wiki Zombie 4: Darkness — https://cso.fandom.com/wiki/Zombie_4:_Darkness — 访问 2026-11-25 — 社区 wiki（直接抓取 402，引自搜索摘要）",
+  "CSO Wiki Zombie: The Hero — https://cso.fandom.com/wiki/Zombie:_The_Hero — 同上",
+  "CSO Wiki Zombie: The Mutation — https://cso.fandom.com/wiki/Zombie:_The_Mutation — 同上",
+  "Source Zombie Escape — https://github.com/samuelmaddock/zombie-escape — 源码 README — 高",
+  "ZP Special Final — https://www.github.com/PerfectScrash/ZP-Special-Final — 源码/发布说明 — 中",
+  "Halopedia Infection — https://halopedia.org/Infection — 社区 wiki — 中",
+  "Halo Infinite Infection — https://news.xbox.com/en-us/2023/06/15/halo-infinite-infection-mode/ — 2023-06-15 — 官方",
+  "L4D Versus (Prima) — https://primagames.com/eguides/left-4-dead-2-eguide/essentials/game-modes/versus — 攻略",
+  "Project Winter Steam 讨论 — https://steamcommunity.com/app/774861/discussions/0/2847921219518324236 — 社区",
+  "Project Winter 补丁 SteamDB — https://steamdb.info/patchnotes/ — 补丁日志",
+  "GamingTrend Dread Hunger 评测 — https://gamingtrend.com/feature/reviews/dread-hunger-review-the-waters-not-as-deep-as-it-seems — 媒体",
+  "DbD Wiki Lunge — https://deadbydaylight.wiki.gg/wiki/Lunge — 社区 wiki",
+  "RuleSmith — https://arxiv.org/html/2602.06232v1 — 论文预印本 2026",
+  "AI playtesting 综述 — https://arxiv.org/abs/2304.08699v1 — 论文"
+ ],
+ "uncertain": [
+  "research_scope",
+  "current_status",
+  "key_findings",
+  "implementation_guidance",
+  "pitfalls_and_failures",
+  "quantitative_params",
+  "alternatives_comparison",
+  "project_implications",
+  "win_probability_inputs",
+  "test_verification_points",
+  "effort_estimate",
+  "china_mainland_notes"
+ ]
+}

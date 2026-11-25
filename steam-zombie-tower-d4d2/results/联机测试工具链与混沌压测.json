@@ -1,0 +1,120 @@
+{
+ "name": "联机测试工具链与混沌压测",
+ "category": "运维、发行与测试",
+ "research_scope": [
+  "Customize Run Instances 用法与 user:// 隔离",
+  "clumsy 0.3 与 tc netem 弱网参数、回环陷阱",
+  "GNS/ENet 内置弱网模拟",
+  "单机多 Steam 账号限制与双机测试",
+  "GUT / gdUnit4 headless 自动化与混沌脚本",
+  "Godot Monitor 与自定义网络指标"
+ ],
+ "prior_claims_check": [
+  "原说法『Godot Customize Run Instances 本机 2–4 开』→ 证实（文档说明可勾选启用并用选择器设定实例数，每个实例可有独立启动参数与特性标签，可选覆盖 Main Run Args）；实例数上限未在文档中核实，2–4 开属实用范围 → 来源 https://docs.godotengine.org/en/stable/tutorials/scripting/debug/overview_of_debugging_tools.html",
+  "原说法『clumsy 0.3 注意本机回环陷阱』→ 证实 → 官方手册：回环入站包无法捕获/重注入，WFP 把所有回环包归为出站，过滤器不要写 inbound；回环包被处理两次（发送与接收），500ms 出站延迟会让本机 ping 约 1000ms；局域网 IP 也算回环 → https://jagt.github.io/clumsy/manual.html ；0.3 release 说明 0.3 二进制与 0.3 RC4 相同 → https://www.github.com/jagt/clumsy/releases",
+  "原说法『Windows 隔离 APPDATA / Linux 隔离 XDG_DATA_HOME』→ 部分证实 → Godot 文档：Windows user:// 位于 %APPDATA%\\Godot\\app_userdata\\项目名，Linux 位于 ~/.local/share/godot/app_userdata/项目名，且遵循 XDG 规范，可覆盖 XDG_DATA_HOME；文档未明说覆盖会改变 user://（属推断，需实测）；也未提及命令行直接指定用户目录的参数 → https://docs.godotengine.org/en/stable/tutorials/io/data_paths.html"
+ ],
+ "current_status": [
+  "clumsy：官方 0.3 发布，二进制与 0.3 RC4 相同（RC4 已发布约 1.5 年），提供 3 个不同 WinDivert 签名的二进制；基于 WinDivert，MIT 协议；上游 README 标注 Windows 7/8/10，是否支持 Win11 [不确定]（第三方列表标 Win11）。核实 2026-11-25。https://www.github.com/jagt/clumsy/releases",
+  "GdUnit4：当前 v6.0.0，文档称至少需要 Godot 4.5；旧 Godot 用旧版本。核实 2026-11-25。https://mikeschulze.github.io/gdUnit4/latest",
+  "GUT：命令行 godot -s addons/gut/gut_cmdln.gd，支持 -gexit、-gjunit_xml_file；文档未写明支持的 Godot 版本，未核实当前版本号 [不确定]。https://gut.readthedocs.io/en/latest/Command-Line.html",
+  "Godot：文档已到 4.7；建议锁定 4.6/4.7 稳定版。核实 2026-11-25。"
+ ],
+ "key_findings": [
+  "[事实] Customize Run Instances（Debug 菜单）：勾选 Enable Multiple Instances 并选实例数；每实例可设 Launch Arguments 和 Feature Tags，默认与 Main Run Args 合并，可 Override。给 get_cmdline_user_args 的参数须以 '-- ' 开头。来源 https://docs.godotengine.org/en/stable/tutorials/scripting/debug/overview_of_debugging_tools.html",
+  "[事实] 自定义特性标签在编辑器运行时不生效（只在导出版本），因此区分实例要靠命令行用户参数而非标签（论坛与文档说法，https://forum.godotengine.org/t/run-in-dedicated-server-mode-from-the-editor/62875）。",
+  "[事实] 同一项目的多实例默认共享 user://（同一 app_userdata 目录），因此存档/日志/缓存会冲突。user:// 位置见 https://docs.godotengine.org/en/stable/tutorials/io/data_paths.html",
+  "[推算] 隔离做法：游戏启动时读 OS.get_cmdline_user_args() 的 --instance=N，据此在代码里把存档、日志路径改为 user://inst_N/（所有存盘封装在一个 UserPath 函数里）；这比改环境变量稳。若多开通过外部脚本启动，则可给每个进程设不同 XDG_DATA_HOME（Linux）/ APPDATA（Windows，需实测）。",
+  "[事实] clumsy 过滤语法直接是 WinDivert：and/or/not/括号；比较 = != < >；字段含 outbound/inbound/loopback/ip/tcp/udp/udp.DstPort/udp.PayloadLength。来源 https://jagt.github.io/clumsy/manual.html",
+  "[事实] clumsy 回环：不要写 inbound；回环包处理两次，延迟值要设为目标的一半；可用目标端口过滤。同上手册。",
+  "[事实] clumsy 功能：Lag、Drop、Throttle、Duplicate、Out of order、Tamper、Set TCP RST、Bandwidth，每项有 Inbound/Outbound 与 Chance 参数。手册列名，参数细节未逐项核实 [不确定]。",
+  "[事实] Linux tc netem：delay TIME [JITTER [CORRELATION]]、distribution normal、loss 0.1%、reorder 25% 50%（需配合 delay）、gap；netem 受定时器粒度限制。来源 https://man7.org/linux/man-pages/man8/tc-netem.8.html",
+  "[事实] 使用 tc 作用于 lo 时同样会影响本机所有回环流量；结束用 tc qdisc del dev lo root 清除（建议用网络命名空间/veth 隔离，[主观]）。",
+  "[事实] SteamNetworkingUtils 有 SetConfigValue；第三方绑定（Facepunch）暴露 FakeSendPacketLag / FakeSendPacketLoss / FakeRecvPacketLag / FakeRecvPacketLoss；Dart 绑定枚举含 FakePacketLoss_Send、FakePacketLag_Send、FakePacketReorder_Send。官方 steamnetworkingtypes.h 未直接核实，枚举名与取值 [不确定]。来源 https://wiki.facepunch.com/steamworks/SteamNetworkingUtils.FakeSendPacketLoss ；https://partner.steamgames.com/doc/api/ISteamnetworkingUtils",
+  "[不确定] ENet 自带弱网模拟：本次检索未发现内置，Godot 的 ENetMultiplayerPeer 也未见暴露；需用外部工具或在自己的发送层加丢包/延迟。",
+  "[事实] gdUnit4 命令行工具位于 addons/gdUnit4/bin/，支持 -a 指定目录/套件、-i 忽略，生成 HTML 与 JUnit 报告；社区反馈 --headless 可用于 CI，输入处理有问题。来源 https://mikeschulze.github.io/gdUnit4/advanced_testing/cmd （页面曾 404，来自搜索摘要）[不确定]",
+  "[事实] GUT 命令行：godot -s addons/gut/gut_cmdln.gd -d --path \"$PWD\" -gdir=res://test/unit -gprefix=test_ -glog=1 -gexit -gjunit_xml_file=results.xml；全通过退出码 0，失败 1。来源 https://gut.readthedocs.io/en/latest/Command-Line.html",
+  "[事实] Performance.add_custom_monitor(id, callable, arguments, type)：id 带斜杠分类，callable 返回非负数，重复 id 报错；Performance 自带监视器枚举不含网络类，需自定义。来源 https://docs.godotengine.org/en/stable/classes/class_performance.html",
+  "[主观] 单机多 Steam 账号：Steam 客户端一机一账号，Sandboxie 等社区反馈不完全兼容，是否违反 Steam 订户协议未核实；最稳做法是双机双账号或一台物理机+虚拟机（虚拟机内另装 Steam 登另一账号）。"
+ ],
+ "implementation_guidance": [
+  "启动参数：编辑器 Debug > Customize Run Instances，Instance1 Launch Args：-- --instance=1 --role=host；Instance2：-- --instance=2 --role=client；GDScript：var args = OS.get_cmdline_user_args(); 解析 --instance=。",
+  "user 目录隔离：func upath(p): return 'user://inst_%d/%s' % [instance_id, p]；所有 FileAccess/日志/Cloud 存档统一通过它；DirAccess.make_dir_recursive_absolute 先建目录。",
+  "clumsy 4 档弱网建议（均为 [主观]，出站+入站，回环用目标一半值）：A 良好 lag 30ms drop 0；B 一般 lag 80ms 抖动 20ms drop 1%；C 差 lag 150ms 抖动 50ms drop 5%；D 极差 lag 300ms 抖动 100ms drop 10% reorder 3%；过滤器例：udp and (udp.DstPort == 27015 or udp.SrcPort == 27015)（端口需按实际 SDR 端口，Steam 中继非固定端口 [不确定]，可退而求其次用 udp 全过滤）。",
+  "tc netem 示例：tc qdisc add dev eth0 root netem delay 80ms 20ms 25% loss 1% reorder 3% 50%；清除 tc qdisc del dev eth0 root。",
+  "GNS 内置：SteamNetworkingUtils.SetGlobalConfigValueInt32 / Float 设置 FakePacketLoss_Send、FakePacketLag_Send 等（名称待与头文件核对）；GodotSteam 是否暴露相应接口 [不确定]。",
+  "headless 测试：godot --headless --path . -s addons/gut/gut_cmdln.gd -gexit -gjunit_xml_file=out.xml；多进程压测脚本：bash/python 用 subprocess 启动 N 个 godot --headless --instance=i，随机 kill -9 或 tc/clumsy 切换档位，收集每进程日志。",
+  "指标：用 Performance.add_custom_monitor('Net/RTT_ms', Callable(self,'_get_rtt'))，另增 Net/Loss_pct、Net/Jitter_ms、Net/BytesPerSec、Net/PPS、Net/HostMigrate_ms；每 1s 写 CSV 到 user://inst_N/metrics.csv。"
+ ],
+ "pitfalls_and_failures": [
+  "clumsy 回环延迟翻倍、inbound 无效，AI 容易照网上教程写错。来源 clumsy 手册。",
+  "多实例共享 user://，存档互相覆盖；换主测试尤甚。来源 Godot 数据路径文档。",
+  "自定义特性标签在编辑器运行时无效。来源 Godot 论坛/文档。",
+  "Steam 客户端同机多账号：社区反馈 Sandboxie 不完全兼容；若本机 Steam 在运行，Unreal 论坛有『同机看不到会话』报告（来源 https://forums.unrealengine.com/t/test-steam-sessions-on-one-pc-tried-with-sandboxie/358308）。",
+  "GdUnit4 v6 需 Godot 4.5+；旧引擎用旧版本。",
+  "custom monitor 不支持负值，会被截为 0；重复 id 会报错。",
+  "tc 作用于 lo 会影响所有本机回环流量，包括调试器连接。"
+ ],
+ "quantitative_params": [
+  "clumsy 档 A（良好）/ lag 30ms，丢包 0% / 单向 / [主观]",
+  "clumsy 档 B（一般）/ lag 80ms ±20ms，丢包 1% / 单向 / [主观]",
+  "clumsy 档 C（差）/ lag 150ms ±50ms，丢包 5% / 单向 / [主观]",
+  "clumsy 档 D（极差）/ lag 300ms ±100ms，丢包 10%，乱序 3% / 单向 / [主观]",
+  "回环修正 / 目标延迟 ÷ 2 / 因处理两次 / 来源 clumsy 手册",
+  "Customize Run Instances 实例数 / 2–4 推荐 / 个 / 内存与 CPU 取决于机器 [不确定]",
+  "GUT 退出码 / 0=全通过，1=有失败 / 来源 GUT 文档",
+  "GdUnit4 版本 / v6.0.0 / 需 Godot 4.5+",
+  "建议通过红线（主观）/ 档 C 下无断开、档 D 下 60s 内自动恢复 / 单局 / [主观]"
+ ],
+ "alternatives_comparison": [
+  "Windows clumsy：免费、图形界面、对 UDP 有效；代价是回环陷阱与签名/杀软提示；值得（单人 Windows 主测）。",
+  "Linux tc netem：参数精确、可脚本化、适合云端 VM 压测；对本机回环影响面大；值得（headless CI）。",
+  "GNS Fake* 配置：不依赖外部工具，针对 Steam 连接；但参数名/绑定可用性需核实；值得验证。",
+  "代码内自写丢包/延迟层：对 ENet 唯一可靠方案；增加代码但可跨平台；值得（如用 ENet）。",
+  "Sandboxie/虚拟机多 Steam：成本高且合规未核实；不推荐，双机双账号更稳。"
+ ],
+ "project_implications": [
+  "一个人测试：日常用 Customize Run Instances 2–4 开 + 本机 clumsy/tc 做弱网；双机双账号作 Steam 层验证（Lobby、SDR、邀请）。",
+  "headless：用 GUT/gdUnit4 做逻辑单测，用 shell/Python 脚本做多进程混沌（杀房主、断网），验证 D2 换主秒级续局。",
+  "指标统一落 CSV，便于比较版本。"
+ ],
+ "mvp_scope": [
+  "V1.0：多开+实例隔离、clumsy 四档、GUT 单测、自定义指标 CSV、手工双机测试。",
+  "V1.5：全自动多进程混沌脚本、CI。",
+  "不建议：Sandboxie/虚拟机多 Steam 登录。"
+ ],
+ "effort_estimate": "[推算] 约 1.5–2.5 人周（多开隔离 0.3、指标 0.5、单测 0.5、混沌脚本 0.5–1）；AI 编码难度：中；典型错误：clumsy 过滤写错、user:// 未隔离；人工验收：四档弱网下手感与断线重连。",
+ "risk_rating": "低到麻烦但可解：Steam 同机多账号不可行但可用双机替代；GNS Fake* 绑定缺失则改用外部工具。无致命。",
+ "win_probability_inputs": [
+  "换主可靠性：+2~4 个百分点（能系统化压测换主）[主观]",
+  "上线稳定性：+2~3 个百分点 [主观]",
+  "个人+双AI执行率：+1 个百分点 [主观]"
+ ],
+ "test_verification_points": [
+  "多开隔离：2 实例同时存档无冲突；可 headless 自动化。",
+  "弱网四档：采集 RTT、丢包、抖动、PPS、带宽、换主耗时；红线（主观）档 C 无断开、换主 <3s；部分可 headless（tc）。",
+  "混沌：随机 kill 房主/客户端，整局续局成功率 ≥95%；可 headless 脚本化。",
+  "GNS Fake* 是否可通过 GodotSteam 调用：需实测。"
+ ],
+ "china_mainland_notes": "无（本 item 为工具链事实；大陆网络特性见其他 item）",
+ "sources": [
+  "Overview of debugging tools - https://docs.godotengine.org/en/stable/tutorials/scripting/debug/overview_of_debugging_tools.html - 访问 2026-11-25 - 官方文档",
+  "Data paths - https://docs.godotengine.org/en/stable/tutorials/io/data_paths.html - 2026-11-25 - 官方文档",
+  "clumsy manual - https://jagt.github.io/clumsy/manual.html - 2026-11-25 - 官方手册",
+  "clumsy releases - https://www.github.com/jagt/clumsy/releases - 2026-11-25 - 发布页（经搜索摘要）",
+  "tc-netem man page - https://man7.org/linux/man-pages/man8/tc-netem.8.html - 2026-11-25 - 官方手册（经搜索摘要）",
+  "ISteamNetworkingUtils - https://partner.steamgames.com/doc/api/ISteamnetworkingUtils - 2026-11-25 - 官方文档（未列 Fake 项）",
+  "Facepunch SteamNetworkingUtils - https://wiki.facepunch.com/steamworks/SteamNetworkingUtils.FakeSendPacketLoss - 第三方绑定文档",
+  "GUT command line - https://gut.readthedocs.io/en/latest/Command-Line.html - 2026-11-25 - 官方文档",
+  "gdUnit4 - https://mikeschulze.github.io/gdUnit4/latest - 2026-11-25 - 官方文档（经搜索摘要）",
+  "Performance class - https://docs.godotengine.org/en/stable/classes/class_performance.html - 2026-11-25 - 官方文档",
+  "Unreal 论坛 Sandboxie - https://forums.unrealengine.com/t/test-steam-sessions-on-one-pc-tried-with-sandboxie/358308 - 社区"
+ ],
+ "uncertain": [
+  "current_status",
+  "key_findings",
+  "implementation_guidance",
+  "quantitative_params",
+  "test_verification_points"
+ ]
+}
