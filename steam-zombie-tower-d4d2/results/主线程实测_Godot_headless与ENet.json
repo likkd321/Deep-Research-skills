@@ -1,0 +1,95 @@
+{
+  "name": "主线程实测：Godot 4.7.2 headless 与 ENet 本机联机",
+  "category": "主线程实测（非子 agent）",
+  "research_scope": [
+    "16 人 × 20Hz 房主每 tick 的解包、穿墙/关门线段校验、按楼层转发的 CPU 开销",
+    "16 个 Bot 在 22 层楼（每层 80×50 格）的跨层寻路 CPU 开销；NavigationServer2D 在 --headless 下是否可用",
+    "全楼快照三种编码（var_to_bytes 字典 / JSON / 手写二进制）的大小、压缩后大小与耗时；JSON 对 64 位 steam_id 的精度影响",
+    "22 层 × 2 个 TileMapLayer（地面 + 带碰撞的墙）的内存，全部加载 vs 只留 3 层",
+    "真实 ENet 本机回环：1 房主 + 15/23 客户端进程，20Hz send_bytes，房主上行带宽、包量与 CPU"
+  ],
+  "prior_claims_check": [
+    "上一轮「16 人同层房主上行约 0.6 Mbps」→ 证实（实测）：ENet 本机回环 16 人同层，房主上行 534–539 kbps、354–356 包/秒（ENet 统计不含 UDP/IP 头）；按每包 28 B UDP/IPv4 头补上后约 0.61 Mbps。证据：主线程 net_bench.gd 实测（2026-11-25，Godot 4.7.2）。",
+    "上一轮「24 人同层约 1.26 Mbps」→ 证实（实测）：24 人同层房主上行 1,205 kbps、546 包/秒，加 UDP/IP 头约 1.33 Mbps。",
+    "上一轮「楼层 AOI 平时可省 50%–80%」→ 证实且更高（实测）：16 人随机分散到 22 层（占用 11 层）时房主上行降到 69 kbps，比同层 534 kbps 省约 87%；楼层越多越省。",
+    "上一轮「全楼快照仅 5–15 KB」→ 证实（实测一例）：16 人 + 1,000 箱 + 400 门 + 150 地面掉落物，手写二进制 2,286 B（zstd 1,599 B）；同一份数据用 var_to_bytes(字典) 为 125,572 B、JSON 为 66,462 B。结论成立的前提是手写紧凑二进制。",
+    "主机迁移子 agent「JSON 会把 64 位 steam_id 变成浮点而丢精度」→ 证实（实测）：76561198012353598 经 JSON.stringify/parse_string 往返后变为 76561198012353600（float），不相等。"
+  ],
+  "current_status": [
+    "测量时间：2026-11-25 约 15:35–15:50（北京时间）",
+    "引擎：Godot 4.7.2.stable.official.ed1daf0bf（官方 Linux x86_64 包，SHA-512 与官方 SHA512-SUMS.txt 一致），--headless",
+    "机器：云端 Linux 容器，4 vCPU Intel Xeon @ 2.10GHz，16 GB 内存；单核性能低于主流游戏台式机，结果偏保守",
+    "传输：ENet（Godot 内置 ENetMultiplayerPeer）本机回环 127.0.0.1，无真实延迟/丢包；Steam SDR 的包头与加密开销与 ENet 不同，需上 Steam 后复测"
+  ],
+  "key_findings": [
+    "[事实] 房主 tick（16 人同层最坏情况）：解包 1.9 µs + 物理射线穿墙/关门检测 17.3 µs（16 条射线）+ GDScript 遍历关门线段 67.5 µs（16 人 × 27 扇关闭的门）+ 按楼层组包转发 10.4 µs = 97 µs/tick，20Hz 下约占一个核心 0.19%（主线程 bench.gd 实测，2,000 tick 平均）",
+    "[事实] 用 PhysicsDirectSpaceState2D.intersect_ray 做 prev_pos→new_pos 校验比 GDScript 循环 Geometry2D.segment_intersects_segment 快约 4 倍（17 µs vs 68 µs/tick），且自动覆盖墙与关着的门（门用碰撞形状 disabled 开关）",
+    "[事实] 跨层寻路：22 层 AStarGrid2D（80×50 格、8% 随机家具障碍）全部建图 7.2 ms；跨层用「本层到楼梯井 + 目标层从楼梯井出发」两次查询，平均 0.106 ms/次、路径约 73 格；16 个 Bot 每秒重算 2 次约占一个核心 0.34%",
+    "[事实] NavigationServer2D 在 --headless 下可用，但地图同步是异步的：建图后立刻查询返回空路径，等若干帧后查询返回正常路径（主线程实测）",
+    "[事实] 快照编码（同一份全楼数据）：var_to_bytes(字典) 125,572 B（zstd 后 6,598 B，0.9–1.0 ms）；JSON 66,462 B（2.7–3.0 ms）；手写二进制 2,286 B（zstd 1,599 B / deflate 1,642 B，0.5 ms）；bytes_to_var 反序列化 1.6–2.0 ms",
+    "[事实] JSON 往返会把 64 位 steam_id 变成 float 并丢精度（76561198012353598 → 76561198012353600），玩家主键绝不能走 JSON",
+    "[事实] 22 层 × 2 个 TileMapLayer（每层 4,000 格，墙砖带碰撞多边形）静态内存增加约 47.6 MB（进程静态内存约 73.5 MB）；只保留 3 层时增加约 8.6 MB。headless 不含显存",
+    "[事实] ENet 本机回环 16 人同层：房主上行 534–539 kbps、354–356 包/秒、平均 UDP 载荷 189 B；房主下行 62 kbps、348 包/秒",
+    "[事实] ENet 16 人分散到 22 层（实际占用 11 层）：房主上行 69 kbps、236 包/秒，比同层省约 87%",
+    "[事实] ENet 24 人同层：房主上行 1,205 kbps、546 包/秒、平均载荷 276 B",
+    "[事实] 房主进程 CPU（16 人同层、60 FPS 上限）：20 秒测量窗加启动共 24.3 s 墙钟内用户态 0.33 s + 内核态 0.09 s，约占一个核心 1.7%，与只跑空循环的客户端进程（约 2.3%）同一量级——联机转发不是瓶颈",
+    "[推算] 换成 Steam SDR 后每包开销比 ENet 大（加密与中继头），16 人同层房主上行预计仍在 0.6–0.8 Mbps 量级；需上 Steam 实测"
+  ],
+  "implementation_guidance": [
+    "房主校验：每个玩家每 tick 只做 1 次 intersect_ray(prev_pos, new_pos, mask=墙|关闭的门)，命中就拉回到 hit.position - dir*2；门用独立 CollisionShape2D，开关门只切 disabled（在物理帧里切或 set_deferred）",
+    "移动包：13 B（1 B 类型 + u16 序号 + u16 x*2 + u16 y*2 + s8 vx/4 + s8 vy/4 + u8 朝向 + u8 状态 + u8 floor_id + u8 保留），用 PackedByteArray.encode_* 手写；按楼层合成一个包转发：4 B 头 + 每人 13 B",
+    "快照：手写二进制（steam_id 用 encode_u64；箱子内容由 seed+box_id 推导，只存「剩余格位掩码」4 bit/箱；门开合用位图，只列出受损门），再 compress(FileAccess.COMPRESSION_ZSTD)",
+    "Bot 寻路：每层一个 AStarGrid2D（与 TileMapLayer 同尺寸），楼梯井在各层同一位置；跨层 = 两次 get_id_path；每个 Bot 每 0.5 s 重算一次即可",
+    "若用 NavigationServer2D：建图后要等地图同步（连接 NavigationServer2D.map_changed 信号或等几帧）再查询，否则拿到空路径",
+    "headless 房主/Bot 进程设置 Engine.max_fps（如 60），避免无渲染时空转",
+    "地图：桌面端 22 层全部常驻内存约 48 MB 可接受；房主必须加载全部楼层的碰撞（校验用），客户端可只加载当前层 ±1 层以省内存"
+  ],
+  "pitfalls_and_failures": [
+    "GDScript 里逐个遍历门线段做相交检测比物理射线慢约 4 倍，人数和门数一多就成倍增长（主线程实测）",
+    "NavigationServer2D 地图异步同步：同一帧建图并查询会拿到空路径，AI 写代码时极易误判为「寻路坏了」（主线程实测）",
+    "var_to_bytes(字典) 体积是手写二进制的约 55 倍（125,572 B vs 2,286 B），用它做快照会把换主/中途加入的下发量放大几十倍（主线程实测）",
+    "JSON 丢 64 位整数精度（主线程实测），存档或网络消息里的 steam_id 必须用字符串或二进制 u64",
+    "多层地图必须按楼层错开坐标（或按楼层分碰撞层），否则 22 层碰撞体叠在同一坐标互相干扰",
+    "用 FileAccess 读 /proc/self/stat 统计 CPU 不可靠（本次读数为 0），应在进程外用 time/ps 测量"
+  ],
+  "quantitative_params": [
+    "房主 tick 总耗时 | 97 µs | 16 人同层、20Hz | 主线程实测",
+    "房主 tick CPU 占用 | 0.19% | 单核、20Hz | 主线程实测",
+    "物理射线校验 | 17.3 µs/tick | 16 条射线 | 主线程实测",
+    "GDScript 门线段循环 | 67.5 µs/tick | 16 人 × 27 扇关门 | 主线程实测",
+    "AStarGrid2D 建图 | 7.2 ms | 22 层 × 80×50 格 | 主线程实测",
+    "跨层寻路单次 | 0.106 ms | 两次 get_id_path，均 73 格 | 主线程实测",
+    "16 Bot 寻路 CPU | 0.34% | 单核、每 Bot 2 Hz | 主线程实测",
+    "快照 手写二进制 | 2,286 B（zstd 1,599 B） | 16 人/1,000 箱/400 门/150 掉落 | 主线程实测",
+    "快照 var_to_bytes(字典) | 125,572 B（zstd 6,598 B） | 同上 | 主线程实测",
+    "快照 JSON | 66,462 B | 同上 | 主线程实测",
+    "22 层 TileMapLayer 内存 | +47.6 MB | 2 层/楼、4,000 格/层、墙带碰撞 | 主线程实测",
+    "只留 3 层内存 | +8.6 MB | 同上 | 主线程实测",
+    "ENet 16 人同层房主上行 | 534–539 kbps、354–356 包/秒 | 不含 UDP/IP 头 | 主线程实测",
+    "ENet 16 人分散 22 层 | 69 kbps、236 包/秒 | 占用 11 层 | 主线程实测",
+    "ENet 24 人同层房主上行 | 1,205 kbps、546 包/秒 | 不含 UDP/IP 头 | 主线程实测",
+    "房主进程 CPU | 约 1.7% 单核 | 16 人同层、60 FPS 上限 | 主线程实测"
+  ],
+  "alternatives_comparison": [
+    "穿门校验：物理射线（推荐，快且自动含墙与门）vs GDScript 线段循环（慢 4 倍，仅在没有碰撞体时用）",
+    "快照编码：手写二进制 + zstd（推荐，1.6 KB）vs var_to_bytes 字典（开发期调试方便但大 55 倍）vs JSON（最大的问题是丢 steam_id 精度）",
+    "Bot 寻路：AStarGrid2D（推荐，格子地图、同步查询、实测极快）vs NavigationServer2D（适合不规则地形，但异步同步要等帧）",
+    "地图加载：全部常驻（房主必须；约 48 MB）vs 客户端按需加载 ±1 层（省约 39 MB，但切层要等加载）"
+  ],
+  "project_implications": "实测说明本项目在 16 人规模下 CPU 与内存都不是瓶颈（房主联机逻辑 <1% 单核、16 个 Bot 寻路 <0.5% 单核、22 层地图约 48 MB），真正的瓶颈是房主上行带宽，而它对楼层分布极其敏感：同层 16 人约 0.6 Mbps、24 人约 1.3 Mbps，分散到多层时降到约 0.07 Mbps。15–22 层的高楼设计因此是带宽上的大优势，风险集中在「终局所有人挤到天台同一层」的那几分钟。快照只要手写二进制就只有 1–3 KB，换主与中途加入的下发成本可以忽略。",
+  "mvp_scope": "V1.0：手写二进制移动包与快照、物理射线穿门校验、AStarGrid2D 跨层寻路、房主全楼层常驻；V1.5：客户端按需加载楼层、上 Steam 后按真实 SDR 开销重新标定带宽红线；不建议：用 var_to_bytes 字典或 JSON 做网络快照、用 MultiplayerSynchronizer 管核心实体",
+  "effort_estimate": "[推算] 本次两个测试脚本（bench.gd 约 330 行、net_bench.gd 约 130 行）可直接作为项目的性能回归测试骨架，交给 AI 补成正式测试约 0.5 人周；AI 编码难度：易；人工把关点：每次改动同步协议后都要重跑并对比带宽与快照字节数",
+  "risk_rating": "低：CPU、内存、寻路在 16 人规模都远离上限；唯一需要盯的是终局同层峰值带宽（24 人同层约 1.3 Mbps），以及换成 Steam SDR 后的真实包头开销",
+  "win_probability_inputs": "技术完成率 +2~+4pp（[主观]：性能与快照大小这两个不确定项变成实测，排除了一类返工风险）；上线稳定性 +1~+2pp（[主观]：带宽红线有实测依据）；其余子概率不受影响",
+  "test_verification_points": "① 在目标 Windows 游戏 PC 上重跑 bench.gd（预期更快）；② 把 net_bench.gd 的传输换成 SteamMultiplayerPeer，在两台电脑 + 两个 Steam 账号下复测房主上行与包量；③ 加 clumsy 100–180 ms / 1–3% 丢包复测；④ 终局 16–24 人同层峰值作为带宽红线：房主上行 < 2 Mbps、包量 < 800 包/秒；全部可 headless 自动化",
+  "china_mainland_notes": "无（本机回环测试，不涉及跨境网络；跨境延迟见「SDR 中继与中国大陆连通性」）",
+  "sources": [
+    "Godot 4.7.2 官方发布与 SHA512-SUMS.txt：https://github.com/godotengine/godot/releases/tag/4.7.2-stable（2026-11-25 下载）| 官方发布",
+    "PhysicsDirectSpaceState2D.intersect_ray 文档：https://docs.godotengine.org/en/stable/classes/class_physicsdirectspacestate2d.html | 官方文档",
+    "AStarGrid2D 文档：https://docs.godotengine.org/en/stable/classes/class_astargrid2d.html | 官方文档",
+    "ENetConnection.pop_statistic 文档：https://docs.godotengine.org/en/stable/classes/class_enetconnection.html | 官方文档",
+    "TileMapLayer 文档：https://docs.godotengine.org/en/stable/classes/class_tilemaplayer.html | 官方文档",
+    "主线程测试脚本 bench.gd / net_bench.gd（会话 scratchpad，2026-11-25 运行）| 主线程实测"
+  ],
+  "uncertain": []
+}

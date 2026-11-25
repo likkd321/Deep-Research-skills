@@ -169,6 +169,7 @@ items:
       - "交火峰值：子弹 RPC（起点+方向）、命中/感染、开箱/拾取事件的频率假设与带宽"
       - "D2 快照字节数（压缩前后）、每 2–3 秒发给 2 名候选的额外上行；旁观者与中途加入者的初始快照下发与流量"
       - "家庭宽带上行现实（中国/全球常见上行、Wi-Fi 抖动），12/16/24 人的甜蜜区与上限结论；逐项复核上一轮数字并给出公式"
+      - "（主线程已实测，可直接引用并在此基础上补 Steam SDR 开销）见 results/主线程实测_Godot_headless与ENet.json：ENet 本机回环 16 人同层房主上行 534–539 kbps / 354 包每秒（不含 UDP/IP 头），16 人分散 22 层 69 kbps，24 人同层 1,205 kbps / 546 包每秒；手写二进制全楼快照 2,286 B（zstd 1,599 B），var_to_bytes 字典 125,572 B，JSON 66,462 B"
     prior_claims:
       - "20Hz 自定义打包 send_bytes 约 12 B/人：16 人同层房主上行约 0.6 Mbps，24 人同层约 1.26 Mbps（全员猛开火约 1.7–2.5 Mbps）"
       - "无脑挂 MultiplayerSynchronizer 不合包在 24 人可达 ~8.3 Mbps / 10,120 PPS 并触发 k_EResultLimitExceeded"
