@@ -1,0 +1,330 @@
+topic: "Steam 联机 2D 像素高楼生化撤离游戏「动作轻壳 × 12–16 人 × 40 分钟拉锯 × D4 分权移动 + D2 换主」完整可行性、技术栈、胜率与网络测试方案"
+request: "零编程基础的全职个人开发者用 Godot 4（纯 GDScript，AI 代写）+ GodotSteam 做 Steam 买断制 2D 像素俯视角 15–22 层高楼生化撤离联机游戏（12–16 人 + Bot、40 分钟一整局、D4 分权移动 + D2 换主、零对局服、全球含中国大陆）；要求逐条核实上一轮 6 项起点结论，给出可行性评估、可直接喂给 AI 的技术栈与实现方案、工程与商业分开的胜率打分及敏感性分析、可执行的网络测试手册，输出与参考报告排版一致的单文件 HTML。"
+started_at: "2026-11-25T14:15+08:00"
+time_range: "不限年份；版本号、库状态、Steam 政策与在线数据一律以 2026-11 最新为准"
+
+design_decisions:   # 用户在开跑前确认（2026-11-25）
+  floors: "15–22 层：更注重规划的策略性、没看到僵尸时的紧张感，以及靠声音和其他迹象判断危险"
+  firing: "360° 鼠标瞄准 vs 4/8 方向由报告评估后推荐"
+  checkpoints: "不设阶段检查点，整局一体式撤离（报告可顺带说明另两种：可见阶段目标 / 后台存档点）"
+  join_in_progress: "中途加入只能以人类身份；能实现更好（少人数可先开），但担心装备差距导致新人体验差，属锦上添花"
+  dev_time: "全职，每周 40+ 小时"
+  project_profile: "见 fields.yaml 顶部 project_profile"
+
+prior_round_claims:   # 用户提供的上一轮 6 项起点结论（待核实，不要照搬）
+  - "1 引擎与插件：最新稳定版 Godot 4.7.2-stable + GodotSteam v4.24-gde（已迁至 Codeberg，修复 4.17–4.23.2 的 CVE-2026-123017 伪造 peer 1 漏洞）；SteamMultiplayerPeer 丢失 peer 1 会触发 close()；godot-proposals #7912 仍未落地。"
+  - "2 中国大陆 SDR 与超时：GetSDRConfig/v1/ 显示第三方独立游戏 0 个中国大陆节点，国内玩家经香港/东京/新加坡/首尔 4 个亚太中继（晚高峰 80–180ms RTT 伴抖动）；GNS TimeoutInitial/TimeoutConnected 默认 10s，但已建连接实际静默断连需 10–21s；Steam Lobby 拔网线约 15–30s，需自写心跳。"
+  - "3 带宽与楼层 AOI：未开箱子闲时 0 B/s、按需 RPC 开箱，不挂 MultiplayerSynchronizer；子弹 1 次 RPC 发起点+方向各端本地模拟；20Hz 自定义打包约 12 B/人，16 人同层房主上行约 0.6 Mbps、24 人约 1.26 Mbps（猛开火 1.7–2.5 Mbps）；无脑挂 MultiplayerSynchronizer 24 人可达 ~8.3 Mbps / 10,120 PPS 并触发 k_EResultLimitExceeded；5 层楼层 AOI 省 50%–80%；换主备份每 2–3 秒给前 2 名候选传 5–15 KB；家宽甜蜜区 12–16 人、上限约 20–24 人。"
+  - "4 D4 三大手感坑：① 隔空/拐角感染（房主端 120–150ms 上限回溯）；② 关门后 150ms 僵尸本地穿门（房主 prev_pos→new_pos 线段拦截拉回，避免刚体硬碰撞堵门）；③ 高频连发击退抢方向盘（改用减速 Tagging）。"
+  - "5 动作中局 D2 与 Understudy：动作中局换主比回合制更割裂，但不刷 AI 尸潮且可丢弃空中 0.3 秒子弹，全楼快照仅 5–15 KB；Understudy v0.1.0（unstable）60Hz 不可靠输入流、2s 踢人超时、禁 Godot 物理、零公网测试，极不适用。"
+  - "6 同类先例：Alien Swarm: Reactive Drop（8p，A1+C3，Source 预测+延迟补偿）、Barotrauma（16p，A1+C3，感染+海量物品）、Project Zomboid（4–16p 监听服+箱子惰性同步）、Among Us Hide n Seek（15p 纯 D4 实时追杀）、Don't Starve Together（可切预测开关）；Liar's Bar / Midnight Ghost Hunt / Bodycam 的换主翻车与补丁史。"
+
+items:
+  # ───────────── 引擎与插件 ─────────────
+  - name: "Godot 4 引擎现状与多人联机底层 API"
+    category: "引擎与插件"
+    description: "核实截至 2026-11 的 Godot 4 最新稳定版/预览版与维护策略，厘清本项目要用的多人联机底层能力与开销。"
+    focus:
+      - "最新 stable / rc / beta 版本号与发布日期（线索：Godot 4.7 于 2026-06 发布并带官方资产商店；需核实 4.7.x 补丁版与 4.8 进度）；小版本维护周期与对 GDExtension（GodotSteam）的兼容影响"
+      - "SceneMultiplayer：@rpc 各模式（any_peer/authority、call_local、reliable/unreliable/unreliable_ordered、channel）的包头开销与路径缓存；send_bytes / peer_packet 的开销与适用场景；MultiplayerPeerExtension 自定义传输"
+      - "MultiplayerSynchronizer / MultiplayerSpawner 的同步机制（每个同步器是否独立发包、delta 同步、visibility 过滤）与带宽/包量特性，核心实体为何不宜挂它"
+      - "godot-proposals #7912（换主/改变 server peer）及相关 PR 状态；固定 peer 1 为服务器的含义"
+      - "--headless 下 CharacterBody2D、物理、NavigationServer2D、TileMapLayer 的可用性与 CPU；Customize Run Instances 多开与 user:// 数据隔离（是否有 --user-data-dir 之类参数）"
+      - "GDScript 在 16 人 × 20Hz 打包/解包与线段碰撞检测下的性能经验"
+    prior_claims:
+      - "最新稳定版为 Godot 4.7.2-stable（参考报告称 2026-08-18 发布；4.8-beta4 于 2026-11-18 发布）"
+      - "godot-proposals #7912 仍未落地（open）"
+      - "核心实体不用 MultiplayerSynchronizer，改用原版 ENet/SteamMultiplayerPeer + send_bytes + @rpc 写轻胶水"
+      - "无脑挂 MultiplayerSynchronizer 不合包，24 人可达 ~8.3 Mbps / 10,120 PPS"
+
+  - name: "GodotSteam 插件与 SteamMultiplayerPeer 源码"
+    category: "引擎与插件"
+    description: "核实 GodotSteam 仓库位置、最新版本、安全补丁与 SteamMultiplayerPeer 源码行为，给出版本锁定纪律。"
+    focus:
+      - "主仓库位置（Codeberg 迁移是否属实、GitHub 是否归档）、GDExtension 与模块版的最新版本号、对应 Steamworks SDK 版本（线索：SDK 1.63/1.64/1.65）、与 Godot 4.x 的兼容矩阵"
+      - "2026-11 安全补丁（线索：GodotSteam 博客称 4.24 于 2026-11-07 发布，握手时校验 peer ID、拒绝 <2 或重复 ID、核对 peer 1 的 Steam ID 与房主一致；4.23.2 修 poisoned client）：影响版本、修复版本、PR 号；核实是否存在「CVE-2026-123017」这一编号，查无则写证伪/无法核实"
+      - "SteamMultiplayerPeer 源码：create_host 是否固定 peer 1、create_client 的 peer id 分配、丢失 host 时是否调用 close()、走 Networking Messages 还是 Sockets、channel 与可靠性映射、发送缓冲满时的行为"
+      - "GodotSteam 暴露的 Networking Sockets/Messages/Utils（sendMessageToConnection、receiveMessagesOnConnection、setConfigValue、getConnectionRealTimeStatus、FakePacketLag/Loss）与 Lobby/Matchmaking/Friends/RemoteStorage 函数和信号，含近一年改名/重构"
+      - "与 expressobits/steam-multiplayer-peer 的类注册冲突；GodotSteamKit（线索：1.1.3，要求 SDK 1.65）是什么、是否值得用"
+      - "官方教程与示例（lobby、p2p、multiplayer peer）；导出时 steam_api64.dll / libsteam_api.so / steam_appid.txt 放置；版本锁定建议"
+    prior_claims:
+      - "GodotSteam v4.24-gde 已迁至 Codeberg，修复 4.17–4.23.2 的 CVE-2026-123017 伪造 peer 1 漏洞"
+      - "SteamMultiplayerPeer 丢失 peer 1 会触发 close()；create_host() 写死 peer 1、create_client() 随机 peer ID（参考报告）"
+      - "2026 年 7–11 月 GodotSteam 发了 8 个独立版本（15 个标签），多含 API 改名（参考报告）"
+
+  - name: "Understudy 源码审计与 Godot 换主生态"
+    category: "引擎与插件"
+    description: "核实 Understudy（D3）模组的真实情况并审计其源码是否适合本项目；梳理 Godot 生态内其他换主方案与 2025 年换主论文。"
+    focus:
+      - "发布位置与元数据（线索：store.godotengine.org/asset/ags221/understudy，v0.1.0 unstable，2026-10-08，CC0/MIT-0，Godot 4.5+，纯 GDScript，支持 ENet 与 GodotSteam 传输）、更新记录、实际使用者"
+      - "源码审计：输入传输方式（是否 60Hz 不可靠输入流、丢包重复上一帧）、超时参数（如 PLAYER_TIMEOUT_MS）、是否禁用 Godot 物理/CharacterBody2D/@rpc（线索：规则只能经 step() 修改并以字节保存）、影子玩家接管机制与 228ms 中位/276ms 最大的测试条件（线索：单机模拟 40ms/10ms 抖动/1% 丢包）、SDR 连接数、是否做过公网测试"
+      - "2025 年换主论文（Louis Vanhove, Howest DAE, zenodo.15169884）的实测环境与结论"
+      - "Godot 4 其他换主方案/插件/讨论（社区示例、GD-Sync、W4 Cloud、Nakama 等是否提供换主）"
+      - "与本项目 D4（客户端本地算移动、CharacterBody2D）的架构冲突点，以及是否值得借鉴其部分代码"
+    prior_claims:
+      - "Understudy v0.1.0（unstable）：60Hz 不可靠输入流、2s 踢人超时、禁 Godot 物理、零公网测试，极不适用"
+      - "Understudy 发布于 Godot Asset Store（参考报告称 Asset ID 3190，作者 ags221，2026-10-08）"
+      - "2025 年论文 1.37–1.53 秒恢复数据是在本机 LAN 用 2 个本地克隆体测得，非公网 Steam SDR 实测（参考报告）"
+
+  # ───────────── Steam 网络基础设施 ─────────────
+  - name: "SDR 中继与中国大陆连通性"
+    category: "Steam 网络基础设施"
+    description: "用一手数据核实中国大陆玩家走 SDR 的实际路径与延迟，并评估直连、加速器等补救手段（全球含大陆玩家的关键风险）。"
+    focus:
+      - "实际请求 https://api.steampowered.com/ISteamApps/GetSDRConfig/v1/?appid=480（及 2–4 款知名独立联机游戏、CS2 730 作对照）统计 POP 数量与是否含中国大陆 POP；解释 partners 字段与 Steam China/完美世界、阿里云/腾讯云合作节点的现状"
+      - "大陆（电信/联通/移动、南北方）→ 香港/东京/新加坡/首尔 POP 的典型 RTT、晚高峰抖动与丢包（实测或社区数据）；大陆↔欧美玩家同房的延迟"
+      - "ISteamNetworkingSockets P2P 的 ICE/NAT 穿透直连（k_ESteamNetworkingConfig_P2P_Transport_ICE_Enable 等）默认是否开启、能否让两名大陆玩家直连绕开境外中继；国内 NAT/CGNAT/IPv6/校园网/手机热点下的直连率"
+      - "国内加速器（UU、迅游、雷神、Watt Toolkit 等）对使用 SDR 的独立游戏是否有效、是否需要开发者对接"
+      - "Steam 在中国大陆的可用性现状（客户端登录、商店/社区访问、下载、支付）对联机与 Lobby 的影响；国内测试者招募渠道"
+      - "房主选择：同房混合大陆与海外玩家时，房主所在地对整体手感的影响与建议（如按 ping 选继任者）"
+    prior_claims:
+      - "GetSDRConfig/v1/ 显示第三方独立游戏获得 0 个中国大陆节点，国内玩家统一经香港/东京/新加坡/首尔 4 个亚太中继转发（晚高峰常见 80–180ms RTT 伴抖动）"
+      - "旧完美世界 pw* 节点已退役，CS2/Dota2 改为阿里云/腾讯云大陆节点（ctu/pek/pvg/tgd，partners: 2）（参考报告）"
+
+  - name: "GNS 底层参数：超时、心跳、缓冲、限速与通道"
+    category: "Steam 网络基础设施"
+    description: "从 Valve GameNetworkingSockets 源码与 Steamworks 文档核实超时、保活、发送缓冲、限速与多通道参数，为心跳、换主与带宽设计提供硬数字。"
+    focus:
+      - "TimeoutInitial / TimeoutConnected 默认值与源码位置；已建连接在对端崩溃/拔网线时实际多久判定断开（keepalive 间隔、可靠包重传超时如何叠加），有无社区实测"
+      - "SendBufferSize 默认值、缓冲满时 SendMessageToConnection 返回 k_EResultLimitExceeded 的条件；SendRateMin/SendRateMax 默认值与对 16 人房主的影响"
+      - "Nagle（NagleTime 默认值、k_nSteamNetworkingSend_NoNagle）、单条消息大小上限、MTU/分片、可靠与不可靠消息的包头字节"
+      - "Lanes（ConfigureConnectionLanes）能否隔离「移动包 vs 快照包」；ISteamNetworkingMessages（面向 SteamID）与 ISteamNetworkingSockets（面向连接）的取舍"
+      - "FakePacketLag / FakePacketLoss / FakePacketReorder / FakePacketJitter 等调试配置在 Steam 环境（含 GodotSteam）的可用性"
+      - "getConnectionRealTimeStatus 可取的指标（ping、质量、待发字节）用于游戏内网络面板"
+    prior_claims:
+      - "GNS 的 TimeoutInitial/TimeoutConnected 默认 10s，但已建连接实际静默断连需 10–21s（空闲链路可达 70s+）（参考报告）"
+      - "需自写应用层心跳（1Hz 心跳，4s 冻结 / 7s 失联）"
+      - "24 人无脑挂 MultiplayerSynchronizer 会触发 k_EResultLimitExceeded"
+
+  - name: "Steam Lobby：房间列表、房间码、旁观与幽灵房"
+    category: "Steam 网络基础设施"
+    description: "核实 Steam Matchmaking/Lobby API 的硬限制与行为，设计「单池子房间列表 + 房间码 + 好友邀请 + 激战中可旁观」的大厅方案。"
+    focus:
+      - "Lobby 成员上限、RequestLobbyList 默认/最大返回条数与 AddRequestLobbyListResultCountFilter、距离过滤（Close/Default/Far/Worldwide）默认值、字符串/数值/近邻过滤及数量限制"
+      - "Lobby 元数据键值长度/数量限制、SetLobbyData 频率限制、SetLobbyMemberData；SetLobbyJoinable 与 SetLobbyType 对「激战中房间仍可见」的影响"
+      - "Lobby Owner 离开/崩溃时 Steam 自动指定新 Owner 的规则与时延、SetLobbyOwner；LobbyChatUpdate 在拔网线/崩溃时的通知时延（社区实测）；幽灵大厅现象与清理"
+      - "好友邀请（InviteUserToLobby、ActivateGameOverlayInviteDialog）、+connect_lobby 启动参数、Rich Presence 的 connect 键、从好友列表加入"
+      - "6 位房间码：lobby data 精确过滤 vs 编码 LobbyID；WEBFISHING 1.06/1.08 搜房补丁案例核实"
+      - "AppID 480（Spacewar）共享池污染与必加过滤键；协议版本/build_id 写入 lobby data 做加入校验"
+      - "旁观者计入成员的方式（max_members = 参战 + 旁观）；中途加入只以人类身份在 Lobby 层的表达"
+    prior_claims:
+      - "Steam Lobby 拔网线约 15–30s 才通知"
+      - "RequestLobbyList 最多返回 50 条；WEBFISHING 1.06（2024-10-12）撞上 50 条上限、1.08（2024-10-17）修复默认距离过滤导致跨区代码房连不上（参考报告）"
+      - "两步智能扩圈（防 50 上限与冷启动空房）、满员防隐身 max_members = 参战 + 旁观"
+
+  # ───────────── 动作联机与换主 ─────────────
+  - name: "D4 分权移动的动作手感"
+    category: "动作联机与换主（核心）"
+    description: "判断在 80–180ms 跨境延迟下，「客户端自管移动 + 房主校验命中/感染/穿门」能否给出可接受的动作手感，并给出具体的校验、回溯、插值与开火方式设计。"
+    focus:
+      - "客户端权威移动在商业 PvP/社交游戏中的先例与边界（Among Us、Fall Guys、Destiny、MMO、Lethal Company 等，哪些用客户端权威移动、出过什么问题）"
+      - "房主侧防穿门：prev_pos→new_pos 线段与墙/关门的相交检测、拉回（rubber-band）策略与玩家感知；「人类关门后 150ms 僵尸本地已穿门」的判定归属与表现；避免刚体硬碰撞堵门"
+      - "感染/近战判定：favor the shooter / favor the victim 取舍；回溯上限 120–150ms 的业界依据（Source sv_maxunlag、Overwatch、Valorant 等）；拐角/隔空感染的容忍阈值与缓解（如持续接触 X ms、受害者侧确认）"
+      - "插值延迟（Source cl_interp 等）与 20Hz 上报/转发的组合；远端实体外推 vs 插值；楼层切换时实体的出现/消失"
+      - "命中减速 Tagging（CS 系列 tagging）vs 击退在客户端权威下的冲突与实现（房主下发「减速状态」而非改位置）；低频大击退（霰弹/手雷）如何以位移指令安全下发"
+      - "360° 鼠标瞄准 vs 4/8 方向攻击：对命中误差、回溯需求、带宽（朝向字段）、手柄/Steam Deck 适配与「动作轻壳」定位的影响，给出推荐"
+      - "15–22 层、每层人少的稀疏遭遇对手感问题的放大或缓解；Godot 4 客户端权威 CharacterBody2D + 服务器校验的实现示例"
+    prior_claims:
+      - "D4 三大手感坑：① 隔空/拐角感染（房主端 120–150ms 上限历史回溯）；② 人类关门后 150ms 僵尸本地穿门（房主做 prev_pos→new_pos 线段拦截拉回，避免刚体硬碰撞堵门）；③ 高频连发击退抢方向盘鬼畜（改用减速 Tagging）"
+      - "Among Us Hide n Seek（15p）是纯 D4 实时追杀先例"
+
+  - name: "全房主权威 + 预测回滚对照（netfox 等）"
+    category: "动作联机与换主"
+    description: "评估「全房主权威移动 + 客户端预测/回滚」路线（相邻方案 3）在 Godot 4 的成熟度与代价，作为 D4 的对照组。"
+    focus:
+      - "netfox（foxssake）最新版本、Godot 版本兼容、核心组件（RollbackSynchronizer、TickInterpolator、StateSynchronizer、netfox.noray、netfox.extras 等）、维护活跃度、文档与示例"
+      - "netfox 能否跑在 SteamMultiplayerPeer 上、16 人 × CharacterBody2D 的 CPU/带宽经验、已上线 Steam 的使用者"
+      - "其他 Godot 4 预测/回滚方案（线索：snopek Godot Rollback Netcode 仅支持到 Godot 4.2、1.0.0-alpha、活跃度低；brogolem35「Godot Rollback With Steam」教程；Multiplayer Starter、GD-Sync）与手写 Source 式预测+和解的工作量"
+      - "换主场景下预测回滚方案的额外难度（服务器状态缓冲、tick 对齐）"
+      - "对零基础 + AI 的学习门槛与 AI 熟悉度；与 D4 相比的工期、手感、换主复杂度差异"
+    prior_claims: []
+
+  - name: "主机迁移业界实践与 Steam 换主翻车史"
+    category: "动作联机与换主（核心）"
+    description: "总结业界主机迁移做法与失败教训，研判「40 分钟动作中局 D2 秒级换主（无阶段检查点）」的可行性，给出状态机关键参数。"
+    focus:
+      - "引擎/中间件换主实现：Unity Multiplayer Services/Netcode 的 Host Migration、Photon Fusion Host Migration、FishNet/Mirror、Epic Online Services、Unreal 社区方案——快照内容与频率、继任者选举、客户端重连流程、停顿时长"
+      - "知名游戏换主经验：Call of Duty、Halo、Destiny、GTA Online、Dead by Daylight（为何弃 P2P 转专服）等的停顿时长、触发条件与玩家评价"
+      - "Steam 独立游戏换主补丁史核实：Liar's Bar、Midnight Ghost Hunt、Bodycam 等，列出具体日期、补丁号与问题类型"
+      - "脑裂（双房主）防护：以 Steam Lobby Owner 仲裁、host_term/epoch 单调号、旧房主复活后的处理"
+      - "快照设计：全楼纯数据快照大小（12–16 人、300–1,000 箱子、门/楼梯、直升机进度、rng.state、15–22 层）、备份频率与对象（前 2 名候选）、增量 vs 全量、迁移时丢弃在途子弹的合理性；与中途加入/旁观的初始快照共用同一套序列化"
+      - "心跳与判定：1Hz 心跳、4s 冻结/7s 失联、18s 超时回大厅等参数的合理性；主动退出优雅交接 vs 崩溃/拔网线；错峰重连、按 64 位 steam_id 重建映射"
+      - "普通玩家掉线重连、Bot 临时接管掉线者、AFK 处理；无阶段检查点时 D2 失败的降级（A1 + 按即时状态体面结算）"
+    prior_claims:
+      - "实时动作中局换主比回合制更割裂，但因不刷额外 AI 尸潮且可丢弃空中 0.3 秒子弹，全楼快照仅 5–15 KB"
+      - "换主备份只需每 2–3 秒给前 2 名候选继任者传 5–15 KB 全楼快照"
+      - "Liar's Bar / Midnight Ghost Hunt / Bodycam 有换主翻车与补丁史"
+      - "《骗子酒馆》2024-11-27 上线 Beta 换主，12-27 补丁修复换主卡死；2026-07-02 已关停匹配专服（参考报告）"
+
+  - name: "带宽与包量测算：16 人同层峰值复核"
+    category: "动作联机与换主"
+    description: "用核实过的协议开销重新计算各场景下房主上行带宽与包量，复核上一轮数字，并给出 V1.0 人数上限建议。"
+    focus:
+      - "一手核实开销：Godot SceneMultiplayer RPC 与 send_bytes 的包头字节、MultiplayerSynchronizer 的发送方式；SteamNetworkingSockets/SDR 每包开销（消息头、加密、UDP/IP）；ENet 开销"
+      - "自定义打包移动状态的字段（位置/朝向/速度/状态位/floor_id/序号）与字节数；20Hz、30Hz 下 12/16/20/24 人的房主上行与 PPS，分三种分布：同层全员、15–22 层分散、终局 16 人挤天台"
+      - "跨楼层声音事件通道（脚步/破门/电梯/枪声向相邻楼层广播）的额外流量"
+      - "交火峰值：子弹 RPC（起点+方向）、命中/感染、开箱/拾取事件的频率假设与带宽"
+      - "D2 快照字节数（压缩前后）、每 2–3 秒发给 2 名候选的额外上行；中途加入/旁观者初始快照"
+      - "家庭宽带上行现实（中国/全球常见上行、Wi-Fi 抖动），12/16/24 人的甜蜜区与上限结论；逐项复核上一轮数字并给出公式"
+    prior_claims:
+      - "20Hz 自定义打包 send_bytes 约 12 B/人：16 人同层房主上行约 0.6 Mbps，24 人同层约 1.26 Mbps（全员猛开火约 1.7–2.5 Mbps）"
+      - "无脑挂 MultiplayerSynchronizer 不合包在 24 人可达 ~8.3 Mbps / 10,120 PPS 并触发 k_EResultLimitExceeded"
+      - "按 5 层高楼做楼层 AOI 平时可省 50%–80% 流量；单玩家家宽主机甜蜜区 12–16 人，上限约 20–24 人"
+      - "几百个静态编号箱子未打开时闲时流量为 0 B/s，按需 RPC 开箱"
+
+  # ───────────── 玩法、Bot 与先例 ─────────────
+  - name: "同类先例网络架构拆解"
+    category: "玩法、Bot 与先例"
+    description: "拆解同类/相邻联机游戏的网络拓扑与同步方式，提取对本项目可借鉴与应避开的做法。"
+    focus:
+      - "逐款：Barotrauma、Project Zomboid（含 Build 42 多人）、Alien Swarm: Reactive Drop、Among Us（含 Hide n Seek）、Don't Starve Together、Project Winter，以及 2024–2026 的 2D/俯视角多人生存或社交恐怖新作"
+      - "每款：人数上限、拓扑（listen server / 专服 / P2P / Steam 中继）、移动同步与是否预测/客户端权威、物品/容器同步（惰性加载）、换主、中途加入、Bot 补位、已知网络问题与补丁史"
+      - "俯视角游戏里多楼层/多层建筑的同步与渲染做法（如 Project Zomboid 楼层、Barotrauma 甲板）"
+      - "对本项目 D4+D2、楼层 AOI、海量箱子惰性同步的借鉴结论"
+    prior_claims:
+      - "Alien Swarm: Reactive Drop（8p，A1+C3，Source 预测+延迟补偿）、Barotrauma（16p，A1+C3，感染+海量物品）、Project Zomboid（4–16p 监听服+箱子惰性同步）、Among Us Hide n Seek（15p 纯 D4 实时追杀）、Don't Starve Together（可切预测开关）"
+
+  - name: "CSOL 生化与感染类玩法节奏"
+    category: "玩法、Bot 与先例"
+    description: "收集 CSOL 生化模式及其他感染类玩法的规则与节奏数据，支撑「40 分钟一整局 vs 多小局制」与双向转化的设计判断。"
+    focus:
+      - "CSOL 生化模式（生化 2/3/4、英雄、母体选择、击退、补给、回合时长与小局数）的规则与设计意图；CS 社区 Zombie Escape/Zombie Plague 等 mod 的回合结构"
+      - "其他感染模式：Halo Infection、CoD Infected、Left 4 Dead 对抗、Dead by Daylight（命中硬直节奏）、Project Winter、Barotrauma Husk 等的节奏与反滚雪球机制"
+      - "长局（30–60 分钟）不重置的社交对抗/生存游戏（Project Winter、Dread Hunger、SCP: Secret Laboratory、Lethal Company 等）的节奏与玩家反馈：中段疲软、滚雪球、翻盘、挂机"
+      - "双向转化（救回人类）机制与撤离型胜利条件的先例与平衡要点"
+      - "用 headless Bot 自动对局做数值模拟/调参（人类与僵尸胜率区间、滚雪球点）的做法与先例"
+      - "多小局制 vs 一整局制在换主、冷启动、主播切片上的差异证据"
+    prior_claims: []
+
+  - name: "补位 Bot 跨楼层寻路与行为决策"
+    category: "玩法、Bot 与先例"
+    description: "给出 15–22 层高楼中人类 Bot 与僵尸 Bot 的极简实用实现方案（单人带 Bot 也要好玩），兼顾 headless 压测。"
+    focus:
+      - "Godot 4 NavigationServer2D / NavigationRegion2D / NavigationLink2D（楼梯/电梯）/ AStarGrid2D 的多层图；每层独立导航 + 楼层图的分层寻路；动态门对导航的更新"
+      - "headless 下导航与物理的可用性与 CPU；16 个 Bot × 15–22 层的 CPU 预算"
+      - "行为框架插件：LimboAI（行为树 + 状态机，GDExtension）、Beehave（GDScript 行为树）、Utility AI 插件等的最新版本、Godot 4.x 兼容、活跃度与对 AI 编码的友好度"
+      - "人类 Bot（搜箱、守楼道、用药救僵尸、冲天台）与僵尸 Bot（追击、听声搜索、破门、绕楼梯包抄）的行为设计；Bot 听觉感知与声音事件系统共用"
+      - "掉线玩家由 Bot 临时接管、中途加入玩家顶替 Bot 并继承其装备与位置的实现要点"
+      - "感染/生存类 Bot 设计先例（CS bots、L4D AI Director 等）"
+    prior_claims: []
+
+  - name: "跨楼层声音情报与近距离语音"
+    category: "玩法、Bot 与先例"
+    description: "本项目核心乐趣之一是「没看到僵尸时靠声音和迹象判断危险」，需要设计跨楼层声音事件的网络通道，并评估是否做近距离语音。"
+    focus:
+      - "声音事件的网络设计：哪些声音由各端本地推导、哪些需房主广播；跨楼层（相邻 ±1–2 层、楼梯井/电梯井）声音 AOI 的范围与频率；方向/距离/楼层信息的编码"
+      - "Godot 4 音频实现：AudioStreamPlayer2D 衰减、音频总线（低通/混响模拟隔层）、楼层切换时的声音处理与性能"
+      - "声音情报设计先例：Project Zomboid 噪音系统、Dead by Daylight 恐惧半径/心跳、Lethal Company 声音吸引怪物、Darkwood、Teleglitch 等"
+      - "近距离语音：Lethal Company/Content Warning/R.E.P.O. 等的传播效应；Steam Voice API（GodotSteam getVoice/decompressVoice，线索：GodotSteamKit 有 SteamVoice 节点）与 Godot AudioEffectCapture + Opus 方案；每路语音带宽；房主转发 vs 点对点；大陆内容合规、举报/屏蔽需求"
+      - "对 D4+D2 与带宽的影响，V1.0 是否做语音的建议"
+    prior_claims: []
+
+  - name: "高楼关卡内容生产与像素美术管线"
+    category: "玩法、Bot 与先例"
+    description: "评估一个人做 15–22 层可玩楼层的内容生产方案（首作的重大工作量风险），及其对同步、快照和 Bot 导航的影响。"
+    focus:
+      - "Godot 4.3+ TileMapLayer 的用法与性能；22 层 TileMapLayer 全部加载 vs 按需加载；headless 下的内存"
+      - "楼层模板拼装/程序化生成（房间模板、WFC 插件、只同步 seed）的方案与 Godot 插件现状"
+      - "搜刮表（loot table）数据驱动设计；箱子静态编号与开局随机内容（用 rng seed 保证各端一致）"
+      - "像素美术来源：素材包（itch.io 等）、外包、AI 生成，以及 Steam AI 披露要求与常见授权"
+      - "同类俯视角多层建筑游戏的楼层数与关卡工作量参考"
+    prior_claims: []
+
+  # ───────────── 市场与执行 ─────────────
+  - name: "同类游戏商业与冷启动数据"
+    category: "市场与执行（核心）"
+    description: "用可查证的数据评估「12–16 人高楼生化买断制 + Bot 兜底」的商业与冷启动存活率。"
+    focus:
+      - "对标游戏数据（价格、发售日、峰值 CCU、2026-11 当前 CCU、评论数与好评率、估算销量及方法）：Project Zomboid、Barotrauma、Alien Swarm: Reactive Drop、Among Us、WEBFISHING、Liar's Bar、Dale & Dawson Stationery Supplies、Project Winter、Lockdown Protocol、Lethal Company、Content Warning、Dread Hunger、Midnight Ghost Hunt，以及 2024–2026 新出的社交恐怖/感染/撤离联机独立作（可用 SteamDB 标签页逐个取数）"
+      - "基准率而非幸存者：个人/小团队小体量联机游戏的峰值与评论数分布；多人游戏 CCU 衰减与冷启动研究（GameDiscoverCo、VG Insights、Gamalytic 等）：平稳期 CCU 占峰值比例、「需 N 人才能开局」的死亡螺旋、Bot/单人模式对留存与评价的影响"
+      - "中国玩家在同类游戏中的占比与评论语言分布；国区定价与退款经验"
+      - "大房间（10+ 人）买断制联机独立游戏的成败案例对比；「凑人门槛」vs「2–4 人好友开黑」在传播上的差异"
+      - "社交传播因子（主播/切片、近距离语音、搞笑时刻）在同类爆款中的作用"
+    prior_claims:
+      - "GameDiscoverCo（2023）：典型多人游戏平稳期 CCU 通常只剩峰值 ~6%（极佳案例 10–20%）（参考报告）"
+      - "Dale & Dawson（$7.99）峰值 6,465，2026-11-24 在线 6 人（参考报告）"
+      - "VG Insights：Steam 合作游戏中位销量约为非合作的 8 倍（~40k vs ~5k）（参考报告）"
+
+  - name: "零基础 + 双 AI 协作可行性"
+    category: "市场与执行"
+    description: "评估零编程基础者全职、主要由 AI 编码完成该联机动作游戏的可行性，提炼协作规范与最易出错的点。"
+    focus:
+      - "2025–2026 年 AI 编程助手写 GDScript/Godot 4 的能力评估与社区反馈（Godot 3/4 语法混淆、过时 API、GodotSteam 旧 API 幻觉、场景/节点结构理解）"
+      - "Godot 专用 AI 工具：Godot MCP 服务器、编辑器内 AI 插件、Claude Code 在 Godot 项目中的工作流（headless 跑测试、截图、读日志）"
+      - "零基础/非程序员借助 AI 上架 Steam（尤其联机游戏）的成功与失败案例"
+      - "Steam 对 AI 生成内容的披露政策现状（2024-01 规则及其后更新）；Godot 官方/社区对 AI 生成代码的态度"
+      - "守护工具：gdtoolkit（gdlint/gdformat）、GUT、gdUnit4、headless CI；适合 AI 的项目结构、CLAUDE.md/AGENTS.md 规范、Windows 本地 ↔ 云端 Linux VM 的同步与版本锁定"
+      - "AI 写联机/并发代码最常见的错误模式（竞态、序列化遗漏、peer_id 当主键、在场景树里存状态等）"
+    prior_claims: []
+
+  # ───────────── 运维、发行与测试 ─────────────
+  - name: "存档、Steam Cloud 与零成本排障日志"
+    category: "运维、发行与测试"
+    description: "设计本地存档 + Steam Cloud 与零月费的一键排障日志上传方案，核实免费额度与中国大陆可达性。"
+    focus:
+      - "Steam Cloud：Auto-Cloud 与 ISteamRemoteStorage 的配置、每用户配额（字节/文件数）设置、冲突处理、路径；GodotSteam 的 RemoteStorage 函数"
+      - "存档 schema 版本与迁移；成长数据统一接口（日后接 ¥30–60/月小服上报）"
+      - "sentry-godot（getsentry/sentry-godot）最新版本与功能（崩溃、日志、附件、GDScript 错误）、Sentry 免费档额度（2026）、sentry.io 在大陆的可达性"
+      - "Cloudflare Workers / R2 免费额度与 workers.dev 在大陆的可达性、自定义域名方案；为什么不能裸放 Discord Webhook"
+      - "其他 $0 方案（GlitchTip、Backtrace 免费档、Supabase、GitHub Issues API 等）对比"
+    prior_claims: []
+
+  - name: "Steam 上架、AppID 480 与 Playtest"
+    category: "运维、发行与测试"
+    description: "梳理从开发测试到上架的 Steam 流程与费用，以及冷启动相关的发行工具与合规事项。"
+    focus:
+      - "Steam Direct 费用与返还条件、审核时长、商店页「即将推出」最短时长、发布前检查"
+      - "AppID 480（Spacewar）开发测试的限制；拿到自己 AppID 后的 Steamworks 设置（Lobby、Networking、Cloud）"
+      - "Steam Playtest 的流程、限制与主 App 的关系；Steam Next Fest；愿望单转化经验值；国内外社区与主播冷启动渠道（B 站、小黑盒、Reddit、Discord）"
+      - "区域定价（人民币推荐价、¥15–48 的定位）、大陆玩家购买支付现状；本地化（中英文）"
+      - "Steam Deck 兼容性审核与手柄要求；beta 分支用于联机版本回滚；Steamworks SDK 近期更新（1.63–1.65）中与联机相关的变化"
+      - "第三方依赖与素材许可（GodotSteam、Steamworks SDK 再分发、Understudy、字体音效）与借鉴 CSOL 玩法的 IP 边界"
+    prior_claims:
+      - "AppID 480 与免费 Steam Playtest 可用于真机测试"
+
+  - name: "联机测试工具链与混沌压测"
+    category: "运维、发行与测试"
+    description: "给出一个人即可执行的联机测试环境与自动化压测方案的工具事实与参数。"
+    focus:
+      - "Godot 编辑器 Customize Run Instances 的用法与版本；多实例时 user:// 隔离（Windows APPDATA、Linux XDG_DATA_HOME、命令行参数）"
+      - "Windows clumsy 0.3（WinDivert）用法、过滤语法、本机回环陷阱与推荐的 4 档弱网参数；Linux tc netem（延迟/抖动/丢包/乱序）"
+      - "GNS 内置弱网模拟在 Steam 环境的使用；ENet 侧是否有内置模拟"
+      - "同一台电脑运行多个 Steam 客户端/账号的限制与变通（虚拟机、家庭共享、Sandboxie 等是否可行与合规）；双机双账号测试步骤"
+      - "Godot headless 自动化：GUT / gdUnit4 headless 运行、命令行参数、日志采集；多进程混沌测试（随机杀进程、断网）脚本思路"
+      - "Godot 网络 Profiler/Monitor 与自定义指标（RTT、丢包、抖动、带宽、PPS、换主耗时）"
+    prior_claims:
+      - "Godot Customize Run Instances 本机 2–4 开；clumsy 0.3 注意本机回环陷阱；Windows 隔离 APPDATA / Linux 隔离 XDG_DATA_HOME"
+
+execution:
+  mode: 标准
+  batch_size: 3
+  core_items:
+    - "D4 分权移动的动作手感"
+    - "主机迁移业界实践与 Steam 换主翻车史"
+    - "同类游戏商业与冷启动数据"
+  items_per_agent: 2
+  judgment_items:
+    - "D4 分权移动的动作手感"
+    - "主机迁移业界实践与 Steam 换主翻车史"
+    - "同类游戏商业与冷启动数据"
+    - "SDR 中继与中国大陆连通性"
+    - "带宽与包量测算：16 人同层峰值复核"
+    - "零基础 + 双 AI 协作可行性"
+  agent_groups:
+    # 批次 1：核心 3 组（Opus）
+    - {agent: web-search-agent-deep, model: opus, items: ["D4 分权移动的动作手感"]}
+    - {agent: web-search-agent-deep, model: opus, items: ["主机迁移业界实践与 Steam 换主翻车史"]}
+    - {agent: web-search-agent-deep, model: opus, items: ["同类游戏商业与冷启动数据"]}
+    # 批次 2：其余深度判断 3 组（Opus）
+    - {agent: web-search-agent-deep, model: opus, items: ["SDR 中继与中国大陆连通性"]}
+    - {agent: web-search-agent-deep, model: opus, items: ["带宽与包量测算：16 人同层峰值复核"]}
+    - {agent: web-search-agent-deep, model: opus, items: ["零基础 + 双 AI 协作可行性"]}
+    # 批次 3–5：检索类两两成组（Sonnet）
+    - {agent: web-search-agent, model: sonnet, items: ["Godot 4 引擎现状与多人联机底层 API", "GodotSteam 插件与 SteamMultiplayerPeer 源码"]}
+    - {agent: web-search-agent, model: sonnet, items: ["Understudy 源码审计与 Godot 换主生态", "全房主权威 + 预测回滚对照（netfox 等）"]}
+    - {agent: web-search-agent, model: sonnet, items: ["GNS 底层参数：超时、心跳、缓冲、限速与通道", "Steam Lobby：房间列表、房间码、旁观与幽灵房"]}
+    - {agent: web-search-agent, model: sonnet, items: ["同类先例网络架构拆解", "CSOL 生化与感染类玩法节奏"]}
+    - {agent: web-search-agent, model: sonnet, items: ["补位 Bot 跨楼层寻路与行为决策", "联机测试工具链与混沌压测"]}
+    - {agent: web-search-agent, model: sonnet, items: ["跨楼层声音情报与近距离语音", "高楼关卡内容生产与像素美术管线"]}
+    - {agent: web-search-agent, model: sonnet, items: ["存档、Steam Cloud 与零成本排障日志", "Steam 上架、AppID 480 与 Playtest"]}
+  output_dir: ./results

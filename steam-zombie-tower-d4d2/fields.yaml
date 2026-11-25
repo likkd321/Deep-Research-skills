@@ -1,0 +1,92 @@
+# ─────────────────────────────────────────────────────────────────────
+# 字段定义（research-deep 子 agent 必读）
+# 输出 JSON 请用【扁平结构】：下面所有字段名直接作为 JSON 顶层键（不要按分类再嵌一层），
+# 末尾加 "uncertain": [ ... ] 数组列出值不确定的字段名。所有字段值用中文。
+# 每个关键数字都要带标签：[事实]（必须附一手来源 URL）/ [推算]（写出公式与输入）/ [主观]（写理由）/ [不确定]（写缺什么证据）。
+# 绝不编造：查不到就写 [不确定] 或"无法核实"，并写明搜过哪里。
+# 「对本项目」均指下方 project_profile 描述的游戏。
+# ─────────────────────────────────────────────────────────────────────
+
+project_profile: |
+  - 开发者：零编程基础、全职（每周 40+ 小时）的个人开发者，首款游戏；Godot 4.x 纯 GDScript + GodotSteam；代码主要由 Windows 本地 AI 助手 + 云端 Linux 虚拟机的 Claude Code 接力编写，开发者"看得多、写得少"。
+  - 商业：Steam 买断制（约 ¥15–48），Windows 为主；玩家全球范围，包括中国大陆。
+  - 玩法：2D 像素俯视角（Top-Down）15–22 层高楼「CSOL 生化模式 + 搜刮道具 + 双向转化 + 天台直升机撤离」。开局 1 名母体僵尸（不会彻底死亡、只会重生，天然担任初始房主）抓人类；人类被感染变小僵尸；人类可用特定药品把小僵尸转化回人类，也可搜集关键物品到天台坐直升机撤离。
+  - 规模与时长：10–16 名玩家（不足由补位 Bot 填充；2–4 人可开；单人带 Bot 也要能完整玩），一整局 40 分钟以上不重置，不设阶段检查点（整局一体式撤离）。不额外刷纯 AI 炮灰僵尸。
+  - 空间：按楼层切换视角（走楼梯/电梯进入另一层平面图，单屏只画当前层，天然按楼层 AOI 裁剪）；楼层多、每层人少，强调"没看到僵尸时的紧张感"与"靠声音（跨楼层脚步、破门、电梯、枪声）和其他迹象判断危险"，核心乐趣是物品使用判断与"什么时候去哪一层做什么"的大局规划。
+  - 动作只是轻壳：僵尸可连续攻击、血厚，单发子弹影响小；普通连发枪械用"命中强减速/僵直（Tagging）"代替逐发猛烈击退，大击退只留给霰弹/手雷等低频道具；开火方式（360° 鼠标瞄准 vs 4/8 方向）待报告评估后推荐。
+  - 海量可搜刮物品：大楼内有大量可开启的箱子（静态编号）与地面掉落物。
+  - 联机主目标（D4 + D2）：平时 D4 分权移动（每个客户端本地算 2D 移动获得 0ms 跟手，20Hz 上报坐标；房主作协调员校验穿门/命中/感染/开箱/直升机进度，按 floor_id 做 AOI 转发）；房主低频向继任者备份全楼纯数据快照，母体房主离开或崩溃时 D2 秒级换主续局。
+  - 降级退路：分权版 A1（母体永不淘汰，母体不退就能打完；母体退则按即时状态体面结算）；同时评估 V1.5 C3 社区自建专服与 Godot D3/Understudy 模组。
+  - 硬约束：V1.0 不租对局/匹配服务器（$0/月，只用 Steam Lobby、SDR、Steam Networking Sockets/Messages）；完全不管开挂与反作弊；成长数据本地存档 + Steam Cloud，架构留统一接口以便日后租 1 台 ¥30–60/月小服做结果上报；接受 $0 免费档第三方服务（Sentry、Cloudflare Workers/R2 等）做游戏内一键上传排障日志。
+  - 房间：房间列表（同时显示等待中与激战中房间、支持旁观）+ 6 位房间码 + Steam 好友邀请；快速匹配与房间列表共用一个大厅池；中途加入只能以人类身份加入，属于"锦上添花"（担心老玩家装备积累多、新人体验差）。
+
+fields:
+  基本信息:
+    - name: name
+      description: item 名称
+      detail_level: 极简
+    - name: category
+      description: 所属类别
+      detail_level: 极简
+    - name: research_scope
+      description: 本 item 实际覆盖的具体问题清单（3–8 条）
+      detail_level: 简要
+
+  核查与现状:
+    - name: prior_claims_check
+      description: 逐条核查 item 中 prior_claims 列出的上一轮起点说法；每条写「原说法 → 核查结论（证实 / 部分证实 / 纠偏 / 证伪 / 无法核实）→ 证据（一手来源 URL、源码文件与行号、或 API 实测输出）」；item 未列 prior_claims 时写"无"
+      detail_level: 详细
+    - name: current_status
+      description: 截至 2026-11 的最新状态：版本号与发布日期、维护活跃度、政策/价格/额度现状、建议锁定的版本，每条注明核实日期
+      detail_level: 详细
+
+  技术特性:
+    - name: key_findings
+      description: 关键发现与核心数字（8–20 条），每条以标签开头：[事实]（必须附一手来源 URL）/ [推算]（写出公式与输入）/ [主观]（写出理由）/ [不确定]（写明缺什么证据）
+      detail_level: 详细
+    - name: implementation_guidance
+      description: 可直接交给 AI 编码的实现要点：具体 API / 函数 / 信号名 / 参数 / 配置默认值与推荐取值 / 伪代码或 GDScript 片段，注明适用的 Godot 与 GodotSteam 版本
+      detail_level: 详细
+    - name: pitfalls_and_failures
+      description: 已知坑、失败案例与补丁史（含 AI 编码最容易写错的点），每条附来源
+      detail_level: 详细
+
+  性能指标:
+    - name: quantitative_params
+      description: 可量化参数表，每条写 名称 / 数值 / 单位 / 口径 / 出处（默认值、上限、阈值、延迟、带宽、包量、价格、额度等）
+      detail_level: 详细
+
+  竞争与生态:
+    - name: alternatives_comparison
+      description: 相邻替代方案与取舍：每个方案写代价、收益、对本项目是否值得
+      detail_level: 简要
+
+  项目研判:
+    - name: project_implications
+      description: 对本项目（见文件顶部 project_profile）的直接影响、推荐决策与理由
+      detail_level: 详细
+    - name: mvp_scope
+      description: 范围划分：V1.0 最小可行实现 / V1.5 再做 / 不建议做
+      detail_level: 简要
+    - name: effort_estimate
+      description: 对"零基础 + 双 AI 全职开发"的工作量估计（人周，标 [推算]）、AI 编码难度（易 / 中 / 难）与典型错误、必须人工把关的验收点
+      detail_level: 简要
+    - name: risk_rating
+      description: 风险分级（致命 / 麻烦但可解 / 低），写理由、触发条件与缓解措施或降级路径
+      detail_level: 简要
+    - name: win_probability_inputs
+      description: 对终局胜率模型的输入：影响哪项子概率（技术完成率 / 动作手感达标率 / 换主可靠性 / 上线稳定性 / 个人+双AI执行率 / 长期低维护度 / 冷启动存活率）、方向与幅度（百分点，标 [推算] 或 [主观]）
+      detail_level: 简要
+    - name: test_verification_points
+      description: 需在网络测试中实测验证的点：测试方法（工具与参数）、采集指标、建议通过红线、能否 headless 自动化
+      detail_level: 简要
+    - name: china_mainland_notes
+      description: 中国大陆专项：可达性、延迟与丢包、合规、支付、社区渠道等相关结论；不涉及时写"无"
+      detail_level: 简要
+
+  来源:
+    - name: sources
+      description: 一手来源清单：每条写 标题 + URL + 发布/访问日期 + 类型（官方文档 / 源码 / 补丁日志 / API 实测 / 论文 / 数据平台 / 社区实测），优先一手、注明可信度
+      detail_level: 详细
+
+uncertain: []
