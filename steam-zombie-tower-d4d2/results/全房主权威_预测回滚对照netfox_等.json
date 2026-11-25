@@ -1,0 +1,61 @@
+{
+ "name": "全房主权威 + 预测回滚对照（netfox 等）",
+ "category": "动作联机与换主",
+ "research_scope": [
+  "netfox 最新版本、Godot 兼容、核心节点、维护活跃度、文档示例",
+  "netfox 与 SteamMultiplayerPeer/GodotSteam 的兼容与已上线 Steam 使用者",
+  "16 人×CharacterBody2D 的 CPU/带宽经验",
+  "其他 Godot 4 预测/回滚方案（snopek、brogolem35、Multiplayer Starter、GD-Sync）",
+  "换主场景下预测回滚的额外难度",
+  "零基础+AI 的门槛与对 D4 的工期/手感/换主复杂度差异"
+ ],
+ "prior_claims_check": "无",
+ "current_status": "核实日期 2026-11-25（克隆 https://github.com/foxssake/netfox 主分支 + 文档）：netfox 最新 tag v1.49.12（插件 plugin.cfg 版本 1.49.12；主分支提交与该 tag 同为 2026-11-23，说明持续每周级更新），addons 下 plugin.cfg 版本：netfox、netfox.extras、netfox.internals、netfox.noray 均为 1.49.12，另有 vest/nohub/trimsock 等内部组件版本 0.9.0/0.12.0/1.10.4（未逐一核对对应关系）。官方 README：'Godot 4.x is supported'，示例按 Godot 4.1 编写，不保证新版本；注意 Godot Asset Library 条目停在 1.35.3（2025-11-23 提交），已过时，应从 GitHub Releases 下载。主要维护者 Tamás Gálffy（foxssake），MIT。有官方文档站 foxssake.github.io/netfox、Discord、Netfox Sharp(C#) 社区端口。已上线 Steam 的使用者（官方展示页）：Bubble Battle、PL4no-B（2D 战术射击）、Chrome Carnage、Nitro Turtles、Kick and Hide。建议锁定：开工时锁定当时最新 tag（现为 v1.49.12），并在 Godot 4.5–4.7 上跑其 forest-brawl 示例验证。snopek Godot Rollback Netcode：Asset Library 上 Godot 4 版为 1.0.0-alpha，标注 Godot 4.2，提交 2024-05-04，搜索未发现更新 [不确定]。brogolem35 教程发布 2026-04-25、2026-09-19 更新，Godot 4.7.2。",
+ "key_findings": [
+  "[事实] netfox 的权威模型：'State properties ... the server is the ultimate authority'，输入属性归各玩家；RollbackSynchronizer 客户端预测 + 服务器回滚校正。来源 https://github.com/foxssake/netfox docs/netfox/nodes/rollback-synchronizer.md。",
+  "[事实] 核心组件：RollbackSynchronizer、TickInterpolator、StateSynchronizer（服务器全权拥有的 NPC 等，可插值）、PredictiveSynchronizer（可由各端自行预测的物体，如子弹）、RewindableAction、NetworkTime/NetworkTimeSynchronizer、NetworkRollback、NetworkEvents、NetworkPerformance；extras：BaseNetInput、RewindableStateMachine、NetworkWeapon、物理(Rollback 物理)、rewindable RNG、NetworkSimulator、WindowTiler；noray：NAT 穿透/中继集成（走 noray 服务器，本项目用 Steam 可不装）。",
+  "[事实] 默认参数：netfox/time/tickrate=30，max_ticks_per_frame=8，rollback/history_limit=64，rollback/input_redundancy=3，display_offset=0（addons/netfox/netfox.gd）。",
+  "[事实] 房主可变：rollback-synchronizer 文档 'Changing authority during gameplay is supported. Make sure to call process_authority() on all peers at the same time'——但这只是节点 authority 的切换，整场的'服务器'角色换主仍需自己处理（Godot 高层 multiplayer 的 peer 1 固定为服务器，见 godot-proposals#7912）；官方文档未提供换主方案 [不确定：未找到 netfox 对 host migration 的任何官方说明]。",
+  "[事实] CharacterBody 可用但有坑：move_and_slide 的 delta 取自帧而非 tick → 需 velocity *= NetworkTime.physics_factor 再还原；is_on_floor() 在回滚中过期 → 先做零速度 move_and_slide；RigidBody 物理游戏'currently don't work with rollback'；物理查询需强制刷新。来源 https://foxssake.github.io/netfox/latest/netfox/tutorials/rollback-caveats/。",
+  "[事实] 回滚循环在同一渲染帧内多次重模拟；性能监视器 NetworkPerformance 提供 Network loop duration / Rollback loop duration / Rollback ticks simulated / Rollback tick duration。官方未给出玩家数或性能上限（docs 'no limits on player count or performance'）。",
+  "[事实] 与 Steam：netfox 基于 Godot 高层 MultiplayerAPI（RPC + MultiplayerPeer），理论上可挂在任何 MultiplayerPeer 上（含 SteamMultiplayerPeer/GodotSteam 中继）。但未找到任何公开文档或社区实测的 netfox+GodotSteam 示例：2026-08 论坛帖 forum.godotengine.org/t/142914 中无人实证使用，仅转述'GodotSteam 管连接、netfox 管同步' [不确定]。官方展示的 5 款 Steam 游戏使用的传输层未核实 [不确定]。",
+  "[事实] 16 人×CharacterBody2D：未找到任何 netfox 公开基准或 16 人游戏报告 [不确定]；官方示例/展示多为 2–8 人规模。",
+  "[事实] snopek Godot Rollback Netcode：确定性、整局快照回滚（P2P 对等，无服务器）；Godot 4 版在 Asset Library 为 1.0.0-alpha、目标 Godot 4.2、提交 2024-05-04、MIT；仓库在 GitLab；forks 活跃度停在 2024-03 [不确定是否有更新]。它适合 2–4 人格斗/小规模，要求完全确定性，不适合 16 人+40 分钟+大状态。",
+  "[事实] brogolem35《Godot Rollback With Steam》：Godot 4.7.2，snopek 插件 + GodotSteam，两种模式（Relayed P2P 走 SteamMultiplayerPeer、True P2P 手动发包）；作者发现 Steam 即便 reliable 也不处理包损坏，需自加 SHA256 校验；Steam 64 位 ID 被 multiplayer_authority 截成 32 位，要自建 steam_mp_id；未提玩家数与换主。https://brogolem35.github.io/rollback-with-godotsteam/",
+  "[事实] Multiplayer Starter（Godot 4.7，ENet，≤4 人）：服务器拥有全部玩家、客户端预测+和解、他人 100ms 插值，明写无换主；1.0.0 unstable。可作为'手写预测+和解'的学习样例。",
+  "[事实] godot-proposals#7912 仍 open：换主需改引擎内部 SceneMultiplayer/SceneReplicationInterface 的 authority 与 peer 1 断开逻辑，因此全房主权威路线下'房主崩溃=整场结束'是 Godot 高层 API 的固有限制，换主要自己造。",
+  "[推算] 16 人带宽：netfox 默认 30Hz，每玩家输入包+服务器状态；若每玩家状态 ~20–40 字节（位置+速度+朝向）、AOI 按楼层裁剪后只发同层 2–4 人，房主下行 ≈16×(30Hz×(几十~上百字节))≈ 0.2–0.5 MB/s 级 [推算：16×30×100B≈48 KB/s≈0.4 Mbit/s，未计 UDP/Steam 头与 Zombie 等实体]；CPU 瓶颈在回滚重模拟：每帧重跑 N 个 tick（RTT/33ms，大陆-海外 200ms 约 6–7 tick）× 所有被回滚的 CharacterBody2D，需自己实测。",
+  "[主观] 对 D4 对照：全房主权威+预测（方案3）手感依赖回滚校正，本地玩家仍 0 延迟预测，但他人位置、命中、开门均需权威确认，换主时必须携带完整可复现状态；D4 本地算移动更便宜、手感相同，主要代价是'放弃防作弊'，而本项目明确不管开挂，因此 D4 更适合。"
+ ],
+ "implementation_guidance": "若想做小规模对照原型（Godot 4.5–4.7，GodotSteam 4.x，netfox v1.49.12）：\n1) 安装：从 GitHub Releases 下载 netfox.extras.v1.49.12.zip（内含 netfox + internals），启用插件；不要用 Asset Library 的 1.35.3。\n2) 玩家节点结构：Player(CharacterBody2D，authority=服务器 peer 1) 下挂 RollbackSynchronizer（state_properties: :global_position, :velocity；input_properties: Input 子节点的 :movement）+ TickInterpolator；Input 子节点 set_multiplayer_authority(peer_id)，继承 netfox.extras 的 BaseNetInput，在 _gather() 里写输入。\n3) 移动写在 _rollback_tick(delta, tick, is_fresh)：velocity = input.movement * SPEED; velocity *= NetworkTime.physics_factor; move_and_slide(); velocity /= NetworkTime.physics_factor。\n4) 其他玩家用 StateSynchronizer（服务器拥有）+ TickInterpolator 插值。\n5) 项目设置：netfox/time/tickrate=30（可试 20-30），rollback/input_redundancy=3，rollback/history_limit=64；开 diff states 省带宽；RollbackSynchronizer 的 enable_input_broadcast 设 false。\n6) Steam：SteamMultiplayerPeer 作为 multiplayer.multiplayer_peer；先 NetworkTime.start() 时机放在连接建立后；Steam ID 勿存 32 位 authority。需自测。\n7) 换主：netfox 不提供；若做，需保存全部权威节点状态，换主后在所有 peer 同一 tick 调用 process_authority()，并重建 peer 1 角色——高层 MultiplayerAPI 不允许改 server id，几乎必须自写传输层 [不确定]。",
+ "pitfalls_and_failures": "- CharacterBody 速度须乘 physics_factor；is_on_floor 在回滚中过期（rollback-caveats 官方文档）。\n- RigidBody 物理不支持回滚（同上）；本项目不用，但开门/推箱子等物理交互需避免。\n- 对象动态创建/销毁在回滚中需特殊处理（docs/netfox/tutorials/spawning-and-despawning-in-rollback.md）；FAQ 明确'尽量避免移除再添加节点'，因为 RollbackSynchronizer 无法可靠检测节点被释放；楼层切换/箱子/掉落物多，AI 易写错。\n- 状态机里冷却、上升沿触发在回滚重放中会重复触发，需用 RewindableStateMachine（官方提示）。\n- 所有影响玩法的数据都必须同步，否则各端结果不一致（FAQ）。\n- 版本漂移：官方示例按 Godot 4.1 写，新版本可能不兼容；Asset Library 版本过时（1.35.3 vs 1.49.12）。\n- Steam 传输：包损坏不检测、ID 截断（brogolem35）；Steam 与 netfox 的组合无公开实证。\n- Godot 论坛 4.5 帖：RigidBody 在非权威端抖动，需要 freeze 非权威端、对状态插值（forum 142914）。\n- 换主：netfox 与 Godot 高层 API 都以 peer 1 为服务器，房主离开时整局终止（godot-proposals#7912）。\n- AI 编码易错点：_physics_process 与 _rollback_tick 混用；在 _rollback_tick 里读取 Input 单例而非 Input 子节点；忘记 set_multiplayer_authority 导致输入不被同步。",
+ "quantitative_params": "名称/数值/单位/口径/出处：\n- netfox 最新版 v1.49.12（2026-11-23，GitHub）\n- tickrate 默认 30 Hz（netfox.gd）；max_ticks_per_frame 8；recalibrate_threshold 8.0；history_limit 64 tick（≈2.1s@30Hz）；input_redundancy 3 帧\n- 回滚深度 ≈ RTT/tick：RTT 200ms@30Hz ≈ 6 tick/帧（[推算]）；超过 64 tick 历史（≈2.1s）则无法回滚\n- 官方示例 Godot 版本：4.1；Understudy-类对照：热备 60Hz 全模拟 host 上行 700 kbit/s@8人（另一 item）\n- snopek Godot 4 版：1.0.0-alpha，Godot 4.2，2024-05-04\n- Multiplayer Starter：≤4 人，100ms 插值延迟，Godot 4.7\n- netfox 官方展示 Steam 游戏：5 款（Bubble Battle、PL4no-B、Chrome Carnage、Nitro Turtles、Kick and Hide）\n- 16 人带宽估算 ≈48 KB/s 下行（房主，仅位置类，[推算] 见 key_findings）；CPU 无公开数据 [不确定]",
+ "alternatives_comparison": "1) netfox（房主权威+预测回滚）：代价=全部玩法需写成 _rollback_tick 可重放、对象生成/销毁/状态机均需适配、无换主、Steam 组合无先例；收益=0 延迟本地手感、防作弊、成熟文档与 Steam 上线案例；对本项目：不值得作为主线（不管反作弊，且换主需自造）。\n2) snopek Godot Rollback Netcode：代价=整局确定性、Godot 4.2 alpha、停更风险；收益=P2P、无服务器；不适合 16 人 40 分钟，不值得。\n3) 手写 Source 式预测+和解（Multiplayer Starter 为样例）：代价=自写输入缓冲/序列号/和解，估 4–8 人周；收益=可控、无第三方依赖；比 D4 重，仍不解决换主。\n4) GD-Sync：托管中继付费，宣称换主，机制未公开，违反 $0 约束，不值得。\n5) D4（客户端本地移动+房主协调）：代价=放弃防作弊（本项目本就不管）、需校验穿门/命中；收益=最小工期、0ms 手感、CharacterBody2D 原生可用、换主只需备份纯数据快照；本项目正选。",
+ "project_implications": "1) 结论：方案3（全房主权威+预测回滚）作为对照组，证明比 D4 重一个量级：状态必须全可回滚、换主需自造；建议不采用，保持 D4+D2。\n2) 可借鉴 netfox 的零件而非整体：TickInterpolator 思路（他人位置按 tick 插值）、NetworkTimeSynchronizer（tick 对齐，换主后新主要重新校时）、NetworkPerformance 监视器、NetworkSimulator（模拟丢包延迟，可直接给 D4 做测试）。\n3) 换主额外难度：新主必须有服务器状态缓冲（至少 history_limit 内的状态+各玩家输入历史）和与旧主一致的 tick 编号；换主瞬间所有客户端的预测基线需重对齐，rollback 内的未确认输入会丢，需要全员重发；D4 只需 20Hz 位置与房主快照，无此要求。\n4) Steam：netfox+SteamMultiplayerPeer 无公开实证，需自行 PoC，作为 V1.5 评估而非 V1.0 依赖。\n5) 对本项目 40 分钟、大楼多层场景、箱子/掉落物多：netfox 的 spawn/despawn 回滚复杂度高，AI 易出错。",
+ "mvp_scope": "V1.0：不用 netfox；用 D4 + 自写轻量插值和对账（20Hz 位置上报、他人插值缓冲 100ms）；可以只借鉴 netfox 的思路与 NetworkSimulator 做测试。V1.5：若手感投诉多，用 netfox 的 TickInterpolator 或 PredictiveSynchronizer 做局部实验（只限命中判定回滚，不做全移动回滚）。不建议做：全房主权威+全回滚、snopek 整局确定性回滚、自写 Source 式完整预测+和解+换主。",
+ "effort_estimate": "[推算] 对'零基础+双 AI'全职：D4 本地移动+房主协调 4–6 人周（对照基线）；netfox 全房主权威（含 Steam 对接 PoC 1–2 周、玩法全部改成 _rollback_tick、对象生成回滚 2–3 周、联调 2–4 周）≈ 8–14 人周，且换主另加 4–8 人周 → 比 D4 多 6–12 人周；手写 Source 式预测+和解 ≈ 6–10 人周。AI 熟悉度：netfox 较新（2023 起）、文档中等，AI 对其 API 易幻觉（旧版 API 名称、enable_input_broadcast 默认值等），难度：难；典型错误：_physics_process 与 _rollback_tick 混用、忘记 physics_factor、authority 设置错误。必须人工把关：多客户端同一 tick 的状态一致性、回滚下的开门/拾取不重复触发、Steam ID 处理。",
+ "risk_rating": "采用 netfox 作为主线：麻烦但可解 偏重（Steam 无先例、换主无方案、AI 熟悉度低）；采用 snopek：致命（停在 4.2 alpha，16 人不适配）；手写预测和解：麻烦但可解；仅借鉴零件（插值/模拟器）：低。缓解/降级：保持 D4 主线，netfox 仅做 V1.5 局部实验；若出现手感问题，降级为 D4 + 100–150ms 插值缓冲。",
+ "win_probability_inputs": "动作手感达标率：D4 已满足本地 0ms；若改 netfox 全回滚，[主观] 手感不变但他人命中/开门体验可能 +1~2 点，不抵消成本；技术完成率：全房主权威路线 [主观] -6~10 个百分点；换主可靠性：全房主权威路线 [主观] -8~12 个百分点（需自造换主 + 状态缓冲）；个人+双AI执行率：netfox 路线 -5~8 点；长期低维护度：依赖 netfox 版本漂移 -2~3 点。",
+ "test_verification_points": "1) 如要验证 netfox+Steam PoC：2 台真实机器经 SDR，SteamMultiplayerPeer + RollbackSynchronizer + CharacterBody2D，采集 NetworkPerformance 的 rollback loop duration 与 ticks simulated；红线：16 个 CharacterBody2D 在 RTT 200ms 时 rollback loop <4ms/帧。2) 使用 netfox.extras NetworkSimulator 或 tc netem 加 100–250ms RTT、2–5% 丢包。3) 换主：杀房主进程，验证新主的状态缓冲与 tick 对齐，红线：无双主、玩家位置回跳 < 1 格。4) 可 headless：多进程 Godot --headless 加输入脚本，可自动化。",
+ "china_mainland_notes": "netfox noray 依赖第三方 noray 服务器（境外），大陆可达性未知，应避开，用 Steam SDR；Steam SDR 在大陆-海外 RTT 可到 150–250ms，回滚深度大、history_limit(64tick≈2.1s@30Hz) 勉强够用 [推算]。GitHub/文档站 foxssake.github.io 在大陆偶有访问不稳 [不确定]。",
+ "sources": [
+  "netfox 仓库 https://github.com/foxssake/netfox（克隆于 2026-11-25；v1.49.12，提交 2026-11-23；源码+docs，可信度高）",
+  "netfox 文档：docs/netfox/nodes/rollback-synchronizer.md、docs/faq.md、docs/netfox/guides/network-performance.md、docs/made-with-netfox.md（同仓库）",
+  "Rollback caveats https://foxssake.github.io/netfox/latest/netfox/tutorials/rollback-caveats/（访问 2026-11-25；官方文档）",
+  "Godot Forum：Can you use GodotSteam + Netfox? https://forum.godotengine.org/t/can-you-use-godotsteam-netfox-connection-syncing/142914（2026-08-12；社区，无实证）",
+  "brogolem35 Godot Rollback With Steam https://brogolem35.github.io/rollback-with-godotsteam/（2026-04-25，更新 2026-09-19；社区教程）",
+  "Godot Rollback Netcode (Godot 4) 资产库条目 https://www.godotengine.org/asset-library/asset/2450（1.0.0-alpha，Godot 4.2；搜索摘要，未直接取原页）与 GitLab 仓库 gitlab.com/snopek-games/godot-rollback-netcode",
+  "Multiplayer Starter https://store.godotengine.org/asset/codingquests/multiplayer-starter/（访问 2026-11-25；商店页）",
+  "godot-proposals#7912 https://github.com/godotengine/godot-proposals/issues/7912（官方 issue，仍 open）",
+  "Netfox Asset Library 条目 https://godotengine.org/asset-library/asset/2375（1.35.3，已过时；搜索摘要）"
+ ],
+ "uncertain": [
+  "current_status（snopek 最新状态、noray 版本口径）",
+  "key_findings（Steam 兼容、16 人性能、换主、已上线游戏的传输层）",
+  "implementation_guidance（Steam 对接与换主）",
+  "quantitative_params（16 人 CPU）",
+  "effort_estimate",
+  "win_probability_inputs",
+  "china_mainland_notes"
+ ]
+}
