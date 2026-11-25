@@ -10,17 +10,19 @@
   "诚实声明：本轮网页检索对网络内部实现的公开一手资料很少，多数条目只能给出『有限证据 + [不确定]』"
  ],
  "prior_claims_check": [
-  "Alien Swarm: Reactive Drop（8p，A1+C3，Source 预测+延迟补偿）→ 部分证实 → Valve 开发者 wiki 确认 Source/Alien Swarm 提供 lag compensation（回溯 hitbox，StartLagCompensation/FinishLagCompensation），SteamDB 补丁说明显示 Reactive Drop 曾在 300ms 模拟延迟下对比并改进延迟补偿算法；『8 人上限』与『A1+C3』本轮未取得一手来源 [不确定]。来源：https://developer.valvesoftware.com/wiki/Lag_Compensation ；https://steamdb.info/patchnotes/13327783",
-  "Barotrauma（16p，A1+C3，感染+海量物品）→ 部分证实 → 官方 GitHub README 称其为 2D 在线多人游戏；Lua 模组文档的类成员(Character.ServerReadInput/ServerWritePosition、ClientWriteInput、Entity.Spawner、NeedsMidRoundSync 等)说明服务器处理输入并下发位置/实体事件，即服务器权威的事件制同步；游戏内托管走 Steamworks/EOS 网络，专服走 Lidgren。『16 人上限』本轮未取得一手来源 [不确定]。来源：https://github.com/FakeFishGames/Barotrauma ；https://evilfactory.github.io/LuaCsForBarotrauma/lua-docs/ ；Steam 论坛讨论 https://steamcommunity.com/app/602960/discussions/1/802344732346974486/",
-  "Project Zomboid（4–16p 监听服+箱子惰性同步）→ 部分纠偏/部分证实 → 开发者称 B42.13 不稳定分支多人『目前不建议单服超过 20 名玩家』（建议值，非硬上限），Steam 联机为 co-op 托管，也有专服；『箱子惰性同步』无一手来源，仅见玩家推测『容器首次打开时才生成战利品』[不确定]。来源：https://www.pcgamesn.com/project-zomboid/build-42-multiplayer-unstable ；https://steamcommunity.com/app/108600/discussions/0/3493131640453725734",
-  "Among Us Hide n Seek（15p 纯 D4 实时追杀）→ 无法核实『纯 D4』 → 一手资料显示 Hide n Seek 是 2022-12 官方加入的模式（PC Gamer 报道）；协议逆向仓库显示传输为 UDP 自研可靠层(Hazel)，含 PlayerPhysics/CustomNetworkTransform 对象，但未说明移动权威归属；15p 上限本轮未核实 [不确定]。来源：https://www.pcgamer.com/among-us-announces-official-hide-and-seek-mode ；https://www.Github.com/roobscoob/among-us-protocol",
-  "Don't Starve Together（可切预测开关）→ 部分证实 → Klei 官方支持文档称『默认使用移动预测，可能导致动作动画延迟、显示位置与服务器略有差异』；玩家社区有通过修改 USE_MOVEMENT_PREDICTION 关闭的做法，官方 bug 库有『预测开关在服务端/客户端可能不同步』的已修复条目；游戏内是否有官方 UI 开关未取得最新证据 [不确定]。来源：https://support.klei.com/hc/en-us/articles/360029555272 （WebFetch 403，内容引自检索摘要）；https://forums.kleientertainment.com/forums/topic/139089-movement-prediction-settings-for-dst/"
+  "Alien Swarm: Reactive Drop（8p，A1+C3，Source 预测+延迟补偿）→ 部分证实：『8 人』证实——Steam 商店 appdetails 简介写明『Tactical co-op for up to 8 players with a top-down perspective』，类别含 Online Co-op/Online PvP/LAN Co-op（核实 2026-11-25，AppID 563560，发售 2017-04-20）：https://store.steampowered.com/api/appdetails?appids=563560&l=english ；延迟补偿证实（Valve Lag Compensation wiki、SteamDB 补丁 13327783）；『A1+C3』是本项目的架构标签，非游戏事实，无法核实。",
+  "Barotrauma（16p，A1+C3，感染+海量物品）→ 部分证实：『16 人』证实——Steam appdetails 写『Play with up to 16 players on board a submarine』，类别含 Online Co-op/Online PvP（AppID 602960，1.0 发售 2023-03-13）：https://store.steampowered.com/api/appdetails?appids=602960&l=english ；服务器权威事件制同步见 Lua API 类成员（间接）；A1+C3 为项目标签；『感染』指 Husk 感染，未逐项核实。",
+  "Project Zomboid（4–16p 监听服+箱子惰性同步）→ 纠偏：Steam appdetails 只写『Online multiplayer survival with persistent player-run servers』与本地分屏，类别含 Online Co-op/Cross-Platform，未给硬人数；开发者称 B42.13 不建议单服超 20 人（PCGamesN），故『4–16p』不准确，应写『无硬上限、建议≤20、以玩家自建/托管专服为主，另有 Steam co-op』；『监听服』仅有开发者『Steam co-op』提法为旁证；『箱子惰性同步』仍无一手来源 [不确定]。https://store.steampowered.com/api/appdetails?appids=108600&l=english ；https://www.pcgamesn.com/project-zomboid/build-42-multiplayer-unstable",
+  "Among Us Hide n Seek（15p 纯 D4 实时追杀）→ 部分证实：『15 人』证实——Steam appdetails 写『4-15 players online or via local WiFi』，Innersloth 公告 2021-06-16 发布 15 人大厅（https://innersloth.com/among-us-3rd-birthday-15-player-lobbies，页面未提 Hide n Seek），Hide n Seek 为 2022-12 官方模式（PC Gamer）；『纯 D4』无法核实（协议逆向仓库未说明移动权威）。https://store.steampowered.com/api/appdetails?appids=945360&l=english",
+  "Don't Starve Together（可切预测开关）→ 部分证实：Klei 官方称默认使用移动预测；Steam appdetails（AppID 322330，类别含 Online Co-op/LAN）简介不含人数；人数上限（常说 6 人）商店页未写，无法核实 [不确定]。https://store.steampowered.com/api/appdetails?appids=322330&l=english",
+  "Project Winter（补充）→ 证实 8 人：Steam appdetails 写『8-person multiplayer game of survival and social deception』（AppID 774861，2019-05-23，类别含 Online PvP/Co-op/Cross-Platform）；拓扑见 key_findings：官方未公开。https://store.steampowered.com/api/appdetails?appids=774861&l=english"
  ],
  "current_status": [
   "核实日期 2026-11-25（仅检索摘要与少量页面）。",
   "Project Zomboid：B42 多人以 42.13 不稳定分支于 2025-12-11 重新开放（PCGamesN）；已知限制：旧档不兼容、需禁用全部 Mod、ragdoll 暂移除；第三方博客称 2026-07-29 的 42.20 进入稳定分支，仅为二手说法 [不确定]。",
   "Barotrauma：2015 年的 Lidgren 可靠 UDP 拥塞修复(v0.2.3.1)是已知早期补丁史；当前版本号与人数上限本轮未核实 [不确定]。",
-  "Reactive Drop / Among Us / DST / Project Winter：当前版本号本轮未核实，建议开发时再查。"
+  "Reactive Drop / Among Us / DST / Project Winter：当前版本号本轮未核实，建议开发时再查。",
+  "人数核实（2026-11-25，Steam appdetails 实测）：Barotrauma 16、Reactive Drop 8、Project Winter 8、Among Us 4–15、PZ 与 DST 商店页未写硬人数。Steam 商店搜索（tags=生存+俯视+在线合作，按发售日降序）已用于找新作，见 key_findings。"
  ],
  "key_findings": [
   "[事实] Barotrauma 早期联机卡顿源于对 Lidgren 可靠 UDP 的不当使用：消息被反复重发直至确认，造成拥塞，延迟聊天与所有可靠消息；拾取/丢弃/接线等物品操作都走可靠消息。修复为自研丢包检测、拥塞时降低或取消重发。作者只在 4–5 人局验证过。https://barotraumagame.com/uncategorized/test-build-with-an-attempt-to-fix-the-lag （2015-10-21）。借鉴：物品操作勿一律走可靠通道；对我们意味着箱子/物品事件需限流与合并。",
@@ -36,7 +38,10 @@
   "[事实] Among Us 协议为 UDP 上的自研可靠层，含游戏列表、Redirect、ReselectServer 等消息，说明有中央房间服务与重定向；资料止于 Airship 更新。https://www.Github.com/roobscoob/among-us-protocol 。移动权威归属 [不确定]。",
   "[推算] 多楼层 AOI：PZ 与 Barotrauma 公开资料均未找到『按楼层/甲板裁剪同步』的说明，因此无法证明同类先例做过；本项目 floor_id 过滤属于自行设计，需自测。",
   "[不确定] Project Winter 的拓扑、人数、换主做法：检索无结果，未核实。",
-  "[不确定] 2024–2026 的 2D/俯视角多人生存或社交恐怖新作：本轮未锁定具体作品，不编造。"
+  "[不确定] 2024–2026 的 2D/俯视角多人生存或社交恐怖新作：本轮未锁定具体作品，不编造。",
+  "[事实] Steam 商店实测人数：Barotrauma『up to 16 players』、Reactive Drop『up to 8 players, top-down』、Project Winter『8-person』、Among Us『4-15』（均来自 store.steampowered.com/api/appdetails，2026-11-25）；PZ/DST 商店页无硬人数。",
+  "[不确定] Project Winter 联机拓扑（专服/P2P/第三方库）：已搜 Steam 商店页、PC Gamer、SteamDB 补丁、GameRant、MobyGames，均未提及；Steam 类别含 Cross-Platform Multiplayer，暗示非纯 Steam P2P（可能有自建服务/中继），但这是推断，不是证据。未找到官方 FAQ 或开发者访谈。",
+  "[事实] 2024–2026 新作（Steam appdetails 实测，2026-11-25；搜索来源：Steam 搜索 tags=生存/俯视/在线合作，按发售日降序，噪声很大，仅取符合项）：① NO SUNRISE（AppID 5383890，2026-10-30）：2.5D 合作僵尸生存射击，1–8 人，『你的死亡可能生成强力僵尸 Boss 威胁队友』——与『人类→僵尸转化』相近，可借鉴其死亡转化的反馈设计；联机方式未写。② Villainy（AppID 4017450，2025-12-15）：4–10 人社交推理，Online PvP/Co-op；视角未核实，可借鉴 10 人级社交推理在商店页的卖点表述。③ Last Evac（AppID 5380070，2026-10-30）：直升机撤离+僵尸世界，PvP 服最多 40 人，另有 60 人撤离模式；视角未核实，可借鉴『撤离』主题的定位，但规模远大于本项目。④ 33 Days till Extraction（AppID 3628390，2026-09-17）：俯视角肉鸽射击，合作，人数未写。⑤ 我在三国开黑店 Escape From SanGuo（AppID 3896970，2026-03-13）：轻度搜打撤，PvP+Co-op，中文市场，视角与人数未核实。以上均未找到其网络拓扑与同步方式，故无法给出技术借鉴，只作市场/玩法参照 [不确定]。"
  ],
  "implementation_guidance": [
   "借鉴 1（事件序列号）：每个箱子/地面物品变更产生 (floor_id, entity_id, seq) 事件；房主为每个客户端记录 last_acked_seq，晚加入时发快照 + 增量；对应 Barotrauma 的 LastSentEntityEventID 思路。适用 Godot 4.x 任意版本，GodotSteam 只作传输。",
@@ -57,7 +62,14 @@
   "PZ 单服建议人数上限 / 不建议超过 20 / 人 / 开发者建议非硬限 / https://www.pcgamesn.com/project-zomboid/build-42-multiplayer-unstable",
   "Barotrauma 专服默认端口 / UDP 27015、27016 / 端口 / 社区指南 / Daedalic 支持页",
   "Reactive Drop 延迟补偿测试条件 / 300ms 模拟延迟 / ms / SteamDB 补丁说明 / https://steamdb.info/patchnotes/13327783",
-  "各游戏人数上限（Reactive Drop 8、Barotrauma 16、Among Us HnS 15、DST 6 默认）/ 未核实 / 人 / 仅为 prior_claims 引用 / [不确定]"
+  "DST 默认人数（常说 6）/ 商店页未写 / 人 / 未核实 / [不确定]",
+  "Barotrauma 官方人数上限 / 16 / 人 / Steam 商店简介 / https://store.steampowered.com/api/appdetails?appids=602960",
+  "Reactive Drop 官方人数上限 / 8 / 人 / Steam 商店简介 / https://store.steampowered.com/api/appdetails?appids=563560",
+  "Project Winter 官方人数 / 8 / 人 / Steam 商店简介 / https://store.steampowered.com/api/appdetails?appids=774861",
+  "Among Us 人数 / 4–15 / 人 / Steam 商店简介 + Innersloth 2021-06-16 公告 / https://innersloth.com/among-us-3rd-birthday-15-player-lobbies",
+  "NO SUNRISE 人数 / 1–8 / 人 / Steam 商店 / https://store.steampowered.com/api/appdetails?appids=5383890",
+  "Villainy 人数 / 4–10 / 人 / Steam 商店 / https://store.steampowered.com/api/appdetails?appids=4017450",
+  "Last Evac PvP 服人数 / 最多 40 / 人 / Steam 商店 / https://store.steampowered.com/api/appdetails?appids=5380070"
  ],
  "alternatives_comparison": [
   "A. 事件序列号 + 快照增量（Barotrauma 式）：代价是需要实现事件日志与 ack；收益是中途加入和换主可复用同一机制；对本项目值得。",
@@ -115,7 +127,12 @@
   "Klei 论坛 DST 预测讨论 — https://forums.kleientertainment.com/forums/topic/139089-movement-prediction-settings-for-dst/ — 社区",
   "LuaCs for Barotrauma 文档 — https://evilfactory.github.io/LuaCsForBarotrauma/lua-docs/ — 社区文档，类成员即源码反射 — 中",
   "Barotrauma Steam 论坛 — https://steamcommunity.com/app/602960/discussions/1/802344732346974486/ — 社区",
-  "PZ Steam 论坛 loot — https://steamcommunity.com/app/108600/discussions/0/3493131640453725734 — 社区推测"
+  "PZ Steam 论坛 loot — https://steamcommunity.com/app/108600/discussions/0/3493131640453725734 — 社区推测",
+  "Steam appdetails Barotrauma — https://store.steampowered.com/api/appdetails?appids=602960&l=english — 2026-11-25 — API 实测 — 高",
+  "Steam appdetails Reactive Drop — https://store.steampowered.com/api/appdetails?appids=563560&l=english — 2026-11-25 — API 实测 — 高",
+  "Steam appdetails Project Zomboid/DST/Project Winter/Among Us — https://store.steampowered.com/api/appdetails?appids=108600 、322330 、774861 、945360 — 2026-11-25 — API 实测 — 高",
+  "Innersloth 三周年 15 人大厅公告 — https://innersloth.com/among-us-3rd-birthday-15-player-lobbies — 2021-06-16 — 官方 — 高",
+  "Steam appdetails 新作 NO SUNRISE/Villainy/Last Evac/33 Days till Extraction/Escape From SanGuo — appids=5383890、4017450、5380070、3628390、3896970 — 2026-11-25 — API 实测 — 高（仅商店文案）"
  ],
  "uncertain": [
   "research_scope",
