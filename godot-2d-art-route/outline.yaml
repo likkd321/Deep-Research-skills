@@ -4,6 +4,8 @@ request: >-
   2D 俯视精品独立游戏有哪些、自制素材与成败的关系、四条美术路径（全自制 / 定画风+AI 批量生图与骨骼动画 /
   大量外购+填补 / 全外购只精修）的工作流、工具与终局胜率、该用多少像素、Claude 网页版与 Antigravity 各模型能发挥什么、
   社交媒体上 "Carbon 做 Godot 2D 骨骼动画" 帖子是否说明 Gemini 已达到这种能力，以及美术阶段里 AI 能做和必须自己做的部分。
+  （第 2 批后追加）游戏是需重复游玩的对抗/搜打撤类，要考虑货架物品显示、人物持不同枪支表现、各像素规格素材供给、修图与动画批量制作难度，
+  给出最甜点区、胜率最高、最适合该游戏的最终方案，含全套美术开服流程、工具与工作流。
 started_at: "2026-11-26T12:09+08:00"
 project_context: &ctx >-
   用户项目 X4-Infection-Strike：Godot 4.7.2 + GDScript，2D 像素 3/4 斜俯视角（对标《远星物语 CrossCode》，带 Y-Sorting），
@@ -79,6 +81,8 @@ items:
       先定画风再用 AI 批量生成像素素材的工作流（2025-11 至今）：像素专用 AI（PixelLab、Retro Diffusion、Sprite-AI、God Mode AI 等）、
       通用图像模型（Gemini 图像模型/Nano Banana 系列、GPT 图像模型、Midjourney、SD/Flux + 像素 LoRA、ComfyUI）、Godot 内 AI 精灵插件；
       角色/画风一致性控制、真像素网格后处理（降采样、调色板量化、去抗锯齿）、商用授权；Steam 2026-01 改版后的 AI 披露规则、玩家对 AI 美术的态度与误判风险。
+      【第 2 批后追加】项目是需重复游玩的对抗/搜打撤类：需大量 loot 物品图标与货架/箱子内物品显示、人物持不同枪支的表现、
+      多种僵尸/人类变体；请特别评估本路径在 48px 下批量产出这些资产（含修图、动画）的难度、单件成本与一致性。
     project_context: *ctx
   - name: Claude网页版与Antigravity各模型在美术管线中的能力
     category: 路径
@@ -94,6 +98,8 @@ items:
     description: >-
       2D 角色动画的几条路线：逐帧像素动画、Godot Skeleton2D / Spine / DragonBones 骨骼动画、3D 建模预渲染成像素（如 Dead Cells 做法）、
       AI 动画工具（PixelLab 骨架动画、Retro Diffusion 动画等）；各自与像素风、3/4 俯视、"3 面身体+旋转枪"方案的适配度、工作量、Godot 接入方式。
+      【第 2 批后追加】项目是需重复游玩的对抗/搜打撤类：需大量 loot 物品图标与货架/箱子内物品显示、人物持不同枪支的表现、
+      多种僵尸/人类变体；请特别评估本路径在 48px 下批量产出这些资产（含修图、动画）的难度、单件成本与一致性。
     project_context: *ctx
   - name: 路径CD-外购主导的工作流与风格统一
     category: 路径
@@ -101,12 +107,16 @@ items:
       路径 C（大量自购 + 自己填补）与路径 D（全自购只精修微调）的工作流：如何挑选同一作者/同一系列素材、统一调色板/描边/光照方向/像素密度，
       怎样补画缺失素材、Aseprite 改色与拼装、授权条款陷阱（商用、修改、再分发、AI 训练、署名、付费素材不得进公开仓库）、防素材提取、
       避免被玩家识别为"asset flip"的成熟做法。
+      【第 2 批后追加】项目是需重复游玩的对抗/搜打撤类：需大量 loot 物品图标与货架/箱子内物品显示、人物持不同枪支的表现、
+      多种僵尸/人类变体；请特别评估本路径在 48px 下批量产出这些资产（含修图、动画）的难度、单件成本与一致性。
     project_context: *ctx
   - name: 路径A-零基础单人全手动自制像素美术
     category: 路径
     description: >-
       零美术基础单人全手动自制像素美术的可行性：工具（Aseprite、Pixelorama、Pyxel Edit、LibreSprite、Krita）、工作流、
       各尺寸下角色/tileset 实际耗时、单人开发者案例（如 Stardew Valley、Eric Barone 等）与零基础转型案例。
+      【第 2 批后追加】项目是需重复游玩的对抗/搜打撤类：需大量 loot 物品图标与货架/箱子内物品显示、人物持不同枪支的表现、
+      多种僵尸/人类变体；请特别评估本路径在 48px 下批量产出这些资产（含修图、动画）的难度、单件成本与一致性。
     project_context: *ctx
   - name: 零美术基础学习路线
     category: 路径
@@ -116,6 +126,17 @@ items:
       "改素材"作为入门方式。
     project_context: *ctx
 
+  - name: 搜打撤对抗类的美术精细度需求与资产规模方案
+    category: 核心判断
+    description: >-
+      项目是需重复游玩的对抗/搜打撤（search-fight-extract）类：调研 2D/2.5D 俯视搜打撤与 loot 型对抗游戏（如 ZERO Sievert、Escape from Duckov、
+      Project Zomboid、Dark and Darker 类 2D 化作品、Realm of the Mad God 等）实际的美术精细度与资产规模：loot 物品种类数与图标尺寸、
+      货架/箱子内物品是否在世界中逐个显示（还是统一容器图标）、人物持不同枪支的表现方式（独立枪精灵按武器换图 vs 身体动画分武器）、
+      僵尸/人类变体数、动画状态数；重复游玩所需的视觉多样性（随机楼层、换色/调色板变体、装饰物组合）如何低成本做出来；
+      48px 与 32/16px 下这些资产的现成供给量、AI 批量生成可行性、修图与动画批量制作难度；最后给出本项目 V1.0 的资产清单规模（多少件、多少帧）与最省力的产出组合。
+      【前 2 批线索】48px 网格 + 960×540 + 3 面身体 + 360° 旋转枪为倾向方案；48px 现成人物/僵尸极稀缺；PixelLab 能出 48×48 角色 4/8 方向与骨架动画底稿，
+      其标准俯视 tileset 只有 16/32px；Retro Dead City（$9.99）有 48 档僵尸。
+    project_context: *ctx
 execution:
   mode: 标准
   batch_size: 3
@@ -124,12 +145,14 @@ execution:
     - 像素规格与3-4斜俯视角人物方向方案
     - Carbon帖子真伪与Gemini骨骼动画能力核实
     - 独立游戏美术生产阶段拆解与AI覆盖度
+    - 搜打撤对抗类的美术精细度需求与资产规模方案
   items_per_agent: 2
   judgment_items:
     - 美术来源与独立游戏成败关系及基准胜率
     - 像素规格与3-4斜俯视角人物方向方案
     - Carbon帖子真伪与Gemini骨骼动画能力核实
     - 独立游戏美术生产阶段拆解与AI覆盖度
+    - 搜打撤对抗类的美术精细度需求与资产规模方案
   agent_groups:
     - {agent: web-search-agent-deep, model: opus, items: [美术来源与独立游戏成败关系及基准胜率]}
     - {agent: web-search-agent-deep, model: opus, items: [像素规格与3-4斜俯视角人物方向方案]}
@@ -140,4 +163,5 @@ execution:
     - {agent: web-search-agent, model: sonnet, items: [路径B-定画风加AI批量生图工作流, Claude网页版与Antigravity各模型在美术管线中的能力]}
     - {agent: web-search-agent, model: sonnet, items: [2D动画方案-逐帧骨骼3D预渲染AI动画的像素适配, 路径CD-外购主导的工作流与风格统一]}
     - {agent: web-search-agent, model: sonnet, items: [路径A-零基础单人全手动自制像素美术, 零美术基础学习路线]}
+    - {agent: web-search-agent-deep, model: opus, items: [搜打撤对抗类的美术精细度需求与资产规模方案]}
   output_dir: ./results
