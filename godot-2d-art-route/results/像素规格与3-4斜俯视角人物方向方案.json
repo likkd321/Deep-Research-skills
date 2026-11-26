@@ -1,0 +1,327 @@
+{
+  "core_question": "X4-Infection-Strike 该用哪种像素规格（8/16/32/48）、哪种基准分辨率，人物用「3 面身体+360° 旋转枪」是否是成熟可行且对联机友好的方案？",
+  "one_line_conclusion": "直接锁定 48px 网格（与 WinLu 同像素密度），人物画在 48×48 画布里（身体约 26–32 宽 × 40–46 高），基准分辨率用 960×540（1080p/4K 正好整数倍，1440p 用 sharp-bilinear 着色器缩放）；人物采用「3 面身体（下/上/右，左镜像）+ 独立手与枪 360° 旋转」——这是 Nuclear Throne（仅左右 2 面）与 Enter the Gungeon（4 套绘制、镜像后 6 面）之间的成熟折中，比 CrossCode 的 8 方向（5 绘+3 镜像）省掉 40% 以上的身体帧，而且联机时只需同步一个 16 位瞄准角 + 一个动画状态枚举。",
+  "key_findings": [
+    "WinLu Spaceship Tileset 官方页写明 48px、已对 RPG Maker 与 Godot 优化，现价 $20（原价 $25），v1.0 于 2024-02-06 发布，13 个评分平均 4.7；包内不含任何人物。WinLu 名下 23 个包同样都没有人物包，人物必须另找或自画。",
+    "我实测了 WinLu 预览图（1339×956）：横向同色游程以 2、4、6 为主，说明预览是原图 2 倍放大，而原图以 1 像素为最小单位。结论是它是原生 48px 密度的精细像素画，不是 16px 放大 3 倍的作品，所以人物也必须按原生 48 密度绘制，否则会出现混合像素尺寸（mixels）。画面是 RPG Maker 式的 3/4 斜俯视，墙体正面可见，墙高约 2.5–3 格，并自带血迹贴花。",
+    "itch.io 素材标签统计（2026-11-26 抓取，game-assets 分类）：8x8 共 479 个，16x16 共 6,565，32x32 共 4,835，48x48 只有 178，64x64 共 619。叠加 top-down 标签后，16x16 有 2,507，32x32 有 1,248，48x48 仅 22。人物类：16x16 有 742，32x32 有 784，48x48 仅 30。科幻类：16x16 有 171，32x32 有 194，48x48 仅 5。僵尸类：16x16 有 62，32x32 有 37，48x48 为 0。48px 现成人物与僵尸素材供给是 16/32 的约 1/25～1/30。",
+    "48px 的隐藏供给在 RPG Maker MV/MZ 生态：itch 上 rpg-maker-mv 标签有 1,064 个，默认 48px 网格，但人物基本是 4 方向 × 3 帧行走的 Q 版，没有射击、手和枪，只能当 NPC 或改绘底稿。LimeZu Modern Interiors 提供 16/32/48 三档（615 个评分、4.9 分，$1.5 起），但评论区有用户自己把 16px 版放大到 48px 来补缺失服装，说明它的 48 档很可能是 16px 原图放大 3 倍。和 WinLu 原生 48 混用会出现像素密度不一致，此点为推断。",
+    "Godot 4.7 官方文档：像素游戏推荐 stretch mode = viewport，scale_mode = integer（4.2 起提供）。640×360 是官方推荐基线，因为它能整数放大到 720p、1080p、1440p、4K。文档还提醒全屏模式下高度会少 1 像素，导致整数缩放降档，要用 Exclusive Fullscreen。",
+    "各基准分辨率的整数倍：320×180 在 1080p 为 6 倍、1440p 为 8 倍；480×270 在 1080p 为 4 倍、1440p 为 5.33 倍（非整数）；640×360 在 1080p 为 3 倍、1440p 为 4 倍、4K 为 6 倍；960×540 在 1080p 为 2 倍、1440p 为 2.67 倍（非整数）、4K 为 4 倍。Steam 2026-10 硬件调查：1920×1080 占 50.23%，2560×1440 占 21.82%，2560×1600 占 5.46%，3840×2160 占 5.05%，3440×1440 占 3.23%。",
+    "48px 格子在各基准分辨率下一屏能看到多少格：320×180 约 6.7×3.75 格（不可用），480×270 约 10×5.6，640×360 约 13.3×7.5，960×540 约 20×11.25，1280×720 约 26.7×15。对照成熟作品：Enter the Gungeon 480×270、16px 单位，约 30×17 单位；CrossCode 568×320、16px 格子，约 35.5×20 格；Nuclear Throne 320×240、16px，约 20×15。只有 960×540 + 48px 的视野接近这些作品；640×360 的视野接近 Nuclear Throne 这种近景单机射击，对 16 人 PvP 偏窄。",
+    "Enter the Gungeon：开发者 Rubel 在 Steam 论坛确认原生分辨率是 480×270，在 1080p 下每个美术像素是 4×4 屏幕像素，1440p 使用缩放模式。第三方角色 mod 规格依据游戏文件整理：身体画布 24×26，16px 为 1 世界单位；idle、idle_forward、idle_backward、idle_bw 四套朝向，奔跑有 run_right、run_right_bw、run_down、run_up；侧面画朝右，向左时由游戏镜像，即 4 套绘制、6 个视觉方向。枪只有 idle/fire/reload 几张图，在运行时旋转；手是单独的 4×4 小图，身体另有 _hand/_twohands 变体；描边由运行时着色器添加，不画进图里。",
+    "Nuclear Throne：开发者在 Steam 论坛确认整个游戏以 320×240 渲染后放大。社区复刻代码 nt-recreated 显示，身体用 image_xscale*right 只做左右镜像；枪用 draw_sprite_ext(枪图, x, y, 1, right, gunangle) 按瞄准角旋转，并按朝向在 y 方向翻转；gunangle≤180（朝上）时先画枪、让枪位于身体后方；后坐力用 wkick 沿瞄准反方向偏移。这就是「1 面身体+360° 枪」的最低成本做法，旋转直接在低分辨率画布上完成，所以自然保持像素感。",
+    "CrossCode（对标作）实际并不是「少面身体+旋转枪」：玩家 Lea 帧尺寸 32×32，dirs=8，flipX=[0,0,0,0,0,1,1,1]，即 5 个方向手绘、3 个镜像。皮肤 mod 文件显示共 91 个动画，其中 54 个是 8 方向，瞄准（aim/aimMove/startAim）和投掷都画进了身体，没有独立旋转的武器。NPC 用 32×40 帧、4 方向（3 绘+1 镜像）。这是专业美术团队的工作量，单人零基础不可复制。",
+    "用户的「3 面（下/上/右，左镜像）=4 个视觉方向」方案正好介于 Nuclear Throne（2 面）和 Gungeon（6 面）之间。只要手和枪独立旋转、身体不画手臂，身体帧数约为 8 方向方案的 3/5，并且瞄准精度与身体方向解耦。",
+    "在 Godot 里旋转像素枪的取舍：viewport 拉伸模式下，旋转在低分辨率画布上完成，像素网格一致，但个别角度会出现锯齿或杂点（4.2.1 用户反馈）；canvas_items 模式旋转平滑，但会出现高分辨率旋转像素与低分辨率世界混在一起的 mixels。更干净的做法是用 Aseprite 的 RotSprite 或 SpriteRot 工具预渲染 16–32 个角度，运行时取最近帧。"
+  ],
+  "cases": [
+    {
+      "名称": "Enter the Gungeon",
+      "链接": "https://store.steampowered.com/app/311690/",
+      "Steam评论数": "79,772（appdetails recommendations 字段，抓取日期 2026-11-26；英文口径 39,359，好评 95%）",
+      "引擎": "Unity + 2D Toolkit（tk2d），精灵放在 3D 空间中做遮挡排序",
+      "玩法贴近度": "中（俯视射击、360° 旋转枪，单人/本地双人，非 PvP）",
+      "美术来源占比": "自制 100%（Dodge Roll 内部美术）",
+      "素材来源证据": "开发者 Rubel 在 Steam 论坛确认 480×270 原生分辨率；第三方 mod 规格（依据游戏文件）列出 4 套身体朝向+镜像、独立手、枪运行时旋转",
+      "证据强度": "强（分辨率）/中（动画清单来自 mod 规格）",
+      "对本项目的启示": "4 套身体（正、背、前斜、后斜）+镜像 = 6 方向，手和枪分离，运行时描边着色器；比用户的 3 面方案多 1 套斜向，是更讲究的上限做法"
+    },
+    {
+      "名称": "Nuclear Throne",
+      "链接": "https://store.steampowered.com/app/242680/",
+      "Steam评论数": "15,146（appdetails recommendations，抓取日期 2026-11-26；英文 9,858，好评 96%）",
+      "引擎": "GameMaker",
+      "玩法贴近度": "中（俯视快节奏射击，有在线合作 mod，非 PvP）",
+      "美术来源占比": "自制 100%（Vlambeer，美术 Paul Veer）",
+      "素材来源证据": "开发者在 Steam 论坛确认 320×240 渲染再放大；社区复刻代码显示身体只做左右镜像、枪按 gunangle 旋转并按朝向翻转、朝上时枪画在身后",
+      "证据强度": "强（分辨率）/中（绘制逻辑来自社区复刻代码）",
+      "对本项目的启示": "最低成本方案：1 面身体+镜像+360° 枪，16 人同屏时完全可读；用户的 3 面方案在此基础上多了正、背两面，更贴合 3/4 视角"
+    },
+    {
+      "名称": "CrossCode（远星物语）",
+      "链接": "https://store.steampowered.com/app/368340/",
+      "Steam评论数": "16,547（appdetails recommendations，抓取日期 2026-11-26；英文 10,318，好评 92%）",
+      "引擎": "ImpactJS（HTML5）+ nw.js",
+      "玩法贴近度": "中（3/4 斜俯视、360° 投掷瞄准、Y 排序，单人 ARPG）",
+      "美术来源占比": "自制 100%（Radical Fish 内部美术）",
+      "素材来源证据": "PCGamingWiki 记录原生 568×320；CCDirectLink 逆向文档与皮肤 mod 文件显示 Lea 为 32×32 帧、dirs=8（5 绘+3 镜像），91 个动画中 54 个为 8 方向",
+      "证据强度": "强（游戏数据格式与 mod 文件）",
+      "对本项目的启示": "对标作的 8 方向全身瞄准方案工作量极大，不能照抄；只借鉴它的 3/4 视角、Y 排序和 16px 网格配约 32px 高人物（人物约为 2 格高）的比例"
+    }
+  ],
+  "data_points": [
+    "itch.io 素材标签数（2026-11-26 抓取，口径为 itch.io/game-assets/tag-X 页面的 results 计数，由作者自行打标签，存在漏标）：8x8=479；16x16=6,565；32x32=4,835；48x48=178；64x64=619；top-down+16x16=2,507；top-down+32x32=1,248；top-down+48x48=22；characters+48x48=30；sci-fi+48x48=5；zombies+48x48=0；rpg-maker-mv=1,064",
+    "Steam 硬件调查 2026-10（Valve 官方）：1920×1080 为 50.23%，2560×1440 为 21.82%，2560×1600 为 5.46%，3840×2160 为 5.05%，3440×1440 为 3.23%，1920×1200 为 2.97%，1366×768 为 2.25%，1280×800 为 0.31%",
+    "Steam 硬件调查 2026-09（iXBT 转述）：1080p 为 47.91%，1440p 为 27.04%，4K 为 4.79%。与 10 月数据波动较大，说明 1440p 用户约占二到三成",
+    "原生分辨率：Enter the Gungeon 480×270（开发者自述）；Nuclear Throne 320×240（开发者自述）；CrossCode 568×320（PCGamingWiki）",
+    "人物帧尺寸：Gungeon 身体画布 24×26（mod 规格）、枪 26×16；CrossCode Lea 32×32、NPC 32×40；WinLu 网格 48px",
+    "瞄准角量化：8 位（256 级）每级 1.406°，最大误差 ±0.70°，在 480px 距离约偏 ±5.9px；16 位（65536 级）每级 0.0055°，在 480px 距离误差 <0.05px（作者按三角函数推算）",
+    "3 面方案人物帧数估算（人类+僵尸各一套，作者估算）：约 100–110 帧；改成 8 方向（5 绘）约 170–180 帧；CrossCode 级别的 91 个动画则以千帧计",
+    "WinLu Spaceship Tileset：$20（原价 $25），13 个评分平均 4.7，v1.0 发布于 2024-02-06，允许商用和修改，禁止再分发，不要求署名",
+    "PixelLab API 价格（第三方页面整理，日期不详）：48×48 4 方向人物约 $0.0105/个，8 方向约 $0.0133/个；骨骼动画支持到 128×128"
+  ],
+  "independent_verification": "已有一手来源佐证的结论：Gungeon 480×270 与 Nuclear Throne 320×240 均出自开发者在 Steam 论坛的自述；Godot 的整数缩放与 640×360 推荐出自官方 4.7 文档；Steam 分辨率占比出自 Valve 官方调查；WinLu 的规格与授权出自作者商品页；itch 标签数是本次直接抓取的数据。经社区或逆向资料佐证、可信度中到强的：CrossCode 8 方向（5 绘+3 镜像）、32×32 帧，来自 CCDirectLink 逆向文档和多个皮肤 mod 的数据文件，彼此一致；Gungeon 的 4 套朝向、手枪分离和运行时描边，来自单一第三方 mod 规格，未见 Dodge Roll 官方说明；Nuclear Throne 的枪绘制逻辑来自社区复刻代码，未见 Vlambeer 官方说明。只有单一来源或属于推断的：LimeZu 48 档是 16px 放大 3 倍（仅依据一条用户评论推断）；Gungeon 每把枪按角度手绘（只是 itch 用户的猜测，与 mod 规格中枪只有 idle/fire/reload 的说法冲突，我判断为运行时旋转）；PixelLab 价格（第三方转述）；每帧工时（社区经验，口径不一）。",
+  "workflow_steps": [
+    "第 1 步（半天）定网格与基准分辨率。新建 Godot 4.7 项目：display/window/size 设为 960×540，stretch/mode=viewport，stretch/aspect=keep（PvP 公平：所有玩家视野一致，16:10 或超宽屏加黑边），先把 scale_mode 设为 integer 验证 1080p 2 倍、4K 4 倍；1440p 再接 sharp-bilinear 后处理（见第 3 步）。纹理过滤设为 Nearest。",
+    "第 2 步（1 天）用 WinLu 搭一个 20×11 格的测试房间，放 16 个占位方块人（约 28×44 像素、彩色描边），在 1080p 和 1440p 截图，检查能否一眼分辨人与僵尸、敌与我；不满意就改人物尺寸，不要改网格。",
+    "第 3 步（半天）1440p 方案：主场景放进 SubViewport（960×540），外层 TextureRect 按窗口缩放，挂 godotshaders 上的 sharp bilinear（可调强度锐利线性插值）着色器；1080p、4K 自动走整数倍，只有非整数倍时启用着色器。也可以先只做整数缩放，1440p 加黑边，后期再补。",
+    "第 4 步（1–2 天）定人物规格表：画布 48×48，脚底对齐画布底部往上第 4 行，身体宽 26–32、高 40–46，不画手臂（或只画肩部），调色板锁定为从 WinLu 截图提取的 16–24 色加 4 色阵营色，描边统一由运行时着色器添加。",
+    "第 5 步（1–2 周）先做 1 个人类原型，只画 3 面：idle 4 帧、run 6 帧，共 30 帧；手做成 4×4 到 6×6 的单独小图，枪做成独立精灵，枪口挂 Marker2D。可以用 PixelLab 生成 4 方向底稿后手工清理，或改绘 RPG Maker 48px 人物底稿。",
+    "第 6 步（半天，Claude 可代写）写朝向与枪逻辑：aim_angle = (鼠标 - 角色).angle()；-45°～45° 用侧面，45°～135° 用正面（下），-135°～-45° 用背面（上），其余用侧面并设 flip_h=true；枪 rotation=aim_angle，瞄准左侧时 scale.y=-1；瞄准朝上时枪的 z_index 低于身体；后坐力沿 -aim 方向偏移 2–3px，0.08 秒回弹。",
+    "第 7 步（1 天）决定旋转渲染方式：先直接用 viewport 模式运行时旋转（Nuclear Throne 做法）；如果个别角度出现锯齿或杂点，就用 SpriteRot 或 Aseprite RotSprite 给每把枪预渲染 16 或 32 个角度（每个角度从原图转一次，不要在上一次结果上叠加旋转），运行时按 round(angle/步长) 取帧。",
+    "第 8 步（2–4 周）补齐状态：hurt 只做 1–2 帧，主要靠闪白着色器和击退；death 与 infection 只做 1 个朝向（倒地或变异）；僵尸套用人类骨架改色改姿势，3 面 × idle/walk/attack。",
+    "第 9 步（1 周）联机：只同步 position、aim_angle（16 位量化）、locomotion_state 枚举、hp 和阵营；射击、受击、感染、死亡用 RPC 事件触发，远端本地自行推导朝向、翻转、播放帧，绝不同步帧号。",
+    "第 10 步（持续）做 16 人压力测试：16 个 Bot 同屏时检查可读性（描边色、名牌、阴影圆）和 Y 排序（脚底锚点对齐 WinLu 墙体），1440p 和 Steam Deck（1280×800）各截图一次。"
+  ],
+  "tools": [
+    {
+      "名称": "Godot 4.7 视口拉伸与整数缩放",
+      "价格": "免费",
+      "用途": "stretch mode=viewport、scale_mode=integer（4.2 起），像素对齐",
+      "链接": "https://docs.godotengine.org/en/stable/tutorials/rendering/multiple_resolutions.html",
+      "版本或核对日期": "文档页标注 4.7，核对 2026-11-26",
+      "Godot接入": "项目设置 → Display → Window → Stretch"
+    },
+    {
+      "名称": "Adjustable Strength (Sharp) Linear Interpolation 着色器",
+      "价格": "免费（godotshaders 社区）",
+      "用途": "非整数倍（1440p 2.67 倍）时做锐利双线性放大，避免像素宽窄不一",
+      "链接": "https://godotshaders.com/shader/adjustable-strength-sharp-linear-interpolation/",
+      "版本或核对日期": "核对 2026-11-26，适用 Godot 4（作者自述）",
+      "Godot接入": "SubViewport → TextureRect，挂 ShaderMaterial"
+    },
+    {
+      "名称": "Aseprite",
+      "价格": "$19.99（Steam，一次买断）",
+      "用途": "绘制 48×48 人物帧、RotSprite 旋转、导出精灵表与 JSON；可用 Lua 脚本批处理",
+      "链接": "https://www.aseprite.org/",
+      "版本或核对日期": "价格为长期稳定价，核对 2026-11-26[不确定是否调价]",
+      "Godot接入": "导出 PNG 精灵表，或用 Aseprite Wizard 插件直接生成 SpriteFrames 或 AnimationPlayer"
+    },
+    {
+      "名称": "SpriteRot（samdze/spriterot）",
+      "价格": "免费开源",
+      "用途": "批量生成多角度旋转帧，支持 rotsprite、shearing、nearest、linear 算法",
+      "链接": "https://github.com/samdze/spriterot",
+      "版本或核对日期": "核对 2026-11-26",
+      "Godot接入": "输出的精灵表导入为 SpriteFrames 或 AtlasTexture，按角度取帧"
+    },
+    {
+      "名称": "Clean Rotate for Aseprite（Astropulse）",
+      "价格": "付费（金额[不确定]）",
+      "用途": "号称比 RotSprite 更干净的像素旋转",
+      "链接": "https://astropulse.itch.io/clean-rotate-for-aseprite",
+      "版本或核对日期": "核对 2026-11-26，效果未验证",
+      "Godot接入": "同 Aseprite 导出"
+    },
+    {
+      "名称": "PixelLab",
+      "价格": "API 估价 48×48 4 方向约 $0.0105/个、8 方向约 $0.0133/个；订阅约 $9–50/月（第三方页面，[不确定]）",
+      "用途": "从一张图生成 4 或 8 方向转身，加骨骼动画（最大 128×128），适合出 3 面身体底稿",
+      "链接": "https://www.pixellab.ai/pixellab-api",
+      "版本或核对日期": "核对 2026-11-26",
+      "Godot接入": "导出 PNG 后手工清理再导入；也有 Aseprite 插件和 MCP 接口"
+    },
+    {
+      "名称": "WinLu Spaceship Tileset",
+      "价格": "$20（原价 $25）",
+      "用途": "48px 3/4 斜俯视科幻场景底座，决定全局像素密度",
+      "链接": "https://winlu.itch.io/spaceship-tileset",
+      "版本或核对日期": "v1.0（2024-02-06），核对 2026-11-26",
+      "Godot接入": "TileSet（48×48），作者声明已对 Godot 优化"
+    },
+    {
+      "名称": "LimeZu Modern Interiors（48×48 档）",
+      "价格": "$1.5 起（自定价）",
+      "用途": "现代办公、医院家具补充；48 档疑似由 16 档放大 3 倍，与 WinLu 混用要谨慎",
+      "链接": "https://limezu.itch.io/moderninteriors",
+      "版本或核对日期": "核对 2026-11-26",
+      "Godot接入": "TileSet 或 Sprite2D"
+    }
+  ],
+  "mature_practices": "1）Nuclear Throne：身体只有左右 2 面（镜像），枪按瞄准角 360° 旋转，朝左时枪纵向翻转，朝上时枪画在身体后面，开枪时枪沿反方向回弹（wkick）；整个游戏以 320×240 渲染，旋转在低分辨率画布上完成，天然像素化。2）Enter the Gungeon：身体画 4 套（正、背、前斜右、后斜右），左侧镜像，共 6 个视觉方向；手是独立的 4×4 小图，挂在枪的握把点，身体另有单手、双手持枪变体；枪每把只有 idle/fire/reload 几张图，运行时旋转；描边由运行时着色器统一添加；原生 480×270，1080p 为 4 倍整数。3）CrossCode：身体 8 方向（5 绘+3 镜像），瞄准姿势画进身体动画，没有独立武器，91 个动画，属于大团队做法。4）通用：身体不画手臂；左右镜像必须保证身体左右对称，不对称细节放在手或枪上；脚底锚点用于 Y 排序；侧面朝右是业界统一约定。",
+  "consistency_method": "像素密度：全部素材以 WinLu 的 1 个原生像素为单位，人物、枪、特效不得缩放（不能把 16px 素材放大 3 倍混入，也不能把 64px 素材缩小）。调色板：从 WinLu 截图用 Aseprite 提取 16–24 色主调色板并锁定，人物只允许额外 4–6 个阵营或高光色（人类偏暖、感染者偏绿紫）。光照：沿用 WinLu 的左上光源，人物高光在左上、阴影在右下，地面用统一的半透明椭圆阴影。描边：身体不画黑描边，用 Gungeon 式运行时 1px 描边着色器，阵营色可切换。旋转：枪的旋转方式全局统一（全部运行时旋转，或全部预渲染 N 角度），不能混用。尺寸：人物身高约为 1 格（40–46px），与 WinLu 门洞宽 1 格、墙高 2.5–3 格的比例匹配。",
+  "animation_spec": "建议规格（3 面方案，每帧 48×48）。人类：idle 3 面×4 帧=12；run 3 面×6 帧=18；hurt 3 面×1–2 帧=3–6（主要靠闪白着色器加击退）；death 1 个朝向×6 帧；infection（变异）1 个朝向×8–10 帧；射击不做身体动画，由枪的 fire 2–3 帧、枪口火光和后坐位移表现；合计约 45–52 帧。僵尸：idle 3×4=12；walk 3×6=18；attack 3×4=12；hurt 3×2=6；death 1×6；合计约 54 帧。每把枪：idle 1 帧+fire 2–3 帧（+reload 0–4 帧）；如果预渲染 16 个角度，每把枪约 16–48 张，但由脚本自动生成。手：1–2 张小图。全项目首版约 100–110 张手工帧。对比：8 方向（5 绘）同状态约 170–180 帧（+70%）；4 面（左右分开画）约 135–145 帧；Gungeon 式 4 套+手持变体约 150 帧以上。工时（零基础，48 密度、身体约 30×44，作者估算）：每帧 0.5–1.5 小时，100 帧约 50–150 小时；借助 PixelLab 底稿或 RPG Maker 改绘，约 25–60 小时。",
+  "license_terms": "WinLu Spaceship Tileset：允许商用和修改，禁止再分发或转售，不要求署名，作者标注未使用生成式 AI；网页未写明 AI 训练条款[不确定]。可以打包进 Steam 联机客户端（游戏内使用不算再分发），但原始 PNG 不能放进公开 Git 仓库，否则构成再分发风险。LimeZu Modern Interiors 完整版：允许商用和修改，禁止转售或分发，需署名并链接 limezu.itch.io。PixelLab 生成物的商用条款以其服务条款为准[不确定]，且 Steam 要求披露 AI 生成内容。像素规格本身与授权无关，但混用多家素材时必须逐一核对是否允许修改（改色、改像素密度都属于修改）。",
+  "cost_time_estimate": "现金：WinLu $20（已选）；Aseprite $19.99；sharp-bilinear 着色器和 SpriteRot 免费；PixelLab 可选，1–3 个月订阅约 $10–150[不确定]；如果委托画师画 48px 3 面人类+僵尸各一套（约 100 帧），市场价估计 $300–1,500（作者估算，按每帧 $3–15 计，未核实具体报价）。工时：分辨率与缩放管线 1–2 天；16 人可读性测试 1 天；朝向与枪逻辑 0.5–1 天（Claude 代写）；人物美术自画 50–150 小时，AI 底稿加清理 25–60 小时；联机同步字段设计 2–4 天。假设：只做 1 套人类和 1 套僵尸外观，皮肤靠换色实现；不做 8 方向。",
+  "fit_for_user": "高度适配。①48px：WinLu 已定为 48 原生密度，换 16 或 32 网格就要放弃 WinLu，或出现像素密度混杂；8×8 连人和僵尸都分不清，直接淘汰。②16 人同屏：960×540 下人物高约 44px，在 1080p 屏上约 88 个屏幕像素高，占屏高约 8%，与 Gungeon（26/270≈9.6%）、CrossCode（32/320=10%）接近，可读性有保障；视野 20×11 格，接近 Gungeon、CrossCode 的视野宽度。640×360 只有 13×7.5 格，对 8–12 层大楼里的 16 人 PvP 太窄。③镜头缩放：视口像素管线下只允许整数缩放，不要做自由缩放；需要更远视野时，用 Gungeon/NT 式的镜头前探（朝鼠标方向偏移 15–25% 屏宽）。④零基础工作量：3 面方案帧数最少且最成熟，身体不画手臂可以再省 20–30% 工作量；但 48 密度单帧像素面积是 16px 的 9 倍、32px 的约 2.25 倍，自画仍然很重，建议用 PixelLab 出底稿或委托 1 套人物。⑤素材供给：48px 现成人物极少（itch 标了 48x48 的人物只有 30 个、僵尸 0 个），人物基本只能自画、AI 生成或委托，这是选 48 的主要代价。⑥Claude 和 Antigravity：朝向逻辑、旋转预渲染脚本、Aseprite Lua、SpriteFrames 生成、联机量化代码都可以交给 AI 写。",
+  "network_sync_impact": "3 面身体+独立枪对联机最友好：朝向和翻转完全由瞄准角在本地推导，不用另外同步 facing；动画帧号也不用同步。建议同步字段（每人每快照约 10–12 字节）：position 用 2×int16（以 1/8 像素为单位或直接用像素坐标）；aim_angle 用 uint16（65536 级，误差 <0.006°，480px 处 <0.05px）；velocity 或移动状态用 1–2 字节；locomotion_state 枚举 1 字节（idle/run/hurt/infecting/dead/zombie）；hp 与阵营 1–2 字节。16 人 × 20Hz × 约 12 字节 ≈ 每个客户端下行 3.8KB/s 有效载荷，主机上行约 ×15 ≈ 58KB/s，再加 UDP/ENet 包头，家用上行能承受。如果改用 8 位瞄准角（误差 ±0.7°，480px 处偏 ±6px），只适合远端视觉显示，开枪 RPC 必须带完整精度（float32 或 16 位）的角度，由服务器判定。用 Godot MultiplayerSynchronizer 直接同步 float 和 Vector2 属性时，每个属性带 Variant 类型头，实际字节会比上面多 2–3 倍[不确定]；16 人规模也能跑，但建议用 PackedByteArray 自行打包快照。事件同步：开火用不可靠 RPC（带时间戳和角度，本地生成弹道和枪口火光），受击、感染、死亡用服务器发出的可靠 RPC；远端瞄准角要做插值（注意角度跨 ±180° 时用 lerp_angle），否则枪口会抖。8 方向身体在网络上没有额外代价，但美术成本高 70%。",
+  "risks_pitfalls": [
+    "1440p 非整数倍：960×540 在 2560×1440 下是 2.67 倍，用最近邻会出现像素宽窄不一、滚动时闪烁；必须用 sharp-bilinear 或加黑边，上线前要在 1440p 实机检查（约 22–27% 的 Steam 用户）。",
+    "PvP 视野公平：stretch aspect=expand 会让 16:10 或超宽屏玩家看到更多地图，竞技不公平；建议用 keep，或 expand 加最大视野上限。",
+    "混合像素尺寸（mixels）：把 16 或 32px 人物放大塞进 48 世界，或在 canvas_items 模式下以高分辨率旋转枪，都会让画面显得廉价、像素材拼凑，玩家容易认为是 asset flip。",
+    "旋转锯齿：viewport 模式下运行时旋转，在 30°/60° 等角度会出现断线或杂点，需要预渲染角度或接受这种观感（Nuclear Throne 就接受了）。",
+    "镜像不对称：左侧直接镜像身体，若身体上画了单侧细节（臂章、肩枪、发型分边）会左右跳变，所以不对称细节一律放在手或枪图层上。",
+    "斜向瞄准观感：3 面方案在 45° 斜向时身体会在正面和侧面之间跳变，应加 5–10° 迟滞，避免来回抖。",
+    "倒退移动：边退边射时腿的方向和身体朝向相反；可以倒放 run 帧，或接受滑步观感（NT、Gungeon 都没有专门处理）。",
+    "相机缩放：非整数 zoom 会破坏像素网格，视口模式下 zoom<1 会丢失像素；观战模式需要全景时，应另建低细节地图视图，而不是缩小镜头。",
+    "48 的素材荒：48px 现成人物和僵尸几乎没有，项目中后期补怪、补皮肤会持续消耗工时。"
+  ],
+  "reversibility_cost": "网格与密度（48）一旦定下几乎不可逆：换成 16 或 32 意味着重做或重买全部场景，并重画人物（约 100+ 帧），返工 100–300 小时以上。基准分辨率（960×540 与 640×360）可逆性高：只是项目设置、镜头和 UI 布局的调整，约 1–3 天。身体方向数（3 面升到 4 或 8 面）中度可逆：已有帧保留，只需补画斜向面（约 +70 帧、35–100 小时），代码只改角度分区表。枪的旋转方式（运行时与预渲染互换）可逆性高，用脚本 0.5–1 天即可切换。",
+  "ai_can_do": "Claude（网页版 Opus/Sonnet）与 Antigravity（Gemini/Claude 系列）可靠能做的：①写 Godot 4.7 的分辨率与缩放配置、SubViewport 加 sharp-bilinear 管线、整数缩放自动判断脚本；②写朝向分区、迟滞、flip、枪 z 序、后坐、lerp_angle 插值、16 位角度打包与解包、快照序列化等 GDScript；③写 Aseprite Lua 或 Python（PIL）脚本：批量 RotSprite 预渲染 16 或 32 个角度、拆精灵表、生成 SpriteFrames .tres、检查调色板越界、按 WinLu 截图提取调色板；④看截图审查可读性、像素密度是否一致、调色板是否统一（多模态审图）。像素专用 AI（PixelLab）可以从一张 48×48 角色图生成 4 或 8 方向转身和行走骨骼动画底稿，Gemini 图像模型（Nano Banana 系列）可以出概念图和情绪板，但都需要人工清理到真像素网格。",
+  "human_must_do": "①决定人物最终尺寸（身高 40–46 像素中具体取几）、头身比、阵营配色，并在 16 人同屏测试中拍板；②逐帧清理 AI 底稿：对齐网格、删掉抗锯齿杂色、统一描边与光源方向、保证 3 面之间体型一致；③挑选旋转方式，并在 1080p、1440p、Steam Deck 实机目测；④判断哪些外购素材的像素密度与 WinLu 兼容（例如 LimeZu 48 档是否是放大 3 倍的，要下载后打开验证）；⑤授权核对（WinLu 原图不得进公开仓库）以及 Steam AI 披露。",
+  "judgment": "明确立场：48px 网格 + 48×48 人物画布（原生 WinLu 密度）+ 960×540 基准分辨率 + 3 面身体（下/上/右，左镜像）+ 手和枪独立 360° 旋转。理由：①WinLu 是原生 48 密度（我实测预览图游程证实），像素规格必须跟场景一致，8/16/32 网格要么弃用 WinLu，要么出现密度混杂，没有讨论余地。②分辨率是真正的取舍。640×360 在所有主流屏幕上都是整数倍，但 48px 网格下视野只有 13×7.5 格，类似 Nuclear Throne 的近景，对 16 人 PvP 来说偏窄。960×540 的视野是 20×11 格，与 Gungeon、CrossCode 的视野和人物占屏比（约 8–10%）一致，代价是 1440p 只能非整数放大，需要 sharp-bilinear 补救。我选 960×540，同时建议在第 2 步用 16 个占位人在两种分辨率下各截一张图，由用户最终拍板。③3 面加旋转枪是经过验证的成熟折中：Nuclear Throne 证明 2 面就够打（9,858 条英文评论、96% 好评），Gungeon 用 6 个视觉方向，CrossCode 用 8 方向但它是专业团队。3 面方案的身体帧数约为 8 方向的 60%，又比 2 面更贴合 3/4 视角的前后关系，最适合零基础单人。④联机层面，这个方案让朝向由瞄准角推导，只需同步 16 位角度和 1 字节状态枚举，带宽和一致性都最简单。⑤真正的风险不在方案，而在 48 密度下人物现成素材极少、要自己做：建议人物走 PixelLab 出 3 面底稿，自己清理（或委托 1 套），僵尸用同一身体改色改姿势，皮肤靠换色而不是重画。不建议：8 方向身体、自由缩放镜头、canvas_items 模式下的高分辨率旋转、把 16px 素材放大混用。",
+  "confidence": "中高：像素规格与 WinLu 匹配、整数缩放算术、Gungeon/NT/CrossCode 的方向数都有一手或逆向数据支撑（高）；960×540 与 640×360 的最终取舍取决于实际地图尺度和可读性测试，帧工时属于经验估算（中）。",
+  "win_rate_impact": "估计：选对规格本身不会直接提高成功率，但能避免两类大损失：①避免像素密度混杂、asset flip 观感拖累商店页转化，估计可避免 10–20% 的愿望单转化损失；②避免中途换网格造成 100–300 小时返工。3 面方案相较 8 方向可节省约 40% 的人物美术工时，按单人 2–3 年开发周期计，相当于提前 1–2 个月进入可玩测试，对按时上线的概率是小幅正向影响（估计 +3～+5 个百分点，主观估计）。",
+  "sources": [
+    {
+      "标题": "Winlu Spaceship Tileset（商品页：48px、$20、授权、更新日志）",
+      "URL": "https://winlu.itch.io/spaceship-tileset",
+      "日期": "v1.0 2024-02-06，核对 2026-11-26",
+      "类型": "一手（素材作者官方页）"
+    },
+    {
+      "标题": "WinLu 作者主页（23 个包，均无人物）",
+      "URL": "https://winlu.itch.io/",
+      "日期": "核对 2026-11-26",
+      "类型": "一手"
+    },
+    {
+      "标题": "Godot 4.7 文档：Multiple resolutions（viewport 模式、integer 缩放、640×360 推荐）",
+      "URL": "https://docs.godotengine.org/en/stable/tutorials/rendering/multiple_resolutions.html",
+      "日期": "4.7 版文档，核对 2026-11-26",
+      "类型": "一手（官方文档）"
+    },
+    {
+      "标题": "Enter the Gungeon Steam 论坛：开发者 Rubel 解释 480×270 原生分辨率与像素完美缩放",
+      "URL": "https://steamcommunity.com/app/311690/discussions/1/371919771751798558",
+      "日期": "2016-04-18",
+      "类型": "一手（开发者自述）"
+    },
+    {
+      "标题": "Pluto the Cat：Enter the Gungeon 角色 mod 设计规格（动画清单、24×26 画布、镜像、手、运行时描边）",
+      "URL": "https://github.com/bogdanovicii/pluto-the-cat/blob/HEAD/docs/superpowers/specs/2026-09-13-pluto-the-cat-design.md",
+      "日期": "2026-09-13",
+      "类型": "第三方（mod 作者依据游戏文件整理）"
+    },
+    {
+      "标题": "ETG Modding Guide：Perpendicularity & Height Off Ground（游戏在 3D 空间渲染以实现遮挡排序）",
+      "URL": "https://mtgmodders.gitbook.io/etg-modding-guide/sprites/perpendicularity-and-height-off-ground",
+      "日期": "核对 2026-11-26",
+      "类型": "社区 mod 文档"
+    },
+    {
+      "标题": "Nuclear Throne Steam 论坛：整个游戏以 320×240 渲染后放大",
+      "URL": "https://steamcommunity.com/app/242680/discussions/0/616198900652624039",
+      "日期": "核对 2026-11-26",
+      "类型": "一手（开发者回复）"
+    },
+    {
+      "标题": "nt-recreated（Nuclear Throne 社区复刻 GML：right 镜像、gunangle 旋转、枪 z 序、wkick 后坐）",
+      "URL": "https://github.com/toarch7/nt-recreated-public",
+      "日期": "核对 2026-11-26",
+      "类型": "社区复刻代码"
+    },
+    {
+      "标题": "CCDirectLink crosscode-re-docs：animation-sheet 格式（dirs、flipX、tileOffsets）",
+      "URL": "https://github.com/CCDirectLink/crosscode-re-docs/blob/master/animation-sheet.md",
+      "日期": "核对 2026-11-26",
+      "类型": "社区逆向文档"
+    },
+    {
+      "标题": "CrossCode 皮肤 mod 模板（Lea 32×32、dirs=8、flipX=[0,0,0,0,0,1,1,1]）",
+      "URL": "https://github.com/dmitmel/crosscode-skin-mod-template",
+      "日期": "核对 2026-11-26",
+      "类型": "社区 mod（基于游戏数据格式）"
+    },
+    {
+      "标题": "CC-Stylish-Lea 皮肤 mod（91 个玩家动画、54 个 8 方向）",
+      "URL": "https://github.com/FlirtyCrow/CC-Stylish-Lea",
+      "日期": "核对 2026-11-26",
+      "类型": "社区 mod"
+    },
+    {
+      "标题": "PCGamingWiki：CrossCode（原生 568×320、整数缩放选项）",
+      "URL": "https://www.pcgamingwiki.com/wiki/CrossCode",
+      "日期": "核对 2026-11-26（经搜索摘要获取）",
+      "类型": "社区维基"
+    },
+    {
+      "标题": "Steam 硬件与软件调查（2026 年 10 月，主显示器分辨率）",
+      "URL": "https://store.steampowered.com/hwsurvey/Steam-Hardware-Software-Survey-Welcome-to-Steam",
+      "日期": "2026-10",
+      "类型": "一手（Valve 数据平台）"
+    },
+    {
+      "标题": "iXBT：2026 年 9 月 Steam 调查 1080p 47.91%、1440p 27.04%",
+      "URL": "https://ixbt.games/en/news/2026/10/31/bolsinstvo-pk-geimerov-v-steam-igraiut-v-1080p-valve-predstavila-srednestatisticeskii-pk-v-sentiabre-2026-goda.html",
+      "日期": "2026-10-31",
+      "类型": "媒体转述"
+    },
+    {
+      "标题": "itch.io 素材标签页（tag-16x16 / tag-32x32 / tag-48x48 等计数）",
+      "URL": "https://itch.io/game-assets/tag-48x48",
+      "日期": "抓取 2026-11-26",
+      "类型": "一手（平台数据，本次直接抓取）"
+    },
+    {
+      "标题": "LimeZu Modern Interiors（16/32/48 三档、授权、评论区放大补缺讨论）",
+      "URL": "https://limezu.itch.io/moderninteriors",
+      "日期": "核对 2026-11-26",
+      "类型": "一手（素材作者页）+用户评论"
+    },
+    {
+      "标题": "itch 评论：Their Eyes 开发者谈 320×180 原生旋转步枪与 Gungeon 枪械（推测）",
+      "URL": "https://itch.io/post/4162405",
+      "日期": "核对 2026-11-26",
+      "类型": "开发者自述（关于 Gungeon 的部分为推测）"
+    },
+    {
+      "标题": "itch 评论：0x72 谈像素武器旋转与 Nuclear Throne 类似做法",
+      "URL": "https://itch.io/post/4162868",
+      "日期": "核对 2026-11-26",
+      "类型": "素材作者自述"
+    },
+    {
+      "标题": "Godot 论坛：Keep pixel grid when rotating sprite?（viewport 与 canvas_items 旋转取舍）",
+      "URL": "https://forum.godotengine.org/t/keep-pixel-grid-when-rotating-sprite/95401",
+      "日期": "核对 2026-11-26",
+      "类型": "社区讨论"
+    },
+    {
+      "标题": "godotshaders：Adjustable Strength (Sharp) Linear Interpolation",
+      "URL": "https://godotshaders.com/shader/adjustable-strength-sharp-linear-interpolation/",
+      "日期": "核对 2026-11-26",
+      "类型": "社区着色器"
+    },
+    {
+      "标题": "SpriteRot（批量像素旋转工具）",
+      "URL": "https://github.com/samdze/spriterot",
+      "日期": "核对 2026-11-26",
+      "类型": "开源工具"
+    },
+    {
+      "标题": "PixelLab API 价格（48×48 4 方向与 8 方向人物）",
+      "URL": "https://pixellab.ai/pixellab-api",
+      "日期": "核对 2026-11-26（价格日期不详）",
+      "类型": "一手（厂商页面，经搜索摘要获取）"
+    },
+    {
+      "标题": "QuakeForge msg_ucmd.c（MSG_WriteAngle16，16 位角度网络编码先例）",
+      "URL": "https://grok.dragonflybsd.org/source/xref/dports/games/quakeforge/quakeforge-0.7.2/libs/qw/msg_ucmd.c?a=true",
+      "日期": "核对 2026-11-26",
+      "类型": "开源引擎源码"
+    },
+    {
+      "标题": "Godot 4 MultiplayerSynchronizer 类参考（replication_interval、delta_interval）",
+      "URL": "https://docs.godotengine.org/en/stable/classes/class_multiplayersynchronizer.html",
+      "日期": "核对 2026-11-26",
+      "类型": "一手（官方文档）"
+    },
+    {
+      "标题": "Steam 商店：Enter the Gungeon / Nuclear Throne / CrossCode（appdetails 评论数）",
+      "URL": "https://store.steampowered.com/app/311690/",
+      "日期": "抓取 2026-11-26",
+      "类型": "一手（平台数据）"
+    }
+  ],
+  "uncertain": [
+    "license_terms",
+    "tools",
+    "cost_time_estimate",
+    "network_sync_impact",
+    "key_findings",
+    "win_rate_impact"
+  ]
+}

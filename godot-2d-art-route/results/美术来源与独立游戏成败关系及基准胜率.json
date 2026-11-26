@@ -1,0 +1,421 @@
+{
+  "core_question": "美术是自制还是外购，是否显著决定独立游戏（尤其单人开发的 10–16 人联机 PvP）成败？基准胜率是多少，美术在其中占多大权重？",
+  "one_line_conclusion": "决定成败的是“画面是否统一、好看、在胶囊图和前 4 张截图里一眼读懂”，而不是“美术是不是自己画的”；对零美术基础的你，外购统一素材包+二次加工+花钱请人画胶囊图是胜率更高的路线，而真正压低胜率的头号因素是 10–16 人 PvP 的冷启动，而不是美术来源。",
+  "key_findings": [
+    "基准胜率极低：VG Insights 数据（Chris Zukowski 统计，2026-01-04 采样）显示 2025 年 Steam 发行 20,282 款游戏，仅 608 款（2.99%）达到 1,000 条评论；2022/2023/2024 分别为 2.74%/2.56%/2.44%。Zukowski 认为 1,000 评论大致对应 15 万美元以上流水。",
+    "长尾极长：SteamDB 年末数据显示 2025 年发行游戏中约 48.7%–48.8% 评论少于 10 条（2024 年为 43.56%），约 11.5% 零评论；500 条以上约 6.2%（2024 年为 7.2%）；评论数中位数约 10 条，终身毛收入中位数约 1,100–3,500 美元。",
+    "像素风并不天然吃亏也不天然占优：OP Game Marketing 用 Gamalytic 统计 2023-08 至 2025-08 带 Pixel Graphics 标签的 6,422 款游戏，343 款（约 5%）达到 500 评论，与全站 500+ 的约 6% 同量级；且作者明确指出“顶级像素游戏美术都很出色”这一印象在硬数据里并没有体现出来；科幻、中世纪、恐怖题材在像素游戏里表现偏弱（对本项目的科幻题材是轻度不利信号）。",
+    "多人射击作为类型的胜率并不低于平均：2023 年 363 款 Multiplayer Shooter 中 20 款（5.51%）达到 1,000 评论；2025 年该类型有 21 款达到 1,000 评论。但该口径包含有团队/有预算的中型作品，不能直接套到单人开发者身上；Zukowski 同时提醒多人射击即便成为热门也常常很快“死服”。",
+    "多人联机冷启动是独立开发的头号死因：BattleBit Remastered 三人团队用约 4 年时间、每次 20–30 人的周末限时测试，才把同时在线做到 100 人，最终 80 万愿望单、峰值 87,323 人在线；开发者原话是“你在做一个只有别人也在玩时才成立的产品”，并直言“如果你打算做多人游戏，别做”。",
+    "冷启动失败案例：Among Us 2018 年上线后 Steam 同时在线仅个位数到几十人，团队 2019 年初几乎放弃，2020 年才爆发（现 Steam 推荐数约 66.5 万）；Decksplash 免费周约 3.6 万人试玩，但峰值在线仅 464、平均 73，随即停止开发；Wheel Make It 有 1.1 万愿望单却首发峰值只有 15 人在线；Spectre Divide 有团队、有投资，上线一月峰值不足 3,000 人后关服。",
+    "胶囊图的影响真实且幅度可以很大：Imagine Earth 只换了一张胶囊图，日销从 0–3 份跳到 40–60 份并保持（约 20 倍），开发者称同期没有其它改动；Kingdom Workshop 改标签+胶囊图后愿望单从约 5 个/天升到约 20 个/天。以上均为开发者自述的单例，没有对照组。",
+    "CTR 本身不是好指标：Zukowski 对 100+ 款游戏非促销周的统计发现，CTR 与周愿望单数“几乎没有相关”，反而有轻微负相关（曝光大的游戏 CTR 被稀释），真正与愿望单强相关的是曝光量和页面访问量；未发售游戏周愿望单中位数仅 23 个（约 3–4 个/天）。他的漏斗案例里，CTR 9.6% 对 6.7%、访问→愿望单 4.7% 对 2.7%，叠加后愿望单差约 3 倍。",
+    "外购素材本身不是失败原因，“看起来像素材翻炒”才是：Phasmophobia（单人起步，Unity，社区整理出大量 Asset Store 来源，Steam 推荐数约 68.8 万）、House Flipper（大量商店素材，约 9.3 万）、Getting Over It（Bennett Foddy 自称“可以合理地被称为 asset flip”，约 7.6 万）、PUBG 早期大量使用 Unreal 商店素材，都取得巨大成功；反例是 Pax Dei 首发即被讥讽为 UE 预制件拼装、首发评价“多半差评”，Fntastic 新作被开发者逐条列出所用素材后口碑崩塌。",
+    "自制美术成功作的共同点是“时间成本巨大”或“风格极简但统一”：Stardew Valley（作者自学美术，约 4 年以上）、CrossCode（本项目对标，Radical Fish 团队约 7 年，Steam 推荐数约 1.65 万）、Brotato（Godot，单人开发者极简“程序员美术”，推荐数约 11.5 万）。说明自制美术成功是“统一且有辨识度”而非“精美”，且这些作品的玩法极强。",
+    "视觉竞争力是门槛而非加分项：GameDiscoverCo 的 Simon Carless 在“游戏吸引力五宗罪”中把“看起来缺乏视觉竞争力”列为第 4 宗罪，要求 UI、动画、美术达到“最低质量线”，玩家“会先看到它动起来的样子，远早于玩到它”；同时把“付费在线多人”列为限制受众的品类障碍（第 3 宗罪）。",
+    "AI 美术已普遍但仍有口碑风险：Totally Human（Ichiro Lambe）统计 2025 年约 1/5 的新发 Steam 游戏披露使用生成式 AI，全库约 7,818 款（约 7%）；Reddit 用户统计 2026 年 10 月新发游戏披露率达 49.9%。同时存在被误指控用 AI 而遭差评的案例（Shrine's Legacy），Supermarket Simulator 也曾被质疑宣传图用 AI、地图为外购素材，但仍达到约 8 万推荐数。"
+  ],
+  "cases": [
+    {
+      "名称": "Phasmophobia",
+      "链接": "https://store.steampowered.com/app/739630/",
+      "Steam评论数": "约 688,278（appdetails recommendations 字段，抓取日期 2026-11-26）",
+      "引擎": "Unity",
+      "玩法贴近度": "中（4 人联机合作恐怖，非 PvP）",
+      "美术来源占比": "外购为主+自制（地图/道具大量来自 Unity Asset Store）",
+      "素材来源证据": "社区整理的素材清单、HuggingFace 数据集标注地图来自 Asset Store 住宅包、Unity 论坛被反复举为“用可识别素材也成功”的例子",
+      "证据强度": "中"
+    },
+    {
+      "名称": "House Flipper",
+      "链接": "https://store.steampowered.com/app/613100/",
+      "Steam评论数": "约 93,020（2026-11-26）",
+      "引擎": "Unity",
+      "玩法贴近度": "低",
+      "美术来源占比": "外购为主",
+      "素材来源证据": "Unity 论坛普遍认知“主要由商店素材构成，但玩法足够独特”",
+      "证据强度": "弱"
+    },
+    {
+      "名称": "Getting Over It with Bennett Foddy",
+      "链接": "https://store.steampowered.com/app/240720/",
+      "Steam评论数": "约 75,843（2026-11-26）",
+      "引擎": "Unity",
+      "玩法贴近度": "低",
+      "美术来源占比": "外购为主+自制核心角色",
+      "素材来源证据": "开发者本人公开称自己的游戏“可以合理地被称为 asset flip”（GamesBeat/Wikipedia 引述）",
+      "证据强度": "强"
+    },
+    {
+      "名称": "PUBG: BATTLEGROUNDS",
+      "链接": "https://store.steampowered.com/app/578080/",
+      "Steam评论数": "约 1,770,011（2026-11-26）",
+      "引擎": "Unreal",
+      "玩法贴近度": "中（大规模 PvP 射击，但非独立/非 2D）",
+      "美术来源占比": "早期大量外购商店素材，后期自制替换",
+      "素材来源证据": "Kotaku《No, PUBG Is Not An Asset Flip》报道其早期使用 Unreal 商店素材",
+      "证据强度": "中"
+    },
+    {
+      "名称": "Supermarket Simulator",
+      "链接": "https://store.steampowered.com/app/2670630/",
+      "Steam评论数": "约 80,279（2026-11-26）",
+      "引擎": "Unity",
+      "玩法贴近度": "低",
+      "美术来源占比": "外购+自制（被质疑地图来自 Fab 素材、宣传图疑似 AI）",
+      "素材来源证据": "仅 Steam 社区玩家指控，开发者未确认",
+      "证据强度": "弱"
+    },
+    {
+      "名称": "BattleBit Remastered",
+      "链接": "https://store.steampowered.com/app/671860/",
+      "Steam评论数": "约 127,717（2026-11-26）",
+      "引擎": "Unity",
+      "玩法贴近度": "高（低成本大规模 PvP 射击、小团队）",
+      "美术来源占比": "自制低多边形（未找到外购证据）",
+      "素材来源证据": "Wikipedia 列三名开发者；未找到 Asset Store 使用证据",
+      "证据强度": "弱"
+    },
+    {
+      "名称": "Among Us",
+      "链接": "https://store.steampowered.com/app/945360/",
+      "Steam评论数": "约 665,006（2026-11-26）",
+      "引擎": "Unity",
+      "玩法贴近度": "高（2D、多人 PvP 社交推理、身份/感染式对抗、小团队）",
+      "美术来源占比": "自制（团队美术 Marcus Bromander）",
+      "素材来源证据": "Innersloth 团队成员访谈；2018 年在线仅几十人、2019 年几乎放弃",
+      "证据强度": "强"
+    },
+    {
+      "名称": "Brotato",
+      "链接": "https://store.steampowered.com/app/1942280/",
+      "Steam评论数": "约 115,443（2026-11-26）",
+      "引擎": "Godot",
+      "玩法贴近度": "中（2D 俯视射击，单人为主）",
+      "美术来源占比": "自制（单人开发者极简风格）",
+      "素材来源证据": "Wikipedia 列 Thomas Gervraud 为开发者；美术是否全部自绘未找到一手确认",
+      "证据强度": "弱"
+    },
+    {
+      "名称": "CrossCode",
+      "链接": "https://store.steampowered.com/app/368340/",
+      "Steam评论数": "约 16,547（2026-11-26）",
+      "引擎": "自研 HTML5（ImpactJS 改）",
+      "玩法贴近度": "中（本项目美术对标，3/4 斜俯视像素，单人）",
+      "美术来源占比": "自制（团队专职像素美术）",
+      "素材来源证据": "Radical Fish Games 官方开发日志",
+      "证据强度": "中"
+    },
+    {
+      "名称": "Stardew Valley",
+      "链接": "https://store.steampowered.com/app/413150/",
+      "Steam评论数": "约 907,599（2026-11-26）",
+      "引擎": "XNA/MonoGame",
+      "玩法贴近度": "低",
+      "美术来源占比": "自制（作者自学像素美术）",
+      "素材来源证据": "作者公开自述长期自学并多次重画",
+      "证据强度": "强"
+    },
+    {
+      "名称": "Project Winter",
+      "链接": "https://store.steampowered.com/app/774861/",
+      "Steam评论数": "约 13,667（2026-11-26）",
+      "引擎": "Unity",
+      "玩法贴近度": "高（8 人联机生存+叛徒 PvP）",
+      "美术来源占比": "自制（工作室）",
+      "素材来源证据": "商店页开发商为 Other Ocean Interactive",
+      "证据强度": "弱"
+    },
+    {
+      "名称": "Decksplash",
+      "链接": "不适用（已停止开发）",
+      "Steam评论数": "[不确定]（免费周约 3.6 万人试玩，峰值在线 464，平均 73）",
+      "引擎": "[不确定]",
+      "玩法贴近度": "中（多人 PvP 冷启动失败典型）",
+      "美术来源占比": "自制",
+      "素材来源证据": "PCGamesN 报道",
+      "证据强度": "中"
+    }
+  ],
+  "data_points": [
+    "2025 年 Steam 发行 20,282 款，608 款达到 1,000 评论 = 2.99%（Zukowski / VG Insights，2026-01-04 采样）",
+    "2024 年 445/18,239 = 2.44%；2023 年 354/13,834 = 2.56%；2022 年 337/12,304 = 2.74%（同上）",
+    "2025 年发行游戏评论 <10 条约 48.7%，0 评论约 11.5%，10–499 约 45%，500+ 约 6.2%（SteamDB 2025 年末，经 Steam Page Analyzer/80.lv 汇总，分桶为近似值）",
+    "评论 >300 条的比例：未找到直接统计，按 500+ 约 6.2%、1,000+ 约 3% 内插估计约 8%–10% [不确定，本人估算]",
+    "评论数→销量换算：约 30–35 份/条评论（WeLoveIt/VaporLens 模型取 35），即 1,000 评论约 3 万份",
+    "像素风 2023-08~2025-08：6,422 款中 343 款达 500 评论 ≈ 5%；自发行中位收入 26.07 万美元 vs 外部发行 42.66 万美元（仅统计成功作，Gamalytic 估算）",
+    "Multiplayer Shooter 2023 年：20/363 = 5.51% 达 1,000 评论（Zukowski）",
+    "Open World Survival Craft 2025 年胜率 20.8%（15/72），为最高；Puzzle 0.34%、2D Platformer 0.18%（Zukowski 2025 年度统计）",
+    "未发售游戏周愿望单中位数 23 个（Zukowski，100+ 款样本）；年流水 25–100 万美元的游戏未发售期周愿望单约 100–700",
+    "GameDiscoverCo：发售时 >2.5 万愿望单的游戏，首周销量中位约为愿望单的 0.15 倍；售价 >10 美元降至约 0.10 倍",
+    "胶囊图 CTR：第三方经验分档 <2% 差、2–4% 一般、4–7% 好、>7% 优秀（Steam Page Analyzer，样本与方法未公开）；2020 年 Steam 夏季节 CTR 平均 0.61%、中位 0.35%",
+    "Imagine Earth 换胶囊图：日销 0–3 → 40–60 份（约 20 倍，开发者自述单例）；Kingdom Workshop：愿望单 5/天 → 20/天",
+    "专业胶囊图预算：Zukowski 建议 500–1,000 美元",
+    "BattleBit：4 年把测试同时在线做到 100 人；发售前 80 万愿望单，峰值 87,323 在线，两周 180 万份",
+    "2025 年新发 Steam 游戏约 1/5 披露生成式 AI（Totally Human）；2026 年 10 月披露率 49.9%（Reddit 用户统计）",
+    "WinLu Spaceship Tileset：itch.io 原价 25 美元、促销 20 美元，评分 4.7/5 但仅 13 个评分（2026-11-26 抓取）→ 曝光度低、被玩家“认出来”的风险低"
+  ],
+  "independent_verification": "1,000 评论胜率（约 3%）有 VG Insights 原始数据 + GamesRadar/PC Gamer/80.lv 等多家转载，且与 SteamDB 的 500+、<10 分布方向一致，可信度高；评论分桶为 SteamDB 不同时点快照，总数在 18,015–19,112 间浮动，属近似值。像素风 5% 胜率仅来自单一营销博客（基于 Gamalytic 估算），中等可信。胶囊图换图案例（Imagine Earth、Kingdom Workshop）均为开发者自述、经 Zukowski 转述，无对照实验，属单一来源；CTR 分档来自 Steam Page Analyzer 厂商博客，方法不透明，低可信。多人冷启动失败率没有任何系统性统计，只有案例堆叠（BattleBit、Among Us、Decksplash、Spectre Divide 等，分别有一手或多家媒体报道）。外购素材成功作中 Getting Over It 有开发者本人一手表态（强），Phasmophobia、House Flipper 主要靠社区整理，PUBG 有 Kotaku 报道；“自制美术与成败显著正相关”这一命题没有找到任何支持它的定量研究，反向证据（像素风数据里“好美术”与成绩无明显关系）也只来自单一来源。",
+  "workflow_steps": [
+    "1. 先定判断标准：把“美术来源”从决策核心降级，改用三条可测指标——胶囊图在 184×69 小图下能否一眼读懂、前 4 张截图是否风格统一、动起来（GIF/预告片前 5 秒）是否达到同类最低质量线。",
+    "2. 场景底座锁定 WinLu Spaceship Tileset（48px，3/4 斜俯视），立即做一张“垂直切片截图”：1 个房间 + 2 个角色 + 1 个感染特效 + UI，用它检验角色与底座的像素密度、调色板和光照方向是否统一。",
+    "3. 对外购素材做“去识别化”二次加工：统一调色板（重映射到一套 32–48 色）、统一描边与高光方向、加自有的感染/污染贴花和灯光层，避免截图与素材商店预览图一模一样（规避 asset flip 观感）。",
+    "4. 人物和枪械用统一规则自制或 AI 辅助后人工修像素，严格遵守与底座相同的像素密度；不要混用多个画风不同的素材包。",
+    "5. 胶囊图单独外包：预算 500–1,000 美元找有成功胶囊作品的画师（非只看画功），胶囊图允许是插画而非游戏截图。",
+    "6. 尽早开 Steam 商店页（至少发售前 6–12 个月），用 Steamworks 流量报表与 UTM 链接追踪曝光、访问、愿望单；对照 Zukowski 基准：周愿望单长期 <40 视为“收入 1 万美元以下”区间的信号。",
+    "7. 冷启动验证优先于美术打磨：用 Steam Playtest 做定时周末测试（BattleBit 做法），记录能否稳定凑满一局 10–16 人；Bot 必须做到“只有 1 个真人也好玩”。",
+    "8. 设立止损门槛（本人建议，非行业标准）：发售前愿望单 <7,000 或定时测试长期凑不满一局真人，则把主模式改为“真人+Bot 混排/小房间 4–8 人/合作撤离”，而不是继续加美术投入。",
+    "9. 发售后 A/B 换胶囊图：在打折或 Next Fest 等流量高峰前后各跑一版，看访问与愿望单变化，而非只看 CTR。"
+  ],
+  "tools": [
+    {
+      "名称": "SteamDB",
+      "价格": "免费",
+      "用途": "查评论数、同时在线、标签、同类竞品基准",
+      "链接": "https://steamdb.info/",
+      "核对日期": "2026-11-26",
+      "Godot接入": "不适用（外部数据站）"
+    },
+    {
+      "名称": "VG Insights / Gamalytic",
+      "价格": "基础免费，高级功能订阅制（具体价格[不确定]）",
+      "用途": "估算竞品销量、收入、按标签统计胜率",
+      "链接": "https://vginsights.com/ ；https://gamalytic.com/",
+      "核对日期": "2026-11-26",
+      "Godot接入": "不适用"
+    },
+    {
+      "名称": "Steamworks 流量报表 + UTM 分析",
+      "价格": "免费（上架费 100 美元/款）",
+      "用途": "测量胶囊图曝光、CTR、页面访问、外部渠道转化",
+      "链接": "https://partner.steamgames.com/doc/marketing/traffic_reporting",
+      "核对日期": "2026-11-26",
+      "Godot接入": "不适用（后台工具）"
+    },
+    {
+      "名称": "Steam Playtest",
+      "价格": "免费",
+      "用途": "发售前招募测试玩家、验证能否凑满 10–16 人房间",
+      "链接": "https://partner.steamgames.com/doc/features/playtest",
+      "核对日期": "2026-11-26",
+      "Godot接入": "通过 GodotSteam 插件接入 Steam API（大厅/匹配/P2P）"
+    },
+    {
+      "名称": "GodotSteam",
+      "价格": "免费（MIT）",
+      "用途": "在 Godot 4.x 中调用 Steamworks（大厅、匹配、成就、统计）",
+      "链接": "https://godotsteam.com/",
+      "核对日期": "2026-11-26（是否已发布对应 Godot 4.7 的版本[不确定]）",
+      "Godot接入": "GDExtension 插件或预编译编辑器"
+    },
+    {
+      "名称": "Zukowski 的 howtomarketagame 博客 / GameDiscoverCo 通讯",
+      "价格": "博客免费；GameDiscoverCo Plus 付费",
+      "用途": "愿望单、胶囊图、类型胜率等营销基准",
+      "链接": "https://howtomarketagame.com/ ；https://newsletter.gamediscover.co/",
+      "核对日期": "2026-11-26",
+      "Godot接入": "不适用"
+    }
+  ],
+  "mature_practices": "①成功的外购素材作品（Phasmophobia、House Flipper、PUBG 早期）都靠“玩法独特+统一光照/后期处理”掩盖素材来源，并在成功后逐步把关键资产替换为自制；②BattleBit 的冷启动做法：小范围手工邀请玩家、只在周末定时开服保证满员、给主播提前权限、用 Steam Playtest 扩大测试；③营销侧普遍做法是胶囊图单独请专业画师（500–1,000 美元），并借用品类惯例让玩家一眼认出类型；④Zukowski 与 Carless 都建议首作避开竞技多人或先做合作模式，Among Us 的翻身靠的是韩国/巴西主播带来的真人基数；⑤Unity 社区共识：外购素材要做二次修改以融入统一风格，否则“玩家会一眼看出来”。",
+  "consistency_method": "本 item 只给判断层面的要求：外购底座与自制/AI 角色必须共享同一像素密度（48px 网格下角色约 32–48px 高）、同一调色板（建议从 WinLu 包中提取主色后锁定）、同一主光源方向（3/4 视角建议左上）、同一描边规则（全描边或无描边二选一）；所有素材混用前先过“同屏截图测试”。具体做法见其它 item。",
+  "animation_spec": "不适用",
+  "license_terms": "WinLu Spaceship Tileset（itch.io 页面，2026-11-26 抓取）：可用于商业项目、可编辑修改、署名非必需但欢迎、禁止再分发或转售素材本身。推论：素材打包进游戏客户端随 Steam 分发属于正常使用；但不应把原始 PNG 放进公开 Git 仓库（可能构成再分发）；页面未明确提及 AI 训练条款 [不确定]，不要把该素材喂给 AI 做风格训练/LoRA，除非先向作者书面确认。",
+  "cost_time_estimate": "美术路线对比（估算，假设单人、业余时间每周约 20 小时）：①外购底座（约 20–60 美元素材）+ AI 辅助自制角色+人工修像素 + 外包胶囊图（500–1,000 美元）：现金约 600–1,500 美元，美术工时约 300–600 小时；②全部自学自制到 CrossCode 级别：现金接近 0，但需 1–3 年美术学习+制作（Stardew Valley 作者约 4 年以上，CrossCode 团队约 7 年），对零基础单人不现实；③全部委托像素美术：按每帧/每格计价，16 人 PvP 所需角色+场景+特效估计 5,000–20,000 美元 [不确定]。冷启动测试（定时 Playtest、社群运营）工时约占开发期 15%–25%，不应被美术挤占。",
+  "fit_for_user": "适配结论：外购底座路线与你的条件高度匹配。理由：①零美术基础+单人，自制到对标 CrossCode 的水准需要以年计的美术投入，而数据没有显示“自制”本身带来胜率加成；②WinLu 包为 48px、3/4 斜俯视、科幻题材、作者标注适配 Godot，与你的 Y-Sorting 高楼场景直接对口，且仅 13 个评分、曝光低，被玩家认出是外购素材的风险小；③你能用 Claude/Antigravity 写工具链脚本（批量调色板重映射、切图、导入 TileSet），能弥补美术短板。不利点：①像素风数据里科幻题材偏弱；②更大的不利因素与美术无关——10–16 人 PvP 需要每个地区同时在线数百人才能在 1–2 分钟内凑满一局（估算），单人开发者的首作极少能做到，Bot 能否在“只有 1 个真人时也好玩”比美术更决定生死。",
+  "network_sync_impact": "不适用（本 item 讨论美术来源与胜率，不涉及同步细节；仅提示：冷启动阶段若依赖 Bot 填充，Bot 的移动与射击需与真人走同一套同步逻辑，否则测试数据失真）",
+  "risks_pitfalls": [
+    "把“自制美术”当作成功前提而投入大量时间学画，导致玩法与联机冷启动验证延期——这是最大的机会成本陷阱。",
+    "多个画风不同的素材包混用、未统一调色板与光照，截图一看就是拼凑，触发 asset flip 观感（Pax Dei、Fntastic 的口碑崩塌就是例子）。",
+    "胶囊图用游戏内截图凑合：Imagine Earth 案例说明一张差的胶囊图可以让好游戏销量低一个数量级。",
+    "只盯 CTR：Zukowski 数据显示 CTR 与愿望单几乎无关，应看曝光量、访问量与愿望单。",
+    "多人冷启动：愿望单不等于在线人数（Wheel Make It 1.1 万愿望单首发峰值 15 人）；Steam 在线人数会形成“死服”舆论自我实现（Spectre Divide）。",
+    "Bot 填充不能替代真人基数：独立多人游戏复盘中有“Bot 几乎帮不上忙”的结论，Bot 只能延缓而不能解决冷启动。",
+    "AI 美术的披露与口碑：大量使用 AI 生成素材需在 Steam 填写 AI 披露；存在被误判/指控 AI 而遭差评的风险。",
+    "素材许可：把原始素材文件提交到公开仓库可能违反“禁止再分发”条款。"
+  ],
+  "reversibility_cost": "美术来源可逆性较高：只要场景用 TileSet/TileMapLayer、角色用统一尺寸的 SpriteFrames，中途把外购底座替换为委托或自制美术主要是“换图”而非“改代码”，估计返工 10%–30% 的美术工时、几乎不动玩法代码；不可逆的是像素密度（48px 网格）和视角（3/4 斜俯视）——中途改网格尺寸会牵动碰撞、Y-Sorting、地图全部重铺，返工可达数百小时。因此要尽早锁定网格与视角，美术来源可以后换（PUBG、Phasmophobia 都是先外购后逐步替换）。",
+  "ai_can_do": "①Claude（网页版，Opus/Sonnet 系列）/ Antigravity 中的模型：可靠完成调色板提取与重映射脚本、TileSet 批量切图与导入脚本、商店页文案与标签策略、对照基准数据做愿望单/在线人数估算表；②图像模型（如 Gemini 系图像生成，在 Antigravity 内可用）：可产出胶囊图草图、概念参考、配色方案，但直接产出 48px 精确像素图仍不稳定，需要人工逐像素修正；③AI 无法替你判断“这张截图是否达到同类最低质量线”，只能辅助比较。",
+  "human_must_do": "①最终美术统一性把关（同屏截图测试、调色板锁定）；②胶囊图的最终定稿与外包画师沟通；③冷启动验证：组织定时 Playtest、维护 Discord 社群、邀请主播；④止损/转向决策（何时把 16 人 PvP 改为混排或合作）；⑤素材许可核对与 AI 披露填写；⑥对 AI 生成像素图的逐像素修正与动画节奏判断。",
+  "judgment": "明确立场：“自制美术与独立游戏成败显著正相关”这一命题不成立；“美术非常关乎成败”只在“视觉质量与统一性”这个意义上成立，在“美术来源”这个意义上不成立。推导：①没有任何定量研究显示自制美术提高胜率，反而有大量外购素材的超级成功作（Phasmophobia、Getting Over It、House Flipper、PUBG 早期）；②真正有证据的是“视觉门槛效应”——胶囊图和截图决定玩家是否点进来，一张图的差别可带来数量级的销量差异（单例证据），Carless 把“视觉缺乏竞争力”列为五宗罪之一；③像素风大样本数据里，“好美术”与成绩之间的关系在硬数据中并不明显，说明过了门槛之后，玩法、品类与营销的权重更大；④对本项目，最大的胜率杀手是 10–16 人 PvP 的冷启动，其影响远大于美术来源。建议：坚定走“外购统一底座 + AI 辅助自制角色并人工修正 + 外包专业胶囊图”的路线；美术目标设为“达到同类最低质量线且风格统一”，不追求 CrossCode 级别；把节省下来的时间投入 Bot 质量和定时 Playtest，并预设把主模式降为“真人+Bot 混排 / 小房间 / 合作撤离”的转向方案。",
+  "confidence": "中：基准胜率（约 3% 达 1,000 评论、约 6% 达 500 评论）数据多源一致，高可信；“美术来源不决定成败、视觉门槛决定点击”有多个案例与业内专家一致支持，但缺乏对照实验；多人冷启动失败率没有系统统计，只有案例，故整体为中。",
+  "win_rate_impact": "以下均为估计：①基准：2025 年 Steam 新游达 1,000 评论约 3%、达 500 评论约 6%；单人开发者的首款 10–16 人 PvP 联机作，考虑冷启动后达 1,000 评论的概率估计约 0.5%–2%，达 100 评论约 10%–20%。②美术来源本身（自制 vs 外购）对胜率的直接影响估计接近 0；③“达到视觉门槛且统一”相对“明显拼凑/低于门槛”，估计可把愿望单与销量提高 2–5 倍（相对值），对应达 1,000 评论的绝对概率提升约 +0.5–1.5 个百分点；④对零美术基础的你，选择自制路线反而因工期拉长与质量不达标，估计使终局成功概率相对下降 30%–60%；⑤把主模式从“纯真人 16 人 PvP”改为“真人+Bot 混排或小房间”，对胜率的正向影响估计大于任何美术决策。",
+  "sources": [
+    {
+      "标题": "what the hell happened in 2025（Chris Zukowski，一手数据分析，VG Insights 数据）",
+      "URL": "https://howtomarketagame.com/2026/01/27/what-the-hell-happened-in-2025/",
+      "日期": "2026-01-27",
+      "类型": "数据平台/行业专家一手分析"
+    },
+    {
+      "标题": "A terrifying 20,282 games were released on Steam in 2025 and just 608 managed to get 1,000 reviews（GamesRadar 转载）",
+      "URL": "https://www.gamesradar.com/games/a-terrifying-20-282-games-were-released-on-steam-in-2025-and-just-608-managed-to-get-1-000-reviews-expert-finds-we-might-be-in-a-bit-of-an-indie-golden-age",
+      "日期": "2026-01",
+      "类型": "媒体转载"
+    },
+    {
+      "标题": "More than 19,000 games launched on Steam this year—but almost half have fewer than 10 reviews（PC Gamer，SteamDB 数据）",
+      "URL": "https://www.pcgamer.com/gaming-industry/more-than-19-000-games-launched-on-steam-this-year-but-almost-half-have-fewer-than-10-reviews",
+      "日期": "2025-12",
+      "类型": "媒体（数据平台 SteamDB）"
+    },
+    {
+      "标题": "Steam earned $16B in 2025 but nearly half of 19,000 games got under 10 reviews（80.lv）",
+      "URL": "https://80.lv/articles/steam-earned-usd16b-in-2025-but-nearly-half-of-19-000-games-got-under-10-reviews",
+      "日期": "2025-12",
+      "类型": "媒体（SteamDB 数据）"
+    },
+    {
+      "标题": "The median Steam game in 2026（Steam Page Analyzer，评论分桶与中位数汇总）",
+      "URL": "https://www.steampageanalyzer.com/blog/median-steam-game-2026",
+      "日期": "2026-09-04（2026-11-02 更新）",
+      "类型": "第三方厂商博客"
+    },
+    {
+      "标题": "What are the top selling indie games of 2023（Zukowski，含 Multiplayer Shooter 胜率）",
+      "URL": "https://howtomarketagame.com/2024/01/25/what-are-the-top-selling-indie-games-of-2023/",
+      "日期": "2024-01-25",
+      "类型": "行业专家一手分析"
+    },
+    {
+      "标题": "How to market a multiplayer, the Battlebit Remastered story（Zukowski 访谈开发者）",
+      "URL": "https://howtomarketagame.com/2023/07/03/how-to-market-a-multiplayer-the-battlebit-remastered-story/",
+      "日期": "2023-07-03",
+      "类型": "开发者自述"
+    },
+    {
+      "标题": "What is a normal click through rate or wishlist rate on Steam（Zukowski）",
+      "URL": "https://howtomarketagame.com/2022/09/14/what-is-a-normal-click-through-rate-or-wishlist-rate-on-steam/",
+      "日期": "2022-09-14",
+      "类型": "行业专家一手分析"
+    },
+    {
+      "标题": "How one new image increased sales by 20x（Zukowski，Imagine Earth 案例）",
+      "URL": "https://howtomarketagame.com/2020/04/13/how-one-new-image-increased-sales-by-20x/",
+      "日期": "2020-04-13",
+      "类型": "开发者自述（经转述）"
+    },
+    {
+      "标题": "How to increase your game's daily wishlist rate（Zukowski，Kingdom Workshop 案例）",
+      "URL": "https://howtomarketagame.com/2020/12/21/how-to-increase-your-games-daily-wishlist-rate/",
+      "日期": "2020-12-21",
+      "类型": "开发者自述（经转述）"
+    },
+    {
+      "标题": "The Five Deadly Sins Of Game Attractiveness（Simon Carless / GameDiscoverCo）",
+      "URL": "https://newsletter.gamediscover.co/p/the-five-deadly-sins-of-game-attractiveness",
+      "日期": "2020-04-10",
+      "类型": "行业专家"
+    },
+    {
+      "标题": "How three tiny social games inverted Steam interest curves（GameDiscoverCo）",
+      "URL": "https://newsletter.gamediscover.co/p/how-three-tiny-social-games-inverted",
+      "日期": "2024-10-18",
+      "类型": "行业专家（部分付费墙）"
+    },
+    {
+      "标题": "The state of Steam wishlist conversions（GameDiscoverCo）",
+      "URL": "https://newsletter.gamediscover.co/p/the-state-of-steam-wishlist-conversions",
+      "日期": "2025",
+      "类型": "数据平台/行业专家"
+    },
+    {
+      "标题": "So You're Making a Pixel Art Game?（OP Game Marketing，Gamalytic 数据）",
+      "URL": "https://opgamemarketing.substack.com/p/so-youre-making-a-pixel-art-game",
+      "日期": "2025-09-05",
+      "类型": "第三方分析（单一来源）"
+    },
+    {
+      "标题": "Steam CTR benchmarks（Steam Page Analyzer）",
+      "URL": "https://www.steampageanalyzer.com/blog/steam-ctr-benchmarks",
+      "日期": "2026-03-03",
+      "类型": "第三方厂商博客（方法未公开）"
+    },
+    {
+      "标题": "Steamworks 文档：流量报表",
+      "URL": "https://partner.steamgames.com/doc/marketing/traffic_reporting",
+      "日期": "核对于 2026-11-26",
+      "类型": "官方文档"
+    },
+    {
+      "标题": "Asset flip（Wikipedia，含 Valve 2017 下架 173 款、Bennett Foddy 表态）",
+      "URL": "https://en.wikipedia.org/wiki/Asset_flip",
+      "日期": "核对于 2026-11-26",
+      "类型": "百科汇总"
+    },
+    {
+      "标题": "In defense of asset flips on Steam（GamesBeat，引述 Bennett Foddy）",
+      "URL": "https://gamesbeat.com/in-defense-of-asset-flips-on-steam/",
+      "日期": "2017",
+      "类型": "媒体（含开发者一手表态）"
+    },
+    {
+      "标题": "No, PUBG is not an asset flip（Kotaku）",
+      "URL": "https://kotaku.com/no-pubg-is-not-an-asset-flip-1826935848",
+      "日期": "2018",
+      "类型": "媒体"
+    },
+    {
+      "标题": "Don't Buy Recognizable Asset Store Assets, It Will Be Seen As An Asset Flip（Unity 论坛讨论，Phasmophobia/House Flipper/Synty 例子）",
+      "URL": "https://discussions.unity.com/t/dont-buy-recognizable-asset-store-assets-it-will-be-seen-as-an-asset-flip/928444",
+      "日期": "2023",
+      "类型": "开发者社区"
+    },
+    {
+      "标题": "Fntastic's new game turned out to be an asset flip（80.lv）",
+      "URL": "https://80.lv/articles/fntastic-s-new-game-turned-out-to-be-an-asset-flip",
+      "日期": "2024",
+      "类型": "媒体"
+    },
+    {
+      "标题": "Innersloth nearly gave up on Among Us in 2019（NME）",
+      "URL": "https://www.nme.com/news/gaming-news/among-us-development-almost-ended-in-2019-3281040",
+      "日期": "2020",
+      "类型": "媒体（含开发者一手表态）"
+    },
+    {
+      "标题": "Decksplash didn't have 100,000 players last week, so now its developers are moving on（PCGamesN）",
+      "URL": "https://www.pcgamesn.com/decksplash/decksplash-free-weekend-players",
+      "日期": "2017",
+      "类型": "媒体"
+    },
+    {
+      "标题": "Failed FPS Spectre Divide could have succeeded \"in a parallel universe\" say devs（PCGamesN）",
+      "URL": "https://www.pcgamesn.com/spectre-divide/failure",
+      "日期": "2025",
+      "类型": "媒体（含开发者表态）"
+    },
+    {
+      "标题": "Indie game publisher blames Steam approval delay and AI slop after game peaks at just 15 players（PC Guide，Wheel Make It）",
+      "URL": "https://www.pcguide.com/news/indie-game-publisher-blames-steam-approval-delay-and-tidal-wave-of-ai-slop-after-game-peaks-at-just-15-players/",
+      "日期": "2025",
+      "类型": "媒体"
+    },
+    {
+      "标题": "1 in 5 Steam games released in 2025 use generative AI（Tom's Hardware，Totally Human 数据）",
+      "URL": "https://www.tomshardware.com/video-games/pc-gaming/1-in-5-steam-games-released-in-2025-use-generative-ai-up-nearly-700-percent-year-on-year-7-818-titles-disclose-genai-asset-usage-7-percent-of-entire-steam-library",
+      "日期": "2025",
+      "类型": "媒体（数据分析）"
+    },
+    {
+      "标题": "WinLu Spaceship Tileset（itch.io 商品页，许可条款与价格）",
+      "URL": "https://winlu.itch.io/spaceship-tileset",
+      "日期": "抓取于 2026-11-26",
+      "类型": "一手（素材作者）"
+    },
+    {
+      "标题": "Steam Store API appdetails（各案例推荐数）",
+      "URL": "https://store.steampowered.com/api/appdetails?appids=945360",
+      "日期": "抓取于 2026-11-26",
+      "类型": "官方数据接口"
+    }
+  ],
+  "uncertain": [
+    "cases",
+    "data_points",
+    "cost_time_estimate",
+    "win_rate_impact",
+    "tools",
+    "license_terms"
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "core_question": "「Carbon」是什么？它（或 Gemini）能不能从零端到端做出帖子里那套 Godot 4.7 Skeleton2D 五动作 Q 版刀客 Demo？这对 X4-Infection-Strike 的美术路线说明了什么？",
+  "one_line_conclusion": "Carbon 就是 Google 的 Gemini 4 Carbon：2026-11-10 正式上线，11-23 起 Antigravity 的 AI Pro（$19.99/月）也能用。这是一个写代码、跑 agent 的文本/多模态推理模型，本身不出图。帖子大概率是真的，但它证明的是 AI 能写出「代码驱动的程序化骨骼动画原型」，证明不了 AI 能做出可上架的像素风 3/4 俯视角色动画。你的项目可以拿 Carbon 写动画逻辑、做枪手旋转和后坐力，但不要因为这条帖子把画风改成 Q 版矢量骨骼。",
+  "key_findings": [
+    "身份已核实：『Carbon』是 Gemini 4 Carbon。2026-10-09 Business Insider 报道它还是 Google 内部检查点（通过内部编码环境 Jetski 测试），10-28 预览，11-10 Google 官方博客宣布上线：先开放给 AI Ultra 订阅者（Antigravity 桌面端/CLI/IDE 插件、Gemini App、搜索 AI Mode），AI Studio 付费 API 同步开放。2026-11-23（9to5Google）起 Antigravity 的 AI Pro 用户也能用。Gemini 4 Argon 和 3.8 Flash 将于 11-30 退出 Antigravity。",
+    "定位：官方说法是『我们最强的模型，前沿的网络安全能力与长程 agent 工作流』，比 Argon 花更多 token 做推理和验证，会跑『构建—验证』循环并检查渲染后的 UI。官方演示是用 /swarm 多 agent 做的 Three.js 开放世界 3D 鹈鹕游戏：3D 资产是子 agent 在 Blender 里建模的，参考图由 Omni 和 Nano Banana 生成。也就是说，出图靠的是别的模型。",
+    "Carbon 本身不生成图像：官方博客演示里的产品图明确是 Nano Banana 2.1 生成的。不过 Antigravity 的 agent 从 2025-11 起就能自己决定调用图像模型（Nano Banana / Pro / 2）生成资产。腾讯新闻（硅星人）的实测也写到，『15 秒艺术史动画』首版『直接调用生图能力拼接图片』，要求『只用代码』后画面才变得低配。所以帖子里的角色图有两种可能：一是 agent 调用 Nano Banana 生成整图或部件，二是 GDScript 用 Polygon2D 和 draw 函数直接画出矢量形状。截图里的『Q 版矢量感 + 骨骼网格合成预览』更像第二种，或者两种混用。",
+    "帖子技术上站得住：截图里出现的元素都是 Godot 内置能力，LLM 可以纯用代码搭出来。包括：Skeleton2D/Bone2D 层级、Polygon2D 网格加骨骼权重（官方的『骨骼网格』做法）、AnimationPlayer 关键帧或程序化动画、SkeletonModification2DJiggle 弹簧链（4.7 文档新增了逐关节重力、use_gravity、reset()）、InputMap 键位（A/D/Shift/J/H/B）、Engine.time_scale 倍速。这些都不需要外部工具。另外，Godot 4.7 版本号与现实相符，进一步说明截图不是凭空捏造的。",
+    "『端到端』要打折扣：帖子只给了成品截图，没有提示词、迭代次数、人工修改量和耗时，属于单一来源的自我展示，而且是挑过的最好结果。同类实测普遍说 Carbon『稳定但偏低配，美术与细节弱』（硅星人），『还凑合、速度特别慢』（LINUX DO，单个 SVG 动画要 9–16 分钟，Three.js 场景 27 分钟到 1 小时）。NodeSeek 有用户拿同一段 MG 动画提示词对比 Fable 5.2 和 Carbon，结论是『细节差距不大，审美差的有点多』。",
+    "最接近的复现案例是 B 站『盒子姬』2026-11-13 发布的《Godot 中 Gemini Carbon 能力实测》（约 1.3 万播放，标签 Godot/Carbon/AI 评测）。作者提到这次测试用掉了 Antigravity Ultra 周额度的 18%，视频标题的问题是『动画效果能否超越 Opus 5.5』。说明中文圈确实有人在测 Carbon 写 Godot 动画，但网页上拿不到它的具体结论。",
+    "图到骨骼一条龙的工具已经存在，但都不出 Godot 原生格式，也都不是像素风：Genielabs 的 spine-animation-ai（Claude 技能，799 星，PolyForm 非商用许可）流程是用 Gemini 把整图拆成部件图集，用 SIFT/RANSAC 定位部件，生成 Spine JSON，再由 Claude 按预设写 idle/walk/run/attack 等动画。God Mode AI 的 AI Spine Animation 输入单张全身图，自动拆头、躯干、四肢并绑定，导出 Spine 3.5–4.2，进 Godot 要靠 spine-godot，攻击类动画标注为实验性。",
+    "像素风 + Gemini 的真实案例是 GitHub 项目 artist2d（Godot + Gemini 像素资产管线）。它用 Godot Skeleton3D 人偶套上 KayKit 动画渲染姿势，让 Gemini 图像模型逐帧重绘，再锁 64 色调色板。结果是角色验收 FAIL，列出 6 个阻断问题（刀鞘重复、刀长不一致、眼睛表现弱、跑步 4 帧循环重复），飞船场景则 PASS。可见 2026 年末 AI 做『像素角色多帧一致性』仍然靠不住。",
+    "画风适配：帖子是 Q 版矢量 + 骨骼网格变形，侧视角，单方向，左右翻转。你的项目是 48px 像素、3/4 斜俯视、Y-Sort、对标 CrossCode。CrossCode 用的是逐帧像素精灵，不是骨骼。像素图一旋转或变形就会出锯齿和 mixel（像素尺寸不一致），一般要用 RotSprite 或高倍率绘制来缓解。俯视角还需要上/下/侧多套部件，单套侧视骨骼不够用。所以这种风格直接搬过来是不合适的。",
+    "能借鉴的部分：你计划的『3 面身体 + 360° 独立旋转手与枪』本质上就是一个轻量的 cutout 挂点结构（身体逐帧，手臂/枪做代码旋转）。Carbon 这类模型擅长的恰好是这一块，比如枪口朝向、后坐力回弹、手臂两骨 IK、受击震退偏移、弹簧挂件（背包带、天线）。这部分可以直接交给 Antigravity 的 Carbon 写。"
+  ],
+  "cases": [
+    {"名称": "Mr.梁 小红书帖子《Carbon好强！做Godot 2D骨骼动画稳了》（疾风少侠 Skeleton2D 五动作 Demo）", "链接": "未检索到公开可索引链接（小红书内容未被搜索引擎收录）", "评论数及抓取日期": "不适用（非 Steam 作品）；2026-11-26 检索", "引擎": "Godot 4.7（截图自述）", "玩法贴近度": "低（横版动作 Q 版刀客 vs 俯视射击）", "美术来源占比": "AI（代码绘制矢量形状，或 Nano Banana 出图后拆件）[不确定]", "证据及强度": "只有帖子截图这一份自述，过程不可见，证据强度：弱"},
+    {"名称": "B站 盒子姬《Godot 中 Gemini Carbon 能力实测》", "链接": "https://www.bilibili.com/video/BV1SgWi6yE7r/", "评论数及抓取日期": "约 1.3 万播放；2026-11-26 抓取", "引擎": "Godot", "玩法贴近度": "低", "美术来源占比": "AI", "证据及强度": "公开视频，附测试文件，作者提到用掉 Ultra 周额度 18%；具体结论未能读取，证据强度：中"},
+    {"名称": "硅星人《实测Gemini 4 Carbon》九项测试", "链接": "https://news.qq.com/rain/a/20261111A05W0X00", "评论数及抓取日期": "不适用；2026-11-26 抓取", "引擎": "Web/Three.js/SVG", "玩法贴近度": "低", "美术来源占比": "AI（部分测试调用生图）", "证据及强度": "媒体实测，结论『稳定但偏低配、美术细节弱』，证据强度：中"},
+    {"名称": "artist2d（Godot + Gemini 像素资产管线）", "链接": "https://github.com/itheamyvalgulious/artist2d", "评论数及抓取日期": "不适用；2026-11-26 抓取", "引擎": "Godot 4", "玩法贴近度": "中（俯视/像素角色与飞船场景）", "美术来源占比": "AI（3D 人偶姿势 + Gemini 重绘 + 程序化后处理）", "证据及强度": "开源仓库自带验收报告：角色 FAIL，场景 PASS，证据强度：强（失败作为反例）"},
+    {"名称": "spine-animation-ai（Claude 技能：Gemini 拆件 → Spine 绑定 → Claude 写动画）", "链接": "https://github.com/GenielabsOpenSource/spine-animation-ai", "评论数及抓取日期": "799 星；2026-11-26 抓取", "引擎": "Spine（经 spine-godot 进 Godot）", "玩法贴近度": "低", "美术来源占比": "外部输入图 + AI 拆件", "证据及强度": "开源代码，非商用许可，证据强度：中"},
+    {"名称": "Google 官方 Gemini 4 Carbon 鹈鹕开放世界游戏演示", "链接": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/", "评论数及抓取日期": "不适用；2026-11-26 抓取", "引擎": "Three.js + Blender", "玩法贴近度": "低", "美术来源占比": "AI（Omni/Nano Banana 出参考图，Blender 子 agent 建模）", "证据及强度": "厂商自选演示，无失败率，证据强度：弱到中"}
+  ],
+  "data_points": [
+    "上线时间：Gemini 4 Carbon 于 2026-11-10 正式可用（Google 博客）；2026-11-23 进入 Antigravity AI Pro（9to5Google）",
+    "订阅价格：AI Pro $19.99/月，AI Ultra $99.99/月（9to5Google 2026-11-23）",
+    "API 价格：截至 2026-11-30 为每百万输入/输出 token $2/$10，之后为 $4/$20；上下文 1M（Google 博客、Handy AI）",
+    "LMArena：Text Arena 第 1，WebDev 第 4（WebDev 分数 1769）（Handy AI 转述）",
+    "Artificial Analysis：幻觉率 Carbon 11%，Argon 4%（Handy AI 转述）；high 档在其 Intelligence Index 中排第 4/74，输出 2.05 亿 token（中位数约 7300 万），每个任务约 $7.76（OrcaRouter 转述）",
+    "生成耗时：SVG 动画 9–16 分钟，Three.js 场景 27 分钟到 1 小时（LINUX DO 用户实测）；3D 楼宇约 1 小时，15 秒动画首版约 28 分钟（硅星人）",
+    "额度消耗：盒子姬一次 Godot 测试用掉 Antigravity Ultra 周额度的 18%",
+    "God Mode AI 骨骼工具：每个角色 1 credit，$32/30 credits；建一个绑定要几分钟，每条动画渲染 5–25 秒",
+    "artist2d：角色验收 6 个阻断问题，最终 FAIL；场景 v5 验收 PASS"
+  ],
+  "independent_verification": "Carbon 的身份、上线时间、价格和档位有 Google 官方博客、Antigravity 官方 X 账号和 9to5Google 三方互相印证，可信度高。『Carbon 擅长 3D/游戏』主要来自 Google 自选演示，第三方实测（硅星人、LINUX DO、NodeSeek）都给出了『稳定但美术偏弱』的折扣评价。帖子本身只有截图这一个来源，没有公开过程或工程文件，『端到端生成角色并拆件』这一点无法独立核实。Godot 侧的能力点（Skeleton2D、Polygon2D 权重、Jiggle 弹簧链）都能在 4.7 官方文档中找到对应，可以确认技术上可行。",
+  "workflow_steps": [
+    "1. 在 Antigravity 中把模型选为 Gemini 4 Carbon（AI Pro 及以上），开一个空的 Godot 4.7 项目，并让 agent 能调用 Godot 命令行（headless 运行、截图）做构建—验证循环。",
+    "2. 复现帖子时，先限定『只用代码绘制』：要求 agent 用 Polygon2D 把角色拆成头、躯干、上下臂、上下腿、武器，再建 Skeleton2D/Bone2D 层级，设好 rest pose，写入 Polygon2D 的 bones/weights。",
+    "3. 让 agent 用 AnimationPlayer 写 idle/walk/run/attack/hurt 五个动作（或用 Tween 做程序化动画），加 SkeletonModification2DJiggle 弹簧链（发带、披风），绑定 InputMap 键位和倍速，并让它截图自检。",
+    "4. 换成图像部件版：让 agent 调用 Nano Banana 生成『部件拆分图集』（或者用 God Mode AI / spine-animation-ai 拆件），在 Godot 的 Polygon2D UV 编辑器里贴图，人工检查遮挡顺序和接缝。",
+    "5. 对照验收：在 48px 像素、3/4 俯视、Y-Sort 场景中放入角色，以 1080p 整数缩放查看，检查旋转锯齿、mixel、方向数是否够用、和 tileset 的风格是否冲突。",
+    "6. 针对本项目，推荐只吸收『代码驱动部分』：身体保持逐帧像素（3 面），把手臂和枪做成独立节点，由 Carbon 写朝向旋转（用预渲染角度或 RotSprite 着色器）、后坐力、受击震退、弹簧挂件，以及 AnimationTree 状态机。",
+    "7. 把动画状态枚举和量化后的瞄准角交给联机同步层，弹簧和抖动只在本地表现，不参与同步。"
+  ],
+  "tools": [
+    {"名称": "Gemini 4 Carbon（Google Antigravity）", "价格": "AI Pro $19.99/月（2026-11-23 起），Ultra $99.99/月；API $2/$10 每百万 token（11-30 后 $4/$20）", "用途": "写 GDScript、搭 Skeleton2D/AnimationPlayer、多 agent 构建—验证", "链接": "https://9to5google.com/2026/11/23/antigravity-gemini-4-carbon/", "核对日期": "2026-11-26", "Godot 接入": "agent 直接读写项目文件，用 Godot CLI 运行和截图"},
+    {"名称": "Nano Banana 系列（Gemini 图像模型，含 Pro / 2 / 2.1）", "价格": "包含在 Antigravity 和 Gemini 订阅内，API 另计", "用途": "生成角色整图或部件拆分图集、参考图", "链接": "https://blog.google/innovation-and-ai/technology/developers-tools/build-with-nano-banana-2/", "核对日期": "2026-11-26", "Godot 接入": "输出 PNG，手动或由 agent 切片后导入"},
+    {"名称": "Godot 4.7 内置 Skeleton2D / Bone2D / Polygon2D / SkeletonModification2DJiggle", "价格": "免费", "用途": "2D 骨骼、网格蒙皮、弹簧链", "链接": "https://docs.godotengine.org/en/4.7/classes/class_skeletonmodification2djiggle.html", "核对日期": "2026-11-26", "Godot 接入": "原生；Jiggle 类曾标注实验性"},
+    {"名称": "spine-animation-ai（Claude 技能）", "价格": "开源，PolyForm 非商用许可（商用需另购授权）", "用途": "Gemini 拆件 → Spine 绑定 → Claude 写预设动画", "链接": "https://github.com/GenielabsOpenSource/spine-animation-ai", "核对日期": "2026-11-26", "Godot 接入": "经 spine-godot 运行时（需 Spine 授权）"},
+    {"名称": "God Mode AI – AI Spine Animation", "价格": "$32/30 credits 或 $100/125 credits；新角色上传目前仅限邀请", "用途": "单图自动拆件、绑定、套预设动画", "链接": "https://www.godmodeai.co/ai-spine-animation", "核对日期": "2026-11-26", "Godot 接入": "导出 Spine JSON，用 spine-godot 导入"},
+    {"名称": "pinkcel（浏览器 2D 骨骼编辑器）", "价格": "免费", "用途": "手动绑定，导出原生 Godot .tscn（Skeleton2D/Bone2D/Polygon2D/AnimationPlayer）", "链接": "https://pinkcel.com/godot-2d-animation.html", "核对日期": "2026-11-26（文档测试版本 4.6.2）", "Godot 接入": "原生场景文件，无需插件"}
+  ],
+  "mature_practices": "像素风俯视游戏（CrossCode、Enter the Gungeon、Nuclear Throne）主流都是逐帧精灵：身体按方向画帧，枪或手做独立旋转精灵。骨骼和 cutout 更适合高分辨率手绘或矢量风格（如 Spine 做的手游、横版 Q 版），像素风用骨骼要配合 RotSprite 或高倍绘制来避免锯齿。业内用骨骼的程序化部分，多是武器挂点、后坐力、挂件弹簧和受击抖动这类补充层。",
+  "consistency_method": "帖子那种代码绘制矢量风，靠同一份形状和颜色常量保证一致，天然统一，但和像素 tileset 不搭。如果改用 AI 图部件，需要锁定调色板、统一光照方向和描边，并保证像素密度和 48px 场景一致。实际证据（artist2d）显示多帧一致性仍然会失败，必须人工逐帧检查。",
+  "animation_spec": "帖子：单方向（侧视，左右翻转），idle/walk/run/attack/hurt 五个动作加骨骼显示。本项目：身体 3 方向（下/上/右，左镜像）×（待机 4 帧 + 走 6 帧 + 跑 6 帧 + 受击 2–3 帧 + 感染变身 6–8 帧 + 死亡 6 帧），每个角色约 90–100 帧，手和枪独立旋转（预渲染 16–32 个角度，或运行时 RotSprite）。如果改走骨骼，每个方向都要单独一套部件，3 方向就是 3 套绑定，工作量并不比逐帧少多少（估计值）。",
+  "license_terms": "Gemini/Nano Banana 生成内容按 Google 生成式 AI 条款可以商用（以账号所在地区条款为准）[不确定]。Steam 要求在商店页披露预生成 AI 内容。spine-animation-ai 是 PolyForm 非商用许可，商用必须另购授权；Spine 运行时需要 Spine 编辑器授权。Godot 本身为 MIT 许可。",
+  "cost_time_estimate": "复现帖子级别的 Demo：AI Pro $19.99/月，agent 时间 1–4 小时，人工调试 2–8 小时（假设：只用代码绘制、单方向、不追求可上架质量）。做到可上架的像素 3 方向骨骼角色：每个角色 20–60 小时，主要花在人工修部件和修像素上，不推荐。只让 Carbon 写枪手旋转、后坐力、弹簧和状态机代码：4–12 小时就能完成一套可复用系统（估计值）。",
+  "fit_for_user": "适配度：作为『美术路线』是低，作为『动画代码助手』是高。理由如下。(1) 画风冲突：帖子是 Q 版矢量网格变形，你的项目是 48px 像素 3/4 俯视，还选了 WinLu tileset，混用会显得割裂。(2) 视角冲突：帖子是单一侧视，俯视角需要多方向部件。(3) 你零美术基础，骨骼动画的关键帧审美（重心、节奏、预备动作）恰恰需要美术能力，AI 给的往往是『能动但不好看』。(4) 你已经能在 Antigravity 用上 Carbon（Pro 档 11-23 起），它写 GDScript 和 Godot 节点结构很强，最适合做『3 面身体 + 360° 手枪』里的代码部分：旋转、后坐力、手臂 IK、受击震退、挂件弹簧、AnimationTree，以及联机插值。(5) 16 人联机时，骨骼动画本身对带宽没有影响，但 Polygon2D 蒙皮在同屏 16 人加 Bot 时的 CPU 开销比精灵高，需要实测。",
+  "network_sync_impact": "骨骼或程序化动画只需同步『状态枚举 + 动作开始时间 + 量化瞄准角（如 uint16，约 0.0055°/级，或 uint8 约 1.4°/级）』，带宽和逐帧精灵相同。弹簧链和抖动是本地物理，不同客户端表现会不一样，只能作为装饰，不能影响命中判定。攻击和受击特效应由同步事件触发，不应依赖动画帧回调。",
+  "risks_pitfalls": [
+    "把『截图惊艳』当成『生产可用』：帖子是挑过的单个 Demo，没有过程、迭代次数和人工修改量。",
+    "像素图旋转和网格变形会产生锯齿和 mixel，跟 48px 3/4 俯视 tileset 风格不搭。",
+    "俯视角需要多方向部件，单套侧视骨骼不够用，绑定工作量会成倍增加。",
+    "Carbon 幻觉率比 Argon 高（11% vs 4%），而且慢、费 token；Antigravity 额度会被快速消耗（一次测试用掉 Ultra 周额度 18%）。",
+    "模型更替很快（Argon、3.8 Flash 将于 11-30 下线，又出现 Hydrogen/Neon 等代号），不要把工作流绑死在某个模型名上。",
+    "SkeletonModification2D 系列曾标注实验性，API 可能变动。",
+    "第三方拆件工具许可（如 PolyForm 非商用）和 Spine 授权容易被忽略。",
+    "博主可能在为课程或账号引流做营销，『稳了』这种说法要打折看[不确定]。"
+  ],
+  "reversibility_cost": "如果现在跟着帖子改成 Q 版矢量骨骼路线，之后再换回像素逐帧，角色资产基本要全部重做（每个角色 20–60 小时作废），场景 tileset 也要重新选。反过来，如果只用 Carbon 写枪手旋转和程序化动画代码，这些代码与画风无关，无论之后换成什么美术都能保留，返工成本接近零。",
+  "ai_can_do": [
+    "Gemini 4 Carbon、Claude Opus 5.5 等：写 Skeleton2D/Bone2D/Polygon2D 节点结构、权重、AnimationPlayer 轨道、AnimationTree 状态机、Jiggle 弹簧链、InputMap 和调试开关；还能用代码画出简单的矢量占位角色。",
+    "Carbon 在 Antigravity 里能跑 Godot、截图自查、迭代修 bug（构建—验证循环）。",
+    "Nano Banana 系列：生成角色概念图、部件拆分图集、参考图（但像素网格和多帧一致性不可靠）。",
+    "God Mode AI、spine-animation-ai：单图自动拆件、绑定、套预设动画（Spine 格式）。",
+    "为本项目写枪手 360° 旋转、后坐力回弹、手臂 IK、受击震退、挂件弹簧和联机插值代码。"
+  ],
+  "human_must_do": [
+    "决定画风路线（像素逐帧还是矢量骨骼），并且坚持不跟风改。",
+    "绘制或精修像素身体帧（3 方向），把关像素网格、调色板和可读性。",
+    "审核动画手感：重心、节奏、预备动作、攻击和受击的打击感。",
+    "在实际 48px 场景、1080p/1440p 整数缩放、16 人同屏下验收可读性和性能。",
+    "核对 AI 生成内容和第三方工具的商用许可，并在 Steam 上完成 AI 内容披露。",
+    "管理 Antigravity 额度和模型版本更替。"
+  ],
+  "judgment": "帖子大概率为真，但它的说服力被高估了。『Carbon』就是 Gemini 4 Carbon，用它在 Godot 4.7 里纯用代码搭出 Skeleton2D 五动作加弹簧链的可交互 Demo，在 2026 年末的技术水平下完全可信。截图里的每个元素都对得上 Godot 官方节点，同期也有 B 站盒子姬等人在测 Carbon 写 Godot 动画。但这证明的是『AI 能写出程序化骨骼动画原型代码，外加代码绘制或生图拼出的 Q 版矢量角色』，不是『AI 能端到端做出可上架的像素风游戏角色』。角色图很可能是代码画的矢量形状或 Nano Banana 出图后拆件，动作是 AI 按通用节奏写的关键帧，审美和打磨程度未知。帖子对你的启示有两点：一是不要改画风，继续走 48px 像素 3/4 俯视、身体逐帧（3 面），这是 CrossCode 一类成功作的成熟做法；二是把 Carbon 用在『360° 手枪 + 程序化动画层 + AnimationTree + 联机同步』这些代码上，这块正是它的强项。可信度判断：帖子『Carbon 能用代码做出这个 Demo』这一点可信度高；『做 Godot 2D 骨骼动画稳了』这一点对你的项目可信度低。",
+  "confidence": "中高：Carbon 身份、上线时间、价格有官方和媒体多方印证（高）；帖子本身的制作过程和人工参与比例无法核实，只能根据技术可行性和同类实测推断（中）。",
+  "win_rate_impact": "直接影响很小。如果被帖子带偏，改走 Q 版矢量骨骼，估计终局成功概率下降 3–8 个百分点（画风割裂、返工、分散精力）。如果只把 Carbon 用于枪手旋转和程序化动画代码，可节省 10–30 小时开发时间，对成功概率有约 +1–2 个百分点的正面影响。以上均为估计值。",
+  "sources": [
+    {"标题": "Gemini 4 Carbon is now available（Google 官方博客，一手来源）", "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/", "日期": "2026-11-10"},
+    {"标题": "Gemini 4 Carbon is now available in Google Antigravity for AI Pro（9to5Google）", "url": "https://9to5google.com/2026/11/23/antigravity-gemini-4-carbon/", "日期": "2026-11-23"},
+    {"标题": "Gemini 4 Carbon rolling out to Gemini app for AI Ultra, Argon remains（9to5Google）", "url": "https://9to5google.com/2026/11/10/gemini-app-4-carbon/", "日期": "2026-11-10"},
+    {"标题": "Google Antigravity 官方 X：Gemini 4 Carbon is live in Google Antigravity（一手来源）", "url": "https://x.com/antigravity/status/2120188336056733746", "日期": "2026-11-10"},
+    {"标题": "Model Drop: Gemini 4 Carbon（Handy AI，基准与价格汇总）", "url": "https://handyai.substack.com/p/model-drop-gemini-4-carbon", "日期": "2026-10-28 之后"},
+    {"标题": "Gemini 4 Carbon: What We Know About Google's AI Model（内部检查点阶段报道汇总）", "url": "https://thenextlevelsoftware.com/blog/gemini-4-carbon-google-ai-model", "日期": "2026-10-13"},
+    {"标题": "Gemini 4 Carbon Pelican Demo: Inside the Build-Review Loop（OrcaRouter）", "url": "https://www.orcarouter.ai/blog/gemini-4-carbon-pelican-demo", "日期": "2026-11"},
+    {"标题": "【盒子姬】Godot 中 Gemini Carbon 能力实测（B站，开发者自测）", "url": "https://www.bilibili.com/video/BV1SgWi6yE7r/", "日期": "2026-11-13"},
+    {"标题": "实测Gemini 4 Carbon：已玩嗨，Google就这样悄悄重回牌桌（硅星人/腾讯新闻）", "url": "https://news.qq.com/rain/a/20261111A05W0X00", "日期": "2026-11-11"},
+    {"标题": "gemini 最新模型Carbon 实测：感觉还凑合（LINUX DO）", "url": "https://linux.do/t/topic/3154448", "日期": "2026-11-11"},
+    {"标题": "Gemini 4 Carbon 实测：Ultra 才能用，到底值不值？（B站 神烦老狗）", "url": "https://www.bilibili.com/video/BV1tjWm6gEtm/", "日期": "2026-11-11"},
+    {"标题": "NodeSeek 帖子：Fable 5.2 与 Carbon 同提示词 MG 动画对比（仅搜索摘要，原帖 403）", "url": "https://nodeseek.com/post-1045049-1", "日期": "2026-11"},
+    {"标题": "artist2d：Godot + Gemini 2D pixel-art asset pipeline（开源仓库，含验收报告）", "url": "https://github.com/itheamyvalgulious/artist2d", "日期": "2026"},
+    {"标题": "spine-animation-ai（Genielabs，Claude 技能）", "url": "https://github.com/GenielabsOpenSource/spine-animation-ai", "日期": "2026"},
+    {"标题": "God Mode AI – AI Spine Animation Generator", "url": "https://www.godmodeai.co/ai-spine-animation", "日期": "2026-11 核对"},
+    {"标题": "Godot 4.7 文档：SkeletonModification2DJiggle（官方文档）", "url": "https://docs.godotengine.org/en/4.7/classes/class_skeletonmodification2djiggle.html", "日期": "4.7"},
+    {"标题": "Godot 文档：2D skeletons（官方文档）", "url": "https://docs.godotengine.org/en/stable/tutorials/animation/2d_skeletons.html", "日期": "stable"},
+    {"标题": "Agent Factory Recap: Antigravity and Nano Banana Pro（Google Cloud 博客，Antigravity agent 可调用生图）", "url": "https://cloud.google.com/blog/topics/developers-practitioners/agent-factory-recap-antigravity-and-nano-banana-pro-with-remik", "日期": "2025-11"},
+    {"标题": "pinkcel：Godot 2D Skeletal Animation: Rig in the Browser", "url": "https://pinkcel.com/godot-2d-animation.html", "日期": "2026（测试 Godot 4.6.2）"},
+    {"标题": "Tutorial: Basic Skeletal Animation（Vapor Trails 开发日志，像素骨骼与 RotSprite）", "url": "https://sevencrane.itch.io/vapor-trails/devlog/214252/tutorial-basic-skeletal-animation", "日期": "2021"}
+  ],
+  "uncertain": ["cases", "license_terms", "risks_pitfalls"]
+}
