@@ -1,0 +1,239 @@
+{
+ "core_question": "截至 2026-11-26，Claude 网页版（Opus/Sonnet/Haiku）与 Antigravity 客户端里的各模型，在 2D 像素美术管线里分别能做什么、不能做什么，如何分工？",
+ "one_line_conclusion": "这两套工具本质上是『审图 + 写代码 + 驱动工具』的大脑，而不是『像素画师』：Claude 网页版和 Gemini 4 Carbon 都不直接出像素图，出图靠 Antigravity 内置的 Nano Banana 或 PixelLab 等外部工具。建议 Claude Opus 5.5 负责审图与写 Python/Aseprite Lua/Godot 脚本，Antigravity 里的 Carbon 负责在项目内跑构建-验证循环、批量导入与动画代码。",
+ "key_findings": [
+  "Antigravity 官方模型页（2026-11-26 抓取）列出：Gemini 4 Neon（新对话默认，上下文最高 512K，思考档 Low/Medium/High/Extra）、Gemini 4 Carbon（Pro/Ultra/Enterprise，计入共享 Gemini 额度）、Gemini 4 Argon（2026-11-30 移除）、Gemini 4 Hydrogen（全部计划可用，免费与试用默认）、Orchestrator（规划模型+执行模型搭配，Pro 及以上）、Gemini 3.8 Flash（11-30 移除）、Gemini 3.7/3.6 Flash 与 3.1 Pro（仅 Enterprise）、Claude Sonnet 5.5 与 Opus 5.5（thinking，Pro 需非试用订阅）、Claude Sonnet 4.6/Opus 4.6 与 GPT-OSS-120b（11-30 移除）。",
+  "口径说明：这份官方页面与第 1 批线索一致（Carbon 在 11-23 起对 Pro 可用、Argon 与 3.8 Flash 11-30 退出）。但搜索摘要对 Neon/Hydrogen 无法交叉核实，这两个名字目前只有官方模型页一个来源，建议你打开 Antigravity 的模型下拉菜单核对。",
+  "Antigravity 的图像生成：官方页写明『Antigravity 的图像生成任务使用 Nano Banana 2，用户不能自定义』。Nano Banana 2.1 于 2026-10-06 GA，可接受最多 14 张参考图，称能保持 4 个角色/10 个物体一致；在 Antigravity 中是否已切到 2.1 官方页未写 [不确定]。Gemini 4 Carbon 本身不出图（第 1 批已核实）。",
+  "Claude 网页版：当前线上型号为 Opus 5.5、Sonnet 5.5（Antigravity 模型页与 API 报道均有）；Haiku 5.5 于 2026-10-07 发布（仅 9to5Mac 一个来源），定位为快速、低价的重复任务。Claude 不原生生成图像，但能读图（审图）、在代码执行环境中用 Python/Pillow 处理图片、写 SVG/HTML 画程序化图（DEV Community 与 OrcaRouter 有『不用图像模型、纯代码画像素』的演示，均为自述/厂商博客，非独立评测）。",
+  "没有找到独立第三方对 Claude Opus 5.5 做像素美术的评测；OrcaRouter 页面自己也说无第三方评测。因此『Claude 审图能多准』主要来自你实测。48px 图的细节（半个像素错位、孤立点）靠视觉模型很容易漏看，建议用脚本做确定性检查（调色板外颜色、孤立像素、透明边），而不是靠模型肉眼。",
+  "程序化生成：SVG/Python/Aseprite Lua 都是纯文本任务，两个阵营的顶级模型都能写。Aseprite 侧已有多个 MCP 服务器：diivi/aseprite-mcp（Python，MIT，约 104 个工具，README 展示 Claude 画剑客与挥砍动画）、willibrandon/pixel-mcp（Go，需 Aseprite 1.3+）、rkdfx/aseprite-mcp（专注 Lua 脚本与导出）、oaktreegames/aseprite-live-mcp（驱动已打开的 Aseprite，每次编辑可撤销）。均需要本机安装 Aseprite 并保持可访问。",
+  "Godot 侧 MCP：hybridindie/godot-mcp 与 hi-godot/godot-ai 连接运行中的 Godot 4.4+ 编辑器（读场景树、改节点、写脚本；godot-ai 的说明里明确列了 Antigravity）；Coding-Solo/godot-mcp 一行命令安装（npx），可建场景、加节点、载入精灵；keeveeg/godot-mcp 标注在 4.7 上测过；Godot MCP Pro 付费 187 个工具。均为项目自述，我没有核实维护状态。",
+  "PixelLab MCP：官网给出 `claude mcp add pixellab https://api.pixellab.ai/mcp -t http -H \"Authorization: Bearer KEY\"`，列出 Claude Code、Codex、Cursor、VS Code、Windsurf 为支持客户端；Antigravity 与 Claude 网页版未列出。网页版是否能挂 MCP 取决于你的套餐与连接器设置 [不确定]；稳妥做法是在 Antigravity（支持 MCP）里接 PixelLab/Aseprite。",
+  "Carbon 的实测口碑：稳定但偏低配、慢（SVG 动画 9–16 分钟，Three.js 场景 27 分钟到 1 小时，LINUX DO 用户）；一次 Godot 测试用掉 Ultra 周额度的 18%（B 站盒子姬）。因此额度很吃紧，不适合反复小改。额度官方不给数字，只写『每 5 小时刷新直到周上限』；论坛有大量额度锁定投诉，且 Google 曾多次上调（Android Authority）。",
+  "Gemini 4 Carbon 价格与档位：AI Pro $19.99/月、AI Ultra $99.99/月（9to5Google，第 1 批结果）；Carbon 在 API 为每百万 token $2/$10，11-30 之后 $4/$20（第 1 批引用）。",
+  "Orchestrator（planner+executor 搭配）对批量切图/导入这类多文件重复任务可能有用，但公开实测我没有找到 [不确定]。",
+  "推荐分工（我的推断）：Opus 5.5=风格圣经、审图清单、复杂脚本设计与代码评审；Sonnet 5.5=批量脚本与日常修改；Haiku 5.5=改文件名、生成清单、简单格式转换；Carbon/Neon（Antigravity）=在项目里自动跑 Godot headless 验证、批量导入、动画代码；Hydrogen=免费额度消耗型小任务；Nano Banana=只出概念图/参考图，不直接进游戏。"
+ ],
+ "cases": [
+  {
+   "名称": "diivi/aseprite-mcp（Claude 画 swordsman 并做挥砍动画）",
+   "链接": "https://github.com/diivi/aseprite-mcp",
+   "评论数及抓取日期": "不适用；2026-11-26",
+   "引擎": "Aseprite",
+   "玩法贴近度": "低",
+   "美术来源占比": "AI",
+   "素材来源证据及强度": "README 展示，作者自选；弱到中"
+  },
+  {
+   "名称": "OrcaRouter：Claude Opus 5.5 kākāpō 像素派对演示",
+   "链接": "https://www.orcarouter.ai/blog/claude-opus-5-5-kakapo-pixel-art-demo",
+   "评论数及抓取日期": "不适用；2026-11-26",
+   "引擎": "HTML",
+   "玩法贴近度": "低",
+   "美术来源占比": "AI（纯代码绘制）",
+   "素材来源证据及强度": "路由商博客，自述，页面称无第三方评测；弱"
+  },
+  {
+   "名称": "artist2d（Godot+Gemini 像素管线，角色 FAIL）",
+   "链接": "https://github.com/itheamyvalgulious/artist2d",
+   "评论数及抓取日期": "不适用；2026-11-26",
+   "引擎": "Godot 4",
+   "玩法贴近度": "中",
+   "美术来源占比": "AI",
+   "素材来源证据及强度": "开源仓库自带验收报告；强"
+  },
+  {
+   "名称": "B站《Godot 中 Gemini Carbon 能力实测》",
+   "链接": "https://www.bilibili.com/video/BV1SgWi6yE7r/",
+   "评论数及抓取日期": "约 1.3 万播放；2026-11-26",
+   "引擎": "Godot",
+   "玩法贴近度": "低",
+   "美术来源占比": "AI",
+   "素材来源证据及强度": "公开视频；结论未读到；中"
+  }
+ ],
+ "data_points": [
+  "Antigravity 可用模型数：官方页列出 14 项（含 4 项 11-30 移除）；AI Pro 可用含 Carbon、Neon、Argon、Hydrogen、Orchestrator、3.8 Flash、Claude 5.5 两款（Pro 须非试用）",
+  "Carbon 上线 2026-11-10；Antigravity AI Pro 可用 2026-11-23（第 1 批核实）",
+  "AI Pro $19.99/月；AI Ultra $99.99/月（9to5Google 2026-11-23）",
+  "Carbon API $2/$10 每百万 token，至 11-30，其后 $4/$20（第 1 批引用）",
+  "Nano Banana 2.1：2026-10-06 GA，参考图上限 14，1K 图约 $0.0336（来源间有分歧）",
+  "Haiku 5.5：2026-10-07 发布，称比上一代便宜约 75%（9to5Mac，单一来源）",
+  "Carbon 生成耗时：SVG 动画 9–16 分钟；Three.js 场景 27 分钟到 1 小时（LINUX DO 用户）",
+  "一次 Godot 测试耗 Ultra 周额度 18%（B 站盒子姬自述）",
+  "Godot MCP Pro 宣称 187 个工具；diivi/aseprite-mcp 宣称 104 个工具（项目自述）"
+ ],
+ "independent_verification": "Antigravity 模型列表来自官方文档，权威但我只有一次抓取，Neon/Hydrogen 无第二来源，必须你本人开客户端确认。Carbon 的上线与价格有官方博客与 9to5Google 印证（第 1 批）。Claude 5.5 系列型号在 Antigravity 官方页、Better Stack、9to5Mac 等处出现，但我没有读到 Anthropic 官方公告页，Haiku 5.5 只有一个媒体来源。『Claude 能做像素美术』没有独立评测，只有厂商/路由商演示。各 MCP 服务器能力均为项目 README 自述，未核实维护状态与在 Godot 4.7、Aseprite 当前版本上的兼容性。",
+ "workflow_steps": [
+  "1. 在 Claude 网页版（Opus 5.5）里与你一起写『风格圣经』和验收清单（调色板、描边、光照、48px 约束），存为 Markdown 放进项目仓库。",
+  "2. 在 Antigravity 选 Gemini 4 Carbon（或 Neon），打开 Godot 项目，让 agent 能调用 Godot headless 做构建/截图验证；注意本项目 CLAUDE.md 规定云端截图必须用 xvfb-run，不得在 --headless 下截图。",
+  "3. 用 Antigravity 或 Claude Code 接 PixelLab MCP / Aseprite MCP，出素材后由 Claude 写 Pillow 脚本做降采样、量化、切图，输出到固定目录。",
+  "4. 把脚本做成可重复运行的一条命令（如 tools/art_import.py），再让 agent 生成 SpriteFrames .tres 与命名约定。",
+  "5. 把截图（Godot 里与 Tileset 同屏）贴给 Opus 5.5 审图，只用于粗筛（风格不一致、方向错、枪位置错）；细节用脚本检查。",
+  "6. 动画与手枪旋转：让 Carbon 写 GDScript（枪口朝向、后坐力、手臂 IK、受击偏移），你用 Godot 编辑器调参数。",
+  "7. 每次改动前后跑项目的提交门禁（parse_gate、GUT、ENet 冒烟），一次任务最多改 ≤3 个脚本。",
+  "8. 额度紧张时：Opus/Sonnet 做设计与评审，Hydrogen/Haiku 做机械工作；避免用 Carbon 反复小改。"
+ ],
+ "tools": [
+  {
+   "名称": "Claude 网页版（Opus 5.5 / Sonnet 5.5 / Haiku 5.5）",
+   "价格": "按你的订阅，未核实具体档位",
+   "用途": "审图、写脚本、设计分工；Haiku 做机械任务",
+   "链接": "https://www.anthropic.com",
+   "核对日期": "2026-11-26",
+   "Godot接入": "导出代码文件手动放入项目；网页版 MCP 支持取决于你的套餐 [不确定]"
+  },
+  {
+   "名称": "Google Antigravity（Carbon/Neon/Hydrogen/Orchestrator/Claude 5.5）",
+   "价格": "AI Pro $19.99/月；Ultra $99.99/月",
+   "用途": "在项目内跑 agent、构建验证、批量改文件、内置 Nano Banana 出图",
+   "链接": "https://antigravity.google/docs/models.md",
+   "核对日期": "2026-11-26",
+   "Godot接入": "直接读写项目目录；可挂 MCP（godot-ai 等明确列出 Antigravity）"
+  },
+  {
+   "名称": "Godot MCP（hybridindie / hi-godot godot-ai / Coding-Solo / keeveeg）",
+   "价格": "开源；Godot MCP Pro 付费",
+   "用途": "让 agent 读场景树、改节点、写脚本",
+   "链接": "https://github.com/Coding-Solo/godot-mcp",
+   "核对日期": "2026-11-26",
+   "Godot接入": "编辑器插件或 npx 命令；多数面向 4.4+，keeveeg 称测过 4.7"
+  },
+  {
+   "名称": "Aseprite MCP（diivi、willibrandon、rkdfx、oaktreegames）",
+   "价格": "开源；Aseprite 约 $20 [不确定]",
+   "用途": "驱动 Aseprite 画/改/导出 sprite sheet",
+   "链接": "https://github.com/diivi/aseprite-mcp",
+   "核对日期": "2026-11-26",
+   "Godot接入": "导出 PNG+JSON 后由脚本生成 SpriteFrames"
+  },
+  {
+   "名称": "PixelLab MCP",
+   "价格": "见路径B（第三方列示 $12–50/月）[不确定]",
+   "用途": "在 agent 内出像素角色、方向、动画",
+   "链接": "https://pixellab.ai",
+   "核对日期": "2026-11-26",
+   "Godot接入": "导出 PNG；MCP 经 Claude Code/Cursor 等"
+  },
+  {
+   "名称": "Nano Banana 2 / 2.1",
+   "价格": "约 $0.034/张（来源分歧）",
+   "用途": "概念/参考图",
+   "链接": "https://www.techrepublic.com/article/news-google-nano-banana-2-1-image-editing-pricing/",
+   "核对日期": "2026-11-26",
+   "Godot接入": "需后处理"
+  }
+ ],
+ "mature_practices": "业内做法：让 LLM 写『会重复运行的脚本』而不是手工逐张处理；用 MCP 让 agent 直接调工具并截图验证；把风格规则写成仓库内文档让每次会话都读；用确定性检查（调色板、网格）代替模型肉眼审图。我没找到公开的、用 Claude/Gemini 全流程做出商业像素游戏的成功案例。",
+ "consistency_method": "不适用于模型本身；一致性靠外部手段：风格圣经文档、调色板量化脚本、统一输出目录、参考图。模型的作用是执行和检查，不是保证一致。",
+ "animation_spec": "模型层面：可写 AnimationPlayer/AnimatedSprite2D/SpriteFrames 生成脚本、枪口旋转与后坐力代码；Skeleton2D+Polygon2D 的程序化骨骼动画已有 Carbon 演示（第 1 批：帖子真实性中等、品质不适合像素风）。每个角色的帧数与状态沿用路径B 的建议（3 面、约 90 帧），模型只负责组织与导入，不负责出帧。",
+ "license_terms": "Claude 与 Gemini 的输出代码可商用，具体以各自服务条款为准 [不确定]；Antigravity 内置 Nano Banana 输出的商用条款以 Google 条款为准 [不确定]；MCP 服务器多为 MIT，但需逐个核对；spine-animation-ai 是 PolyForm 非商用，不能用。",
+ "cost_time_estimate": "现金：沿用你已有订阅则增量接近 0；若升到 Antigravity AI Pro 为 $19.99/月，Ultra $99.99/月。时间：搭建 Aseprite/PixelLab/Godot MCP 与导入脚本管线，零基础约 1–3 天（推断）；每个新素材批次约 0.5–2 小时脚本+验证。额度风险：Carbon 一次复杂 Godot 任务可能耗掉大量周额度。",
+ "fit_for_user": "高：你本来就在用 Claude 网页版与 Antigravity，且项目要求 AI 写 GDScript。适合的部分是代码、脚本与导入自动化；不适合期望它们『画出』48px 人物帧。额外注意：Antigravity 的 agent 默认会自己调用 Nano Banana 出图，会得到非像素网格的图，需要你在提示里约束为『只用代码/只用指定工具』。你的项目铁律（严格静态类型、禁用 Godot 3 语法、一次改≤3个脚本）要写进每个 agent 的系统指令。",
+ "network_sync_impact": "模型本身无影响。但建议动画状态用枚举同步、枪口角度用 20 Hz 角度量；让 agent 生成动画代码时要遵守项目的『core/ 零渲染依赖』规则，动画只放在 view 层。",
+ "risks_pitfalls": "1. Agent 擅自调用 Nano Banana 生图，导致风格不一致；2. 额度锁定与周额度不透明，论坛投诉多；3. 模型名称/列表变化快（11-30 将有 4 款移除）；4. MCP 服务器维护状态未核实；5. 视觉审图在 48px 上不可靠；6. 模型说『看起来一致』时不要信，用脚本验证；7. 网页版与 Antigravity 各自不记得对方的上下文，需靠仓库文档同步。",
+ "reversibility_cost": "低：这些都是工具层，换模型或换工具只需要更换提示与脚本；保存好脚本与风格圣经即可。",
+ "ai_can_do": "Claude Opus/Sonnet 5.5：读图审图、写 Python/Pillow/Aseprite Lua/GDScript、设计骨骼与动画代码、写 SpriteFrames 生成器、整理清单；Haiku 5.5：机械重复任务；Gemini 4 Carbon/Neon（Antigravity）：在项目内跑构建-验证循环、批量重构与导入、写动画代码，经 MCP 驱动 Godot/Aseprite/PixelLab；Nano Banana（Antigravity 内置）：出概念图与参考图。",
+ "human_must_do": "确认 Antigravity 实际可用模型与额度；决定风格；验收 48px 图的美观与一致；在 Godot 里调手感；开启并信任 MCP 服务器（它们能执行本机命令，需自行审查）；法务条款与 Steam 披露。",
+ "judgment": "明确立场：把 Claude 网页版当『审稿人+脚本作者』，把 Antigravity 的 Gemini 4 Carbon 当『在项目里干活的工程师』，把 PixelLab/Nano Banana 当『出原料的工具』，三者职责不要混。不要花时间让任何一个 LLM 直接画 48px 帧；让它们写后处理与导入脚本，并用脚本做确定性检查。额度上 Opus 5.5 与 Carbon 都要节约使用：大设计在 Opus，批量执行在 Hydrogen/Sonnet/Haiku。11-30 之前别依赖 Argon 与 3.8 Flash。",
+ "confidence": "中。理由：Antigravity 模型列表来自官方文档但 Neon/Hydrogen 缺乏第二来源；Claude 模型线只有二手来源；『模型在像素管线中的能力』缺少独立评测，推荐分工是我的推断。",
+ "win_rate_impact": "估计：正确分工带来的是工程效率提升，对终局成功概率约 +2~5 个百分点（纯估计）；若误以为 LLM 能直接解决像素美术，反而可能浪费数周，约 -3~6 个百分点（纯估计）。",
+ "sources": [
+  {
+   "标题": "Antigravity: Choose a model（官方）",
+   "URL": "https://antigravity.google/docs/models.md",
+   "日期": "2026-11-26 抓取",
+   "类型": "一手官方文档"
+  },
+  {
+   "标题": "Antigravity plans（官方）",
+   "URL": "https://antigravity.google/docs/plans",
+   "日期": "2026-11",
+   "类型": "一手官方文档（额度无具体数字）"
+  },
+  {
+   "标题": "Google 新 Antigravity 限额公告",
+   "URL": "https://blog.google/feed/new-antigravity-rate-limits-pro-ultra-subsribers/",
+   "日期": "2026",
+   "类型": "一手官方博客"
+  },
+  {
+   "标题": "Android Authority：Antigravity 限额上调",
+   "URL": "https://androidauthority.com/gemini-antigravity-limits-increased-3670209",
+   "日期": "2026",
+   "类型": "媒体"
+  },
+  {
+   "标题": "The Register：Antigravity 价格上浮",
+   "URL": "https://www.theregister.com/2026/03/12/users_protest_as_google_antigravity/",
+   "日期": "2026-03-12",
+   "类型": "媒体"
+  },
+  {
+   "标题": "9to5Mac：Claude Haiku 5.5",
+   "URL": "https://9to5mac.com/2026/10/07/anthropic-upgrades-claude-with-new-haiku-5-5-model-details-here/",
+   "日期": "2026-10-07",
+   "类型": "媒体，单一来源"
+  },
+  {
+   "标题": "Nano Banana 2.1 发布（TechRepublic）",
+   "URL": "https://www.techrepublic.com/article/news-google-nano-banana-2-1-image-editing-pricing/",
+   "日期": "2026-10",
+   "类型": "媒体"
+  },
+  {
+   "标题": "diivi/aseprite-mcp",
+   "URL": "https://github.com/diivi/aseprite-mcp",
+   "日期": "2026",
+   "类型": "开源仓库"
+  },
+  {
+   "标题": "willibrandon/pixel-mcp",
+   "URL": "https://pkg.go.dev/github.com/willibrandon/pixel-mcp",
+   "日期": "2026",
+   "类型": "开源仓库"
+  },
+  {
+   "标题": "Coding-Solo/godot-mcp",
+   "URL": "https://github.com/Coding-Solo/godot-mcp",
+   "日期": "2026",
+   "类型": "开源仓库"
+  },
+  {
+   "标题": "hybridindie/godot-mcp",
+   "URL": "https://github.com/hybridindie/godot-mcp",
+   "日期": "2026",
+   "类型": "开源仓库"
+  },
+  {
+   "标题": "PixelLab 官网（MCP 命令）",
+   "URL": "https://pixellab.ai",
+   "日期": "2026-11-26 抓取",
+   "类型": "一手厂商自述"
+  },
+  {
+   "标题": "OrcaRouter：Opus 5.5 kākāpō 像素演示",
+   "URL": "https://www.orcarouter.ai/blog/claude-opus-5-5-kakapo-pixel-art-demo",
+   "日期": "2026",
+   "类型": "厂商博客"
+  },
+  {
+   "标题": "artist2d",
+   "URL": "https://github.com/itheamyvalgulious/artist2d",
+   "日期": "2026-11",
+   "类型": "一手开发者自述"
+  }
+ ],
+ "uncertain": [
+  "Neon/Hydrogen 仅官方页单一来源",
+  "Haiku 5.5 单一来源",
+  "Antigravity 是否已用 Nano Banana 2.1",
+  "Claude 网页版 MCP 支持",
+  "MCP 服务器维护状态与 4.7 兼容性",
+  "Orchestrator 实测效果",
+  "各服务条款商用细节",
+  "win_rate_impact 幅度",
+  "搭建工时估算"
+ ]
+}

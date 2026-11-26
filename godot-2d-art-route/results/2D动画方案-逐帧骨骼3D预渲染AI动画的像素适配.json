@@ -1,0 +1,262 @@
+{
+  "core_question": "在 48px、3/4 斜俯视、「3 面身体+360° 旋转手枪」前提下，逐帧像素、Skeleton2D/Spine/DragonBones、3D 预渲染、AI 动画工具四条路线哪条最适合零美术基础的单人开发者，尤其是批量产出 loot 图标、多枪支表现、多种僵尸/人类变体？",
+  "one_line_conclusion": "主线用「逐帧像素身体（3 面，约 100 帧）+ Godot 代码驱动的手与枪旋转/后坐/闪白」，PixelLab 等 AI 只用来出底稿（方向转身、走路循环、loot 图标）再手工清理；不要用 Skeleton2D/Spine 骨骼做像素角色主体，3D 预渲染只在「想要 8 方向以上或大量僵尸变体共用动作」时作为第二阶段备选。",
+  "key_findings": [
+    "3/4 斜俯视的人物精灵量：cxong（Dead Dungeons / C-Dogs SDL 作者）的统计是 top-down 垂直=1x、侧视=1–1.5x、等距 4 向=2–2.5x、斜视（oblique 3/4）=3–3.5x、8 向=5–5.5x；斜视至少要 侧（镜像）/正/背 三套，与你的「3 面身体」一致，且指出带持枪手性的角色镜像会出错，要把武器放到可单独替换的层（正是你的独立手与枪方案）。来源：cxong 博客 2022-03。",
+    "Godot 官方文档（4.7）的 Skeleton2D 教程是「Polygon2D+UV 编辑器+骨骼权重绘制」流程：必须手动同步骨骼列表、改骨骼后重置 rest pose、弯曲处要手加内部顶点并重新刷权重。这套流程做的是网格变形，天然产出平滑插值的亚像素图像，与像素风格冲突；Godot 论坛有人专门发帖问 Skeleton2D 动画出现锯齿/伪影，常见建议是缩小视口+stretch=viewport+integer 缩放，但没有找到确认「Skeleton2D 像素风无锯齿」的权威方案（论坛单一来源，证据弱）。",
+    "像素图运行时任意角度旋转会产生断线和杂点：多个 Game Dev StackExchange/itch 帖子的共识是像素图要保持原样只能 90° 倍数，其他角度要用 RotSprite 预渲染（Aseprite 内置）或在低分辨率视口内旋转让锯齿变成「像素化旋转」；Nuclear Throne 就是在 320×240 画布上做旋转，天然像素化。对你的「手与枪 360° 旋转」，推荐 viewport 拉伸+整数缩放下运行时旋转，或脚本批量预渲染 16/32 个 RotSprite 角度并吸附最近角度。",
+    "Dead Cells 是「3D 预渲染成像素」的代表：作者 Thomas Vasseur 自述一年内独自设计并制作全部动画，先画关键帧、审批后再加插值帧，并称这是工作流中最有用的小技巧；Motion Twin 的 Dan Moran 视频指出管线里 C#/引擎代码量大于着色器。具体分辨率、帧数、单动画耗时在可访问的二手页面里没有给出，[不确定]。该管线的前提是已有 3D 建模/绑定/动画能力和美术审美，零美术基础单人自建成本高。",
+    "3D→像素在技术上已有成熟的 Blender 免费/付费工具链：FoozleCC 的 Blender 脚本可一键渲染 4 或 8 方向动画精灵（itch.io，免费）；Pixel Kit（付费 Blender 插件）在合成器里做低分辨率渲染、可调描边、二值透明和调色板吸附；业内共识是「必须直接按目标分辨率渲染、关抗锯齿、吸附调色板」，否则只是模糊缩小图。对 48px 小人，需要自建低模、绑骨、做走/跑/死亡动画，学习成本远超画 100 帧像素。",
+    "PixelLab（专做像素的 AI 服务）官方 API 页（抓取 2026-11-26）列出：animate-with-skeleton 32/64/128px 约 $0.0136–0.0157 每次；animate-with-skeleton v3（beta，3–15 帧，最大 256px）约 $0.0436–0.0622；animate-character 每方向 64×64 v3 4 帧约 $0.0129；8 方向旋转 v3 64×64 约 $0.0337；Pro 档（至多 128px）$0.08 每次；inpaint/edit 约 $0.007–0.04。价格为官方「估算」且随 GPU 时间浮动；订阅档位和商用条款在抓取页面中未显示，[不确定]。它还提供 Aseprite 扩展和 MCP（可被 Claude Code 等调用）。",
+    "Retro Diffusion 的 rd-animation 模型（Replicate/Scenario/Aseprite 扩展）默认生成 4 方向走路循环，输出 192×192 的精灵表（4 行×4 帧，顺序为背/右/正/左，对应 48×48 每格）——这个格子尺寸恰好与你的 48px 画布一致，是本调研最贴合的发现；Aseprite 扩展价位据第三方指南 Lite $20 / 完整 $65（第三方，价格变动频繁，未在官方页核实）。但它出的是 4 向，没有「3 面+独立手枪」结构，要自行拆手、拆枪。",
+    "AI 像素动画的共同短板：独立来源（DEV Community 的 Gemini 动画实验、多篇行业文章）一致认为简单循环（待机、走）可用，连续复杂动作（攻击连招）不稳，一致性漂移（比例、调色板、线宽）需要逐帧人工清理；同行经验帖估算每个动画 15–45 分钟收尾，属单一/论坛来源。Gemini 图像模型不能直接输出透明 PNG，需要纯色背景后手动抠图。",
+    "Claude 与 Antigravity 本身不画图，但可靠产出 GDScript、Aseprite Lua、Python/PIL 批处理（批量 RotSprite、切表、生成 SpriteFrames .tres、调色板越界检查）。此前核实报告（Carbon 帖子）已确认：Gemini 4 Carbon 能代码生成程序化骨骼动画原型，但不等于可上架的像素角色动画。",
+    "loot 图标是本路径里最适合 AI 批量化的部分：静态、单帧、无朝向，PixelLab 单次生成约 $0.01–0.08，图标用 32×32 内容放在 48×48 格内即可，一致性靠固定调色板+同一参考图+统一光源，失败代价只是多点几次生成。货架/箱子内物品显示直接复用同一套图标缩放到 24–32px，不额外出图。",
+    "持不同枪支的表现成本由架构决定：枪作为独立 Sprite2D 层，每把枪 idle 1 帧 + fire 2–3 帧 + 可选换弹，约 3–6 张/把，由 Python 脚本做 16 或 32 角度预渲染即可；10 把枪≈30–60 张手工+脚本图。如果把枪画进身体动画（CrossCode 做法）则每把枪要乘以 3 面×全部状态，工作量翻 10 倍以上，不可行。",
+    "僵尸/人类变体用「共享骨架/共享动画+换皮」才可能单人完成：像素路线靠 Aseprite 调色板替换和叠加配件层（头部/衣服/头盔）实现变体，Spine 类骨骼路线靠换附件（slot attachment）更方便，但 Spine 的像素风需要把贴图固定缩放+关闭插值，Godot 官方没有 Spine 原生支持（需 spine-godot 运行时，授权要求 Spine 专业版 $369 起，[不确定，未在本次核对官方价目]）。3D 预渲染换变体最省：换贴图/换配件模型后重新批量渲染。"
+  ],
+  "cases": [
+    {
+      "名称": "Dead Cells",
+      "Steam链接": "https://store.steampowered.com/app/588650/Dead_Cells/",
+      "Steam评论数及抓取日期": "[不确定]，本次未抓取",
+      "引擎": "自研（Motion Twin，Haxe/Heaps）",
+      "玩法贴近度": "低（横版动作，非俯视联机）",
+      "美术来源占比": "自制 100%（3D 建模动画预渲染成像素，Thomas Vasseur 一年独立完成角色动画）",
+      "素材来源证据及证据强度": "开发者自述 Art Design Deep Dive（Game Developer，2018-01）；中：只确认 3D→像素与关键帧+插值流程，分辨率与帧数未获取"
+    },
+    {
+      "名称": "Nuclear Throne",
+      "Steam链接": "https://store.steampowered.com/app/242680/Nuclear_Throne/",
+      "Steam评论数及抓取日期": "[不确定]，本次未抓取",
+      "引擎": "GameMaker",
+      "玩法贴近度": "高（俯视射击，360° 旋转枪，身体仅左右两面）",
+      "美术来源占比": "自制 100%",
+      "素材来源证据及证据强度": "见前序报告《像素规格与3-4斜俯视角人物方向方案》，证据中（社区复刻代码）"
+    },
+    {
+      "名称": "Enter the Gungeon",
+      "Steam链接": "https://store.steampowered.com/app/311690/",
+      "Steam评论数及抓取日期": "79,772（引用前序报告 appdetails，抓取 2026-11-26）",
+      "引擎": "Unity + 2D Toolkit",
+      "玩法贴近度": "中",
+      "美术来源占比": "自制 100%",
+      "素材来源证据及证据强度": "前序报告：第三方 mod 规格，4 套身体+镜像、独立手、枪运行时旋转；中"
+    },
+    {
+      "名称": "CrossCode",
+      "Steam链接": "https://store.steampowered.com/app/368340/CrossCode/",
+      "Steam评论数及抓取日期": "[不确定]，本次未抓取",
+      "引擎": "HTML5/自研 ImpactJS 衍生",
+      "玩法贴近度": "中（3/4 斜俯视，对标对象）",
+      "美术来源占比": "自制 100%",
+      "素材来源证据及证据强度": "前序报告：8 方向（5 绘+3 镜像）逐帧，瞄准姿势画进身体；中"
+    }
+  ],
+  "data_points": [
+    "PixelLab 官方 API 价格（抓取 2026-11-26，USD 估算，随 GPU 时间浮动）：animate-with-skeleton 32/64/128px = $0.0136/$0.0143/$0.0157；animate-with-skeleton v3（beta，3/8/15 帧）= $0.0436/$0.0513/$0.0622；animate-character v3 每方向 64×64 4 帧 = $0.0129；generate-8-rotations v3 64×64 = $0.0337；Pro 档（≤128px）= $0.08/次；edit-image 64×64 = $0.0118；来源：pixellab.ai/pixellab-api",
+    "Retro Diffusion rd-animation：默认 4 方向走路，输出 192×192 PNG（4 行×4 帧，每格 48×48，顺序背/右/正/左）；Scenario 帮助文档；Aseprite 扩展价格第三方称 $20/$65（未核实官方）",
+    "斜视（3/4）所需精灵套数为 top-down 的 3–3.5 倍，8 向为 5–5.5 倍（cxong 2022-03，个人经验值非实测）",
+    "Skeleton2D 官方文档（4.7 latest）：需 Polygon2D 网格、每骨骼权重绘制，改骨必须重置 rest pose；无「像素风」专用选项",
+    "AI 动画收尾工时：论坛经验帖 15–45 分钟/动画（单一来源）；我的估算：每个 6 帧走路循环清理 20–40 分钟，一套 3 面+死亡+感染约 6–12 小时/角色，标为估计",
+    "每个 loot 图标 AI 成本估算：5–10 次生成 × $0.01–0.08 = $0.05–0.8 + 人工修图 3–10 分钟；100 个图标约 $5–80 + 5–15 小时（估计，非实测）",
+    "每把枪预渲染：16 角度×(idle 1 + fire 2) = 48 张，脚本 1 秒内生成；10 把枪 ≈ 480 张自动图+30 张手绘/AI 底图"
+  ],
+  "independent_verification": "有一手/独立来源佐证：Godot Skeleton2D 流程与限制（官方文档）、PixelLab 价格和功能（官方 API 页，但属厂商自述，价格是其估算）、Dead Cells 的 3D→像素与关键帧流程（开发者自述）、cxong 的方向精灵倍数（个人博客，有行业认可但属经验值）。Retro Diffusion 动画格式来自 Scenario 帮助文档（第三方平台文档），价格来自第三方评测。仅厂商宣传或单一来源：AI 动画收尾耗时（论坛单帖）、AI 动画质量评价（行业文章多属软文，如 SEELE 称缩短 85% 时间为其内部数据）、Skeleton2D 像素风锯齿的解决办法（论坛）。我没有找到任何已发行 Steam 作品公开使用 PixelLab 骨架动画做 48px 3/4 俯视角色的独立案例，即本路径在你的具体场景缺少成功先例。",
+  "workflow_steps": [
+    "第 1 步（0.5 天）定规格：48×48 画布，人物身高约 40–46px，3 面（下/上/右，左镜像），身体不画手臂，手与枪单独层；调色板沿用前序报告的 16–24 色主调色板。",
+    "第 2 步（1–2 天）出基础角色：用 PixelLab（或 Retro Diffusion/Nano Banana 出概念）生成一张正面 48×48 人类角色，再用 PixelLab 8 方向旋转或 4 方向生成上、右两面；人工在 Aseprite 修到体型一致、调色板落入锁定色板。",
+    "第 3 步（2–4 天）走路/待机循环：用 PixelLab animate-character/skeleton（每面 4–6 帧）或 Retro Diffusion rd-animation 出底稿；在 Aseprite 里逐帧清理（对齐网格、去抗锯齿杂色、固定脚底锚点），先只做 idle 与 walk/run；射击不画身体动画。",
+    "第 4 步（1–2 天）手与枪：枪每把 idle+fire 2–3 帧；让 Claude/Antigravity 写 Aseprite Lua 或 Python 脚本，用 RotSprite 批量生成 16/32 角度并拼成精灵表，或在 960×540 viewport 内运行时旋转，二者统一选一种。",
+    "第 5 步（1 天）Godot 接入：AnimatedSprite2D（SpriteFrames）播放身体；Node2D 子节点挂 Hand/Gun Sprite2D，aim_angle 驱动 rotation，后坐用 Tween/脚本位移；受击用闪白 shader；Y-Sort 用脚底锚点。",
+    "第 6 步（1–2 天）变体：僵尸与人类变体用 Aseprite 色板替换+配件层（头/帽/衣）叠加，避免每变体重画动画；差异大的僵尸（如巨型）单独画，数量控制在 3–5 种。",
+    "第 7 步（2–3 天）loot 图标批量化：确定 32×32 图标规则（统一左上光、1px 深色轮廓、固定色板），用 PixelLab/Nano Banana 批量出，Python 脚本按调色板重映射并检查越界；货架/箱内显示复用缩小图标。",
+    "第 8 步（持续）一致性回归：每批新资产放进 16 人同屏测试场景，用多模态审图（Claude/Antigravity）对比调色板和密度，不合格退回；每周重新核对 Steam AI 披露要求。",
+    "备选路线（仅当 8 向以上或大量变体成为瓶颈时）：Blender 低模+FoozleCC 脚本渲染 8 方向，低分辨率直出、关抗锯齿、调色板吸附，再进入同一 SpriteFrames 流程。"
+  ],
+  "tools": [
+    {
+      "名称": "PixelLab",
+      "价格": "按量 API 约 $0.01–0.15/次（官方 API 页）；订阅档位[不确定]，第三方称有免费试用和约 $12/月入门档",
+      "用途": "像素角色生成、4/8 方向旋转、骨架动画、走路循环、inpaint 修图、图标",
+      "链接": "https://pixellab.ai/pixellab-api",
+      "版本或核对日期": "核对 2026-11-26",
+      "Godot接入": "导出 PNG 精灵表→Godot SpriteFrames；官方有 Aseprite 扩展和 MCP（可被 Claude Code/Antigravity 调用）；无原生 Godot 插件"
+    },
+    {
+      "名称": "Retro Diffusion（rd-animation）",
+      "价格": "Aseprite 扩展约 $20 Lite/$65 完整（第三方来源，未核实）；Replicate/Scenario 按量",
+      "用途": "4 方向走路循环精灵表 192×192（48×48 每格）",
+      "链接": "https://replicate.com/retro-diffusion/rd-animation",
+      "版本或核对日期": "核对 2026-11-26",
+      "Godot接入": "PNG 精灵表导入 SpriteFrames"
+    },
+    {
+      "名称": "Aseprite",
+      "价格": "$19.99",
+      "用途": "逐帧编辑、RotSprite 旋转、调色板、导出精灵表+JSON",
+      "链接": "https://www.aseprite.org/",
+      "版本或核对日期": "价格取自前序报告，未再核对",
+      "Godot接入": "导入插件（社区 Aseprite Wizard）或导出 PNG+JSON"
+    },
+    {
+      "名称": "Godot Skeleton2D / Bone2D / Polygon2D",
+      "价格": "免费",
+      "用途": "网格变形骨骼动画（不推荐用于本项目像素角色主体）",
+      "链接": "https://docs.godotengine.org/en/latest/tutorials/animation/2d_skeletons.html",
+      "版本或核对日期": "文档页标注 4.7 latest，核对 2026-11-26",
+      "Godot接入": "内置"
+    },
+    {
+      "名称": "Spine / DragonBones",
+      "价格": "Spine 专业版价格[不确定，未核对]；DragonBones 免费但已基本停止更新[不确定]",
+      "用途": "骨骼动画与换附件",
+      "链接": "https://esotericsoftware.com/",
+      "版本或核对日期": "未核对",
+      "Godot接入": "Spine 需 spine-godot 运行时（官方提供）；DragonBones 为社区插件"
+    },
+    {
+      "名称": "FoozleCC 4/8 方向 Blender 渲染脚本",
+      "价格": "免费（itch.io）",
+      "用途": "3D→多方向精灵表",
+      "链接": "https://foozlecc.itch.io/render-4-or-8-direction-sprites-from-blender",
+      "版本或核对日期": "核对 2026-11-26",
+      "Godot接入": "PNG 精灵表"
+    },
+    {
+      "名称": "Pixel Kit（Blender 插件）",
+      "价格": "[不确定]",
+      "用途": "低分辨率渲染+描边+调色板吸附",
+      "链接": "https://superhivemarket.com/products/pixel-kit---one-click-pixel-art-renderer",
+      "版本或核对日期": "核对 2026-11-26",
+      "Godot接入": "PNG 精灵表"
+    },
+    {
+      "名称": "Claude 网页版 / Antigravity（Gemini 4 Carbon 等）",
+      "价格": "按各自订阅",
+      "用途": "写 GDScript、Aseprite Lua、Python 批处理、审图",
+      "链接": "见前序报告",
+      "版本或核对日期": "2026-11",
+      "Godot接入": "生成脚本与 .tres"
+    }
+  ],
+  "mature_practices": "1）横版成熟作（Dead Cells）用 3D 预渲染换取动画量，但有专职角色动画师且 3D 工具链成熟。2）俯视射击成熟作（Nuclear Throne、Enter the Gungeon）一致做法是：身体少方向逐帧，武器与手独立层运行时旋转，身体不画手臂。3）CrossCode 做 8 方向逐帧，是大团队选择。4）Godot 社区的像素游戏几乎都用 AnimatedSprite2D/AnimationPlayer 驱动逐帧，Skeleton2D 主要用于 HD/矢量风；这是我从论坛检索得出的印象，不是统计。5）AI 工具的成熟用法是「出底稿+人工清理」，没有找到可以不修图直接上架的像素动画成功案例。",
+  "consistency_method": "锁定 16–24 色调色板并用 Python 脚本检查越界；统一左上光；1px 轮廓规则；所有资产原生 48 密度，不缩放；同一角色全部动画在同一 AI 会话/同一参考图下出；枪旋转方式全局统一（全部运行时旋转，或全部预渲染）；每批资产放同一测试场景做多模态审图。AI 一致性漂移（比例、色板、线宽）是行业共性问题，需要每批检查。",
+  "animation_spec": "沿用前序报告：人类 idle 3×4、run 3×6、hurt 3×1–2、death 1×6、infection 1×8–10，约 45–52 帧；僵尸约 54 帧；每把枪 idle 1+fire 2–3；手 1–2 张。首版约 100–110 张手工/AI 清理帧。工作量估算（估计）：纯手绘 50–150 小时；AI 底稿+清理 25–60 小时；3D 预渲染一次性搭管线（建模、绑骨、渲染脚本）约 80–200 小时，但变体和方向数增加时边际成本低；Skeleton2D 搭一个角色约 20–40 小时，但视觉与像素风冲突，不计入可用方案。",
+  "license_terms": "Godot、Aseprite 导出物无授权限制。PixelLab/Retro Diffusion 的商用与训练数据条款在本次抓取页面中未显示，[不确定]，上线前需读 ToS；Steam 自 2026-01 起披露表只要求披露「随游戏发行、被玩家消费」的预生成 AI 内容，幕后工具（如代码助手）不需披露，AI 生成的像素精灵属于需披露范围（我的推断，来源 PC Gamer/GamingOnLinux 对政策的报道）。美国版权局口径下，大量人工修改有助于获得版权保护，[不确定，未核实]。WinLu 原图不得进公开仓库。",
+  "cost_time_estimate": "现金（估计）：Aseprite $19.99；PixelLab 1–3 个月 $10–50 或按 API 量计 $10–60（官方单价约 $0.01–0.15/次，按 200–600 次有效调用估）；Retro Diffusion 扩展 $20–65；Blender/FoozleCC 免费。合计 AI 像素路线 $30–150。外包委托对照：100 帧 $300–1,500（前序报告估计）。工时（估计）：逐帧+AI 底稿 1 套人类+1 套僵尸+10 把枪+100 个 loot 图标约 80–180 小时，其中修图占 60%；3D 预渲染路线首套 150–300 小时（含学习），第二套及后续变体 10–30 小时/套；Skeleton2D 不建议。假设：单人、零美术基础、48px、每角色 3 面。",
+  "fit_for_user": "逐帧像素+AI 底稿：高度适配（与 WinLu 48 密度一致、3 面方案成熟、AI 工具可批量出 loot 图标和变体底稿、Claude/Antigravity 可写全部脚本）。Skeleton2D/Spine/DragonBones：低适配，网格变形与像素风冲突，且 48px 小人的骨骼平滑动画看起来像「PPT 动画」，对标 CrossCode 的手感不符；唯一可借用的是 Godot AnimationPlayer 驱动枪与手的位置/旋转/后坐（这不算骨骼动画）。3D 预渲染：中低适配（零美术基础者要学建模绑骨，且 48px 下 3D 降采样容易糊成团；优势是方向数和变体边际成本低，适合后期若要 8 向或几十种僵尸时再引入）。AI 动画工具：中高适配但必须人工清理，批量 loot 图标最合适，复杂动作（射击连发、感染变身）不稳。16 人联机：同步只需 aim_angle(uint16)+动画状态枚举，对所有路线都友好。Godot 4.7：AnimatedSprite2D/SpriteFrames 成熟稳定。",
+  "network_sync_impact": "逐帧+独立手枪方案：只同步 aim_angle（uint16）和 locomotion_state 枚举，朝向与动画帧本地推导，枪口火光/后坐由本地基于「开火事件」触发，不用同步骨骼姿态。Skeleton2D 路线则要同步各骨骼状态或至少统一动画时间戳，带宽与复杂度更高，没有收益。3D 预渲染对联机无额外影响（最终仍是精灵表）。运行时旋转与预渲染角度的差异只在表现层，不影响判定，但预渲染 16 角度时瞄准判定仍应用精确角度。",
+  "risks_pitfalls": [
+    "AI 动画一致性漂移：比例、调色板、线宽跨帧变化，必须逐帧清理，工时容易被低估为「点一下」。",
+    "把 AI 输出的 64/128px 图缩小到 48px 会产生混合像素（mixels）和糊边，必须原生 48 画布生成或用最近邻+手修。",
+    "Skeleton2D 网格变形导致亚像素图像、锯齿和插值模糊，与像素风格冲突；Godot 论坛有相关锯齿提问。",
+    "运行时旋转像素枪在 30°/60° 等角度会断线，需 viewport 整数缩放或预渲染。",
+    "3D 预渲染做零基础入门成本高：建模、绑骨、渲染脚本、调色板吸附缺一不可，且 48px 下细节被吞。",
+    "PixelLab 价格是官方「估算」，订阅与商用条款未核实，可能变动；服务关停风险需保留已生成源图。",
+    "Steam 的 AI 披露要求：随游戏发行的 AI 生成美术需在商店页披露，部分玩家会因此差评或不买，影响转化。",
+    "批量 loot 图标若不同批次用不同提示词，会出现风格漂移；需固定参考图和调色板。"
+  ],
+  "reversibility_cost": "逐帧→3D 预渲染：枪与手层逻辑保留，身体帧全部重做，约 100–300 小时；逐帧→骨骼：Godot 节点结构要重写，约 60–150 小时，且美术全部重做；AI 与手绘之间可混合，返工低（AI 输出本就是 PNG 底稿）；先把输出统一成「精灵表+SpriteFrames」接口，可让后续替换身体来源而不改代码，重做成本主要在美术而不在代码，约 1–3 天代码调整。",
+  "ai_can_do": "2025-11 至今可靠完成：Claude/Antigravity 写 GDScript（AnimatedSprite2D、枪旋转、后坐、闪白 shader、状态机）、Aseprite Lua 与 Python 批处理（RotSprite 预渲染、调色板检查、SpriteFrames 生成）；PixelLab 生成 48–64px 角色、4/8 方向旋转、简单走路/待机循环、静态 loot 图标和 inpaint 修图；Retro Diffusion rd-animation 出 4 向走路循环（192×192 精灵表）；多模态审图检查密度/调色板。不可靠：复杂动作（攻击连招、感染变身）、跨动画一致性、无需人工清理的上架级精灵、端到端自动生成「3 面+独立手枪」结构。",
+  "human_must_do": "确定人物比例与风格拍板；逐帧清理 AI 底稿（对齐网格、统一色板和描边、保持 3 面体型一致）；挑选并统一枪的旋转方式；16 人同屏在 1080p/1440p/Steam Deck 上做可读性实测；核对 PixelLab/Retro Diffusion 服务条款和 Steam AI 披露；决定是否升级到 3D 预渲染。",
+  "judgment": "明确立场：路线选「逐帧像素身体（3 面）+ 代码驱动手枪层」，AI（PixelLab/Retro Diffusion）只做底稿加批量 loot 图标，人工在 Aseprite 清理；不要用 Skeleton2D/Spine/DragonBones 做像素角色，也不要一开始就上 3D 预渲染。理由：①3 面方案帧量最低（约 100 帧）且是 Nuclear Throne/Gungeon 验证过的结构；②骨骼网格变形与像素风冲突，Godot 官方流程偏向 HD/矢量；③3D 预渲染在 48px 下性价比不高，学习成本远大于画 100 帧，只有在变体数量爆炸时才值得；④loot 图标、枪支、变体换色是 AI 最能省工时的部分，是本项目「大量重复资产」需求的主要杠杆；⑤我没找到使用 AI 骨架动画做 48px 3/4 俯视的公开成功案例，所以首版必须设计成「AI 失败时可退回手画」。",
+  "confidence": "中：方向数、旋转与 Skeleton2D 限制有官方/多来源支撑（高）；PixelLab 实际出图质量、单件成本和一致性缺少独立评测，工时为估算（低）；Dead Cells 具体参数未取得（低）。",
+  "win_rate_impact": "估计：选逐帧+AI 底稿相对「全手绘」可省约 30–50% 美术工时，对按时完成的概率约 +3～+6 个百分点；相对「Skeleton2D 路线」可避免风格割裂带来的商店页转化损失（估计 5–15% 愿望单转化）。若 AI 清理工时被低估，收益归零甚至因返工为负。以上均为主观估计。",
+  "sources": [
+    {
+      "标题": "PixelLab API（价格与端点，抓取 2026-11-26）",
+      "URL": "https://pixellab.ai/pixellab-api",
+      "日期": "2026-11-26",
+      "类型": "一手（厂商官方，价格为其估算）"
+    },
+    {
+      "标题": "PixelLab 首页（功能：骨架动画、4/8 向、Aseprite 扩展、MCP）",
+      "URL": "https://pixellab.ai/",
+      "日期": "2026-11-26",
+      "类型": "一手（厂商）"
+    },
+    {
+      "标题": "Godot 文档：Cutout animation with 2D skeletons（4.7 latest）",
+      "URL": "https://docs.godotengine.org/en/latest/tutorials/animation/2d_skeletons.html",
+      "日期": "2026-11-26",
+      "类型": "一手（官方文档）"
+    },
+    {
+      "标题": "Godot 论坛：2d Skeleton animation jaggies/artifacts",
+      "URL": "https://forum.godotengine.org/t/2d-skeleton-animation-im-getting-jaggies-artifacts/74834",
+      "日期": "[不确定]",
+      "类型": "社区单帖"
+    },
+    {
+      "标题": "Art Design Deep Dive: Using a 3D pipeline for 2D animation in Dead Cells（Thomas Vasseur）",
+      "URL": "https://www.gamedeveloper.com/production/art-design-deep-dive-using-a-3d-pipeline-for-2d-animation-in-dead-cells",
+      "日期": "2018-01",
+      "类型": "一手（开发者自述，本次仅获搜索摘要，未读到全文）"
+    },
+    {
+      "标题": "80.lv：Case study: Dead Cells character art pipeline",
+      "URL": "https://80.lv/articles/case-study-dead-cells-character-art-pipeline",
+      "日期": "[不确定]",
+      "类型": "二手"
+    },
+    {
+      "标题": "cxong：How many sprites do different perspectives need",
+      "URL": "https://cxong.github.io/2022/03/how-many-sprites-do-different-perspectives-need",
+      "日期": "2022-03",
+      "类型": "个人博客（有经验）"
+    },
+    {
+      "标题": "Scenario：Retro Diffusion Models - The Essentials（rd-animation 输出格式）",
+      "URL": "https://help.scenario.com/en/articles/retro-diffusion-models-the-essentials/",
+      "日期": "2026-11-26核对",
+      "类型": "第三方平台文档"
+    },
+    {
+      "标题": "Replicate：retro-diffusion/rd-animation",
+      "URL": "https://replicate.com/retro-diffusion/rd-animation",
+      "日期": "2026-11-26核对",
+      "类型": "第三方平台"
+    },
+    {
+      "标题": "FoozleCC：Render 4 or 8 Direction Sprites from Blender",
+      "URL": "https://foozlecc.itch.io/render-4-or-8-direction-sprites-from-blender",
+      "日期": "2026-11-26核对",
+      "类型": "工具作者页"
+    },
+    {
+      "标题": "Pixel Kit（Blender 像素渲染插件）",
+      "URL": "https://superhivemarket.com/products/pixel-kit---one-click-pixel-art-renderer",
+      "日期": "2026-11-26核对",
+      "类型": "厂商"
+    },
+    {
+      "标题": "DEV Community：Practical workflow for AI pixel art (Gemini 2D animation experiment)",
+      "URL": "https://dev.to/kenjidev9662/practical-workflow-for-ai-pixel-art-gemini-2d-animation-experiment-21le",
+      "日期": "2026",
+      "类型": "个人实验"
+    },
+    {
+      "标题": "PC Gamer：Steam AI 披露表更新（针对玩家消费内容）",
+      "URL": "https://www.pcgamer.com/software/ai/steam-updates-ai-disclosure-form-to-specify-that-its-focused-on-ai-generated-content-that-is-consumed-by-players-not-efficiency-tools-used-behind-the-scenes/",
+      "日期": "2026-01",
+      "类型": "媒体"
+    },
+    {
+      "标题": "前序报告：Carbon帖子真伪与Gemini骨骼动画能力核实 / 像素规格与3-4斜俯视角人物方向方案",
+      "URL": "/home/user/Deep-Research-skills/godot-2d-art-route/results/",
+      "日期": "2026-11-26",
+      "类型": "本项目内部"
+    }
+  ],
+  "uncertain": [
+    "cases",
+    "data_points",
+    "tools",
+    "license_terms",
+    "cost_time_estimate",
+    "win_rate_impact",
+    "key_findings",
+    "confidence"
+  ]
+}

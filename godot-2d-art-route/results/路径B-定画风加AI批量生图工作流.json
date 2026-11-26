@@ -1,0 +1,230 @@
+{
+ "core_question": "先定画风、再用 AI 批量出图的路线（路径B），能否让零美术基础的单人开发者在 48px 3/4 俯视下，批量产出 loot 图标、持枪人物、多种僵尸变体及其动画，并且画风一致、能上 Steam？",
+ "one_line_conclusion": "路径B 适合出静态素材：loot 图标、货架/箱内物品、UI、部分怪物变体。人物 3 面身体加动画可用 PixelLab 骨骼/多方向功能辅助，但仍要人工修图。不要指望全自动、零审图。想让 48px 帧动画完全一致，目前 AI 做不到，必须保留你本人逐帧验收。",
+ "key_findings": [
+  "工具分两类：(a) 像素专用：PixelLab（4/8 方向旋转、骨骼动画、文本动画、tileset、Aseprite 插件、MCP 服务器，官网首页确认）、Retro Diffusion（Aseprite 扩展，itch.io 标价 $65 起，本地运行；另有网页版积分包 $5/250 积分起，后者日期不明）；(b) 通用模型：Nano Banana 系（2.1 于 2026-10-06 GA，最多 14 张参考图，官方称可保持 4 个角色/10 个物体一致，1K 图约 $0.034，来源间价格有分歧）、GPT 图像模型、SD/Flux+像素 LoRA、ComfyUI。",
+  "通用模型出的『像素风』图不是真像素网格：2026 年的 Nano Banana 像素风指南明确说『远看对，网格已消失』，必须做网格检测与对齐、降采样、调色板量化后才能进引擎。像素专用工具直接输出整数网格，这是它们对你最大的价值。",
+  "一致性：社区实践是『从一个锚点帧一次生成整条动画条』优于逐帧生成（Nano Banana 2 对 GPT Image 1.5 的说法），但 OpenAI 社区有相反意见，且都是非对照的经验帖。开源项目 artist2d（Godot+Gemini 像素管线）自带验收报告：角色 FAIL（6 个阻断问题：刀鞘重复、武器长度不一致、跑步 4 帧循环重复等），场景 PASS。说明 2026 年末多帧角色一致性仍不可靠，场景/静物较稳。",
+  "loot 图标是路径B 最强的用法：整套图标一次生成在一张图里再切片（SpriteCook 做法），或用共享批量提示词锁住光照、描边、调色板（seeles.ai 建议）。行业指南称图标须在 24–64px 下可读，一周的风格漂移会毁掉库存界面。我没找到针对 48x48 的专门评测，这部分是推断。",
+  "持不同枪支的人物表现：本项目计划『3 面身体+独立旋转手与枪』，枪可以做成独立的小精灵（单件静物，AI 易出），旋转由 Godot 代码完成，这比让 AI 出每把枪×每个方向×每帧的整图稳得多。但像素图旋转会出 mixel（像素大小不一致）。48px 下枪短，旋转伪影相对可接受，需要实测 [不确定]。",
+  "多种僵尸/人类变体：可用同一骨架/同一基础身体让 PixelLab 改外观（换衣服、皮肤、血迹）来出变体，减少重绘；但每个变体的 3 面×走/跑/受击/死亡等动画，仍要逐个检查，工作量随变体数线性上升。",
+  "Steam 规则（2026-01 中旬改版）：披露表单聚焦『玩家会看到/听到的 AI 内容』（随游戏发布的美术、音频、叙事、本地化，以及商店页素材），明确『开发效率类工具不是重点』；分为预生成内容与实时生成内容，后者要说明防非法输出的护栏。你用 AI 出的美术属于预生成，必须披露；披露会公开显示在商店页『关于此游戏』。各媒体对日期（1月16/17日）和商店营销素材是否豁免说法不一，需以 Steamworks 文档为准。",
+  "玩家态度：2026-10 新上架游戏有 49.9% 披露了 AI（去年同月 26.4%；2026 年 1–10 月约 40.1%，不同统计口径差别大，另一份 5.36 万款的普查给出 2026 年 7 月 30.8%）。披露里美术占 63%。评论少于 10 条的 2026 新作里 47% 披露，评论 ≥1000 的只有 14%，说明 AI 披露作品很难做成大作。PC Gamer 报道一位分析师称 AI 污名可使评论数减少约 53%且评分更差；另一份分析显示 ≥50 评论游戏披露者好评率 77%，未披露者 83%（未控制类型/价格，因果不明）。",
+  "误判风险：不披露但被玩家怀疑用 AI（例如 FragPunk 被指控）会引发信任问题。像素风 AI 图常有『像素大小不一、孤立噪点、抗锯齿残留』这类特征，容易被识别。我没有找到明确的『因 AI 美术被刷差评』的具体个案，所以这里只能作定性判断。",
+  "商用授权：PixelLab 官网首页未写授权条款；Retro Diffusion 的商用权在 itch 页面上不明确（有用户留言要求写明；SpriteCook 的对比页称允许，但是二手说法），授权文本在扩展包内的 EULA。Retro Diffusion 开发者称训练数据是获得授权的像素画师素材（自述）。在把素材放进公开仓库或售卖之前，必须逐个工具核对 ToS。",
+  "Antigravity 内置的是 Nano Banana 2 出图，用户不能自定义（官方模型页 2026-11 抓取）；Claude 网页版和 Gemini 4 Carbon 本身不出图，但可以写 Python（Pillow）做降采样/量化/切图，也能通过 MCP 连接 PixelLab 与 Aseprite（diivi/aseprite-mcp、willibrandon/pixel-mcp 等，需要本机装 Aseprite）。"
+ ],
+ "cases": [
+  {
+   "名称": "artist2d（Godot+Gemini 像素资产管线）",
+   "链接": "https://github.com/itheamyvalgulious/artist2d",
+   "评论数及抓取日期": "不适用（开源仓库）；沿用 2026-11-26 前批次抓取",
+   "引擎": "Godot 4",
+   "玩法贴近度": "中",
+   "美术来源占比": "AI（3D 人偶出姿势+Gemini 重绘+程序化后处理）",
+   "素材来源证据及强度": "仓库自带验收报告：角色 FAIL、飞船场景 PASS；强（自曝失败）"
+  },
+  {
+   "名称": "diivi/aseprite-mcp 的 swordsman 示例",
+   "链接": "https://github.com/diivi/aseprite-mcp",
+   "评论数及抓取日期": "不适用；2026-11-26",
+   "引擎": "Aseprite",
+   "玩法贴近度": "低",
+   "美术来源占比": "AI（Claude 经 MCP 驱动）",
+   "素材来源证据及强度": "README 展示，作者自选；弱到中"
+  },
+  {
+   "名称": "Steam 披露统计（2026-10 新作 49.9% 披露）",
+   "链接": "https://dexerto.com/gaming/almost-half-of-all-new-steam-games-use-ai-now-3423933",
+   "评论数及抓取日期": "不适用；2026-11-26",
+   "引擎": "不适用",
+   "玩法贴近度": "不适用",
+   "美术来源占比": "AI 披露者占比",
+   "素材来源证据及强度": "社区统计转述；中"
+  }
+ ],
+ "data_points": [
+  "Steam 2026-10 新上架游戏 AI 披露率 49.9%（去年同月 26.4%）；年内累计约 40.1%（Dexerto/Outlook Respawn 等转述社区统计，2026-11 初）；另一普查 2026-07 为 30.8%，口径差异大",
+  "披露内容中美术占 63%、文本/翻译 30%、语音 7%（WNHub 转述）",
+  "2026 新作评论<10 条者 47% 披露，评论≥1000 者仅 14%（同上）；≥50 评论游戏好评率披露 77% vs 未披露 83%（未控制变量）",
+  "PixelLab 第三方列示价：Apprentice $12/月、Artisan $24/月、Architect $50/月（G2，未能在官网核实，生成额度未知）[不确定]",
+  "PixelLab API 单次调用约 $0.007–$0.013（第三方转述，口径不明）[不确定]",
+  "Retro Diffusion Aseprite 扩展 itch.io 最低 $65（一次性买断，本地运行）；网页积分包 $5/250 积分起（日期不明）",
+  "Nano Banana 2.1：2026-10-06 GA，1K 图约 $0.0336（Decrypt/TechRepublic），另一来源给出不同口径，参考图上限 14 张",
+  "icon 在游戏中须在 24–64px 下可读（jenova.ai 指南，厂商博客）"
+ ],
+ "independent_verification": "Steam 披露改版有 GamingOnLinux、PC Gamer、Notebookcheck 等多家媒体印证，可信度高。披露率统计来自社区分析师，多家转述同一来源，口径不一致。PixelLab 的功能列表来自其官网自述（一手但是宣传），价格只有 G2 一个第三方来源。像素 AI 一致性方面，artist2d 的自曝失败是少见的独立反例。『批量图标可保持风格一致』主要来自 SpriteCook、seeles.ai 等厂商博客，缺少独立评测。我没能找到 48px 专项评测，也没有找到玩家因 AI 美术刷差评的具体个案。",
+ "workflow_steps": [
+  "1. 先用 WinLu Spaceship Tileset 的真实截图定画风：锁定调色板（从 tileset 提取 16–32 色）、光照方向（统一左上）、描边规则（深色 1px 外描边）、像素密度（48px 格内的角色约 40–48px 高）。写成一页『风格圣经』存进仓库，Claude 和 Antigravity 都读它。",
+  "2. 用 PixelLab（或 Retro Diffusion）以 tileset 截图为风格参考，先做 1 个『金标准』角色（下/上/右 3 面）和 1 套 12 个图标，自己人工验收；不合格就改提示词，不要直接批量。",
+  "3. 批量出 loot 图标：成套生成（一次 6–12 个）、切片、后处理（按 48px/或 32px 整数网格降采样、量化到锁定调色板、去抗锯齿、去孤立像素），让 Claude 网页版用 Python+Pillow 写成可复跑脚本。",
+  "4. 枪械做成独立精灵（侧向 1 张，必要时再加一张俯视），由 Godot 代码旋转；先做 6–8 把武器的原型验证旋转后的 mixel 是否可接受。",
+  "5. 人物/僵尸：用同一骨架的 PixelLab 骨骼动画或 4/8 方向功能出 idle/walk 起步，其他状态（射击/受击/感染/死亡）逐个补；每个动画用脚本拼成 sprite sheet，在 Godot 里实机播放检查抖动。",
+  "6. 在 Antigravity（Gemini 4 Carbon/Claude Opus 5.5）里让 agent 写 Godot 导入脚本：切图、生成 SpriteFrames、命名约定、批量 .import 设置（过滤设为 Nearest）。",
+  "7. 每批素材入库前用同一场景截图做『并排对比』：与 Tileset 同屏，检查色调和像素密度，不合格打回。",
+  "8. 上架前在 Steam 披露表单勾选预生成美术 AI，并在商店页写明；预留一份 AI 素材清单，便于以后替换。"
+ ],
+ "tools": [
+  {
+   "名称": "PixelLab",
+   "价格": "第三方列示 $12/$24/$50 每月（未核实）",
+   "用途": "像素角色、4/8 方向、骨骼动画、tileset、图标、Aseprite 插件",
+   "链接": "https://pixellab.ai",
+   "核对日期": "2026-11-26",
+   "Godot接入": "导出 PNG/sprite sheet 进 Godot；有 MCP 服务器可在 Claude Code 等客户端调用；官网未提 Godot 插件"
+  },
+  {
+   "名称": "Retro Diffusion",
+   "价格": "Aseprite 扩展 $65 起买断；网页积分 $5/250 积分起",
+   "用途": "本地像素生成、调色板约束",
+   "链接": "https://astropulse.itch.io/retrodiffusion",
+   "核对日期": "2026-11-26",
+   "Godot接入": "经 Aseprite 导出 PNG；需自己的显卡/本地环境 [不确定]"
+  },
+  {
+   "名称": "Nano Banana 2.1 / Nano Banana 2（Antigravity 内置）",
+   "价格": "API 约 $0.034/张 1K（来源分歧）",
+   "用途": "概念图、参考图、成套图标原图，不是真像素",
+   "链接": "https://www.techrepublic.com/article/news-google-nano-banana-2-1-image-editing-pricing/",
+   "核对日期": "2026-11-26",
+   "Godot接入": "出图后需后处理再导入"
+  },
+  {
+   "名称": "Aseprite + MCP（diivi/aseprite-mcp、willibrandon/pixel-mcp）",
+   "价格": "Aseprite 约 $20 [不确定]；MCP MIT 开源",
+   "用途": "让 AI 驱动 Aseprite 画/改/导出",
+   "链接": "https://github.com/diivi/aseprite-mcp",
+   "核对日期": "2026-11-26",
+   "Godot接入": "导出 sprite sheet/JSON，用 Godot 导入"
+  },
+  {
+   "名称": "Python+Pillow 后处理脚本（自写，Claude 生成）",
+   "价格": "免费",
+   "用途": "降采样、调色板量化、切片、拼图",
+   "链接": "不适用",
+   "核对日期": "2026-11-26",
+   "Godot接入": "批量输出到 res://art/"
+  },
+  {
+   "名称": "Godot 内 AI 精灵插件（如 PixelMaker，Asset Library #5294）",
+   "价格": "未核实 [不确定]",
+   "用途": "编辑器内调用 AI 出图",
+   "链接": "https://godotengine.org/asset-library/asset/5294",
+   "核对日期": "2026-11-26",
+   "Godot接入": "Godot 4 插件；成熟度未评估"
+  },
+  {
+   "名称": "ComfyUI + 像素 LoRA / SD / Flux",
+   "价格": "免费（本地，需显卡）",
+   "用途": "高度可控的批量图标/变体",
+   "链接": "https://comfy.org/workflows/use-cases/sprite-sheet-generator/",
+   "核对日期": "2026-11-26",
+   "Godot接入": "PNG 输出；对零基础门槛高"
+  }
+ ],
+ "mature_practices": "成熟做法：(1)先在仓库里写风格圣经并配参考图，AI 每次都带上；(2)图标成套一次生成；(3)AI 只出『原料』，用确定性脚本做网格对齐/量化，避免靠提示词控制像素；(4)人物用部件化、枪独立旋转，减少需要一致的帧数；(5)AI 素材清单留档以便披露与替换。我没有找到靠纯 AI 像素图做出高评价 Steam 对战游戏的公开成功案例，这是缺口。",
+ "consistency_method": "调色板锁定（从 Tileset 提取，量化脚本强制映射）；统一光照方向与 1px 深色描边；统一像素密度（降采样到整数网格）；参考图/锚点帧；同一骨架出变体；PixelLab 风格参考功能；若用 SD/Flux，可训练像素 LoRA（零基础门槛高）。",
+ "animation_spec": "建议 3 面（下/上/右，左镜像）。基础 8 帧走、4 帧待机、射击/受击/感染/死亡各 3–6 帧；枪与手独立旋转，不占身体帧。估算：每角色 3 方向×约 6 个状态×平均 5 帧≈90 帧；每个僵尸变体若不共享骨架，需再出一遍 90 帧并检查；用 AI+人工修图，保守估计每角色 1–3 天（我的推断，无实测来源）[不确定]。多变体共享动画骨架可降到每变体半天。",
+ "license_terms": "PixelLab 官网未写商用条款，须读 ToS [不确定]；Retro Diffusion 商用权页面不明确，授权在扩展包内 EULA；Nano Banana 输出商用以 Google 条款为准，输出可能带 SynthID 水印 [不确定]；Aseprite 本身是商用软件。AI 生成图在美国的版权可保护性有限，不要假设能独占；联机分发和放公开仓库的条款均需单独核对。本项目 CLAUDE.md 要求把产物放到 research 分支而不是 master，素材仓库同理需区分。",
+ "cost_time_estimate": "现金：PixelLab $12–50/月；Retro Diffusion $65 买断；Nano Banana 约 $0.03/张，数百张约 $10–30；Aseprite 约 $20；你已有的 Claude/Antigravity 订阅另计。估算 150–300 个 loot 图标：每个出图+筛选+后处理平均 3–10 分钟，合计 10–40 小时；8–12 个角色/僵尸变体的 3 面动画：40–150 小时（含修图）。假设：你本人审图、不外包；无实测来源，属推断。",
+ "fit_for_user": "优点：不需要美术基础就能起步；PixelLab 的骨骼/多方向功能贴合你的『3 面+独立旋转手枪』；loot 图标最适合批量；PixelLab 有 MCP，可与 Claude 联动。缺点：(1)48px 下一个像素错位就很明显，你零基础难以判断好坏；(2)变体和动画成本随数量线性涨；(3)Steam 披露后可能影响评论与销量；(4)人物动画一致性仍要人工修，工具无法保证。对 16 人对战搜打撤，大量 loot 图标是刚需，所以我建议：图标和货架物品走路径B；人物主体走『外购/基础精灵+AI 变体』混合，不要全靠 AI 动画。",
+ "network_sync_impact": "间接影响：若采用 3 面+独立旋转手枪，联机只需同步 20 Hz 朝向角与动画状态枚举，不依赖美术帧数；若 AI 导致每个变体帧数不同，需要在配置文件里以数据驱动动画状态，避免硬编码。武器图标/变体多不影响带宽（只同步 ID）。",
+ "risks_pitfalls": "1. 通用模型出的像素风不是真网格，漏做后处理会在缩放时糊边；2. 多帧一致性崩坏（artist2d 案例）；3. 风格漂移（几周后图标不一致）；4. 工具价格/额度变动，PixelLab 价格未能官网核实；5. 授权条款不明；6. Steam 披露与玩家负面情绪，披露游戏评论更少、好评率略低（因果不明）；7. 不披露被发现的信任风险；8. 你无美术基础，难以发现细微瑕疵。",
+ "reversibility_cost": "中低：图标和单帧资产可以逐件替换为外购或手绘，文件名和图集规范保持不变即可；人物动画若中途改路线，需要重做整套帧，但因为用部件化+代码旋转，枪、手、特效可保留。关键是第一天就把素材命名与 SpriteFrames 生成脚本化，换素材只需重跑脚本。",
+ "ai_can_do": "PixelLab：生成角色、4/8 方向、骨骼动画、图标、tileset；Nano Banana 2.1：概念图和成套图标原图、参考图；Claude Opus 5.5/Sonnet 5.5 与 Gemini 4 Carbon：写 Pillow 后处理、切图、SpriteFrames 生成、Godot 导入脚本、调色板提取、图标命名与清单；审图（看图找不一致，但 48px 细节不可靠）。",
+ "human_must_do": "定画风与风格圣经；验收金标准角色与每批图标；决定哪些素材必须外购或重画；在 Godot 里实机查看抖动与 mixel；阅读并保存各工具的商用条款；Steam 披露表单填写与商店页文案；最终美术统一性把关。",
+ "judgment": "我的立场：路径B 只当作『辅助生产线』，不当作整个美术路线。具体：loot 图标、货架物品、UI 小图标、僵尸/人类的皮肤变体走 PixelLab+脚本后处理，这是性价比最高的部分；人物主体与动画先用外购基础精灵或 PixelLab 骨骼出一个金标准，再让 AI 批量变体。不要指望 Nano Banana 直接出可用 48px 帧动画；一定要写后处理脚本。披露 AI 是必须的，要接受它对评论的轻微负面影响，大约与你想靠大量内容取胜的搜打撤玩法并不冲突。如果实测金标准角色在 Godot 里抖动严重，则退回外购。",
+ "confidence": "中。理由：Steam 规则与披露统计有多家来源；工具功能来自官网自述；48px 批量产出的难度与成本缺少独立实测，价格有未核实项。",
+ "win_rate_impact": "估计：相对于『全外购』，若 AI 用在图标和变体上，美术成本与时间下降较多，对完成度概率有正向影响（约 +3~8 个百分点，纯估计）；若人物动画也全靠 AI，则一致性风险和披露后的评论折损可能抵消收益（约 -2~5 个百分点，纯估计）。",
+ "sources": [
+  {
+   "标题": "Steam updates AI disclosure form (GamingOnLinux, 2026-01)",
+   "URL": "https://www.gamingonlinux.com/2026/01/valve-tweak-steam-ai-disclosure-form-for-developers-to-clarify-its-for-content-consumed-by-players/",
+   "日期": "2026-01",
+   "类型": "媒体，转述 Valve 表单原文"
+  },
+  {
+   "标题": "PC Gamer: Steam updates AI disclosure form",
+   "URL": "https://www.pcgamer.com/software/ai/steam-updates-ai-disclosure-form-to-specify-that-its-focused-on-ai-generated-content-that-is-consumed-by-players-not-efficiency-tools-used-behind-the-scenes/",
+   "日期": "2026-01",
+   "类型": "媒体"
+  },
+  {
+   "标题": "Dexerto: 近半新 Steam 游戏使用 AI",
+   "URL": "https://dexerto.com/gaming/almost-half-of-all-new-steam-games-use-ai-now-3423933",
+   "日期": "2026-11",
+   "类型": "媒体转述社区统计"
+  },
+  {
+   "标题": "PC Gamer: AI 污名使评论减少约 53%",
+   "URL": "https://www.pcgamer.com/software/ai/data-analyst-finds-ai-stigma-on-steam-can-reduce-the-number-of-reviews-a-game-gets-by-around-53-percent-and-the-reviews-it-does-get-are-more-negative/",
+   "日期": "2026",
+   "类型": "媒体转述分析师"
+  },
+  {
+   "标题": "PixelLab 官网",
+   "URL": "https://pixellab.ai",
+   "日期": "2026-11-26 抓取",
+   "类型": "一手（厂商自述）"
+  },
+  {
+   "标题": "PixelLab G2 列示价",
+   "URL": "https://ai.g2.com/marketplace/tools/pixellab",
+   "日期": "2026",
+   "类型": "第三方，未核实"
+  },
+  {
+   "标题": "Retro Diffusion Aseprite 扩展 itch.io",
+   "URL": "https://astropulse.itch.io/retrodiffusion",
+   "日期": "2026-11-26 抓取",
+   "类型": "一手"
+  },
+  {
+   "标题": "Nano Banana 2.1 发布（TechRepublic）",
+   "URL": "https://www.techrepublic.com/article/news-google-nano-banana-2-1-image-editing-pricing/",
+   "日期": "2026-10",
+   "类型": "媒体"
+  },
+  {
+   "标题": "Antigravity 官方模型页",
+   "URL": "https://antigravity.google/docs/models.md",
+   "日期": "2026-11-26 抓取",
+   "类型": "一手官方文档"
+  },
+  {
+   "标题": "artist2d Godot+Gemini 像素管线",
+   "URL": "https://github.com/itheamyvalgulious/artist2d",
+   "日期": "2026-11",
+   "类型": "一手开发者自述"
+  },
+  {
+   "标题": "Nano Banana 像素风游戏资产指南（SpriteCook）",
+   "URL": "https://www.spritecook.ai/blog/nanobanana-pixel-art-for-games",
+   "日期": "2026-03-19",
+   "类型": "厂商博客"
+  },
+  {
+   "标题": "diivi/aseprite-mcp",
+   "URL": "https://github.com/diivi/aseprite-mcp",
+   "日期": "2026",
+   "类型": "开源仓库"
+  },
+  {
+   "标题": "SpriteCook 游戏图标生成",
+   "URL": "https://www.spritecook.ai/game-icon-generator",
+   "日期": "2026",
+   "类型": "厂商"
+  }
+ ],
+ "uncertain": [
+  "PixelLab 价格与额度",
+  "Retro Diffusion 商用条款与网页积分价格日期",
+  "旋转后 mixel 可接受度",
+  "动画工时估算",
+  "win_rate_impact 具体幅度",
+  "Aseprite 价格",
+  "PixelMaker 插件成熟度",
+  "Nano Banana 价格口径",
+  "Nano Banana 输出水印"
+ ]
+}
