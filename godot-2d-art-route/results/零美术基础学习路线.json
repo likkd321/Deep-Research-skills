@@ -1,0 +1,137 @@
+{
+ "core_question": "零美术基础开发者如何在 4-12 周内系统学会足以支撑本项目（48px、3/4 斜俯视、3 面角色+旋转枪、物品图标）的像素美术，学什么、跟谁学、按什么顺序练？",
+ "one_line_conclusion": "用 12 周『改素材先行』路线：前 2 周学调色板/明暗/轮廓并临摹小图标，3-6 周改 WinLu 与现成人物素材，7-10 周做 1 个角色 3 面+手枪分离，11-12 周做动画与图标批量；教程以 Lospec、Saint11（Pedro Medeiros）、AdamCYounis、MortMort 为主，不要追求从零画出整套，而是追求『能改、能补、能保持一致』。",
+ "key_findings": [
+  "Lospec 的『Pixel Art: Where to Start』页是公认入口：提供按主题/作者可筛选的数百篇教程库，并建议先研究他人作品再自己创作；推荐 Idleworm 动画教程补动画基础（原为 Flash 动画师写）。",
+  "Pedro Medeiros（Saint11，MiniBoss 联合创始人，参与 TowerFall 美术）的像素教程以动画 GIF 形式为主，汇总在 blog.studiominiboss.com/pixelart，也在 itch.io 有合集（Patreon 门槛约 $5 获取合集，据搜索结果）；其更新状态不确定（有评论称不再做新教程）。他的教程强项是实战技巧：循环动画、挤压拉伸、特效、屏幕抖动等，对射击游戏特效很有用。",
+  "AdamCYounis 与 MortMort 是 YouTube 上的免费教程主力：MortMort 有 Aseprite 入门、时间轴与逐帧动画、抗锯齿等系列；AdamCYounis 覆盖入门到进阶（据搜索结果的社区描述，具体系列名本次未逐一核对[不确定]）。Brandon James Greer 为内容教学型创作者，本次未找到其课程细节[不确定]。",
+  "学习路径可归为：调色板（色相偏移、少色数）→ 明暗与形体（光源一致、材质）→ 轮廓可读性（缩小到游戏尺寸仍可辨）→ 抗锯齿/抖动取舍 → 动画（12 原则中的预备、挤压拉伸、跟随、弧线、缓入缓出，在像素里用帧间距和关键帧体现）→ 子像素动画（用颜色渐变制造亚像素位移，48px 下尤其有用）。",
+  "社区通用建议：从小画布与有限调色板开始（如画 5 个 16x16 的 4 色物体），先画完整个角色再碰 tileset/UI；避免只看教程不练习；传统绘画基础有帮助，但像素画约束多、对新手相对宽容（来源为博客/社区，单一来源）。",
+  "Steam 上有 Pixel Art Academy: Learn Mode（Early Access，单人开发，评价很正面），可作为游戏化入门；Udemy 有『Learn pixel art and create a game』（Godot 俯视游戏，评分 4.4/5，仅 38 人评分，样本小）。",
+  "『改素材』是最快的入门方式：对 WinLu 与现成人物素材做换色、改装备、加伤口/感染贴图、拆分手与枪，既能学会密度与风格，又能让产出自动贴合场景底座。48px 现成人物素材稀缺（见既有调研），改素材需特别注意不要混入 16px 放大素材。",
+  "零基础学习者的 devlog（Willard、averygamedev）都显示：靠研究、风格取舍与观众反馈迭代，可以在几个月内做出『可用』资产；但没有找到有人在 12 周内从零做出 48px 多方向角色整套动画的公开记录[不确定]。"
+ ],
+ "cases": [
+  {
+   "名称": "Willard 学像素画 devlog",
+   "商店链接": "https://nightrunstudio.itch.io/willard/devlog/418003/learning-to-pixel-art-willard-devlog",
+   "Steam评论数及抓取日期": "不适用",
+   "引擎": "[不确定]",
+   "玩法贴近度": "低",
+   "美术来源占比": "自制",
+   "素材来源证据及证据强度": "开发者 devlog 自述，中"
+  },
+  {
+   "名称": "Learning Pixel-Art（averygamedev）",
+   "商店链接": "https://averygamedev.itch.io/travel/devlog/410196/learning-pixel-art",
+   "Steam评论数及抓取日期": "不适用",
+   "引擎": "[不确定]",
+   "玩法贴近度": "低",
+   "美术来源占比": "自制",
+   "素材来源证据及证据强度": "开发者 devlog（自述为音乐/程序背景），中"
+  },
+  {
+   "名称": "Stardew Valley（Eric Barone 自学）",
+   "商店链接": "https://store.steampowered.com/app/413150/",
+   "Steam评论数及抓取日期": "[不确定]",
+   "引擎": "XNA/MonoGame",
+   "玩法贴近度": "低",
+   "美术来源占比": "自制100%",
+   "素材来源证据及证据强度": "PC Gamer/NPR，强；自述此前未做过像素画，据称练习数千小时"
+  }
+ ],
+ "data_points": [
+  "Lospec 教程库：数百篇（Lospec 页面描述）。",
+  "Udemy『Learn pixel art and create a game』评分 4.4/5，38 人评分（样本小）。",
+  "Saint11 教程合集 itch 门槛 $5（搜索结果显示）。",
+  "Eric Barone：开发约 4 年，美术练习数千小时（PC Gamer/大学博客）。",
+  "建议时间表（本报告设计）：12 周，每周 15-20 小时，共约 180-240 小时。"
+ ],
+ "independent_verification": "Lospec 页面、Saint11 教程汇总为一手/可验证；Udemy、Steam 课程数据来自商店页；练习顺序与时间表是本报告综合社区建议后的设计，没有独立实证其有效性；Brandon James Greer、AdamCYounis 具体内容未逐一核对。",
+ "workflow_steps": [
+  "第1周：装 Aseprite（或 Pixelorama）；读 Lospec『Where to Start』；选一个 16-32 色调色板；画 5 个 16x16 的 4 色小物体；学习色相偏移。",
+  "第2周：明暗与形体（球、盒、圆柱的光影，光源固定左上）；轮廓练习：把图标缩到 24-32px 仍可辨认。",
+  "第3-4周：改素材——在 Aseprite 打开 WinLu 瓦片，换色/加血迹/拼新房间；临摹 20 个武器/物品图标并统一为 48px 风格。",
+  "第5-6周：角色基础：画一个 48x48 的站姿正面，使用 3 面（下/上/右）；练习抗锯齿与选择性描边。",
+  "第7-8周：动画基础：2 帧待机呼吸、6 帧走路（学 Saint11 与 MortMort 的走路循环、挤压拉伸、弧线），学习子像素动画。",
+  "第9-10周：把手与枪拆为独立部件并在 Godot 中旋转测试；做 3 把枪、僵尸/人类变体（调色板替换+配饰）。",
+  "第11-12周：批量 loot 图标 20-40 个、感染/受击反馈动画、整体并排对比 WinLu，做风格检查清单；决定哪些资产继续手画、哪些外购或交给 AI 辅助。",
+  "4 周精简版：仅执行 1、2、3-4（改素材）+ 简化版 7，后续资产用外购/AI 补。8 周版：到第 8 周完成角色 3 面 + 基础动画。"
+ ],
+ "tools": [
+  {
+   "名称": "Aseprite",
+   "价格": "$19.99",
+   "用途": "学习与生产主力",
+   "链接": "https://dacap.itch.io/aseprite",
+   "版本或核对日期": "2026-06",
+   "与Godot接入": "PNG+JSON 或 AsepriteWizard"
+  },
+  {
+   "名称": "Pixelorama",
+   "价格": "免费 MIT",
+   "用途": "零成本练习",
+   "链接": "https://github.com/Orama-Interactive/Pixelorama",
+   "版本或核对日期": "1.x",
+   "与Godot接入": "PNG 导出"
+  },
+  {
+   "名称": "Lospec（调色板库、教程库）",
+   "价格": "免费",
+   "用途": "调色板选择与教程检索",
+   "链接": "https://lospec.com/",
+   "版本或核对日期": "2026-11",
+   "与Godot接入": "导入调色板文件到 Aseprite/Pixelorama"
+  },
+  {
+   "名称": "Saint11 教程合集",
+   "价格": "免费/Patreon 合集约 $5",
+   "用途": "动画与特效技巧",
+   "链接": "https://blog.studiominiboss.com/pixelart",
+   "版本或核对日期": "[不确定]",
+   "与Godot接入": "不适用"
+  },
+  {
+   "名称": "MortMort / AdamCYounis YouTube",
+   "价格": "免费",
+   "用途": "系统入门与进阶",
+   "链接": "YouTube 频道（搜索作者名）",
+   "版本或核对日期": "[不确定]",
+   "与Godot接入": "不适用"
+  }
+ ],
+ "mature_practices": "改素材入门；固定小调色板；先画完整个角色再扩展；每个概念做一个小练习而不是看完全部教程；用 Lospec 临摹研究；动画先做关键帧再补间；缩到实际游戏尺寸检查可读性。",
+ "consistency_method": "调色板锁定（Lospec/WinLu 取色）；统一光源；统一描边规则；统一 48px 像素密度；用样板资产对照。",
+ "animation_spec": "学习阶段目标：1 角色 3 面×（待机 2 帧、走 6 帧、简单受击 2 帧）；完整的感染/死亡动画放到第 2 阶段。",
+ "license_terms": "教程内容多为受版权保护，不可再分发；Saint11 Patreon 合集仅限自用；练习中改他人素材需遵守该素材授权（WinLu、LimeZu 等见其各自条款），商用前须核对；自己临摹他人作品不可商用发布。",
+ "cost_time_estimate": "现金：$0-45（Aseprite $20 + 可选教程/课程 $0-25）。工时：4 周精简版约 60-80 小时，12 周完整版约 180-240 小时（每周 15-20 小时）；达到『可发布品质』的 48px 多方向角色整套通常还需在此之上 3-6 个月练习（推断）。",
+ "fit_for_user": "适合：学习成本低、可边做程序边练，且『改素材』与 WinLu 底座天然贴合；单人零基础、Godot 4.7、Claude+Antigravity 均可辅助写导入脚本、做练习计划与批评。局限：学习本身不产出游戏，会和 16 人联机开发争时间；48px 教程资源比 16px/32px 少，需要自行放大练习标准。",
+ "network_sync_impact": "不适用",
+ "risks_pitfalls": "只看不练（教程地狱）；一开始就画大尺寸复杂角色；与 16px 放大素材混用；追求完美而拖延；把学习时间当成『开发时间』而没有产出节奏；Saint11 教程更新状态与具体合集内容不确定。",
+ "reversibility_cost": "低：学到的调色板/明暗/动画技能对任何后续路线（外购、AI、混合）都通用，不会沉没。",
+ "ai_can_do": "Claude/Antigravity 可制定每周练习计划、点评截图（调色板数量、轮廓、一致性）、写导入/批量导出脚本、解释动画原则；AI 图像模型可提供参考图，但不能替代手练像素基本功。",
+ "human_must_do": "自己动手练习、选择风格与参考、做每一阶段验收；对最终游戏内观感拍板。",
+ "judgment": "必学，但要限时：投入 4-8 周掌握调色板、明暗、轮廓与基础动画，以『改素材+补资产』为目标，而不是成为全能像素画师。第 4 周与第 8 周各设一次关卡：若届时 48px 角色无法在游戏中与 WinLu 并排而不违和，就转外购/AI 辅助的混合路线。",
+ "confidence": "中：学习路径与资源是社区共识，时间表是本报告设计；缺少对个体进度的实证。",
+ "win_rate_impact": "估计：掌握基础美术技能使项目整体成功概率提升约 5-10 个百分点（能审美把关与改素材）；若超过 12 周仍无产出则转为负面（估计）。",
+ "sources": [
+  "Lospec Where to Start https://lospec.com/pixel-art-where-to-start（一手/社区站）",
+  "Saint11 教程汇总（据论坛引用）https://blog.studiominiboss.com/pixelart",
+  "Pixel Animation Tutorial by Pedro Medeiros https://80.lv/articles/pixel-animation-tutorial-by-pedro-medeiros",
+  "Saint11 itch 合集 https://studiominiboss.itch.io/pixel-art-tutorials",
+  "Medium：Learn pixel art with free YouTube videos https://medium.com/@TheElisaDay/learn-pixel-art-with-free-youtube-videos-8686c95bfc19",
+  "Pixel Art Academy Learn Mode https://store.steampowered.com/app/2330360/Pixel_Art_Academy_Learn_Mode/",
+  "Udemy Learn pixel art and create a game https://www.udemy.com/course/learn-pixel-art-and-create-a-game-no-experience-needed/",
+  "Willard devlog https://nightrunstudio.itch.io/willard/devlog/418003/learning-to-pixel-art-willard-devlog",
+  "averygamedev devlog https://averygamedev.itch.io/travel/devlog/410196/learning-pixel-art",
+  "PC Gamer Stardew 访谈 https://www.pcgamer.com/stardew-valley-interview/1",
+  "Gtstu 入门路线 https://gtstu.com/pixel-art-indie-game-beginner-guide/（博客，弱）"
+ ],
+ "uncertain": [
+  "AdamCYounis与Brandon James Greer具体系列",
+  "Saint11更新状态",
+  "12周时间表有效性",
+  "48px零基础12周成果",
+  "cases.Steam评论数"
+ ]
+}

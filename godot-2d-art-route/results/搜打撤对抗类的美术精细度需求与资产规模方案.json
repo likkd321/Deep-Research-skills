@@ -1,0 +1,384 @@
+{
+  "core_question": "搜打撤/loot 对抗类 2D 俯视游戏实际需要多精细的美术、多大的资产量，本项目 V1.0 最少要做多少件、多少帧，用什么组合最省力？",
+  "one_line_conclusion": "同类成功作的重复游玩靠战利品随机、敌人随机和玩家对抗，而不是靠画面多。本项目 V1.0 约需 300–450 个图像文件，其中手工或半手工动画帧约 230–320 帧。最省力的组合是：WinLu 场景；1 套 48px 人类身体加 2–3 套僵尸身体，靠调色板换色出 8–16 种外观；6–8 把独立旋转的枪；40–60 个 32×32 物品图标，由 AI 生成后清理或用现成包；容器只画“关/开/搜空”三态，不在世界里逐个显示内容物；特效、UI、字体全用 CC0 或 OFL 免费素材。",
+  "key_findings": [
+    "【资产规模随团队规模放大，不是玩法刚需】ZERO Sievert（CABO Studio，GameMaker，像素风，起初为单人开发）的 Steam 商店页写着“100 多种可搜刮物品、50 多把独特枪械、150 个配件、6 张地图”，SteamSpy 记录好评 12,413、差评 2,226（2026-11-26）。Escape from Duckov（Team Soda，5 人团队，3D 卡通风）商店页写“50 多把武器、5 张地图”，第三方数据库收录 1,246 个物品条目，Steam 英文评论 10,803 条、93% 好评（2026-11-26）。Project Zomboid 是十余年的长期团队项目，第三方数据库在 Build 42.20.4 中收录 4,489 个带图标的物品定义。结论：一个单人项目的首发规模，ZERO Sievert 量级（约 100 个物品、50 把枪）已是上限；本项目的核心玩法是负重取舍和感染时机，40–60 种物品就够，不必有配件系统。",
+    "【容器内物品一律不在世界里逐个显示】ZERO Sievert、Escape from Duckov、Project Zomboid 都是“世界里只画容器，打开后在格子界面列出内容物”。Project Zomboid 原版的货架和柜子不显示存放的东西，Workshop 上才有“Shelf Contents 3D”这类 Build 42 模组，把容器内的真实物品显示到家具上，说明原版没做、玩家也能接受。掉在地上的物品才显示为世界物件。本项目应采用：容器有“关/开/已搜空”3 种状态（同步层只需开启位图，与 CLAUDE.md 铁律 10 一致），地面掉落统一用一个小包裹或通用掉落精灵，最多再按大类分 4–6 种外形。",
+    "【持枪表现：主流是“身体与枪分离、枪随瞄准角旋转”】Nuclear Throne 的社区模组 NTT Hands 为每把武器单独配置双手坐标（存在 guns.txt 中），侧面印证原版的武器精灵与角色身体是分离的。Enter the Gungeon 的 200 多把枪也采用浮空手加独立枪精灵，美术 Joe Harty 一人手绘了全作 20 万张以上精灵（Gameranx 采访 Dave Crooks）。这个数字说明，“每把枪各配一套身体动画”在单人项目里不可行。ZERO Sievert 同样是枪精灵随鼠标旋转[具体实现不确定]。前两批锁定的“3 面身体加 360° 枪”与业内做法一致，新增一把枪的边际成本只有 1 张世界精灵、2–3 帧开火和 1 个图标。",
+    "【敌人与人物变体数：成功作并不多】ZED ZONE（2D/2.5D 俯视像素僵尸生存联机，Steam 英文评论 999 条、84% 好评；最近 30 天 1,628 条、82%，2026-11-26）商店页列出 9 种敌人，其中 6 种是僵尸或感染者，另外 3 种是机甲或变异体，还有 200 多种可合成物品。Project Zomboid 的僵尸只有一套身体骨架，外观多样性来自分层服装系统、血污与破损叠加、按地图区域刷出的服装，以及腐烂阶段（官方开发日志）。本项目 V1.0 建议做 1 套人类身体，加 2–3 套感染者身体（普通感染者、母体或突变体，以及可选的快速型），外观差异靠换色和叠加层，不另画身体。",
+    "【重复游玩的视觉多样性，同类作并不靠随机楼层】ZERO Sievert、Escape from Duckov、Project Zomboid 都是手工固定地图，随机性来自战利品、敌人和事件。Duckov 的“夏日岛挑战”更新新增的随机性也是“每局随机敌人和物品”，而不是随机地形（Inven Global 采访）。本项目 8–12 层楼的低成本做法：楼层模板手摆 4–6 种（实验室、办公、宿舍、仓储、机房、天台），用种子随机选模板、随机摆放装饰物和容器，再给每层套不同的色调和灯光。这样不必新增像素资产。",
+    "【调色板换色在 Godot 4 有现成方案】Godot 资产库有 KoBeWi 的“Palette swap shader with animation support”（MIT，标注 Godot 4.4）；godotshaders 上有 UV 查表换色和双 LUT 贴图换色两种写法。论坛提醒，在着色器里循环查找颜色效率很低，应改用索引或 UV 查表。实现方式是：1 套身体帧加 N 张一维调色板，就能得到 N 种服装、肤色或阵营色，联机只需同步 1 字节调色板编号。",
+    "【现成素材供给，48px 是断层】itch.io 资产标签计数（2026-11-26 抓取）：16x16 有 6,567 个、32x32 有 4,836 个、48x48 只有 178 个。叠加 top-down 标签后，16x16 有 2,508 个、32x32 有 1,248 个、48x48 只有 22 个。48x48 加 zombies 为 0 个，32x32 加 zombies 为 37 个，16x16 加 zombies 为 62 个。图标类中，32x32 有 1,159 个、16x16 有 1,099 个、48x48 只有 28 个。结论：物品图标用 32×32（UI 层独立缩放，不受场景 48 网格约束），供给充足；48px 的人物和僵尸基本只能自己做或 AI 生成。",
+    "【物品图标现成包举例】vivicat 的 Survival Items Pack [32x32] 有 128 个末日生存物品，售价 $2 起；Domin Dev 的 Free Pixel Survival Items Pack 有 100 个，其中食品药品 16 个、弹药军用 11 个，随意付费，尺寸未标明；cyangmou 的 Survival Horror 32×32 售价 $44.99 起；eagersprout 的 Survival Kit 32x32 有 40 个，$1 起。枪械方面：Jestan Weapons Pack 有 100 多把枪，CC0；Pas7studio Weaponarrie 有 346 把（128×128，偏科幻），$6.99 起。两三个包就能凑够 V1.0 的图标，但需要统一调色板和描边。",
+    "【图标尺寸惯例】RotMG 官方教程说明，物品通常是 8×8 或 16×16（偶尔 32×32），放大后再加 1px 描边。ZERO Sievert 和 Tarkov 一类采用格子背包，物品按占格数显示（1×1、1×2、2×3 等）。本项目的负重取舍若用格子背包，图标做“1 格 = 32×32”的倍数（长枪 64×32 或 96×32）。若只用重量数值，就统一做 32×32 单格。",
+    "【AI 批量生成可行性】物品图标是 AI 最适合批量生成的资产：单帧、无动画、无方向一致性要求。流程是 Gemini 或 Retro Diffusion 出图，再用 Pixel Snapper、Pixel Rehab、proper-pixel-art 等工具网格对齐并量化调色板，最后在 Aseprite 里修描边。Retro Diffusion 的 rd-plus 有图标风格（Replicate 博客），第三方页面报价约 $0.03/张[不确定]。PixelLab 订阅为 $12/$24/$50 每月（G2 列表），可出 4/8 方向角色和骨架动画；官网主页未把物品图标列为独立功能。人物动画即使用 AI 出底稿，仍需逐帧清理，它是工作量的大头。"
+  ],
+  "cases": [
+    {
+      "名称": "ZERO Sievert",
+      "Steam/商店链接": "https://store.steampowered.com/app/1782120/",
+      "Steam评论数及抓取日期": "好评 12,413 / 差评 2,226（SteamSpy，2026-11-26）；英文 8,204 条、85% 好评（商店页，2026-11-26）",
+      "引擎": "GameMaker",
+      "玩法贴近度": "高（2D 俯视像素撤离射击）",
+      "美术来源占比": "以自制为主",
+      "素材来源证据及证据强度": "中：商店页写“100 多种物品、50 多把枪、150 个配件、6 张地图、像素画风”；单人起步和 Aseprite 来自媒体及二手文章",
+      "本项目可借鉴": "格子背包、容器打开后列出内容、枪精灵随瞄准旋转；规模不要照抄"
+    },
+    {
+      "名称": "Escape from Duckov",
+      "Steam/商店链接": "https://store.steampowered.com/app/3167020/",
+      "Steam评论数及抓取日期": "英文 10,803 条、93% 好评（商店页，2026-11-26）；首月销量 300 万份以上（Inven Global 采访）",
+      "引擎": "[不确定]（3D）",
+      "玩法贴近度": "中（俯视撤离，但为 3D 卡通风、单人 PvE）",
+      "美术来源占比": "自制（5 人团队）",
+      "素材来源证据及证据强度": "中：开发者采访称美术画的鸭子草稿定下风格；未披露外购素材",
+      "本项目可借鉴": "用 1 个强辨识度角色形象代替画面精细度；50 多把武器、1,246 个物品条目是 5 人团队的量，不可照搬"
+    },
+    {
+      "名称": "Project Zomboid",
+      "Steam/商店链接": "https://store.steampowered.com/app/108600/",
+      "Steam评论数及抓取日期": "好评 356,313 / 差评 21,693（SteamSpy，2026-11-26）",
+      "引擎": "自研（Java）",
+      "玩法贴近度": "中（俯视僵尸生存搜刮，非 PvP 撤离）",
+      "美术来源占比": "自制（长期团队）",
+      "素材来源证据及证据强度": "强：官方开发日志描述分层服装、血污、腐烂等僵尸多样性系统",
+      "本项目可借鉴": "1 套身体加叠加层出变体；原版容器内容不在世界里显示"
+    },
+    {
+      "名称": "Enter the Gungeon",
+      "Steam/商店链接": "https://store.steampowered.com/app/311690/",
+      "Steam评论数及抓取日期": "好评 75,911 / 差评 3,862（SteamSpy，2026-11-26）",
+      "引擎": "Unity",
+      "玩法贴近度": "低（单机 roguelite 射击）",
+      "美术来源占比": "自制（专职美术）",
+      "素材来源证据及证据强度": "中：采访称 Joe Harty 手绘 20 万张以上精灵、200 多把枪",
+      "本项目可借鉴": "浮空手加独立枪是成熟做法；反面教材是它的手绘量"
+    },
+    {
+      "名称": "Nuclear Throne",
+      "Steam/商店链接": "https://store.steampowered.com/app/242680/",
+      "Steam评论数及抓取日期": "好评 14,613 / 差评 535（SteamSpy，2026-11-26）",
+      "引擎": "GameMaker",
+      "玩法贴近度": "低（单机 roguelite）",
+      "美术来源占比": "自制",
+      "素材来源证据及证据强度": "弱到中：社区 Hands 模组按武器配置手部坐标，侧面说明枪与身体分离",
+      "本项目可借鉴": "只做左右 2 面身体加旋转枪也能大卖，证明身体方向可以很少"
+    },
+    {
+      "名称": "Realm of the Mad God Exalt",
+      "Steam/商店链接": "https://store.steampowered.com/app/200210/",
+      "Steam评论数及抓取日期": "好评 39,691 / 差评 8,229（SteamSpy，2026-11-26）",
+      "引擎": "Unity（Exalt 版）[不确定]",
+      "玩法贴近度": "中（大型多人 loot 射击，永久死亡）",
+      "美术来源占比": "自制",
+      "素材来源证据及证据强度": "强：官方 remaster 博客说明物品为 8×8 或 16×16，放大后加 1px 描边",
+      "本项目可借鉴": "极低分辨率加统一描边，就能撑起数百种物品；图标精细度不是留存关键"
+    },
+    {
+      "名称": "ZED ZONE",
+      "Steam/商店链接": "https://store.steampowered.com/app/1211600/",
+      "Steam评论数及抓取日期": "英文 999 条、84% 好评；最近 30 天 1,628 条、82%（商店页，2026-11-26）",
+      "引擎": "[不确定]",
+      "玩法贴近度": "高（2D/2.5D 俯视像素僵尸生存联机）",
+      "美术来源占比": "[不确定]",
+      "素材来源证据及证据强度": "弱：商店页仅列 9 种敌人、200 多种可合成物品，未披露素材来源",
+      "本项目可借鉴": "6 种左右的僵尸变体已足以支撑一款成功作"
+    }
+  ],
+  "data_points": [
+    "ZERO Sievert：100 多种物品、50 多把枪、150 个配件、6 张地图（Steam 商店页，2026-11-26）",
+    "Escape from Duckov：50 多把武器、5 张地图（Steam 商店页）；1,246 个物品条目（第三方 escapefromduckov.net，2026-11-26）；5 人团队；首月销量 300 万份以上（Inven Global 采访）",
+    "Project Zomboid：4,489 个带图标的物品定义（第三方 Knox County 数据库，Build 42.20.4）",
+    "Enter the Gungeon：手绘精灵 20 万张以上（Gameranx 采访）；200 多把枪（GamesBeat）",
+    "ZED ZONE：9 种敌人、200 多种可合成物品、40 多个配件（Steam 商店页，2026-11-26）",
+    "itch.io 资产标签计数（2026-11-26）：16x16 有 6,567 个，32x32 有 4,836 个，48x48 有 178 个；48x48 加 top-down 有 22 个；48x48 加 zombies 为 0 个；32x32 加 icons 有 1,159 个；weapons 加 top-down 有 127 个",
+    "图标包价格：vivicat 128 个 32×32 图标 $2 起；cyangmou Survival Horror 32×32 $44.99 起；Jestan 100 多把枪 CC0",
+    "PixelLab 订阅：$12、$24、$50 每月（G2 列表）[不确定是否为当前价]；Retro Diffusion 约 $0.03/张（第三方）[不确定]",
+    "本项目 V1.0 估算：图像文件约 300–450 个，手工或半手工动画帧约 230–320 帧（作者估算，明细见 animation_spec）"
+  ],
+  "independent_verification": "可靠的：物品、枪械、地图数量来自 Steam 商店页官方文案，属于厂商宣传口径，但数字可核对；评论数来自 SteamSpy 与 Steam 商店页两个独立来源；itch.io 标签计数为我实测抓取；Project Zomboid 的僵尸多样性来自官方开发日志（一手）；RotMG 的图标尺寸来自官方博客（一手）。只有单一来源或推断的：Gungeon 的“20 万张精灵”只来自 1 篇采访；Nuclear Throne 和 ZERO Sievert 的枪与身体分离，是从模组和社区说法推断的；Duckov 的 1,246 个物品与 Project Zomboid 的 4,489 个物品来自第三方数据库，口径不同；AI 工具价格来自第三方汇总页。“重复游玩靠战利品和敌人随机、而非视觉随机”是我综合 3 款作品得出的判断，没有专门研究佐证。",
+  "workflow_steps": [
+    "第 1 步，定规格（半天）：场景 48px（WinLu）、人物画布 48×48、物品图标 32×32（格子背包单格），全项目共用 1 套 32–48 色主调色板和 1px 深色描边规则。把这些写进 docs/美术规格.md。",
+    "第 2 步，先做灰盒占位（1–2 天）：每类资产先放 1 个色块或现成素材，让 GameState 跑通开箱、捡物、换枪、感染变身。确认美术需求清单不再变，再开始画。",
+    "第 3 步，人类身体（核心工作量）：用 PixelLab 出 48×48 三面（下/上/右）底稿和 idle/run 骨架动画，导入 Aseprite 逐帧清理，统一调色板，拆出可换色区域（衣服、肤色、阵营标记各用独立颜色索引）。",
+    "第 4 步，感染者身体：在人类身体上改姿势、改轮廓（前倾、垂手、破衣），做普通感染者；母体或突变体单独做 1 套更大的轮廓（可用 64×64 画布）；动画状态复用人类骨架。",
+    "第 5 步，换色变体：在 Godot 4 里用 KoBeWi 的 Palette swap shader 或 UV 查表着色器，给每套身体做 4–8 张调色板（服装、阵营、Bot、感染阶段），同步层只同步调色板编号。",
+    "第 6 步，枪与手：每把枪画 1 张水平向右的世界精灵，加 2–3 帧开火；手做 1–2 张；用 Godot 的 rotation 或预渲染 16 方向（SpriteRot、RotSprite）。左半圈用 flip_v 镜像；枪口火光、弹壳用通用特效。",
+    "第 7 步，物品图标批处理：列出 40–60 个物品，交给 Gemini 或 Retro Diffusion 按“32×32、俯视 45°、1px 描边、主调色板”出图，用 Pixel Snapper 或 proper-pixel-art 对齐网格并量化颜色，再在 Aseprite 里逐个修描边与轮廓（每个约 5–15 分钟）。也可以直接买 vivicat 等现成包，再统一换色。",
+    "第 8 步，容器与可交互物：为 6–8 种容器各画关、开、搜空 3 态；门画关、半开、开 3 态，横竖 2 个朝向；电闸画开关 2 态；生化容器做 4–6 帧动画；电梯、楼梯、直升机尽量从 WinLu 改。",
+    "第 9 步，楼层多样性：手摆 4–6 个楼层模板，以 rng_seed 决定每层用哪个模板、哪些装饰物出现、容器放在哪些候选点；每种楼层主题做 1 个 CanvasModulate 色调和 1 套灯光颜色。不再新增像素资产。",
+    "第 10 步，特效与 UI：血溅、枪口火光、命中火花、毒气用 CC0 包加 GPUParticles2D；UI 用像素 UI 包加 OFL 字体，统一换成主调色板。",
+    "第 11 步，验收：用 xvfb 截图，把 16 个占位人和全部变体放在同一画面，检查可辨识度（敌我、感染阶段、持枪类型在 960×540 下是否一眼可辨）。"
+  ],
+  "tools": [
+    {
+      "名称": "Aseprite",
+      "价格": "$19.99 一次买断（Steam）",
+      "用途": "清理 AI 底稿、逐帧动画、调色板管理、导出精灵表",
+      "链接": "https://www.aseprite.org/",
+      "版本或核对日期": "核对 2026-11-26",
+      "Godot接入": "导出 PNG 加 JSON，或用 Aseprite Wizard 插件生成 SpriteFrames"
+    },
+    {
+      "名称": "PixelLab",
+      "价格": "$12、$24、$50 每月（G2 列表）[不确定]",
+      "用途": "48×48 人物 4/8 方向底稿、骨架动画、修补重绘",
+      "链接": "https://www.pixellab.ai/",
+      "版本或核对日期": "官网主页核对 2026-11-26（价格页未加载）",
+      "Godot接入": "导出 PNG 精灵表后手工清理"
+    },
+    {
+      "名称": "Retro Diffusion（rd-plus 或 rd-fast）",
+      "价格": "约 $0.03/张（第三方）[不确定]；免费试用 50 积分",
+      "用途": "物品图标、小物件单帧生成",
+      "链接": "https://astropulse.itch.io/retrodiffusionai",
+      "版本或核对日期": "核对 2026-11-26",
+      "Godot接入": "PNG 拼到图集后作为 AtlasTexture"
+    },
+    {
+      "名称": "Gemini 图像模型（经 Antigravity 或 Gemini 网页调用）",
+      "价格": "含在用户现有订阅内[不确定]",
+      "用途": "批量出物品图标概念图或底稿（需后处理为真像素）",
+      "链接": "https://gemini.google.com/",
+      "版本或核对日期": "核对 2026-11-26",
+      "Godot接入": "经网格对齐和量化后导入"
+    },
+    {
+      "名称": "Sprite Fusion Pixel Snapper / Pixel Rehab / proper-pixel-art",
+      "价格": "免费、开源",
+      "用途": "把 AI 出的伪像素图对齐网格、缩小并量化调色板",
+      "链接": "https://www.gigazine.net/gsc_news/en/20260516-spritefusion-pixel-snapper ；https://arcade.pirillo.com/pixel-rehab.html ；https://pypi.org/project/proper-pixel-art/",
+      "版本或核对日期": "Pixel Snapper 发布于 2026-05，核对 2026-11-26",
+      "Godot接入": "离线预处理，输出 PNG"
+    },
+    {
+      "名称": "Palette swap shader with animation support（KoBeWi）",
+      "价格": "免费，MIT",
+      "用途": "1 套身体帧加多张调色板做换色变体，支持动画",
+      "链接": "https://godotengine.org/asset-library/asset/1444",
+      "版本或核对日期": "资产库标注 Godot 4.4，需在 4.7.2 实测",
+      "Godot接入": "给 AnimatedSprite2D 挂 ShaderMaterial，调色板贴图作为 uniform"
+    },
+    {
+      "名称": "Godot 4 TileSet 地形与图块随机概率、TileMapLayer",
+      "价格": "免费（引擎自带）",
+      "用途": "地面和墙面的随机变体图块，以及按种子摆放装饰物",
+      "链接": "https://docs.godotengine.org/en/stable/tutorials/2d/using_tilesets.html",
+      "版本或核对日期": "核对 2026-11-26",
+      "Godot接入": "在编辑器中设置 TileData.probability；运行时按 rng_seed 生成"
+    },
+    {
+      "名称": "SpriteRot / RotSprite",
+      "价格": "免费、开源",
+      "用途": "预渲染枪械 16 方向或 32 方向旋转帧",
+      "链接": "https://github.com/samdze/spriterot",
+      "版本或核对日期": "核对 2026-11-26",
+      "Godot接入": "输出精灵表，按角度取帧"
+    },
+    {
+      "名称": "现成图标包与枪械包（vivicat Survival Items 32x32 / Jestan Weapons Pack / Domin Dev Free Survival Items）",
+      "价格": "$0–$2 起",
+      "用途": "V1.0 物品图标和枪械的现成底子",
+      "链接": "https://vivicat.itch.io/survival-items-pack-32x32 ；https://jestan.itch.io/weapons-pack ；https://domin-dev.itch.io/free-pixel-survival-items-pack",
+      "版本或核对日期": "核对 2026-11-26，授权需逐包阅读",
+      "Godot接入": "PNG 图集导入"
+    }
+  ],
+  "mature_practices": [
+    "世界里只画容器，内容物进格子界面（ZERO Sievert、Duckov、Project Zomboid 原版）。",
+    "身体与武器分离，枪精灵随瞄准角旋转，左半圈镜像（Nuclear Throne、Gungeon）；新增武器只加 1 张精灵、几帧开火和 1 个图标。",
+    "1 套身体骨架，加分层服装、叠加、换色出大量外观（Project Zomboid 的僵尸）。",
+    "地图手工固定，随机性放在战利品、敌人和事件上（ZERO Sievert、Duckov 的夏日岛挑战）。",
+    "极低分辨率物品加统一 1px 描边（RotMG），保证几百种物品风格一致。",
+    "用 1 个强辨识度的角色形象撑起品牌（Duckov 的鸭子），比提高画面精细度更有效。"
+  ],
+  "consistency_method": "锁定 1 套 32–48 色主调色板（可从 WinLu 预览图提取，再补肤色和血色），所有外购素材和 AI 图都量化到这套调色板；统一光源为左上；人物、僵尸、物品统一用 1px 深色描边（场景图块不描边，以区分可交互物）；像素密度上，场景和人物都按 48 网格 1:1，物品图标 32×32 只在 UI 层使用，世界里的掉落物用统一的小包裹精灵，避免混用密度；AI 出图时固定附上同一张参考图（已清理的角色或图标）做风格锚点，每批图出完后在 Aseprite 里套调色板。",
+  "animation_spec": "V1.0 规格（48×48，3 面身体，左面镜像）。人类基础身体：idle 3 面×4 帧=12；run 3×6=18；hurt 3×1=3（另加闪白着色器）；death 1×6=6；infect（感染变身过渡）1×8=8；合计约 47 帧。持枪和射击不画在身体上，由枪精灵表现。普通感染者：idle 3×4=12；walk 3×6=18；attack 3×4=12；hurt 3×1=3；death 1×6=6；合计约 51 帧。母体或突变体（可用 64×64）：合计约 50–60 帧。可选快速型感染者：复用普通感染者的约 30 帧并改轮廓。枪：6–8 把，每把 1 张世界精灵加 2–3 帧开火，约 20–32 帧（预渲染旋转帧由脚本生成，不计入）。近战 1–2 种挥砍：3–4 帧。手 2 张。容器 6–8 种×3 态=18–24 张；门 2 个朝向×3 态=6 张；生化容器动画 4–6 帧；电闸 2 张；直升机 1 张加旋翼 4 帧。合计手工或半手工帧约 230–320 帧（不含物品图标）。换色变体 8–16 种，新增 0 帧。工时估算：人物和僵尸约 150–170 帧，用 AI 底稿加清理按 0.3–0.8 小时/帧计，约 50–130 小时；道具与枪约 80–150 帧，每帧 0.2–0.5 小时，约 20–60 小时。",
+  "license_terms": "外购包大多可商用、可修改，但禁止转售或再分发原始素材文件（WinLu、LimeZu、Retro Dead City 等），所以不能把原始素材放进公开 GitHub 仓库：仓库设为私有，或把 assets/third_party 加入 .gitignore。打进游戏 .pck 随客户端分发是允许的，这本来就是“游戏内使用”。Retro Dead City 明确禁止用于训练 AI，所以不要把它的素材当 AI 参考图喂给模型。CC0 包（如 Jestan Weapons Pack）没有限制；OFL 字体需随游戏附许可证文本。PixelLab 付费档含商用授权（第三方评测）[不确定细则]。Steam 发行需在商店页的 AI 披露栏如实申报“使用 AI 生成的美术资产”。",
+  "cost_time_estimate": "现金：WinLu $20；图标和枪械包 $0–15；可选 LimeZu 或 Retro Dead City $10–15；Aseprite $20；PixelLab 2–3 个月×$12–24=$24–72；Retro Diffusion 约 $5–15。合计约 $80–160。若人物与僵尸改为委托画师：再加 $300–1,500[不确定，行情估计]。工时（零美术基础，有 AI 底稿）：规格与灰盒 2–3 天；人物和僵尸 50–130 小时；枪与道具 20–60 小时；物品图标 50 个×(5–15 分钟清理加出图)≈8–15 小时；楼层模板与装饰随机化 20–40 小时（偏程序和摆图）；特效与 UI 整合 10–20 小时。合计约 110–270 小时，按每周 15 小时业余投入约 2–4.5 个月。假设：V1.0 规模不超过下方清单；每帧不重画超过 2 次。",
+  "fit_for_user": "高度适配。①单人零基础：本方案把需要真正画的东西压缩到约 150–170 帧角色加约 100 帧道具，其余靠换色、镜像、旋转、程序随机放大；这是单人能完成的量级，接近 ZERO Sievert 起步期的规模，远小于 Gungeon 的手绘量。②Godot 4.7：换色着色器、TileSet 随机概率、AnimatedSprite2D、flip 全是引擎原生或 MIT 插件，无需 C#。③3/4 斜俯视 48px：48px 人物和僵尸没有现成供给（itch 上 48x48 加 zombies 为 0 个），只能 AI 加清理，所以必须把身体套数压到 3–4 套；物品图标放在 UI 层用 32×32，可以绕开 48px 断层，直接用海量现成的 32×32 包。④16 人联机 PvP：对抗类最重要的是敌我、感染阶段和武器类型一眼可辨，而不是细节多；换色加轮廓差异正好服务于辨识度。⑤Claude 加 Antigravity：Claude 适合写换色着色器、楼层种子随机摆放、批处理脚本（Aseprite Lua、Python 量化）；图像生成用 Antigravity 侧的 Gemini 图像模型或 PixelLab。",
+  "network_sync_impact": "容器只同步开启位图和剩余格掩码（已在铁律 10 内），世界中不显示内容物，因此不需要同步每个物品的外观。换色只需在加入或变身时可靠下发 1 字节调色板编号。枪械外观由背包中当前武器 ID 推导，切枪走可靠通道的离散事件；瞄准角走 20Hz 不可靠通道（2 字节）。身体动画状态由速度和朝向在本地推导，只同步 1 字节状态枚举，用于死亡、感染、受击这类大事。楼层模板和装饰物由 rng_seed 加 floor_id 确定性生成，开局 0 额外带宽，快照不必包含装饰物。地面掉落物要同步位置和物品 ID，用统一的通用精灵即可。特效（血溅、枪口火光）在客户端由命中和开火事件触发，不单独发包。整体对带宽影响可忽略。",
+  "risks_pitfalls": [
+    "范围蔓延：照抄 ZERO Sievert 或 Duckov 的“50 多把枪、几百个物品”会把美术工时翻 3–5 倍；V1.0 应锁死 6–8 把枪、40–60 个物品。",
+    "混用密度：32×32 图标如果直接放进 48 网格世界当掉落物，会显得粒度不一致；世界掉落只用为 48 网格画的通用精灵。",
+    "换色可辨识度：只换颜色时，16 人同屏的敌我、感染者区分可能不够；感染者还需要轮廓差异（姿势、体型），加上发光或描边色。",
+    "AI 图伪像素：AI 出图常有半像素、渐变和噪点，不清理就导入会显得廉价；必须经过对齐网格、量化、修描边三步。",
+    "多个外购包的调色板冲突：不统一量化就会显得像拼凑的素材。",
+    "换色着色器在 Godot 4.7.2 下兼容性未验证（资产库标注 4.4），需先做 1 小时最小测试。",
+    "Retro Dead City 等素材禁止用于 AI 训练或参考，喂给 AI 可能违约。",
+    "随机装饰物与碰撞：随机摆放的装饰若带碰撞，可能堵死通道；装饰物应设为无碰撞，或只放在预设的安全点。"
+  ],
+  "reversibility_cost": "低到中。换色、楼层随机化、枪械分离都是程序层设计，改美术不需要改代码。物品图标是单帧、相互独立的，随时可以整批替换（约 10–20 小时）。返工成本最高的是人物和僵尸身体：若中途从 48px 改到 32px，或从 3 面改成 8 方向，约 150–170 帧要全部重做（50–130 小时）。因此身体规格必须在灰盒阶段用截图确认后再锁定。",
+  "ai_can_do": [
+    "物品图标批量生成（Gemini 图像模型、Retro Diffusion rd-plus），后处理后可用率估计约 50–70%[不确定]。",
+    "PixelLab 出 48×48 人物和僵尸的 3/4 方向底稿与 idle/walk 骨架动画，作为清理的起点。",
+    "Claude：编写换色着色器、楼层模板种子随机摆放的 GDScript、Aseprite Lua 批处理、Python 批量量化或对齐网格脚本、资产清单表与命名规范。",
+    "把现成素材包按主调色板批量重新上色（脚本完成）。",
+    "生成楼层主题的色调和灯光参数方案，以及装饰物组合表。"
+  ],
+  "human_must_do": [
+    "拍板主调色板、描边规则和人物轮廓风格，决定整体观感。",
+    "逐帧清理人物和僵尸动画，修正手脚抖动和左右镜像穿帮（AI 目前做不稳）。",
+    "判断 16 人同屏下敌我和感染阶段是否一眼可辨（实机截图验收）。",
+    "在 Godot 编辑器里手摆 4–6 个楼层模板，标注容器候选点和装饰物安全点。",
+    "逐包阅读授权并记录（尤其是禁止 AI 训练、禁止再分发的条款），以及 Steam 商店页的 AI 披露。",
+    "控制范围：拒绝在 V1.0 中加配件系统或更多枪。"
+  ],
+  "judgment": "明确立场：对抗搜打撤类不需要高精细美术，需要的是“可辨识度加适度内容量”，V1.0 按“小而全”做。①规模锚点：成功作中，单人起步的 ZERO Sievert 首发是 100 多个物品、50 多把枪；5 人团队的 Duckov 是 50 多把武器、5 张地图。本项目的核心乐趣是负重取舍、感染时机和关灯听声，不是收集。所以 V1.0 物品 40–60 种（弹药 4、药品和抗毒血清 8–10、食物饮料 6、钥匙门卡 4–6、高价值撤离物 10–15、护甲背包 4–6、投掷物 3）；枪 6–8 把（手枪、冲锋枪、霰弹枪、步枪、狙击枪或射钉枪、喷火或电击枪任选，以及 1–2 种近战）；不做配件。②世界显示：容器不显示内容物，做 3 态；地面掉落用 1 个通用包裹精灵，最多按大类分 4–6 种外形。③持枪：坚持 3 面身体加 360° 独立枪，坚决不做“身体动画按武器区分”（Gungeon 的 20 万张精灵就是反例）。④变体：1 套人类身体，加普通感染者、母体或突变体 2 套，外加 1 套可选快速型；靠调色板做 8–16 种外观（阵营、服装、Bot、感染阶段），感染者另靠轮廓区分。⑤重复游玩的多样性：不做程序生成地形。手摆 4–6 个楼层模板，用 rng_seed 随机选模板、装饰物、容器点和物品，每种主题配色调和灯光；这与同类成功作“固定地图、随机战利品和敌人”的经验一致，美术成本几乎为 0。⑥产出组合：场景用 WinLu；人物和僵尸用 PixelLab 底稿加 Aseprite 清理（预算允许时，这一块优先委托画师）；物品图标用 32×32 现成包或 AI 加后处理；枪用 CC0 包改绘或 AI 生成；特效、UI、字体用 CC0 或 OFL。V1.0 资产清单：图像文件约 300–450 个；手工或半手工帧约 230–320 帧（人物约 47、普通感染者约 51、母体约 55、快速型约 30、枪与近战约 25–36、道具与交互物约 40–50）；图标 40–60 个；换色调色板 8–16 张；楼层模板 4–6 个。",
+  "confidence": "中。竞品的规模数字来自商店页和第三方数据库，较可靠；“容器不显示内容物”“枪与身体分离”是行业通行做法，证据中等；帧数和工时是作者按规格推算的，缺少零基础单人的实测数据；AI 图标的可用率未经实测。",
+  "win_rate_impact": "正向，估计 +5 到 +10 个百分点（主观估计）。理由：把美术量锁在约 300 帧级别，能把美术工期从“可能拖垮项目”的 6–12 个月压到 2–4.5 个月，让单人开发者把时间留给联机稳定性和玩法打磨（前批结论：美术对成败的权重约 15–25%）。反过来，若照抄竞品的内容量，或做 8 方向加按武器区分的身体动画，烂尾概率显著上升（估计 −10 到 −20 个百分点）。",
+  "sources": [
+    {
+      "标题": "ZERO Sievert Steam 商店页（物品、枪、地图数量，评论数）",
+      "URL": "https://store.steampowered.com/app/1782120/",
+      "日期": "抓取 2026-11-26",
+      "类型": "一手：官方商店页"
+    },
+    {
+      "标题": "Escape from Duckov Steam 商店页（50 多把武器、5 张地图，评论 10,803 条）",
+      "URL": "https://store.steampowered.com/app/3167020/",
+      "日期": "抓取 2026-11-26",
+      "类型": "一手：官方商店页"
+    },
+    {
+      "标题": "The 'Duck Syndrome' Created by a Five-Person Dev Team（Inven Global 采访）",
+      "URL": "https://www.invenglobal.com/articles/23678/the-duck-syndrome-created-by-a-five-person-dev-team-escape-from-duckov",
+      "日期": "2026 年[具体日期不确定]",
+      "类型": "一手：开发者采访"
+    },
+    {
+      "标题": "Escape From Duckov 物品数据库（1,246 个物品）",
+      "URL": "https://escapefromduckov.net/items",
+      "日期": "抓取 2026-11-26",
+      "类型": "第三方数据库"
+    },
+    {
+      "标题": "Project Zomboid Knox County 物品库（4,489 个物品定义，Build 42.20.4）",
+      "URL": "https://www.bamboogaming.net/project-zomboid/items",
+      "日期": "抓取 2026-11-26",
+      "类型": "第三方数据库"
+    },
+    {
+      "标题": "Project Zomboid 官方开发日志（分层服装与僵尸多样性）",
+      "URL": "https://projectzomboid.com/blog/?p=5479",
+      "日期": "约 2019–2022",
+      "类型": "一手：开发者博客"
+    },
+    {
+      "标题": "Shelf Contents 3D 模组（Build 42，把容器内物品显示到家具上）",
+      "URL": "https://steamcommunity.com/sharedfiles/filedetails/comments/3408629510",
+      "日期": "2025–2026[不确定]",
+      "类型": "社区模组"
+    },
+    {
+      "标题": "Enter the Gungeon 采访：Joe Harty 手绘 20 万张以上精灵（Gameranx）",
+      "URL": "https://gameranx.com/features/id/48447/article/enter-the-gungeon-interview-with-dodge-rolls-dave-crooks-the-past-present-and-future/",
+      "日期": "[不确定]",
+      "类型": "一手：开发者采访"
+    },
+    {
+      "标题": "Enter the Gungeon has over 200 guns（GamesBeat）",
+      "URL": "https://gamesbeat.com/enter-the-gungeon-has-over-200-guns-like-one-thats-an-alien-ant-face-and-barfs-poison-slime/",
+      "日期": "[不确定]",
+      "类型": "媒体"
+    },
+    {
+      "标题": "Nuclear Throne Hands 模组（按武器配置手部坐标）",
+      "URL": "https://splattie.itch.io/hands-mod",
+      "日期": "[不确定]",
+      "类型": "社区模组"
+    },
+    {
+      "标题": "RotMG 官方 remaster 博客：Getting started creating pixel art",
+      "URL": "https://remaster.realmofthemadgod.com/?p=846",
+      "日期": "[不确定]",
+      "类型": "一手：官方博客"
+    },
+    {
+      "标题": "ZED ZONE Steam 商店页（9 种敌人、200 多种可合成物品）",
+      "URL": "https://store.steampowered.com/app/1211600/",
+      "日期": "抓取 2026-11-26",
+      "类型": "一手：官方商店页"
+    },
+    {
+      "标题": "SteamSpy API（ZERO Sievert、Project Zomboid、Gungeon、Nuclear Throne、RotMG 评论数）",
+      "URL": "https://steamspy.com/api.php?request=appdetails&appid=1782120",
+      "日期": "抓取 2026-11-26",
+      "类型": "第三方数据平台"
+    },
+    {
+      "标题": "itch.io 资产标签计数（16x16、32x32、48x48、top-down、zombies、icons）",
+      "URL": "https://itch.io/game-assets/tag-48x48",
+      "日期": "实测抓取 2026-11-26",
+      "类型": "一手：平台数据"
+    },
+    {
+      "标题": "Survival Items Pack [32x32]（vivicat，128 个图标）",
+      "URL": "https://vivicat.itch.io/survival-items-pack-32x32",
+      "日期": "抓取 2026-11-26",
+      "类型": "素材商店页"
+    },
+    {
+      "标题": "Free Pixel Survival Items Pack（Domin Dev，100 个物品）",
+      "URL": "https://domin-dev.itch.io/free-pixel-survival-items-pack",
+      "日期": "抓取 2026-11-26",
+      "类型": "素材商店页"
+    },
+    {
+      "标题": "Jestan Weapons Pack（100 多把枪，CC0）",
+      "URL": "https://jestan.itch.io/weapons-pack",
+      "日期": "抓取 2026-11-26",
+      "类型": "素材商店页"
+    },
+    {
+      "标题": "Pixel RPG Icons Survival Horror 32×32（cyangmou）",
+      "URL": "https://cyangmou.itch.io/pixel-rpg-icons-survival-horror-3232",
+      "日期": "抓取 2026-11-26",
+      "类型": "素材商店页"
+    },
+    {
+      "标题": "Palette swap shader with animation support（Godot 资产库，MIT）",
+      "URL": "https://godotengine.org/asset-library/asset/1444",
+      "日期": "抓取 2026-11-26",
+      "类型": "一手：官方资产库"
+    },
+    {
+      "标题": "Palette Swap (no recolor / recolor)（godotshaders）",
+      "URL": "https://godotshaders.com/shader/palette-swap-no-recolor-recolor/",
+      "日期": "抓取 2026-11-26",
+      "类型": "社区着色器"
+    },
+    {
+      "标题": "Sprite Fusion Pixel Snapper 发布报道（GIGAZINE）",
+      "URL": "https://www.gigazine.net/gsc_news/en/20260516-spritefusion-pixel-snapper",
+      "日期": "2026-05-16",
+      "类型": "媒体"
+    },
+    {
+      "标题": "Retro Diffusion's pixel art models are now on Replicate",
+      "URL": "https://replicate.com/blog/retro-diffusions-pixel-art-models-are-now-on-replicate",
+      "日期": "[不确定]",
+      "类型": "一手：平台博客"
+    },
+    {
+      "标题": "PixelLab 在 G2 的定价列表",
+      "URL": "https://ai.g2.com/marketplace/tools/pixellab",
+      "日期": "抓取 2026-11-26",
+      "类型": "第三方"
+    },
+    {
+      "标题": "PixelLab 官网（功能列表）",
+      "URL": "https://www.pixellab.ai/",
+      "日期": "抓取 2026-11-26",
+      "类型": "一手：官方"
+    }
+  ],
+  "uncertain": [
+    "cases",
+    "tools",
+    "license_terms",
+    "cost_time_estimate",
+    "ai_can_do",
+    "sources"
+  ]
+}

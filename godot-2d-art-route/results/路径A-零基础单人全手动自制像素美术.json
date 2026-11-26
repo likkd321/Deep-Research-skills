@@ -1,0 +1,139 @@
+{
+ "core_question": "零美术基础的单人开发者，能否全手动用 Aseprite 等工具在 48px 规格下自制本项目所需的全部像素资产（角色、僵尸/人类变体、持枪表现、大量 loot 图标、特效），耗时、成本与风格一致性如何？",
+ "one_line_conclusion": "可行但不推荐作为全量方案：场景用 WinLu 外购，人物/武器/物品图标全自画在 48px 下对零基础者是数月到一年以上的全职量级且一致性风险最高；建议只手工画「少量核心且需要强识别的资产」（枪图 3-6 把、手、物品图标的最简版、变体用调色板/配饰换色），其余用外购+改素材或与路径B（AI批量）混合。",
+ "key_findings": [
+  "工具价格（2026-06 核对）：Aseprite 在 Steam 与 itch.io 均为 $19.99 一次性买断，itch 购买附 Steam key；官方博客 2026-06-30 说明已按 Steam 建议汇率调整各地区定价。Aseprite 是单人像素动画的事实标准（时间轴、洋葱皮、标签、spritesheet 导出）。",
+  "Pixelorama：MIT 许可、完全免费，用 Godot 开发（README 称从源码运行需 Godot 4.7.2）；1.0 于 2024-07-31 发布，含 perfect pixel、索引色模式、cleanEdge/OmniScale/rotxel 旋转算法，可作为 Aseprite 的零成本替代，但生态与教程量少于 Aseprite。",
+  "LibreSprite 是 Aseprite 最后一个 GPLv2 提交的免费分叉，核心功能够用但更新慢；Pyxel Edit 偏 tileset 编辑（实时更新瓦片、导出 tilemap），依赖 Adobe AIR，较老；Krita 是绘画软件，有动画时间轴与像素笔刷，但无 spritesheet 导出与像素专用工作流，不适合作主力（以上多为聚合/评测站说法，价格未逐一核实）。",
+  "Stardew Valley：Eric Barone 独自完成美术、程序、音乐，自述此前没做过像素画，据 PC Gamer/NPR 报道开发约 4 年（另有说 4.5 年，来源较弱）；有大学博客称其练习像素画数千小时。注意：Stardew 是 16px 瓦片、俯视农场，美术密度与动画数量远低于 48px 角色 + 多方向 + 多持枪的对抗游戏，不能直接外推。",
+  "耗时基准缺乏公开可靠数据：自由职业动画师称 64x64 内的一段动画有经验者约 5-10 工时；初学者论坛反馈首个走路循环要数小时并多次返工；Soulwielder 作者首个走路动画重做约 5 次。本报告据此推断：零基础者在 48px 画一个方向的 6-8 帧走路循环约 6-15 工时（推断，非实测）。",
+  "48px 下工作量按面积约为 16px 的 9 倍、32px 的 2.25 倍：每个像素细节都要处理，且需手画描边、阴影、抗锯齿，一致性压力最大；而 itch.io 上 48px 现成人物/僵尸素材极少（见同批其他 item：48x48 人物类仅约 30 个、僵尸 0 个），意味着缺口只能自画或改素材。",
+  "本项目资产清单（本报告估算）：3 面身体×（待机/走/跑/受击/感染/死亡）≈ 3×约 30 帧 ≈ 90 帧/角色体型；僵尸 3-5 种变体；人类变体（不同服装配色）可用调色板替换省工；手+枪独立旋转部件每把枪 1-3 张图；loot 图标按 32-48px 单张，初期 80-150 个。全手动合计约 600-1500 张精灵，需要的是数量产能而不是单张艺术水准。",
+  "对抗/搜打撤类的特点：loot 图标与货架/箱内物品展示需求量大、需要一眼可读（轮廓+主色），这是像素画里较易学、较可批量的一类（图标比动画简单）；而多种枪支持握表现（手与枪分离旋转后只需单图）已被项目方案降低复杂度；真正吃工时的是角色/僵尸的多方向动画与修图一致性。",
+  "零基础转型的成功样本多为小体量/低分辨率（16px、1-2 色调、少帧）；高分辨率 48px + 多方向 + 大量变体全由零基础单人手工做出并商业成功的公开案例本次未找到[不确定]。"
+ ],
+ "cases": [
+  {
+   "名称": "Stardew Valley（ConcernedApe/Eric Barone）",
+   "商店链接": "https://store.steampowered.com/app/413150/",
+   "Steam评论数及抓取日期": "[不确定]（本次未抓取；评论量极大，属顶级体量）",
+   "引擎": "XNA/MonoGame",
+   "玩法贴近度": "低",
+   "美术来源占比": "自制100%",
+   "素材来源证据及证据强度": "开发者自述与 PC Gamer/NPR 访谈，强；但 16px 俯视农场，与本项目 48px 对抗玩法差异大"
+  },
+  {
+   "名称": "Willard（nightrunstudio，学像素画 devlog）",
+   "商店链接": "https://nightrunstudio.itch.io/willard/devlog/418003/learning-to-pixel-art-willard-devlog",
+   "Steam评论数及抓取日期": "不适用（itch.io 项目）",
+   "引擎": "[不确定]",
+   "玩法贴近度": "低",
+   "美术来源占比": "自制为主",
+   "素材来源证据及证据强度": "开发者自述 devlog，中（自述为非美术背景）"
+  },
+  {
+   "名称": "Soulwielder",
+   "商店链接": "https://gamedev.net/blogs/2106/entry-2261474-postmortem-of-soulwielder-–-part-2-development/",
+   "Steam评论数及抓取日期": "[不确定]",
+   "引擎": "[不确定]",
+   "玩法贴近度": "低",
+   "美术来源占比": "自制+借鉴",
+   "素材来源证据及证据强度": "开发者 postmortem，中；记载首个走路动画约 5 次重做"
+  }
+ ],
+ "data_points": [
+  "Aseprite 价格 $19.99（Steam/itch，2026-06-29 价格追踪站与官方页）；SteamDB 史低 $9.99（2024-02-06，-50%）。",
+  "Pixelorama：MIT、免费；1.0 发布 2024-07-31（It's FOSS）。",
+  "自由职业动画师口径：64x64 以内动画 5-10 工时/段（论坛自述，单一来源）。",
+  "面积比：48px 约为 32px 的 2.25 倍、16px 的 9 倍（算术）。",
+  "本报告估算：全手动 600-1500 张精灵；零基础可用水准通常需先练 3-6 个月（推断）。"
+ ],
+ "independent_verification": "工具价格/许可有官方页或 SteamDB/GitHub 佐证（较强）；Stardew 事迹有 PC Gamer、NPR 等第三方报道（较强）；耗时数据几乎都是论坛自述或本报告推断，没有独立实测；其他工具对比来自聚合评测站（弱）；48px 全手动零基础成功案例未找到。",
+ "workflow_steps": [
+  "1. 买 Aseprite（$19.99）或先用 Pixelorama 试水；Godot 用 AsepriteWizard 插件或直接导出 PNG spritesheet + JSON。",
+  "2. 锁定规格：画布 48x48、调色板 16-32 色（Lospec 选或改 WinLu 取色）、统一光源（左上）、统一描边规则（外描边深色/选择性描边）、统一像素密度。",
+  "3. 先做『白模』：用最少帧（走路 4 帧、待机 2 帧）画 1 个角色的 3 面（下/上/右），验证 Y-Sorting 与镜像。",
+  "4. 手与枪画成独立部件（手 1 张、每把枪 1-3 张），在 Godot 里用 Node2D 旋转，朝上时调整 z_index（对应成熟做法：Nuclear Throne、Enter the Gungeon）。",
+  "5. 僵尸/人类变体：复用骨架帧，通过调色板替换 + 少量配饰/伤口贴图叠加产生变体，避免每种重画。",
+  "6. 物品图标：统一 32 或 48px 画布、统一描边与投影，先做 20 个最常见物品定风格，再批量扩展；货架/箱内展示直接复用图标缩放。",
+  "7. 每完成一批用 Godot 实机截图对照 WinLu 场景检查一致性，建立『风格检查清单』。",
+  "8. 需求评审：每两周盘点总工时，超预算的资产改为外购/改素材/AI 辅助。"
+ ],
+ "tools": [
+  {
+   "名称": "Aseprite",
+   "价格": "$19.99 买断",
+   "用途": "像素绘制与动画主力",
+   "链接": "https://dacap.itch.io/aseprite",
+   "版本或核对日期": "2026-06-29 价格",
+   "与Godot接入": "导出 PNG+JSON，或 AsepriteWizard 插件直接导入 SpriteFrames/AnimationPlayer"
+  },
+  {
+   "名称": "Pixelorama",
+   "价格": "免费（MIT）",
+   "用途": "Aseprite 免费替代，Godot 开发",
+   "链接": "https://github.com/Orama-Interactive/Pixelorama",
+   "版本或核对日期": "1.x，README 提 Godot 4.7.2（日期未标）",
+   "与Godot接入": "导出 PNG spritesheet"
+  },
+  {
+   "名称": "LibreSprite",
+   "价格": "免费（GPL）",
+   "用途": "Aseprite 旧版分叉",
+   "链接": "https://libresprite.github.io/",
+   "版本或核对日期": "[不确定]",
+   "与Godot接入": "导出 PNG"
+  },
+  {
+   "名称": "Pyxel Edit",
+   "价格": "[不确定]",
+   "用途": "瓦片编辑",
+   "链接": "http://pyxeledit.com/",
+   "版本或核对日期": "[不确定]",
+   "与Godot接入": "导出 PNG/tilemap"
+  },
+  {
+   "名称": "Krita",
+   "价格": "免费",
+   "用途": "修图/概念；不适合作主力像素动画",
+   "链接": "https://krita.org/",
+   "版本或核对日期": "[不确定]",
+   "与Godot接入": "导出 PNG"
+  }
+ ],
+ "mature_practices": "成熟作品普遍用『身体少面 + 独立旋转的手和枪』：Nuclear Throne 仅左右镜像+枪旋转；Enter the Gungeon 4 套绘制镜像成 6 向，枪与手独立旋转；描边可用运行时着色器统一添加（Gungeon 做法），从而减少手画描边的不一致。变体用调色板替换（palette swap）而非重画。",
+ "consistency_method": "锁定一个 16-32 色调色板并全项目共用；统一光源方向；统一描边规则（可用 shader 统一描边）；统一 48px 像素密度，避免与 16px 放大素材混用；建立样板角色/样板图标作为参考；定期并排对比 WinLu 场景。",
+ "animation_spec": "每角色 3 面×（待机 2-4 帧、走/跑 6-8 帧、射击反馈 2-3 帧、受击 2 帧、感染 4-6 帧、死亡 5-8 帧）≈ 约 90 帧/体型；僵尸另加攻击。零基础者估计 1 个体型完整动画集约 100-250 工时（推断）；3-5 个体型+变体乘数后总量巨大。",
+ "license_terms": "自画素材版权完全归自己，可商用、可联机分发、可放公开仓库，无署名限制；Aseprite 买断许可商用无限制（工具产出归用户）。若参考/改绘他人素材需遵守其授权，WinLu 授权细节见同批其他 item。",
+ "cost_time_estimate": "现金：Aseprite $20（或 0）；外购 WinLu 约 $20。工时（假设每天 6 小时有效绘制）：学习 2-4 个月 + 核心角色 1 体型 3 面完整动画约 1-2 个月 + 僵尸/人类变体 1-2 个月 + 80-150 个 loot 图标约 1-2 个月 + 特效/UI 额外；合计约 6-12 个月全职量级（推断，区间很宽）。",
+ "fit_for_user": "优点：零现金成本、无授权风险、可精确贴合游戏需求、手枪分离方案天然适合手工；缺点：用户零基础+单人+还要写完联机与权威同步代码，美术会吃掉大部分排期；48px 比 16/32px 更难一致，且与 WinLu 外购场景需要风格对齐。Claude/Antigravity 可辅助写工具脚本与审阅，但不能替代手绘。结论是适合『局部手绘+大量复用』，不适合『全部手动』。",
+ "network_sync_impact": "手/枪独立旋转只需同步 1 个量化瞄准角与动画状态枚举，对带宽极友好；全手动本身不改变同步方案，但帧数少的粗糙动画会使受击/感染状态难读，需要靠额外特效提示。",
+ "risks_pitfalls": "1) 进度风险：美术拖垮整个项目；2) 像素密度混用（16px 放大 vs 原生 48px）；3) 抛光螺旋：反复重画前几张；4) 变体不一致、方向镜像出现左右不对称物件；5) 学习曲线早期成品观感与 WinLu 专业场景落差大，需要靠重取样/统一后期（光照/滤镜）弥合；6) 缺乏 48px 零基础全自制商业成功案例佐证。",
+ "reversibility_cost": "低到中：自画资产与外购/AI 资产可按资产类别混用，路线可中途切换；但已画的 3 面角色若改为不同方向方案需重画，约 30-60% 工时沉没。",
+ "ai_can_do": "2025-11 至今：Claude 与 Antigravity 内的模型可写 Godot 的 spritesheet 加载、调色板检查脚本、批量导出/重命名脚本、手枪旋转与 z_index 逻辑；Claude/Gemini 可看截图给风格一致性批评。AI 图像模型可生成参考草图与图标底稿（具体可靠性见路径B item）；AI 不能可靠产出严格 48px 一致的多方向帧动画[不确定]。",
+ "human_must_do": "选定风格与调色板、手绘或精修关键帧与枪图、审核全部资产在游戏内的可读性与一致性、每批验收与取舍。",
+ "judgment": "不建议『全手动』作为主路线。理由：项目资产是数量型（图标数十到上百、角色多变体多动画），而零基础者全手工单件成本高、一致性随时间漂移。建议：保留手绘作为『定调与关键资产』部分（枪、手、少量标志性图标、角色基础型），其余用调色板变体、外购改素材，并与 AI 辅助路线混合；设定一个硬预算（如美术总时间不超过总开发时间的 30%），超出即改外购。",
+ "confidence": "中：工具与授权信息可靠；耗时与可行性依赖少量单一来源与推断，缺少 48px 零基础全自制成功先例。",
+ "win_rate_impact": "估计：纯全手动路线相对混合路线使终局成功概率下降约 10-25 个百分点（主要因工期与一致性风险；仅为估计）；若限定手绘范围则影响接近中性。",
+ "sources": [
+  "Aseprite 价格追踪 https://steambase.io/games/aseprite/price（2026-06-29）",
+  "Aseprite 官方 itch 页 https://dacap.itch.io/aseprite（一手）",
+  "Aseprite 官方博客 https://blog.aseprite.org/2026/06/30/new-website-account/（2026-06-30，一手）",
+  "Pixelorama GitHub https://github.com/Orama-Interactive/Pixelorama（一手）",
+  "Pixelorama 1.0 报道 https://itsfoss.com/news/pixelorama-1-0/（2024-07-31）",
+  "PC Gamer 访谈 https://www.pcgamer.com/stardew-valley-interview/1（一手访谈）",
+  "NPR 报道 https://www.npr.org/2025/01/24/g-s1-44510/the-legacy-and-future-of-the-farming-game-stardew-valley",
+  "Soulwielder postmortem https://gamedev.net/blogs/2106/entry-2261474-postmortem-of-soulwielder-–-part-2-development/（开发者自述）",
+  "Willard devlog https://nightrunstudio.itch.io/willard/devlog/418003/learning-to-pixel-art-willard-devlog（开发者自述）",
+  "工具对比聚合 https://lospec.com/pixel-art-software-list",
+  "同仓库既有调研：像素规格与3-4斜俯视角人物方向方案.json（Gungeon/Nuclear Throne 做法与 itch 供给统计）"
+ ],
+ "uncertain": [
+  "cases.Steam评论数",
+  "tools.Pyxel Edit价格",
+  "tools.LibreSprite/Krita版本",
+  "48px下各资产实际耗时（推断）",
+  "零基础48px全自制成功案例",
+  "ai_can_do中AI生成48px多方向动画的可靠性"
+ ]
+}
