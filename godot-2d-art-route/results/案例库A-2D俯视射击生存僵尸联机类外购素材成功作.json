@@ -1,69 +1,73 @@
 {
   "core_question": "2D 俯视/斜俯视、射击/生存/僵尸/联机类、主体美术大量来自外购/现成素材包且 Steam 评论>300 的成功作有哪些，素材来源证据有多硬？",
-  "one_line_conclusion": "该细分里“证据确凿的外购素材成功作”极少：本次只找到 1 个强证据案例（Vampire Survivors，素材包起家），其余多为自制美术；结论是外购素材包本身不阻止成功，但不能当作“该路线已被大量验证”的依据，你必须靠统一调色/二次加工/胶囊图去做差异化。",
+  "one_line_conclusion": "放宽到“俯视/3D 也算、免费素材也算”后找到 4 个有出处的案例，其中最贴近你的是 Realm of the Mad God（2D 俯视联机像素射击，约 47,920 评论，早期美术主要来自 Oryx 精灵图）：外购/现成素材起家并成功是真实存在的，但证据多为二手且披露率很低，你不能把它当成“已被大量验证”的路线，必须靠统一加工与差异化。",
   "key_findings": [
-    "【强证据】Vampire Survivors（poncle，Steam 评论约 253,804、好评约 98%，SteamSpy 2026-11-26 抓取）：开发者 Luca Galante 在 PC Gamer/NME/Game Developer 采访中自述早期使用现成素材包（一套类恶魔城风格的 sprite 包，部分报道称为免费包，另有二手报道称早期版本在素材/美术/音乐上约花 1,100 英镑[不确定，二手转述]）；引擎早期为 Phaser（HTML5），Game Developer 文章明确提到 Phaser。后来他把被指像恶魔城的 sprite 换掉。说明：素材包起家可做出爆款，但它不是联机、不是僵尸、不是 3/4 斜俯视。",
-    "【未找到硬证据】本次对 Unity Asset Store/itch.io/CraftPix/LimeZu 与 Steam 联机俯视僵尸射击成功作的交叉搜索，没有找到任何一款“开发者自述或素材作者展示 + 评论>300 + 联机俯视射击/僵尸”的明确案例；LimeZu Modern Interiors 页面评论区只列出 itch.io 小游戏（Internet Cafe Tycoon 等），无 Steam>300 评论的联机射击案例。",
-    "多数评论>300 的同类成功作美术是自制或团队自绘：ZERO Sievert（GameMaker，约 14,639 评论、85%，单人 Luca Carbonera，Aseprite 像素画，据报道称其单人开发；具体谁绘图[不确定]）；ZED ZONE（2D 俯视像素僵尸生存，约 4,956 评论、82%，开发 Leven Liu、发行 INDIECN，素材来源[不确定]，无证据显示外购）。",
-    "Steam 上存在大量用商店素材的低评论作品（如 Zombocalypse，2025-03 发售，3 条评论，$3.99，2D 俯视像素联机僵尸射击，素材来源未披露）：同赛道供给拥挤，素材包本身不构成卖点，“卖点=玩法+差异化”。",
-    "素材包公开授权可商用但不独占：CraftPix 页面明确“We do not sell graphics rights to you. We sell a license”；同一素材包会被多款游戏使用，辨识度风险真实存在。",
-    "社区对“完全未改的商店素材”有负面态度（Steam 论坛“Asset Store and my opinion”、House Flipper 讨论串“Just found out every asset in this game was not made by the developers”等），但也有观点认为改造后问题不大；Hunt Down The Freeman 事件（PC Gamer）说明素材来源不当/披露不当会引发强烈差评（该例为 3D 模型，TurboSquid）。"
+    "【最贴近的案例】Realm of the Mad God（Wild Shadow Studios→Kabam→DECA；Steam 版 Realm of the Mad God Exalt，评论约 47,920、好评 83%、当前在线约 723，SteamSpy/Steam API 2026-11-26）：2D 俯视联机弹幕射击，对象多为 8×8/16×16 像素（RealmEye 指南）。素材来源证据（中）：2010-02 Amit Patel（Red Blob Games）博客称 “The sprite art we got from Oryx is pixel art”；RealmEye 论坛 2021-02 用户称“初始图标是向 Oryx Design Lab 授权的”（论坛用户自述，未获官方佐证）。维基称 TIGSource Assemblee 比赛限定参赛者使用“很小一组美术资源”，但“该资源即 Oryx 的 LOFI 精灵图”这一说法我没有找到文献证实[不确定]。2020 年 Unity 重制版 Exalt 的美术已有重制，不能说现在仍全部是 Oryx 素材。",
+    "【强证据，早期素材包起家】Vampire Survivors（poncle，评论约 253,804、好评 98%，2026-11-26）：开发者 Luca Galante 在 PC Gamer/NME/Game Developer 采访自述早期使用现成（类恶魔城）素材包，引擎早期 Phaser；后来替换被指像恶魔城的 sprite。俯视生存，非联机非僵尸。",
+    "【强证据但为 3D 参照】Soulstone Survivors（Game Smithing，Unity，评论约 25,935、好评 91%，2026-11-26）：Synty 官方博客 “Made with Synty”（2024-08-06）列出使用 POLYGON Dungeon/Fantasy Kingdom/Modular Fantasy Characters 等包，并称“定制 Synty 资产让游戏有自己的风味”。俯视幸存者，但是 3D，不是 2D 像素。",
+    "【弱证据】Bone's Cafe（Acute Owl Studio，1–4 人沙发合作餐厅经营，非射击；评论约 302–330，好评 97%）：搜索摘要显示有人在 pixel-boy 的 Ninja Adventure（CC0，免费，含 Godot 4 示例工程）素材页评论中称“在 Steam 游戏 Bone's Cafe 里用了其角色 sprite”，但我没能在评论原文中复核，Steam 页也未提及，证据弱；该素材包作者页确认 CC0、可商用、无需署名。",
+    "【Oryx 官方展示】Oryx Design Lab 官网“games”页仅列出 Famaze（Steam 约 382 评论，开发者即 Oryx 本人）与 Brogue Tiles，没有大量第三方成功作展示；Spammerina（Steam 仅 2 评论）开发者在 itch 评论称用了其精灵。Tiny Rogues（约 9,755 评论、97%）是否使用 Oryx 素材：未找到任何来源，不收录。",
+    "【核实后不能算外购的热门作】Halls of Torment（约 31,136 评论，Godot，美术师 Daniel Karner，自制）、Brotato（约 115,102 评论，Godot，Blobfish 单人）、20 Minutes Till Dawn（约 27,993 评论）、Rogue: Genesia（约 7,568 评论）、Spirit Hunters（约 1,564 评论）：均未找到外购素材证据，按“来源[不确定]/自制”处理。TopDown Engine 官方 showcase 只列游戏，不披露美术来源，无法作为外购素材证据。",
+    "【RPG Maker 反查结果】To the Moon（约 70,606 评论）、Mad Father（约 6,377）、The Witch's House MV（约 3,451）、Corpse Party（约 1,275）：我没有找到任何来源证明它们“主要使用 RTP”；The Witch's House MV 的 Steam 页面称重制了全部图形（地图 tile 与角色 sprite），反而说明不是直接用 RTP。RPG Maker 默认素材通常有再分发限制。因此 RTP 成功作论点本次未获证实，不收录。",
+    "【Super Auto Pets 参照】Steam 约 291 人在线，但 Wikipedia 与搜索均未证实其使用 Google Noto Emoji（Noto Emoji 本身为开源 OFL 授权），该说法不收录。Kenney 官方未提供可用的“made with”Steam 成功案例清单（页面 404），也未搜到评论>1000 的第三方 Steam 作品。",
+    "结论：在“证据+评论>300”的双重过滤下，只有 RotMG、Vampire Survivors（2D）和 Soulstone（3D）三个站得住；披露率低是本质特征，不是搜索不足可以完全解释。联机 PvP/僵尸感染方向没有找到外购素材成功作。"
   ],
   "cases": [
     {
+      "名称": "Realm of the Mad God (Exalt)",
+      "链接": "https://store.steampowered.com/app/200210/",
+      "评论数及抓取日期": "约 47,920 条，83%（SteamSpy，2026-11-26）；在线约 723",
+      "引擎": "原版 Flash；2020 重制为 Unity",
+      "玩法贴近度": "高（2D 俯视联机像素弹幕射击，大量玩家同屏）",
+      "美术来源占比": "早期以 Oryx 精灵图（授权/外购）为主；Exalt 重制后部分重绘[比例不确定]",
+      "素材来源证据及证据强度": "中：Red Blob Games 2010 博客称 sprite art 来自 Oryx；RealmEye 论坛称初始图标授权自 Oryx Design Lab（用户自述）；LOFI 与比赛关联未证实"
+    },
+    {
       "名称": "Vampire Survivors",
       "链接": "https://store.steampowered.com/app/1794680/",
-      "评论数及抓取日期": "约 253,804 条，好评约 98%（SteamSpy，2026-11-26）",
-      "引擎": "早期 Phaser（HTML5）；后续版本引擎[不确定]",
-      "玩法贴近度": "低（俯视生存弹幕，单机/后加联机，非僵尸）",
-      "美术来源占比": "早期外购/现成素材包为主，后续逐步替换为自制/委托[不确定比例]",
-      "素材来源证据及证据强度": "强：开发者采访（PC Gamer、NME、Game Developer）自述使用 asset pack；具体包名未公开；二手称 1,100 英镑[不确定]"
+      "评论数及抓取日期": "约 253,804 条，98%（SteamSpy，2026-11-26）",
+      "引擎": "早期 Phaser（HTML5）；后续[不确定]",
+      "玩法贴近度": "低-中（俯视生存弹幕，后加联机，非僵尸）",
+      "美术来源占比": "早期外购/现成素材包为主，后续逐步替换[比例不确定]",
+      "素材来源证据及证据强度": "强：开发者采访（PC Gamer、NME、Game Developer）自述；具体包名未公开"
     },
     {
-      "名称": "ZERO Sievert",
-      "链接": "https://store.steampowered.com/app/1782120/",
-      "评论数及抓取日期": "约 14,639 条，85%（SteamSpy，2026-11-26）；SteamDB/商店称售出 60 万+",
-      "引擎": "GameMaker",
-      "玩法贴近度": "高（2D 俯视撤离射击，PvE 为主）",
-      "美术来源占比": "自制为主（Aseprite），具体绘制者[不确定]",
-      "素材来源证据及证据强度": "中：多篇报道称单人开发；无外购证据"
+      "名称": "Soulstone Survivors（3D 参照）",
+      "链接": "https://store.steampowered.com/app/2066020/",
+      "评论数及抓取日期": "约 25,935 条，91%（SteamSpy，2026-11-26）",
+      "引擎": "Unity",
+      "玩法贴近度": "低-中（俯视幸存者，3D，非像素）",
+      "美术来源占比": "Synty 外购 3D 资产为主，加自制 VFX/角色/敌人[比例不确定]",
+      "素材来源证据及证据强度": "强：Synty 官方 Made with Synty 博客（2024-08-06）；注意是 3D"
     },
     {
-      "名称": "ZED ZONE",
-      "链接": "https://store.steampowered.com/app/1211600/",
-      "评论数及抓取日期": "约 4,956 条，82%（SteamSpy，2026-11-26）；1.0 于 2026-11-06 发布；当前在线约 1,497",
+      "名称": "Bone's Cafe",
+      "链接": "https://store.steampowered.com/app/1739070/",
+      "评论数及抓取日期": "约 302–330 条，97%（SteamSpy 2026-11-26 与搜索摘要）",
       "引擎": "[不确定]",
-      "玩法贴近度": "中高（2D 俯视像素僵尸生存、最多 8 人联机，PvE）",
-      "美术来源占比": "[不确定]",
-      "素材来源证据及证据强度": "弱：未找到任何来源披露素材出处"
+      "玩法贴近度": "低（1–4 人沙发合作餐厅经营，像素，非射击）",
+      "美术来源占比": "部分 sprite 可能来自 Ninja Adventure（CC0）[不确定]",
+      "素材来源证据及证据强度": "弱：来自素材页评论的二手转述，未复核原文"
     },
     {
-      "名称": "Survivor Squad",
-      "链接": "https://store.steampowered.com/app/258050/",
-      "评论数及抓取日期": "约 541 条，67%（SteamSpy，2026-11-26）",
-      "引擎": "Unity（SteamDB）",
-      "玩法贴近度": "中（俯视僵尸，含 1v1 幸存者 vs 感染者联机）",
-      "美术来源占比": "[不确定]",
-      "素材来源证据及证据强度": "弱：无披露"
-    },
-    {
-      "名称": "Zombocalypse",
-      "链接": "https://store.steampowered.com/app/3378650/",
-      "评论数及抓取日期": "3 条（Steam 商店页，2026-11-26 前后抓取）——不满足>300，仅作反例",
-      "引擎": "[不确定]",
-      "玩法贴近度": "高（2D 俯视像素联机僵尸射击）",
-      "美术来源占比": "[不确定]",
-      "素材来源证据及证据强度": "弱：无"
+      "名称": "Halls of Torment（反例，自制）",
+      "链接": "https://store.steampowered.com/app/2218750/",
+      "评论数及抓取日期": "约 31,136 条，95%（SteamSpy，2026-11-26）",
+      "引擎": "Godot（由 Unity 迁移）",
+      "玩法贴近度": "中（俯视生存弹幕，伪等距）",
+      "美术来源占比": "自制/团队美术（Daniel Karner）",
+      "素材来源证据及证据强度": "中：Wikipedia 美术署名；无外购证据"
     }
   ],
   "data_points": [
-    "Vampire Survivors：约 253,804 评论、98% 好评、售价 $4.99（SteamSpy，2026-11-26）。",
-    "ZERO Sievert：约 14,639 评论、85%；ZED ZONE：约 4,956 评论、82%（SteamSpy，2026-11-26，口径为 Steam 全语言评论）。",
-    "基准：2025 年 Steam 新游中仅约 2.99% 达到 1,000 评论（VG Insights/Zukowski，来自同批调研的另一 item）。",
-    "CraftPix 授权为“使用许可、不转让图形版权”（CraftPix/itch 页面原文）。",
-    "本次检索：约 10 组关键词×多源搜索，仅得 1 个强证据素材包案例；说明该类“披露素材来源的成功作”披露率低。"
+    "评论数（SteamSpy/Steam API，2026-11-26）：RotMG Exalt 47,920（83%）；Vampire Survivors 253,804（98%）；Soulstone Survivors 25,935（91%）；Halls of Torment 31,136（95%）；Brotato 115,102（96%）；20 Minutes Till Dawn 27,993（90%）；Tiny Rogues 9,755（97%）；Rogue: Genesia 7,568（91%）；Spirit Hunters 1,564（79%）；Bone's Cafe 302（97%）。",
+    "RotMG Exalt 当前在线约 723（昨日峰值约 935，Steam API/SteamSpy 2026-11-26）；对象尺寸 8×8/16×16（RealmEye 指南）。",
+    "Ninja Adventure（pixel-boy）：CC0，itch 页评分 4.9（271 条），众筹约 $5,411/1,361 人，含 Godot 4 工程（itch 页，2026-11-26 抓取）。",
+    "Oryx Design Lab：多数素材包“含免费商用许可与源文件”（官网说明）；Steam 上官网列出的第三方案例仅 Famaze（约 382 评论，作者自家）。",
+    "基准：2025 年 Steam 新游约 2.99% 达到 1,000 评论（同批调研另一 item）。",
+    "检索覆盖：对 Oryx/Kenney/CraftPix/LimeZu/RPG Maker/TopDown Engine/幸存者类共 7 个反查方向逐一查证，通过“证据+评论>300”过滤的仅 3 个（含 1 个 3D）。"
   ],
-  "independent_verification": "Vampire Survivors 的素材包起家有多家独立媒体（PC Gamer、NME、Game Developer）转述开发者采访，可信度较高，但具体包名与 1,100 英镑数字仅为二手转述；ZERO Sievert 单人开发来自多篇媒体，美术谁画[不确定]；评论数为 SteamSpy 第三方口径，非 Steam 官方页面逐一核对。其余案例素材来源均无独立佐证。",
+  "independent_verification": "Vampire Survivors：多家独立媒体转述开发者采访（较可信）；Soulstone：Synty 官方博客（一手但属素材商宣传，加之开发者自述）；RotMG：2010 年第三方技术博客+论坛用户，缺官方一手，且“LOFI/比赛资源”未证实；Bone's Cafe：仅二手转述；评论数为 SteamSpy 第三方口径，未逐一对照 Steam 页面。",
   "workflow_steps": [
     "1. 先买一个风格统一的主素材包（如已选的 WinLu Spaceship Tileset 48×48）作为唯一视觉基准，其余素材一律向它的调色板靠拢。",
     "2. 用 Aseprite（或 Antigravity 脚本）把所有外来素材重映射到同一调色板（16–32 色），统一描边与光照方向。",
@@ -89,28 +93,34 @@
   "reversibility_cost": "中：若中途从外购换成自制/委托，TileSet 和人物 sprite 需整体替换，但只要保持统一 48px 网格与 Godot 资源引用结构，换图成本约 2–6 周工时。",
   "ai_can_do": "Claude/Antigravity 可可靠完成：批量切图与 TileSet/SpriteFrames 资源生成脚本、调色板重映射脚本、授权清单整理、Godot 场景搭建；不能可靠完成：生成与外购包风格逐像素一致的新角色动画。",
   "human_must_do": "选定素材包并逐包阅读授权；最终风格与调色板拍板；胶囊图/商店页美术把关；发售前做一次“同类游戏截图对比”确认辨识度。",
-  "judgment": "我的立场：外购统一素材包作场景底座可以做，但把它视为“降低成本、不构成优势”的选择，不要当作成功依据；本次证据显示该细分里强证据成功案例极少，你应当把预算和精力放在玩法留存、二次统一加工和商店页辨识度上，并把素材来源清单保留好，随时可替换关键资产（角色、胶囊图）。",
-  "confidence": "低-中：案例检索受限于搜索工具对 Steam 评论区/credits 的覆盖，且素材来源披露率本身很低；Vampire Survivors 结论为中高，其余为低。",
-  "win_rate_impact": "估计：外购素材 vs 自制对最终成功概率的直接影响小（约 ±5 个百分点内，估计，非实测）；真正影响因素是玩法冷启动、统一美术与商店页呈现。",
+  "judgment": "我的立场：外购/授权素材起家的成功作确实存在（RotMG 是联机俯视像素射击里最贴近你的例子，Vampire Survivors 是最硬的证据），所以 WinLu 底座+统一加工是可行路线；但证据级别只到“可行”，不到“已被大量验证”，且这些成功作的成功主因是玩法与规模，不是素材包。建议：保持素材来源清单、关键角色与胶囊图尽早做差异化（RotMG 后来也重制了美术）；联机 PvP/感染方向没有外购成功作先例，不要寄希望于素材包本身提供辨识度。",
+  "confidence": "中：新增案例使“可行”的结论更站得住（RotMG、Soulstone 有一手/半一手证据）；但 RotMG 的素材来源为二手，RPG Maker/RTP、Tiny Rogues、Super Auto Pets 等方向未获证实，披露率低导致样本偏少。",
+  "win_rate_impact": "估计：外购素材 vs 自制对终局成功概率的直接影响小（约 ±5 个百分点，估计）；RotMG/Vampire Survivors 说明素材包不阻止成功，但成功主要由玩法、冷启动与运营驱动。",
   "sources": [
-    "PC Gamer，Vampire Survivors didn't rip-off Castlevania sprites after all（二手/媒体采访）：https://www.pcgamer.com/vampire-survivors-didnt-rip-off-castlevania-sprites-after-all",
-    "Game Developer，Vampire Survivors development sounds like an open source-fueled fever dream（提到 Phaser 与免费 sprite 包）：https://gamedeveloper.com/design/vampire-survivors-development-sounds-like-an-open-source-fueled-fever-dream",
-    "NME，Vampire Survivors creator Luca Galante talks quitting his job：https://www.nme.com/features/vampire-survivors-creator-luca-galante-talks-quitting-his-job-to-fulfil-his-promise-3153107",
-    "SteamSpy API（评论数，2026-11-26 抓取）：https://steamspy.com/api.php?request=appdetails&appid=1794680 等",
-    "ZERO Sievert Steam 页面：https://store.steampowered.com/app/1782120/ZERO_Sievert/；NME 开发者访谈：https://www.nme.com/features/zero-sievert-developer-cabo-studio-talks-about-the-tarkov-esque-2d-extraction-shooter-3321572",
-    "LimeZu Modern Interiors itch.io 页面（评论区使用案例，一手但为用户自述）：https://limezu.itch.io/moderninteriors",
-    "CraftPix Zombie Top-Down Shooter Game Kit（授权文字）：https://free-game-assets.itch.io/zombie-top-down-shooter-game-kit",
-    "Steam 页面：Zombocalypse https://store.steampowered.com/app/3378650；ZED ZONE https://store.steampowered.com/app/1211600；Survivor Squad https://store.steampowered.com/app/258050",
-    "PC Gamer，Why people are furious about that Hunt Down The Freeman game on Steam：https://pcgamer.com/why-people-are-furious-about-that-hunt-down-the-freeman-game-on-steam"
+    "Wikipedia, Realm of the Mad God（起源、Flash→Unity、比赛限定美术资源）：https://en.wikipedia.org/wiki/Realm_of_the_Mad_God",
+    "Red Blob Games(simblob) 2010-02 博客，“The sprite art we got from Oryx is pixel art”：https://simblob.blogspot.com/2010/02",
+    "RealmEye 论坛 2021-02（用户自述初始图标授权自 Oryx Design Lab，弱）：https://www.realmeye.com/forum/t/realm-of-the-mad-god-rpg/68226",
+    "Realm of the Mad God Exalt Steam 页：https://store.steampowered.com/app/200210/",
+    "Oryx Design Lab 官网与 games 页（Famaze/Brogue Tiles，一手）：https://www.oryxdesignlab.com/games",
+    "Synty 官方博客 Made with Synty: Soulstone Survivors（2024-08-06，一手）：https://syntystore.com/blogs/blog/made-with-synty-soulstone-survivors",
+    "PC Gamer，Vampire Survivors didn't rip-off Castlevania sprites after all：https://www.pcgamer.com/vampire-survivors-didnt-rip-off-castlevania-sprites-after-all",
+    "Game Developer，Vampire Survivors development…open source-fueled fever dream：https://gamedeveloper.com/design/vampire-survivors-development-sounds-like-an-open-source-fueled-fever-dream",
+    "NME，Luca Galante 访谈：https://www.nme.com/features/vampire-survivors-creator-luca-galante-talks-quitting-his-job-to-fulfil-his-promise-3153107",
+    "pixel-boy Ninja Adventure（CC0，itch 页，一手授权说明）：https://pixel-boy.itch.io/ninja-adventure-asset-pack",
+    "Wikipedia, Halls of Torment：https://en.wikipedia.org/wiki/Halls_of_Torment；Brotato：https://en.wikipedia.org/wiki/Brotato",
+    "The Witch's House MV Steam 页（重制全部图形）：https://store.steampowered.com/app/885810/",
+    "SteamSpy API（评论数，2026-11-26 抓取，第三方）：https://steamspy.com/api.php?request=appdetails&appid=200210 等",
+    "ZERO Sievert/ZED ZONE/Survivor Squad/Zombocalypse 的 Steam 页面（见前版）：https://store.steampowered.com/app/1782120/ ，https://store.steampowered.com/app/1211600 ，https://store.steampowered.com/app/258050 ，https://store.steampowered.com/app/3378650",
+    "LimeZu Modern Interiors itch.io 页：https://limezu.itch.io/moderninteriors；CraftPix 授权文字：https://free-game-assets.itch.io/zombie-top-down-shooter-game-kit"
   ],
   "uncertain": [
+    "cases.RotMG 素材来源（Oryx/LOFI/比赛资源关联）与重制后美术占比",
     "cases.Vampire Survivors 引擎与具体素材包名",
-    "cases.ZERO Sievert 绘制者",
-    "cases.ZED ZONE 引擎/美术来源",
-    "cases.Survivor Squad 美术来源",
-    "cases.Zombocalypse 引擎/美术来源",
-    "key_findings 中 1,100 英镑数字",
-    "license_terms 各包AI训练条款",
-    "confidence"
+    "cases.Soulstone 自制比例",
+    "cases.Bone's Cafe 素材来源与引擎",
+    "RPG Maker RTP 案例（未证实）",
+    "Tiny Rogues / Super Auto Pets 素材来源（未证实）",
+    "confidence",
+    "win_rate_impact"
   ]
 }
