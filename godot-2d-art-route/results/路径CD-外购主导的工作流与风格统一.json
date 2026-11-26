@@ -1,0 +1,266 @@
+{
+  "core_question": "路径 C（大量外购+自己填补）与路径 D（全外购只微调）在 48px、3/4 俯视、搜打撤 PvP 项目里怎么做：如何选同源素材、统一风格、补缺失（尤其 loot 图标、多枪支、僵尸/人类变体）、避开授权陷阱和 asset flip 观感，以及批量产出的难度、单件成本与一致性？",
+  "one_line_conclusion": "路径 C 比 D 现实：WinLu 只给场景，人物、僵尸、枪、loot 在 48px 下几乎没有现成同源素材，必须自己补；做法是「场景 WinLu + 人物/枪/图标用同密度 48px 的一个第二来源（如 LimeZu 48 档）或 AI 底稿，统一进一个锁定调色板和一个描边/光照规则，再由 Aseprite 脚本批量重映射」，付费素材 PNG 永远不进公开仓库。",
+  "key_findings": [
+    "WinLu Spaceship Tileset 官方页（2026-11-26 抓取）：48px、为 RPG Maker 与 Godot 优化，现价 $20（原价 $25）；授权明写「可用于商业项目、可编辑修改、不得再分发或转售、署名非必需」；内容为驾驶舱、货舱、医疗舱、冬眠舱、机库、水培、引擎室等 tile 与电子设备动画物件，预览提到箱子、桶、控制台、电脑、床、储物柜、管道、植物，另有一张展示图出现一把枪；没有提到任何角色。页面标注「未使用生成式 AI」，无 AI 训练条款。",
+    "LimeZu Modern Interiors（itch.io 页面，抓取 2026-11-26）：提供 16/32/48 三档，含数千家具单图、100+ 帧动画物件、角色生成器（100+ 套服装、200 发型、80 配件、9 肤色，带 idle/run/shoot/punch 等动画）；授权：可编辑并用于商业/非商业项目，禁止转售或分发，需署名并链接 limezu.itch.io；最低 $1.50，页面最近一条更新日志为 2023-07-11。意义：它是少数在 48px 档同时带人物生成器和射击动画的同源包，但风格是现代室内（不是科幻），与 WinLu 的 48 密度是否一致需下载后验证（前序报告已列为待核实项）。",
+    "授权陷阱 1（再分发/公开仓库）：多个 itch.io 作者明说不允许转售、再分发或重新打包，哪怕已修改；是否「放进公开 GitHub 仓库」被算作再分发在社区没有定论，但保守做法是把付费素材文件夹加入 .gitignore，仓库只写购买链接和脚本；游戏构建里打包使用到的素材通常按「游戏内使用」处理，这一点来自社区推断而非法律意见。",
+    "授权陷阱 2（AI 条款）：itch.io 作者各自写协议，没有平台统一规则。已见条款包括「禁止用于训练 AI」、「禁止用于 AI 或 NFT 相关用途」、以及 Mana Seed（Seliel the Shaper）作者在 itch 评论中明确表示其用户协议禁止「与任何 AI 生成资产一起使用」（图像、音频、文字、代码都算，该作者对一个只用 AI 写城市名和对话的项目也判定违规）。这对你的项目是硬冲突：你用 Claude/Antigravity 写代码，并计划用 AI 补图，凡带这种条款的包一律不能买。WinLu 与 LimeZu 页面未见此类条款（只有「无生成式 AI」的内容标签，不是对你的限制）。",
+    "授权陷阱 3（署名）：LimeZu 要求署名并带链接，需在游戏内 Credits 与 Steam 商店页做；WinLu 不要求。授权陷阱 4（修改范围）：改色、改像素密度、拼装都算修改，必须逐包确认允许修改；授权文本以购买时页面为准，作者可能事后修改，购买时截图并存档（我的建议，非来源陈述）。",
+    "防素材提取：Godot 的 GDRE Tools（gdsdecomp）可无头恢复整个项目、提取 PCK 并反编译 GDScript；PCK 加密需要自己用源码编译导出模板，官方预编译模板不支持，并且密钥嵌在可执行文件里，社区有 Bruteforcer/gdke 能找回密钥，官方文档也只说「需要花功夫才能找到」。结论：加密只能抬高门槛，无法阻止提取；对 $20 素材包，现实做法是接受「游戏内使用」本来就可被提取，靠授权条款维权而不是技术防护。因此不建议为此自己编译引擎模板，除非有额外需求。",
+    "asset flip 观感：多篇开发者文章和 Unity 论坛帖的共识是「问题不在于用了外购素材，而在于被玩家一眼认出是通用素材」；Steam 曾于 2017 年下架 Silicon Echo 一次发布的 173 个 asset flip 游戏，还有策展人专门标注此类游戏。可操作的建议来自单一博客（Wayline，自带产品推广）：把素材当作起点而不是成品、增加自己的原创价值、素材重度依赖时不要定高价——证据强度弱，只能当经验参考。",
+    "风格统一：LPC 社区教程指出把一种调色板的像素图转到另一种调色板并不简单，尤其目标调色板更受限时，混用调色板会让画面杂乱；Aseprite 提供「按最近色替换为调色板」，并支持共享调色板（Lospec 提供数百个社区调色板，GPL 格式）。实践上先选定目标调色板，用最近色映射每个素材包，再肉眼复核，因为最近色映射会压平明暗层次；描边统一用重映射把所有描边色归并成一个深色。这一段的「通用做法」部分属我的知识补充，搜索结果只直接支持调色板与 Aseprite 功能。",
+    "补缺成本对比（本次 Fiverr 等挂牌价，不是成交价）：32×32 约 $3/帧，48×48 约 $5/帧，64×64 约 $8/帧（部分挂牌重复帧 40% 折扣）；另有「32×32 以内 $30 起步 +$10/帧；64×64 以内 $60 起步 +$15/帧」的报价；经验画师称低于 5 分钟/帧几乎不可能。按 48px 的 $5/帧估算：一套人类+僵尸 100 帧≈$500，100 个 loot 图标按单张 $3–8≈$300–800。",
+    "loot 图标在外购路径下最难补齐：我在 itch.io 的 48x48 标签下前序统计只有 178 个包、zombies+48x48 为 0，没有现成的「48px 搜打撤 loot 包」；所以 loot 图标几乎一定要自己补，且可以用 AI（PixelLab 的单次 $0.01–0.08 量级，见 item 1）出底稿后在 Aseprite 里套同一调色板和 1px 描边。",
+    "持不同枪支：外购人物包（含 LimeZu 角色生成器的 shoot 动画）是把枪画进身体的，不适配「手枪独立 360° 旋转」；若采用你的方案，需要把外购人物的手与枪拆掉，或只借用其头/身，枪由自己补。这意味着路径 D（全自购只微调）在你的架构下基本不成立，只能是路径 C。",
+    "变体：外购 + 调色板替换是最便宜的变体方式（衣服、皮肤、血迹色），可在 Aseprite 里用 Lua 脚本批量做；僵尸造型差异（体型、残肢）无法靠换色获得，需要画或 AI 底稿。"
+  ],
+  "cases": [
+    {
+      "名称": "WinLu Spaceship Tileset（场景底座，购买页）",
+      "链接": "https://winlu.itch.io/spaceship-tileset",
+      "Steam评论数及抓取日期": "不适用（素材包），页面核对 2026-11-26",
+      "引擎": "RPG Maker/Godot 通用",
+      "玩法贴近度": "中（科幻场景，无人物）",
+      "美术来源占比": "外购（作者自制，无生成式 AI）",
+      "素材来源证据及证据强度": "商品页自述，强"
+    },
+    {
+      "名称": "LimeZu Modern Interiors（人物生成器+48 档）",
+      "链接": "https://limezu.itch.io/moderninteriors",
+      "Steam评论数及抓取日期": "不适用，页面核对 2026-11-26",
+      "引擎": "RPG Maker/通用",
+      "玩法贴近度": "中低（现代室内，非科幻，射击动画为身体内置）",
+      "美术来源占比": "外购",
+      "素材来源证据及证据强度": "商品页自述，强；48 档是否原生 48 密度[不确定]，待下载验证"
+    },
+    {
+      "名称": "同类外购主导成功作",
+      "链接": "见同目录《案例库A》《案例库B》《案例库C》三份报告",
+      "Steam评论数及抓取日期": "[不确定]，本次未重新抓取，请直接引用上述三份已核实报告",
+      "引擎": "[不确定]",
+      "玩法贴近度": "[不确定]",
+      "美术来源占比": "外购",
+      "素材来源证据及证据强度": "不在本 item 重复，弱"
+    }
+  ],
+  "data_points": [
+    "WinLu 价格：$20（原价 $25），授权商用+可修改+禁再分发，不要求署名，抓取 2026-11-26，来源作者商品页（一手）",
+    "LimeZu Modern Interiors：最低 $1.50，16/32/48 三档，需署名，最近更新日志 2023-07-11，抓取 2026-11-26（一手）",
+    "Steam 2017 年下架 Silicon Echo 等账号 173 个 asset flip 游戏（来源：二手文章摘要，口径为一次下架事件）",
+    "Fiverr 挂牌价：32×32 约 $3/帧、48×48 约 $5/帧、64×64 约 $8/帧；起步价+每帧 $10–15 的报价（挂牌价，非成交价，抓取 2026-11-26）",
+    "PixelLab 官方 API 价格：inpaint 约 $0.007–0.04/次，edit-image 64×64 $0.0118，Pro 档 $0.08–0.15/次（来源 pixellab.ai/pixellab-api，估算价）",
+    "Godot PCK 加密：必须自行编译模板，官方预编译模板无效，默认不加密任何文件（Godot 4.7 文档）",
+    "我的估算：一套 100 张 loot 图标（AI 出稿+修图）$5–80、5–15 小时；一套 100 帧人物+僵尸（AI 底稿+清理）$30–150、25–60 小时；外包同量约 $500–1,500（估计，假设见 cost_time_estimate）"
+  ],
+  "independent_verification": "WinLu、LimeZu 的授权与价格为作者一手页，已直接抓取；Godot 加密限制为官方文档；GDRE/密钥找回工具来自 GitHub 项目页（已存在的公开工具）。Mana Seed 禁止「与 AI 资产同用」来自作者在 itch 评论中的自述，没有读到完整用户协议原文（selieltheshaper.weebly.com/user-license.html），因此是作者自述的二手转述，证据中。asset flip 建议主要来自单一博客（Wayline，带推广）和论坛，证据弱；Steam 下架事件来自二手摘要。Fiverr 价格是挂牌价非成交价。我没有找到「全外购的 48px 搜打撤」成功作的独立数据，这一点见案例库报告。",
+  "workflow_steps": [
+    "第 1 步（0.5 天）确定「主源」：以 WinLu（场景）为风格锚点，截图提取 16–24 色主调色板，存为 .gpl/.pal；决定人物与图标「是否」来自第二来源（LimeZu 48 档）或自制/AI。每多一个来源，统一成本翻倍，建议总来源数 ≤3。",
+    "第 2 步（0.5 天）逐包核对授权：下载页面截图存档；确认可商用、可修改（含改色和改像素密度）、署名要求、是否有 AI 条款（凡有「不得与 AI 资产同用」的包一律放弃）；记录到 LICENSES.md（只写条款摘要和链接，不放素材）。",
+    "第 3 步（0.5 天）仓库隔离：assets_paid/ 加入 .gitignore，公开仓库只放脚本和 README 的购买链接；构建流水线由本地提取；若仓库私有也建议同样处理，避免日后转公开。",
+    "第 4 步（1 天）验证像素密度：把候选素材在 Aseprite 里放大 1:1 检查游程（前序方法），确认是原生 48px，而不是 16px 放大 3 倍；不兼容的包直接淘汰。",
+    "第 5 步（1–2 天）统一管线：写 Python/Aseprite Lua 脚本，输入原始素材、输出：①调色板最近色重映射 ②描边色归并为单一深色（或交给运行时 1px 描边 shader）③统一光源方向复核（左上）。让 Claude/Antigravity 写并跑，人工看对比图。",
+    "第 6 步（3–6 天）补缺：先列「缺口清单」——人物（3 面+手）、僵尸（3–5 种）、枪（约 10 把）、loot 图标（约 100）、血迹/特效。人物与僵尸用 AI 底稿+手清；枪用外购或自制 + 16 角度预渲染脚本；loot 图标按「32×32 内容放在 48×48 格内」批量出。",
+    "第 7 步（2–3 天）定制化防 asset flip：给场景加自己的元素（专属色彩、专属 UI、专属光照/后期、专属怪物与枪、专属 logo 与商店页风格），保证核心玩法画面里至少 3–5 个玩家一眼能认出的「本作专属」元素。",
+    "第 8 步（持续）一致性回归：每批新资产放进 16 人同屏测试场景，用多模态审图和调色板越界脚本检查；每月核对一次购买页授权是否改动。",
+    "第 9 步（上线前）完成 Credits 署名（LimeZu 等）、Steam AI 披露表（若有 AI 生成美术随游戏发行）、素材许可证文件备查。"
+  ],
+  "tools": [
+    {
+      "名称": "WinLu Spaceship Tileset",
+      "价格": "$20（原价 $25）",
+      "用途": "场景底座",
+      "链接": "https://winlu.itch.io/spaceship-tileset",
+      "版本或核对日期": "v1.0（2024-02-06），核对 2026-11-26",
+      "Godot接入": "PNG 精灵表→TileSet（作者说明已为 Godot 优化）"
+    },
+    {
+      "名称": "LimeZu Modern Interiors（含 Character Generator）",
+      "价格": "$1.50 起",
+      "用途": "48 档人物/家具/动画候选",
+      "链接": "https://limezu.itch.io/moderninteriors",
+      "版本或核对日期": "v41.4，核对 2026-11-26",
+      "Godot接入": "导出 PNG→SpriteFrames"
+    },
+    {
+      "名称": "Aseprite（调色板、色替换、脚本 Lua）",
+      "价格": "$19.99",
+      "用途": "调色板重映射、描边统一、拼装、变体换色",
+      "链接": "https://www.aseprite.org/",
+      "版本或核对日期": "未再核对价格",
+      "Godot接入": "导出 PNG/JSON 或 Aseprite Wizard 插件"
+    },
+    {
+      "名称": "Lospec 调色板库",
+      "价格": "免费",
+      "用途": "选统一调色板",
+      "链接": "https://lospec.com/palette-list",
+      "版本或核对日期": "2026-11-26 通过搜索结果确认存在",
+      "Godot接入": "导入 Aseprite 调色板"
+    },
+    {
+      "名称": "PixelLab",
+      "价格": "按量约 $0.007–0.15/次",
+      "用途": "补缺（人物底稿、loot 图标、inpaint 修图）",
+      "链接": "https://pixellab.ai/pixellab-api",
+      "版本或核对日期": "2026-11-26",
+      "Godot接入": "PNG/MCP"
+    },
+    {
+      "名称": "GDRE Tools（gdsdecomp）",
+      "价格": "免费开源",
+      "用途": "了解提取风险；测试自己的包被提取的难度",
+      "链接": "https://github.com/GDRETools/gdsdecomp",
+      "版本或核对日期": "2026-11-26（搜索确认存在，仓库地址有多个 fork）",
+      "Godot接入": "独立工具"
+    },
+    {
+      "名称": "Godot PCK 加密（自编译导出模板）",
+      "价格": "免费，需自行编译",
+      "用途": "抬高提取门槛",
+      "链接": "https://docs.godotengine.org/en/4.7/engine_details/development/compiling/compiling_with_script_encryption_key.html",
+      "版本或核对日期": "文档 4.7，核对 2026-11-26",
+      "Godot接入": "导出预设 Encryption 页"
+    }
+  ],
+  "mature_practices": "1）把外购素材当起点：统一调色板、统一描边、加专属后期与 UI，是独立开发者降低 asset flip 观感的通行说法（来源为开发者博客与论坛，非统计）。2）混用多家素材的稳妥办法是只选同一作者/同一系列：同一系列同密度、同光源、同描边，省掉大部分统一成本。3）关键资产（主角、核心敌人、本作 logo、UI）自制或定制，次要场景/杂物外购，是 C 路径的常见分层。4）预先把授权条款记录入库，是商业发行的基本合规动作。5）对下载素材做原生像素密度验证，避免 mixels。6）提取防护靠授权而非技术：对 Godot 项目，加密只是抬高门槛。",
+  "consistency_method": "单一调色板（16–24 色）+ 最近色重映射脚本；描边统一：外购素材如无黑描边，用运行时 1px 描边 shader 统一人物/僵尸/道具；光照方向统一为左上；像素密度必须全部原生 48，禁止缩放；人物比例固定为 1 格高；所有新补资产按「同一参考图、同一调色板、同一提示词模板」生成；每批用多模态审图和脚本检查越界色。风险点：最近色映射压平明暗，需手修高光与阴影；不同作者的透视（墙高、人物头身比）无法靠调色板解决。",
+  "animation_spec": "沿用前序报告规格：人类约 45–52 帧、僵尸约 54 帧、每把枪 idle 1+fire 2–3 帧（16 角度预渲染脚本生成）、手 1–2 张。外购人物包只有 LimeZu 生成器提供射击等动画，但是把枪画进身体的做法与独立手枪方案冲突，需要拆件或只借头身；其他外购包基本没有 48px 的僵尸动画（前序统计：zombies+48x48 标签为 0）。因此动画几乎一定要自己补：AI 底稿+清理 25–60 小时/套（估计）。",
+  "license_terms": "WinLu：可商用、可修改、禁止再分发/转售、署名非必需、无 AI 条款（页面标「无生成式 AI」）；可打包进游戏，不得把原始 PNG 放进公开仓库。LimeZu：可商用与修改，禁止转售分发，必须署名并链接 limezu.itch.io，页面无 AI 条款。部分作者（如 Mana Seed）禁止与 AI 生成资产同用，部分作者禁止用于 AI 训练；每包协议由作者自定，itch.io 没有统一规则；必须逐包读取并存档。联机客户端分发：游戏内使用通常可行，具体以各包协议为准。公开仓库：保守做法不放；这是我的建议，非法律意见。",
+  "cost_time_estimate": "现金（估计）：WinLu $20 + LimeZu $1.5–$10 + Aseprite $19.99 + AI 工具 $10–60 = 约 $50–110；若部分补缺外包（按挂牌价 $5/帧×100 帧）+$500；变体/loot 外包+$300–800。工时（估计）：授权核对与仓库隔离 1 天；统一脚本 2–3 天；人物/僵尸补缺 25–60 小时（AI 底稿+清理）；loot 图标 100 个 5–15 小时；枪 10 把约 10–20 小时；总计路径 C 约 60–140 小时美术工时。路径 D（全外购）理论上 5–15 小时，但在你的方案下无法成立，因为 48px 没有同源人物/僵尸/loot。假设：单人、零美术基础、沿用 AI 底稿+手修。",
+  "fit_for_user": "路径 C 适配度高，路径 D 适配度低。理由：①零美术基础，从零自画全部资产风险大，外购场景+外购可用部分是最稳妥的起点；②48px 同源素材稀缺，需要补缺的部分占人物、僵尸、枪、loot，约占美术总量的 60–80%（我的估计），所以 D 在你的项目里不成立；③Claude/Antigravity 擅长写重映射、检查脚本，正好降低统一成本；④16 人联机 PvP 对美术同步无额外约束；⑤最大风险是外购场景与 AI 补缺人物的风格不匹配，要通过调色板和密度验证来控制。",
+  "network_sync_impact": "不适用（美术路线不改变同步协议）；仅需注意换皮变体用整数 skin_id 同步即可，不要同步贴图或调色板。",
+  "risks_pitfalls": [
+    "把 16px/32px 素材放大塞进 48 世界造成混合像素，被玩家一眼识别为拼凑。",
+    "买了带「禁止与 AI 同用」条款的包（如 Mana Seed 作者的协议），与你的 AI 辅助开发冲突，可能被投诉下架。",
+    "付费素材 PNG 进了公开仓库，被当作再分发；要用 .gitignore 并检查 git 历史。",
+    "作者事后修改授权条款，或下架素材包，导致无法再下载；购买时存档页面截图与文件。",
+    "LimeZu 需署名，漏做 Credits 会违约。",
+    "外购场景与 AI 补缺人物的光照、描边、比例不一致，商店页截图显得杂乱。",
+    "Godot PCK 加密需自编译模板，门槛高且收益有限，容易浪费时间。",
+    "把素材当成品直接上架，asset flip 观感差评风险；同类热门包被其他游戏大量使用会降低辨识度。",
+    "AI 批量图标一致性漂移，需固定参考与调色板。"
+  ],
+  "reversibility_cost": "场景与调色板选定后，换场景素材相当于重画全部地图（返工 50–200 小时）；换人物来源（外购↔AI↔手绘）只要保持 3 面精灵表接口，返工约 25–100 小时，代码不变；loot 图标是独立单图，替换成本最低（按个替换，几乎线性）。先把精灵表命名与尺寸规则固定，换来源的成本可降到 1–3 天代码+美术重做。",
+  "ai_can_do": "Claude/Antigravity 可靠完成：写 Python/Lua 脚本（调色板最近色映射、描边归并、越界检查、批量换色变体、RotSprite 预渲染）；整理 LICENSES.md 与购买清单；多模态审图（比较外购和补缺资产的色板、光照、密度是否一致）；GDScript 接入。AI 图像工具（PixelLab、Retro Diffusion、Gemini 图像模型）：loot 图标、人物底稿、inpaint 修图可用，复杂变体和动画需手清。不可靠：自动判断授权风险（只能读你给的文本，不能替代律师）、保证风格一致无需人工复核。",
+  "human_must_do": "逐包阅读并存档授权文本；决定最终使用哪些来源；拍板调色板和光照方向；逐帧/逐图修图与风格复核；仓库隔离与 git 历史检查；Credits 署名；Steam AI 披露；16 人同屏可读性与 asset flip 观感实测。",
+  "judgment": "明确立场：走路径 C，不要走 D。具体：场景用 WinLu 作风格锚点，人物与僵尸以 AI 底稿+Aseprite 手工清理为主、LimeZu 48 档只作为头/服饰参考或可选来源，枪与 loot 图标自制/AI 并全部锁入同一调色板，用脚本批量重映射；同时给游戏加至少 3–5 个本作专属的视觉元素（后期、UI、怪物、枪）降低 asset flip 观感。授权上：只买没有 AI 禁用条款的包，付费素材永不进公开仓库，全部存档，LimeZu 做署名。技术防提取不投入，靠授权维权。依据：外购素材在 48px 上缺人物、僵尸、loot，D 在你的方案下不可行；C 的统一成本可由 Claude/Antigravity 写脚本大幅降低；asset flip 风险主要来自「未做统一与专属化」，而不是用了外购本身。",
+  "confidence": "中：授权与价格来自一手页面（高）；asset flip 的做法与成功率缺少独立量化证据（低）；人物/loot 的工时和成本是估算（中低）。",
+  "win_rate_impact": "估计：路径 C 相对「全自制」可省约 40–60% 美术工时，对按时上线的概率约 +4～+8 个百分点；若不做统一与专属化，商店页转化可能损失 10–25%（估计）；若误用带 AI 禁用条款的包，下架/投诉风险可造成较大负面（概率低但损失高）。均为主观估计。",
+  "sources": [
+    {
+      "标题": "WinLu Spaceship Tileset（商品页，价格与授权）",
+      "URL": "https://winlu.itch.io/spaceship-tileset",
+      "日期": "v1.0 2024-02-06，核对 2026-11-26",
+      "类型": "一手（素材作者）"
+    },
+    {
+      "标题": "LimeZu Modern Interiors（商品页，授权与尺寸）",
+      "URL": "https://limezu.itch.io/moderninteriors",
+      "日期": "核对 2026-11-26；最近更新日志 2023-07-11",
+      "类型": "一手（素材作者）"
+    },
+    {
+      "标题": "itch.io 评论：Mana Seed 作者说明协议禁止与 AI 资产同用",
+      "URL": "https://itch.io/post/12516306",
+      "日期": "[不确定]",
+      "类型": "作者自述（二手转述协议）"
+    },
+    {
+      "标题": "Mana Seed User License（作者站点）",
+      "URL": "https://selieltheshaper.weebly.com/user-license.html",
+      "日期": "未直接读取",
+      "类型": "一手（未核对原文）"
+    },
+    {
+      "标题": "itch.io 博客：The Flavare 更新所有素材授权（不得用于图像生成 AI）",
+      "URL": "https://itch.io/blog/757546/update-license-for-all-assets",
+      "日期": "2024-06-30",
+      "类型": "一手（素材作者）"
+    },
+    {
+      "标题": "GamingOnLinux：itch.io 要求素材页披露 AI 生成内容",
+      "URL": "https://gamingonlinux.com/2024/11/itchio-store-now-requires-ai-generated-content-disclosures-for-assets/",
+      "日期": "2024-11",
+      "类型": "媒体"
+    },
+    {
+      "标题": "Godot 4.7 文档：Compiling with PCK encryption key",
+      "URL": "https://docs.godotengine.org/en/4.7/engine_details/development/compiling/compiling_with_script_encryption_key.html",
+      "日期": "核对 2026-11-26",
+      "类型": "一手（官方文档）"
+    },
+    {
+      "标题": "GDRE Tools（gdsdecomp）",
+      "URL": "https://github.com/GDRETools/gdsdecomp",
+      "日期": "核对 2026-11-26",
+      "类型": "一手（开源工具）"
+    },
+    {
+      "标题": "Wikipedia：Asset flip",
+      "URL": "https://en.wikipedia.org/wiki/Asset_flip",
+      "日期": "[不确定]",
+      "类型": "二手"
+    },
+    {
+      "标题": "Unity 论坛：Don't buy recognizable Asset Store assets",
+      "URL": "https://discussions.unity.com/t/dont-buy-recognizable-asset-store-assets-it-will-be-seen-as-an-asset-flip/928444",
+      "日期": "[不确定]",
+      "类型": "社区"
+    },
+    {
+      "标题": "Wayline 博客：asset flip regret / fixing asset flip",
+      "URL": "https://www.wayline.io/blog/fixing-asset-flip-indie-game-monetization",
+      "日期": "[不确定]",
+      "类型": "单一博客（带推广，弱）"
+    },
+    {
+      "标题": "LPC：Colors and palettes（混用调色板的警告）",
+      "URL": "https://lpc.opengameart.org/node/23143",
+      "日期": "[不确定]",
+      "类型": "社区教程"
+    },
+    {
+      "标题": "Aseprite 社区：How to match sprite palettes",
+      "URL": "https://community.aseprite.org/t/how-to-match-sprite-palettes/6793",
+      "日期": "[不确定]",
+      "类型": "官方社区"
+    },
+    {
+      "标题": "Aseprite 社区：pixel art commission pricing sanity check",
+      "URL": "https://community.aseprite.org/t/a-simple-pricing-sanity-check-for-pixel-art-commissions/28697",
+      "日期": "[不确定]",
+      "类型": "社区"
+    },
+    {
+      "标题": "Fiverr 挂牌：pixel art animations（32/48/64px 每帧价）",
+      "URL": "https://fiverr.com/admurin/pixel-art-animations-for-games",
+      "日期": "核对 2026-11-26",
+      "类型": "挂牌价"
+    },
+    {
+      "标题": "PixelLab API（价格）",
+      "URL": "https://pixellab.ai/pixellab-api",
+      "日期": "2026-11-26",
+      "类型": "一手（厂商）"
+    },
+    {
+      "标题": "PC Gamer：Steam AI 披露表更新",
+      "URL": "https://www.pcgamer.com/software/ai/steam-updates-ai-disclosure-form-to-specify-that-its-focused-on-ai-generated-content-that-is-consumed-by-players-not-efficiency-tools-used-behind-the-scenes/",
+      "日期": "2026-01",
+      "类型": "媒体"
+    }
+  ],
+  "uncertain": [
+    "cases",
+    "key_findings",
+    "data_points",
+    "tools",
+    "license_terms",
+    "cost_time_estimate",
+    "consistency_method",
+    "win_rate_impact",
+    "confidence",
+    "sources"
+  ]
+}
