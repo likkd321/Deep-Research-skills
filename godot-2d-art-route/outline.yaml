@@ -42,6 +42,8 @@ items:
       把一款 2D 像素独立游戏的美术生产拆成阶段（美术方向/情绪板、调色板、角色设计、角色动画、tileset 与场景、道具与拾取物、特效 VFX、
       光照与后处理、UI/HUD/图标、字体、宣传素材：胶囊图/预告片/截图），逐阶段评估 2025-11 至今 AI 实际能覆盖多少（可直接用 / 需大量修 / 基本不行），
       哪些必须由开发者本人完成（审美决策、一致性把关、像素清理、可读性测试等），以及"灰盒→占位→替换"的分阶段替换策略。
+      【第 1 批跨 item 线索】项目倾向 48px 网格 + 960×540 基准分辨率 + 3 面身体 + 360° 旋转枪；48px 现成人物/僵尸极稀缺，人物大概率需 AI 出底稿 + 人工清理；
+      Gemini 4 Carbon（Antigravity 可用）擅长写代码不出图，出图靠 Nano Banana 2.1；胶囊图被多方建议外包（$500–1,000）。
     project_context: *ctx
   - name: 案例库A-2D俯视射击生存僵尸联机类外购素材成功作
     category: 案例
@@ -67,6 +69,9 @@ items:
       给出适合本项目的具体素材链接：3/4 斜俯视现代写字楼/实验室/生化设施/医院 tileset、僵尸与人类角色（含方向与动画）、枪械与手、
       特效（枪口火光、血、毒气）、UI/HUD/图标、字体；标价格、尺寸（优先 48×48 或可与 48 对齐的 16/32 倍数）、授权（商用、修改、再分发、联机客户端分发）、
       与 WinLu Spaceship Tileset 风格是否搭配（科幻飞船包用于写字楼生化题材是否违和）。
+      【第 1 批跨 item 线索】WinLu 包内没有任何人物（作者 23 个包都没有）；itch.io 48x48 标签下人物仅约 30 个、僵尸 0 个，
+      48px 现成人物/僵尸极度稀缺；LimeZu Modern Interiors 的 48 档疑似 16px×3 放大（仅一条用户评论，需核实），与 WinLu 原生 48 密度混用可能像素大小不一；
+      请重点找可与原生 48px 密度匹配的人物/僵尸来源（含 RPG Maker MV 48px 生态、委托画师、AI 生成后清理）并核实 LimeZu 48 档是否放大。
     project_context: *ctx
   - name: 路径B-定画风加AI批量生图工作流
     category: 路径
@@ -81,6 +86,8 @@ items:
       截至 2026-11：Claude 网页版（Opus / Sonnet / Haiku 系列，不含 Fable）与 Google Antigravity 客户端可用模型（Gemini 各版本、Claude、其他）
       在 2D 像素美术管线中各能做什么：图像理解与审图、是否能直接生图、程序化生成（SVG / Python / Aseprite Lua 脚本）、写 Godot 场景/SpriteFrames/Skeleton2D/着色器、
       通过 MCP 驱动 Aseprite / Blender / PixelLab 等工具、批量切图与导入自动化；各自优劣与推荐分工。
+      【第 1 批跨 item 线索】已核实「Carbon」即 Google Gemini 4 Carbon（2026-11-10 上线、11-23 起 Antigravity AI Pro 可用、不出图，出图靠 Nano Banana 2.1；
+      Gemini 4 Argon 与 3.8 Flash 将于 2026-11-30 退出 Antigravity），请以此口径统一并核对 Antigravity 当前完整模型列表与额度。
     project_context: *ctx
   - name: 2D动画方案-逐帧骨骼3D预渲染AI动画的像素适配
     category: 路径
