@@ -1,0 +1,101 @@
+fields:
+  基本信息:
+    - name: core_question
+      description: 本 item 要回答的核心问题（一句话）
+      detail_level: 极简
+      required: true
+    - name: one_line_conclusion
+      description: 一句话结论，面向零美术基础的单人开发者，直接可用
+      detail_level: 极简
+      required: true
+  证据:
+    - name: key_findings
+      description: 关键发现，分条列出，每条带具体事实/数字（不要空话）
+      detail_level: 详细
+      required: true
+    - name: cases
+      description: 案例表（列表，每条含：名称、Steam/商店链接、Steam 评论数及抓取日期、引擎、玩法贴近度 高/中/低、美术来源占比 外购/自制/AI/委托、素材来源证据及证据强度 强/中/弱）；与本 item 无关时写"不适用"
+      detail_level: 详细
+      required: false
+    - name: data_points
+      description: 可量化的数据点（数字 + 口径 + 来源），如评论分布、耗时、价格、CTR、披露率
+      detail_level: 简要
+      required: true
+    - name: independent_verification
+      description: 关键结论是否有独立第三方来源佐证，哪些只来自厂商宣传或单一来源
+      detail_level: 简要
+      required: true
+  方法与工具:
+    - name: workflow_steps
+      description: 可照做的工作流步骤（按顺序）
+      detail_level: 详细
+      required: true
+    - name: tools
+      description: 工具列表（名称、价格、用途、链接、版本或核对日期、与 Godot 4.x 的接入方式）
+      detail_level: 详细
+      required: true
+    - name: mature_practices
+      description: 业内成熟做法与成功作的具体做法
+      detail_level: 简要
+      required: true
+    - name: consistency_method
+      description: 风格一致性实现方式（调色板锁定、统一光照方向、描边规则、像素密度、参考图/LoRA 等）；无关时写"不适用"
+      detail_level: 简要
+      required: false
+    - name: animation_spec
+      description: 动画规格（每角色方向数、帧数、动画状态：待机/走/跑/射击/受击/感染/死亡）与工作量估算；无关时写"不适用"
+      detail_level: 简要
+      required: false
+    - name: license_terms
+      description: 相关授权条款要点（商用、修改、再分发、AI 训练、署名、联机客户端分发、能否放公开仓库）；无关时写"不适用"
+      detail_level: 简要
+      required: false
+    - name: cost_time_estimate
+      description: 现金成本与工时估算（给区间，注明假设）
+      detail_level: 简要
+      required: true
+  适配:
+    - name: fit_for_user
+      description: 对本项目的适配度与理由（单人、零美术基础、Godot 4.7、3/4 斜俯视 48px、16 人联机 PvP、Claude+Antigravity）
+      detail_level: 详细
+      required: true
+    - name: network_sync_impact
+      description: 对联机同步的影响（瞄准角精度、动画状态同步、特效触发、带宽）；无关时写"不适用"
+      detail_level: 简要
+      required: false
+    - name: risks_pitfalls
+      description: 风险与常见坑
+      detail_level: 简要
+      required: true
+    - name: reversibility_cost
+      description: 中途换美术路线的返工成本；无关时写"不适用"
+      detail_level: 简要
+      required: false
+  AI覆盖:
+    - name: ai_can_do
+      description: 2025-11 至今 AI 在本 item 范围内能可靠完成的部分（具体到工具/模型）
+      detail_level: 简要
+      required: true
+    - name: human_must_do
+      description: 必须由开发者本人完成或把关的部分
+      detail_level: 简要
+      required: true
+  判断:
+    - name: judgment
+      description: 综合判断与建议（给明确立场，不要两边都说）
+      detail_level: 详细
+      required: true
+    - name: confidence
+      description: 判断的置信度（高/中/低）及理由
+      detail_level: 极简
+      required: true
+    - name: win_rate_impact
+      description: 对项目终局成功概率的影响（方向与大致幅度，注明是估计）
+      detail_level: 简要
+      required: true
+  来源:
+    - name: sources
+      description: 来源列表（标题 + URL + 日期；标明一手来源：开发者自述、官方文档、财报/数据平台）
+      detail_level: 详细
+      required: true
+uncertain: []
