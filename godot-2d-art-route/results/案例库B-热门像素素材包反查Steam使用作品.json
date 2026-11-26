@@ -1,0 +1,103 @@
+{
+  "core_question": "热门像素素材包（LimeZu、Kenney、Pixel Frog、Seliel、CraftPix、Cainos、Szadi、Penzilla、ElvGames）能否反查到真实上架 Steam 的俯视/斜俯视作品，尤其评论>300 的？外购素材在 Steam 是否有成功先例",
+  "one_line_conclusion": "本次反查基本失败：公开渠道几乎查不到“Steam 作品—素材包”的强证据，仅 1 个弱证据案例（Bone's Cafe，343 评，来自 itch 评论区自述，且是烹饪游戏）；结论是不能把“外购像素包已被大量 Steam 热销俯视作品验证”当作事实，需要靠自己对关键作品逐个核对署名。",
+  "key_findings": [
+    "LimeZu Modern Interiors 在 itch 有 615 个评分（均分 4.9），标签含 Top-Down，授权允许商用与修改、禁止转售/再分发、要求署名并链接 limezu.itch.io；页面本身没有列出任何 Steam 作品，只列 itch 作品。",
+    "唯一反查到的 Steam 案例：Bone's Cafe（Steam app 1739070，343 条评论、好评 96%、$14.99、2022-10-29 正式发售，Unity）。依据仅是 Modern Interiors 评论区一位用户自述“我们在 Steam 的合作烹饪游戏用了其中一部分”；Steam 商店页没有署名 LimeZu，证据强度弱。且它是烹饪管理游戏，非 PvP 俯视射击。",
+    "对 Kenney、Pixel Frog、Seliel、CraftPix、Cainos、Szadi、Penzilla、ElvGames：多轮搜索未能把任何一款 Steam 作品与这些作者的素材确认挂钩（搜索工具对 Steam 署名页索引很差，不代表不存在）。Kenney 原 Steam 合集已下架，仅有 Kenney Game Assets All-in-1 即将上线的页面。",
+    "itch.io “Made with Kenney / Modern Interiors”聚合页只列 itch 作品（如 Shattered Pixel Dungeon、Doki Doki Literature Club! 出现在 Modern Interiors 聚合页，但这是 itch 标签，不能当作其用了该包的证据），页面不标注是否上架 Steam。",
+    "僵尸/俯视题材 Steam 样本（素材来源均未披露）：Pixel Combat: Zombie Shooter 156 评、71% 好评、披露了 AI 用于翻译/图标/头像；Zombiehood 94 评、声明无 AI 美术；PIXEL ZUMBI 34 评。三者都没有披露使用了哪个素材包，无法算作素材包案例。",
+    "Steam 商店页普遍不署名第三方素材包（Bone's Cafe、Pixel Combat 页面均未提及），所以“按 Steam 页面署名反查”的披露率很低，证据主要只能来自 itch 评论、开发者博客、游戏内 credits 画面（无法在线抓取）。",
+    "素材包经济学侧面证据：WinLu Spaceship Tileset 仅 13 个评分（4.7），说明所选底座属于小众包，几乎没有“已有 Steam 成功作”可参照；LimeZu 615 评分的大众包才有较多用例。"
+  ],
+  "cases": [
+    {
+      "名称": "Bone's Cafe（Acute Owl Studio）",
+      "Steam/商店链接": "https://store.steampowered.com/app/1739070/Bones_Cafe/",
+      "Steam评论数及抓取日期": "343 条，好评 96%（2026-11-26 抓取）；另有第三方快照 337 条",
+      "引擎": "Unity（来自搜索摘要，未在商店页确认）",
+      "玩法贴近度": "低（合作烹饪经营，非 PvP 射击/生化撤离）",
+      "美术来源占比": "[不确定] 疑似部分外购（LimeZu），其余未知",
+      "素材来源证据及证据强度": "弱：仅 Modern Interiors 评论区用户自述‘在 Steam 合作烹饪游戏里用了其中一部分’；Steam 页面无署名"
+    },
+    {
+      "名称": "Pixel Combat: Zombie Shooter",
+      "Steam/商店链接": "https://store.steampowered.com/app/3813570/",
+      "Steam评论数及抓取日期": "156 条，71% 好评，Mostly Positive（2026-11-26 抓取）",
+      "引擎": "未披露",
+      "玩法贴近度": "中（像素僵尸射击，视角未确认）",
+      "美术来源占比": "页面称角色、怪物、道具由人类画师制作，AI 用于翻译、部分图标、头像；未披露外购包",
+      "素材来源证据及证据强度": "无素材包证据；仅 AI 披露声明（强，但与素材包无关）"
+    },
+    {
+      "名称": "Zombiehood",
+      "Steam/商店链接": "https://store.steampowered.com/app/ [不确定：搜索摘要未给出 app id]",
+      "Steam评论数及抓取日期": "约 94 条，Very Positive（搜索摘要，未在页面核对）",
+      "引擎": "[不确定]",
+      "玩法贴近度": "[不确定]",
+      "美术来源占比": "声明无 AI 美术；其余未披露",
+      "素材来源证据及证据强度": "无"
+    },
+    {
+      "名称": "LimeZu 以外八位作者对应的 Steam 作品",
+      "Steam/商店链接": "未找到",
+      "Steam评论数及抓取日期": "不适用",
+      "引擎": "不适用",
+      "玩法贴近度": "不适用",
+      "美术来源占比": "不适用",
+      "素材来源证据及证据强度": "无证据：Kenney、Pixel Frog、Seliel、CraftPix、Cainos、Szadi、Penzilla、ElvGames 均未能反查到 Steam 作品"
+    }
+  ],
+  "data_points": [
+    "LimeZu Modern Interiors：615 个评分，均分 4.9/5，最低 $1.50（itch 页，2026-11-26）；Modern Interiors 评论区总数约 750+ 条（搜索结果显示 746-757）。",
+    "Bone's Cafe：343 条评论、96% 好评（Steam，2026-11-26），首发 Early Access 2022-04-08，正式版 2022-10-29。",
+    "Pixel Combat: Zombie Shooter 156 评/71% 好评；PIXEL ZUMBI 34 评；Zombiehood 约 94 评（Steam 搜索摘要）。",
+    "反查命中率：9 位作者/素材来源共 N≈9 个，其中仅 1 个得到可点名的 Steam 作品（弱证据），披露确认率为 0（没有任何一个由 Steam 商店页或开发者官方署名证实）。",
+    "WinLu Spaceship Tileset：13 个评分，均分 4.7，标价 $25（当前 20% 折扣价 $20）。"
+  ],
+  "independent_verification": "几乎没有独立佐证。Bone's Cafe 用 LimeZu 素材只来自单条 itch 评论（单一来源、未被 Steam 页面或开发者博客证实）。LimeZu 授权条款来自 itch 页面（一手，作者自述）。其余作者的 Steam 使用情况为“未找到”，不能当作“没人用”，只能说搜索工具没有查出。",
+  "workflow_steps": [
+    "1. 在 Steam 打 Top-Down + Pixel Graphics + Zombies/Survival/Co-op/Multiplayer 标签，按评论数>300 排序，列出 20–30 个候选。",
+    "2. 对每个候选打开商店页“关于”与“制作人员名单”，查开发者 itch/博客/X/Discord，搜 credits 画面（YouTube 通关视频结尾字幕）。",
+    "3. 用素材作者的 itch 页评论区与“Made with / Games using this asset”聚合页反向核对（搜索 Steam 链接）。",
+    "4. 用 SteamDB 的 Credits/Depots 文件名（如 LimeZu 导出的 Interiors_48x48.png）对已解包游戏做二次核对（注意只做公开可见信息，不破解）。",
+    "5. 为每个案例标注证据强度：强=Steam 页或开发者官方署名；中=开发者博客/视频字幕；弱=用户评论自述。",
+    "6. 若关键素材包查不到成功作，就改为在自己的 2–3 个关键场景做 prototype 视觉验证，而不是依赖他人背书。"
+  ],
+  "tools": [
+    {"名称": "Steam 商店高级搜索 + 标签", "价格": "免费", "用途": "按标签/评论数筛俯视像素作品", "链接": "https://store.steampowered.com/search/", "版本或核对日期": "2026-11-26", "与Godot接入方式": "无需接入"},
+    {"名称": "SteamDB", "价格": "免费", "用途": "查评论数趋势、引擎、制作人员信息", "链接": "https://steamdb.info", "版本或核对日期": "2026-11-26", "与Godot接入方式": "无需接入"},
+    {"名称": "itch.io 素材页评论区与 Made-with 聚合页", "价格": "免费", "用途": "找开发者自述的使用作品", "链接": "https://itch.io/games/made-with-modern-interiors", "版本或核对日期": "2026-11-26", "与Godot接入方式": "无需接入"}
+  ],
+  "mature_practices": "成熟做法是外购包 + 二次加工：主角/怪物等关键资产自制或委托，以避免“素材换皮”观感；商店页和 credits 里署名素材作者（LimeZu 明确要求署名）；Steam 上带 AI 的作品必须按规则披露。本次未能从检索中得到具体成功作的做法细节。",
+  "consistency_method": "不适用（本 item 是案例反查）。仅提示：LimeZu 的 16/32/48 三档可能是同一套美术的不同缩放，混用不同来源包时需统一像素密度与调色板。",
+  "animation_spec": "不适用",
+  "license_terms": "LimeZu Modern Interiors（完整版）：可用于商业与非商业项目并可修改；禁止转售、再分发及修改后转售；必须署名并链接 limezu.itch.io；公开仓库放原始素材文件违反“不得再分发”，应只提交处理后的导出而不放原文件（需自行确认）。WinLu：可商用、可改，不要求署名但欢迎，不得转售/再分发。Kenney：CC0，无限制。Retro Dead City：禁止用于训练 AI 图像生成器。",
+  "cost_time_estimate": "本次调研已耗时约 1 小时，现金 0 元。若要补全 Steam 案例库：约 4–8 小时人工逐页核对 20–30 个候选，现金 0 元；如购买 LimeZu Modern Interiors 约 $1.50–$5。",
+  "fit_for_user": "对本项目价值有限：没有找到可复用的 Steam 成功案例，不能作为选包依据。可用的只是授权条款（LimeZu 可商用、需署名）。LimeZu 为 16×16 体系（另有 32/48 档），与已选 WinLu 原生 48px 的科幻飞船风格不同，混搭需验证像素密度。零美术基础的单人开发者应把素材选择建立在自己实测上，而不是“某某游戏用过”。",
+  "network_sync_impact": "不适用",
+  "risks_pitfalls": [
+    "把“itch 评论里有人自称用于 Steam 游戏”当成事实会误判，Bone's Cafe 的素材来源并未被 Steam 页面证实。",
+    "热门包被大量使用会造成“素材换皮”观感，Steam 评论里可能出现“asset flip”批评（未找到具体案例，属风险推断）。",
+    "LimeZu 要求署名，Steam 页面不署名会违反其条款。",
+    "搜索工具对 Steam 署名页索引差，本次“未找到”≠不存在。"
+  ],
+  "reversibility_cost": "不适用",
+  "ai_can_do": "Claude 可帮助整理候选清单、批量比对 credits 文本、起草署名文案；无法可靠抓取 Steam 游戏内 credits 画面或 YouTube 字幕（需人工或视频转写工具）。",
+  "human_must_do": "开发者本人需亲自核对授权文本（购买后下载包内的 license 文件）、确认署名方式、判断视觉观感与差异化。",
+  "judgment": "不要把案例反查当成选择素材路线的依据：这一轮没有拿到可信的强证据。建议保持 WinLu 作底座，另用 1–2 天做垂直切片（一个房间 + 一个角色 + 一个僵尸）验证风格，而非等待“成功先例”。如果仍想要先例，改查 Steam 上同类“俯视像素+多人”游戏的开发者自述。",
+  "confidence": "低：搜索工具对 Steam 页面署名覆盖差，且只确认了 1 个弱证据案例。",
+  "win_rate_impact": "对项目成功率的直接影响很小（估计 ±1% 以内），因为本 item 只是风险参考；真正影响来自后续美术实测和一致性。",
+  "sources": [
+    "LimeZu Modern Interiors 页面（一手，作者自述）https://limezu.itch.io/moderninteriors （2026-11-26 抓取）",
+    "LimeZu 评论区含 48x48 说明与 Bone's Cafe 自述（一手，开发者与用户评论）https://limezu.itch.io/moderninteriors/comments?after=497",
+    "Bone's Cafe Steam 页面 https://store.steampowered.com/app/1739070/Bones_Cafe/ （2026-11-26）",
+    "PC Gamer 报道 https://www.pcgamer.com/running-a-cafe-using-the-undead-isnt-sanitary-but-theres-a-game-about-it",
+    "Pixel Combat: Zombie Shooter Steam 页 https://store.steampowered.com/app/3813570/ （2026-11-26）",
+    "itch.io Made with Modern Interiors 聚合页 https://itch.io/games/made-with-modern-interiors",
+    "itch.io Made with Kenney Studio 聚合页 https://itch.io/games/top-rated/made-with-kenney-studio",
+    "WinLu Spaceship Tileset 页面（一手）https://winlu.itch.io/spaceship-tileset",
+    "Retro Dead City Starter Pack（一手，授权条款）https://everlywritesgames.itch.io/retro-dead-city-starter-pack"
+  ],
+  "uncertain": ["cases", "data_points", "independent_verification", "confidence"]
+}

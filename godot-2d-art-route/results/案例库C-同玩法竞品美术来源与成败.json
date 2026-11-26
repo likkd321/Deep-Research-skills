@@ -1,0 +1,158 @@
+{
+  "core_question": "与本项目玩法最接近的竞品（感染/僵尸 PvP、非对称人类 vs 僵尸、2D 俯视联机生存射击）的美术来源、像素规格、评论数/在线人数与成败原因是什么，美术在其中权重多大？",
+  "one_line_conclusion": "同玩法竞品里，成功者（Among Us、Goose Goose Duck、Project Winter、ZED ZONE、ZERO Sievert）靠的是玩法钩子+社交传播+持续运营，美术多为自制且风格统一而非高精度；真正做 2D 俯视“人类 vs 感染者”PvP 的直接竞品全部是微型体量（评论<600），说明赛道空白但冷启动是最大风险，美术权重约次要。",
+  "key_findings": [
+    "【直接竞品=全部小体量】Never Immortal（LawrenceDev，Unity，2D 俯视多人射击，含 Human/Zombie/Detective 的 Zombie Mystery 模式，最多 20 人，免费，2025-12-26 上 Steam，仅 12 条评论、83% 好评，Steam 页面 2026-11-26 抓取，在线 0）；Survivor Squad（Endless Loop，Unity，含 1v1 幸存者 vs 感染者联机，约 541 评论、67%，SteamSpy 2026-11-26）；Infection Warfare（FlyingWingStudio，约 5 评论、定价 $0.99）；ZOMBIE RAID: No One Survives（Red Dot，约 128 评论、45%）。2D 俯视“多人感染 PvP”这一细分没有任何评论>1,000 的存活案例。",
+    "【成功的邻近玩法】Among Us（Innersloth，约 664,968 评论、92%，当前在线约 4,154，SteamSpy 与 Steam API 2026-11-26）；Goose Goose Duck（Gaggle Studios，免费，Very Positive，13,624 英文评论、89%，当前在线约 940，2026-11-26）；Project Winter（Other Ocean，约 13,667 评论、84%，历史峰值同时在线 2,865（2024-08-30，Steambase 转述），2026-11-26 在线约 16）：均为 2D/俯视社交推理或感染式非对称，美术都是自制的简洁卡通风而不是复杂像素细节。",
+    "【成功的生存射击】ZERO Sievert（CABO，GameMaker，约 14,639 评论、85%，售出 60 万+，在线约 251；2D 俯视撤离射击，单人开发、Aseprite 像素画）；ZED ZONE（Leven Liu/INDIECN，2D 俯视像素僵尸生存，约 4,956 评论、82%，在线约 1,497，2026-11-06 发布 1.0）：美术规格为中等像素密度，成功的主因是玩法深度/内容量与长期更新。",
+    "【长寿命的开源邻居】Space Station 14（Space Wizards Federation，开源 2D 俯视联机，Steam 玩测版第三方记录峰值在线 4,701、约 4,142 好评/543 差评（第三方，2026-07-19），2026-11-26 在线约 2,157）：靠社区自治、内容贡献与角色扮演内容留存，美术由社区众包，像素 32×32 风格[不确定具体规格]。",
+    "【失败/冷启动共性】Project Winter 在线从 2,865 峰值跌到 2026-11 约 16，是 8 人局匹配依赖在线人数的典型教训；Survivor Squad 的联机仅为 1v1 附加模式；Never Immortal 免费仍仅 12 评论——说明冷启动与曝光比美术质量更决定成败。10–16 人局若在线<50 将频繁无法开局，需 Bot 兜底（本项目已规划）。",
+    "【美术权重判断】在可查案例中，没有一例把成败主要归因于美术来源（外购/自制）；ZERO Sievert 与 ZED ZONE 的好评原因多为玩法深度，Among Us/Goose Goose Duck 美术极简但辨识度高。结论：美术权重估计占成败的 15–25%（估计，主观），玩法钩子与冷启动/运营占大头。",
+    "像素规格公开信息少：多数案例商店页不披露 tile 尺寸；本次未能为任何竞品核实确切像素规格（如 16/32/48px）[不确定]，建议实机截图量取。"
+  ],
+  "cases": [
+    {
+      "名称": "Among Us",
+      "链接": "https://store.steampowered.com/app/945360/",
+      "评论数及抓取日期": "约 664,968 条，92%（SteamSpy，2026-11-26）；在线约 4,154",
+      "引擎": "Unity（据公开资料，未逐一核对[不确定]）",
+      "玩法贴近度": "中（2D 俯视社交推理+感染式非对称）",
+      "美术来源占比": "自制为主",
+      "素材来源证据及证据强度": "中：开发者 Innersloth 自研；未核对具体访谈"
+    },
+    {
+      "名称": "Goose Goose Duck",
+      "链接": "https://store.steampowered.com/app/1568590/",
+      "评论数及抓取日期": "13,624 英文评论，89%（Steam 页面，2026-11-26）；在线约 940",
+      "引擎": "Unity[不确定]",
+      "玩法贴近度": "中",
+      "美术来源占比": "自制",
+      "素材来源证据及证据强度": "弱：未查证"
+    },
+    {
+      "名称": "Project Winter",
+      "链接": "https://store.steampowered.com/app/774861/",
+      "评论数及抓取日期": "约 13,667 条，84%（SteamSpy，2026-11-26）；当前在线约 16",
+      "引擎": "Unity[不确定]",
+      "玩法贴近度": "高（8 人生存+叛徒，俯视）",
+      "美术来源占比": "自制",
+      "素材来源证据及证据强度": "弱"
+    },
+    {
+      "名称": "ZERO Sievert",
+      "链接": "https://store.steampowered.com/app/1782120/",
+      "评论数及抓取日期": "约 14,639 条，85%（SteamSpy，2026-11-26）；在线约 251",
+      "引擎": "GameMaker",
+      "玩法贴近度": "高（2D 俯视撤离射击）",
+      "美术来源占比": "自制",
+      "素材来源证据及证据强度": "中：多家媒体称单人开发，Aseprite 像素画"
+    },
+    {
+      "名称": "ZED ZONE",
+      "链接": "https://store.steampowered.com/app/1211600/",
+      "评论数及抓取日期": "约 4,956 条，82%（SteamSpy，2026-11-26）；在线约 1,497",
+      "引擎": "[不确定]",
+      "玩法贴近度": "高（2D 俯视像素僵尸生存联机）",
+      "美术来源占比": "[不确定]",
+      "素材来源证据及证据强度": "弱"
+    },
+    {
+      "名称": "Space Station 14",
+      "链接": "https://store.steampowered.com/app/1482520/",
+      "评论数及抓取日期": "约 4,685 条（4,142 好评/543 差评，第三方 Live Player Count，2026-07-19）；在线约 2,157（2026-11-26）",
+      "引擎": "自研 Robust Toolbox（C#，开源）",
+      "玩法贴近度": "中（2D 俯视联机，含僵尸模式[不确定]）",
+      "美术来源占比": "自制（社区众包）",
+      "素材来源证据及证据强度": "中：官方站点/开源"
+    },
+    {
+      "名称": "Survivor Squad",
+      "链接": "https://store.steampowered.com/app/258050/",
+      "评论数及抓取日期": "约 541 条，67%（SteamSpy，2026-11-26）",
+      "引擎": "Unity（SteamDB）",
+      "玩法贴近度": "中（含 1v1 幸存者 vs 感染者）",
+      "美术来源占比": "[不确定]",
+      "素材来源证据及证据强度": "弱"
+    },
+    {
+      "名称": "Never Immortal",
+      "链接": "https://store.steampowered.com/app/2239930",
+      "评论数及抓取日期": "12 条，83%（Steam，2026-11-26）；在线 0",
+      "引擎": "Unity（开发者 itch 页）",
+      "玩法贴近度": "高（2D 俯视，Human/Zombie/Detective 模式）",
+      "美术来源占比": "[不确定]",
+      "素材来源证据及证据强度": "弱：开发者列出 Unity/Blender/Paint.net，素材来源未披露"
+    },
+    {
+      "名称": "Infection Warfare",
+      "链接": "https://store.steampowered.com/app/3293820",
+      "评论数及抓取日期": "约 5 条（SteamSpy，2026-11-26）",
+      "引擎": "[不确定]",
+      "玩法贴近度": "高（回合开始随机分人类/感染阵营）",
+      "美术来源占比": "[不确定]",
+      "素材来源证据及证据强度": "弱"
+    },
+    {
+      "名称": "ZOMBIE RAID: No One Survives",
+      "链接": "https://store.steampowered.com/app/688540",
+      "评论数及抓取日期": "约 128 条，45%（SteamSpy，2026-11-26）",
+      "引擎": "[不确定]",
+      "玩法贴近度": "中（俯视联机僵尸）",
+      "美术来源占比": "[不确定]",
+      "素材来源证据及证据强度": "弱"
+    }
+  ],
+  "data_points": [
+    "2D 俯视多人感染 PvP 的直接竞品评论数：12 / 约5 / 541 / 128（Never Immortal / Infection Warfare / Survivor Squad / ZOMBIE RAID，2026-11-26）。",
+    "成功邻近案例评论数：Among Us 约 66.5 万；Project Winter 约 1.37 万；Goose Goose Duck 1.36 万；ZERO Sievert 约 1.46 万；ZED ZONE 约 4,956（口径：Steam 全语言评论，SteamSpy/Steam 页面）。",
+    "在线：Project Winter 峰值 2,865（2024-08-30，Steambase）→ 2026-11-26 约 16；ZED ZONE 约 1,497；SS14 约 2,157；Among Us 约 4,154（Steam 当前玩家 API）。",
+    "基准：2025 年 Steam 新游约 2.99% 达到 1,000 评论（同批调研另一 item）。",
+    "Zukowski 观点：多人射击常热后快速死服（同批调研 item 引用）。"
+  ],
+  "independent_verification": "评论数与在线人数来自 SteamSpy/Steam 官方玩家数 API 与商店页，可独立复核；美术来源（自制 vs 外购）几乎无独立来源，多为推断；SS14 数据来自第三方站点；Project Winter 峰值来自 Steambase 转述；成败原因归因是本报告的推断，缺少开发者复盘佐证。",
+  "workflow_steps": [
+    "1. 用 SteamDB/SteamSpy 每周记录 5–8 个核心竞品的评论数与同时在线，建立自己的基线表。",
+    "2. 对每个竞品截图并量取 tile/角色像素高度，得到真实规格（16/32/48px）。",
+    "3. 用 Bot 兜底确保 1 人可开局，避免 Project Winter 式在线跌落导致无法开局。",
+    "4. 先做 3–5 天可玩原型+免费 Playtest，用愿望单与 Playtest 反馈验证“感染撤离”钩子再投入美术。",
+    "5. 商店页用 1 张高辨识度胶囊图+前 4 张截图突出“关灯听声、毒气上推”核心钩子，而不是素材包本身的美感。"
+  ],
+  "tools": [
+    "SteamDB（免费，steamdb.info，核对 2026-11-26，网页浏览，不涉及 Godot）",
+    "SteamSpy API（免费，steamspy.com/api.php，评论/拥有量估算）",
+    "Steam 官方玩家数 API ISteamUserStats/GetNumberOfCurrentPlayers（免费）",
+    "Steambase / Live Player Count 第三方（免费，在线峰值与评分）"
+  ],
+  "mature_practices": "Among Us/Goose Goose Duck：极简卡通美术+强社交传播+主播友好；Project Winter：限时对称“人类 vs 内鬼”+生存；SS14：开源社区共创内容；ZERO Sievert：单人长期打磨+EA 更新。共性是强钩子，美术服务可读性。",
+  "consistency_method": "不适用（本 item 为竞品梳理）；仅供参考：成功者均保持统一调色与简洁轮廓，以保证多人同屏可读性。",
+  "animation_spec": "不适用（未核实竞品动画规格）。",
+  "license_terms": "不适用。",
+  "cost_time_estimate": "竞品跟踪成本：每周 1–2 小时，零现金（免费工具）；若委托一次竞品截图/像素规格测量，约 3–6 小时。",
+  "fit_for_user": "适配度高（作为战略参照）：证明“2D 俯视联机感染”有需求但细分空白；你的 10–16 人+Bot、40–50 分钟长局、撤离决策与现有竞品差异大，机会和风险都明确——风险主要在冷启动与单人完成度，而非 48px 素材包是否够好。",
+  "network_sync_impact": "间接相关：竞品在线人数骤降说明必须 Bot 兜底和低门槛开局；美术层面需保证 360° 瞄准手枪与感染变身的状态同步足够轻量（本 item 未核实竞品具体做法）。",
+  "risks_pitfalls": "1) 直接竞品全是微型体量，缺少“成功样本”可对标；2) 把 Among Us 等爆款当基准会高估胜率；3) SteamSpy/第三方数据有偏差，需交叉验证；4) 玩家在线骤降（Project Winter）风险；5) 美术来源信息缺失，不应推断“外购=失败”。",
+  "reversibility_cost": "不适用。",
+  "ai_can_do": "Claude 可批量抓取并整理 Steam/SteamSpy 数据、生成竞品对比表、起草商店页文案；Antigravity 可写自动抓取脚本。不能可靠完成：判断竞品美术来源的真实性（需人工看 credits/访谈）。",
+  "human_must_do": "亲自玩 3–5 个核心竞品并记录体验；量取像素规格；决定差异化钩子与商店页卖点；复核关键数字。",
+  "judgment": "我的立场：美术来源不是同玩法竞品成败的主因；你应把外购 WinLu 底座视为够用的起点，把精力集中到“Bot 兜底的冷启动、核心撤离钩子、商店页辨识度”。不要为追求更高像素精度而推迟玩法验证；若只能优先一件事，优先做可玩原型并在 Playtest 里验证留存。",
+  "confidence": "中：评论与在线数据可复核；竞品美术来源与成败归因为推断，且部分引擎/规格未核实。",
+  "win_rate_impact": "估计：美术路线（外购 vs 自制）对终局成功概率影响约 ±5 个百分点；冷启动/Bot/商店页可能影响 ±15–20 个百分点（均为主观估计）。",
+  "sources": [
+    "SteamSpy API（2026-11-26 抓取，第三方）：https://steamspy.com/api.php?request=appdetails&appid=1211600 等各 appid",
+    "Steam 官方当前玩家数 API：https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=1211600 等（一手数据）",
+    "Goose Goose Duck Steam 页面（一手）：https://store.steampowered.com/app/1568590/Goose_Goose_Duck/",
+    "Never Immortal Steam 页面（一手）：https://store.steampowered.com/app/2239930；开发者 itch 页：https://lawrencedev.itch.io/never-immortal；gamedev.net：https://gamedev.net/projects/4605-never-immortal",
+    "Survivor Squad Steam/SteamDB：https://store.steampowered.com/app/258050/ ，https://steamdb.info/app/258050/",
+    "Project Winter 数据（第三方）：https://steambase.io/apps/774861",
+    "Space Station 14 数据（第三方）：https://tracker.gg/population/steam/1482520 ，https://live-player-count.com/game/space-station-14-playtest",
+    "ZED ZONE 1.0 公告（第三方转述）：https://www.dlcompare.com/gaming-news/zed-zone-1-0-full-release-co-op-far-island-40-off-89338",
+    "ZERO Sievert NME 访谈：https://www.nme.com/features/zero-sievert-developer-cabo-studio-talks-about-the-tarkov-esque-2d-extraction-shooter-3321572"
+  ],
+  "uncertain": [
+    "cases 各项引擎/美术来源（多数）",
+    "像素规格（全部竞品未核实）",
+    "SS14 僵尸模式与像素规格",
+    "Project Winter 峰值",
+    "美术权重 15–25% 与胜率影响（主观估计）"
+  ]
+}

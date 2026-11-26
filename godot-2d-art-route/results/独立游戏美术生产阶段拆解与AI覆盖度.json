@@ -1,0 +1,430 @@
+{
+  "core_question": "把 2D 像素独立游戏的美术生产拆成 11 个阶段后，2025-11 至今的 AI 在每个阶段能覆盖多少（可直接用／需大量修／基本不行）？哪些必须由开发者本人完成？怎样按“灰盒→占位→替换”分阶段推进？",
+  "one_line_conclusion": "AI 在“写代码类美术”上可以直接用，包括调色板脚本、光照、着色器、程序化特效、UI 布局和导入管线；在“出图类美术”上，角色、动画和道具都要大量修，tileset 补件和胶囊图基本不行，截图和预告片的素材必须来自游戏实录。所以你的路线是：场景用 WinLu 外购，人物用 PixelLab 或 Nano Banana 出底稿再自己逐帧清理，特效和光照全交给 Claude 或 Carbon 写代码，字体用开源的 Fusion Pixel，胶囊图花钱外包。占位文件从第一天起统一加 ph_ 前缀，靠门禁脚本挡在发布包外。",
+  "key_findings": [
+    "【阶段覆盖度总表（本 item 的核心判断，以 2026-11 的工具水平为准）】①美术方向/情绪板：可直接用。Nano Banana 2.1 出情绪板和概念图，仅作内部参考，不进包。②调色板：可直接用。Claude 写 PIL 脚本从 WinLu 截图提取调色板、做越界检查和批量重映射；最终选哪套色由人定。③角色设计（剪影/配色/阵营辨识）：需大量修。AI 出 10–30 个方案，人挑 1 个再改。④角色动画（3 面 × 各状态）：需大量修，偏“基本不行”。PixelLab 能出 48×48 的 4 方向底稿和骨骼动画底稿，但帧间一致性和 48 原生密度要逐帧清理；感染变身这类特殊动画基本得手工做。⑤Tileset 与场景：生成整套基本不行，补件需大量修。WinLu 外购即最终版，场景在 Godot 编辑器里由人摆。⑥道具与拾取物：需修，量中等，是三档里最接近“可直接用”的出图类。⑦特效 VFX：画成逐帧像素特效基本不行；用 GPUParticles2D 加着色器的程序化特效可直接用，代码由 AI 写，手感由人调。⑧光照与后处理：可直接用，PointLight2D、CanvasModulate、LightOccluder2D、法线贴图管线都由 AI 写代码，参数靠人调。⑨UI/HUD/图标：布局和 Theme 代码可直接用；像素框体和图标需修。⑩字体：不需要 AI，选现成开源字体即可，用 Fusion Pixel（OFL 1.1）。⑪宣传素材：胶囊图不建议用 AI（舆论风险加质量门槛）；截图和预告片按 Valve 规定必须是实机画面，AI 只能帮忙写分镜脚本和剪辑清单。",
+    "Nano Banana 系列出的像素图“看着像、其实不是”：SpriteCook 2026-03 的实测显示，它通常输出 1024×1024 图，像素格只是近似对齐，有的“像素”宽 6px、有的宽 7px，带亚像素噪点和边缘渗色，还会混入真像素画里不会出现的细微色差；要求 32×32、64×64 这类画布尺寸“有时生效、有时被忽略”。必须经过检测网格 → 吸附重采样 → 减色到 8/16/32 色 → Nearest 导入这几步。Nano Banana 2.1 于 2026-10-06 发布，官方称最多支持 14 张参考图、保持最多 4 个角色和 10 个物体一致，改善的是概念图层面的一致性，并不解决像素网格问题。",
+    "PixelLab 是目前对游戏像素管线最贴合的 AI 工具。官方 API 页（2026-11 抓取）显示：4 方向角色在 48×48 下每张 $0.0105，8 方向 $0.0133（标准端点只列 48 和 64 两档）；骨骼动画最大 128×128，每次约 $0.014；文字驱动动画 v3 最大 256×256、最多 16 帧；Pro 版 8 方向最大 168×168。注意：标准俯视 tileset 端点只支持 16×16 和 32×32，不支持 48；要出 48 只能用 Pro 版 tiles（最大 85×85，约 $0.115 一次）。它提供 Aseprite 插件和 MCP，可以接 Claude Code、Cursor 等 agent。",
+    "Retro Diffusion 的 RD Plus 接受输入调色板、严格守色，RD Tile 专做无缝俯视 tilemap，但 RD Tile 不支持指定调色板。所以“用 AI 补一块和 WinLu 同色板的 tile”在工具层面就没有现成解，只能出图后用脚本强制重映射到 WinLu 色板，再手修。",
+    "Steam 上 AI 披露已非常普遍：Reddit 的统计覆盖约 6.36 万款游戏，2026 年 10 月新游戏中 49.9% 带 AI 披露（2025 年 10 月为 26.4%），2026 年截至 11-03 为 40.1%（10,427/25,988）。2026 年评论数少于 10 条的作品中 47% 披露了 AI，1,000 评论以上的作品只有 14%。Valve 于 2026-01 改了披露表：编码助手等“效率工具”不必披露，玩家能看到或听到的、随游戏发布的内容仍须披露。",
+    "AI 披露与成绩呈负相关（相关，不等于因果）：Game Oracle 统计 2025 年 1–10 月 9,879 款游戏，控制发行商、开发者经验和类型后，带 AI 披露的游戏评论数少约 52.6%；首月平均评论 4 条，不带披露的是 7 条；评论满 100 条的游戏里，好评率 84.6% 对 88.3%。另一份独立分析（fragwyz，约 5.36 万款）显示，AI 标记游戏达到 100 评论档的比例只有非 AI 游戏的约 55%，且两年来没有改善；失败作的披露文本中 72% 提到图像/美术，成功作只有 57%，而成功作更多把 AI 用在语音（24% 对 8%）和本地化（18% 对 6%）。也就是说，“美术用 AI”恰恰是玩家最敏感的那一类。",
+    "少量 AI 资产也会被追打，但不一定致命：Librarian（ArtRising 两人团队，2026-04-30 发售）只用 AI 精修了 4 个资产（1 个 UI 组件、3 幅墙上风景画）并主动披露，引来一波差评，部分主播取消直播，但它照样峰值 2.9 万同时在线，2026-11-26 英文评论 18,444 条、93% 好评。反面例子是 Hardest，因 AI 资产引发争议，开发者下架游戏，当时 31 条评论、54% 好评。",
+    "“占位 AI 资产漏进发售版”有真实大案：Clair Obscur: Expedition 33 约 2022 年用生成式 AI 做了临时占位贴图，发售时漏在包里（工作室称 5 天内移除），2025-12 被 Indie Game Awards 撤回年度游戏和最佳首作两项大奖。Hooded Horse（2026-01）在发行合同里禁止任何阶段的生成式 AI 美术，连占位也禁，CEO Tim Bender 的原话是“只要有一个在某个构建里漏过去就完了”。这说明“占位”阶段就要有隔离机制，不能靠记性。",
+    "误判同样存在：像素 RPG Shrine's Legacy（2025-10 发售）被差评指控为 AI 生成，开发者否认。Spilled.gg 引用分析称“当前生成式 AI 很难产出精灵尺度、可直接进游戏的像素画”。2026-11-26 它有 160 条评论、81% 好评。Abandoned Sheep 因胶囊图“看起来像 AI”被误认，主动换了胶囊图。即便不用 AI，胶囊图也要刻意避开“AI 感”的特征（光滑渐变、过度细节、手指和文字错误）。",
+    "胶囊图被 AI 污染最严重：2026-02 Steam Next Fest 期间，Kotaku、Creative Bloq、PC Gamer 都报道了“AI 胶囊图泛滥”。Pocketpair 的 John Buckley 说看到 AI 胶囊图就不想点进 Demo，Mike Rose 说“AI 主视觉的数量疯了”，玩家开始“只按热度排序”来躲开它们。胶囊图是转化漏斗的第一屏，所以它是最不该用 AI 的一个阶段。",
+    "Valve 的硬性规定决定了截图和预告片不能靠生成：Steamworks 规定“截图应只展示游戏的实际玩法”，避免概念图和预渲染 CG，至少 5 张，最低 1920×1080；还建议商店页第一条预告片以实机玩法为主，HUD 最好可见，因为在发现队列里“可能只有不到 10 秒”留住玩家。胶囊图有五个必需尺寸：头图 920×430、小图 462×174、主图 1232×706、竖版 748×896、库存图 600×900。不按规则做的商店页可能被限制曝光、无缘官方促销。",
+    "特效、光照和字体基本不需要“出图 AI”：Godot 4.7 原生提供 PointLight2D、CanvasModulate、LightOccluder2D 和 CanvasTexture（漫反射加法线）；官方文档写明阴影过滤设为 None 最适合像素风，还提醒默认 Light Height 太低，开了法线贴图会几乎看不到效果。法线贴图可以用 Laigter（免费、GPL-3.0）生成。像素特效工具有 Pixel FX Designer（Steam $9.99，史低 $4.99），也可以直接让 AI 写 GPUParticles2D 和着色器。中文像素字体有 Fusion Pixel（8/10/12px、OFL 1.1、含简体中文）；而 Zpix（最像素）商用要收授权费，GitHub 标价 $1,000 一款，中文页标价 ¥7,000，应避开。",
+    "胶囊图外包价：一篇 2026-07 的行业博客调查称完全定制的整套胶囊约 $300–600，用现有主视觉改尺寸约 $130–150；Fiverr 整套多在 $200–600、工期约 3 周，itch 上有插画师 $100 起一张。上一批线索里给出的 $500–1,000 是“质量较高的专业画师”口径。两者合起来，现实区间是 $300–1,000，买的时候注意报价是否包含全部 5 个尺寸加 Logo。"
+  ],
+  "cases": [
+    {
+      "名称": "Librarian: Tidy Up the Arcane Library!",
+      "链接": "https://store.steampowered.com/app/4197610/",
+      "Steam评论数及抓取日期": "英文 18,444 条，93% 好评；近 30 天 3,347 条，98% 好评（2026-11-26 抓取商店页）",
+      "引擎": "[不确定]",
+      "玩法贴近度": "低（休闲整理，单人）",
+      "美术来源占比": "自制为主，AI 仅精修 4 个资产（1 个 UI 组件、3 幅墙画）",
+      "素材来源证据及强度": "Steam AI 披露原文加 Kotaku 2026-06-04 报道，强",
+      "启示": "少量、坦白披露的 AI 精修资产会招来差评和取消直播，但只要玩法过硬不致命；披露越含糊越容易被认为“藏了更多”"
+    },
+    {
+      "名称": "CODEX MORTIS",
+      "链接": "https://store.steampowered.com/app/4084120/",
+      "Steam评论数及抓取日期": "103 条，82% 好评（2026-11-26 抓取；2026-09-24 发售）",
+      "引擎": "[不确定]",
+      "玩法贴近度": "中（俯视弹幕类肉鸽，单人）",
+      "美术来源占比": "AI 100%（自称代码、文本、美术、音效、音乐全部由 AI 生成）",
+      "素材来源证据及强度": "Steam AI 披露原文：“AI is used for entire code of the game, text, arts, sounds and music”，强",
+      "启示": "全 AI 可以做出能玩、评价不差的小品，但评论量只有百条级，媒体用“slop 里程碑”式标题报道，营销天花板明显"
+    },
+    {
+      "名称": "Shrine's Legacy",
+      "链接": "https://store.steampowered.com/app/1435410/",
+      "Steam评论数及抓取日期": "160 条，81% 好评（2026-11-26 抓取；2025-10-07 发售）",
+      "引擎": "[不确定]",
+      "玩法贴近度": "低（像素动作 RPG，单人）",
+      "美术来源占比": "自制/委托 100%（开发者称全部由人类美术完成）",
+      "素材来源证据及强度": "开发者 X 帖子，PC Gamer、Spilled.gg、Automaton 报道，中（未经独立审计）",
+      "启示": "像素风也会被误判为 AI；保留 Aseprite 源文件和过程录屏，可作为自证材料"
+    },
+    {
+      "名称": "Clair Obscur: Expedition 33",
+      "链接": "https://store.steampowered.com/app/1903340/",
+      "Steam评论数及抓取日期": "未抓取（与本项目体量差异大，仅作流程教训）",
+      "引擎": "Unreal Engine 5",
+      "玩法贴近度": "低（3D 回合制 RPG）",
+      "美术来源占比": "自制为主；约 2022 年用生成式 AI 做的占位贴图随首发漏进包里",
+      "素材来源证据及强度": "工作室声明，Engadget、PC Gamer、VGC 等多家报道，强",
+      "启示": "占位 AI 资产漏进发售版，2025-12 被撤回 Indie Game Awards 两项大奖；占位隔离必须做成机制，比如文件前缀加构建门禁"
+    },
+    {
+      "名称": "Hardest",
+      "链接": "[不确定]（已宣布下架）",
+      "Steam评论数及抓取日期": "31 条，54% 好评（据 finalboss.io 报道，2026 年，未直接抓取）",
+      "引擎": "[不确定]",
+      "玩法贴近度": "低（免费卡牌肉鸽）",
+      "美术来源占比": "含 AI 资产，比例 [不确定]",
+      "素材来源证据及强度": "媒体报道开发者自述，中",
+      "启示": "体量小、口碑一般时，AI 争议可能直接压垮项目"
+    },
+    {
+      "名称": "Enter the Gungeon / Nuclear Throne / CrossCode（参照系）",
+      "链接": "https://store.steampowered.com/app/311690/ ；https://store.steampowered.com/app/242680/ ；https://store.steampowered.com/app/368340/",
+      "Steam评论数及抓取日期": "见同目录《像素规格与3-4斜俯视角人物方向方案.json》（2026-11-26）",
+      "引擎": "Unity+tk2d / GameMaker / Impact(HTML5)",
+      "玩法贴近度": "中（俯视射击、旋转枪、3/4 视角）",
+      "美术来源占比": "自制 100%（AI 时代之前）",
+      "素材来源证据及强度": "公开开发资料，强",
+      "启示": "它们定义了“成品像素射击”的质量线：身体逐帧，枪和特效用程序化手段增强表现，这正是 AI 写代码能接手的部分"
+    }
+  ],
+  "data_points": [
+    "Steam AI 披露率：2026 年 10 月新游戏 49.9%（2025 年 10 月 26.4%）；2026 年截至 11-03 为 40.1%（10,427/25,988）。口径：Reddit 统计约 6.36 万款游戏，Dexerto、PowerUp Gaming 转述。",
+    "按体量分：2026 年评论少于 10 条的作品 47% 披露 AI，1,000 评论以上的作品 14%。口径同上。",
+    "Game Oracle：9,879 款（2025 年 1–10 月，已剔除 F2P 和垃圾游戏），校正后带 AI 披露的游戏评论少 52.6%；首月平均评论 4 对 7；首月零评论比例 19.8% 对 15.2%；100 评论以上的好评率 84.6% 对 88.3%。来源：Notebookcheck，2026-06-25。",
+    "fragwyz（约 5.36 万款）：AI 标记游戏达到 100 评论档的比例约为非 AI 游戏的 55%；披露文本提到“美术/图像”的，失败作 72%、成功作 57%。2026-07-13。",
+    "PixelLab API 单价（2026-11 抓取）：4 方向 48×48 $0.0105；8 方向 48×48 $0.0133；骨骼动画约 $0.014；俯视 tileset 只有 16/32px 档，$0.008–0.010；Pro tiles 最大 85×85，$0.08–0.15；地图物件 $0.0099 一个。订阅 Tier 1 约 $12/月（G2 口径，[不确定]）。",
+    "Nano Banana 2.1：2026-10-06 发布，最多 14 张参考图，保持 4 个角色和 10 个物体一致；每张 1K 图约 $0.0336（媒体口径不一）。",
+    "Nano Banana 像素输出：典型 1024×1024，逻辑网格约 64×64（16 倍放大），“像素”宽度在 6–7px 之间漂移（SpriteCook 2026-03）。",
+    "胶囊图外包：完全定制整套 $300–600，改尺寸 $130–150（2026-07 行业博客）；Fiverr 整套 $200–600，约 3 周；高端画师 $500–1,000（第 1 批线索）。",
+    "Steam 资产硬规格：截图至少 5 张、1920×1080 以上、只能是实机画面；胶囊五个尺寸分别为 920×430、462×174、1232×706、748×896、600×900。",
+    "工具价：Pixel FX Designer Steam $9.99（2026-01-05 史低 $4.99）；Laigter 免费（GPL-3.0）；SpriteIlluminator 约 $40 买断（第三方口径）；WinLu tileset $20；Zpix 商用授权 $1,000 一款。"
+  ],
+  "independent_verification": "有多方独立佐证的结论：①AI 披露率快速上升、且集中在小体量作品，Reddit 统计、Game Oracle、fragwyz 三个独立数据源方向一致；②AI 披露与评论量负相关，有两个独立分析（Game Oracle 约 -53%，fragwyz 约 55% 达标率），但两者都只是相关性，作者都承认无法排除“低预算项目更爱用 AI”这一混杂因素；③Nano Banana 一类通用图像模型出的像素图网格不对齐、颜色多，有 SpriteCook（厂商博客）、dev.to 独立开发者文章、HN 评论三方一致；④Clair Obscur 占位漏包、Hooded Horse 禁令、Next Fest AI 胶囊泛滥，均为多家主流媒体报道。只来自厂商或单一来源的：PixelLab 的能力描述（官网加联盟式评测，没找到独立的长期实测）、Nano Banana 2.1 的一致性和 Elo 数据（Google 自测）、胶囊图 $300–600 区间（单一博客加 Fiverr 挂单）、Shrine's Legacy 是否完全未用 AI（只有开发者自述）。没有数据的：AI 底稿清理每帧要多少工时，搜不到社区统计，本文的工时数字是推算。",
+  "workflow_steps": [
+    "第 0 步：锁死资产规格表（开工第 1 天，半天）。由 Claude 生成 docs/art_spec.md，内容包括：48px 网格；人物画布 48×48、脚底锚点 (24,44)，作为 Y-Sort 原点；动画状态名枚举（idle/walk/run/hit/infect/death），每个状态的帧数和帧率；文件命名规则；调色板文件路径；Nearest 过滤。之后每个美术资产都只是“按规格把文件丢进去替换”，代码一行不改。",
+    "第 1 步：灰盒（M0–M2，联机核心期）。完全不画图：地面和墙用 ColorRect 或 TileMapLayer 纯色块（48px）；人物用代码画的三色胶囊，阵营色加方向箭头；枪用一条线段；毒气用半透明色层；电灯用 PointLight2D 加 CanvasModulate。目的是让碰撞体、视野、Y-Sort、楼层 AOI 和 16 人同屏可读性先跑通。全部占位文件和节点名加前缀 ph_。",
+    "第 2 步：定方向（半天到 1 天，全程人主导）。用 Nano Banana 2.1（Antigravity 或 Gemini App）以 WinLu 截图为参考，生成 10–20 张情绪板：感染、科幻高楼、关灯、毒气；你挑 2–3 张钉在 docs/art/moodboard/，写下 5 条风格规则（光源方向左上、1px 深色描边或无描边、阴影色相偏冷、人物饱和度高于场景、感染者用绿/紫辨识）。这些图只做内部参考，绝不进包。",
+    "第 3 步：锁调色板（1 天）。让 Claude 写 Python（PIL）脚本，从 WinLu 原图提取全部颜色并聚类成 32–48 色主调色板，另加 8–12 个人物和特效专用强调色（阵营色、感染绿、枪口黄），导出 .gpl/.png 给 Aseprite 用；同时写一个“调色板越界检查”脚本，接进门禁。",
+    "第 4 步：上外购场景（与第 1 步并行，2–5 天）。WinLu tileset 直接作为最终版导入 TileSet，碰撞层、遮挡层（LightOccluder2D）、Y-Sort 都由 AI 写导入脚本；缺的 tile（电闸、生化容器、电梯门）先用 WinLu 现有 tile 拼改。实在需要新 tile 时，用 PixelLab Pro tiles 或 inpaint 出底稿，再脚本重映射到 WinLu 色板，最后手修。",
+    "第 5 步：人物占位到底稿（M3 前后，约 1–2 周）。人类和僵尸各出 1 个基础体：PixelLab 用 48×48 的 4 方向角色端点出正、背、侧三面（左面镜像），或用 Nano Banana 出概念图再交给 PixelLab 转像素；骨骼或文字动画出 idle/walk 底稿。导入时仍保留 ph_ 前缀。先用 16 个占位人同屏截图，测阵营可读性。",
+    "第 6 步：人物逐帧清理（Vertical Slice 前，约 3–6 周的零碎时间）。在 Aseprite 里按调色板逐帧清理：统一轮廓粗细、修正脚底接地点、对齐 48 原生密度、修帧间抖动；先用 Pixel Snapper 或 unfake.js 自动吸附网格，再人工收尾。清理完去掉 ph_ 前缀，并在 docs/art/ai_ledger.csv 登记“AI 参与与否、工具、人工改动程度”，日后写 Steam 披露时直接用。",
+    "第 7 步：代码类美术（与第 5、6 步并行）。让 Claude 或 Gemini 4 Carbon 写：360° 枪旋转加后坐力回弹、枪口闪光、受击白闪 shader、感染描边 shader、毒气雾 shader、手电锥形光、关灯后的 CanvasModulate 黑场、GPUParticles2D 血花和弹壳；需要逐帧像素特效时用 Pixel FX Designer 或现成特效包。手感参数由你在编辑器里调。",
+    "第 8 步：UI/HUD（M4 前后，约 1 周）。Claude 写 Theme 资源、9-slice 面板、负重条、感染值条、楼层指示器；字体导入 Fusion Pixel 12px（中文）加一款 OFL 英文数字像素字体；图标（武器、药、钥匙卡）用 PixelLab 出 24–32px 底稿，重映射色板后手修。",
+    "第 9 步：替换优先级（Steam 页上线前）。按“玩家看到频率 × 占屏比”排序替换剩余占位：人类主体 → 僵尸主体 → 枪 → HUD → 拾取物 → 高频特效 → 低频装饰。上线前跑门禁脚本，确认 res:// 中不存在任何 ph_ 文件、不存在 ai_ledger 里未审核的文件。",
+    "第 10 步：宣传素材（Steam 页提前 6–12 个月上线）。胶囊图找专业像素或插画画师外包（$300–1,000，确认包含 5 个尺寸加 Logo），给画师的需求包括：情绪板、角色清理稿、游戏标题、阵营色。截图从实机构建里截（xvfb 加 1920×1080 整数放大），预告片前 10 秒必须是实机对战；Claude 只负责写分镜脚本、镜头清单和商店文案。"
+  ],
+  "tools": [
+    {
+      "名称": "PixelLab",
+      "价格": "API 按次计费，48×48 4 方向 $0.0105 一次；订阅 Tier 1 约 $12/月 [不确定]",
+      "用途": "48×48 角色 4/8 方向、骨骼或文字动画、inpaint、地图物件、Pro tiles（最大 85px）",
+      "链接": "https://www.pixellab.ai/pixellab-api",
+      "核对日期": "2026-11-26",
+      "Godot 接入": "导出 PNG 序列或精灵表，在 Aseprite 插件里清理后，用 Godot 的 SpriteFrames 导入（过滤设 Nearest）；也有 MCP，可让 agent 直接调用"
+    },
+    {
+      "名称": "Nano Banana 2.1（Gemini 图像模型）",
+      "价格": "随 Google AI Pro/Ultra 订阅；API 每张 1K 图约 $0.0336 [不确定]",
+      "用途": "情绪板、概念图、角色设定稿、胶囊草图参考（仅内部）",
+      "链接": "https://decrypt.co/380257/google-launches-nano-banana-2-1",
+      "核对日期": "2026-10-06 发布，2026-11-26 核对",
+      "Godot 接入": "不直接进引擎；不是真像素图，进游戏前必须吸附网格加减色"
+    },
+    {
+      "名称": "Retro Diffusion（RD Plus / RD Tile）",
+      "价格": "按次计费（Replicate、Scenario 或官方）[不确定]",
+      "用途": "RD Plus 可按指定调色板出像素图；RD Tile 出无缝俯视 tile（不支持指定调色板）",
+      "链接": "https://replicate.com/retro-diffusion/rd-plus",
+      "核对日期": "2026-11-26",
+      "Godot 接入": "PNG 加 TileSet；有 MCP 服务器"
+    },
+    {
+      "名称": "Claude（网页版 Opus 5.5 / Sonnet）",
+      "价格": "现有订阅",
+      "用途": "不出位图。写调色板提取和重映射脚本、精灵表切割、SpriteFrames .tres 生成、shader、粒子、光照、Theme、门禁脚本；多模态审截图的可读性和一致性；写商店文案和预告片分镜",
+      "链接": "https://claude.ai",
+      "核对日期": "2026-11-26",
+      "Godot 接入": "直接产出 GDScript、.gdshader、.tres 和 Python/Lua 工具脚本"
+    },
+    {
+      "名称": "Gemini 4 Carbon（Antigravity）",
+      "价格": "AI Pro $19.99/月起（2026-11-23 起开放）",
+      "用途": "长程 agent 写代码：程序化动画层、枪手旋转、VFX、构建—验证循环；需要图时可调 Nano Banana",
+      "链接": "见同目录《Carbon帖子真伪与Gemini骨骼动画能力核实.json》",
+      "核对日期": "2026-11-26",
+      "Godot 接入": "在 Antigravity 里直接改项目并运行 Godot"
+    },
+    {
+      "名称": "Aseprite",
+      "价格": "约 $19.99 买断（凭常识，[不确定]）",
+      "用途": "逐帧清理、调色板锁定、动画预览，也是 PixelLab 插件的宿主",
+      "链接": "https://www.aseprite.org/",
+      "核对日期": "[不确定]",
+      "Godot 接入": "导出精灵表 PNG 加 JSON；也可用社区的 Aseprite 导入插件 [不确定]"
+    },
+    {
+      "名称": "Pixel Snapper（Sprite Fusion）/ unfake.js / DeAI PixelKit",
+      "价格": "前两个免费开源；DeAI PixelKit 在 itch 上，价格 [不确定]",
+      "用途": "把 AI 出的“伪像素图”吸附回真网格、减色、去背景",
+      "链接": "https://dev.to/jenissimo/how-to-tame-your-ai-pixel-art-3pk5 ；https://masaka0411.itch.io/deai-pixelkit",
+      "核对日期": "2026-11-26",
+      "Godot 接入": "预处理工具，处理后的 PNG 再进 Aseprite"
+    },
+    {
+      "名称": "Pixel FX Designer / SpriteMancer",
+      "价格": "Steam $9.99（史低 $4.99）；五件套合集 $48.70",
+      "用途": "参数化生成像素粒子特效，导出精灵表或 GIF",
+      "链接": "https://store.steampowered.com/app/939360",
+      "核对日期": "2026-11-26",
+      "Godot 接入": "精灵表导入 AnimatedSprite2D 或 GPUParticles2D 的贴图动画"
+    },
+    {
+      "名称": "Laigter",
+      "价格": "免费（GPL-3.0，可自愿付费）",
+      "用途": "从像素精灵生成法线、高光等光照贴图",
+      "链接": "https://azagaya.itch.io/laigter",
+      "核对日期": "2026-11-26",
+      "Godot 接入": "CanvasTexture 的 normal_texture；导入时关闭过滤，并调高 PointLight2D 的 Height"
+    },
+    {
+      "名称": "Godot 4.7 内置 2D 光照与粒子",
+      "价格": "免费",
+      "用途": "PointLight2D、DirectionalLight2D、CanvasModulate、LightOccluder2D、GPUParticles2D、CanvasItem shader",
+      "链接": "https://docs.godotengine.org/en/4.7/tutorials/2d/2d_lights_and_shadows.html",
+      "核对日期": "2026-11-26",
+      "Godot 接入": "原生；阴影过滤设为 None 最适合像素风"
+    },
+    {
+      "名称": "Fusion Pixel Font（缝合像素字体）",
+      "价格": "免费（OFL 1.1）",
+      "用途": "8/10/12px 中日韩像素字体，含简体中文",
+      "链接": "https://github.com/TakWolf/fusion-pixel-font",
+      "核对日期": "2026-11-26",
+      "Godot 接入": "导入 TTF/OTF/BMF，关闭抗锯齿和 hinting，字号用原生像素尺寸的整数倍"
+    },
+    {
+      "名称": "WinLu Spaceship Tileset",
+      "价格": "$20",
+      "用途": "48px 3/4 俯视科幻场景底座（作为最终资产）",
+      "链接": "https://winlu.itch.io/spaceship-tileset",
+      "核对日期": "2026-11-26（见同目录 item）",
+      "Godot 接入": "TileSet 加 TileMapLayer，作者称已针对 Godot 优化"
+    }
+  ],
+  "mature_practices": [
+    "“程序员美术 → 外购统一底座 → 最后精修主角”是单人开发者的主流路线：先让玩法和联机在色块上跑通，外购素材当最终场景，只把精力花在玩家盯得最久的角色和枪上。",
+    "成熟的俯视射击（Enter the Gungeon、Nuclear Throne）身体逐帧、方向少，枪、后坐力、闪光、屏幕震动、受击白闪都用代码实现；“打击感”主要来自程序化反馈，而不是帧数。这部分正是 AI 写代码最强的地方。",
+    "成功作的 AI 使用集中在玩家“看不见或不敏感”的环节，比如语音、本地化和开发效率工具；失败作的披露更多集中在美术（72% 对 57%）。把 AI 用在管线和代码上，比用在成品图上安全。",
+    "大发行商（Hooded Horse）连占位都禁用生成式 AI，Clair Obscur 因占位漏包丢了奖项。成熟做法是占位资产统一前缀或放进隔离目录，配资产登记表和构建前自动扫描。",
+    "胶囊图外包给专业画师、截图和预告片用实机画面，是 Valve 规则和行业共识；即使不用 AI，也要避免胶囊图“看起来像 AI”（Abandoned Sheep 因此换图）。",
+    "保留过程证据（Aseprite 源文件、时间轴录屏），被误判为 AI 时可以自证（Shrine's Legacy 的教训）。"
+  ],
+  "consistency_method": "①调色板锁定：以 WinLu 提取的 32–48 色加 8–12 个强调色为唯一色板，所有 AI 产出必须经过脚本重映射，再由门禁检查越界色；②统一光照方向：画面固定左上光源，人物和道具的受光面、阴影面与 WinLu 墙体一致，动态光交给 PointLight2D，贴图里不画强烈投影；③描边规则：人物用 1px 色相偏暗的选择性描边，场景沿用 WinLu 无描边，这样人物能从背景里跳出来，可读性更好；④像素密度：全部按 48 原生密度绘制，禁止把 16px 资产放大 3 倍混用，禁止运行时非整数缩放精灵；⑤参考图：PixelLab 和 Nano Banana 每次都喂同一张“标准人物”参考图加风格规则文本，皮肤靠换色（palette swap shader）而不是重新生成；⑥用 Claude 多模态审图：每批新资产和 WinLu 场景合成一张截图，让 Claude 按 5 条风格规则逐条打分，最后由你拍板。LoRA 训练对单人零基础项目性价比低，不建议。",
+  "animation_spec": "按“3 面身体（下、上、右，左镜像）加独立 360° 枪”估算。人类：idle 4 帧、walk 6、run 6（可先省掉，用 walk 加速代替）、hit 2–3、death 6，三面合计约 57–75 帧；射击不需要身体帧，由枪的旋转、后坐和闪光代码表现；感染变身 8–12 帧，只做正面 1 套，其他朝向转到正面再播。僵尸：idle 4、walk 6、attack 4–5、hit 2–3、death 6，三面合计约 66–72 帧。两个基础体合计约 140–170 张独立身体帧，皮肤和阵营差异用调色板替换，不新增帧。工作量估算（推算，无社区统计）：AI 出底稿约 1–3 天，含反复生成挑选；48px 每帧人工清理 10–30 分钟，合计约 25–85 小时；枪支每把 1 张高质量侧视图，运行时旋转，或用 RotSprite 预渲染 16/32 角度（脚本自动），每把 0.5–2 小时；对零基础的人，前 20 帧会慢 2–3 倍。",
+  "license_terms": "①AI 产出的商用：PixelLab 第三方汇总称生成资产可用于商业游戏、禁止用来训练其他 AI 模型，以官方条款为准 [不确定]；Google 图像模型按 Gemini 或 Google AI 服务条款，输出带不可见 SynthID 水印 [不确定]。②版权：美国版权局的立场是纯 AI 生成内容不受版权保护，经实质性人工修改的部分才可能受保护 [不确定，凭既有知识]，所以 AI 底稿越是经过大量人工清理，越接近“你的作品”。③Steam 披露：2026-01 起，玩家可见或可听、随游戏发布的预生成 AI 内容（包括清理过的 AI 底稿）必须在 AI 披露表中填写；编码助手和管线脚本属于效率工具，不必披露。商店页宣传图是否在披露范围内 [不确定]，建议一并如实写。④字体：Fusion Pixel 采用 OFL 1.1，可商用、可随游戏打包，但不能单独售卖字体文件，需保留版权声明；Zpix 商用需付费（$1,000 或 ¥7,000），禁止修改和拆分，应避开。⑤工具：Laigter 是 GPL-3.0，只约束工具本身，生成的法线图不受 GPL 影响 [不确定]。⑥公开仓库：外购 tileset（WinLu）通常禁止原始文件再分发，不要放进公开 Git 仓库，可放私有仓库或用 .gitignore 排除；AI 底稿和自绘资产可以放。⑦联机客户端分发：资产随游戏客户端打包分发，属于正常使用。",
+  "cost_time_estimate": "现金（单人、按 12–18 个月开发周期假设）：WinLu $20；Aseprite 约 $20；PixelLab 订阅 3–6 个月 $36–300，或 API 按次计费估计 < $50；Nano Banana 随现有 Google 订阅；Pixel FX Designer $5–10（可选）；Laigter 和 Fusion Pixel $0；胶囊图外包 $300–1,000；可选：委托画师精修 1 套主角 $200–800 [不确定]。合计约 $400–1,400（不含委托主角）到 $600–2,200（含）。工时（推算）：资产规格表、调色板、情绪板 2–3 天；灰盒占位 1–2 天（代码画）；人物底稿加清理 60–150 小时；代码类美术（枪、特效、光照、shader）40–80 小时，其中多数由 AI 写、你调参；UI/HUD 加图标 20–40 小时；tileset 补件 10–30 小时；截图和预告片 20–40 小时。美术总计约 180–400 小时，占单人总工时的 20–30%。假设：零基础、每周 15–25 小时，AI 承担全部代码类美术。",
+  "fit_for_user": "高度适配“代码类 AI 加外购底座加人工清理角色”的分工。理由：①单人、零美术基础：11 个阶段里有 5 个（调色板、光照、程序化特效、UI 布局、导入管线）可以几乎全交给 Claude 或 Carbon，这正好是你的 AI 工具链最强的部分；②48px 的 3/4 俯视：场景有 WinLu 原生 48 可用，人物现成素材极少（48px 僵尸素材在 itch 上为 0），AI 底稿加人工清理是唯一不花大钱的方案，而 PixelLab 的标准角色端点正好支持 48×48；③3 面身体加 360° 枪：把动画工作量压到 140–170 帧，打击感交给代码，避开 AI 最弱的多帧一致性；④16 人 PvP：可读性（阵营、朝向、持枪、感染状态）比精细度重要，人物描边加阵营色加感染 shader 都能由代码保证；⑤Godot 4.7：2D 光照、CanvasTexture 法线、GPUParticles2D、Theme 全部原生，不需要第三方插件；⑥Claude 加 Antigravity：Claude 不出图，出图走 Antigravity 里的 Nano Banana 和外部的 PixelLab，再由 Claude 写清理和校验脚本，闭环可行。不适配的点：Nano Banana 出的图不能直接当像素资产；PixelLab 标准 tileset 端点没有 48 档；感染变身等表演性动画 AI 做不好，需要你投入或委托。",
+  "network_sync_impact": "美术路线本身几乎不增加带宽，关键是让“美术状态”可以从权威状态推导：①朝向不单独同步，由 16 位瞄准角推导三面身体和是否镜像（迟滞阈值放在客户端）；枪若用 RotSprite 预渲染 32 角度，只在渲染端量化，网络仍传完整 16 位角；②动画状态用 1 字节枚举（idle/walk/run/hit/infect/death），走 20 Hz 不可靠通道，属于表现字段；感染变身和死亡由可靠事件触发，客户端本地播完；③特效全部本地生成：枪口闪光由 20 Hz 包里的开火标志位触发，命中血花和受击白闪由可靠的命中事件触发，弹壳、烟雾等粒子不同步；④光照：每层电灯开关是 GameState 里的位图（可靠通道），view 层据此切换 CanvasModulate 和 PointLight2D，手电开关走 20 Hz 表现位；⑤换皮靠调色板替换，皮肤 ID 只在入房时同步一次（1 字节）。结论：按这套方案，美术相关的每人每 tick 字节数 ≤ 3–4 字节（角度 2 + 状态 1 + 标志位 1），对 16 人 600 kbps 的预算可以忽略。",
+  "risks_pitfalls": [
+    "占位 AI 资产漏进发售包（Clair Obscur 丢奖案）：必须用 ph_ 前缀加 ai_ledger.csv，并在构建门禁里扫描，不能靠记性。",
+    "把 Nano Banana 的“伪像素图”直接导入：缩放后发糊、出现像素尺寸不一致、颜色超出色板，和 WinLu 一对比就露馅。一律先吸附网格、再减色、再手修。",
+    "AI 动画帧间漂移：体型、配饰、头身比逐帧变化，16 人同屏时会闪烁。只把 AI 帧当底稿，以第一帧为基准逐帧修。",
+    "胶囊图用 AI：Next Fest 期间已形成“看见 AI 胶囊就跳过”的玩家习惯，而且是转化漏斗第一屏，损失最大。",
+    "披露写得含糊或干脆不写：研究显示失败作的披露更短（中位数 13 词，成功作 22 词）。被扒出未披露的后果比如实披露更糟；应如实、具体地写“AI 底稿经人工逐帧重绘”。",
+    "被误判为 AI：要保留源文件和过程录屏；胶囊图避开 AI 典型特征。",
+    "48px tile 补件：PixelLab 标准 tileset 没有 48 档、RD Tile 不能指定色板，补件成本被低估。优先用 WinLu 现有 tile 拼改，场景设计迁就素材。",
+    "字体授权坑：Zpix 商用要付 $1,000，误用会有下架风险；选 OFL 字体并保留授权文件。",
+    "过早精修：在玩法和联机没验证前就清理 150 帧，若之后改方向数或画布尺寸会全部返工。必须先锁规格表、再灰盒验证、最后清理。",
+    "光照和法线叠加：默认 Light Height 太低会让法线贴图几乎失效；法线贴图导入压缩可能导致像素发糊，要用无损或关闭过滤。"
+  ],
+  "reversibility_cost": "取决于是否先锁了规格表。锁了的话：替换单个资产几乎零代码成本，丢文件即生效；从 AI 底稿换成委托画师重绘，只是现金加沟通成本（每套主角 $200–800 [不确定]），不返工代码。改像素规格（例如 48 改 32）的代价最大：tileset 要整套换掉（WinLu 作废，$20 加 10–30 小时导入工作），人物 140–170 帧全部重画（60–150 小时），UI 字号和镜头都要重调，是灾难级返工。改方向数（3 面改 8 方向）：身体帧约增加 60–70%，枪和网络代码不变。改光照方案：纯代码，约 1–3 天。结论：规格表和调色板必须在 M1 前定死，后续换“谁来画”很便宜，换“画成什么规格”很贵。",
+  "ai_can_do": [
+    "美术方向：Nano Banana 2.1（Antigravity 或 Gemini App）以 WinLu 截图为参考出情绪板和概念图（可直接用于内部参考）。",
+    "调色板：Claude 写 PIL 脚本提取、聚类、重映射色板，并做越界检查，接进门禁（可直接用）。",
+    "角色：PixelLab 出 48×48 的 4 或 8 方向底稿、骨骼和文字动画底稿；Nano Banana 出设定稿（都需大量修）。",
+    "Tileset：PixelLab Pro tiles 或 inpaint 出 WinLu 风格补件底稿，脚本重映射色板（需大量修，整套生成基本不行）。",
+    "道具和图标：PixelLab 地图物件端点或 Pro UI 出 24–48px 道具和图标底稿（需修，量中等）。",
+    "特效、光照、后处理：Claude 或 Gemini 4 Carbon 写 GPUParticles2D、受击白闪、感染描边、毒气雾 shader、PointLight2D 手电、CanvasModulate 黑场、屏幕震动、后坐力（可直接用，参数由人调）。",
+    "UI：Claude 写 Theme、9-slice、HUD 布局、多语言字体回退（可直接用）。",
+    "管线：Claude 写精灵表切割、SpriteFrames .tres 生成、RotSprite 32 角度预渲染、ph_ 前缀和 AI 登记表门禁脚本（可直接用）。",
+    "审图：Claude 多模态按风格规则审截图的可读性和一致性，指出越界色、密度混杂、轮廓不一（可直接用作辅助）。",
+    "宣传：Claude 写商店文案、标签策略、预告片分镜、截图清单、给胶囊画师的需求文档（可直接用）；胶囊成品图、截图、预告片画面基本不行或不应使用。"
+  ],
+  "human_must_do": [
+    "审美决策：从 AI 方案里选定风格方向，写下 5 条风格规则；确定人物、僵尸、阵营的最终设计。",
+    "一致性把关：每批资产和 WinLu 场景合成截图后的最终拍板（AI 只能打分，不能负责）。",
+    "像素清理：在 Aseprite 里对 AI 底稿逐帧清理，包括轮廓、接地点、48 原生密度、帧间漂移，这是工时最大的部分。",
+    "表演性动画：感染变身、死亡等决定氛围的关键帧，需要你亲手做或委托。",
+    "可读性测试：16 人同屏、关灯、毒气中，阵营、朝向、持枪、感染状态能否在 0.5 秒内认出，要真人试玩判断。",
+    "手感调参：后坐力、闪光时长、屏幕震动、光照半径和颜色，在编辑器里反复调。",
+    "场景摆放：在 Godot 编辑器里用 WinLu 摆 8–12 层楼层布局（按 CLAUDE.md 约定，这件事由你负责）。",
+    "合规与披露：维护 AI 登记表，如实填写 Steam AI 披露；确认字体和素材授权；发布前确认没有 ph_ 资产。",
+    "外包管理：给胶囊画师写需求、验收稿件，确认包含 5 个尺寸。",
+    "截图和预告片：从实机构建中挑选高光时刻，前 10 秒展示核心玩法。"
+  ],
+  "judgment": "明确立场：AI 在这个项目里的角色应该定位为“代码美术师加底稿画师”，不是“美术师”。逐阶段的分工：①美术方向、调色板、光照与后处理、程序化特效、UI 布局和导入管线这 6 类，AI 可直接用，由 Claude 和 Carbon 包办，你只负责调参和拍板；②角色设计、角色动画、道具图标、UI 像素框体属于“需大量修”，AI 只出底稿，要你逐帧清理，这是你美术工时的主要去处（约 60–150 小时）；③tileset 整套生成、表演性动画、胶囊图、截图和预告片画面这 4 类，AI 基本不行或不该用。tileset 直接外购 WinLu 作为最终版；胶囊图外包，$300–1,000；截图和预告片按 Valve 规定用实机画面；字体用 Fusion Pixel，不需要 AI。推导依据：一是能力边界，通用图像模型出的像素图网格和色板都不对，只有 PixelLab 这类专用工具接近可用，但帧间一致性仍需人修；二是市场惩罚，带 AI 披露的游戏评论量约少一半，而且美术正是失败作最常披露 AI 的类别，胶囊图更是 AI 重灾区；三是项目特点，3 面身体加代码驱动的枪和特效，把“必须手画”的部分压到最小，让 AI 擅长的代码承担打击感。“灰盒→占位→替换”的执行要点有四条：第 1 天锁死资产规格表和调色板，这是之后一切替换不返工的前提；M0–M2 只用代码画的色块，不碰任何 AI 图，避免在玩法未验证时浪费清理工时；M3 起导入带 ph_ 前缀的 AI 底稿，用 16 人同屏截图测可读性；Vertical Slice 前按“出现频率 × 占屏比”逐一清理替换，构建门禁扫描 ph_ 和 AI 登记表，Steam 页上线前胶囊外包到位。不建议：用 AI 生成胶囊图；把未清理的 AI 图当成品；为补 tile 训练 LoRA；在联机核心未稳前开始精修角色。",
+  "confidence": "中高。各阶段 AI 能力边界与 Valve 规则有官方文档和多方实测支撑，置信度高；AI 披露对成绩的影响有两个独立数据源，但只是相关性，置信度中；人工清理工时和委托价格是推算或单一来源，置信度低到中。",
+  "win_rate_impact": "估计：按本方案执行（AI 管代码美术和底稿、人工清理角色、胶囊外包、如实披露），相比“全 AI 出图直接用”，可避免约一半的评论量折损（参照 Game Oracle 的 -52.6%，属于相关性推断），在项目终局成功概率上，相当于把基准概率的相对值提高 30–60%；相比“全部手绘或全部委托”，可节省 $3,000–10,000 和数月工期，让你把时间投到联机冷启动和 Bot 上，而那才是头号胜率杀手。在绝对值上，美术路线的正确与否大约影响终局成功率 ±1–2 个百分点（基准约 3% 的 1,000 评论档），不如 PvP 冷启动的影响大。以上均为估计，不是测算。",
+  "sources": [
+    {
+      "标题": "PixelLab API（各端点尺寸与单价）",
+      "URL": "https://www.pixellab.ai/pixellab-api",
+      "日期": "抓取 2026-11-26",
+      "类型": "一手（厂商官方）"
+    },
+    {
+      "标题": "PixelLab 官网（功能：4/8 方向、骨骼动画、tileset、Aseprite 插件、MCP）",
+      "URL": "https://www.pixellab.ai/",
+      "日期": "抓取 2026-11-26",
+      "类型": "一手（厂商官方）"
+    },
+    {
+      "标题": "SpriteCook：Nano Banana pixel art for games（网格、色板问题）",
+      "URL": "https://www.spritecook.ai/blog/nanobanana-pixel-art-for-games",
+      "日期": "2026-03-19",
+      "类型": "厂商博客（有利益相关）"
+    },
+    {
+      "标题": "How to tame your AI pixel art（清理管线、unfake.js）",
+      "URL": "https://dev.to/jenissimo/how-to-tame-your-ai-pixel-art-3pk5",
+      "日期": "2025-07-30",
+      "类型": "开发者自述"
+    },
+    {
+      "标题": "Hacker News：AI 像素图需减色加网格对齐、仍需大量人工",
+      "URL": "https://news.ycombinator.com/item?id=50488244",
+      "日期": "约 2026-11",
+      "类型": "社区讨论"
+    },
+    {
+      "标题": "Decrypt：Google launches Nano Banana 2.1",
+      "URL": "https://decrypt.co/380257/google-launches-nano-banana-2-1",
+      "日期": "2026-10",
+      "类型": "媒体（转述 Google 官方）"
+    },
+    {
+      "标题": "Retro Diffusion RD Plus（输入调色板）/ RD Tile",
+      "URL": "https://replicate.com/retro-diffusion/rd-plus",
+      "日期": "核对 2026-11-26",
+      "类型": "一手（模型页）"
+    },
+    {
+      "标题": "Dexerto：Almost half of all new Steam games use AI now（49.9%、47% 对 14%）",
+      "URL": "https://dexerto.com/gaming/almost-half-of-all-new-steam-games-use-ai-now-3423933",
+      "日期": "2026-11",
+      "类型": "媒体（转述 Reddit 统计）"
+    },
+    {
+      "标题": "Notebookcheck：Study suggests AI is hurting video game sales（Game Oracle 9,879 款，-52.6%）",
+      "URL": "https://www.notebookcheck.net/Study-suggests-AI-is-hurting-video-game-sales.1328725.0.html",
+      "日期": "2026-06-25，2026-10-05 更新",
+      "类型": "媒体（转述数据分析）"
+    },
+    {
+      "标题": "Three years of AI on Steam（fragwyz，55% 达标率、披露文本分析）",
+      "URL": "https://fragwyz.substack.com/p/three-years-of-ai-on-steam",
+      "日期": "2026-07-13",
+      "类型": "独立数据分析"
+    },
+    {
+      "标题": "PC Gamer：Steam updates AI disclosure form（效率工具不必披露）",
+      "URL": "https://www.pcgamer.com/software/ai/steam-updates-ai-disclosure-form-to-specify-that-its-focused-on-ai-generated-content-that-is-consumed-by-players-not-efficiency-tools-used-behind-the-scenes/",
+      "日期": "2026-01",
+      "类型": "媒体（转述 Valve 官方）"
+    },
+    {
+      "标题": "Steamworks：Standard store assets（截图只能是实机画面、胶囊尺寸）",
+      "URL": "https://partner.steamgames.com/doc/store/assets/standard",
+      "日期": "核对 2026-11-26",
+      "类型": "一手（官方文档）"
+    },
+    {
+      "标题": "Steamworks：Trailers（首条预告片以实机玩法为主）",
+      "URL": "https://partner.steamgames.com/doc/store/trailer",
+      "日期": "核对 2026-11-26",
+      "类型": "一手（官方文档）"
+    },
+    {
+      "标题": "Steamworks：Graphical asset rules",
+      "URL": "https://partner.steamgames.com/doc/store/assets/rules",
+      "日期": "2022-09-01 生效",
+      "类型": "一手（官方文档）"
+    },
+    {
+      "标题": "Kotaku：Steam Next Fest Feb 2026 gen AI art demos",
+      "URL": "https://kotaku.com/steam-next-fest-feb-2026-gen-ai-art-demos-2000673280",
+      "日期": "2026-02-24",
+      "类型": "媒体"
+    },
+    {
+      "标题": "Kotaku：Hooded Horse gen AI art ban（含占位）",
+      "URL": "https://kotaku.com/hooded-horse-gen-ai-art-ban-4x-strategy-steam-2000658179",
+      "日期": "2026-01-08",
+      "类型": "媒体（发行商 CEO 自述）"
+    },
+    {
+      "标题": "Engadget：Indie Game Awards 撤回 Clair Obscur 奖项（AI 占位贴图）",
+      "URL": "https://www.engadget.com/gaming/the-indie-game-awards-snatches-back-two-trophies-from-clair-obscur-over-its-use-of-generative-ai-164730842.html",
+      "日期": "2025-12",
+      "类型": "媒体"
+    },
+    {
+      "标题": "Kotaku：Librarian 因 4 个 AI 资产遭反弹",
+      "URL": "https://kotaku.com/librarian-tidy-up-arcane-library-steam-game-cozy-ai-2000702089",
+      "日期": "2026-06-04",
+      "类型": "媒体"
+    },
+    {
+      "标题": "Steam 商店页：Librarian / CODEX MORTIS / Shrine's Legacy（评论数、AI 披露原文）",
+      "URL": "https://store.steampowered.com/app/4197610/ ；https://store.steampowered.com/app/4084120/ ；https://store.steampowered.com/app/1435410/",
+      "日期": "抓取 2026-11-26",
+      "类型": "一手（数据平台）"
+    },
+    {
+      "标题": "Spilled.gg：Shrine's Legacy 被误判为 AI",
+      "URL": "https://spilled.gg/rpg-developers-ai-accusations-steam-reviews-game-content",
+      "日期": "2025-12",
+      "类型": "媒体"
+    },
+    {
+      "标题": "PC Gamer：Steam Week in Review（AI 胶囊图泛滥，Abandoned Sheep 换图）",
+      "URL": "https://www.pcgamer.com/gaming-industry/steam-week-in-review-spammy-ai-generated-capsule-art-is-a-pox-and-it-makes-browsing-steam-less-fun/",
+      "日期": "2026",
+      "类型": "媒体"
+    },
+    {
+      "标题": "Steam Page Analyzer：Indie game marketing on a $1,000 budget（胶囊 $300–600）",
+      "URL": "https://www.steampageanalyzer.com/blog/indie-game-marketing-1000-budget",
+      "日期": "2026-07",
+      "类型": "行业博客（单一来源）"
+    },
+    {
+      "标题": "Godot 4.7 文档：2D lights and shadows",
+      "URL": "https://docs.godotengine.org/en/4.7/tutorials/2d/2d_lights_and_shadows.html",
+      "日期": "核对 2026-11-26",
+      "类型": "一手（官方文档）"
+    },
+    {
+      "标题": "Laigter（itch.io，免费，GPL-3.0）",
+      "URL": "https://azagaya.itch.io/laigter",
+      "日期": "核对 2026-11-26",
+      "类型": "一手（作者页）"
+    },
+    {
+      "标题": "Pixel FX Designer（Steam）",
+      "URL": "https://store.steampowered.com/app/939360",
+      "日期": "核对 2026-11-26",
+      "类型": "一手（商店页）"
+    },
+    {
+      "标题": "Fusion Pixel Font（GitHub，OFL 1.1，8/10/12px）",
+      "URL": "https://github.com/TakWolf/fusion-pixel-font",
+      "日期": "核对 2026-11-26",
+      "类型": "一手（作者仓库）"
+    },
+    {
+      "标题": "Zpix 最像素（GitHub，商用授权 $1,000）",
+      "URL": "https://github.com/SolidZORO/zpix-pixel-font",
+      "日期": "核对 2026-11-26",
+      "类型": "一手（作者仓库）"
+    }
+  ],
+  "uncertain": [
+    "tools",
+    "license_terms",
+    "cost_time_estimate",
+    "cases",
+    "win_rate_impact"
+  ]
+}
